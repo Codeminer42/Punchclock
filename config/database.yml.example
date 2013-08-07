@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: punchclock_development
+  pool: 5
+  username: punchclock
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: punchclock_test
+  pool: 5
+  username: punchclock
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: punchclock_production
+  pool: 5
+  username: punchclock
+  password:
