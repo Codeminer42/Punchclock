@@ -5,3 +5,8 @@
 config/db/database.yml
 /log/*.log
 /tmp
+
+.rvmrc
+.versions.conf
+
+.DS_Store

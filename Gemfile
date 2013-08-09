@@ -37,16 +37,6 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-group :development do
-  gem 'guard'
-  gem 'guard-rspec'
-  gem "better_errors"
-  gem 'binding_of_caller'
-  gem 'bullet'
-  gem 'rb-inotify', :require => false
-  gem 'thin'
-end
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -58,3 +48,20 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+group :development do
+  gem 'guard'
+  gem 'guard-rspec'
+  gem "better_errors"
+  gem 'binding_of_caller'
+  gem 'bullet'
+  gem 'rb-inotify', :require => false
+  gem 'thin'
+  gem 'certified'
+end
+
+gem 'settingslogic'
+gem 'dotenv-rails'
+gem "devise", "~> 3.0.1"
+gem 'omniauth'
+gem 'omniauth-google-apps'

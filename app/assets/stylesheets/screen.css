@@ -1,0 +1,39 @@
+.page {
+  background-color: white;
+  margin: 0 auto;
+  width: 960px;
+}
+.page-body {
+  padding: 16px 32px 32px;
+}
+.page-header {
+  border-bottom: 1px solid gray;
+  line-height: 56px;
+  padding: 16px 32px;
+}
+.page-header-1 {
+  float: left;
+  width: 350px;
+}
+.page-header-1 a {
+  color: black;
+  text-decoration: none;
+}
+.page-header-1 h1 {
+  display: inline;
+  line-height: 1em;
+  margin: 0;
+  vertical-align: middle;
+}
+.page-header-2 {
+  float: left;
+  text-align: right;
+  width: 540px;
+}
+.page-header-2 a {
+  margin: 0 0 0 8px;
+}
+body {
+  background-color: gray;
+  margin: 16px;
+}

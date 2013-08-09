@@ -7,8 +7,30 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-1">
+        <h1><%= link_to 'PUNCHCLOCK', root_path %></h1>
+      </div>
+      <div class="page-header-2">
+        <div id="user_nav" align="right">
+          <%- if user_signed_in? -%>
+          <strong><%= current_user.email %></strong>
+          <%= link_to 'Logout', home_logout_path %>
+          <%- else -%>
+          <%= link_to 'Login', user_omniauth_authorize_path(:google_apps) %>
+          <%- end -%>
+        </div>
+      </div>
+      <br style="clear:both"/>
+    </div>
+    <div class="page-body">
+      <div class="flash-messages">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      </div>
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>
