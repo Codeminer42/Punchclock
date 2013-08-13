@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>When:</strong>
+  <%= l @punch.from, :format => '%Y-%m-%d' %> from
+  <%= l @punch.from, :format => '%H:%M' %> to
+  <%= l @punch.to, :format => '%H:%M' %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @punch.project.present? ? @punch.project.name : '' %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @punch.user.present? ? @punch.user.email : '' %>
+</p>
+
+<%= link_to 'Edit', edit_punch_path(@punch) %> |
+<%= link_to 'Back', punches_path %>

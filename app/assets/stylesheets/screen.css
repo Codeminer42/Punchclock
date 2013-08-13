@@ -1,5 +1,6 @@
 .page {
   background-color: white;
+  border-radius: 16px;
   margin: 0 auto;
   width: 960px;
 }
@@ -21,6 +22,7 @@
 }
 .page-header-1 h1 {
   display: inline;
+  font-family: serif;
   line-height: 1em;
   margin: 0;
   vertical-align: middle;
@@ -33,7 +35,72 @@
 .page-header-2 a {
   margin: 0 0 0 8px;
 }
+a {
+  color: #6495ED;
+}
 body {
-  background-color: gray;
+  background-color: #d2d2d2;
+  font-family: sans-serif;
   margin: 16px;
+}
+table {
+  width: 100%;
+}
+
+
+
+/* PUNCHES */
+
+#q_from_gteq_1i {
+  width: 70px;
+}
+#q_from_gteq_2i {
+  width: 100px;
+}
+#q_project_id_eq {
+
+}
+
+.punch-button {
+  background-color: green;
+  color: black;
+  display: inline-block;
+  padding: 2px 8px;
+  text-decoration: none;
+}
+.punches-header {
+  line-height: 48px;
+  margin-bottom: 24px;
+}
+.punches-header br {
+  clear: both;
+}
+.punches-header-1 {
+  float: left;
+  width: 245px;
+}
+.punches-header-2 {
+  float: left;
+  text-align: right;
+  width: 645px;
+}
+.punches-header-2 form {
+  margin: 0;
+}
+
+.grid th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-family: serif;
+  font-size: small;
+}
+.grid th a {
+  color: #333;
+  display: block;
+  padding: 4px;
+  text-decoration: none;
+}
+.grid th a:hover {
+  background-color: gray;
+  color: white;
 }

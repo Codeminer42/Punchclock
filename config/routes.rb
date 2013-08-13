@@ -1,5 +1,5 @@
 Punchclock::Application.routes.draw do
-  resources :projects
+  resources :punches
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

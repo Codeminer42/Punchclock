@@ -34,7 +34,10 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.14.0'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'forgery'
 end
 
 # Use ActiveModel has_secure_password
@@ -72,3 +75,5 @@ gem 'activeadmin',         github: 'gregbell/active_admin', branch: 'rails4'
 gem 'ransack',             github: 'ernie/ransack',         branch: 'rails-4'
 gem 'inherited_resources', github: 'josevalim/inherited_resources'
 gem 'formtastic',          github: 'justinfrench/formtastic'
+
+gem 'bootstrap-sass'
