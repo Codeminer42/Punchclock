@@ -53,4 +53,27 @@ describe PunchesController do
       }
     end
   end
+
+  describe "punch access control" do
+    let(:own) { FactoryGirl.create(:user) }
+    let(:not_own) { FactoryGirl.create(:user) }
+    let(:punch) { FactoryGirl.create(:punch, user_id: own.id ) }
+
+    context "user not own punch" do
+      it "deny access" do
+        sign_in not_own
+        get :show, id: punch.id
+        expect(response.code).to eq '403'
+      end
+    end
+
+    context "user own punch" do
+      it "allow access" do
+        sign_in own
+        get :show, id: punch.id
+        expect(response.code).to eq '200'
+      end
+    end
+  end
+
 end
