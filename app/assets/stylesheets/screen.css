@@ -39,7 +39,7 @@ a {
   color: #6495ED;
 }
 body {
-  background-color: #d2d2d2;
+  background-color: #dfdfdf;
   font-family: sans-serif;
   margin: 16px;
 }
@@ -93,6 +93,7 @@ table {
   color: #333;
   font-family: serif;
   font-size: small;
+  line-height: 18px;
 }
 .grid th a {
   color: #333;
