@@ -3,37 +3,49 @@ class PunchesController < InheritedResources::Base
   before_action :verify_ownership, only: [:show, :edit, :update, :destroy]
 
   def index
-    @search = Punch.search(params[:q])
+    if params[:q].present? && params[:q][:"from_gteq(1i)"]
+      t = Time.new(params[:q][:"from_gteq(1i)"].to_i,
+                   params[:q][:"from_gteq(2i)"].to_i,
+                   params[:q][:"from_gteq(3i)"].to_i).end_of_month
+    else
+      t = Time.now.end_of_month
+    end
+    @search = Punch.where(user_id: current_user.id)
+                   .where("\"to\" < ?", t)
+                   .search(params[:q])
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
   end
 
   def create
-    @punch = Punch.new
-    set_time_and_project_from_params
-    @punch.user_id = current_user.id
-    create!
+    @punch = current_user.punches.new(sanitized_params)
+    if @punch.save
+      redirect_to punch_url(@punch)
+    else
+      render :action => :new
+    end
   end
 
   def update
-    set_time_and_project_from_params
-    update!
+    @punch = current_user.punches.find params[:id]
+    if @punch.update(sanitized_params)
+      redirect_to punch_url @punch
+    else
+      render action: :edit
+    end
   end
 
 private
-  def set_time_and_project_from_params
-    @punch.from = DateTime.new(params[:punch][:"from(1i)"].to_i,
-                               params[:punch][:"from(2i)"].to_i,
-                               params[:punch][:"from(3i)"].to_i,
-                               params[:punch][:"from(4i)"].to_i,
-                               params[:punch][:"from(5i)"].to_i)
-    @punch.to = DateTime.new(params[:punch][:"from(1i)"].to_i,
-                             params[:punch][:"from(2i)"].to_i,
-                             params[:punch][:"from(3i)"].to_i,
-                             params[:punch][:"to(4i)"].to_i,
-                             params[:punch][:"to(5i)"].to_i)
-    @punch.project_id = params[:punch][:project]
+  def sanitized_params
+    punch_data = {}
+    permitted_params[:punch].each do |k,v|
+      punch_data[k.to_sym] = v
+    end
+    punch_data[:"to(1i)"] = punch_data[:"from(1i)"]
+    punch_data[:"to(2i)"] = punch_data[:"from(2i)"]
+    punch_data[:"to(3i)"] = punch_data[:"from(3i)"]
+    punch_data
   end
 
   def permitted_params

@@ -52,10 +52,14 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+group :test do
+  gem 'shoulda-matchers'
+end
+
 group :development do
   gem 'guard'
   gem 'guard-rspec'
-  gem "better_errors"
+  gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'rb-inotify', :require => false
@@ -65,7 +69,7 @@ end
 
 gem 'settingslogic'
 gem 'dotenv-rails'
-gem "devise", "~> 3.0.1"
+gem 'devise', '~> 3.0.1'
 gem 'omniauth'
 gem 'omniauth-google-apps'
 

@@ -8,8 +8,10 @@
     <%= search_form_for @search do |f| %>
       <div>
         Filter
-        <%= f.date_select :from_gteq, :discard_day => true %>
-        <%= f.collection_select :project_id_eq, Project.order(:name), :id, :name, { :prompt => true } %>
+        <%= f.date_select :from_gteq, discard_day: true,
+                          end_year: Time.now.year %>
+        <%= f.collection_select :project_id_eq, Project.order(:name), :id,
+                                :name, prompt: false, include_blank: 'All' %>
         <%= f.submit 'OK', :class => :btn %>
       </div>
     <% end %>
@@ -40,7 +42,7 @@
   <tbody>
     <% @punches.each do |punch| %>
       <tr>
-        <td><%= link_to(l(punch.from, :format => '%Y-%m-%d'), punch) %></td>
+        <td><%= link_to(l(punch.from, :format => '%d-%m-%Y'), punch) %></td>
         <td><%= l punch.from, :format => '%H:%M' %></td>
         <td><%= l punch.to, :format => '%H:%M' %></td>
         </td>
@@ -52,4 +54,9 @@
       </tr>
     <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6"><strong>TOTAL:</strong> <%= current_user.total_hours @punches %></td>
+    </tr>
+  </tfoot>
 </table>
