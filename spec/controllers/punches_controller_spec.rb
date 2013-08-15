@@ -4,29 +4,67 @@ describe PunchesController do
   login_user
 
   describe "GET index" do
-    it "searches" do
-      search = double(:search)
-      expect(search).to receive(:sorts).and_return('from desc')
-      expect(search).to receive(:result).and_return([double('punch')])
-      expect(Punch).to receive(:search).with(nil).and_return(search)
+    let(:search) { double(:search) }
+    let(:punches) { double(:punches) }
 
-      get :index
+    context "without search" do
+      it "renders current month" do
+        expect(search).to receive(:sorts).and_return('from desc')
+        expect(search).to receive(:result).and_return([double('punch')])
+        expect(Punch).to receive(:search).with(nil).and_return(search)
+        get :index
+      end
+    end
+
+    context "with search" do
+      it "renders selected month" do
+        from_params = {
+          "from_gteq(1i)" => '2013',
+          "from_gteq(2i)" => '08',
+          "from_gteq(3i)" => '01'
+        }
+        expect(search).to receive(:sorts).and_return('from desc')
+        expect(search).to receive(:result).and_return([double('punch')])
+        expect(Punch).to receive(:search).with(from_params).and_return(search)
+        get :index, q: from_params
+      end
     end
   end
 
   describe "POST create" do
     let(:project) { FactoryGirl.create(:project) }
+    let(:punch) { double("Punch") }
+
     it "creates" do
-      post :create, punch: {
-        'from(1i)' => '2013',
-        'from(2i)' => '08',
-        'from(3i)' => '13',
-        'from(4i)' => '08',
-        'from(5i)' => '00',
-        'to(4i)'   => '17',
-        'to(5i)'   => '00',
-        'project_id'=> project.id
+      punch_params = {
+        :'from(1i)'  => '2013',
+        :'from(2i)'  => '08',
+        :'from(3i)'  => '13',
+        :'from(4i)'  => '08',
+        :'from(5i)'  => '00',
+        :'to(1i)'    => '2013',
+        :'to(2i)'    => '08',
+        :'to(3i)'    => '13',
+        :'to(4i)'    => '17',
+        :'to(5i)'    => '00',
+        :'project_id'=> project.id.to_s
       }
+      controller.stub_chain(:current_user, :punches,
+                            :new => punch_params).and_return(punch)
+      expect(punch).to receive(:save).and_return(true)
+      post :create, punch: punch_params
+      expect(assigns(:punch)).to eq(punch)
+      expect(response).to redirect_to punch_url punch
+    end
+
+    it "does not create do" do
+      punch_params = {}
+      controller.stub_chain(:current_user, :punches,
+                            :new => punch_params).and_return(punch)
+      expect(punch).to receive(:save).and_return(false)
+      post :create, punch: punch_params
+      expect(assigns(:punch)).to eq(punch)
+      expect(response).to render_template(:new)
     end
   end
 
