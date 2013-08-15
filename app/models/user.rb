@@ -1,17 +1,22 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
   devise :omniauthable, omniauth_providers: [:google_apps]
-  # devise :database_authenticatable, :registerable,
-  #        :recoverable, :rememberable, :trackable, :validatable
+  has_many :punches
+
+  def total_hours(result = nil)
+    total_punches = result.nil? ? self.punches : result
+    total_sum = 0.0
+    total_punches.each do |punch|
+      total_sum = total_sum + (punch.to - punch.from)
+    end
+    total_sum / 3600
+  end
 
   def self.find_for_googleapps_oauth(access_token, signed_in_resource=nil)
     data = access_token['info']
 
     if user = User.where(:email => data['email']).first
-      return user
-    else #create a user with stub pwd
+      user
+    else
       User.create! email: data['email']
     end
   end
