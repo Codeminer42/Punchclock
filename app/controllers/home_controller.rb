@@ -1,18 +1,17 @@
 class HomeController < ApplicationController
-  # before_filter :authenticate_member!, except: "users/sign_in"
+  before_action :go_to_punches, :except => :logout
 
-  def index
-
-  end
+  def index; end
 
   def logout
     reset_session
     redirect_to action: :index
   end
 
-  private
+private
 
-  def authenticate_member!
-    redirect_to(controller: :"devise/sessions", :action => :new) unless user_signed_in?
+  def go_to_punches
+    redirect_to(punches_path) if user_signed_in?
   end
+
 end

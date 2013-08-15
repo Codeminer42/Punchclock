@@ -1,0 +1,55 @@
+<div class="punches-header">
+  <div class="punches-header-1">
+    <div class="btn-group">
+      <%= link_to 'Punch', new_punch_path, :class => 'btn' %>
+    </div>
+  </div>
+  <div class="punches-header-2">
+    <%= search_form_for @search do |f| %>
+      <div>
+        Filter
+        <%= f.date_select :from_gteq, :discard_day => true %>
+        <%= f.collection_select :project_id_eq, Project.order(:name), :id, :name, { :prompt => true } %>
+        <%= f.submit 'OK', :class => :btn %>
+      </div>
+    <% end %>
+  </div>
+  <br/>
+</div>
+
+<table class="grid">
+  <colgroup>
+    <col width="100"/>
+    <col width="60"/>
+    <col width="60"/>
+    <col/>
+    <col width="24"/>
+    <col width="24"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :from, 'When' %></th>
+      <th>From</th>
+      <th>To</th>
+      <th><%= sort_link @search, :project_id, 'Project' %></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @punches.each do |punch| %>
+      <tr>
+        <td><%= link_to(l(punch.from, :format => '%Y-%m-%d'), punch) %></td>
+        <td><%= l punch.from, :format => '%H:%M' %></td>
+        <td><%= l punch.to, :format => '%H:%M' %></td>
+        </td>
+        <td><%= punch.project.present? ? punch.project.name : '' %></td>
+        <td>
+          <%= link_to image_tag('edit.png'), edit_punch_path(punch) %>
+        </td>
+        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
