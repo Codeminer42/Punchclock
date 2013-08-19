@@ -15,7 +15,8 @@
       <div class="page-header-2">
         <div id="user_nav" align="right">
           <%- if user_signed_in? -%>
-          <strong><%= current_user.email %></strong>
+          Welcome,
+          <strong><%= current_user.name %></strong>
           <%= link_to 'Logout', home_logout_path %>
           <%- else -%>
           <%= link_to 'Login', user_omniauth_authorize_path(:google_apps) %>
