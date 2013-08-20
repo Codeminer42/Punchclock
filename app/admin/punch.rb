@@ -16,4 +16,10 @@ ActiveAdmin.register Punch do
     end
     default_actions
   end
+
+  controller do
+    def permitted_params
+      params.permit(punch: [:from, :to, :project_id])
+    end
+  end
 end
