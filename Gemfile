@@ -80,4 +80,6 @@ gem 'ransack',             github: 'ernie/ransack',         branch: 'rails-4'
 gem 'inherited_resources', github: 'josevalim/inherited_resources'
 gem 'formtastic',          github: 'justinfrench/formtastic'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass',
+    :git => 'git://github.com/thomas-mcdonald/bootstrap-sass.git',
+    :branch => '3'

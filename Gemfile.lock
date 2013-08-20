@@ -42,6 +42,14 @@ GIT
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
 
+GIT
+  remote: git://github.com/thomas-mcdonald/bootstrap-sass.git
+  revision: 5bf533b803e92042c846dbf80faa4411951bb890
+  branch: 3
+  specs:
+    bootstrap-sass (3.0.0.0)
+      sass (~> 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -79,8 +87,6 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (2.3.2.1)
-      sass (~> 3.2)
     bourbon (3.1.8)
       sass (>= 3.2.0)
       thor
@@ -276,7 +282,7 @@ DEPENDENCIES
   activeadmin!
   better_errors
   binding_of_caller
-  bootstrap-sass
+  bootstrap-sass!
   bullet
   certified
   coffee-rails (~> 4.0.0)
