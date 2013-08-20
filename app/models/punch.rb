@@ -3,6 +3,11 @@ class Punch < ActiveRecord::Base
   belongs_to :user
   validates :from, :to, :project_id, :user_id, presence: true
   validate :check_time
+
+  def delta
+    (self.to - self.from) / 3600
+  end
+
 private
   def check_time
     if self.from.present? && self.to.present?
