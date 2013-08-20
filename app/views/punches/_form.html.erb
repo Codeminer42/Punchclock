@@ -11,18 +11,52 @@
     </div>
   <% end %>
 
-  <dl>
-    <dt><%= f.label :from %></dt>
-    <dd><%= f.datetime_select :from %></dd>
-
-    <dt><%= f.label :to %></dt>
-    <dd><%= f.time_select :to %></dd>
-
-    <dt><%= f.label :project_id %></dt>
-    <dd><%= f.collection_select(:project_id, Project.order(:name), :id, :name, :prompt => true) %></dd>
-  </dl>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <table border="0" cellspacing="8" cellpadding="8" class="punch-form-table">
+    <tr>
+      <th><label>From</label></th>
+      <td>
+        <input type="text" size="2" name="punch[from(4i)]" class="spinner-hr"
+               value="<%= @punch.from.present? ?
+               l(@punch.from, :format => '%H') : '0' %>" /> :
+        <input type="text" size="2" name="punch[from(5i)]" class="spinner-mn"
+               value="<%= @punch.from.present? ?
+               l(@punch.from, :format => '%M') : '0' %>"/>
+      </td>
+      <th><label>To</label></th>
+      <td>
+        <input type="text" size="2" name="punch[to(4i)]" class="spinner-hr"
+               value="<%= @punch.to.present? ?
+               l(@punch.to, :format => '%H') : '0' %>"/> :
+        <input type="text" size="2" name="punch[to(5i)]" class="spinner-mn"
+               value="<%= @punch.to.present? ?
+               l(@punch.to, :format => '%M') : '0' %>"/>
+      </td>
+    </tr>
+    <tr>
+      <th><label>When</label></th>
+      <td colspan="3">
+        <input class="datepicker" name="when_day" size="10"
+               value="<%= @punch.from.present? ?
+               l(@punch.from, format: '%Y-%m-%d') : '' %>"/>
+        <%= image_tag 'calendar.png' %>
+      </td>
+    </tr>
+    <tr>
+      <th><label>On</label></th>
+      <td colspan="3">
+        <%= f.collection_select :project_id, Project.order(:name), :id, :name,
+                                {}, { class: 'form-control' } %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= link_to 'Cancel', punches_path, class: 'btn btn-danger' %>
+      </td>
+      <td colspan="2">
+        <div class="actions">
+          <%= f.submit(nil, { class: 'btn btn-default' }) %>
+        </div>
+      </td>
+    </tr>
+  </table>
 <% end %>

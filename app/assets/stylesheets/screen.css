@@ -68,6 +68,13 @@ table {
   padding: 2px 8px;
   text-decoration: none;
 }
+.punch-form-table {
+  margin: 32px auto;
+  width: 640px;
+}
+.punch-form-table .actions {
+  text-align: right;
+}
 .punches-header {
   line-height: 48px;
   margin-bottom: 24px;
@@ -87,6 +94,7 @@ table {
 .punches-header-2 form {
   margin: 0;
 }
+
 
 .grid th {
   background-color: #f4f4f4;

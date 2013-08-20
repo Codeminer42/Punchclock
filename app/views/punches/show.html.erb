@@ -1,3 +1,10 @@
+<nav class="navbar navbar-static-top">
+  <ul class="nav navbar-nav">
+    <li><%= link_to 'Back', punches_path %></li>
+    <li><%= link_to 'Edit', edit_punch_path(@punch) %></li>
+  </ul>
+</nav>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -14,8 +21,5 @@
 
 <p>
   <strong>User:</strong>
-  <%= @punch.user.present? ? @punch.user.email : '' %>
+  <%= @punch.user.present? ? @punch.user.name : '' %>
 </p>
-
-<%= link_to 'Edit', edit_punch_path(@punch) %> |
-<%= link_to 'Back', punches_path %>
