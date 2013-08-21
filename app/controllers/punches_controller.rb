@@ -22,6 +22,7 @@ class PunchesController < InheritedResources::Base
   def create
     @punch = current_user.punches.new(sanitized_params)
     if @punch.save
+      flash[:notice] = "Punch created successfully!"
       redirect_to punch_url(@punch)
     else
       render :action => :new
@@ -31,6 +32,7 @@ class PunchesController < InheritedResources::Base
   def update
     @punch = current_user.punches.find params[:id]
     if @punch.update(sanitized_params)
+      flash[:notice] = "Punch updated successfully!"
       redirect_to punch_url(@punch)
     else
       render action: :edit
