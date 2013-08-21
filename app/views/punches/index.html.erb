@@ -44,15 +44,15 @@
   <tbody>
     <% @punches.each do |punch| %>
       <tr>
-        <td><%= link_to(l(punch.from, :format => '%d/%m/%Y'), punch) %></td>
+        <td><%= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}") %></td>
         <td><%= l punch.from, :format => '%H:%M' %></td>
         <td><%= l punch.to, :format => '%H:%M' %></td>
         <td><%= punch.delta %> hs</td>
         <td><%= punch.project.present? ? punch.project.name : '' %></td>
         <td>
-          <%= link_to image_tag('edit.png'), edit_punch_path(punch) %>
+          <%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %>
         </td>
-        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{punch.id}" %></td>
       </tr>
     <% end %>
   </tbody>
