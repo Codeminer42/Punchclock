@@ -1,7 +1,7 @@
 <div class="punches-header">
   <div class="punches-header-1">
     <div class="btn-group">
-      <%= link_to 'Punch', new_punch_path, :class => 'btn' %>
+      <%= link_to 'Punch', new_punch_path, :class => 'btn btn-primary' %>
     </div>
   </div>
   <div class="punches-header-2">
@@ -12,16 +12,17 @@
                           end_year: Time.now.year %>
         <%= f.collection_select :project_id_eq, Project.order(:name), :id,
                                 :name, prompt: false, include_blank: 'All' %>
-        <%= f.submit 'OK', :class => :btn %>
+        <%= f.submit 'OK', :class => 'btn' %>
       </div>
     <% end %>
   </div>
   <br/>
 </div>
 
-<table class="grid">
+<table class="table table-striped">
   <colgroup>
     <col width="100"/>
+    <col width="60"/>
     <col width="60"/>
     <col width="60"/>
     <col/>
@@ -33,6 +34,7 @@
       <th><%= sort_link @search, :from, 'When' %></th>
       <th>From</th>
       <th>To</th>
+      <th>Delta</th>
       <th><%= sort_link @search, :project_id, 'Project' %></th>
       <th></th>
       <th></th>
@@ -42,10 +44,10 @@
   <tbody>
     <% @punches.each do |punch| %>
       <tr>
-        <td><%= link_to(l(punch.from, :format => '%d-%m-%Y'), punch) %></td>
+        <td><%= link_to(l(punch.from, :format => '%d/%m/%Y'), punch) %></td>
         <td><%= l punch.from, :format => '%H:%M' %></td>
         <td><%= l punch.to, :format => '%H:%M' %></td>
-        </td>
+        <td><%= punch.delta %> hs</td>
         <td><%= punch.project.present? ? punch.project.name : '' %></td>
         <td>
           <%= link_to image_tag('edit.png'), edit_punch_path(punch) %>
@@ -56,7 +58,10 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6"><strong>TOTAL:</strong> <%= current_user.total_hours @punches %></td>
+      <td colspan="6">
+        <strong>TOTAL:</strong>
+        <%= current_user.total_hours @punches %> hs
+      </td>
     </tr>
   </tfoot>
 </table>

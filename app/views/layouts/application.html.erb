@@ -8,6 +8,36 @@
 </head>
 <body>
   <div class="page">
+
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle"
+                data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<%= root_path %>">Punchclock</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <%- if user_signed_in? -%>
+        <li>
+          <p class="navbar-text">
+            Welcome,
+            <strong><%= current_user.name %></strong>
+          </p>
+        </li>
+        <li><%= link_to 'Logout', home_logout_path %></li>
+        <%- else -%>
+        <li>
+          <%= link_to 'Login', user_omniauth_authorize_path(:google_apps) %>
+        </li>
+        <%- end -%>
+      </ul>
+    </nav>
+
+<!--
     <div class="page-header">
       <div class="page-header-1">
         <h1><%= link_to 'PUNCHCLOCK', root_path %></h1>
@@ -25,11 +55,18 @@
       </div>
       <br style="clear:both"/>
     </div>
+ -->
     <div class="page-body">
+      <%- if notice.present? || alert.present? -%>
       <div class="flash-messages">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+        <%- if notice.present? -%>
+        <p class="alert alert-info"><%= notice %></p>
+        <%- end -%>
+        <%- if alert.present? -%>
+        <p class="alert alert-danger"><%= alert %></p>
+        <%- end -%>
       </div>
+      <%- end -%>
       <%= yield %>
     </div>
   </div>

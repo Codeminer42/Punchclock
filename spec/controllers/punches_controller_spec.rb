@@ -37,22 +37,20 @@ describe PunchesController do
 
     it "creates" do
       punch_params = {
-        :'from(1i)'  => '2013',
-        :'from(2i)'  => '08',
-        :'from(3i)'  => '13',
         :'from(4i)'  => '08',
         :'from(5i)'  => '00',
-        :'to(1i)'    => '2013',
-        :'to(2i)'    => '08',
-        :'to(3i)'    => '13',
         :'to(4i)'    => '17',
         :'to(5i)'    => '00',
         :'project_id'=> project.id.to_s
       }
+      params = {
+        when_day: "2013-08-20",
+        punch: punch_params
+      }
       controller.stub_chain(:current_user, :punches,
                             :new => punch_params).and_return(punch)
       expect(punch).to receive(:save).and_return(true)
-      post :create, punch: punch_params
+      post :create, params
       expect(assigns(:punch)).to eq(punch)
       expect(response).to redirect_to punch_url punch
     end
@@ -72,23 +70,46 @@ describe PunchesController do
     let(:project) { FactoryGirl.create(:project) }
     let(:punch) { FactoryGirl.create(:punch) }
 
+    before do
+      controller.current_user.stub(id: punch.user_id)
+      controller.current_user.punches.stub(:find).with(punch.id.to_s) { punch }
+      Punch.stub(:find).with(punch.id.to_s) { punch }
+    end
+
     it "updates" do
+      expect(punch).to receive(:update).and_return(true)
       put :update, {
-        id: punch.id,
+        id: punch.id.to_s,
+        when_day: '2013-08-20',
         punch: {
-          'from(1i)'   => '2013',
-          'from(2i)'   => '08',
-          'from(3i)'   => '13',
-          'from(4i)'   => '08',
-          'from(5i)'   => '00',
-          'to(1i)'     => '2013',
-          'to(2i)'     => '08',
-          'to(3i)'     => '12',
-          'to(4i)'     => '17',
-          'to(5i)'     => '00',
-          'project_id' => project.id
+          :'from(4i)'   => '8',
+          :'from(5i)'   => '0',
+          :'to(4i)'     => '17',
+          :'to(5i)'     => '0',
+          :'project_id' => project.id.to_s
         }
       }
+      expect(assigns(:punch)).to eq(punch)
+      expect(response).to redirect_to punch_url(punch)
+    end
+
+    it "does not update do" do
+      punch_params = {
+        :'from(4i)'  => '08',
+        :'from(5i)'  => '00',
+        :'to(4i)'    => '17',
+        :'to(5i)'    => '00',
+        :'project_id'=> project.id.to_s
+      }
+      params = {
+        id: punch.id,
+        when_day: "",
+        punch: punch_params
+      }
+      expect(punch).to receive(:update).and_return(false)
+      put :update, params
+      expect(assigns(:punch)).to eq(punch)
+      expect(response).to render_template(:edit)
     end
   end
 

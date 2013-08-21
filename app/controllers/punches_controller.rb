@@ -10,9 +10,10 @@ class PunchesController < InheritedResources::Base
     else
       t = Time.now.end_of_month
     end
-    @search = Punch.where(user_id: current_user.id)
-                   .where("\"to\" < ?", t)
-                   .search(params[:q])
+
+    @search = current_user.punches
+                          .where("\"to\" < ?", t)
+                          .search(params[:q])
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
@@ -30,7 +31,7 @@ class PunchesController < InheritedResources::Base
   def update
     @punch = current_user.punches.find params[:id]
     if @punch.update(sanitized_params)
-      redirect_to punch_url @punch
+      redirect_to punch_url(@punch)
     else
       render action: :edit
     end
@@ -39,12 +40,35 @@ class PunchesController < InheritedResources::Base
 private
   def sanitized_params
     punch_data = {}
+
     permitted_params[:punch].each do |k,v|
       punch_data[k.to_sym] = v
     end
-    punch_data[:"to(1i)"] = punch_data[:"from(1i)"]
-    punch_data[:"to(2i)"] = punch_data[:"from(2i)"]
-    punch_data[:"to(3i)"] = punch_data[:"from(3i)"]
+
+    when_data = params[:when_day].to_s.split('-')
+
+    if when_data.present?
+      punch_data[:"from(1i)"] = when_data[0]
+      punch_data[:"from(2i)"] = when_data[1]
+      punch_data[:"from(3i)"] = when_data[2]
+
+      punch_data[:"to(1i)"] = when_data[0]
+      punch_data[:"to(2i)"] = when_data[1]
+      punch_data[:"to(3i)"] = when_data[2]
+    else
+      punch_data[:"from(1i)"] = ''
+      punch_data[:"from(2i)"] = ''
+      punch_data[:"from(3i)"] = ''
+      punch_data[:"from(4i)"] = ''
+      punch_data[:"from(5i)"] = ''
+
+      punch_data[:"to(1i)"] = ''
+      punch_data[:"to(2i)"] = ''
+      punch_data[:"to(3i)"] = ''
+      punch_data[:"to(4i)"] = ''
+      punch_data[:"to(5i)"] = ''
+    end
+
     punch_data
   end
 
