@@ -51,3 +51,13 @@ Running with [Guard](https://github.com/guard/guard-rspec):
 ```console
 bundle exec guard
 ```
+
+## Deploy
+
+Givin errors to precompile assets must use this heroku add-on.
+
+Please read [labs-user-env-compile](https://devcenter.heroku.com/articles/labs-user-env-compile)
+
+```console
+heroku labs:enable user-env-compile -a punchclock
+```
