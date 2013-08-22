@@ -77,10 +77,13 @@ gem 'omniauth-google-apps'
 # ActiveAdmin
 # https://github.com/gregbell/active_admin/pull/2326
 gem 'activeadmin',         github: 'gregbell/active_admin', branch: 'rails4'
-gem 'ransack',             github: 'ernie/ransack',         branch: 'rails-4'
-gem 'inherited_resources', github: 'josevalim/inherited_resources'
-gem 'formtastic',          github: 'justinfrench/formtastic'
+# gem 'ransack',             github: 'ernie/ransack',         branch: 'rails-4'
+# gem 'inherited_resources', github: 'josevalim/inherited_resources'
+# gem 'formtastic',          github: 'justinfrench/formtastic'
 
 gem 'bootstrap-sass',
     :git => 'git://github.com/thomas-mcdonald/bootstrap-sass.git',
     :branch => '3'
+
+gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
+gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
