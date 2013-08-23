@@ -302,6 +302,7 @@ DEPENDENCIES
   guard-rspec
   jbuilder (~> 1.2)
   jquery-rails
+  jquery-ui-rails
   omniauth
   omniauth-google-apps
   pg

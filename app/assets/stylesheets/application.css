@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require screen
- *= require ./smoothness/jquery-ui.min
+ *= require jquery.ui.all
  *= require bootstrap
  * require_tree .
  */

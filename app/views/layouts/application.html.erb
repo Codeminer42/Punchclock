@@ -36,26 +36,6 @@
         <%- end -%>
       </ul>
     </nav>
-
-<!--
-    <div class="page-header">
-      <div class="page-header-1">
-        <h1><%= link_to 'PUNCHCLOCK', root_path %></h1>
-      </div>
-      <div class="page-header-2">
-        <div id="user_nav" align="right">
-          <%- if user_signed_in? -%>
-          Welcome,
-          <strong><%= current_user.name %></strong>
-          <%= link_to 'Logout', home_logout_path %>
-          <%- else -%>
-          <%= link_to 'Login', user_omniauth_authorize_path(:google_apps) %>
-          <%- end -%>
-        </div>
-      </div>
-      <br style="clear:both"/>
-    </div>
- -->
     <div class="page-body">
       <%- if notice.present? || alert.present? -%>
       <div class="flash-messages">
