@@ -12,9 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+// require turbolinks
 //= require bootstrap
 //= require_tree .
+
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
 
 $(function(){
   if ($('#clock-canvas').length == 0) {
@@ -69,13 +78,13 @@ $(function(){
 
   function animate(tm) {
     if (tm - 1000 < tic) {
-      webkitRequestAnimationFrame(animate);
+      requestAnimFrame(animate);
       return;
     }
     tic = tm;
     drawClock();
-    webkitRequestAnimationFrame(animate);
+    requestAnimFrame(animate);
   }
 
-  webkitRequestAnimationFrame(animate);
+  requestAnimFrame(animate);
 });
