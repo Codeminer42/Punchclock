@@ -54,7 +54,7 @@ $(function(){
   function drawClock() {
     var dt = new Date(),
         hour = dt.getHours(),
-        hourAngle = (hour > 12 ? hour - 12 : hour) * 10,
+        hourAngle = (hour > 12 ? hour - 12 : hour) * 30,
         minAngle = dt.getMinutes() * 6,
         secAngle = dt.getSeconds() * 6;
 
