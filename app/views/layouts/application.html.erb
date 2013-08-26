@@ -6,10 +6,10 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body <%= raw signed_in? ? 'class="signed-in"' : '' %>>
   <div class="page">
-
-    <nav class="navbar navbar-default" role="navigation">
+    <%- if user_signed_in? -%>
+    <nav class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle"
                 data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -21,7 +21,6 @@
         <a class="navbar-brand" href="<%= root_path %>">Punchclock</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <%- if user_signed_in? -%>
         <li>
           <p class="navbar-text">
             Welcome,
@@ -29,13 +28,9 @@
           </p>
         </li>
         <li><%= link_to 'Logout', home_logout_path %></li>
-        <%- else -%>
-        <li>
-          <%= link_to 'Login', user_omniauth_authorize_path(:google_apps) %>
-        </li>
-        <%- end -%>
       </ul>
     </nav>
+    <%- end -%>
     <div class="page-body">
       <%- if notice.present? || alert.present? -%>
       <div class="flash-messages">

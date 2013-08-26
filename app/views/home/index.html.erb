@@ -1,1 +1,10 @@
-<h3>Welcome!</h3>
+<div class="clock-widget">
+  <div class="clock-div">
+    <canvas id="clock-canvas" width="360" height="360"></canvas>
+  </div>
+  <div class="login-div">
+    <%= link_to 'Login with Google',
+                user_omniauth_authorize_path(:google_apps),
+                class: 'btn btn-primary' %>
+  </div>
+</div>

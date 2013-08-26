@@ -1,10 +1,8 @@
 <nav class="navbar navbar-static-top">
-  <ul class="nav navbar-nav">
+  <ul class="nav nav-pills">
     <li><%= link_to 'Back', punches_path %></li>
     <li><%= link_to 'Show', @punch %></li>
   </ul>
 </nav>
-
-<h1>Editing punch</h1>
-
+<h1 class="punch-form-title">Editing punch</h1>
 <%= render 'form' %>

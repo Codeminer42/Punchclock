@@ -9,8 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require screen
  *= require jquery.ui.all
  *= require bootstrap
+ *= require screen
  * require_tree .
  */

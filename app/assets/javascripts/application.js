@@ -15,3 +15,67 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+$(function(){
+  if ($('#clock-canvas').length == 0) {
+    return;
+  }
+  var tic = 0;
+  var ctx = $('#clock-canvas').get(0).getContext('2d');
+  ctx.translate(180, 180);
+  ctx.rotate((Math.PI / 180) * -90);
+
+  function braceVector(deg, radius) {
+    var rad = (Math.PI / 180) * deg;
+    x = Math.cos(rad) * radius;
+    y = Math.sin(rad) * radius;
+    return { x: x, y: y };
+  }
+
+  function drawBrace(angle, size, color, lineSize) {
+    var v = braceVector(angle, size);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(v.x, v.y);
+    ctx.lineWidth = lineSize;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+  }
+
+  function drawClock() {
+    var dt = new Date(),
+        hour = dt.getHours(),
+        hourAngle = (hour > 12 ? hour - 12 : hour) * 10,
+        minAngle = dt.getMinutes() * 6,
+        secAngle = dt.getSeconds() * 6;
+
+    ctx.beginPath();
+    ctx.arc(0, 0, 164, 0 * Math.PI, 2 * Math.PI, false);
+    ctx.lineWidth = 10;
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.strokeStyle = '#396c50';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(0, 0, 8, 0 * Math.PI, 2 * Math.PI, false);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    drawBrace(hourAngle, 84, 'black', 8);
+    drawBrace(minAngle, 134, 'black', 10);
+    drawBrace(secAngle, 144, 'red', 4);
+  }
+
+  function animate(tm) {
+    if (tm - 1000 < tic) {
+      webkitRequestAnimationFrame(animate);
+      return;
+    }
+    tic = tm;
+    drawClock();
+    webkitRequestAnimationFrame(animate);
+  }
+
+  webkitRequestAnimationFrame(animate);
+});
