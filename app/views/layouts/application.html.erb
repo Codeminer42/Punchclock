@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body <%= raw signed_in? ? 'class="signed-in"' : '' %>>
+<body class="<%= user_signed_in? ? 'signed-in' : 'signed-out' %>">
   <div class="page">
     <%- if user_signed_in? -%>
     <nav class="navbar navbar-inverse" role="navigation">
