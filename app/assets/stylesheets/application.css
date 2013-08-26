@@ -12,5 +12,6 @@
  *= require jquery.ui.all
  *= require bootstrap
  *= require screen
+ *= require assets
  * require_tree .
  */
