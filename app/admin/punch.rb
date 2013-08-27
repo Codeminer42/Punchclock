@@ -22,4 +22,14 @@ ActiveAdmin.register Punch do
       params.permit(punch: [:from, :to, :project_id])
     end
   end
+
+  csv do
+    column('User')    { |punch| punch.user.name }
+    column('Project') { |punch| punch.project.name }
+    column('When')    { |punch| l punch.from, format: '%d/%m/%Y' }
+    column('From')    { |punch| l punch.from, format: '%H:%M' }
+    column('To')      { |punch| l punch.to, format: '%H:%M' }
+    column('Delta')   { |punch| "#{punch.delta}" }
+  end
+
 end
