@@ -12,7 +12,7 @@ ActiveAdmin.register Punch do
       l punch.to, format: '%H:%M'
     end
     column 'Delta' do |punch|
-      "#{punch.delta} hs"
+      "#{time_format(punch.delta)}"
     end
     default_actions
   end
@@ -29,7 +29,7 @@ ActiveAdmin.register Punch do
     column('When')    { |punch| l punch.from, format: '%d/%m/%Y' }
     column('From')    { |punch| l punch.from, format: '%H:%M' }
     column('To')      { |punch| l punch.to, format: '%H:%M' }
-    column('Delta')   { |punch| "#{punch.delta}" }
+    column('Delta')   { |punch| "#{time_format(punch.delta)}" }
   end
 
 end
