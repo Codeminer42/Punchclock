@@ -123,8 +123,8 @@ ActiveAdmin.setup do |config|
   # Active Admin resources and pages from here.
   #
   # config.before_filter :do_something_awesome
-  
-  
+
+
   # == Setting a Favicon
   #
   # config.favicon = '/assets/favicon.ico'
@@ -153,6 +153,7 @@ ActiveAdmin.setup do |config|
   #
   # Force the use of quotes
   # config.csv_options = { :force_quotes => true }
+  config.csv_options = { :col_sep => ';', :force_quotes => true }
 
 
   # == Menu System
