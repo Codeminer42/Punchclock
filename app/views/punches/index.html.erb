@@ -49,7 +49,7 @@
         <td><%= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}") %></td>
         <td><%= l punch.from, :format => '%H:%M' %></td>
         <td><%= l punch.to, :format => '%H:%M' %></td>
-        <td><%= punch.delta %> hs</td>
+        <td><%= time_format(punch.delta) %></td>
         <td><%= punch.project.present? ? punch.project.name : '' %></td>
         <td>
           <%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %>
@@ -62,7 +62,7 @@
     <tr>
       <td colspan="6">
         <strong>TOTAL:</strong>
-        <%= current_user.total_hours @punches %> hs
+        <%= time_format(current_user.total_hours(@punches)) %>
       </td>
     </tr>
   </tfoot>
