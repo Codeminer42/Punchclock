@@ -17,6 +17,11 @@ bundle install
 bundle exec rake db:setup
 ```
 
+### Postgree Notes
+If something went wrong take a look on 
+config/database.yml 
+If necessary change username and/or host.
+
 ## Running
 
 ### Server
@@ -38,6 +43,12 @@ bundle exec rails c
 This app uses Rspec, Factory Girl, Forgery and Faker to fake reality.
 
 Please read [betterspecs.org](http://betterspecs.org/).
+
+At first time:
+```console
+$ bundle exec rake db:migrate
+$ bundle exec rake test:prepare
+``
 
 Running tests:
 
