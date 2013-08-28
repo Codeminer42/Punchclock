@@ -22,6 +22,15 @@ If something went wrong take a look on
 config/database.yml 
 If necessary change username and/or host.
 
+### Development
+
+Run ```console $rake db:seed``` and the following admin user will be created
+
+```
+E-mail:   admin@codeminer42.com
+Password: password
+```
+
 ## Running
 
 ### Server
