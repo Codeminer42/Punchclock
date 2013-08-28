@@ -1,7 +1,7 @@
-Punckclock
+Punchclock
 =========
 
-DESCRIPTION HERE...
+A simple electronic punch clock to track hours spent on projects.
 
 ## Rails
 
