@@ -42,6 +42,6 @@ feature "Punches list" do
     select 'January', from: 'q_from_gteq_2i'
     select other_project.name, from: 'q_project_id_eq'
     click_button 'OK'
-    expect(page).to have_content('0.0 hs')
+    expect(page).to have_content('0:00')
   end
 end
