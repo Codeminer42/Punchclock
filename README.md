@@ -24,7 +24,11 @@ If necessary change username and/or host.
 
 ### Development
 
-Run ```console $rake db:seed``` and the following admin user will be created
+Run: 
+```console 
+$rake db:seed
+```
+And the following admin user will be created
 
 ```
 E-mail:   admin@codeminer42.com
