@@ -5,6 +5,7 @@ development:
   pool: 5
   username: punchclock
   password:
+  host: localhost
 
 test:
   adapter: postgresql
@@ -13,6 +14,7 @@ test:
   pool: 5
   username: punchclock
   password:
+  host: localhost
 
 production:
   adapter: postgresql
@@ -21,3 +23,4 @@ production:
   pool: 5
   username: punchclock
   password:
+  host: localhost
