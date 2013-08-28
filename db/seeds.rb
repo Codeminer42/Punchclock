@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+unless AdminUser.exists?(email: 'admin@codeminer42.com')
+  puts 'Creating default admin user'
+  AdminUser.create(
+    email:                 'admin@codeminer42.com',
+    password:              'password',
+    password_confirmation: 'password'
+  )
+end
