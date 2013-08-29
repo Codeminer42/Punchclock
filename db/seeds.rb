@@ -11,6 +11,7 @@ unless AdminUser.exists?(email: 'admin@codeminer42.com')
   AdminUser.create(
     email:                 'admin@codeminer42.com',
     password:              'password',
-    password_confirmation: 'password'
+    password_confirmation: 'password',
+    is_super:              true
   )
 end
