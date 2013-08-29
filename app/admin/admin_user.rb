@@ -19,6 +19,14 @@ ActiveAdmin.register AdminUser do
     f.actions
   end
   controller do
+    def scoped_collection
+      if current_admin_user.is_super?
+        AdminUser.all
+      else
+        AdminUser.where(company_id: current_admin_user.company_id)
+      end
+    end
+
     def permitted_params
       params.permit admin_user: [:email, :password, :password_confirmation,
                                  :is_super, :company_id]
