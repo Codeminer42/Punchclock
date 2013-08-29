@@ -1,4 +1,5 @@
 ActiveAdmin.register Punch do
+  total_hours = 0
   index do
     column :user
     column :project, sortable: [:project, :name]
@@ -12,9 +13,13 @@ ActiveAdmin.register Punch do
       l punch.to, format: '%H:%M'
     end
     column 'Delta' do |punch|
+      total_hours = total_hours + punch.delta
       "#{time_format(punch.delta)}"
     end
     default_actions
+    div class: 'panel' do
+      h3 "Total: #{time_format(total_hours)}"
+    end
   end
 
   controller do
