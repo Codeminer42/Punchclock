@@ -18,5 +18,14 @@ ActiveAdmin.register User do
     def permitted_params
       params.permit user: [:name, :email]
     end
+
+    def create
+      create! do |success, failure| 
+        success.html do
+          NotificationMailer.notify_user_registration(@user)
+          redirect_to resource_path
+        end        
+      end
+    end
   end
 end
