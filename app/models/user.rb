@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  devise :omniauthable, omniauth_providers: [:google_apps]
+  devise :database_authenticatable, :recoverable, :rememberable,
+         :trackable, :validatable
   has_many :punches
   validates :email, uniqueness: true, presence: true
 
