@@ -1,0 +1,13 @@
+language: ruby
+bundler_args: --without development
+rvm:
+  - 2.0.0
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - bundle exec rake db:create db:migrate db:test:load
+script:
+  - bundle exec rspec .
+notifications:
+  email:
+    recipients:
+      - fernando.martinez@codeminer42.com
