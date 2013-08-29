@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130829182828) do
+ActiveRecord::Schema.define(version: 20130829194853) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(version: 20130829182828) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_super"
+    t.integer  "company_id"
   end
 
+  add_index "admin_users", ["company_id"], name: "index_admin_users_on_company_id", using: :btree
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
