@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe NotificationMailer do
   describe "notification email" do
-  	let(:user) { User.new(name:"username", email:"username@domain.sf", password:"123456", password_confirmation:"123456") }
+  	let(:user) { User.new(name:"username", email:"username@domain.sf", password:"12345678", password_confirmation:"12345678") }
   	let(:mail) { NotificationMailer.notify_user_registration(user) }
 
   	it 'renders the subject' do
