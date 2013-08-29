@@ -20,5 +20,9 @@ describe NotificationMailer do
     it 'assigns @name' do
       mail.body.encoded.should match(user.name)
     end
+
+    it 'assigns @email' do
+      mail.body.encoded.should match(user.email)
+    end    
   end
 end
