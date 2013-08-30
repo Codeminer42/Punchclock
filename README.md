@@ -28,8 +28,15 @@ Run:
 ```console 
 $rake db:seed
 ```
-And the following admin user will be created
+And the following admin users will be created
 
+1. Super Admin User
+```
+E-mail:   super@codeminer42.com
+Password: password
+```
+
+2. A Admin User
 ```
 E-mail:   admin@codeminer42.com
 Password: password
