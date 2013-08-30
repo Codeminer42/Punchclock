@@ -72,6 +72,7 @@ end
 gem 'settingslogic'
 gem 'dotenv-rails'
 gem 'devise', '~> 3.0.1'
+gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-google-apps'
 
