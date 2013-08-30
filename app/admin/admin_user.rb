@@ -13,11 +13,11 @@ ActiveAdmin.register AdminUser do
       f.input :email
       f.input :password
       f.input :password_confirmation
-      f.input :is_super, label: 'CAN MANAGE ALL COMPANIES?'
+      f.input :is_super, label: 'CAN MANAGE ALL COMPANIES?', :input_html => { disabled: !current_admin_user.is_super }
       if current_admin_user.is_super
         f.input :company
       else            
-        f.input :company, value:Company.find(current_admin_user.company_id), collection: [Company.find(current_admin_user.company_id)]
+        f.input :company, :input_html => { value:Company.find(current_admin_user.company_id), disabled: true }, collection: [Company.find(current_admin_user.company_id)]
       end
     end
     f.actions
