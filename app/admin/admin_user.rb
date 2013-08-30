@@ -14,7 +14,11 @@ ActiveAdmin.register AdminUser do
       f.input :password
       f.input :password_confirmation
       f.input :is_super, label: 'CAN MANAGE ALL COMPANIES?'
-      f.input :company
+      if current_admin_user.is_super
+        f.input :company
+      else            
+        f.input :company, value:Company.find(current_admin_user.company_id), collection: [Company.find(current_admin_user.company_id)]
+      end
     end
     f.actions
   end
