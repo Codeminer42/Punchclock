@@ -19,8 +19,11 @@ describe "AdminUser" do
 		context "when is an super account manager" do
 			let(:user) { FactoryGirl.create(:super) }
 
-			it { should be_able_to(:manage, Company.new) }
 			it { should be_able_to(:manage, AdminUser.new) }
+			it { should be_able_to(:manage, Company.new) }
+			it { should be_able_to(:manage, Project.new) }
+			it { should be_able_to(:manage, User.new) }
+			it { should be_able_to(:manage, Punch.new) }
 		end
 	end
 end
