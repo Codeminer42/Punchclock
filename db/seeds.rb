@@ -28,7 +28,6 @@ unless AdminUser.exists?(email: 'admin@codeminer42.com')
     email:                 'admin@codeminer42.com',
     password:              'password',
     password_confirmation: 'password',
-    is_super:              false,
     company_id:            Company.find_by_name('Codeminer42').id
   )
 end
