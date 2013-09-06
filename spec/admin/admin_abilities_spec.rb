@@ -14,6 +14,8 @@ describe "AdminUser" do
 			it { should be_able_to(:manage, AdminUser.new(company_id: user.company.id)) }
 			it { should_not be_able_to(:manage, AdminUser.new(company_id: user.company.id, is_super:true)) }
 			it { should_not be_able_to(:manage, AdminUser.new) }
+			it { should be_able_to(:manage, Project.new(company_id: user.company.id)) }
+			it { should_not be_able_to(:manage, Project.new) }
 		end
 
 		context "when is an super account manager" do
