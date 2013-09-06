@@ -1,4 +1,16 @@
 ActiveAdmin.register Project do
+	filter :company
+	filter :name
+	filter :created_at
+	filter :updated_at
+
+  index do
+    column :company
+    column :name
+    column :created_at
+    default_actions
+  end
+
   form do |f|
     f.inputs "Project Details" do
       f.input :name
