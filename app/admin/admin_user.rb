@@ -32,11 +32,8 @@ ActiveAdmin.register AdminUser do
     end
 
     def new
-      if current_admin_user.is_super?
-        @admin_user = AdminUser.new
-      else
-        @admin_user = AdminUser.new(company_id:current_admin_user.company.id)
-      end
+      @admin_user = AdminUser.new
+      @admin_user.company_id = current_admin_user.company.id unless current_admin_user.is_super?
       new!
     end
   end
