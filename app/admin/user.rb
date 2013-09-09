@@ -1,8 +1,4 @@
 ActiveAdmin.register User do
-  filter :name
-  filter :email
-  filter :company, :if => proc { current_admin_user.is_super? }
-
   index do
     column :company
     column :name
@@ -46,4 +42,8 @@ ActiveAdmin.register User do
       end
     end
   end
+
+  filter :name
+  filter :email
+  filter :company, :if => proc { current_admin_user.is_super? }
 end
