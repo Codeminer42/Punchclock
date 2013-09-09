@@ -1,9 +1,4 @@
 ActiveAdmin.register Project do
-	filter :company
-	filter :name
-	filter :created_at
-	filter :updated_at
-
   index do
     column :company
     column :name
@@ -36,4 +31,9 @@ ActiveAdmin.register Project do
   		new!
   	end
   end
+
+  filter :company
+  filter :name
+  filter :created_at
+  filter :updated_at
 end
