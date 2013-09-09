@@ -1,6 +1,4 @@
 ActiveAdmin.register AdminUser do
-  filter :email
-
   index do
     column :company
     column :email
@@ -37,4 +35,6 @@ ActiveAdmin.register AdminUser do
       new!
     end
   end
+
+  filter :email
 end
