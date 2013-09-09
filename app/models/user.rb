@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
+  belongs_to :company
   devise :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable
   has_many :punches
   validates :email, uniqueness: true, presence: true
+  validates :company_id, presence: true
 
   def total_hours(result = nil)
     total_punches = result.nil? ? self.punches : result
