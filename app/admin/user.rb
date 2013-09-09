@@ -1,9 +1,10 @@
 ActiveAdmin.register User do
   filter :name
   filter :email
+  filter :company, :if => proc { current_admin_user.is_super? }
 
   index do
-    column :id
+    column :company
     column :name
     column :email
     default_actions
