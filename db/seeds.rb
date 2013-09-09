@@ -31,3 +31,13 @@ unless AdminUser.exists?(email: 'admin@codeminer42.com')
     company_id:            Company.find_by_name('Codeminer42').id
   )
 end
+
+unless User.exists?(email: 'fernando.martinez@codeminer42.com')
+  puts 'Creating default user'
+  AdminUser.create(
+    name:                  'Fernando Martínez'
+    email:                 'fernando.martinez@codeminer42.com',
+    password:              'password',
+    company_id:            Company.find_by_name('Codeminer42').id
+  )
+end
