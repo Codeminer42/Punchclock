@@ -3,7 +3,7 @@ require 'cancan/matchers'
 
 describe "User" do
 	describe "abilities" do
-		subject(:ability){ Ability.new(user) }
+		subject(:ability){ UserAbility.new(user) }
 		let(:user){ nil }
 
 		context "when is creating punches" do

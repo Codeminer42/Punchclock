@@ -3,7 +3,7 @@ require 'cancan/matchers'
 
 describe "AdminUser" do
 	describe "abilities" do
-		subject(:ability){ Ability.new(user) }
+		subject(:ability){ AdminAbility.new(user) }
 		let(:user){ nil }
 
 		context "when is an account manager" do
