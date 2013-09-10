@@ -12,9 +12,10 @@ class Ability
       can :manage, Punch
     else
       can :manage, Company, id: user.company.id
-      can :manage, AdminUser, company_id: user.company.id, :is_super => nil
+      can :manage, AdminUser, company_id: user.company.id, is_super: nil
       can :manage, Project, company_id: user.company.id
       can :manage, User, company_id: user.company.id
+      can :manage, Punch, company_id: user.company.id, user: { company: { id: user.company.id } }, project: { company: { id: user.company.id } }
     end
   end
 end
