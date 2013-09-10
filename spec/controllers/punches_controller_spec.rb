@@ -34,6 +34,13 @@ describe PunchesController do
   describe "POST create" do
     let(:project) { FactoryGirl.create(:project) }
     let(:punch) { double("Punch") }
+    let(:user) { double(:current_user) }
+
+    before do
+      controller.stub(current_user: user)
+      controller.stub(authorize!: true)
+      user.stub(company_id: 1)
+    end
 
     it "creates" do
       punch_params = {
@@ -47,6 +54,8 @@ describe PunchesController do
         when_day: "2013-08-20",
         punch: punch_params
       }
+
+      punch.should_receive(:company_id=).with(1)
       controller.stub_chain(:current_user, :punches,
                             :new => punch_params).and_return(punch)
       expect(punch).to receive(:save).and_return(true)
@@ -59,6 +68,7 @@ describe PunchesController do
       punch_params = {}
       controller.stub_chain(:current_user, :punches,
                             :new => punch_params).and_return(punch)
+      punch.should_receive(:company_id=).with(1)
       expect(punch).to receive(:save).and_return(false)
       post :create, punch: punch_params
       expect(assigns(:punch)).to eq(punch)
