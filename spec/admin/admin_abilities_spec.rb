@@ -19,7 +19,9 @@ describe "AdminUser" do
 
 			it { should be_able_to(:manage, User.new(company_id: user.company.id)) }
 			it { should_not be_able_to(:manage, User.new) }
-			it { should be_able_to(:manage, Punch.new(company_id: user.company.id)) }
+			it { should be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id), project: Project.new(company_id: user.company.id))) }
+			it { should_not be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new, project: Project.new(company_id: user.company.id))) }
+			it { should_not be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id), project: Project.new)) }
 			it { should_not be_able_to(:manage, Punch.new) }
 		end
 
