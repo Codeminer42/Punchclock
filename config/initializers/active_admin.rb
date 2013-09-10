@@ -218,6 +218,6 @@ ActiveAdmin.setup do |config|
 
   # Use Ability Class
   #
-  config.cancan_ability_class = "Ability"
+  config.cancan_ability_class = "AdminAbility"
 
 end
