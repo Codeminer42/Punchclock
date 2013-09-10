@@ -21,6 +21,8 @@ class PunchesController < InheritedResources::Base
 
   def create
     @punch = current_user.punches.new(sanitized_params)
+    @punch.company_id = current_user.company_id
+    authorize! :create, @punch
     if @punch.save
       flash[:notice] = "Punch created successfully!"
       redirect_to punch_url(@punch)
