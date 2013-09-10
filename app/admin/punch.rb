@@ -1,6 +1,7 @@
 ActiveAdmin.register Punch do
   total_hours = 0
   index do
+    column :company
     column :user
     column :project, sortable: [:project, :name]
     column 'When', sortable: :from do |punch|
@@ -22,9 +23,34 @@ ActiveAdmin.register Punch do
     end
   end
 
+  form do |f|
+    f.inputs do
+      if current_admin_user.is_super?
+        f.input :user
+        f.input :project
+        f.input :company
+      else
+        f.input :user, collection: current_admin_user.company.users.load.map { |u| [u.name, u.id] }
+        f.input :project, collection: current_admin_user.company.projects.load.map { |p| [p.name, p.id] }
+        f.input :company, collection: {
+          punch.company.name => current_admin_user.company_id
+        }
+      end
+      f.input :from, :as => :datetime_picker
+      f.input :to, :as => :datetime_picker
+    end
+    f.actions
+  end
+
   controller do
     def permitted_params
-      params.permit(punch: [:from, :to, :project_id])
+      params.permit(punch: [:from, :to, :user_id, :project_id, :company_id])
+    end
+
+    def new
+      @punch = Punch.new
+      @punch.company_id = current_admin_user.company.id unless current_admin_user.is_super?
+      new!
     end
   end
 
