@@ -32,47 +32,75 @@ describe PunchesController do
   end
 
   describe "POST create" do
-    let(:project) { FactoryGirl.create(:project) }
+    let(:company) { FactoryGirl.build(:company) }
+    let(:project) { FactoryGirl.build(:project, company: company) }
     let(:punch) { double("Punch") }
     let(:user) { double(:current_user) }
 
     before do
       controller.stub(current_user: user)
-      controller.stub(authorize!: true)
-      user.stub(company_id: 1)
+      user.stub(company_id: company.id)
+      user.stub(company: company)
     end
 
-    it "creates" do
-      punch_params = {
-        :'from(4i)'  => '08',
-        :'from(5i)'  => '00',
-        :'to(4i)'    => '17',
-        :'to(5i)'    => '00',
-        :'project_id'=> project.id.to_s
-      }
-      params = {
-        when_day: "2013-08-20",
-        punch: punch_params
-      }
+    context "when authorize pass" do
+      before { controller.stub(authorize!: true) }
+      it "creates" do
+        punch_params = {
+          :'from(4i)'  => '08',
+          :'from(5i)'  => '00',
+          :'to(4i)'    => '17',
+          :'to(5i)'    => '00',
+          :'project_id'=> project.id.to_s
+        }
+        params = {
+          when_day: "2013-08-20",
+          punch: punch_params
+        }
 
-      punch.should_receive(:company_id=).with(1)
-      controller.stub_chain(:current_user, :punches,
-                            :new => punch_params).and_return(punch)
-      expect(punch).to receive(:save).and_return(true)
-      post :create, params
-      expect(assigns(:punch)).to eq(punch)
-      expect(response).to redirect_to punch_url punch
+        punch.should_receive(:company_id=).with(company.id)
+        controller.stub_chain(:current_user, :punches,
+                              :new => punch_params).and_return(punch)
+        expect(punch).to receive(:save).and_return(true)
+        post :create, params
+        expect(assigns(:punch)).to eq(punch)
+        expect(response).to redirect_to punch_url punch
+      end
+
+      it "does not create" do
+        punch_params = {}
+        controller.stub_chain(:current_user, :punches,
+                              :new => punch_params).and_return(punch)
+        punch.should_receive(:company_id=).with(company.id)
+        expect(punch).to receive(:save).and_return(false)
+        post :create, punch: punch_params
+        expect(assigns(:punch)).to eq(punch)
+        expect(response).to render_template(:new)
+      end
     end
 
-    it "does not create do" do
-      punch_params = {}
-      controller.stub_chain(:current_user, :punches,
-                            :new => punch_params).and_return(punch)
-      punch.should_receive(:company_id=).with(1)
-      expect(punch).to receive(:save).and_return(false)
-      post :create, punch: punch_params
-      expect(assigns(:punch)).to eq(punch)
-      expect(response).to render_template(:new)
+    context "when authorize fails" do
+      it "must not create a punch" do
+        punch_params = {
+          :'from(4i)'  => '08',
+          :'from(5i)'  => '00',
+          :'to(4i)'    => '17',
+          :'to(5i)'    => '00',
+          :'project_id'=> project.id.to_s
+        }
+        params = {
+          when_day: "2013-08-20",
+          punch: punch_params
+        }
+
+        punch.should_receive(:company_id=).with(company.id)
+        controller.stub_chain(:current_user, :punches,
+                              :new => punch_params).and_return(punch)
+
+        post :create, punch: punch_params
+        expect(assigns(:punch)).to eq(punch)
+        expect(response).to redirect_to(root_url)
+      end
     end
   end
 
