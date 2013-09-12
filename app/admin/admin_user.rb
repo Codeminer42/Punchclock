@@ -2,7 +2,7 @@ ActiveAdmin.register AdminUser do
   index do
     column :company
     column :email
-    column :is_super if can? :manage_all, Company if current_admin_user.is_super?
+    column :is_super if current_admin_user.is_super?
     default_actions
   end
 
