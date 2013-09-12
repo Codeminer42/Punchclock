@@ -34,7 +34,7 @@ end
 
 unless User.exists?(email: 'fernando.martinez@codeminer42.com')
   puts 'Creating default user'
-  AdminUser.create(
+  User.create(
     name:                  'Fernando Martínez',
     email:                 'fernando.martinez@codeminer42.com',
     password:              'password',
