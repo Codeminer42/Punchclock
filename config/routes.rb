@@ -12,6 +12,8 @@ Punchclock::Application.routes.draw do
   get 'home/logout'
   root 'home#index'
 
+  match 'user/account', to: 'users#account', via: 'get'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
