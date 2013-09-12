@@ -23,8 +23,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <p class="navbar-text">
-            Welcome,
-            <strong><%= current_user.name %></strong>
+            Welcome, <strong><%= link_to "#{current_user.name}", user_account_path %></strong>
           </p>
         </li>
         <li><%= link_to 'Logout', home_logout_path %></li>
