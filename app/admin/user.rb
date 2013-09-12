@@ -36,7 +36,7 @@ ActiveAdmin.register User do
     def create
       create! do |success, failure|
         success.html do
-          NotificationMailer.notify_user_registration(@user)
+          NotificationMailer.notify_user_registration(@user).deliver
           redirect_to resource_path
         end
       end
