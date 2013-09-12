@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Edit Punch" do
   let!(:authed_user) { create_logged_in_user }
-  let!(:project) { FactoryGirl.create(:project) }
+  let!(:project) { FactoryGirl.create(:project, company_id: authed_user.company_id) }
   let!(:punch) { FactoryGirl.create(:punch, user_id: authed_user.id) }
 
   scenario "editing punch" do
