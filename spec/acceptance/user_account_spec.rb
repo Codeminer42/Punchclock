@@ -25,7 +25,7 @@ feature "User Account" do
   scenario "update password" do
     click_link 'Change Password'
     expect(page).to have_selector('.btn-danger[href="/user/account"]')
-    within '.edit_password' do
+    within '.edit_user' do
       fill_in 'user[password]', with: 'password'
       fill_in 'user[password_confirmation]', with: 'password'
       click_button 'Update'
