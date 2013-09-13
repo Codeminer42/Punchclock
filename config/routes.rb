@@ -13,6 +13,7 @@ Punchclock::Application.routes.draw do
   root 'home#index'
 
   resources :users, only: [:edit, :update], controller: 'user_account'
+  match "users/password", to: 'passwords#password', via: 'get'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
