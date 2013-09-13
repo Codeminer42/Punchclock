@@ -1,7 +1,6 @@
 class PasswordsController < ApplicationController
-	def edit
-		:authenticate_user!
-	end
+	before_action :authorize
+	before_action :authenticate_user!
 
 	def update
 		if current_user.update_with_password(user_params[:user])
@@ -9,13 +8,17 @@ class PasswordsController < ApplicationController
 			flash[:notice] = "Password updated successfully!"
 			redirect_to edit_user_path(current_user)
 		else
-			flash[:alert] = current_user.errors.full_messages.first
-			redirect_to users_account_password_edit_path
+			flash.now[:alert] = current_user.errors.full_messages.first
+			render :edit
 		end
 	end
 
 private
 	def user_params
 		params.permit(user: [:current_password, :password, :password_confirmation])
+	end
+
+	def authorize
+		redirect_to root_path unless params[:id] == current_user.id.to_s
 	end
 end
