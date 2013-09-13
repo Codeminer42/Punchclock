@@ -1,0 +1,25 @@
+<%= form_for(current_user, url: user_account_update_path) do |f| %>
+	<table border="0" cellspacing="8" cellpadding="8">
+		<tr>
+			<th><%= f.label 'Name' %></th>
+			<th><%= f.text_field :name %></th>
+		</tr>
+		<tr>
+			<th><%= f.label 'E-mail' %></th>
+			<th><%= f.text_field :email %></th>
+		</tr>
+    <tr>
+      <td colspan="2">
+        <%= link_to 'Cancel', punches_path, class: 'btn btn-danger' %>
+      </td>
+      <td colspan="2">
+        <%= link_to 'Change Password', user_account_password_path, class: 'btn btn-default' %>
+      </td>
+      <td colspan="2">
+        <div class="actions">
+          <%= f.submit('Update', { class: 'btn btn-primary' }) %>
+        </div>
+      </td>
+    </tr>
+	</table>
+<% end %>

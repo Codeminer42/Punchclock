@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable
   has_many :punches
+  validates :name, presence: true
   validates :email, uniqueness: true, presence: true
   validates :company_id, presence: true
 
