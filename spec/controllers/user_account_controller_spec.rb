@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe UsersController do
-	login_user
+describe UserAccountController do
+login_user
 
 	describe "PATCH update_user" do
 		let(:user) { controller.current_user }

@@ -1,4 +1,4 @@
-<%= form_for(current_user, url: user_account_password_update_path) do |f| %>
+<%= form_for(current_user, url: users_account_password_update_path) do |f| %>
 	<table border="0" cellspacing="8" cellpadding="8">
     <tr>
       <th><%= f.label 'Current Password' %></th>
@@ -14,7 +14,7 @@
 		</tr>
     <tr>
       <td colspan="2">
-        <%= link_to 'Cancel', user_account_path, class: 'btn btn-danger' %>
+        <%= link_to 'Cancel', edit_user_path(current_user), class: 'btn btn-danger' %>
       </td>
       <td colspan="2">
         <div class="actions">
