@@ -12,7 +12,7 @@ Punchclock::Application.routes.draw do
   get 'home/logout'
   root 'home#index'
 
-  resources :users, only: [:show, :edit, :update], controller: 'user_account'
+  resources :users, only: [:edit, :update], controller: 'user_account'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

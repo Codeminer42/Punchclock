@@ -2,9 +2,6 @@ class UserAccountController < ApplicationController
 	before_action :authenticate_user!
 	before_action :authorize
 
-	def show
-	end
-
 	def edit
 	end
 
