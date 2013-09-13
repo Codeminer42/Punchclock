@@ -6,6 +6,12 @@ class UserAccountController < ApplicationController
 	end
 
 	def update
+		if current_user.update(user_params[:user])
+			flash[:notice] = "User updated successfully!"
+		else
+			flash[:alert] = current_user.errors.full_messages.first
+		end
+		redirect_to edit_user_path(current_user)
 	end
 
 private
