@@ -16,10 +16,15 @@ class UsersController < ApplicationController
 	end
 
 	def update_password
+		current_user.update_attributes(password:params[:user][:password], password_confirmation:params[:user][:password_confirmation])
+		if current_user.save
+			flash[:notice] = "Password updated successfully!"
+		end
+		redirect_to user_account_path
 	end
 
 private
   def permitted_params
-    params.permit(user: [:name, :email])
+    params.permit(user: [:name, :email, :password, :password_confirmation])
   end
 end
