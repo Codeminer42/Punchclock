@@ -51,24 +51,5 @@ describe PasswordsController do
 				end
 			end
 		end
-
-		context "with incorrect authorization" do
-			before do
-				user.stub(id: 42)
-			end
-
-			it "should not update password" do
-				params = { id: 1,
-									 user: { "current_password" => 'password',
-									 				 "password" => '',
-									 				 "password_confirmation" => '12345678'
-									       }
-								 }
-				expect(user).not_to receive(:update)
-
-				patch :update, params
-				expect(response).to redirect_to root_url
-			end
-		end
 	end
 end
