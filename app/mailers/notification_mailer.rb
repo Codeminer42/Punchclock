@@ -5,4 +5,9 @@ class NotificationMailer < ActionMailer::Base
   	@user = user
   	mail(to:user.email, subject:"Welcome to Punchclock")
   end
+
+  def notify_user_password_change(user)
+  	@user = user
+  	mail(to:user.email, subject:"Punchclock - Your password has been modified")
+  end
 end
