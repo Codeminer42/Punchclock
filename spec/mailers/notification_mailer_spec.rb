@@ -31,7 +31,7 @@ describe NotificationMailer do
       end
 
       it 'assigns link to edit password path' do
-        mail.body.encoded.should have_link('here', href: users_account_password_edit_path)
+        mail.body.encoded.should have_link('here', href: users_account_password_edit_url)
       end
     end
 

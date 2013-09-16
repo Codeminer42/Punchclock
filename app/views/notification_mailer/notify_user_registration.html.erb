@@ -3,4 +3,4 @@
 <%= "Email: #{@user.email}" %>
 <%= "Password: #{@user.password}" %>
 <br>
-<div> Modify your password <%= link_to('here', users_account_password_edit_path) %> </div>
+<div> Modify your password <%= link_to('here', users_account_password_edit_url, only_path: false) %> </div>
