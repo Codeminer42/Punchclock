@@ -29,6 +29,11 @@ describe NotificationMailer do
       it 'assigns @password' do
         mail.body.encoded.should match(user.password)
       end
+
+      it 'assigns link to edit password path' do
+        #binding.prymail.bod
+        mail.body.encoded.should have_link('here', href: users_account_password_edit_path)
+      end
     end
 
     context "when user change your own password" do
