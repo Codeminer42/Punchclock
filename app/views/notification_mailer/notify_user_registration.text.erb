@@ -4,8 +4,9 @@
 Change your password soon as possible
 
 Dados
-    
+
   email: <%= "Email: #{@user.email}" %>
   password: <%= "Password: #{@user.password}" %>
 
+Modify your password <%= link_to('here', users_account_password_edit_path) %>
 -------------------------------
