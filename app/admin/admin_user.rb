@@ -34,6 +34,15 @@ ActiveAdmin.register AdminUser do
       @admin_user.company_id = current_admin_user.company.id unless current_admin_user.is_super?
       new!
     end
+
+    def create
+      create! do |success, failure|
+        success.html do
+          NotificationMailer.notify_admin_registration(@admin_user).deliver if current_admin_user.is_super?
+          redirect_to resource_path
+        end
+      end
+    end
   end
 
   filter :email
