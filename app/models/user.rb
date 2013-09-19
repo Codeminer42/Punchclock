@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
-  devise :omniauthable, omniauth_providers: [:google_apps]
+  belongs_to :company
+  devise :database_authenticatable, :recoverable, :rememberable,
+         :trackable, :validatable
   has_many :punches
+  validates :name, presence: true
   validates :email, uniqueness: true, presence: true
+  validates :company_id, presence: true
 
   def total_hours(result = nil)
     total_punches = result.nil? ? self.punches : result

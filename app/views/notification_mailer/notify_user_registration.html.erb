@@ -1,0 +1,6 @@
+<%= "Welcome #{@user.name}," %>
+<div> Change your password soon as possible </div>
+<%= "Email: #{@user.email}" %>
+<%= "Password: #{@user.password}" %>
+<br>
+<div> Modify your password <%= link_to('here', users_account_password_edit_url, only_path: false) %> </div>

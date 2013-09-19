@@ -4,5 +4,6 @@ FactoryGirl.define do
     to { Time.new(2001, 1, 1, 17, 0, 0, 0) }
     project { FactoryGirl.create(:project) }
     user { FactoryGirl.create(:user) }
+    company { FactoryGirl.create(:company) }
   end
 end

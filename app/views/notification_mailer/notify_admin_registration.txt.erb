@@ -1,0 +1,8 @@
+"Welcome,"
+
+You was registered as <%= @user.company.name %>'s admin on Punchclock
+Change your password soon as possible
+<%= "Email: #{@user.email}" %>
+<%= "Password: #{@user.password}" %>
+
+Modify your password <%= edit_admin_admin_user_url(@user), only_path: false) %>

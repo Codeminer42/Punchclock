@@ -1,5 +1,6 @@
 class PunchesController < InheritedResources::Base
   before_action :authenticate_user!
+  before_action :user_projects
   before_action :verify_ownership, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -21,6 +22,8 @@ class PunchesController < InheritedResources::Base
 
   def create
     @punch = current_user.punches.new(sanitized_params)
+    @punch.company_id = current_user.company_id
+    authorize! :create, @punch
     if @punch.save
       flash[:notice] = "Punch created successfully!"
       redirect_to punch_url(@punch)
@@ -81,6 +84,10 @@ private
   def verify_ownership
     @punch = Punch.find params[:id]
     head 403 unless @punch.user_id == current_user.id
+  end
+
+  def user_projects
+    @projects = current_user.company.projects
   end
 
 end

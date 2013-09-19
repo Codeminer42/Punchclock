@@ -18,13 +18,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<%= root_path %>">Punchclock</a>
+        <a class="navbar-brand" href="<%= root_path %>">Punchclock - <%= current_user.company.name%></a>
       </div>
       <ul class="nav navbar-nav navbar-right">
         <li>
           <p class="navbar-text">
-            Welcome,
-            <strong><%= current_user.name %></strong>
+            Welcome, <strong><%= link_to "#{current_user.name}", edit_user_path(current_user) %></strong>
           </p>
         </li>
         <li><%= link_to 'Logout', home_logout_path %></li>

@@ -3,7 +3,7 @@ Punchclock::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -11,6 +11,10 @@ Punchclock::Application.routes.draw do
   # You can have the root of your site routed with "root"
   get 'home/logout'
   root 'home#index'
+
+  resources :users, only: [:edit, :update], controller: 'user_account'
+  match "users/account/password/edit", to: 'passwords#edit', via: :get
+  match "users/account/password/update", to: 'passwords#update', via: [:patch, :put]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

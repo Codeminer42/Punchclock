@@ -38,6 +38,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'forgery'
+  gem 'letter_opener'
 end
 
 # Use ActiveModel has_secure_password
@@ -71,6 +72,7 @@ end
 gem 'settingslogic'
 gem 'dotenv-rails'
 gem 'devise', '~> 3.0.1'
+gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-google-apps'
 

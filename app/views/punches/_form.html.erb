@@ -44,7 +44,7 @@
     <tr>
       <th><%= f.label :project_id, 'On' %></th>
       <td colspan="3">
-        <%= f.collection_select :project_id, Project.order(:name), :id, :name,
+        <%= f.collection_select :project_id, @projects.order(:name), :id, :name,
                                 {}, { class: 'form-control' } %>
       </td>
     </tr>
