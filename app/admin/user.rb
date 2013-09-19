@@ -3,6 +3,7 @@ ActiveAdmin.register User do
     column :company
     column :name
     column :email
+    column :hour_cost
     default_actions
   end
 
@@ -10,6 +11,7 @@ ActiveAdmin.register User do
     f.inputs do
       f.input :name
       f.input :email
+      f.input :hour_cost, input_html: { value: '0.0' }
       if current_admin_user.is_super?
         f.input :company
       else
@@ -24,7 +26,7 @@ ActiveAdmin.register User do
 
   controller do
     def permitted_params
-      params.permit user: [:name, :email, :company_id, :password]
+      params.permit user: [:name, :email, :company_id, :hour_cost, :password]
     end
 
     def new
