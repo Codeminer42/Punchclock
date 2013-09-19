@@ -3,6 +3,8 @@ Punchclock
 
 A simple electronic punch clock to track hours spent on projects.
 
+[![Build Status](https://magnum.travis-ci.com/Codeminer42/punchclock.png?token=CEkfcqrMueoSq22M4PF4&branch=master)](https://magnum.travis-ci.com/Codeminer42/punchclock)
+
 ## Rails
 
 This app uses Rails 4.0.0 and Postgres >= 9.1
@@ -18,14 +20,14 @@ $ bundle exec rake db:setup
 ```
 
 ### Postgree Notes
-If something went wrong take a look on 
-config/database.yml 
+If something went wrong take a look on
+config/database.yml
 If necessary change username and/or host.
 
 ### Development
 
-Run: 
-```console 
+Run:
+```console
 $rake db:seed
 ```
 And the following admin users will be created
