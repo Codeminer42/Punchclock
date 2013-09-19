@@ -3,7 +3,7 @@ development:
   encoding: unicode
   database: punchclock_development
   pool: 5
-  username: punchclock
+  username:
   password:
   host: localhost
 
@@ -12,7 +12,7 @@ test:
   encoding: unicode
   database: punchclock_test
   pool: 5
-  username: punchclock
+  username:
   password:
   host: localhost
 
@@ -21,6 +21,6 @@ production:
   encoding: unicode
   database: punchclock_production
   pool: 5
-  username: punchclock
+  username:
   password:
   host: localhost
