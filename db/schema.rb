@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130909134132) do
+ActiveRecord::Schema.define(version: 20130919141756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20130909134132) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "company_id"
+    t.decimal  "hour_cost"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
