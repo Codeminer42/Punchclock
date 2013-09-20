@@ -22,10 +22,5 @@
                 %strong= link_to "#{current_user.name}", edit_user_path(current_user)
             %li= link_to 'Logout', home_logout_path
       .page-body
-        - if notice.present? || alert.present?
-          .flash-messages
-            - if notice.present?
-              %p{class: "alert alert-info"}= notice
-            - if alert.present?
-              %p{class: "alert alert-danger"}= alert
+        = render 'shared/flash'
         = yield
