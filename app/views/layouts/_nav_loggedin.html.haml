@@ -8,6 +8,7 @@
     .navbar-brand= link_to "Punchclock - #{current_user.company.name}", root_path
   %ul{class: "nav navbar-nav navbar-right"}
     %li
-      %p.navbar-text Welcome,
+      %p.navbar-text
+        Welcome,
         %strong= link_to "#{current_user.name}", edit_user_path(current_user)
     %li= link_to 'Logout', home_logout_path
