@@ -2,21 +2,21 @@
 %html
   %head
     %title Punchclock
-      = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
-      = javascript_include_tag "application", "data-turbolinks-track" => true
-      = csrf_meta_tags
-  %body{class="#{user_signed_in? ? 'signed-in' : 'signed-out'}"}
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body{class: "#{user_signed_in? ? 'signed-in' : 'signed-out'}"}
     .page
       - if user_signed_in?
-        %nav{class="navbar navbar-inverse" role="navigation"}
+        %nav{class: "navbar navbar-inverse", role: "navigation"}
           .navbar-header
-            %button{'type'="button" class="navbar-toggle" 'data-toggle'="collapse" 'data-target'=".navbar-ex1-collapse"}
+            %button{type: "button", class: "navbar-toggle", 'data-toggle' => "collapse", 'data-target' => ".navbar-ex1-collapse"}
               %span.sr-only Toggle navigation
               %span.icon-bar
               %span.icon-ba
               %span.icon-ba
             .navbar-brand= link_to "Punchclock - #{current_user.company.name}", root_path
-          %ul{class="nav navbar-nav navbar-right"}
+          %ul{class: "nav navbar-nav navbar-right"}
             %li
               %p.navbar-text Welcome,
                 %strong= link_to "#{current_user.name}", edit_user_path(current_user)
@@ -25,7 +25,7 @@
         - if notice.present? || alert.present?
           .flash-messages
             - if notice.present?
-              %p{class="alert alert-info"}= notice
+              %p{class: "alert alert-info"}= notice
             - if alert.present?
-              %p{class="alert alert-danger"}= alert
+              %p{class: "alert alert-danger"}= alert
         = yield
