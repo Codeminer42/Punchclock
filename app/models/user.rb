@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :company
   devise :database_authenticatable, :recoverable, :rememberable,
-         :trackable, :validatable
+         :trackable, :validatable, :registerable
   has_many :punches
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
