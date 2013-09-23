@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   has_many :punches
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
-  validates :company_id, presence: true
+  validates :company, presence: true
+
+  accepts_nested_attributes_for :company
 
   def total_hours(result = nil)
     total_punches = result.nil? ? self.punches : result
