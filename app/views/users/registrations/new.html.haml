@@ -5,8 +5,10 @@
   %div= f.label :name
   %div= f.text_field :name
 
-  %div= f.label 'Company'
-  %div= f.text_field :company
+  %div
+    = f.fields_for :company do |ff|
+      %div= ff.label 'Company'
+      %div= ff.text_field :name
 
   %div= f.label :email
   %div= f.email_field :email
