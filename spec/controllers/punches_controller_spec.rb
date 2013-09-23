@@ -41,6 +41,7 @@ describe PunchesController do
       controller.stub(current_user: user)
       user.stub(company_id: company.id)
       user.stub(company: company)
+      user.stub(is_admin?: false)
     end
 
     context "when authorize pass" do
@@ -80,6 +81,7 @@ describe PunchesController do
     end
 
     context "when authorize fails" do
+
       it "must not create a punch" do
         punch_params = {
           :'from(4i)'  => '08',
