@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title Punchclock
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body{class: "#{user_signed_in? ? 'signed-in' : 'signed-out'}"}
+    .page
+      = render 'layouts/navigation'
+      .page-body
+        = render 'shared/flash'
+        = yield

@@ -69,6 +69,7 @@ group :development do
   gem 'certified'
 end
 
+gem 'haml'
 gem 'settingslogic'
 gem 'dotenv-rails'
 gem 'devise', '~> 3.0.1'
