@@ -5,11 +5,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 		respond_with self.resource
 	end
 
-	def create
-		binding.pry
-		super
-	end
-
 private
 	def sign_up_params
 		allow = [:name, :email, :password, :password_confirmation, company_attributes: [:name]]
