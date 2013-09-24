@@ -13,7 +13,7 @@ Punchclock::Application.routes.draw do
   root 'home#index'
 
   resources :users, only: [:edit, :update], controller: 'user_account'
-  resources :projects
+  resources :projects, except: [:show]
 
   match "users/account/password/edit", to: 'passwords#edit', via: :get
   match "users/account/password/update", to: 'passwords#update', via: [:patch, :put]
