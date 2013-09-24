@@ -1,4 +1,29 @@
 class ProjectsController < ApplicationController
 	before_action :authenticate_user!
-	load_and_authorize_resource
+	load_and_authorize_resource except: [:create]
+
+	def index
+		@projects = current_user.company.projects
+	end
+
+	def new
+		@project = Project.new(company: current_user.company)
+	end
+
+	def create
+		project = Project.new(project_params)
+		project.company = current_user.company
+		authorize! :create, project
+		if project.save
+			redirect_to projects_path
+		else
+			@project = project
+			render action: :new
+		end
+	end
+private
+	def project_params
+		allow = [:name]
+		params.require(:project).permit(allow)
+	end
 end

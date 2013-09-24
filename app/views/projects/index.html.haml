@@ -1,2 +1,5 @@
 .projects-header
-	.btn-group= link_to 'Project', new_project_path, :class => 'btn btn-primary'
+	.btn-group= link_to 'New Project', new_project_path, :class => 'btn btn-primary'
+%ul
+	- @projects.each do |p|
+		%li= p.name
