@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 
 	def new
-		build_resource({company: Company.new})
+		build_resource({company: Company.new, is_admin: true})
 		respond_with self.resource
 	end
 private
