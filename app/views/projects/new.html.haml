@@ -1,8 +1,2 @@
 %h2 New Project
-= form_for(@project, url: projects_path) do |f|
-  = render "shared/errors", messages: @project.errors.full_messages
-  %div= f.label :name
-  %div= f.text_field :name
-
-  %div= f.submit
-= link_to 'Back', projects_path
+= render 'form', path: projects_path

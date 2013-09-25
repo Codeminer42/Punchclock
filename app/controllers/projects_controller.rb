@@ -21,6 +21,14 @@ class ProjectsController < ApplicationController
 			render action: :new
 		end
 	end
+
+	def update
+		if @project.update(project_params)
+			redirect_to projects_path
+		else
+			render action: :edit
+		end
+	end
 private
 	def project_params
 		allow = [:name]
