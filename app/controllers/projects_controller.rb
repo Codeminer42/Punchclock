@@ -15,6 +15,7 @@ class ProjectsController < InheritedResources::Base
 		project.company = current_user.company
 		authorize! :create, project
 		if project.save
+			flash[:notice] = "Project created successfully!"
 			redirect_to projects_path
 		else
 			@project = project
