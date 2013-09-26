@@ -1,0 +1,6 @@
+- @users.each do |u|
+	%div
+		= link_to "#{u.name}", edit_user_path(u)
+		%div GRAVATAR
+		%div= u.email
+		%br
