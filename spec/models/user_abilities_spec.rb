@@ -19,8 +19,17 @@ describe "User" do
 		subject(:ability){ UserAbility.new(user) }
 
 		context "when is creating projects" do
-			it { should be_able_to(:manage, Punch.new(company_id: user.company.id)) }
-			it { should_not be_able_to(:manage, Punch.new) }
+			it { should be_able_to(:manage, Project.new(company_id: user.company.id)) }
+			it { should_not be_able_to(:manage, Project.new) }
+		end
+
+		context "when updating your own company" do
+			let(:company) { FactoryGirl.build(:company) }
+			it { should be_able_to(:read, user.company) }
+			it { should be_able_to(:update, user.company) }
+			it { should_not be_able_to(:create, Company.new) }
+			it { should_not be_able_to(:destroy, user.company) }
+			it { should_not be_able_to(:manage, company) }
 		end
 	end
 end
