@@ -16,6 +16,14 @@ describe "User" do
 		context "when is trying to manage Company" do
 			it { should_not be_able_to(:manage, Company.new) }
 		end
+
+		context "when is trying to manage Users" do
+			it { should be_able_to(:read, User.new(company_id: user.company.id)) }
+			it { should_not be_able_to(:read, User.new) }
+			it { should_not be_able_to(:manage, User.new) }
+			it { should be_able_to(:create, User.new(company_id: user.company.id)) }
+			it { should_not be_able_to(:create, User.new) }
+		end
 	end
 
 	describe "user admin abilities" do
@@ -34,6 +42,11 @@ describe "User" do
 			it { should_not be_able_to(:create, Company.new) }
 			it { should_not be_able_to(:destroy, user.company) }
 			it { should_not be_able_to(:manage, company) }
+		end
+
+		context "when is managing Users" do
+			it { should be_able_to(:manage, User.new(company_id: user.company.id)) }
+			it { should_not be_able_to(:manage, User.new) }
 		end
 	end
 end
