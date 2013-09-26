@@ -20,6 +20,6 @@
         %span.caret
       %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
         %li= link_to "Account", edit_user_path(current_user)
-        %li= link_to "Company", '#'
+        %li= link_to "Company", edit_company_path(current_user.company)
         %li.divider
         %li= link_to 'Logout', home_logout_path
