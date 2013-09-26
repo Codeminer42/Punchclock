@@ -12,8 +12,13 @@
     %li= link_to 'Projects', projects_path
     %li
       %a Punches
-    %li
-      %a Users
+    %li.dropdown
+      %a{class: '','data-toggle' => 'dropdown', 'href' => '#'}
+        Users
+        %span.caret
+      %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
+        %li= link_to 'All', users_path
+        %li= link_to 'Invite', new_user_path
     %li.dropdown
       %a{class: '','data-toggle' => 'dropdown', 'href' => '#'}
         Settings
