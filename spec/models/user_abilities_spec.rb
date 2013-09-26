@@ -17,12 +17,9 @@ describe "User" do
 			it { should_not be_able_to(:manage, Company.new) }
 		end
 
-		context "when is trying to manage Users" do
+		context "when is trying to read Users" do
 			it { should be_able_to(:read, User.new(company_id: user.company.id)) }
 			it { should_not be_able_to(:read, User.new) }
-			it { should_not be_able_to(:manage, User.new) }
-			it { should be_able_to(:create, User.new(company_id: user.company.id)) }
-			it { should_not be_able_to(:create, User.new) }
 		end
 	end
 

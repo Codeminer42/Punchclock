@@ -11,7 +11,6 @@ class UserAbility
   	else
   		can :manage, Punch, company_id: user.company.id, user: { company: { id: user.company.id } }, project: { company: { id: user.company.id } }
       can :read, User, company_id: user.company.id
-      can :create, User, company_id: user.company.id
   	end
   end
 end
