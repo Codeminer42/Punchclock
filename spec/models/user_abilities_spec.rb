@@ -12,6 +12,10 @@ describe "User" do
 			it { should_not be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id), project: Project.new)) }
 			it { should_not be_able_to(:manage, Punch.new) }
 		end
+
+		context "when is trying to manage Company" do
+			it { should_not be_able_to(:manage, Company.new) }
+		end
 	end
 
 	describe "user admin abilities" do
