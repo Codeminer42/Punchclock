@@ -10,12 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery_nested_form
 //= require jquery
 //= require jquery_ujs
 // require turbolinks
 //= require bootstrap
 //= require_tree .
+//= require jquery_nested_form
 
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
