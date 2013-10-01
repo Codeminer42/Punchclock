@@ -5,6 +5,7 @@ class Punch < ActiveRecord::Base
   has_many :comments
   validates :from, :to, :project_id, :user_id, :company_id, presence: true
   validate :check_time
+  accepts_nested_attributes_for :comments, allow_destroy: true
 
   def delta
     (self.to - self.from) / 3600
