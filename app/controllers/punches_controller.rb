@@ -12,9 +12,7 @@ class PunchesController < InheritedResources::Base
       t = Time.now.end_of_month
     end
 
-    @search = current_user.punches
-                          .where("\"to\" < ?", t)
-                          .search(params[:q])
+    @search = search_punches(t)
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
@@ -90,4 +88,11 @@ private
     @projects = current_user.company.projects
   end
 
+  def search_punches(t)
+    if current_user.is_admin?
+      current_user.company.punches.where("\"to\" < ?", t).search(params[:q])
+    else
+      current_user.punches.where("\"to\" < ?", t).search(params[:q])
+    end
+  end
 end

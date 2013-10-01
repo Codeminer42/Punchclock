@@ -1,0 +1,51 @@
+.punches-header
+  .punches-header-1
+    .btn-group= link_to 'Punch', new_punch_path, :class => 'btn btn-primary'
+  .punches-header-2
+    = search_form_for @search do |f|
+      %div
+        Filter
+        = f.date_select :from_gteq, { discard_day: true,
+                          end_year: Time.now.year }, { class: 'form-control' }
+        = f.collection_select :project_id_eq, Project.order(:name),
+                                :id, :name, { prompt: false,
+                                include_blank: 'All' },
+                                { class: 'form-control' }
+        = f.submit 'OK', :class => 'btn btn-default'
+  %br
+%table{class: 'table table-striped'}
+  %colgroup
+    %col{'width'=>'100'}
+    %col{'width'=>'60'}
+    %col{'width'=>'60'}
+    %col{'width'=>'60'}
+    %col
+    %col{'width'=>'24'}
+    %col{'width'=>'24'}
+  %thead
+    %tr
+      %th= sort_link @search, :from, 'When'
+      %th User
+      %th From
+      %th To
+      %th Delta
+      %th= sort_link @search, :project_id, 'Project'
+      %th
+      %th
+  %tbody
+    - @punches.each do |punch|
+      %tr
+        %td= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}")
+        %td= punch.user.name
+        %td= l punch.from, :format => '%H:%M'
+        %td= l punch.to, :format => '%H:%M'
+        %td= time_format(punch.delta)
+        %td= punch.project.present? ? punch.project.name : ''
+        %td= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}"
+        %td= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{punch.id}"
+  %tbody
+  %tfoot
+    %tr
+      %td{'colspan' => "6"}
+        %strong>TOTAL:
+        = time_format(current_user.total_hours(@punches))

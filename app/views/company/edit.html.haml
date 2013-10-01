@@ -1,0 +1,7 @@
+= form_for(@company, url: company_path) do |f|
+  = render "shared/errors", messages: @company.errors.full_messages
+  %div= f.label :name
+  %div= f.text_field :name
+
+  %div= f.submit
+= link_to 'Back', edit_company_path

@@ -3,7 +3,7 @@ Punchclock::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -12,7 +12,10 @@ Punchclock::Application.routes.draw do
   get 'home/logout'
   root 'home#index'
 
-  resources :users, only: [:edit, :update], controller: 'user_account'
+  resources :users, except: [:new, :create, :show]
+  resources :projects, except: [:show]
+  resources :company, only: [:edit, :update]
+
   match "users/account/password/edit", to: 'passwords#edit', via: :get
   match "users/account/password/update", to: 'passwords#update', via: [:patch, :put]
 

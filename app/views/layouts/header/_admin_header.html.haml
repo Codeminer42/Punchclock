@@ -1,0 +1,29 @@
+%nav{class: "navbar navbar-default", role: "navigation"}
+  .navbar-header
+    %button.navbar-toggle{'data-toggle' => 'collapse', 'data-tagert' => '.navbar-ex1-collapse'}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    %a.navbar-brand{'href'=>"#{root_path}"}= "Punchclock - #{current_user.company.name}"
+  %ul{class: 'nav navbar-nav navbar-right'}
+    %li
+      %a Dashboard
+    %li= link_to 'Projects', projects_path
+    %li= link_to 'Punches', punches_path
+    %li.dropdown
+      %a{class: '','data-toggle' => 'dropdown', 'href' => '#'}
+        Users
+        %span.caret
+      %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
+        %li= link_to 'All', users_path
+        %li= link_to 'Invite', new_user_invitation_path
+    %li.dropdown
+      %a{class: '','data-toggle' => 'dropdown', 'href' => '#'}
+        Settings
+        %span.caret
+      %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
+        %li= link_to "Account", edit_user_path(current_user)
+        %li= link_to "Company", edit_company_path(current_user.company)
+        %li.divider
+        %li= link_to 'Logout', home_logout_path

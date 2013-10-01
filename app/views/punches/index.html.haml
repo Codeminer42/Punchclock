@@ -1,0 +1,4 @@
+- if current_user.is_admin?
+  = render 'punches/index/admin_index'
+- else
+  = render 'punches/index/user_index'

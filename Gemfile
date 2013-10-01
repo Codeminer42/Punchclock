@@ -72,14 +72,15 @@ end
 gem 'haml'
 gem 'settingslogic'
 gem 'dotenv-rails'
-gem 'devise', '~> 3.0.1'
+gem 'devise', '>= 2.0'
+gem 'devise_invitable', '~> 1.2.1'
 gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-google-apps'
 
 # ActiveAdmin
 # https://github.com/gregbell/active_admin/pull/2326
-gem 'activeadmin',         github: 'gregbell/active_admin', branch: 'rails4'
+gem 'activeadmin', github: 'gregbell/active_admin'
 # gem 'ransack',             github: 'ernie/ransack',         branch: 'rails-4'
 # gem 'inherited_resources', github: 'josevalim/inherited_resources'
 # gem 'formtastic',          github: 'justinfrench/formtastic'

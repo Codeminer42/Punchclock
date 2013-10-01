@@ -1,6 +1,6 @@
 %h2 Sign up
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  = render "users/shared/errors", messages: @user.errors.full_messages
+  = render "shared/errors", messages: @user.errors.full_messages
 
   %div= f.label :name
   %div= f.text_field :name
