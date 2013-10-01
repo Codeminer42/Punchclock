@@ -5,14 +5,38 @@ describe PunchesController do
 
   describe "GET index" do
     let(:search) { double(:search) }
-    let(:punches) { double(:punches) }
 
     context "without search" do
+
       it "renders current month" do
         expect(search).to receive(:sorts).and_return('from desc')
         expect(search).to receive(:result).and_return([double('punch')])
         expect(Punch).to receive(:search).with(nil).and_return(search)
         get :index
+      end
+
+      describe "with multiuser selection" do
+        let(:user) { FactoryGirl.build(:user) }
+
+        before do
+          double(current_user: user)
+        end
+
+        context "when user is admin" do
+          before { user.stub(is_admin?: true) }
+
+          it "returns punches of a company" do
+            get :index
+            assigns(:punches).should eq(user.company.punches.to_a)
+          end
+        end
+
+        context "when user is a employer of a company" do
+          it "returns punches of the user" do
+            get :index
+            assigns(:punches).should eq(user.punches.to_a)
+          end
+        end
       end
     end
 

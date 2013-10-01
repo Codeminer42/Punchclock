@@ -25,6 +25,7 @@
   %thead
     %tr
       %th= sort_link @search, :from, 'When'
+      %th User
       %th From
       %th To
       %th Delta
@@ -35,6 +36,7 @@
     - @punches.each do |punch|
       %tr
         %td= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}")
+        %td= punch.user.name
         %td= l punch.from, :format => '%H:%M'
         %td= l punch.to, :format => '%H:%M'
         %td= time_format(punch.delta)
