@@ -2,6 +2,7 @@ class Punch < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   belongs_to :company
+  has_many :comments
   validates :from, :to, :project_id, :user_id, :company_id, presence: true
   validate :check_time
 
