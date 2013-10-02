@@ -75,8 +75,10 @@ private
     if punch_data[:comments_attributes].present?
       comments_attributes = punch_data[:comments_attributes]
       user_id = current_user.id
+      company_id = current_user.company_id
       comments_attributes.each do |comment|
         comment[1][:user_id] = user_id
+        comment[1][:company_id] = company_id
       end
     end
 
