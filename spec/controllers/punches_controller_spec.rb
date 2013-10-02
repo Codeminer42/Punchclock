@@ -93,7 +93,7 @@ describe PunchesController do
       end
 
       it "does not create" do
-        punch_params = {}
+        punch_params = { punch: {} }
         controller.stub_chain(:current_user, :punches,
                               :new => punch_params).and_return(punch)
         punch.should_receive(:company_id=).with(company.id)
@@ -101,6 +101,38 @@ describe PunchesController do
         post :create, punch: punch_params
         expect(assigns(:punch)).to eq(punch)
         expect(response).to render_template(:new)
+      end
+
+      context "with comments" do
+        before do
+          user.stub(id: 1)
+          punch.stub_chain(:comments, :count)
+        end
+
+        it "creates" do
+          punch_params = {
+            :'from(4i)'  => '08',
+            :'from(5i)'  => '00',
+            :'to(4i)'    => '17',
+            :'to(5i)'    => '00',
+            :'project_id'=> project.id.to_s,
+            comments_attributes: {
+              "#{rand(0..100)}" => { text:'a comment' }
+            }
+          }
+          params = {
+            when_day: "2013-08-20",
+            punch: punch_params
+          }
+
+          punch.should_receive(:company_id=).with(company.id)
+          controller.stub_chain(:current_user, :punches,
+                                :new => punch_params).and_return(punch)
+          expect(punch).to receive(:save).and_return(true)
+          post :create, params
+          expect(assigns(:punch)).to eq(punch)
+          expect(response).to redirect_to punch_url punch
+        end
       end
     end
 

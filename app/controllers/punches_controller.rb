@@ -44,7 +44,7 @@ private
   def sanitized_params
     punch_data = {}
 
-    permitted_params[:punch].each do |k,v|
+    permitted_params.each do |k,v|
       punch_data[k.to_sym] = v
     end
 
@@ -72,11 +72,20 @@ private
       punch_data[:"to(5i)"] = ''
     end
 
+    if punch_data[:comments_attributes].present?
+      comments_attributes = punch_data[:comments_attributes]
+      user_id = current_user.id
+      comments_attributes.each do |comment|
+        comment[1][:user_id] = user_id
+      end
+    end
+
     punch_data
   end
 
   def permitted_params
-    params.permit(punch: [:from, :to, :project_id])
+    allow = [:from, :to, :project_id, comments_attributes: [:text]]
+    params.require(:punch).permit(allow)
   end
 
   def verify_ownership
