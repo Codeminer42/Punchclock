@@ -1,7 +1,7 @@
 class PunchesController < InheritedResources::Base
   before_action :authenticate_user!
+  load_and_authorize_resource except: [:create]
   before_action :user_projects
-  before_action :verify_ownership, only: [:show, :edit, :update, :destroy]
 
   def index
     if params[:q].present? && params[:q][:"from_gteq(1i)"]
@@ -12,7 +12,7 @@ class PunchesController < InheritedResources::Base
       t = Time.now.end_of_month
     end
 
-    @search = search_punches(t)
+    @search = scopped_punches.where("\"to\" < ?", t).search(params[:q])
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
@@ -31,7 +31,7 @@ class PunchesController < InheritedResources::Base
   end
 
   def update
-    @punch = current_user.punches.find params[:id]
+    @punch = scopped_punches.find params[:id]
     if @punch.update(sanitized_params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punch_url(@punch)
@@ -44,7 +44,7 @@ private
   def sanitized_params
     punch_data = {}
 
-    permitted_params.each do |k,v|
+    punch_params.each do |k,v|
       punch_data[k.to_sym] = v
     end
 
@@ -83,7 +83,7 @@ private
     punch_data
   end
 
-  def permitted_params
+  def punch_params
     allow = [:from, :to, :project_id, comments_attributes: [:text]]
     params.require(:punch).permit(allow)
   end
@@ -97,11 +97,8 @@ private
     @projects = current_user.company.projects
   end
 
-  def search_punches(t)
-    if current_user.is_admin?
-      current_user.company.punches.where("\"to\" < ?", t).search(params[:q])
-    else
-      current_user.punches.where("\"to\" < ?", t).search(params[:q])
-    end
+  def scopped_punches
+    #binding.pry
+    current_user.is_admin? ? current_user.company.punches : current_user.punches
   end
 end
