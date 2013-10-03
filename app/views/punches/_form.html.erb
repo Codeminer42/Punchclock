@@ -53,6 +53,13 @@
       <td colspan="3">
         <%= f.file_field :attachment %>
         <%= f.hidden_field :attachment_cache %>
+        <p>
+          <%= f.check_box :remove_attachment %>
+          <%= f.label :remove_attachment, 'remove' %>
+        </p>
+        <p>
+          <%= image_tag @punch.attachment_url, width: 250, height: 250 if @punch.attachment? %>
+        </p>
       </td>
     </tr>
     <tr>

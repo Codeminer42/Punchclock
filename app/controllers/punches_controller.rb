@@ -76,7 +76,7 @@ private
   end
 
   def permitted_params
-    params.permit(punch: [:from, :to, :project_id, :attachment])
+    params.permit(punch: [:from, :to, :project_id, :attachment, :remove_attachment])
   end
 
   def verify_ownership
