@@ -77,6 +77,7 @@ gem 'devise_invitable', '~> 1.2.1'
 gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-google-apps'
+gem 'carrierwave', '~> 0.9.0'
 
 # ActiveAdmin
 # https://github.com/gregbell/active_admin/pull/2326
