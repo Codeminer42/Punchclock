@@ -7,7 +7,7 @@ feature "Add new Punch" do
   }
   scenario "creating punch" do
     visit '/punches/new'
-    expect(page).to have_content('New punch')
+    expect(page).to have_content('New Punch')
     within '#new_punch' do
       fill_in 'punch[from(4i)]', with: '8'
       fill_in 'punch[from(5i)]', with: '0'

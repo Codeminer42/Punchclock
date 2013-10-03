@@ -55,6 +55,32 @@ describe PunchesController do
     end
   end
 
+  describe "GET edit" do
+    let(:user) { double(:current_user) }
+    let(:punch) { FactoryGirl.build(:punch) }
+
+    before do
+      user.stub(id: punch.user.id)
+      user.stub(company: punch.company)
+      user.stub(company_id: punch.company.id)
+      user.stub(is_admin?: false)
+      punch.stub(id: 1)
+      controller.stub(current_user: user)
+      Punch.stub(:find).with(punch.id.to_s) { punch }
+      controller.stub(load_and_authorize_resource: true)
+    end
+
+    it "builds comment if does not exist" do
+      params = {
+        id: 1
+      }
+
+      punch.should receive(:build_comment)
+      get :edit, params
+      response.should render_template :edit
+    end
+  end
+
   describe "POST create" do
     let(:company) { FactoryGirl.build(:company) }
     let(:project) { FactoryGirl.build(:project, company: company) }

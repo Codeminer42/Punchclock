@@ -17,7 +17,9 @@ describe CompanyController do
 				controller.stub(authenticate_user!: true)
 				controller.stub(load_and_authorize_resource: true)
 				user.stub(is_admin?: true)
+				user.stub(id: 1)
 				user.stub(company: company)
+				user.stub(company_id: company.id)
 			end
 
 			it "should update the company settings" do
