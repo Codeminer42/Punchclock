@@ -23,3 +23,9 @@
   <strong>User:</strong>
   <%= @punch.user.present? ? @punch.user.name : '' %>
 </p>
+<% if @punch.attachment? %>
+  <p>
+    <strong>Attachment:</strong>
+    <%= link_to (image_tag @punch.attachment_url, width: 250, height: 250), @punch.attachment_url %>
+  </p>
+<% end %>
