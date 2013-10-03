@@ -18,6 +18,16 @@ class PunchesController < InheritedResources::Base
     index!
   end
 
+  def new
+    @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id)
+    @punch.build_comment
+  end
+
+  def edit
+    @punch = Punch.find(params[:id])
+    @punch.build_comment if @punch.comment.nil?
+  end
+
   def create
     @punch = current_user.punches.new(sanitized_params)
     @punch.company_id = current_user.company_id
@@ -26,12 +36,13 @@ class PunchesController < InheritedResources::Base
       flash[:notice] = "Punch created successfully!"
       redirect_to punch_url(@punch)
     else
-      render :action => :new
+      render action: :new
     end
   end
 
   def update
     @punch = scopped_punches.find params[:id]
+    authorize! :update, Comment unless sanitized_params[:comments_attributes].nil?
     if @punch.update(sanitized_params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punch_url(@punch)
@@ -72,21 +83,17 @@ private
       punch_data[:"to(5i)"] = ''
     end
 
-    if punch_data[:comments_attributes].present?
-      comments_attributes = punch_data[:comments_attributes]
-      user_id = current_user.id
-      company_id = current_user.company_id
-      comments_attributes.each do |comment|
-        comment[1][:user_id] = user_id
-        comment[1][:company_id] = company_id
-      end
+    if punch_data[:comment_attributes]
+      punch_data[:comment_attributes][:user_id] = current_user.id
+      punch_data[:comment_attributes][:company_id] = current_user.company_id
+      punch_data[:comment_attributes][:_destroy] = true unless punch_data[:comment_attributes][:text].present?
     end
 
     punch_data
   end
 
   def punch_params
-    allow = [:from, :to, :project_id, comments_attributes: [:text]]
+    allow = [:from, :to, :project_id, comment_attributes: [:id, :text]]
     params.require(:punch).permit(allow)
   end
 
@@ -100,7 +107,6 @@ private
   end
 
   def scopped_punches
-    #binding.pry
     current_user.is_admin? ? current_user.company.punches : current_user.punches
   end
 end

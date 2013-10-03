@@ -32,7 +32,7 @@
       %th To
       %th Delta
       %th= sort_link @search, :project_id, 'Project'
-      %th Comments
+      %th Comment
       %th
       %th
   %tbody
@@ -44,7 +44,7 @@
         %td= l punch.to, :format => '%H:%M'
         %td= time_format(punch.delta)
         %td= punch.project.present? ? punch.project.name : ''
-        %td= "#{punch.comments.count}" if punch.comments.present?
+        %td= "#{punch.comment.text}" unless punch.comment.nil?
         %td= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}"
         %td= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{punch.id}"
   %tbody

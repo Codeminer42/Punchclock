@@ -51,11 +51,9 @@
     <tr>
       <th>Comments</th>
       <td colspan="3">
-        <%= f.fields_for :comments do |comment_form| %>
-          <%= comment_form.text_area :text %>
-          <%= comment_form.link_to_remove "Remove this comment" %>
+        <%= f.fields_for :comment, include_id: true do |comment_form| %>
+            <%= comment_form.text_area :text %>
         <% end %>
-        <p><%= f.link_to_add "Add a comment", :comments %></p>
       </td>
     </tr>
     <tr>

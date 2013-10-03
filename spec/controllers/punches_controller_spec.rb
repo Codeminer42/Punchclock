@@ -103,21 +103,20 @@ describe PunchesController do
         expect(response).to render_template(:new)
       end
 
-      context "with comments" do
+      context "with comment" do
         before do
           user.stub(id: 1)
-          punch.stub_chain(:comments, :count)
         end
 
-        it "creates" do
+        it "creates a punch with comment" do
           punch_params = {
             :'from(4i)'  => '08',
             :'from(5i)'  => '00',
             :'to(4i)'    => '17',
             :'to(5i)'    => '00',
             :'project_id'=> project.id.to_s,
-            comments_attributes: {
-              "#{rand(0..100)}" => { text:'a comment' }
+            comment_attributes: {
+              text:'a comment'
             }
           }
           params = {
@@ -137,7 +136,7 @@ describe PunchesController do
     end
 
     context "when authorize fails" do
-
+      before { user.stub(id: 1) }
       it "must not create a punch" do
         punch_params = {
           :'from(4i)'  => '08',
