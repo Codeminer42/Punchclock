@@ -2,10 +2,10 @@ class Punch < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   belongs_to :company
-  has_many :comments
+  has_one :comment
   validates :from, :to, :project_id, :user_id, :company_id, presence: true
   validate :check_time
-  accepts_nested_attributes_for :comments, allow_destroy: true
+  accepts_nested_attributes_for :comment, allow_destroy: true
 
   def delta
     (self.to - self.from) / 3600
