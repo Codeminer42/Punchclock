@@ -4,6 +4,7 @@ class Punch < ActiveRecord::Base
   belongs_to :company
   validates :from, :to, :project_id, :user_id, :company_id, presence: true
   validate :check_time
+  mount_uploader :attachment, AttachmentUploader
 
   def delta
     (self.to - self.from) / 3600
