@@ -1,4 +1,4 @@
-<%= form_for(@punch) do |f| %>
+<%= form_for @punch, html: { multipart: true } do |f| %>
   <% if @punch.errors.any? %>
     <div class="alert alert-danger" id="error_explanation">
       <h2><%= pluralize(@punch.errors.count, "error") %> prohibited this punch from being saved:</h2>
@@ -46,6 +46,13 @@
       <td colspan="3">
         <%= f.collection_select :project_id, @projects.order(:name), :id, :name,
                                 {}, { class: 'form-control' } %>
+      </td>
+    </tr>
+    <tr>
+      <th><%= f.label :attachment, 'Anexo' %></th>
+      <td colspan="3">
+        <%= f.file_field :attachment %>
+        <%= f.hidden_field :attachment_cache %>
       </td>
     </tr>
     <tr>

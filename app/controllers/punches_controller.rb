@@ -19,6 +19,7 @@ class PunchesController < InheritedResources::Base
   end
 
   def create
+    binding.pry
     @punch = current_user.punches.new(sanitized_params)
     @punch.company_id = current_user.company_id
     authorize! :create, @punch
@@ -76,7 +77,7 @@ private
   end
 
   def permitted_params
-    params.permit(punch: [:from, :to, :project_id])
+    params.permit(punch: [:from, :to, :project_id, :attachment])
   end
 
   def verify_ownership
