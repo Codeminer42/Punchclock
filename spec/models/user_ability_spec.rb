@@ -2,14 +2,12 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe "User" do
-	describe "user abilities" do
+	describe "abilities" do
 		let(:user) { FactoryGirl.build(:user) }
 		subject(:ability){ UserAbility.new(user) }
 
 		context "when is creating punches" do
-			it { should be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id), project: Project.new(company_id: user.company.id))) }
-			it { should_not be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new, project: Project.new(company_id: user.company.id))) }
-			it { should_not be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id), project: Project.new)) }
+			it { should be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id))) }
 			it { should_not be_able_to(:manage, Punch.new) }
 		end
 
@@ -27,12 +25,11 @@ describe "User" do
 		end
 
 		context "when is managing Comments" do
-			it { should_not be_able_to(:read, Comment.new(company_id: user.company_id)) }
-			it { should be_able_to(:manage, Comment.new(user: user)) }
+			it { should be_able_to(:manage, Comment.new(user_id: user.id, company_id: user.company_id)) }
 		end
 	end
 
-	describe "user admin abilities" do
+	describe "admin abilities" do
 		let(:user) { FactoryGirl.build(:user, is_admin: true) }
 		subject(:ability){ UserAbility.new(user) }
 
@@ -57,8 +54,8 @@ describe "User" do
 
 		context "when is managing Comments" do
 			it { should be_able_to(:read, Comment.new(company_id: user.company_id)) }
-			it { should be_able_to(:manage, Comment.new(user: user)) }
-			it { should_not be_able_to(:manage, Comment.new(company_id: user.company_id)) }
+			it { should be_able_to(:manage, Comment.new(company_id: user.company_id)) }
+			it { should_not be_able_to(:manage, Comment.new) }
 		end
 	end
 end
