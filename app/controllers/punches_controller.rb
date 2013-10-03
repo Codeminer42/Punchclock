@@ -19,7 +19,6 @@ class PunchesController < InheritedResources::Base
   end
 
   def create
-    binding.pry
     @punch = current_user.punches.new(sanitized_params)
     @punch.company_id = current_user.company_id
     authorize! :create, @punch
