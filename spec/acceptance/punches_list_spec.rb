@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Punches list" do
   let!(:authed_user) { create_logged_in_user }
-  let!(:punch) { FactoryGirl.create(:punch, :user_id => authed_user.id) }
+  let!(:punch) { FactoryGirl.create(:punch, :user_id => authed_user.id, company_id: authed_user.company_id) }
   let!(:other_project) { FactoryGirl.create(:project) }
 
   before do

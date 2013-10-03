@@ -55,6 +55,32 @@ describe PunchesController do
     end
   end
 
+  describe "GET edit" do
+    let(:user) { double(:current_user) }
+    let(:punch) { FactoryGirl.build(:punch) }
+
+    before do
+      user.stub(id: punch.user.id)
+      user.stub(company: punch.company)
+      user.stub(company_id: punch.company.id)
+      user.stub(is_admin?: false)
+      punch.stub(id: 1)
+      controller.stub(current_user: user)
+      Punch.stub(:find).with(punch.id.to_s) { punch }
+      controller.stub(load_and_authorize_resource: true)
+    end
+
+    it "builds comment if does not exist" do
+      params = {
+        id: 1
+      }
+
+      punch.should receive(:build_comment)
+      get :edit, params
+      response.should render_template :edit
+    end
+  end
+
   describe "POST create" do
     let(:company) { FactoryGirl.build(:company) }
     let(:project) { FactoryGirl.build(:project, company: company) }
@@ -93,7 +119,7 @@ describe PunchesController do
       end
 
       it "does not create" do
-        punch_params = {}
+        punch_params = { punch: {} }
         controller.stub_chain(:current_user, :punches,
                               :new => punch_params).and_return(punch)
         punch.should_receive(:company_id=).with(company.id)
@@ -102,10 +128,41 @@ describe PunchesController do
         expect(assigns(:punch)).to eq(punch)
         expect(response).to render_template(:new)
       end
+
+      context "with comment" do
+        before do
+          user.stub(id: 1)
+        end
+
+        it "creates a punch with comment" do
+          punch_params = {
+            :'from(4i)'  => '08',
+            :'from(5i)'  => '00',
+            :'to(4i)'    => '17',
+            :'to(5i)'    => '00',
+            :'project_id'=> project.id.to_s,
+            comment_attributes: {
+              text:'a comment'
+            }
+          }
+          params = {
+            when_day: "2013-08-20",
+            punch: punch_params
+          }
+
+          punch.should_receive(:company_id=).with(company.id)
+          controller.stub_chain(:current_user, :punches,
+                                :new => punch_params).and_return(punch)
+          expect(punch).to receive(:save).and_return(true)
+          post :create, params
+          expect(assigns(:punch)).to eq(punch)
+          expect(response).to redirect_to punch_url punch
+        end
+      end
     end
 
     context "when authorize fails" do
-
+      before { user.stub(id: 1) }
       it "must not create a punch" do
         punch_params = {
           :'from(4i)'  => '08',
@@ -131,72 +188,59 @@ describe PunchesController do
   end
 
   describe "PUT update" do
-    let(:project) { FactoryGirl.create(:project) }
     let(:punch) { FactoryGirl.create(:punch) }
+    let(:project) { punch.project }
+    let(:user) { punch.user }
 
     before do
-      controller.current_user.stub(id: punch.user_id)
-      controller.current_user.punches.stub(:find).with(punch.id.to_s) { punch }
+      controller.stub(authorize!: true)
+      user.stub(is_admin?: false)
+      controller.stub(current_user: user)
       Punch.stub(:find).with(punch.id.to_s) { punch }
     end
 
-    it "updates" do
-      expect(punch).to receive(:update).and_return(true)
-      put :update, {
-        id: punch.id.to_s,
-        when_day: '2013-08-20',
-        punch: {
-          :'from(4i)'   => '8',
-          :'from(5i)'   => '0',
-          :'to(4i)'     => '17',
-          :'to(5i)'     => '0',
-          :'project_id' => project.id.to_s
+    context "when user is employer" do
+      it "updates" do
+        params = {
+          id: punch.id.to_s,
+          when_day: '2013-08-20',
+          punch: {
+            :'from(4i)'   => '8',
+            :'from(5i)'   => '0',
+            :'to(4i)'     => '17',
+            :'to(5i)'     => '0',
+            :'project_id' => project.id.to_s
+          }
         }
-      }
-      expect(assigns(:punch)).to eq(punch)
-      expect(response).to redirect_to punch_url(punch)
-    end
 
-    it "does not update do" do
-      punch_params = {
-        :'from(4i)'  => '08',
-        :'from(5i)'  => '00',
-        :'to(4i)'    => '17',
-        :'to(5i)'    => '00',
-        :'project_id'=> project.id.to_s
-      }
-      params = {
-        id: punch.id,
-        when_day: "",
-        punch: punch_params
-      }
-      expect(punch).to receive(:update).and_return(false)
-      put :update, params
-      expect(assigns(:punch)).to eq(punch)
-      expect(response).to render_template(:edit)
-    end
-  end
-
-  describe "punch access control" do
-    let(:own) { FactoryGirl.create(:user) }
-    let(:not_own) { FactoryGirl.create(:user) }
-    let(:punch) { FactoryGirl.create(:punch, user_id: own.id ) }
-
-    context "user not own punch" do
-      it "deny access" do
-        sign_in not_own
-        get :show, id: punch.id
-        expect(response.code).to eq '403'
+        put :update, params
+        expect(response).to redirect_to punch_path(punch)
       end
     end
 
-    context "user own punch" do
-      it "allow access" do
-        sign_in own
-        get :show, id: punch.id
-        expect(response.code).to eq '200'
+    context "when user is admin" do
+      before do
+        user.stub(is_admin?: true)
+        controller.stub_chain(:current_user, :company, :punches, find: punch)
+        controller.stub(user_projects: true)
+      end
+
+      it "updates" do
+        params = {
+          id: punch.id.to_s,
+          when_day: '2013-08-20',
+          punch: {
+            :'from(4i)'   => '8',
+            :'from(5i)'   => '0',
+            :'to(4i)'     => '17',
+            :'to(5i)'     => '0',
+            :'project_id' => project.id.to_s
+          }
+        }
+
+        put :update, params
+        expect(response).to redirect_to punch_path(punch)
       end
     end
   end
-
 end
