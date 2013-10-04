@@ -23,13 +23,14 @@
   <strong>User:</strong>
   <%= @punch.user.present? ? @punch.user.name : '' %>
 </p>
-
+<<<<<<< HEAD
 <% if @punch.attachment? %>
   <p>
     <strong>Attachment:</strong>
     <%= link_to (image_tag @punch.attachment_url, width: 250, height: 250), @punch.attachment_url %>
   </p>
-<% end %></p>
+<% end %>
+=======
 
 <p>
   <strong>Comments</strong>
@@ -40,3 +41,4 @@
     </P
   <% end %>
 </p>
+>>>>>>> 1c2b2d04eb2f29a1d6fa23f60ae41c5a4fdbbad0

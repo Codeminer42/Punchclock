@@ -1,7 +1,7 @@
 class PunchesController < InheritedResources::Base
   before_action :authenticate_user!
+  load_and_authorize_resource except: [:create]
   before_action :user_projects
-  before_action :verify_ownership, only: [:show, :edit, :update, :destroy]
 
   def index
     if params[:q].present? && params[:q][:"from_gteq(1i)"]
@@ -12,10 +12,20 @@ class PunchesController < InheritedResources::Base
       t = Time.now.end_of_month
     end
 
-    @search = search_punches(t)
+    @search = scopped_punches.where("\"to\" < ?", t).search(params[:q])
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
+  end
+
+  def new
+    @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id)
+    @punch.build_comment
+  end
+
+  def edit
+    @punch = Punch.find(params[:id])
+    @punch.build_comment if @punch.comment.nil?
   end
 
   def create
@@ -26,12 +36,13 @@ class PunchesController < InheritedResources::Base
       flash[:notice] = "Punch created successfully!"
       redirect_to punch_url(@punch)
     else
-      render :action => :new
+      render action: :new
     end
   end
 
   def update
-    @punch = current_user.punches.find params[:id]
+    @punch = scopped_punches.find params[:id]
+    authorize! :update, Comment unless sanitized_params[:comments_attributes].nil?
     if @punch.update(sanitized_params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punch_url(@punch)
@@ -44,7 +55,7 @@ private
   def sanitized_params
     punch_data = {}
 
-    permitted_params[:punch].each do |k,v|
+    punch_params.each do |k,v|
       punch_data[k.to_sym] = v
     end
 
@@ -72,11 +83,18 @@ private
       punch_data[:"to(5i)"] = ''
     end
 
+    if punch_data[:comment_attributes]
+      punch_data[:comment_attributes][:user_id] = current_user.id
+      punch_data[:comment_attributes][:company_id] = current_user.company_id
+      punch_data[:comment_attributes][:_destroy] = true unless punch_data[:comment_attributes][:text].present?
+    end
+
     punch_data
   end
 
-  def permitted_params
-    params.permit(punch: [:from, :to, :project_id, :attachment, :remove_attachment])
+  def punch_params
+    allow = [:from, :to, :project_id, :attachment, :remove_attachment, comment_attributes: [:id, :text]]
+    params.require(:punch).permit(allow)
   end
 
   def verify_ownership
@@ -88,11 +106,7 @@ private
     @projects = current_user.company.projects
   end
 
-  def search_punches(t)
-    if current_user.is_admin?
-      current_user.company.punches.where("\"to\" < ?", t).search(params[:q])
-    else
-      current_user.punches.where("\"to\" < ?", t).search(params[:q])
-    end
+  def scopped_punches
+    current_user.is_admin? ? current_user.company.punches : current_user.punches
   end
 end

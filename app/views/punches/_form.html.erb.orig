@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<%= form_for @punch, html: { multipart: true } do |f| %>
+=======
 <%= nested_form_for(@punch) do |f| %>
+>>>>>>> 1c2b2d04eb2f29a1d6fa23f60ae41c5a4fdbbad0
   <% if @punch.errors.any? %>
     <div class="alert alert-danger" id="error_explanation">
       <h2><%= pluralize(@punch.errors.count, "error") %> prohibited this punch from being saved:</h2>
@@ -49,6 +53,7 @@
       </td>
     </tr>
     <tr>
+<<<<<<< HEAD
       <th><%= f.label :attachment, 'Anexo' %></th>
       <td colspan="3">
         <%= f.file_field :attachment %>
@@ -60,14 +65,13 @@
         <p>
           <%= image_tag @punch.attachment_url, width: 250, height: 250 if @punch.attachment? %>
         </p>
-      </td>
-    </tr>
-    <tr>
+=======
       <th>Comments</th>
       <td colspan="3">
         <%= f.fields_for :comment, include_id: true do |comment_form| %>
             <%= comment_form.text_area :text %>
         <% end %>
+>>>>>>> 1c2b2d04eb2f29a1d6fa23f60ae41c5a4fdbbad0
       </td>
     </tr>
     <tr>

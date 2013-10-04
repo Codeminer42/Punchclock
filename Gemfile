@@ -78,6 +78,7 @@ gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-google-apps'
 gem 'carrierwave', '~> 0.9.0'
+gem 'nested_form', '~> 0.3.2'
 
 # ActiveAdmin
 # https://github.com/gregbell/active_admin/pull/2326

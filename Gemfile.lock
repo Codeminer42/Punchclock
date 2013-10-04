@@ -179,6 +179,7 @@ GEM
     mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.7.9)
+    nested_form (0.3.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     omniauth (1.1.4)
@@ -322,6 +323,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   letter_opener
+  nested_form (~> 0.3.2)
   omniauth
   omniauth-google-apps
   pg
