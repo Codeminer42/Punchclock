@@ -87,6 +87,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     certified (0.1.1)
     coderay (1.0.9)
     coffee-rails (4.0.0)
@@ -303,6 +307,7 @@ DEPENDENCIES
   bullet
   cancan
   capybara
+  carrierwave (~> 0.9.0)
   certified
   coffee-rails (~> 4.0.0)
   devise (>= 2.0)

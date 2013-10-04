@@ -93,7 +93,7 @@ private
   end
 
   def punch_params
-    allow = [:from, :to, :project_id, comment_attributes: [:id, :text]]
+    allow = [:from, :to, :project_id, :attachment, :remove_attachment, comment_attributes: [:id, :text]]
     params.require(:punch).permit(allow)
   end
 
