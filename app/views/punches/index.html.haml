@@ -15,8 +15,8 @@
   %br
 %table{class: 'table table-striped'}
   %colgroup
+    %col{'width'=>'160'}
     %col{'width'=>'100'}
-    %col{'width'=>'60'}
     %col{'width'=>'60'}
     %col{'width'=>'60'}
     %col
@@ -27,25 +27,27 @@
     %col{'width'=>'24'}
   %thead
     %tr
-      %th= sort_link @search, :from, 'When'
       %th User
+      %th= sort_link @search, :from, 'When'
       %th From
       %th To
       %th Delta
-      %th= sort_link @search, :project_id, 'Project'
       %th Comment
+      %th= sort_link @search, :project_id, 'Project'
       %th
       %th
   %tbody
     - @punches.each do |punch|
       %tr
+        %td
+          = gravatar_for punch.user, size: 40
+          = punch.user.name
         %td= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}")
-        %td= punch.user.name
         %td= l punch.from, :format => '%H:%M'
         %td= l punch.to, :format => '%H:%M'
         %td= time_format(punch.delta)
-        %td= punch.project.present? ? punch.project.name : ''
         %td= "#{punch.comment.text}" unless punch.comment.nil?
+        %td= punch.project.name
         %td= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment?
         %td= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}"
         %td= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{punch.id}"
