@@ -41,7 +41,7 @@
       %tr
         %td
           = gravatar_for punch.user, size: 40
-          = punch.user.name
+          = link_to punch.user.name, user_path(punch.user)
         %td= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}")
         %td= l punch.from, :format => '%H:%M'
         %td= l punch.to, :format => '%H:%M'
