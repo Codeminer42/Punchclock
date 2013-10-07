@@ -12,7 +12,7 @@ Punchclock::Application.routes.draw do
   get 'home/logout'
   root 'home#index'
 
-  resources :users, except: [:new, :create, :show]
+  resources :users, except: [:new, :create]
   resources :projects, except: [:show]
   resources :company, only: [:edit, :update]
 
