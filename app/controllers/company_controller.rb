@@ -13,7 +13,7 @@ class CompanyController < InheritedResources::Base
 
 private
 	def company_params
-		allow = [:name]
+		allow = [:name, :avatar, :remove_avatar]
 		params.require(:company).permit(allow)
 	end
 end
