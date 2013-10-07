@@ -10,7 +10,7 @@ class UsersController < InheritedResources::Base
 	end
 private
 	def user_params
-		allow = [:name, :email]
+		allow = [:name, :email, :hour_cost]
 		params.require(:user).permit(allow)
 	end
 end
