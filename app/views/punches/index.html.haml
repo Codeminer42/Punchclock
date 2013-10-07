@@ -11,6 +11,10 @@
                                 :id, :name, { prompt: false,
                                 include_blank: 'All' },
                                 { class: 'form-control' }
+        = f.collection_select :user_id_eq, current_user.company.users.order(:name),
+                                :id, :name, { prompt: false,
+                                include_blank: 'All' },
+                                { class: 'form-control' }
         = f.submit 'OK', :class => 'btn btn-default'
   %br
 %table{class: 'table table-striped'}
