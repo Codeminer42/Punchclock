@@ -10,5 +10,7 @@
     %li
       %p.navbar-text
         Welcome,
-        %strong= link_to "#{current_user.name}", edit_user_path(current_user)
+        %strong
+          = image_tag current_user.company.avatar.url, width: 48, height: 48
+          = link_to "#{current_user.name}", edit_user_path(current_user)
     %li= link_to 'Logout', home_logout_path
