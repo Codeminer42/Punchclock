@@ -13,6 +13,8 @@ class UserAbility
   	else
   		can :manage, Punch, company_id: user.company.id, user_id: user.id
       can :read, User, company_id: user.company.id
+      can :edit, User, id: user.id
+      can :update, User, id: user.id
       can :manage, Comment, user_id: user.id, company_id: user.company_id
   	end
   end

@@ -1,8 +1,10 @@
 - @users.each do |u|
   %div
     = gravatar_for(u)
-    = link_to "#{u.name}", edit_user_path(u)
+    = link_to "#{u.name}", current_user.is_admin? ? edit_user_path(u) : user_path(u)
     %br
     = u.email
     %br
-    = "Cost: #{u.hour_cost} R$/h"
+    = "Administrador: #{u.is_admin? ? 'sim' : 'não'}"
+    %br
+    = "Cost: #{u.hour_cost} R$/h" if current_user.is_admin?

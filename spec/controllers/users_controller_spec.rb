@@ -10,30 +10,50 @@ describe UsersController do
 			User.stub(:find).with(user.id.to_s) { user }
 			controller.stub(load_and_authorize_resource: true)
 			controller.stub(current_user: user)
-			user.stub(is_admin?: true)
 		end
 
-		context "with valid informations" do
-			it "should update user" do
-				params = {
-					id: user.id,
-					user: { name: '1234', email: '1234@1234.com'}
-				}
+		context "when user is admin" do
+			before { user.stub(is_admin?: true) }
 
-				expect(user).to receive(:update).and_return(true)
-				put :update, params
-				expect(response).to render_template :edit
+			context "with valid informations" do
+				it "should update user" do
+					params = {
+						id: user.id,
+						user: { name: '1234', email: '1234@1234.com', hour_cost: '20.0'}
+					}
+
+					expect(user).to receive(:update).and_return(true)
+					put :update, params
+					expect(response).to render_template :edit
+				end
+			end
+
+			context "with invalid informations" do
+				it "should update user" do
+					params = {
+						id: user.id,
+						user: { name: '', email: '1234@1234.com', hour_cost: '20.0'}
+					}
+
+					expect(user).to receive(:update).and_return(false)
+					put :update, params
+					expect(response).to render_template :edit
+				end
 			end
 		end
 
-		context "with invalid informations" do
+		context "with injected informations" do
 			it "should update user" do
 				params = {
 					id: user.id,
-					user: { name: '', email: '1234@1234.com'}
+					user: { name: '1234', email: '1234@1234.com', hour_cost: '13.0'}
 				}
 
-				expect(user).to receive(:update).and_return(false)
+				allowed_params = {
+					'name' => '1234', 'email' => '1234@1234.com'
+				}
+
+				expect(user).to receive(:update).with(allowed_params).and_return(true)
 				put :update, params
 				expect(response).to render_template :edit
 			end

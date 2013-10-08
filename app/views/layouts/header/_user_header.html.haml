@@ -5,12 +5,17 @@
       %span.icon-bar
       %span.icon-ba
       %span.icon-ba
-    .navbar-brand= link_to "Punchclock - #{current_user.company.name}", root_path
+    .navbar-brand
+      = image_tag current_user.company.avatar.url, width: 48, height: 48
+      = link_to "Punchclock - #{current_user.company.name}", root_path
   %ul{class: "nav navbar-nav navbar-right"}
-    %li
-      %p.navbar-text
-        Welcome,
-        %strong
-          = image_tag current_user.company.avatar.url, width: 48, height: 48
-          = link_to "#{current_user.name}", edit_user_path(current_user)
-    %li= link_to 'Logout', home_logout_path
+    %li= link_to 'Punches', punches_path
+    %li= link_to 'Users', users_path
+    %li.dropdown
+      %a{class: '','data-toggle' => 'dropdown', 'href' => '#'}
+        Settings
+        %span.caret
+      %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
+        %li= link_to "Account", edit_user_path(current_user)
+        %li.divider
+        %li= link_to 'Logout', home_logout_path
