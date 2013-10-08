@@ -3,11 +3,11 @@ require 'cancan/matchers'
 
 describe "User" do
 	describe "abilities" do
-		let(:user) { FactoryGirl.build(:user) }
+		let(:user) { FactoryGirl.build(:user, id: 1) }
 		subject(:ability){ UserAbility.new(user) }
 
 		context "when is creating punches" do
-			it { should be_able_to(:manage, Punch.new(company_id: user.company.id, user: User.new(company_id: user.company.id))) }
+			it { should be_able_to(:manage, Punch.new(company_id: user.company.id, user_id: user.id)) }
 			it { should_not be_able_to(:manage, Punch.new) }
 		end
 
@@ -19,9 +19,13 @@ describe "User" do
 			it { should_not be_able_to(:manage, Project.new) }
 		end
 
-		context "when is trying to read Users" do
+		context "when is trying to perform operations on Users" do
 			it { should be_able_to(:read, User.new(company_id: user.company.id)) }
 			it { should_not be_able_to(:read, User.new) }
+			it { should be_able_to(:edit, User.new(id: user.id)) }
+			it { should_not be_able_to(:edit, User.new) }
+			it { should be_able_to(:update, User.new(id: user.id)) }
+			it { should_not be_able_to(:update, User.new) }
 		end
 
 		context "when is managing Comments" do
