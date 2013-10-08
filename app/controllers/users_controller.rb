@@ -10,7 +10,8 @@ class UsersController < InheritedResources::Base
 	end
 private
 	def user_params
-		allow = [:name, :email, :hour_cost]
+		allow = [:name, :email]
+		allow << :hour_cost if current_user.is_admin?
 		params.require(:user).permit(allow)
 	end
 end
