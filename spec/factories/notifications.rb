@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :notification do
-    user nil
-    message "MyString"
+    user
+    from_user_id { FactoryGirl.create(:user, company: user.company).id }
+    message "My Message"
     read false
   end
 end
