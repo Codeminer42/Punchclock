@@ -89,3 +89,10 @@ $(function(){
 
   requestAnimFrame(animate);
 });
+
+function markAsRead(id, count){
+  var notificationsText = count > 0 ? "Notifications(" + count + ")" : "Notifications";
+  var element = "n-rd-" + id;
+  document.getElementById(element).remove();
+  document.getElementById("n-r-count").innerHTML = notificationsText;
+}

@@ -1,3 +1,4 @@
+- notifications = current_user.notifications.where("read IS NULL")[0,5]
 %nav{class: "navbar navbar-default", role: "navigation"}
   .navbar-header
     %button.navbar-toggle{'data-toggle' => 'collapse', 'data-tagert' => '.navbar-ex1-collapse'}
@@ -20,6 +21,18 @@
       %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
         %li= link_to 'All', users_path
         %li= link_to 'Invite', new_user_invitation_path
+    %li.dropdown
+      %a{id:"n-r-count", class: '','data-toggle' => 'dropdown', 'href' => '#'}
+        = "Notifications"
+        = "(#{notifications.count})" if notifications.count > 0
+        %span.caret
+      %ul{class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel'}
+        - notifications.each do |n|
+          %li{id: "n-rd-#{n.id}"}
+            = link_to n.message.truncate(45), n.event_path
+            = link_to image_tag('destroy.png'), notification_path(n, notification: { read: true } ), remote: true, method: :put, onclick: "markAsRead(#{n.id})"
+        %li.divider
+        %li= link_to 'Show All', notification_index_path
     %li.dropdown
       %a{class: '','data-toggle' => 'dropdown', 'href' => '#'}
         Settings
