@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe "User" do
-	describe "abilities" do
-		let(:user) { FactoryGirl.build(:user, id: 1) }
-		subject(:ability){ UserAbility.new(user) }
+	let(:user) { FactoryGirl.build(:user, id: 1) }
+	subject(:ability){ UserAbility.new(user) }
 
+	describe "abilities" do
 		context "when is creating punches" do
 			it { should be_able_to(:manage, Punch.new(company_id: user.company.id, user_id: user.id)) }
 			it { should_not be_able_to(:manage, Punch.new) }
@@ -61,5 +61,12 @@ describe "User" do
 			it { should be_able_to(:manage, Comment.new(company_id: user.company_id)) }
 			it { should_not be_able_to(:manage, Comment.new) }
 		end
+	end
+
+	describe "shared abilities" do
+		it { should be_able_to(:read, Notification.new(user_id: user.id)) }
+		it { should_not be_able_to(:read, Notification.new) }
+		it { should be_able_to(:update, Notification.new(user_id: user.id)) }
+		it { should_not be_able_to(:update, Notification.new) }
 	end
 end

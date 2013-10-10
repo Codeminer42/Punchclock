@@ -89,3 +89,19 @@ $(function(){
 
   requestAnimFrame(animate);
 });
+
+function openNotificationCenter(){
+  document.getElementById("n-r-count").innerHTML = "Notifications <span class=\"caret\"/>";
+}
+
+function markAsRead(id){
+  document.getElementById("n-r-count").innerHTML = "Notifications <span class=\"caret\"/>";
+  var element = "n-rd-" + id;
+  document.getElementById(element).remove();
+  $.ajax({
+    type: 'PUT',
+    dataType: "json",
+    url: 'notification/' + id,
+    data: { notification: { read: true } }
+  })
+}

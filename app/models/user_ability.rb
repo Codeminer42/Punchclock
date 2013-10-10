@@ -17,5 +17,8 @@ class UserAbility
       can :update, User, id: user.id
       can :manage, Comment, user_id: user.id, company_id: user.company_id
   	end
+
+    can :read, Notification, user_id: user.id
+    can :update, Notification, user_id: user.id
   end
 end
