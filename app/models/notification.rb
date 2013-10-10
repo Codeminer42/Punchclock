@@ -7,7 +7,7 @@ class Notification < ActiveRecord::Base
     from_user_id.nil? ? nil : User.find(from_user_id)
   end
 
-private
+  private
   def record_default_event_path
     self.event_path = '#' if self.event_path.nil?
   end
