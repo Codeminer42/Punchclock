@@ -11,7 +11,7 @@ class NotificationController < InheritedResources::Base
     render action: :index
   end
 
-private
+  private
   def notification_params
     params.require(:notification).permit(:read)
   end

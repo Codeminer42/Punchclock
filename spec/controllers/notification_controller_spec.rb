@@ -10,9 +10,7 @@ describe NotificationController do
   end
 
   describe "PUT update" do
-    before do
-      Notification.stub(find: notification)
-    end
+    before { Notification.stub(find: notification) }
 
     let(:params) {
       {
