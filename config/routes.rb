@@ -15,7 +15,7 @@ Punchclock::Application.routes.draw do
   resources :users, except: [:new, :create]
   resources :projects, except: [:show]
   resources :company, only: [:edit, :update]
-  resources :notification, only: [:index]
+  resources :notification, only: [:index, :update]
 
   match "users/account/password/edit", to: 'passwords#edit', via: :get
   match "users/account/password/update", to: 'passwords#update', via: [:patch, :put]
