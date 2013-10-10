@@ -66,5 +66,7 @@ describe "User" do
 	describe "shared abilities" do
 		it { should be_able_to(:read, Notification.new(user_id: user.id)) }
 		it { should_not be_able_to(:read, Notification.new) }
+		it { should be_able_to(:update, Notification.new(user_id: user.id)) }
+		it { should_not be_able_to(:update, Notification.new) }
 	end
 end

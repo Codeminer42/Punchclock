@@ -19,5 +19,6 @@ class UserAbility
   	end
 
     can :read, Notification, user_id: user.id
+    can :update, Notification, user_id: user.id
   end
 end
