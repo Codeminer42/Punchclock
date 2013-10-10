@@ -8,6 +8,7 @@ class NotificationController < InheritedResources::Base
 
   def update
     @notification.update(notification_params)
+    render action: :index
   end
 
 private
