@@ -25,7 +25,7 @@ describe NotificationController do
 
       notification.should_receive(:update).and_return(true)
       put :update, params
-      response.code.should eq '200'
+      response.should be_successful
     end
   end
 end
