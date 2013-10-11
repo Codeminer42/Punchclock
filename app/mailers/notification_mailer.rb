@@ -21,4 +21,10 @@ class NotificationMailer < ActionMailer::Base
   	@new_password = new_password
   	mail(to:@user.email, subject:"Punchclock - Your password has been modified")
   end
+
+  def notify_admin_punches_pending(admin, user)
+    @admin = admin
+    @user = user
+    mail(to:@admin.email, subject:"Punchclock - #{user.name} still inactive")
+  end
 end

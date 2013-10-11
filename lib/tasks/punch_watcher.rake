@@ -14,6 +14,7 @@ namespace :watcher do
             admins.each do |a|
               puts "Notifying #{a.name}"
               a.notifications.create(message: "#{user.name} still inactive after #{deltaTime.round} days", from_user_id: user.id, event_path: "users/#{user.id}")
+              NotificationMailer.notify_admin_punches_pending(a, user).deliver
             end
           end
         end
