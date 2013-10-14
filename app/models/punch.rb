@@ -12,7 +12,7 @@ class Punch < ActiveRecord::Base
     (self.to - self.from) / 3600
   end
 
-private
+  private
   def check_time
     if self.from.present? && self.to.present?
       if self.to < self.from
@@ -21,6 +21,10 @@ private
 
       if self.from.to_date != self.to.to_date
         errors.add(:to, "can't be in diferent dates")
+      end
+
+      if Time.now < self.to.to_date
+        errors.add(:to, "can't be in the future, take you time machine and go back")
       end
     end
   end
