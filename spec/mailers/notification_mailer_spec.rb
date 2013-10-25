@@ -126,5 +126,31 @@ describe NotificationMailer do
         mail.body.encoded.should match(new_password)
       end
     end
+
+    context "when notify admin: user dont punch makes 7 days or more" do
+      let(:user) { FactoryGirl.build(:user) }
+      let(:admin) { FactoryGirl.build(:user_admin, company_id: user.company_id) }
+      let(:mail) { NotificationMailer.notify_admin_punches_pending(admin, user) }
+
+      it 'renders the subject' do
+        mail.subject.should == "Punchclock - #{user.name} still inactive"
+      end
+
+      it 'renders the receiver email' do
+        mail.to.should == [admin.email]
+      end
+
+      it 'renders the sender email' do
+        mail.from.should == ['do-not-reply@punchclock.com']
+      end
+
+      it 'assigns user @name' do
+        mail.body.encoded.should match(user.name)
+      end
+
+      it 'assigns admin @name' do
+        mail.body.encoded.should match(admin.name)
+      end
+    end
   end
 end

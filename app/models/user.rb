@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable, :registerable, :confirmable, :invitable
   has_many :punches
+  has_many :notifications
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
   validates :company, presence: true
