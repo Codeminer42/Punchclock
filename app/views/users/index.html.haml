@@ -7,4 +7,6 @@
     %br
     = "Administrador: #{u.is_admin? ? 'sim' : 'não'}"
     %br
-    = "Cost: #{u.hour_cost} R$/h" if current_user.is_admin?
+    - if current_user.is_admin?
+      = "Cost: #{u.hour_cost} R$/h"
+      = render 'users/shared/options', user: u
