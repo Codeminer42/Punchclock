@@ -37,7 +37,7 @@
       <td colspan="3">
         <input class="datepicker" name="when_day" size="10"
                value="<%= @punch.from.present? ?
-               l(@punch.from, format: '%Y-%m-%d') : '' %>"/>
+               l(@punch.from, format: '%Y-%m-%d') : "#{Time.now.strftime("%Y-%m-%d")}" %>"/>
         <%= image_tag 'calendar.png' %>
       </td>
     </tr>
