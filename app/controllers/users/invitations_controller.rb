@@ -3,9 +3,11 @@ class Users::InvitationsController < Devise::InvitationsController
 	def create
     super
     #skip validations
-    self.resource.update_attribute(:name, resource_params[:email].split('@').first)
-    self.resource.update_attribute(:is_admin, false)
-    self.resource.update_attribute(:company_id, current_user.company_id)
+    if resource.errors.blank?
+      self.resource.update_attribute(:name, resource_params[:email].split('@').first)
+      self.resource.update_attribute(:is_admin, false)
+      self.resource.update_attribute(:company_id, current_user.company_id)
+    end
 	end
 
 protected
