@@ -24,7 +24,7 @@ class Punch < ActiveRecord::Base
       end
 
       if Time.now < self.to.to_date
-        errors.add(:to, "can't be in the future, take you time machine and go back")
+        errors.add(:to, "can't be in the future, take your time machine and go back")
       end
     end
   end
