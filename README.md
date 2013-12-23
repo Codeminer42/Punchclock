@@ -7,7 +7,7 @@ A simple electronic punch clock to track hours spent on projects.
 
 ## Rails
 
-This app uses Rails 4.0.0 and Postgres >= 9.1
+This app uses Rails 4.0.2 and Postgres >= 9.1
 
 ## Installing
 
