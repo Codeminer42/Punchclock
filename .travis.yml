@@ -1,5 +1,5 @@
 language: ruby
-bundler_args: --without development
+bundler_args: --without development production
 rvm:
   - 2.0.0
 before_script:
