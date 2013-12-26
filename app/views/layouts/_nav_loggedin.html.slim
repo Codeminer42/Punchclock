@@ -1,4 +1,4 @@
--if current_user.is_admin?
+- if current_user.is_admin?
   = render 'layouts/header/admin_header'
--else
+- else
   = render 'layouts/header/user_header'

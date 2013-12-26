@@ -1,4 +1,4 @@
 - messages.each do |m|
-	p class: "alert alert-danger" 
-		= m
-		a.close 'data-dismiss' => 'alert', 'href' => '#'  &times;
+  p(class="alert alert-danger")
+    = m
+    a.close(data-dismiss= 'alert' href= '#') &times;
