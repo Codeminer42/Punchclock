@@ -1,17 +1,17 @@
-%h2 Finish Signup
+h2 Finish Signup
 
 = form_for resource, as: resource_name, url: invitation_path(resource_name), :html => { :method => :put } do |f|
 	= render "shared/errors", messages: resource.errors.full_messages
 	= f.hidden_field :invitation_token
 
-	%p= f.label :name
+	p= f.label :name
 	= f.text_field :name
 
-	%p= f.label :password
+	p= f.label :password
 	= f.password_field :password
 
-	%p= f.label :password_confirmation
+	p= f.label :password_confirmation
 	= f.password_field :password_confirmation
 
-	%br
+	br
 	= f.submit 'OK'

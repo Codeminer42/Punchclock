@@ -1,0 +1,21 @@
+nav class: "navbar navbar-inverse", role: "navigation" 
+  .navbar-header
+    button type: "button", class: "navbar-toggle", 'data-toggle' => "collapse", 'data-target' => ".navbar-ex1-collapse" 
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-ba
+      span.icon-ba
+    .navbar-brand
+      = image_tag current_user.company.avatar.url, width: 48, height: 48
+      = link_to "Punchclock - #{current_user.company.name}", root_path
+  ul class: "nav navbar-nav navbar-right" 
+    li= link_to 'Punches', punches_path
+    li= link_to 'Users', users_path
+    li.dropdown
+      a class: '','data-toggle' => 'dropdown', 'href' => '#' 
+        | Settings
+        span.caret
+      ul class: 'dropdown-menu', 'role' => 'menu', 'aria-labelledby' => 'dLabel' 
+        li= link_to "Account", edit_user_path(current_user)
+        li.divider
+        li= link_to 'Logout', home_logout_path
