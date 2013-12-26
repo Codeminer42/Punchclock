@@ -40,6 +40,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'letter_opener'
+  gem 'quiet_assets'
   gem 'rb-inotify', :require => false
   gem 'thin'
 end
