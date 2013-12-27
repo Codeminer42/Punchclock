@@ -1,4 +1,4 @@
-%h2 Edit User
+h2 Edit User
 = render 'users/shared/form', user: @user, url_path: user_path
 - if current_user.id == @user.id
 	= link_to 'Change Password', users_account_password_edit_path, class: 'btn btn-default'

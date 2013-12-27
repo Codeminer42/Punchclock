@@ -1,12 +1,12 @@
 - @users.each do |u|
-  %div
+  div
     = gravatar_for(u)
     = link_to "#{u.name}", current_user.is_admin? ? edit_user_path(u) : user_path(u)
-    %br
+    br
     = u.email
-    %br
+    br
     = "Administrador: #{u.is_admin? ? 'sim' : 'não'}"
-    %br
+    br
     - if current_user.is_admin?
       = "Cost: #{u.hour_cost} R$/h"
       = render 'users/shared/options', user: u

@@ -1,7 +1,0 @@
-.projects-header
-	.btn-group= link_to 'New Project', new_project_path, :class => 'btn btn-primary'
-%ul
-	- @projects.each do |p|
-		%li
-			= link_to "#{p.name}", edit_project_path(p)
-			= link_to image_tag('destroy.png'), p, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{p.id}"

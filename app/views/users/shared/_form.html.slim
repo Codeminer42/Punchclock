@@ -1,0 +1,14 @@
+= form_for(user, url: url_path) do |f|
+  = render "shared/errors", messages: user.errors.full_messages
+
+  div= f.label :name
+  div= f.text_field :name
+
+  div= f.label :email
+  div= f.email_field :email
+
+  - if current_user.is_admin?
+    div= f.label :hour_cost
+    div= f.text_field :hour_cost
+
+  div= f.submit
