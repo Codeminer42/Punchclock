@@ -6,8 +6,7 @@ html
     = javascript_include_tag "application"
     = csrf_meta_tags
   body class="#{user_signed_in? ? 'signed-in' : 'signed-out'}"
-    .page
+    .container
       = render 'navigation'
-      .page-body
-        = render 'shared/flash'
-        = yield
+      = render 'shared/flash'
+      = yield

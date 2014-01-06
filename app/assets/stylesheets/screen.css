@@ -7,14 +7,6 @@
   font-size: small;
   margin: 0;
 }
-.page {
-  border-radius: 16px;
-  margin: 0 auto;
-  width: 960px;
-}
-.page-body {
-  padding: 16px 32px 32px;
-}
 .page-header {
   border-bottom: 1px solid gray;
   line-height: 56px;

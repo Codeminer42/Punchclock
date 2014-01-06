@@ -1,7 +1,7 @@
-.punches-header
-  .punches-header-1
+.row
+  .col-md-3
     .btn-group= link_to 'Punch', new_punch_path, :class => 'btn btn-primary'
-  .punches-header-2
+  .col-md-6
     = search_form_for @search do |f|
       div
         | Filter
