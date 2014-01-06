@@ -71,60 +71,6 @@ table {
   font-size: large;
   padding: 16px 32px;
 }
-
-/* PUNCHES */
-#punch_search select.form-control {
-  display: inline;
-  width: auto;
-}
-#q_from_gteq_1i {
-  width: 70px;
-}
-#q_from_gteq_2i {
-  width: 100px;
-}
-#q_project_id_eq {
-
-}
-
-.punch-button {
-  background-color: green;
-  color: black;
-  display: inline-block;
-  padding: 2px 8px;
-  text-decoration: none;
-}
-.punch-form-title {
-  margin: 0 auto;
-  width: 640px;
-}
-.punch-form-table {
-  margin: 32px auto;
-  width: 640px;
-}
-.punch-form-table .actions {
-  text-align: right;
-}
-.punches-header {
-  line-height: 48px;
-  margin-bottom: 24px;
-}
-.punches-header br {
-  clear: both;
-}
-.punches-header-1 {
-  float: left;
-  width: 245px;
-}
-.punches-header-2 {
-  float: left;
-  text-align: right;
-  width: 645px;
-}
-.punches-header-2 form {
-  margin: 0;
-}
-
 .signed-in .page {
   background-color: white;
 }
