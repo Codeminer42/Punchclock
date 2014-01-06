@@ -5,9 +5,9 @@ html
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  body(class="#{user_signed_in? ? 'signed-in' : 'signed-out'}")
+  body class="#{user_signed_in? ? 'signed-in' : 'signed-out'}"
     .page
-      = render 'layouts/navigation'
+      = render 'navigation'
       .page-body
         = render 'shared/flash'
         = yield
