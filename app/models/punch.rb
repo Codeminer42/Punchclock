@@ -1,11 +1,16 @@
 class Punch < ActiveRecord::Base
+
   belongs_to :project
   belongs_to :user
   belongs_to :company
+
   has_one :comment
-  validates :from, :to, :project_id, :user_id, :company_id, presence: true
+
+  validates_presence_of :from, :to, :project_id, :user_id, :company_id
   validate :check_time
+
   mount_uploader :attachment, AttachmentUploader
+
   accepts_nested_attributes_for :comment, allow_destroy: true
 
   def delta
