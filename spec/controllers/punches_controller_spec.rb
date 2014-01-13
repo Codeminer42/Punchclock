@@ -18,11 +18,9 @@ describe PunchesController do
           expect(Punch).to receive(:search).with(nil).and_return(search)
           get :index
         end
-
-
       end
 
-      context "withou search" do
+      context "without search" do
         it "renders selected month" do
           from_params = {
             "from_gteq(1i)" => '2013',
@@ -51,14 +49,21 @@ describe PunchesController do
         controller.stub(load_and_authorize_resource: true)
       end
 
-      it "builds comment" do
-        params = {
-          id: 1
-        }
+      it "renders new template" do
+        get :new
+        response.should render_template :new
+      end
 
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
+      context "when has a last project punched" do
+        before do
+          Punch.stub(:find_last_by_user_id).with(punch.user_id) { punch }
+        end
+
+        it "builds punch with last project punched" do
+          get :new
+          last_project_id = Punch.find_last_by_user_id(punch.user_id).project_id
+          punch.project_id.should eq last_project_id
+        end
       end
     end #END GET NEW
 
