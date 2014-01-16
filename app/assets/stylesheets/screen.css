@@ -74,3 +74,15 @@ table {
 .signed-in .page {
   background-color: white;
 }
+
+#filter-form {
+  padding: 30px 0;
+}
+
+#filter-form  .filter-form-col {
+  text-align: right;
+}
+
+#filter-form  .filter-form-col .form-group {
+  margin: 0 5px;
+}

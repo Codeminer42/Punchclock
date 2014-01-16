@@ -1,14 +1,14 @@
-.row
-  .col-md-3
+.row#filter-form
+  .col-md-2
     .btn-group= link_to 'Punch', new_punch_path, :class => 'btn btn-primary'
-  .col-md-6
+  .col-md-10.pull-right.filter-form-col
     = simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f|
-      = f.input :since, as: :datepicker
-      = f.input :until, as: :datepicker
-      = f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: 'All'
+      = f.input :since, as: :datepicker, label: false, placeholder: 'Since'
+      = f.input :until, as: :datepicker, label: false, placeholder: 'Until'
+      = f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: 'All projects', label: false
       - if current_user.is_admin?
-        = f.input :user_id, collection: current_user.company.users.order(:name), include_blank: 'All'
-      = f.submit 'Filtrar', class: 'btn btn-default'
+        = f.input :user_id, collection: current_user.company.users.order(:name), include_blank: 'All users', label: false
+      = f.button :button, 'Filtrar', class: 'btn btn-default'
   br
 table(class='table table-striped')
   colgroup
