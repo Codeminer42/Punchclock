@@ -1,5 +1,4 @@
 class Punch < ActiveRecord::Base
-
   belongs_to :project
   belongs_to :user
   belongs_to :company
@@ -12,6 +11,9 @@ class Punch < ActiveRecord::Base
   mount_uploader :attachment, AttachmentUploader
 
   accepts_nested_attributes_for :comment, allow_destroy: true
+
+  scope :since, lambda {|time| where("punches.from >= ?", time) }
+  scope :until, lambda {|time| where("punches.to <= ?", time) }
 
   def delta
     (self.to - self.from) / 3600

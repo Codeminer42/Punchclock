@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe PunchesController do
-  login_user
-  let(:user) { double(:current_user) }
+  let(:user) { build_stubbed(:user) }
+
+  before do
+    controller.stub(:authenticate_user!)
+    controller.stub(:current_user).and_return(user)
+  end
 
   context "when user is admin" do
     before do
@@ -18,8 +22,6 @@ describe PunchesController do
           expect(Punch).to receive(:search).with(nil).and_return(search)
           get :index
         end
-
-
       end
 
       context "withou search" do

@@ -2,20 +2,13 @@
   .col-md-3
     .btn-group= link_to 'Punch', new_punch_path, :class => 'btn btn-primary'
   .col-md-6
-    = search_form_for @search do |f|
-      div
-        | Filter
-        = f.date_select :from_gteq, { discard_day: true,
-            end_year: Time.now.year }, { class: 'form-control' }
-        = f.collection_select :project_id_eq, current_user.company.projects.order(:name),
-            :id, :name, { prompt: false,
-            include_blank: 'All' },
-            { class: 'form-control' }
-        = f.collection_select :user_id_eq, current_user.company.users.order(:name),
-            :id, :name, { prompt: false,
-            include_blank: 'All' },
-            { class: 'form-control' } if current_user.is_admin?
-        = f.submit 'OK', :class => 'btn btn-default'
+    = simple_form_for @punches_filter_form, url: punches_path, method: :get do |f|
+      = f.input :since, as: :datepicker
+      = f.input :until, as: :datepicker
+      = f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: 'All'
+      - if current_user.is_admin?
+        = f.input :user_id, collection: current_user.company.users.order(:name), include_blank: 'All'
+      = f.submit 'Filtrar', class: 'btn btn-default'
   br
 table(class='table table-striped')
   colgroup

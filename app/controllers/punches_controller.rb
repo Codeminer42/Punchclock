@@ -1,18 +1,13 @@
 class PunchesController < InheritedResources::Base
+
   before_action :authenticate_user!
   load_and_authorize_resource except: [:create]
   before_action :user_projects
 
   def index
-    if params[:q].present? && params[:q][:"from_gteq(1i)"]
-      t = Time.new(params[:q][:"from_gteq(1i)"].to_i,
-                   params[:q][:"from_gteq(2i)"].to_i,
-                   params[:q][:"from_gteq(3i)"].to_i).end_of_month
-    else
-      t = Time.now.end_of_month
-    end
+    @punches_filter_form = PunchesFilterForm.new(params[:punches_filter_form])
+    @search = @punches_filter_form.apply_filters(scopped_punches).search(params[:q])
 
-    @search = scopped_punches.where("\"to\" < ?", t).search(params[:q])
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
