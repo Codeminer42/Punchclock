@@ -1,5 +1,5 @@
 - notifications = current_user.notifications.where("read IS NULL")[0,5]
-nav class="navbar navbar-default" role= "navigation"
+nav class="navbar navbar-inverse" role= "navigation"
   .navbar-header
     button.navbar-toggle data-toggle= 'collapse' data-tagert= '.navbar-ex1-collapse'
       span.sr-only Toggle navigation
@@ -7,7 +7,7 @@ nav class="navbar navbar-default" role= "navigation"
       span.icon-bar
       span.icon-bar
     a.navbar-brand href= root_path
-      = image_tag current_user.company.avatar.url, width: 48, height: 48
+      /= image_tag current_user.company.avatar.url, width: 48, height: 48
       = "Punchclock - #{current_user.company.name}"
   ul class= 'nav navbar-nav navbar-right'
     li
