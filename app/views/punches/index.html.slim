@@ -2,7 +2,7 @@
   .col-md-3
     .btn-group= link_to 'Punch', new_punch_path, :class => 'btn btn-primary'
   .col-md-6
-    = simple_form_for @punches_filter_form, url: punches_path, method: :get do |f|
+    = simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f|
       = f.input :since, as: :datepicker
       = f.input :until, as: :datepicker
       = f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: 'All'
