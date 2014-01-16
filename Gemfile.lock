@@ -135,9 +135,6 @@ GEM
     hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
-    immigrant (0.1.5)
-      activerecord (>= 3.0)
-      foreigner (>= 1.2.1)
     inherited_resources (1.4.1)
       has_scope (~> 0.6.0.rc)
       responders (~> 1.0.0.rc)
@@ -328,7 +325,6 @@ DEPENDENCIES
   forgery
   guard
   guard-rspec
-  immigrant
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails
