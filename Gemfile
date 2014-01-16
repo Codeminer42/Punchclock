@@ -42,6 +42,7 @@ group :development do
   gem 'certified'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'immigrant'
   gem 'letter_opener'
   gem 'quiet_assets'
   gem 'rb-inotify', :require => false
