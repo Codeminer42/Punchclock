@@ -114,6 +114,8 @@ GEM
     faker (1.2.0)
       i18n (~> 0.5)
     ffi (1.9.0)
+    foreigner (1.6.0)
+      activerecord (>= 3.0.0)
     forgery (0.5.0)
     formatador (0.2.4)
     formtastic (2.3.0.rc2)
@@ -319,6 +321,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   faker
+  foreigner
   forgery
   guard
   guard-rspec
