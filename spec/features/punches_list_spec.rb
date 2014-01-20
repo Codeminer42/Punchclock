@@ -38,10 +38,10 @@ feature "Punches list" do
   end
 
   scenario "filter punches" do
-    select Time.now.year.to_s, from: 'q_from_gteq_1i'
-    select 'January', from: 'q_from_gteq_2i'
-    select other_project.name, from: 'q_project_id_eq'
-    click_button 'OK'
+    fill_in 'punches_filter_form_since', with: '17/01/2014'
+    fill_in 'punches_filter_form_until', with: '20/01/2014'
+    select other_project.name, from: 'punches_filter_form_project_id'
+    click_button 'Filtrar'
     expect(page).to have_content('0:00')
   end
 end
