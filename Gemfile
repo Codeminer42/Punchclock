@@ -25,9 +25,6 @@ gem 'settingslogic'
 gem 'simple_form'
 gem 'slim'
 gem 'uglifier', '>= 1.3.0'
-
-# ActiveAdmin
-# https://github.com/gregbell/active_admin/pull/2326
 gem 'activeadmin', github: 'gregbell/active_admin'
 
 group :test do
