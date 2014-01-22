@@ -14,7 +14,7 @@ class PunchesController < InheritedResources::Base
   end
 
   def new
-    @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id)
+    @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id, project: last_user_project)
     @punch.build_comment
   end
 
@@ -46,7 +46,7 @@ class PunchesController < InheritedResources::Base
     end
   end
 
-private
+  private
   def sanitized_params
     punch_data = {}
 
@@ -103,5 +103,9 @@ private
 
   def scopped_punches
     current_user.is_admin? ? current_user.company.punches : current_user.punches
+  end
+
+  def last_user_project
+    Punch.where(user_id: current_user).last.try(:project)
   end
 end
