@@ -1,6 +1,10 @@
 - if notice.present? || alert.present?
   .flash-messages
     - if notice.present?
-      p(class="alert alert-info")= notice
+      p(class="alert alert-info")
+        = notice
+        a.close(data-dismiss= 'alert' href= '#') &times;
     - if alert.present?
-      p(class="alert alert-danger")= alert
+      p(class="alert alert-danger")
+        = alert
+        a.close(data-dismiss= 'alert' href= '#') &times;
