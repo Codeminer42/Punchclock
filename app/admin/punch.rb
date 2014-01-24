@@ -47,6 +47,12 @@ ActiveAdmin.register Punch do
       params.permit(punch: [:from, :to, :user_id, :project_id, :company_id])
     end
 
+    def index
+
+      params["q"]["from_lteq"] += " 23:59:59.999999" unless params['q'].blank? && params[ 'q'][ 'from_lteq'].blank?
+      index!
+    end
+
     def new
       @punch = Punch.new
       @punch.company_id = current_admin_user.company.id unless current_admin_user.is_super?
@@ -63,4 +69,8 @@ ActiveAdmin.register Punch do
     column('Delta')   { |punch| "#{time_format(punch.delta)}" }
   end
 
+  filter :project
+  filter :user
+  filter :company
+  filter :from, label: 'Interval', as: :date_range
 end
