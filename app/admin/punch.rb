@@ -48,8 +48,7 @@ ActiveAdmin.register Punch do
     end
 
     def index
-
-      params["q"]["from_lteq"] += " 23:59:59.999999" unless params['q'].blank? && params[ 'q'][ 'from_lteq'].blank?
+      params["q"]["from_lteq"] += " 23:59:59.999999" if params['q'].respond_to? 'from_lteq'
       index!
     end
 
