@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: exception.message
   end
 
+=begin
   def current_ability
     if request.fullpath =~ /\/admin/
       @current_ability ||= AdminAbility.new(current_admin_user)
@@ -14,4 +15,5 @@ class ApplicationController < ActionController::Base
       @current_ability ||= UserAbility.new(current_user)
     end
   end
+=end
 end

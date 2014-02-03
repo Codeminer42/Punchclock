@@ -214,10 +214,10 @@ ActiveAdmin.setup do |config|
 
   # Use CAN CAN to manage authorizations
   #
-  config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  # config.authorization_adapter = ActiveAdmin::CanCanAdapter
 
   # Use Ability Class
   #
-  config.cancan_ability_class = "AdminAbility"
+  # config.cancan_ability_class = "AdminAbility"
 
 end
