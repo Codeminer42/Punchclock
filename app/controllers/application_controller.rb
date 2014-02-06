@@ -6,14 +6,4 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, alert: exception.message
   end
-
-=begin
-  def current_ability
-    if request.fullpath =~ /\/admin/
-      @current_ability ||= AdminAbility.new(current_admin_user)
-    else
-      @current_ability ||= UserAbility.new(current_user)
-    end
-  end
-=end
 end
