@@ -15,10 +15,14 @@ Punchclock::Application.routes.draw do
   resources :notification, only: [:index, :update]
 
   authenticated :user do
-    root to: 'punches#index', as: :authenticated_root
+    root to: 'punches#index', as: :authenticated_user
   end
 
-  unauthenticated do
+  authenticated :admin_user do
+    root to: 'admin/dashboard#index', as: :authenticated_super
+  end
+
+  unauthenticated :user do
     root to: 'home#index'
   end
 
