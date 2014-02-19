@@ -44,27 +44,8 @@ feature "Punches filter form" do
   end
 
   context "when the user is a regular user" do
-    let!(:user) { create_logged_in_user(company_id: cscenario "filling only the 'since' field" do
-        visit "/" 
-        
-
-        click_button 'Filtrar'
-    end
+    let!(:user) { create_logged_in_user(company_id: company.id)} 
     
-    scenario "filling only the 'until' field" do
-        visit "/" 
-        
-
-        click_button 'Filtrar'
-    end
-
-    scenario "filling both the 'until' and 'since' fields" do
-        visit "/" 
-        
-
-        click_button 'Filtrar'
-    endompany.id) }
-
     scenario "the user filter field is not present" do
       visit "/" 
       expect(page).to_not have_selector "punches_filter_form[user_id]"
@@ -72,25 +53,49 @@ feature "Punches filter form" do
   end 
   
   context "date filters" do
+    let!(:user) { create_logged_in_user(company_id: company.id)}
+   
     scenario "filling only the 'since' field" do
         visit "/" 
-        
+          
+          within ("#filter-form") do
+            fill_in 'Until', with: '19/02/2014'   
+          end       
         
         click_button 'Filtrar'
     end
     
     scenario "filling only the 'until' field" do
-        visit "/" 
-        
+        visit "/"
 
+          within ("#filter-form") do
+            fill_in 'Until', with: '19/02/2014'
+          end
+          
         click_button 'Filtrar'
     end
 
     scenario "filling both the 'until' and 'since' fields" do
-        visit "/" 
-        
-
+      visit "/" 
+  
+      within ("#filter-form") do
+          fill_in 'Since', with: '01/02/2014'
+          fill_in 'Since', with: '27/02/2014'              
+       end 
+       
         click_button 'Filtrar'
     end
+
+#    scenario "if 'until'  greater than 'since'" do
+#        visit "/" 
+#
+#        within ("#filter-form") do
+#          fill_in 'Since', with: '19/02/2014'
+#          fill_in 'Until', with: '01/02/2014'
+#        end
+
+#        click_button 'Filtrar'
+#        expect(page).to_not have_selector ""
+#    end
   end
 end
