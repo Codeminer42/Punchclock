@@ -21,7 +21,7 @@ feature "Punches filter form" do
   context "when the user is admin" do
     let!(:user) { create_logged_in_user(is_admin: true, company_id: company.id) }
 
-    scenario "the user filter field is present" do    
+    scenario "the user filter field is present" do
       visit "/"
 
       within ("#filter-form") do
@@ -31,7 +31,7 @@ feature "Punches filter form" do
       click_button 'Filtrar'
     end
 
-    scenario "can filter the punches by a user" do    
+    scenario "can filter the punches by a user" do
       visit "/"
 
       within ("#filter-form") do
@@ -44,58 +44,46 @@ feature "Punches filter form" do
   end
 
   context "when the user is a regular user" do
-    let!(:user) { create_logged_in_user(company_id: company.id)} 
-    
+    let!(:user) { create_logged_in_user(company_id: company.id)}
+
     scenario "the user filter field is not present" do
-      visit "/" 
+      visit "/"
       expect(page).to_not have_selector "punches_filter_form[user_id]"
     end
-  end 
-  
+  end
+
   context "date filters" do
     let!(:user) { create_logged_in_user(company_id: company.id)}
-   
-    scenario "filling only the 'since' field" do
-        visit "/" 
-          
-          within ("#filter-form") do
-            fill_in 'Until', with: '19/02/2014'   
-          end       
-        
-        click_button 'Filtrar'
-    end
-    
-    scenario "filling only the 'until' field" do
-        visit "/"
 
-          within ("#filter-form") do
-            fill_in 'Until', with: '19/02/2014'
-          end
-          
-        click_button 'Filtrar'
+    scenario "filling only the 'since' field" do
+      visit "/"
+
+      within ("#filter-form") do
+        fill_in 'Until', with: '19/02/2014'
+      end
+
+      click_button 'Filtrar'
+    end
+
+    scenario "filling only the 'until' field" do
+      visit "/"
+
+      within ("#filter-form") do
+        fill_in 'Until', with: '19/02/2014'
+      end
+
+      click_button 'Filtrar'
     end
 
     scenario "filling both the 'until' and 'since' fields" do
-      visit "/" 
-  
+      visit "/"
+
       within ("#filter-form") do
-          fill_in 'Since', with: '01/02/2014'
-          fill_in 'Since', with: '27/02/2014'              
-       end 
-       
-        click_button 'Filtrar'
+        fill_in 'Since', with: '01/02/2014'
+        fill_in 'Since', with: '27/02/2014'
+      end
+
+      click_button 'Filtrar'
     end
-
-#    scenario "if 'until'  greater than 'since'" do
-#        visit "/" 
-#
-#        within ("#filter-form") do
-#          fill_in 'Since', with: '19/02/2014'
-#          fill_in 'Until', with: '01/02/2014'
-#        end
-
-#        click_button 'Filtrar'
-#        expect(page).to_not have_selector ""
-#    end
   end
 end
