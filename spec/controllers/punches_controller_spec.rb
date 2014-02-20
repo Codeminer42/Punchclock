@@ -142,7 +142,7 @@ describe PunchesController do
             expect(punch).to receive(:save).and_return(true)
             post :create, params
             expect(assigns(:punch)).to eq(punch)
-            expect(response).to redirect_to punch_url punch
+            expect(response).to redirect_to punches_path
           end
         end
 
@@ -180,7 +180,7 @@ describe PunchesController do
 
         it "updates" do
           put :update, params
-          expect(response).to redirect_to punch_path(punch)
+          expect(response).to redirect_to punches_path
         end
       end #END PUT UPDATE
     end #END METHODS
@@ -316,7 +316,7 @@ describe PunchesController do
             expect(punch).to receive(:save).and_return(true)
             post :create, params
             expect(assigns(:punch)).to eq(punch)
-            expect(response).to redirect_to punch_url punch
+            expect(response).to redirect_to punches_path
           end
         end
 
@@ -354,7 +354,7 @@ describe PunchesController do
 
         it "updates" do
           put :update, params
-          expect(response).to redirect_to punch_path(punch)
+          expect(response).to redirect_to punches_path
         end
       end #END PUT UPDATE
     end #END METHODS

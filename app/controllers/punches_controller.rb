@@ -29,7 +29,7 @@ class PunchesController < InheritedResources::Base
     authorize! :create, @punch
     if @punch.save
       flash[:notice] = "Punch created successfully!"
-      redirect_to punch_url(@punch)
+      redirect_to punches_path
     else
       render action: :new
     end
@@ -40,7 +40,7 @@ class PunchesController < InheritedResources::Base
     authorize! :update, Comment unless sanitized_params[:comments_attributes].nil?
     if @punch.update(sanitized_params)
       flash[:notice] = "Punch updated successfully!"
-      redirect_to punch_url(@punch)
+      redirect_to punches_path
     else
       render action: :edit
     end
