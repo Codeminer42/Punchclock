@@ -1,7 +1,9 @@
 module ApplicationHelper
   def time_format(hours)
-    hour = (hours - hours % 1).to_i.to_s
-    mins = ((hours % 1) * 60).to_i
+    hours *=  60
+    hours = hours.to_int
+    hour = (hours / 60).to_s
+    mins = (hours % 60)
     mins = mins < 10 ? ('0' + mins.to_s) : mins.to_s
     hour + ':' + mins
   end
