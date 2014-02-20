@@ -36,4 +36,15 @@ class User < ActiveRecord::Base
       end
     end
   end
+  def import_punches input_file
+    transaction do
+      CSV.foreach(input_file) {|line| import_punch *line }
+    end
+  end
+
+private
+  def import_punch from, to, project_name
+    project = Project.find_by name: project_name
+    self.punches.create! from: from, to: to, project: project, company: self.company
+  end
 end

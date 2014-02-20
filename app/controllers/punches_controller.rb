@@ -1,3 +1,5 @@
+require 'csv'
+
 class PunchesController < InheritedResources::Base
 
   before_action :authenticate_user!
@@ -11,6 +13,13 @@ class PunchesController < InheritedResources::Base
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result
     index!
+  end
+
+  def import_csv
+    current_user.import_punches import_csv_params[:archive].path
+    redirect_to punches_path, notice: "Finalized the importation of punches."
+  rescue Exception => e
+    redirect_to punches_path, alert: "Error while importing punches."
   end
 
   def new
@@ -107,5 +116,9 @@ class PunchesController < InheritedResources::Base
 
   def last_user_project
     Punch.where(user_id: current_user).last.try(:project)
+  end
+
+  def import_csv_params
+    params.require(:archive_csv).permit(:archive)
   end
 end

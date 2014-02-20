@@ -1,9 +1,10 @@
 require 'spec_helper.rb'
 
 describe User do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:project) { FactoryGirl.create(:project) }
+
   describe "#total_hours" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:project) { FactoryGirl.create(:project) }
     before do
       FactoryGirl.create(:punch, {
         from: Time.new(2001, 1, 1, 8, 0, 0, 0),
@@ -27,6 +28,16 @@ describe User do
 
     it "returns total of hours based in result" do
       expect(user.total_hours(result)).to eq(4)
+    end
+  end
+
+  describe '#import_punches' do
+    before { Project.stub(:find_by).and_return(project) }
+    let(:file) { Rails.root.join('spec/fixtures/punches.csv').to_s }
+
+    it 'create punches based on CSV file' do
+      expect{user.import_punches(file)}
+        .to change{Punch.count}.by(3)
     end
   end
 end
