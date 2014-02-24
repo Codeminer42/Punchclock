@@ -1,0 +1,57 @@
+<% notifications = current_user.notifications.where("read IS NULL")[0,5] %>
+<nav class="navbar navbar-inverse" role= "navigation">
+  <div class="navbar-header">
+    <button class="navbar-toggle" data-toggle='collapse' data-tagert='.navbar-ex1-collapse'>
+      <span class='sr-only Toggle navigation' > </span>
+      <span class='icon-bar' > </span>
+      <span class='icon-bar' > </span>
+      <span class='icon-bar' > </span>
+    </button>
+    <%= link_to "Punchclock - #{current_user.company.name}", root_path, class: "navbar-brand" %>
+    <%# image_tag current_user.company.avatar.url, width: 48, height: 48 %>
+  </div>
+    <ul class='nav navbar-nav navbar-right'>
+    <li>
+      <a> Dashboard </a>
+    </li>
+    <li> <%= link_to 'Projects', projects_path %> </li>
+    <li> <%= link_to 'Punches', punches_path %> </li>
+    <li class="dropdown">
+      <a class= '' data-toggle= 'dropdown' href= '#'>
+        Users
+        <span class="caret"> </span>
+      </a>
+      <ul class= 'dropdown-menu' role= 'menu' aria-labelledby= 'dLabel'>
+        <li> <%= link_to 'All', users_path %> </li>
+        <li> <%= link_to 'Invite', new_user_invitation_path %> </li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a id="n-r-count" class= '' data-toggle= 'dropdown' href= '#' onclick= 'openNotificationCenter()'>
+        Notifications
+        <%= "(#{notifications.count})" if notifications.count > 0 %>
+        <span class="caret"></span>
+      </a>
+      <ul class= 'dropdown-menu' role= 'menu' aria-labelledby= 'dLabel'>
+        <% notifications.each do |n| %>
+          <li id= "n-rd-#{n.id}" >
+            <%= link_to n.message.truncate(45), n.event_path, onclick: "markAsRead(#{n.id})" %>
+          </li>
+          <li class="divider"></li>
+          <li><%= link_to 'Show All', notification_index_path %> </li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a class= '' data-toggle= 'dropdown' href= '#'>
+        Settings
+        <span class="caret"> </span>
+      </a>
+      <ul class= 'dropdown-menu' role= 'menu' aria-labelledby= 'dLabel'>
+        <li><%= link_to "Account", edit_user_path(current_user) %>
+        <li><%= link_to "Company", edit_company_path(current_user.company) %> </li>
+        <li class="divider"></li>
+        <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %> </li>
+      </ul>
+    </li>
+</nav>
