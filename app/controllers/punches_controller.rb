@@ -1,5 +1,3 @@
-require 'csv'
-
 class PunchesController < InheritedResources::Base
 
   before_action :authenticate_user!
@@ -17,8 +15,8 @@ class PunchesController < InheritedResources::Base
 
   def import_csv
     current_user.import_punches import_csv_params[:archive].path
-    redirect_to punches_path, notice: "Finalized the importation of punches."
-  rescue Exception => e
+    redirect_to punches_path, notice: "Finished importing punches."
+  rescue => e
     redirect_to punches_path, alert: "Error while importing punches."
   end
 

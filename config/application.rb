@@ -1,4 +1,5 @@
 require File.expand_path('../boot', __FILE__)
+require 'csv'
 
 # Pick the frameworks you want:
 require "active_record/railtie"

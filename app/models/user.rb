@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
       end
     end
   end
+
   def import_punches input_file
     transaction do
       CSV.foreach(input_file) {|line| import_punch *line }
