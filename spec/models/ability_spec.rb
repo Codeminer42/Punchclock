@@ -3,7 +3,7 @@ require 'cancan/matchers'
 
 describe "User" do
 	let(:user) { FactoryGirl.build(:user, id: 1) }
-	subject(:ability){ UserAbility.new(user) }
+	subject(:ability){ Ability.new(user) }
 
 	describe "abilities" do
 		context "when is creating punches" do
@@ -35,7 +35,7 @@ describe "User" do
 
 	describe "admin abilities" do
 		let(:user) { FactoryGirl.build(:user, is_admin: true) }
-		subject(:ability){ UserAbility.new(user) }
+		subject(:ability){ Ability.new(user) }
 
 		context "when is creating projects" do
 			it { should be_able_to(:manage, Project.new(company_id: user.company.id)) }
