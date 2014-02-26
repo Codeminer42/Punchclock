@@ -54,7 +54,7 @@
 
   <tbody>
     <% @punches.each do |punch| %>
-      <tr>
+      <tr class="user-punch">
         <td>
           <%= gravatar_for punch.user, size: 40 %>
           <%= link_to punch.user.name, user_path(punch.user) %>
@@ -75,7 +75,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
-        strong TOTAL:
+        <strong>TOTAL:</strong>
         <%= time_format(current_user.total_hours(@punches)) %>
       </td>
     </tr>
