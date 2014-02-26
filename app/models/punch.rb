@@ -16,15 +16,15 @@ class Punch < ActiveRecord::Base
   scope :until, lambda {|time| where("punches.to <= ?", time) }
 
   def delta
-    self.to - self.from
+    (self.to - self.from)
   end
-
+  
   def self.total
     self.all.reduce(0) do |total, punch|
-      total += punch.delta 
-    end
+      total += punch.delta
+    end 
   end
-    
+
   private
   def check_time
     if self.from.present? && self.to.present?

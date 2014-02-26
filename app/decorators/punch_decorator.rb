@@ -1,22 +1,33 @@
 class PunchDecorator < ApplicationDecorator
   delegate_all
 
+  def date
+    localize_date(object.to)
+  end
+
   def to
-    localize_date_time(object.to)
+    localize_time(object.to)
   end
 
   def from
-    localize_date_time(object.from)
+    localize_time(object.from)
   end
 
   def delta
-    I18n.l Time.at(object.delta), format: '%H:%M'
+   TimeDelta.new(object.delta)
   end
 
   private
 
   def localize_date_time(datetime)
-    I18n.l datetime, format: :short
+    h.l datetime, format: :short
+  end
+
+  def localize_time(datetime)
+    h.l datetime, format: "%H:%M"
   end
   
+  def localize_date(datetime)
+    h.l datetime, format: :short
+  end
 end
