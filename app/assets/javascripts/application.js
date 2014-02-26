@@ -15,6 +15,10 @@ window.requestAnimFrame = (function(){
 
 $(function(){
 
+  $(".file-field-import-csv").change(function() {
+      $(this).parents("form").submit();
+  });
+
   $('input.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
 
   if ($('#clock-canvas').length == 0) {
