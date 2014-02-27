@@ -7,10 +7,6 @@ class TimeDelta < Numeric
     "%02d:%02d" % [@hours, @minutes]
   end
 
-  def to_a
-  	[@hours, @minutes]
-  end
-
   def inspect
     to_s
   end
