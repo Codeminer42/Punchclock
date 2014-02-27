@@ -14,7 +14,7 @@ class PunchDecorator < ApplicationDecorator
   end
 
   def delta
-   TimeDelta.new(object.delta)
+   h.secs_to_formated_hour(object.delta)
   end
 
   private
