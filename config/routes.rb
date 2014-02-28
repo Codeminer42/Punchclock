@@ -4,22 +4,27 @@ Punchclock::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
-
+  resources :punches
   resources :users, except: [:new, :create]
   resources :projects, except: [:show]
   resources :company, only: [:edit, :update]
   resources :notification, only: [:index, :update]
 
   authenticated :user do
-    root to: 'punches#index', as: :authenticated_root
+    root to: 'punches#index', as: :authenticated_user
   end
 
-  unauthenticated do
+  authenticated :admin_user do
+    root to: 'admin/dashboard#index', as: :authenticated_super
+  end
+
+  unauthenticated :user do
     root to: 'home#index'
   end
 

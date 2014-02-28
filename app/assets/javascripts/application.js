@@ -19,7 +19,7 @@ $(function(){
       $(this).parents("form").submit();
   });
 
-  $('input.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+  $('input.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 
   if ($('#clock-canvas').length == 0) {
     return;

@@ -3,6 +3,7 @@ Punchclock
 
 A simple electronic punch clock to track hours spent on projects.
 
+[![Code Climate](https://codeclimate.com/repos/52ba26a5e30ba00cad00050d/badges/72ac249ef8822a90c0c4/gpa.png)](https://codeclimate.com/repos/52ba26a5e30ba00cad00050d/feed)
 [![Build Status](https://magnum.travis-ci.com/Codeminer42/punchclock.png?token=CEkfcqrMueoSq22M4PF4&branch=master)](https://magnum.travis-ci.com/Codeminer42/punchclock)
 
 ## Rails

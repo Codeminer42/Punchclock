@@ -9,7 +9,7 @@ class PunchesController < InheritedResources::Base
     @search = @punches_filter_form.apply_filters(scopped_punches).search(params[:q])
 
     @search.sorts = 'from desc' if @search.sorts.empty?
-    @punches = @search.result
+    @punches = @search.result.decorate
     index!
   end
 
