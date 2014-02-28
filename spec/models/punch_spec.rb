@@ -12,7 +12,7 @@ describe Punch do
     let(:punch) { build(:punch, from: Time.new(2014, 1, 1, 8), to: Time.new(2014, 1, 1, 12)) }
 
     it "returns the time difference between from and to in hours"  do
-      expect(punch.delta).to eq(4.hours / 3600)
+      expect(punch.delta).to eq(4.hours)
     end
   end
 
