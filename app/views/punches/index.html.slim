@@ -1,6 +1,8 @@
 .row#filter-form
   .col-md-2
     .btn-group= link_to 'Punch', new_punch_path, :class => 'btn btn-primary'
+    = simple_form_for :archive_csv, url: punches_import_csv_path do |f|
+      = f.file_field :archive, class: "file-field-import-csv"
   .col-md-10.pull-right.filter-form-col
     = simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f|
       = f.input :since, as: :datepicker, label: false, placeholder: 'Since'
