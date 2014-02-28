@@ -9,22 +9,26 @@ describe PunchesController do
   end
 
   context "when user is admin" do
+    let(:punches) { double(:punch)}
     before do
       user.stub(is_admin?: true)
+      punches.stub(:decorate)
     end
 
     describe "GET index" do
       let(:search) { double(:search) }
-      context "with search" do
+
+      context "with search" do        
         it "renders current month" do
           expect(search).to receive(:sorts).and_return('from desc')
-          expect(search).to receive(:result).and_return([double('punch')])
+          expect(search).to receive(:result).and_return(punches)
           expect(Punch).to receive(:search).with(nil).and_return(search)
           get :index
         end
       end
 
       context "without search" do
+        
         it "renders selected month" do
           from_params = {
             "from_gteq(1i)" => '2013',
@@ -32,7 +36,7 @@ describe PunchesController do
             "from_gteq(3i)" => '01'
           }
           expect(search).to receive(:sorts).and_return('from desc')
-          expect(search).to receive(:result).and_return([double('punch')])
+          expect(search).to receive(:result).and_return(punches)
           expect(Punch).to receive(:search).with(from_params).and_return(search)
           get :index, q: from_params
         end
@@ -187,8 +191,10 @@ describe PunchesController do
   end
 
   context "when user is a employer" do
+    let(:punches) { double(:punch)}
     before do
       user.stub(is_admin?: false)
+      punches.stub(:decorate)
     end
 
     describe "GET index" do
@@ -196,7 +202,7 @@ describe PunchesController do
       context "with search" do
         it "renders current month" do
           expect(search).to receive(:sorts).and_return('from desc')
-          expect(search).to receive(:result).and_return([double('punch')])
+          expect(search).to receive(:result).and_return(punches)
           expect(Punch).to receive(:search).with(nil).and_return(search)
           get :index
         end
@@ -212,7 +218,7 @@ describe PunchesController do
             "from_gteq(3i)" => '01'
           }
           expect(search).to receive(:sorts).and_return('from desc')
-          expect(search).to receive(:result).and_return([double('punch')])
+          expect(search).to receive(:result).and_return(punches)
           expect(Punch).to receive(:search).with(from_params).and_return(search)
           get :index, q: from_params
         end
