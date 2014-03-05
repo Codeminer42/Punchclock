@@ -59,7 +59,7 @@
           <%= gravatar_for punch.user, size: 40 %>
           <%= link_to punch.user.name, user_path(punch.user) %>
         </td>
-        <td><%= link_to(l(punch.from, :format => '%d/%m/%Y'), punch, id: "shw-#{punch.id}") %> </td>
+        <td><%= link_to punch.from, punch, id: "shw-#{punch.id}" %> </td>
         <td><%= punch.from %> </td>
         <td><%= punch.to %> </td>
         <td><%= punch.delta %> </td>
@@ -76,7 +76,7 @@
     <tr>
       <td colspan="6">
         <strong>TOTAL:</strong>
-        <%= time_format(current_user.total_hours(@punches)) %>
+        <%= @punches.total_hours %>
       </td>
     </tr>
   </tfoot>
