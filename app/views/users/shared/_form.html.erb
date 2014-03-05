@@ -1,0 +1,22 @@
+<%= form_for(user, url: url_path) do |f| %>
+  <%= render "shared/errors", messages: user.errors.full_messages %>
+
+  <div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  </div>
+
+  <div>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+  </div>
+
+  <% if current_user.is_admin? %>
+    <div>
+    <%= f.label :hour_cost %>
+    <%= f.text_field :hour_cost %>
+   	</div>
+  <% end %>
+
+  <div> <%= f.submit %> </div>
+<% end %>

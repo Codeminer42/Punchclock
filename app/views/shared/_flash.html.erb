@@ -1,0 +1,16 @@
+<% if notice.present? || alert.present? %>
+  <div class="flash-messages">
+    <% if notice.present? %>
+      <p class="alert alert-info">
+        <%= notice %>
+        <a class="close" data-dismiss= 'alert' href= '#'> &times;</a>
+      </p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert alert-danger">
+        <%= alert %>
+        <a class="close" data-dismiss= 'alert' href= '#'> &times; </a>
+      </p>
+    <% end %>
+  </div>
+<% end %>

@@ -1,7 +1,0 @@
-h2 Edit User
-= render 'users/shared/form', user: @user, url_path: user_path
-- if current_user.id == @user.id
-	= link_to 'Change Password', users_account_password_edit_path, class: 'btn btn-default'
-- if current_user.is_admin? && current_user.id != @user.id
-	= link_to 'Delete User', @user, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{@user.id}",class: 'btn btn-danger'
-= link_to 'Back', users_path

@@ -1,0 +1,5 @@
+<% if current_user.is_admin? %>
+  <%= render 'admin_header' %>
+<% else %>
+  <%= render 'user_header' %>
+<% end %>

@@ -1,0 +1,7 @@
+<%= simple_form_for @project do |f| %>
+  <%= f.input :name %>
+  <div class="well">
+    <%= link_to 'Back', projects_path, class: 'btn btn-default' %>
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
