@@ -26,6 +26,7 @@ gem 'simple_form'
 gem 'slim'
 gem 'uglifier', '>= 1.3.0'
 gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'draper', '~> 1.3'
 
 group :test do
   gem 'capybara'

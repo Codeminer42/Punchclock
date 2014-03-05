@@ -1,4 +1,5 @@
 require File.expand_path('../boot', __FILE__)
+require 'csv'
 
 # Pick the frameworks you want:
 require "active_record/railtie"
@@ -13,6 +14,10 @@ Bundler.require(:default, Rails.env)
 
 module Punchclock
   class Application < Rails::Application
+
+    config.autoload_paths += Dir[
+        "#{config.root}/lib"
+    ]
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
