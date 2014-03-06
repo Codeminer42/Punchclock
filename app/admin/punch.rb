@@ -1,25 +1,17 @@
 ActiveAdmin.register Punch do
-  total_hours = 0
+  decorate_with PunchDecorator
+
   index do
-    column :company
-    column :user
+    column :company, sortable: [:company, :name]
+    column :user, sortable: [:user, :name]
     column :project, sortable: [:project, :name]
-    column 'When', sortable: :from do |punch|
-      l punch.from, format: '%d/%m/%Y'
-    end
-    column 'From' do |punch|
-      l punch.from, format: '%H:%M'
-    end
-    column 'To' do |punch|
-      l punch.to, format: '%H:%M'
-    end
-    column 'Delta' do |punch|
-      total_hours = total_hours + punch.delta
-      "#{time_format(punch.delta)}"
-    end
+    column :when, sortable: :from
+    column :from, sortable: false
+    column :to, sortable: false
+    column :delta, sortable: false
     default_actions
     div class: 'panel' do
-      h3 "Total: #{time_format(total_hours)}"
+      h3 "Total: #{collection.total_hours}"
     end
   end
 
@@ -62,10 +54,10 @@ ActiveAdmin.register Punch do
   csv do
     column('User')    { |punch| punch.user.name }
     column('Project') { |punch| punch.project.name }
-    column('When')    { |punch| l punch.from, format: '%d/%m/%Y' }
-    column('From')    { |punch| l punch.from, format: '%H:%M' }
-    column('To')      { |punch| l punch.to, format: '%H:%M' }
-    column('Delta')   { |punch| "#{time_format(punch.delta)}" }
+    column :when
+    column :from
+    column :to
+    column :delta
   end
 
   filter :project
