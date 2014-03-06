@@ -2,13 +2,13 @@ ActiveAdmin.register Punch do
   decorate_with PunchDecorator
 
   index do
-    column :company
-    column :user
+    column :company, sortable: [:company, :name]
+    column :user, sortable: [:user, :name]
     column :project, sortable: [:project, :name]
     column :when, sortable: :from
-    column :from
-    column :to
-    column :delta
+    column :from, sortable: false
+    column :to, sortable: false
+    column :delta, sortable: false
     default_actions
     div class: 'panel' do
       h3 "Total: #{collection.total_hours}"
@@ -54,10 +54,10 @@ ActiveAdmin.register Punch do
   csv do
     column('User')    { |punch| punch.user.name }
     column('Project') { |punch| punch.project.name }
-    column('When')    { |punch| l punch.from, format: '%d/%m/%Y' }
-    column('From')    { |punch| l punch.from, format: '%H:%M' }
-    column('To')      { |punch| l punch.to, format: '%H:%M' }
-    column('Delta')   { |punch| punch.delta }
+    column :when
+    column :from
+    column :to
+    column :delta
   end
 
   filter :project
