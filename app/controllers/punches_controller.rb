@@ -22,18 +22,16 @@ class PunchesController < InheritedResources::Base
 
   def new
     @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id, project: last_user_project)
-    @punch.build_comment
   end
 
   def edit
     @punch = Punch.find(params[:id])
-    @punch.build_comment if @punch.comment.nil?
   end
 
   def create
-    @punch = current_user.punches.new(sanitized_params)
-    @punch.company_id = current_user.company_id
+    @punch = Punch.new(params[:punch])
     authorize! :create, @punch
+
     if @punch.save
       flash[:notice] = "Punch created successfully!"
       redirect_to punches_path
@@ -44,7 +42,8 @@ class PunchesController < InheritedResources::Base
 
   def update
     @punch = scopped_punches.find params[:id]
-    authorize! :update, Comment unless params[:comments_attributes].nil?
+    authorize! :update, @punch
+    
     if @punch.update(params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punches_path
@@ -54,16 +53,6 @@ class PunchesController < InheritedResources::Base
   end
 
   private
-  def sanitized_params
-    if punch_data[:comment_attributes]
-      punch_data[:comment_attributes][:user_id] = current_user.id
-      punch_data[:comment_attributes][:company_id] = current_user.company_id
-      punch_data[:comment_attributes][:_destroy] = true unless punch_data[:comment_attributes][:text].present?
-    end
-
-    punch_data
-  end
-
   def punch_params
     allow = [:from, :to, :project_id, :attachment, :remove_attachment, comment_attributes: [:id, :text]]
     params.require(:punch).permit(allow)
