@@ -13,6 +13,10 @@ class PunchDecorator < ApplicationDecorator
     localize_time(object.from)
   end
 
+  def when
+    h.l object.from, format: "%d/%m/%Y"
+  end
+
   def delta
    h.secs_to_formated_hour(object.delta)
   end
@@ -26,7 +30,7 @@ class PunchDecorator < ApplicationDecorator
   def localize_time(datetime)
     h.l datetime, format: "%H:%M"
   end
-  
+
   def localize_date(datetime)
     h.l datetime, format: :short
   end
