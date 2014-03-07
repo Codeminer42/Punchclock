@@ -4,25 +4,9 @@
       <%= link_to 'Punch', new_punch_path, :class => 'btn btn-primary' %>
     </div>
   </div>
-  <div class="col-md-10 pull-right filter-form-col">
 
-    <%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f| %>
+  <%= render "punches_filter_form"%>
 
-      <%= f.input :since, as: :datepicker, label: false, placeholder: 'Since' %>
-
-      <%= f.input :until, as: :datepicker, label: false, placeholder: 'Until' %>
-
-      <%= f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: 'All projects', label: false %>
-
-      <% if current_user.is_admin? %>
-
-        <%= f.input :user_id, collection: current_user.company.users.order(:name), include_blank: 'All users', label: false %>
-
-      <% end %>
-
-      <%= f.button :button, 'Filtrar', class: 'btn btn-default' %>
-    <% end %>
-</div>
   <br>
 <table class='table table-striped'>
 <colgroup>
@@ -63,7 +47,7 @@
         <td><%= punch.from %> </td>
         <td><%= punch.to %> </td>
         <td><%= punch.delta %> </td>
-        <td><%= "# punch.comment.text " unless punch.comment.nil? %> </td>
+        <td><strong> <%= punch.comment ? punch.comment.text : "No comments" %> </strong> </td>
         <td><%= punch.project.name %> </td>
         <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
         <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
