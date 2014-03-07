@@ -44,8 +44,8 @@ class PunchesController < InheritedResources::Base
 
   def update
     @punch = scopped_punches.find params[:id]
-    authorize! :update, Comment unless sanitized_params[:comments_attributes].nil?
-    if @punch.update(sanitized_params)
+    authorize! :update, Comment unless params[:comments_attributes].nil?
+    if @punch.update(params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punches_path
     else
@@ -55,36 +55,6 @@ class PunchesController < InheritedResources::Base
 
   private
   def sanitized_params
-    punch_data = {}
-
-    punch_params.each do |k,v|
-      punch_data[k.to_sym] = v
-    end
-
-    when_data = params[:when_day].to_s.split('-')
-
-    if when_data.present?
-      punch_data[:"from(1i)"] = when_data[0]
-      punch_data[:"from(2i)"] = when_data[1]
-      punch_data[:"from(3i)"] = when_data[2]
-
-      punch_data[:"to(1i)"] = when_data[0]
-      punch_data[:"to(2i)"] = when_data[1]
-      punch_data[:"to(3i)"] = when_data[2]
-    else
-      punch_data[:"from(1i)"] = ''
-      punch_data[:"from(2i)"] = ''
-      punch_data[:"from(3i)"] = ''
-      punch_data[:"from(4i)"] = ''
-      punch_data[:"from(5i)"] = ''
-
-      punch_data[:"to(1i)"] = ''
-      punch_data[:"to(2i)"] = ''
-      punch_data[:"to(3i)"] = ''
-      punch_data[:"to(4i)"] = ''
-      punch_data[:"to(5i)"] = ''
-    end
-
     if punch_data[:comment_attributes]
       punch_data[:comment_attributes][:user_id] = current_user.id
       punch_data[:comment_attributes][:company_id] = current_user.company_id
