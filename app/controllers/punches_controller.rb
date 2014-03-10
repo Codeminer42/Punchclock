@@ -21,7 +21,7 @@ class PunchesController < InheritedResources::Base
   end
 
   def new
-    @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id, project: last_user_project)
+    @punch = Punch.new
   end
 
   def edit
@@ -29,8 +29,9 @@ class PunchesController < InheritedResources::Base
   end
 
   def create
-    @punch = Punch.new(params[:punch])
-    authorize! :create, @punch
+    @punch = Punch.new(punch_params)
+    @punch.company_id = current_user.company_id
+    @punch.user_id = current_user.id
 
     if @punch.save
       flash[:notice] = "Punch created successfully!"
@@ -43,8 +44,7 @@ class PunchesController < InheritedResources::Base
   def update
     @punch = scopped_punches.find params[:id]
     authorize! :update, @punch
-    
-    if @punch.update(params)
+    if @punch.update(punch_params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punches_path
     else
@@ -54,7 +54,7 @@ class PunchesController < InheritedResources::Base
 
   private
   def punch_params
-    allow = [:from, :to, :project_id, :attachment, :remove_attachment, comment_attributes: [:id, :text]]
+    allow = [:id, :from_time, :to_time, :when_day, :project_id, :attachment, :remove_attachment, :comment]
     params.require(:punch).permit(allow)
   end
 
@@ -69,10 +69,6 @@ class PunchesController < InheritedResources::Base
 
   def scopped_punches
     current_user.is_admin? ? current_user.company.punches : current_user.punches
-  end
-
-  def last_user_project
-    Punch.where(user_id: current_user).last.try(:project)
   end
 
   def import_csv_params

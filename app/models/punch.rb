@@ -1,18 +1,14 @@
 class Punch < ActiveRecord::Base
-  attr_accessor :from_time, :tp_time, :when_day
+  attr_accessor :from_time, :to_time, :when_day
 
   belongs_to :project
   belongs_to :user
   belongs_to :company
 
-  has_one :comment
-
   validates_presence_of :from, :to, :project_id, :user_id, :company_id
   validate :check_time
 
   mount_uploader :attachment, AttachmentUploader
-
-  accepts_nested_attributes_for :comment, allow_destroy: true
 
   scope :since, lambda {|time| where("punches.from >= ?", time) }
   scope :until, lambda {|time| where("punches.to <= ?", time) }
