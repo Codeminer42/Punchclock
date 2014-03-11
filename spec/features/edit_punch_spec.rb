@@ -7,9 +7,8 @@ feature "Edit Punch" do
 
   scenario "editing punch" do
     visit "/punches/#{punch.id}/edit"
-    expect(page).to have_content('Editing punch')   
+    expect(page).to have_content('Editing punch')
 
-    
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from(4i)]', with: '08'
       fill_in 'punch[from(5i)]', with: '00'
@@ -17,9 +16,8 @@ feature "Edit Punch" do
       fill_in 'punch[to(5i)]', with: '00'
       fill_in 'when_day', with: '2001-01-01'
       select project.name, from: 'punch[project_id]'
-      click_button 'Update Punch'
-    end    
+      click_button 'Atualizar Punch'
+    end
     expect(page).to have_content('Punch updated successfully!')
     end
-
   end
