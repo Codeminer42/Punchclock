@@ -6,7 +6,7 @@ class Punch < ActiveRecord::Base
   belongs_to :company
 
   validates_presence_of :from, :to, :project_id, :user_id, :company_id
-  validate :check_time
+  validates [:from, :to], check_time: true
 
   mount_uploader :attachment, AttachmentUploader
 
@@ -34,11 +34,11 @@ class Punch < ActiveRecord::Base
   def delta
     (self.to - self.from)
   end
-  
+
   def self.total
     self.all.reduce(0) do |total, punch|
       total += punch.delta
-    end 
+    end
   end
 
   private
@@ -50,18 +50,6 @@ class Punch < ActiveRecord::Base
     unless @when_day.nil?
       self.to = mount_time(@to_time) unless @to_time.nil?
       self.from = mount_time(@from_time) unless @from_time.nil?
-    end
-  end
-
-  def check_time
-    if self.from.present? && self.to.present?
-      if self.to < self.from
-        errors.add(:from, "can't be greater than From time")
-      elsif self.from.to_date != self.to.to_date
-        errors.add(:to, "can't be in diferent dates")
-      elsif Time.now < self.to.to_date
-        errors.add(:to, "can't be in the future, take your time machine and go back")
-      end
     end
   end
 end
