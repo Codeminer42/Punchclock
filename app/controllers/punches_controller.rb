@@ -53,6 +53,13 @@ class PunchesController < InheritedResources::Base
     end
   end
 
+  def destroy
+    @punch = Punch.find(params[:id])
+    @punch.destroy
+    flash[:notice] = "Punch was successfully destroyed."
+    redirect_to action: :index
+  end
+
   private
   def sanitized_params
     punch_data = {}
