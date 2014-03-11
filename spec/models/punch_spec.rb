@@ -38,7 +38,7 @@ describe Punch do
     end
 
     it "does not allow times from diferent days" do
-      expect(Punch.new(from: Time.new(2001,1,1,8,0,0,0),
+        expect(Punch.new(from: Time.new(2001,1,1,8,0,0,0),
                        to:   Time.new(2001,1,2,17,0,0,0),
                        project: project, user: user)).not_to be_valid
     end

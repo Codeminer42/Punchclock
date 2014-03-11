@@ -4,11 +4,11 @@ class CheckTimeValidator < ActiveModel::Validator
     to = model.to
     if from.present? && to.present?
       if to < from
-        errors.add(:from, "can't be greater then From time" )
+        model.errors.add(:from, "can't be greater then From time" )
       elsif from.to_date < to.to_date
-        errors.add(:to, "cant't be diferente dates")
+        model.errors.add(:to, "cant't be diferente dates")
       elsif Time.now < to.to_date
-        errors.add(:to, "can't be in the future, take you time machine and go back")
+        model.errors.add(:to, "can't be in the future, take you time machine and go back")
       end
     end
   end
