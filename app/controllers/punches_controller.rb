@@ -52,6 +52,13 @@ class PunchesController < InheritedResources::Base
     end
   end
 
+  def destroy
+    @punch = Punch.find(params[:id])
+    @punch.destroy
+    flash[:notice] = "Punch was successfully destroyed."
+    redirect_to action: :index
+  end
+
   private
   def punch_params
     allow = [:id, :from_time, :to_time, :when_day, :project_id, :attachment, :remove_attachment, :comment]

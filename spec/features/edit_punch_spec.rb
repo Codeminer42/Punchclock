@@ -9,7 +9,6 @@ feature "Edit Punch" do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_content('Editing punch')
 
-
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from_time]', with: '08:00'
       fill_in 'punch[to_time]', with: '12:00'
@@ -19,5 +18,4 @@ feature "Edit Punch" do
     end
     expect(page).to have_content('Punch updated successfully!')
     end
-
 end

@@ -8,6 +8,7 @@ feature "Add new Punch" do
   scenario "creating punch" do
     visit '/punches/new'
     expect(page).to have_content('New Punch')
+
     within '#new_punch' do
       fill_in 'punch[from_time]', with: '08:00'
       fill_in 'punch[to_time]', with: '12:00'
