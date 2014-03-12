@@ -8,6 +8,8 @@
 public/assets
 public/uploads
 
+coverage
+
 .rvmrc
 .versions.conf
 
