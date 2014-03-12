@@ -10,11 +10,9 @@ feature "Add new Punch" do
     expect(page).to have_content('New Punch')
 
     within '#new_punch' do
-      fill_in 'punch[from(4i)]', with: '8'
-      fill_in 'punch[from(5i)]', with: '0'
-      fill_in 'punch[to(4i)]', with: '12'
-      fill_in 'punch[to(5i)]', with: '0'
-      fill_in 'when_day', with: '2001-01-01'
+      fill_in 'punch[from_time]', with: '08:00'
+      fill_in 'punch[to_time]', with: '12:00'
+      fill_in 'punch[when_day]', with: '2001-01-01'
       select project.name, from: 'punch[project_id]'
       click_button 'Criar Punch'
     end

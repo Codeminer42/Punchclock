@@ -18,7 +18,7 @@ describe PunchesController do
     describe "GET index" do
       let(:search) { double(:search) }
 
-      context "with search" do        
+      context "with search" do
         it "renders current month" do
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
@@ -28,7 +28,7 @@ describe PunchesController do
       end
 
       context "without search" do
-        
+
         it "renders selected month" do
           from_params = {
             "from_gteq(1i)" => '2013',
@@ -97,16 +97,6 @@ describe PunchesController do
         get :edit, params
         response.should render_template :edit
       end
-
-      it "builds comment if does not exist" do
-        params = {
-          id: 1
-        }
-
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
-      end
     end #END GET EDIT
 
     describe "methods" do
@@ -121,45 +111,38 @@ describe PunchesController do
         controller.stub(current_user: user)
       end
 
-      describe "POST create" do
-        let(:punch_params) {
-            {
-              :'from(4i)'  => '08',
-              :'from(5i)'  => '00',
-              :'to(4i)'    => '17',
-              :'to(5i)'    => '00',
-              :'project_id'=> project.id.to_s
-            }
-        }
-        let(:params) {
-            params = {
-              when_day: "2013-08-20",
-              punch: punch_params
-            }
-        }
+      describe "POST #create" do
+        def post_create
+          post :create, punch: {}
+        end
 
-        context "when authorize pass" do
-          it "creates" do
-            punch.should_receive(:company_id=).with(company.id)
-            controller.stub_chain(:current_user, :punches,
-                                  :new => punch_params).and_return(punch)
+        before do
+          controller.stub(:punch_params)
+          Punch.should_receive(:new).and_return(punch)
+        end
+
+        context "when success" do
+          before do
             expect(punch).to receive(:save).and_return(true)
-            post :create, params
-            expect(assigns(:punch)).to eq(punch)
+          end
+
+          it "saves the punch and redirect to punches_path" do
+            post_create
             expect(response).to redirect_to punches_path
           end
         end
 
-        context "when authorize fails" do
-          before { user.stub(company_id: punch.company.id - 1) }
+        context "when fails" do
+          before do
+            expect(punch).to receive(:save).and_return(false)
+          end
 
-          it "does not create" do
-            punch.should_not receive(:save)
-            post :create, params
-            expect(response).to redirect_to(root_url)
+          it "renders the action new" do
+            post_create
+            expect(response).to render_template(:new)
           end
         end
-      end #END POST CREATE
+      end
 
       describe "PUT update" do
         before do
@@ -238,18 +221,7 @@ describe PunchesController do
         Punch.stub(:find).with(punch.id.to_s) { punch }
         controller.stub(load_and_authorize_resource: true)
       end
-
-      it "builds comment" do
-        params = {
-          id: 1
-        }
-
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
-      end
-    end #END GET NEW
-
+    end
     describe "GET edit" do
       let(:punch) { FactoryGirl.build(:punch) }
 
@@ -272,17 +244,7 @@ describe PunchesController do
         get :edit, params
         response.should render_template :edit
       end
-
-      it "builds comment if does not exist" do
-        params = {
-          id: 1
-        }
-
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
-      end
-    end #END GET EDIT
+    end
 
     describe "methods" do
 
@@ -297,45 +259,38 @@ describe PunchesController do
         controller.stub(current_user: user)
       end
 
-      describe "POST create" do
-        let(:punch_params) {
-            {
-              :'from(4i)'  => '08',
-              :'from(5i)'  => '00',
-              :'to(4i)'    => '17',
-              :'to(5i)'    => '00',
-              :'project_id'=> project.id.to_s
-            }
-        }
-        let(:params) {
-            params = {
-              when_day: "2013-08-20",
-              punch: punch_params
-            }
-        }
+      describe "POST #create" do
+        def post_create
+          post :create, punch: {}
+        end
 
-        context "when authorize pass" do
-          it "creates" do
-            punch.should_receive(:company_id=).with(company.id)
-            controller.stub_chain(:current_user, :punches,
-                                  :new => punch_params).and_return(punch)
+        before do
+          controller.stub(:punch_params)
+          Punch.should_receive(:new).and_return(punch)
+        end
+
+        context "when success" do
+          before do
             expect(punch).to receive(:save).and_return(true)
-            post :create, params
-            expect(assigns(:punch)).to eq(punch)
+          end
+
+          it "save and return to root_path" do
+            post_create
             expect(response).to redirect_to punches_path
           end
         end
 
-        context "when authorize fails" do
-          before { user.stub(company_id: punch.company.id - 1) }
+        context "when fails" do
+          before do
+            expect(punch).to receive(:save).and_return(false)
+          end
 
-          it "does not create" do
-            punch.should_not receive(:save)
-            post :create, params
-            expect(response).to redirect_to(root_url)
+          it "fail and render action new" do
+            post_create
+            expect(response).to render_template(:new)
           end
         end
-      end #END POST CREATE
+      end
 
       describe "PUT update" do
         before do

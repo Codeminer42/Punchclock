@@ -21,19 +21,18 @@ class PunchesController < InheritedResources::Base
   end
 
   def new
-    @punch = Punch.new(company_id: current_user.company_id, user_id: current_user.id, project: last_user_project)
-    @punch.build_comment
+    @punch = Punch.new
   end
 
   def edit
     @punch = Punch.find(params[:id])
-    @punch.build_comment if @punch.comment.nil?
   end
 
   def create
-    @punch = current_user.punches.new(sanitized_params)
+    @punch = Punch.new(punch_params)
     @punch.company_id = current_user.company_id
-    authorize! :create, @punch
+    @punch.user_id = current_user.id
+
     if @punch.save
       flash[:notice] = "Punch created successfully!"
       redirect_to punches_path
@@ -44,8 +43,8 @@ class PunchesController < InheritedResources::Base
 
   def update
     @punch = scopped_punches.find params[:id]
-    authorize! :update, Comment unless sanitized_params[:comments_attributes].nil?
-    if @punch.update(sanitized_params)
+    authorize! :update, @punch
+    if @punch.update(punch_params)
       flash[:notice] = "Punch updated successfully!"
       redirect_to punches_path
     else
@@ -61,48 +60,8 @@ class PunchesController < InheritedResources::Base
   end
 
   private
-  def sanitized_params
-    punch_data = {}
-
-    punch_params.each do |k,v|
-      punch_data[k.to_sym] = v
-    end
-
-    when_data = params[:when_day].to_s.split('-')
-
-    if when_data.present?
-      punch_data[:"from(1i)"] = when_data[0]
-      punch_data[:"from(2i)"] = when_data[1]
-      punch_data[:"from(3i)"] = when_data[2]
-
-      punch_data[:"to(1i)"] = when_data[0]
-      punch_data[:"to(2i)"] = when_data[1]
-      punch_data[:"to(3i)"] = when_data[2]
-    else
-      punch_data[:"from(1i)"] = ''
-      punch_data[:"from(2i)"] = ''
-      punch_data[:"from(3i)"] = ''
-      punch_data[:"from(4i)"] = ''
-      punch_data[:"from(5i)"] = ''
-
-      punch_data[:"to(1i)"] = ''
-      punch_data[:"to(2i)"] = ''
-      punch_data[:"to(3i)"] = ''
-      punch_data[:"to(4i)"] = ''
-      punch_data[:"to(5i)"] = ''
-    end
-
-    if punch_data[:comment_attributes]
-      punch_data[:comment_attributes][:user_id] = current_user.id
-      punch_data[:comment_attributes][:company_id] = current_user.company_id
-      punch_data[:comment_attributes][:_destroy] = true unless punch_data[:comment_attributes][:text].present?
-    end
-
-    punch_data
-  end
-
   def punch_params
-    allow = [:from, :to, :project_id, :attachment, :remove_attachment, comment_attributes: [:id, :text]]
+    allow = [:id, :from_time, :to_time, :when_day, :project_id, :attachment, :remove_attachment, :comment]
     params.require(:punch).permit(allow)
   end
 
@@ -117,10 +76,6 @@ class PunchesController < InheritedResources::Base
 
   def scopped_punches
     current_user.is_admin? ? current_user.company.punches : current_user.punches
-  end
-
-  def last_user_project
-    Punch.where(user_id: current_user).last.try(:project)
   end
 
   def import_csv_params
