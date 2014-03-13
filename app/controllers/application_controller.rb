@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  self.responder = ApplicationResponder
   responders :flash
   respond_to :html, :json
 
