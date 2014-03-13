@@ -1,4 +1,4 @@
-class NotificationController < InheritedResources::Base
+class NotificationController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 

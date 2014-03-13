@@ -343,7 +343,6 @@ DEPENDENCIES
   forgery
   guard
   guard-rspec
-  inherited_resources
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails
