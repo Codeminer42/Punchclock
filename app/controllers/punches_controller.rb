@@ -1,4 +1,4 @@
-class PunchesController < InheritedResources::Base
+class PunchesController < ApplicationController
 
   before_action :authenticate_user!
   load_and_authorize_resource except: [:create]
@@ -10,7 +10,7 @@ class PunchesController < InheritedResources::Base
 
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result.decorate
-    index!
+    respond_with @punches
   end
 
   def import_csv
