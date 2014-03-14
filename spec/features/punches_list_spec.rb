@@ -29,7 +29,7 @@ feature "Punches list" do
 
   scenario "follow destroy link" do
     click_link "dlt-#{punch.id}"
-    expect(page).to have_content('Punch was successfully destroyed.')
+    expect(page).to have_content("Punch foi deletado com sucesso.")
   end
 
   scenario "sort punches" do

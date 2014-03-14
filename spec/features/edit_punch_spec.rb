@@ -16,6 +16,6 @@ feature "Edit Punch" do
       select project.name, from: 'punch[project_id]'
       click_button 'Atualizar Punch'
     end
-    expect(page).to have_content('Punch updated successfully!')
+    expect(page).to have_content('Punch foi atualizado com sucesso.')
     end
 end
