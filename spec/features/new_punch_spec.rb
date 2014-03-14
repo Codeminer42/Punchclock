@@ -16,6 +16,6 @@ feature "Add new Punch" do
       select project.name, from: 'punch[project_id]'
       click_button 'Criar Punch'
     end
-    expect(page).to have_content('Punch created successfully!')
+    expect(page).to have_content('Punch foi criado com sucesso.')
   end
 end

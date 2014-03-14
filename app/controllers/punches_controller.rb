@@ -33,30 +33,20 @@ class PunchesController < ApplicationController
     @punch.company_id = current_user.company_id
     @punch.user_id = current_user.id
 
-    if @punch.save
-      flash[:notice] = "Punch created successfully!"
-      redirect_to punches_path
-    else
-      render action: :new
-    end
+    @punch.save
+    respond_with @punch, location: punches_path
   end
 
   def update
     @punch = scopped_punches.find params[:id]
-    authorize! :update, @punch
-    if @punch.update(punch_params)
-      flash[:notice] = "Punch updated successfully!"
-      redirect_to punches_path
-    else
-      render action: :edit
-    end
+    @punch.update(punch_params)
+    respond_with @punch, location: punches_path
   end
 
   def destroy
     @punch = Punch.find(params[:id])
     @punch.destroy
-    flash[:notice] = "Punch was successfully destroyed."
-    redirect_to action: :index
+    respond_with @punch
   end
 
   private

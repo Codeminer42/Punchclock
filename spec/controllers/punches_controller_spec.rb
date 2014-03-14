@@ -135,6 +135,7 @@ describe PunchesController do
         context "when fails" do
           before do
             expect(punch).to receive(:save).and_return(false)
+            punch.stub(:errors).and_return(['foo'])
           end
 
           it "renders the action new" do
@@ -283,6 +284,7 @@ describe PunchesController do
         context "when fails" do
           before do
             expect(punch).to receive(:save).and_return(false)
+            punch.stub(:errors).and_return(['foo'])
           end
 
           it "fail and render action new" do
