@@ -43,7 +43,7 @@
           <%= gravatar_for punch.user, size: 40 %>
           <%= link_to punch.user.name, user_path(punch.user) %>
         </td>
-        <td><%= link_to punch.from, punch, id: "shw-#{punch.id}" %> </td>
+        <td><%= link_to punch.object.from.strftime("%d/%m/%Y"), punch, id: "shw-#{punch.id}" %> </td>
         <td><%= punch.from %> </td>
         <td><%= punch.to %> </td>
         <td><%= punch.delta %> </td>

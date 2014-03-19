@@ -59,7 +59,7 @@ feature "Punches filter form" do
       visit "/"
 
       within ("#filter-form") do
-        fill_in 'Until', with: '19/02/2014'
+        fill_in 'Until', with: '2014-02-19'
       end
 
       click_button 'Filtrar'
@@ -69,7 +69,7 @@ feature "Punches filter form" do
       visit "/"
 
       within ("#filter-form") do
-        fill_in 'Until', with: '19/02/2014'
+        fill_in 'Until', with: '2014-02-19'
       end
 
       click_button 'Filtrar'
@@ -79,8 +79,8 @@ feature "Punches filter form" do
       visit "/"
 
       within ("#filter-form") do
-        fill_in 'Since', with: '01/02/2014'
-        fill_in 'Since', with: '27/02/2014'
+        fill_in 'Since', with: '2014-02-01'
+        fill_in 'Since', with: '2014-02-27'
       end
 
       click_button 'Filtrar'
