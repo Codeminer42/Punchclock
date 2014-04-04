@@ -37,7 +37,7 @@ describe PunchesFilterForm do
     let!(:relation) { double('relation') }
 
     context "when @from and @to is present" do
-      let!(:form) { PunchesFilterForm.new({since: '01/10/2013', until: '31/10/2013'}) }
+      let!(:form) { PunchesFilterForm.new({since: '2013-10-01', until: '2013-10-31'}) }
 
       it "apply from and to conditions" do
         relation.should_receive(:since).with(Date.new(2013, 10, 1)).and_return(relation)
@@ -47,7 +47,7 @@ describe PunchesFilterForm do
     end
 
     context "when only @since is present" do
-      let!(:form) { PunchesFilterForm.new({since: '01/10/2013'}) }
+      let!(:form) { PunchesFilterForm.new({since: '2013-10-01'}) }
 
       it "apply from and to conditions" do
         relation.should_receive(:since).with(Date.new(2013, 10, 1)).and_return(relation)
@@ -56,7 +56,7 @@ describe PunchesFilterForm do
     end
 
     context "when only @to is present" do
-      let!(:form) { PunchesFilterForm.new({until: '31/10/2013'}) }
+      let!(:form) { PunchesFilterForm.new({until: '2013-10-31'}) }
 
       it "apply to and to conditions" do
         relation.should_receive(:until).with(Date.new(2013, 10, 31)).and_return(relation)
