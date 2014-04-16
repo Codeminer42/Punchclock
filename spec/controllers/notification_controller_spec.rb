@@ -9,19 +9,19 @@ describe NotificationController do
     controller.stub(current_user: user)
   end
 
-  describe "PUT update" do
+  describe 'PUT update' do
     before { Notification.stub(find: notification) }
 
-    let(:params) {
+    let(:params) do
       {
         id: notification.id,
         notification: {
           read: true
         }
       }
-    }
+    end
 
-    it "should update read param" do
+    it 'should update read param' do
 
       notification.should_receive(:update).and_return(true)
       put :update, params

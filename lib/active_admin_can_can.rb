@@ -13,11 +13,11 @@ module ActiveAdminCanCan
 
   def permission
     case action_name
-    when "show"
+    when 'show'
       :read
-    when "new", "create"
+    when 'new', 'create'
       :create
-    when "edit"
+    when 'edit'
       :update
     else
       action_name.to_sym

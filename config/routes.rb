@@ -4,7 +4,7 @@ Punchclock::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
+  devise_for :users, controllers: { registrations: 'users/registrations', invitations: 'users/invitations' }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -28,8 +28,8 @@ Punchclock::Application.routes.draw do
     root to: 'home#index'
   end
 
-  match "users/account/password/edit", to: 'passwords#edit', via: :get
-  match "users/account/password/update", to: 'passwords#update', via: [:patch, :put]
+  match 'users/account/password/edit', to: 'passwords#edit', via: :get
+  match 'users/account/password/update', to: 'passwords#update', via: [:patch, :put]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

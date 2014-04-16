@@ -14,12 +14,12 @@ class PunchesFilterForm
 
   def apply_filters(relation)
     if @since.present?
-      since_date = Date.strptime(@since, "%Y-%m-%d")
+      since_date = Date.strptime(@since, '%Y-%m-%d')
       relation = relation.since(since_date)
     end
 
     if @until.present?
-      until_date = Date.strptime(@until, "%Y-%m-%d")
+      until_date = Date.strptime(@until, '%Y-%m-%d')
       relation = relation.until(until_date)
     end
 

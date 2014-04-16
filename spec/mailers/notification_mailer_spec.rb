@@ -1,8 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe NotificationMailer do
-  describe "notification email" do
-    context "when user sign up" do
+  describe 'notification email' do
+    context 'when user sign up' do
       let(:user) { FactoryGirl.build(:user_admin) }
       let(:mail) { NotificationMailer.notify_user_registration(user) }
 
@@ -31,7 +31,7 @@ describe NotificationMailer do
       end
     end
 
-    context "when admin user has been registered" do
+    context 'when admin user has been registered' do
       let(:admin_user) { FactoryGirl.create(:admin_user) }
       let(:mail) { NotificationMailer.notify_admin_registration(admin_user) }
 
@@ -64,13 +64,13 @@ describe NotificationMailer do
       end
     end
 
-    context "when user has been registered" do
-    	let(:user) { User.new(name:"username", email:"username@domain.sf", password:"12345678", password_confirmation:"12345678") }
-    	let(:mail) { NotificationMailer.notify_user_registration(user) }
+    context 'when user has been registered' do
+    	 let(:user) { User.new(name: 'username', email: 'username@domain.sf', password: '12345678', password_confirmation: '12345678') }
+    	 let(:mail) { NotificationMailer.notify_user_registration(user) }
 
-    	it 'renders the subject' do
-    		mail.subject.should == 'Welcome to Punchclock'
-    	end
+    	 it 'renders the subject' do
+     		 mail.subject.should == 'Welcome to Punchclock'
+     	end
 
       it 'renders the receiver email' do
         mail.to.should == [user.email]
@@ -97,7 +97,7 @@ describe NotificationMailer do
       end
     end
 
-    context "when user change your own password" do
+    context 'when user change your own password' do
       let(:new_password) { Faker::Lorem.characters(8) }
       let(:user) { FactoryGirl.create(:user) }
       let(:mail) { NotificationMailer.notify_user_password_change(user, new_password) }
@@ -127,7 +127,7 @@ describe NotificationMailer do
       end
     end
 
-    context "when notify admin: user dont punch makes 7 days or more" do
+    context 'when notify admin: user dont punch makes 7 days or more' do
       let(:user) { FactoryGirl.build(:user) }
       let(:admin) { FactoryGirl.build(:user_admin, company_id: user.company_id) }
       let(:mail) { NotificationMailer.notify_admin_punches_pending(admin, user) }

@@ -10,39 +10,39 @@ class Punch < ActiveRecord::Base
 
   mount_uploader :attachment, AttachmentUploader
 
-  scope :since, lambda {|time| where("punches.from >= ?", time) }
-  scope :until, lambda {|time| where("punches.to <= ?", time) }
+  scope :since, lambda { |time| where('punches.from >= ?', time) }
+  scope :until, lambda { |time| where('punches.to <= ?', time) }
 
-  def from_time= time_string
+  def from_time=(time_string)
     @from_time = time_string
     mount_times
     time_string
   end
 
-  def to_time= time_string
+  def to_time=(time_string)
     @to_time = time_string
     mount_times
     time_string
   end
 
-  def when_day= date
+  def when_day=(date)
     @when_day = date
     mount_times
     date
   end
 
   def delta
-    (self.to - self.from)
+    (to - from)
   end
 
   def self.total
-    self.all.reduce(0) do |total, punch|
+    all.reduce(0) do |total, punch|
       total += punch.delta
     end
   end
 
   private
-  def mount_time time_string
+  def mount_time(time_string)
     RelativeTime.new(time_string).relative_to(@when_day)
   end
 

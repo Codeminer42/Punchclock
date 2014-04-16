@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-feature "Add new Punch" do
+feature 'Add new Punch' do
   let!(:authed_user) { create_logged_in_user }
-  let!(:project) {
-    Project.create(name:Faker::Internet.name, company_id: authed_user.company_id)
-  }
-  scenario "creating punch" do
+  let!(:project) do
+    Project.create(name: Faker::Internet.name, company_id: authed_user.company_id)
+  end
+  scenario 'creating punch' do
     visit '/punches/new'
     expect(page).to have_content('New Punch')
 

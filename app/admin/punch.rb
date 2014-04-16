@@ -28,8 +28,8 @@ ActiveAdmin.register Punch do
           punch.company.name => current_admin_user.company_id
         }
       end
-      f.input :from, :as => :datetime_picker
-      f.input :to, :as => :datetime_picker
+      f.input :from, as: :datetime_picker
+      f.input :to, as: :datetime_picker
     end
     f.actions
   end
@@ -40,7 +40,7 @@ ActiveAdmin.register Punch do
     end
 
     def index
-      params['q']['from_lteq'] += ' 23:59:59.999999' if params['q'] and params['q']['from_lteq']
+      params['q']['from_lteq'] += ' 23:59:59.999999' if params['q'] && params['q']['from_lteq']
       index!
     end
 

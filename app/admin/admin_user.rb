@@ -7,7 +7,7 @@ ActiveAdmin.register AdminUser do
   end
 
   form do |f|
-    f.inputs "Admin Details" do
+    f.inputs 'Admin Details' do
       f.input :email
       f.input :password
       f.input :password_confirmation
@@ -25,8 +25,8 @@ ActiveAdmin.register AdminUser do
 
   controller do
     def permitted_params
-      params.permit admin_user: [ :email, :password, :password_confirmation,
-                                  :is_super, :company_id ]
+      params.permit admin_user: [:email, :password, :password_confirmation,
+                                 :is_super, :company_id]
     end
 
     def new
