@@ -1,19 +1,18 @@
 class Users::InvitationsController < Devise::InvitationsController
-
-	def create
+	 def create
     super
-    #skip validations
+     # skip validations
     if resource.errors.blank?
-      self.resource.update_attribute(:name, resource_params[:email].split('@').first)
-      self.resource.update_attribute(:is_admin, false)
-      self.resource.update_attribute(:company_id, current_user.company_id)
+      resource.update_attribute(:name, resource_params[:email].split('@').first)
+      resource.update_attribute(:is_admin, false)
+      resource.update_attribute(:company_id, current_user.company_id)
     end
-	end
+ 	end
 
-protected
+  protected
 
   def update_resource_params
-  	allow = [:name, :password, :password_confirmation, :invitation_token]
+  	 allow = [:name, :password, :password_confirmation, :invitation_token]
     params.require(:user).permit(allow)
   end
 end

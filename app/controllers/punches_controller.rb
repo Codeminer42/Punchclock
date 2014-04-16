@@ -1,5 +1,4 @@
 class PunchesController < ApplicationController
-
   before_action :authenticate_user!
   load_and_authorize_resource except: [:create]
   before_action :user_projects
@@ -15,9 +14,9 @@ class PunchesController < ApplicationController
 
   def import_csv
     current_user.import_punches import_csv_params[:archive].path
-    redirect_to punches_path, notice: "Finished importing punches."
+    redirect_to punches_path, notice: 'Finished importing punches.'
   rescue => e
-    redirect_to punches_path, alert: "Error while importing punches."
+    redirect_to punches_path, alert: 'Error while importing punches.'
   end
 
   def new

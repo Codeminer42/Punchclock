@@ -3,7 +3,7 @@ class NotificationController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @notifications = current_user.notifications.where("read IS NULL")
+    @notifications = current_user.notifications.where('read IS NULL')
   end
 
   def update
