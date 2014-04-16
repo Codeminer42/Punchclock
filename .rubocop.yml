@@ -1,0 +1,6 @@
+AllCops:
+  Excludes:
+    - 'gem/**'
+Documentation:
+  Enabled: false
+
