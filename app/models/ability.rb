@@ -1,12 +1,12 @@
 class Ability
-   include CanCan::Ability
+  include CanCan::Ability
 
   def initialize(user)
     if user.is_admin?
       admin_permitions(user)
     else
       user_permitions(user)
-    end   
+    end
   end
 
   def all_permitions(user)

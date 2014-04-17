@@ -47,6 +47,7 @@ group :development do
   gem 'quiet_assets'
   gem 'rb-inotify', :require => false
   gem 'thin'
+  gem 'rubocop', '~> 0.19.1', require: false
 end
 
 group :development, :test do

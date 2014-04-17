@@ -8,7 +8,8 @@ class Notification < ActiveRecord::Base
   end
 
   private
+
   def record_default_event_path
-    self.event_path = '#' if self.event_path.nil?
+    self.event_path = '#' if event_path.nil?
   end
 end

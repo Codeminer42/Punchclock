@@ -1,11 +1,13 @@
 require 'spec_helper'
 
-feature "Edit Punch" do
+feature 'Edit Punch' do
   let!(:authed_user) { create_logged_in_user }
-  let!(:project) { FactoryGirl.create(:project, company_id: authed_user.company_id) }
-  let!(:punch) { FactoryGirl.create(:punch, user_id: authed_user.id, company_id: authed_user.company_id) }
+  let!(:project) { create(:project, company_id: authed_user.company_id) }
+  let!(:punch) do
+    create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
+  end
 
-  scenario "editing punch" do
+  scenario 'editing punch' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_content('Editing punch')
 
@@ -17,5 +19,5 @@ feature "Edit Punch" do
       click_button 'Atualizar Punch'
     end
     expect(page).to have_content('Punch foi atualizado com sucesso.')
-    end
+  end
 end

@@ -7,7 +7,7 @@ ActiveAdmin.register Project do
   end
 
   form do |f|
-    f.inputs "Project Details" do
+    f.inputs 'Project Details' do
       f.input :name
       if current_admin_user.is_super?
         f.input :company
@@ -25,15 +25,24 @@ ActiveAdmin.register Project do
       params.permit project: [:name, :company_id]
     end
 
-  	def new
-  		@project = Project.new
-  		@project.company_id = current_admin_user.company.id unless current_admin_user.is_super?
-  		new!
-  	end
+    def new
+      @project = Project.new
+      @project.company_id = current_company.id unless signed_in_as_super?
+      new!
+    end
   end
 
   filter :company
   filter :name
   filter :created_at
   filter :updated_at
+
+  def signed_in_as_super?
+    current_admin_user.is_super?
+  end
+
+  def current_company
+    current_admin_user.company
+  end
+
 end

@@ -13,23 +13,25 @@ class PunchesFilterForm
   end
 
   def apply_filters(relation)
+    relation = filter_date relation
+    relation = relation.where(project_id: @project_id) if @project_id.present?
+    relation = relation.where(user_id: @user_id) if @user_id.present?
+    relation
+  end
+
+  protected
+
+  def filter_date(relation)
     if @since.present?
-      since_date = Date.strptime(@since, "%Y-%m-%d")
+      since_date = Date.strptime(@since, '%Y-%m-%d')
       relation = relation.since(since_date)
     end
 
     if @until.present?
-      until_date = Date.strptime(@until, "%Y-%m-%d")
+      until_date = Date.strptime(@until, '%Y-%m-%d')
       relation = relation.until(until_date)
     end
 
-    if @project_id.present?
-      relation = relation.where(project_id: @project_id)
-    end
-
-    if @user_id.present?
-      relation = relation.where(user_id: @user_id)
-    end
     relation
   end
 end
