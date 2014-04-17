@@ -12,6 +12,7 @@ class NotificationController < ApplicationController
   end
 
   private
+
   def notification_params
     params.require(:notification).permit(:read)
   end

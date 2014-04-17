@@ -9,7 +9,13 @@ describe Punch do
   it { should validate_presence_of(:company_id) }
 
   describe '#delta' do
-    let(:punch) { build(:punch, from: Time.new(2014, 1, 1, 8), to: Time.new(2014, 1, 1, 12)) }
+    let(:punch) do
+      build(
+        :punch,
+        from: Time.new(2014, 1, 1, 8),
+        to: Time.new(2014, 1, 1, 12)
+      )
+    end
 
     it 'returns the time difference between from and to in hours'  do
       expect(punch.delta).to eq(4.hours)
@@ -17,7 +23,9 @@ describe Punch do
   end
 
   describe 'Datetime mount' do
-    let(:params) { { from_time: '08:00', to_time: '12:00', when_day: Date.new(2014, 1, 1) } }
+    let(:params) do
+      { from_time: '08:00', to_time: '12:00', when_day: Date.new(2014, 1, 1) }
+    end
     subject(:punch) { FactoryGirl.create :punch, params }
 
     it 'mount datetimes correctly' do

@@ -37,7 +37,8 @@ describe PunchesController do
           }
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(from_params).and_return(search)
+          expect(Punch).to receive(:search).with(from_params)
+            .and_return(search)
           get :index, q: from_params
         end
       end
@@ -69,7 +70,8 @@ describe PunchesController do
 
         it 'builds punch with last project punched' do
           get :new
-          last_project_id = Punch.find_last_by_user_id(punch.user_id).project_id
+          last_project_id = Punch.find_last_by_user_id(punch.user_id)
+            .project_id
           punch.project_id.should eq last_project_id
         end
       end
@@ -201,7 +203,8 @@ describe PunchesController do
           }
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(from_params).and_return(search)
+          expect(Punch).to receive(:search).with(from_params)
+            .and_return(search)
           get :index, q: from_params
         end
       end

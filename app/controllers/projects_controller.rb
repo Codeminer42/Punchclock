@@ -32,6 +32,7 @@ class ProjectsController < ApplicationController
   end
 
   private
+
   def project_params
     allow = [:name]
     params.require(:project).permit(allow)

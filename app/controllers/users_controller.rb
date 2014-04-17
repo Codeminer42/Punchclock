@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   private
+
   def user_params
     allow = [:name, :email]
     allow << :hour_cost if current_user.is_admin?

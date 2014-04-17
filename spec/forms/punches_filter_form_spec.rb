@@ -13,7 +13,14 @@ describe PunchesFilterForm do
     end
 
     context 'when not pass nil params' do
-      let!(:form) { PunchesFilterForm.new(since: 'bar', until: 'foo', project_id: 1, user_id: 2) }
+      let!(:form) do
+        PunchesFilterForm.new(
+          since: 'bar',
+          until: 'foo',
+          project_id: 1,
+          user_id: 2
+        )
+      end
 
       it 'assigns @since' do
         expect(form.since).to eq('bar')
@@ -37,11 +44,15 @@ describe PunchesFilterForm do
     let!(:relation) { double('relation') }
 
     context 'when @from and @to is present' do
-      let!(:form) { PunchesFilterForm.new(since: '2013-10-01', until: '2013-10-31') }
+      let!(:form) do
+        PunchesFilterForm.new(since: '2013-10-01', until: '2013-10-31')
+      end
 
       it 'apply from and to conditions' do
-        relation.should_receive(:since).with(Date.new(2013, 10, 1)).and_return(relation)
-        relation.should_receive(:until).with(Date.new(2013, 10, 31)).and_return(relation)
+        relation.should_receive(:since).with(Date.new(2013, 10, 1))
+          .and_return(relation)
+        relation.should_receive(:until).with(Date.new(2013, 10, 31))
+          .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
     end
@@ -50,7 +61,8 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(since: '2013-10-01') }
 
       it 'apply from and to conditions' do
-        relation.should_receive(:since).with(Date.new(2013, 10, 1)).and_return(relation)
+        relation.should_receive(:since).with(Date.new(2013, 10, 1))
+          .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
     end
@@ -59,7 +71,8 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(until: '2013-10-31') }
 
       it 'apply to and to conditions' do
-        relation.should_receive(:until).with(Date.new(2013, 10, 31)).and_return(relation)
+        relation.should_receive(:until).with(Date.new(2013, 10, 31))
+          .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
     end
@@ -77,7 +90,8 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(project_id: 1) }
 
       it 'apply project_id condition' do
-        relation.should_receive(:where).with(project_id: 1).and_return(relation)
+        relation.should_receive(:where).with(project_id: 1)
+          .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
     end

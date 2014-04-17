@@ -12,6 +12,7 @@ class CompanyController < ApplicationController
   end
 
   private
+
   def company_params
     allow = [:name, :avatar, :remove_avatar]
     params.require(:company).permit(allow)

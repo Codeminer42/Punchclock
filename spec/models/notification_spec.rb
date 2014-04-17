@@ -14,7 +14,10 @@ describe Notification do
 
   describe 'save notification' do
     it 'should have a default event path when no path was set' do
-      n = Notification.create(user_id: notification.user_id, message: notification.message)
+      n = Notification.create(
+        user_id: notification.user_id,
+        message: notification.message
+      )
       n.event_path.should eq('#')
     end
   end

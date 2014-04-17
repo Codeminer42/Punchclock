@@ -31,7 +31,7 @@ ActiveAdmin.register User do
 
     def new
       @user = User.new
-      @user.company_id = current_admin_user.company.id unless current_admin_user.is_super?
+      @user.company_id = current_company.id unless signed_in_as_super?
       new!
     end
 
@@ -48,4 +48,12 @@ ActiveAdmin.register User do
   filter :name
   filter :email
   filter :company, if: proc { current_admin_user.is_super? }
+
+  def signed_in_as_super?
+    current_admin_user.is_super?
+  end
+
+  def current_company
+    current_admin_user.company
+  end
 end

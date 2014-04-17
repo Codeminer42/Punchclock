@@ -5,7 +5,8 @@ class PunchesController < ApplicationController
 
   def index
     @punches_filter_form = PunchesFilterForm.new(params[:punches_filter_form])
-    @search = @punches_filter_form.apply_filters(scopped_punches).search(params[:q])
+    @search = @punches_filter_form.apply_filters(scopped_punches)
+      .search(params[:q])
 
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = @search.result.decorate
@@ -15,7 +16,7 @@ class PunchesController < ApplicationController
   def import_csv
     current_user.import_punches import_csv_params[:archive].path
     redirect_to punches_path, notice: 'Finished importing punches.'
-  rescue => e
+  rescue
     redirect_to punches_path, alert: 'Error while importing punches.'
   end
 
@@ -49,8 +50,10 @@ class PunchesController < ApplicationController
   end
 
   private
+
   def punch_params
-    allow = [:id, :from_time, :to_time, :when_day, :project_id, :attachment, :remove_attachment, :comment]
+    allow = %w(id from_time to_time when_day project_id attachment\
+               remove_attachment comment).map(&:to_sym)
     params.require(:punch).permit(allow)
   end
 
@@ -64,7 +67,11 @@ class PunchesController < ApplicationController
   end
 
   def scopped_punches
-    current_user.is_admin? ? current_user.company.punches : current_user.punches
+    if current_user.is_admin?
+      current_user.company.punches
+    else
+      current_user.punches
+    end
   end
 
   def import_csv_params

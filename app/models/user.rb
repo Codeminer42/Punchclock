@@ -12,29 +12,28 @@ class User < ActiveRecord::Base
 
   def self.find_for_googleapps_oauth(access_token, signed_in_resource = nil)
     data = access_token['info']
-
-    if user = User.where(email: data['email']).first
-      user
-    else
-      User.create! email: data['email'], name: data['name']
-    end
+    User.where(email: data['email']).first_or_create! name: data['name']
   end
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session['devise.googleapps_data'] && session['devise.googleapps_data']['user_info']
-        user.email = data['email']
-      end
+      data = googleapps_user_info(session)
+      user.email = data['email'] if data
     end
   end
 
   def import_punches(input_file)
     transaction do
-      CSV.foreach(input_file) { |line| import_punch *line }
+      CSV.foreach(input_file) { |line| import_punch * line }
     end
   end
 
   private
+
+  def googleapps_user_info(session)
+    session.fetch('devise.googleapps_data', {}).fetch('user_info', nil)
+  end
+
   def import_punch(from, to, project_name)
     project = Project.find_by name: project_name
     punches.create! from: from, to: to, project: project, company: company

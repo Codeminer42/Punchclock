@@ -1,6 +1,8 @@
 AllCops:
   Excludes:
     - 'gem/**'
+    - 'db/**'
+    - 'config/initializers/secret_token.rb'
 Documentation:
   Enabled: false
 

@@ -3,7 +3,9 @@ require 'spec_helper'
 feature 'Add new Punch' do
   let!(:authed_user) { create_logged_in_user }
   let!(:project) do
-    Project.create(name: Faker::Internet.name, company_id: authed_user.company_id)
+    Project.create(
+      name: Faker::Internet.name, company_id: authed_user.company_id
+    )
   end
   scenario 'creating punch' do
     visit '/punches/new'
