@@ -1,46 +1,27 @@
 require 'spec_helper'
 
 describe CompanyController do
-  login_user
+  let(:user) { create :user, is_admin: true }
+  let(:company) { user.company }
+  before { login user }
 
   describe 'PUT update' do
-    let(:user) { double('user') }
-    let(:company) { FactoryGirl.create(:company) }
-
     before do
-      controller.stub(current_user: user)
+      Company.any_instance.stub(:update)
+        .with(any_args).and_return(has_valid_params)
+      put :update, id: company.id, company: { name: '' }
     end
 
-    context 'when authorize pass' do
-      before do
-        Company.stub(:find).with(company.id.to_s) { company }
-        controller.stub(authenticate_user!: true)
-        controller.stub(load_and_authorize_resource: true)
-        user.stub(is_admin?: true)
-        user.stub(id: 1)
-        user.stub(company: company)
-        user.stub(company_id: company.id)
-      end
-
+    context 'when has valid params' do
+      let(:has_valid_params) { true }
       it 'should update the company settings' do
-        params = {
-          id: company.id,
-          company: { name: '1234' }
-        }
-
-        expect(company).to receive(:update).and_return(true)
-        put :update, params
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to root_url
       end
+    end
 
+    context 'when has no valid params' do
+      let(:has_valid_params) { false }
       it 'should not update company settings' do
-        params = {
-          id: company.id,
-          company: { name: '' }
-        }
-
-        expect(company).to receive(:update).and_return(false)
-        put :update, params
         expect(response).to render_template :edit
       end
     end
