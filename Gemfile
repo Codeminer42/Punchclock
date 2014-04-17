@@ -2,15 +2,15 @@ source 'https://rubygems.org'
 
 ruby "2.1.0"
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.0'
 gem 'pg'
 
-gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass', branch: '3'
+gem 'bootstrap-sass'
 gem 'cancan'
 gem 'carrierwave', '~> 0.9.0'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'devise', '>= 2.0'
-gem 'devise_invitable', '~> 1.2.1'
+gem 'devise'
+gem 'devise_invitable'
 gem 'dotenv-rails'
 gem 'foreigner'
 gem 'jbuilder', '~> 1.2'
