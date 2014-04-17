@@ -9,4 +9,10 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, alert: exception.message
   end
+
+  private
+
+  def ensure_admin!
+    current_user.is_admin? or fail CanCan::AccessDenied
+  end
 end

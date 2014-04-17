@@ -1,20 +1,22 @@
 class CompanyController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  before_action :ensure_admin!
+  self.responder = ApplicationResponder
+
+  def edit
+    @company = current_user.company
+    respond_with @company
+  end
 
   def update
-    if @company.update(company_params)
-      flash.now[:notice] = 'Company successful updated'
-      redirect_to root_url
-    else
-      render action: :edit
-    end
+    @company = current_user.company
+    @company.update(company_params)
+    respond_with @company, location: root_url
   end
 
   private
 
   def company_params
-    allow = [:name, :avatar, :remove_avatar]
-    params.require(:company).permit(allow)
+    params.require(:company).permit %w(name avatar remove_avatar)
   end
 end
