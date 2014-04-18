@@ -1,30 +1,18 @@
 require 'spec_helper'
 
 describe NotificationController do
-  login_user
-  let(:notification) { FactoryGirl.create(:notification) }
+  let(:notification) { create(:notification) }
   let(:user) { notification.user }
-
-  before do
-    controller.stub(current_user: user)
-  end
+  before { login user }
 
   describe 'PUT update' do
-    before { Notification.stub(find: notification) }
-
-    let(:params) do
-      {
-        id: notification.id,
-        notification: {
-          read: true
-        }
-      }
+    before do
+      Notification.any_instance.stub(:update)
+      Notification.any_instance.stub(:errors).and_return([])
+      put :update, id: notification.id, notification: { read: true }
     end
 
     it 'should update read param' do
-
-      notification.should_receive(:update).and_return(true)
-      put :update, params
       response.should be_successful
     end
   end

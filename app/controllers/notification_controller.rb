@@ -1,14 +1,15 @@
 class NotificationController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  self.responder = FastResponder
 
   def index
-    @notifications = current_user.notifications.where('read IS NULL')
+    @notifications = current_user.notifications.where read: nil
   end
 
   def update
+    @notification = current_user.notifications.find(params[:id])
     @notification.update(notification_params)
-    render action: :index
+    respond_with @notification
   end
 
   private
