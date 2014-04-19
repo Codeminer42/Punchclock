@@ -9,7 +9,7 @@ class Period < ActiveRecord::Base
   }
   scope :currents, -> { contains Date.current }
   
-  def self.contains_or_create date
+  def self.contains_or_create(date)
     contains(date).first_or_create(
       range: calculate_range_from(date, end_period)
     )
@@ -29,20 +29,21 @@ class Period < ActiveRecord::Base
   end
 
   def previous
-    company.reload.try(:periods).try :last
+    company.reload
+    company.periods.last
   end
 
-  def overlap? period
+  def overlap?(period)
     overlap_range? period.try :range
   end
 
-  def overlap_range? range
+  def overlap_range?(range)
     (range.include?(range.min) || range.include?(range.max)) if range
   end
 
   protected
 
-  def self.calculate_range_from date, day_base
+  def self.calculate_range_from(date, day_base)
     start = date.change day: day_base
     start = start.prev_month if start > date
     finish = start.next_month - 1.day
