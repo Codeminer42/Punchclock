@@ -4,11 +4,11 @@ class Period < ActiveRecord::Base
   belongs_to :company
   validate :valid_overlap, if: :company
 
-  scope :contains, ->(date) {
+  scope :contains, lambda{ |date|
     where 'start_at < ? and end_at > ? ', date, date
   }
   scope :currents, -> { contains Date.current }
-  
+
   def self.contains_or_create(date)
     contains(date).first_or_create(
       range: calculate_range_from(date, end_period)
@@ -23,7 +23,7 @@ class Period < ActiveRecord::Base
     start_at..end_at
   end
 
-  def range= range
+  def range=(range)
     self.start_at = range.min
     self.end_at = range.max
   end

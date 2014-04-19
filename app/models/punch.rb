@@ -18,7 +18,7 @@ class Punch < ActiveRecord::Base
   scope :wrongs, -> { where period_id: nil }
 
   def self.fix_all
-    wrongs.each {|punch| punch.save }
+    wrongs.each { |punch| punch.save }
   end
 
   def from_time=(time_string)

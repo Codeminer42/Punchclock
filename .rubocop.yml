@@ -5,4 +5,6 @@ AllCops:
     - 'config/initializers/secret_token.rb'
 Documentation:
   Enabled: false
+ClassVars:
+  Enabled: false
 

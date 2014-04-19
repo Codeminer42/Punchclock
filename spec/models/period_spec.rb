@@ -8,7 +8,7 @@ describe Period do
 
     context 'when has no current period' do
       let(:month_len) { 28 }
-      before{ Period.delete_all }
+      before { Period.delete_all }
       it 'creates one' do
         expect(period.range.to_a.length).to be > month_len
         expect(period.range).to include date

@@ -23,10 +23,10 @@ describe Punch do
   end
 
   describe '#period' do
-    let(:from) { Time.new 2014, 1, 1, 8 } 
+    let(:from) { Time.new 2014, 1, 1, 8 }
     let(:punch) do
       create(:punch,
-             from: Time.new(2014, 1, 1, 8), to: Time.new(2014, 1, 1, 12) )
+             from: Time.new(2014, 1, 1, 8), to: Time.new(2014, 1, 1, 12))
     end
 
     it 'returns a period that contains the from date' do
