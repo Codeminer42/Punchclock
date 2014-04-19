@@ -15,6 +15,11 @@ class Punch < ActiveRecord::Base
 
   scope :since, ->(time) { where('punches.from >= ?', time) }
   scope :until, ->(time) { where('punches.to <= ?', time) }
+  scope :wrongs, -> { where period_id: nil }
+
+  def self.fix_all
+    wrongs.each {|punch| punch.save }
+  end
 
   def from_time=(time_string)
     @from_time = time_string
