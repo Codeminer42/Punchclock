@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Period do
   describe '#contains_or_create' do
     let(:date) { Date.current }
-    let(:period) { Period.contains_or_create date }
+    let(:company) { create :company }
+    let(:period) { company.periods.contains_or_create date }
 
     context 'when has no current period' do
       let(:month_len) { 28 }
@@ -16,7 +17,7 @@ describe Period do
 
     context 'when has current period' do
       let!(:new_period) do
-        create :period, range: 15.days.ago..15.days.from_now
+        create :period, range: 15.days.ago..15.days.from_now, company: company
       end
       it 'returns the period' do
         expect(period).to be == new_period
