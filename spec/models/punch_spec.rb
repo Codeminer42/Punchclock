@@ -22,6 +22,18 @@ describe Punch do
     end
   end
 
+  describe '#period' do
+    let(:from) { Time.new 2014, 1, 1, 8 } 
+    let(:punch) do
+      create(:punch,
+             from: Time.new(2014, 1, 1, 8), to: Time.new(2014, 1, 1, 12) )
+    end
+
+    it 'returns a period that contains the from date' do
+      expect(punch.period.range).to include(from.to_date)
+    end
+  end
+
   describe 'Datetime mount' do
     let(:params) do
       { from_time: '08:00', to_time: '12:00', when_day: Date.new(2014, 1, 1) }

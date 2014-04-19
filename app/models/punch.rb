@@ -4,9 +4,12 @@ class Punch < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   belongs_to :company
+  belongs_to :period
 
   validates_presence_of :from, :to, :project_id, :user_id, :company_id
   validates [:from, :to], check_time: true
+
+  before_save :attatch_to_period
 
   mount_uploader :attachment, AttachmentUploader
 
@@ -40,6 +43,10 @@ class Punch < ActiveRecord::Base
   end
 
   private
+
+  def attatch_to_period
+    self.period = company.periods.contains_or_create from.to_date
+  end
 
   def mount_time(time_string)
     RelativeTime.new(time_string).relative_to(@when_day)

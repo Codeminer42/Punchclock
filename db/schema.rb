@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419150313) do
+ActiveRecord::Schema.define(version: 20140419150801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,9 +114,11 @@ ActiveRecord::Schema.define(version: 20140419150313) do
     t.integer  "company_id"
     t.string   "attachment"
     t.text     "comment"
+    t.integer  "period_id"
   end
 
   add_index "punches", ["company_id"], name: "index_punches_on_company_id", using: :btree
+  add_index "punches", ["period_id"], name: "index_punches_on_period_id", using: :btree
   add_index "punches", ["project_id"], name: "index_punches_on_project_id", using: :btree
   add_index "punches", ["user_id"], name: "index_punches_on_user_id", using: :btree
 
