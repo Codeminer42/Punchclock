@@ -5,9 +5,14 @@ class Period < ActiveRecord::Base
   validate :valid_overlap, if: :company
 
   scope :contains, lambda{ |date|
-    where 'start_at < ? and end_at > ? ', date, date
+    where t[:start_at].lt(date).or t[:start_at].gt(date)
   }
+
   scope :currents, -> { contains Date.current }
+
+  def self.t
+    arel_table
+  end
 
   def self.contains_or_create(date)
     contains(date).first_or_create(
