@@ -10,6 +10,6 @@ class DateOverlapQuery < BaseQuery
   private
 
   def wrap(date)
-    t[:start_at].lt(date).and t[:end_at].gt(date)
+    t[:start_at].lteq(date).and t[:end_at].gt(date)
   end
 end

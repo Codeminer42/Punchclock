@@ -22,7 +22,7 @@ class Period < ActiveRecord::Base
   def self.calculate_range_from(date, day_base)
     start = date.change day: day_base
     start = start.prev_month if start > date
-    finish = start.next_month - 1.day
+    finish = start.next_month
 
     start..finish
   end
