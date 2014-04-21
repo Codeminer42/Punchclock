@@ -1,19 +1,15 @@
-DateOverlapQuery = Struct.new(:object_class) do
+class DateOverlapQuery < BaseQuery
   def contains(date)
-    object_class.where contains_exp date
+    model.where wrap date
   end
 
   def intersect(range)
-    object_class.where contains_exp(range.min).or contains_exp range.max
+    model.where wrap(range.min).or wrap range.max
   end
 
   private
 
-  def contains_exp(date)
+  def wrap(date)
     t[:start_at].lt(date).and t[:end_at].gt(date)
-  end
-
-  def t
-    object_class.arel_table
   end
 end
