@@ -1,5 +1,11 @@
 pt-BR:
   activerecord:
+    errors:
+      models:
+        period:
+          attributes:
+            base:
+              overlap: As datas escolhidas se sobrepõem com outras já cadastradas
     models:
       admin_user:
         one: "Administrador"
