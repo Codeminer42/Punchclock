@@ -9,9 +9,8 @@ class Period < ActiveRecord::Base
   scope :currents, -> { contains Date.current }
 
   def self.contains_or_create(date)
-    contains(date).first_or_create(
-      range: calculate_range_from(date, end_period)
-    )
+    contains(date)
+      .first_or_create( range: calculate_range_from(date, end_period) )
   end
 
   def self.end_period
