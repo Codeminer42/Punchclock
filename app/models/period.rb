@@ -14,7 +14,7 @@ class Period < ActiveRecord::Base
   end
 
   def siblings
-    company.periods
+    company.periods.siblings(id)
   end
 
   protected

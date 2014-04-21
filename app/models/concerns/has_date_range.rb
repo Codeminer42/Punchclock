@@ -7,6 +7,7 @@ module HasDateRange
     scope :contains, ->(d) { DateOverlapQuery.new(self).contains d }
     scope :intersect, ->(r) { DateOverlapQuery.new(self).intersect r }
     scope :currents, -> { contains Date.current }
+    scope :siblings, ->(id) { where.not id: id }
   end
 
   def range
@@ -19,7 +20,7 @@ module HasDateRange
   end
 
   def siblings
-    self.class
+    self.class.siblings(id)
   end
 
   protected
