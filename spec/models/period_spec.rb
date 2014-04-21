@@ -27,13 +27,23 @@ describe Period do
 
   describe 'validations' do
     let(:company) { create :company }
+    let!(:period) do
+      create :period, range: 15.days.ago..15.days.from_now, company: company
+    end
 
-    context 'when have 2 periods with overlap days' do
-      let!(:period) do
-        create :period, range: 15.days.ago..15.days.from_now, company: company
-      end
+    context 'when new period starts inner the other period' do
       let!(:new_period) do
         build :period, range: 10.days.ago..20.days.from_now, company: company
+      end
+
+      it 'invalids the second' do
+        expect(new_period).to_not be_valid
+      end
+    end
+
+    context 'when new period ends inner the other period' do
+      let!(:new_period) do
+        build :period, range: 10.days.from_now..40.days.from_now, company: company
       end
 
       it 'invalids the second' do

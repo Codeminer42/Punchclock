@@ -4,10 +4,8 @@ class Period < ActiveRecord::Base
   belongs_to :company
   validate :valid_overlap, if: :company
 
-  scope :contains, lambda{ |date|
-    where t[:start_at].lt(date).or t[:start_at].gt(date)
-  }
-
+  scope :contains, ->(d){ DateOverlapQuery.new(self).contains d }
+  scope :intersect, ->(r){ DateOverlapQuery.new(self).intersect r }
   scope :currents, -> { contains Date.current }
 
   def self.t
@@ -38,14 +36,6 @@ class Period < ActiveRecord::Base
     company.periods.last
   end
 
-  def overlap?(period)
-    overlap_range? period.try :range
-  end
-
-  def overlap_range?(range)
-    (range.include?(range.min) || range.include?(range.max)) if range
-  end
-
   protected
 
   def self.calculate_range_from(date, day_base)
@@ -57,6 +47,8 @@ class Period < ActiveRecord::Base
   end
 
   def valid_overlap
-    errors[:base] << 'Overlap' if overlap? previous
+    if previous && self.class.intersect(previous.range)
+      errors[:base] << 'Overlap'
+    end
   end
 end
