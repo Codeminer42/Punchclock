@@ -4,7 +4,7 @@ DateOverlapQuery = Struct.new(:object_class) do
   end
 
   def intersect(range)
-    object_class.where contains_exp(min).or contains_exp range.max
+    object_class.where contains_exp(range.min).or contains_exp range.max
   end
 
   private

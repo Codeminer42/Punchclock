@@ -8,10 +8,6 @@ class Period < ActiveRecord::Base
   scope :intersect, ->(r){ DateOverlapQuery.new(self).intersect r }
   scope :currents, -> { contains Date.current }
 
-  def self.t
-    arel_table
-  end
-
   def self.contains_or_create(date)
     contains(date).first_or_create(
       range: calculate_range_from(date, end_period)
@@ -31,11 +27,6 @@ class Period < ActiveRecord::Base
     self.end_at = range.max
   end
 
-  def previous
-    company.reload
-    company.periods.last
-  end
-
   protected
 
   def self.calculate_range_from(date, day_base)
@@ -47,8 +38,6 @@ class Period < ActiveRecord::Base
   end
 
   def valid_overlap
-    if previous && self.class.intersect(previous.range)
-      errors[:base] << 'Overlap'
-    end
+    errors[:base] << 'Overlap' if company.periods.intersect(range).any?
   end
 end
