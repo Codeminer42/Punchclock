@@ -4,8 +4,8 @@ module HasDateRange
   included do
     validate :valid_overlap
 
-    scope :contains, ->(d){ DateOverlapQuery.new(self).contains d }
-    scope :intersect, ->(r){ DateOverlapQuery.new(self).intersect r }
+    scope :contains, ->(d) { DateOverlapQuery.new(self).contains d }
+    scope :intersect, ->(r) { DateOverlapQuery.new(self).intersect r }
     scope :currents, -> { contains Date.current }
   end
 
