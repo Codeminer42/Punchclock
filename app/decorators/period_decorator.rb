@@ -5,6 +5,8 @@ class PeriodDecorator < ApplicationDecorator
     h.t :period_label, months: months, years: years, scope: :date
   end
 
+  alias :to_s :label
+
   def start_at
     localize_date object.start_at
   end
