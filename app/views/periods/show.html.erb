@@ -1,78 +1,33 @@
-<div class="col-md-2">
-  <%= gravatar_for current_user, size: 40 %>
-  <%= link_to current_user.name, user_path(current_user) %>
+<div class="btn-group punches-action">
+  <%= link_to 'Punch', new_punch_path, :class => 'btn btn-primary' %>
 </div>
 
-<div class="col-md-2">
-  <div class="btn-group">
-    <%= link_to 'Punch', new_punch_path, :class => 'btn btn-primary' %>
-  </div>
-</div>
+<h1>
+  <%= link_to '&#10094;'.html_safe, periods_path %> <%= @period %>
+</h1>
 
-<br clear="all" >
-
-<div>
-  <dl>
-    <dt>Total hours</dt>
-    <dd><%= @period.punches.total_hours %><dd>
-    <dt>Punches</dt>
-    <dd><%= @period.punches.count %><dd>
-    <dt>Days</dt>
-    <dd><%= @period.punches.by_day.count %><dd>
-  </dl>
-</div>
-
-<br>
-<h1><%= link_to '&#10094;'.html_safe, periods_path %> <%= @period %></h1>
-<table class='table table-striped'>
-<colgroup>
-    <col width='160'>
-    <col width='100'>
-    <col width='60'>
-    <col width='60'>
-    <col>
-    <col>
-    <col>
-    <col width='24'>
-    <col width='24'>
-    <col width='24'>
-  </colgroup>
-
-  <thead>
-    <tr>
-      <th> When
-      <th> From
-      <th> To
-      <th> Delta
-      <th> Comment
-      <th> Project
-      <th>
-      <th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @period.punches.each do |punch| %>
-      <tr class="user-punch">
-        <td><%= link_to punch.date, punch, id: "shw-#{punch.id}" %> </td>
-        <td><%= punch.from %> </td>
-        <td><%= punch.to %> </td>
-        <td><%= punch.delta %> </td>
-        <td><strong> <%= punch.comment %> </strong> </td>
-        <td><%= punch.project.name %> </td>
-        <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
-        <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
-        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{punch.id}" %> </td>
-      </tr>
-    <% end %>
-  </tbody>
-
-  <tfoot>
-    <tr>
-      <td colspan="6">
-        <strong>TOTAL:</strong>
-        <%= @period.punches.total_hours %>
+<table class="punches-table">
+<%- @period.weeks.each do |weekdays| %>
+  <tr>
+    <%- weekdays.each do |date| %>
+      <td>
+        <p><%= date.day %></p>
+        <ul>
+          <%- @period.by_date(date).each do |punch| %>
+            <li><%= link_to punch, punch %></li>
+          <%- end %>
+        </ul>
       </td>
-    </tr>
-  </tfoot>
+    <%- end %>
+  </tr>
+<%- end %>
 </table>
+
+<dl class="punches-summary">
+  <dt>Total hours</dt>
+  <dd><%= @period.punches.total_hours %><dd>
+  <dt>Punches</dt>
+  <dd><%= @period.punches.count %><dd>
+  <dt>Days</dt>
+  <dd><%= @period.punches.by_date.count %><dd>
+</dl>

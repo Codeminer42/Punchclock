@@ -19,6 +19,16 @@ class PeriodDecorator < ApplicationDecorator
     object.punches.decorate
   end
 
+  def by_date date
+    punches.by_date.fetch date, []
+  end
+
+  def weeks
+    range = object.range
+    (range.min.beginning_of_week..range.max.end_of_week).
+      to_a.in_groups_of(7)
+  end
+
   protected
 
   def months

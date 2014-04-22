@@ -1,6 +1,12 @@
 class PunchDecorator < ApplicationDecorator
   delegate_all
 
+  def summary
+    "#{from} - #{to}"
+  end
+  
+  alias :to_s :summary
+
   def date
     localize_date(object.to)
   end
