@@ -22,14 +22,14 @@ ActiveAdmin.register Punch do
         f.input :project
         f.input :company
       else
-        f.input :user, collection: current_admin_user.company.users.load.map { |u| [u.name, u.id] }
-        f.input :project, collection: current_admin_user.company.projects.load.map { |p| [p.name, p.id] }
+        f.input :user, collection: list_users
+        f.input :project, collection: list_projects
         f.input :company, collection: {
           punch.company.name => current_admin_user.company_id
         }
       end
-      f.input :from, :as => :datetime_picker
-      f.input :to, :as => :datetime_picker
+      f.input :from, as: :datetime_picker
+      f.input :to, as: :datetime_picker
     end
     f.actions
   end
@@ -40,13 +40,15 @@ ActiveAdmin.register Punch do
     end
 
     def index
-      params['q']['from_lteq'] += ' 23:59:59.999999' if params['q'] and params['q']['from_lteq']
+      if params['q'] && params['q']['from_lteq']
+        params['q']['from_lteq'] += ' 23:59:59.999999'
+      end
       index!
     end
 
     def new
       @punch = Punch.new
-      @punch.company_id = current_admin_user.company.id unless current_admin_user.is_super?
+      @punch.company_id = current_company.id unless signed_in_as_super?
       new!
     end
   end
@@ -64,4 +66,20 @@ ActiveAdmin.register Punch do
   filter :user
   filter :company
   filter :from, label: 'Interval', as: :date_range
+
+  def signed_in_as_super?
+    current_admin_user.is_super?
+  end
+
+  def current_company
+    current_admin_user.company
+  end
+
+  def list_projects
+    current_admin_user.company.projects.load.map { |p| [p.name, p.id] }
+  end
+
+  def list_users
+    current_admin_user.company.users.load.map { |u| [u.name, u.id] }
+  end
 end

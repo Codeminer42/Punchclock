@@ -1,14 +1,16 @@
 language: ruby
+cache: bundler
 bundler_args: --without development production
 rvm:
   - 2.1.0
 before_script:
   - cp config/database.yml.example config/database.yml
-  - bundle exec rake db:create db:migrate db:test:load
+  - bundle exec rake db:create db:migrate db:test:prepare
 script:
-  - bundle exec rspec .
+  - bundle exec rspec
 notifications:
   email:
     recipients:
-      - fernando.martinez@codeminer42.com
       - sadjow.leao@codeminer42.com
+      - dante.santos@codeminer42.com
+      - romildo.oliveira@codeminer42.com

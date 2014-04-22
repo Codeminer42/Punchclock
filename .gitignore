@@ -1,5 +1,5 @@
 /.bundle
-
+/gem
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /config/database.yml
@@ -7,6 +7,8 @@
 /tmp
 public/assets
 public/uploads
+
+coverage/
 
 .rvmrc
 .versions.conf

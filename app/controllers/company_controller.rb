@@ -1,19 +1,22 @@
-class CompanyController < InheritedResources::Base
-	before_action :authenticate_user!
-	load_and_authorize_resource
+class CompanyController < ApplicationController
+  before_action :authenticate_user!
+  before_action :ensure_admin!
+  self.responder = ApplicationResponder
 
-	def update
-		if @company.update(company_params)
-			flash.now[:notice] = "Company successful updated"
-			redirect_to root_url
-		else
-			render action: :edit
-		end
-	end
+  def edit
+    @company = current_user.company
+    respond_with @company
+  end
 
-private
-	def company_params
-		allow = [:name, :avatar, :remove_avatar]
-		params.require(:company).permit(allow)
-	end
+  def update
+    @company = current_user.company
+    @company.update(company_params)
+    respond_with @company, location: root_url
+  end
+
+  private
+
+  def company_params
+    params.require(:company).permit %w(name avatar remove_avatar)
+  end
 end

@@ -8,18 +8,18 @@ describe PunchesController do
     controller.stub(:current_user).and_return(user)
   end
 
-  context "when user is admin" do
-    let(:punches) { double(:punch)}
+  context 'when user is admin' do
+    let(:punches) { double(:punch) }
     before do
       user.stub(is_admin?: true)
       punches.stub(:decorate)
     end
 
-    describe "GET index" do
+    describe 'GET index' do
       let(:search) { double(:search) }
 
-      context "with search" do        
-        it "renders current month" do
+      context 'with search' do
+        it 'renders current month' do
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
           expect(Punch).to receive(:search).with(nil).and_return(search)
@@ -27,23 +27,24 @@ describe PunchesController do
         end
       end
 
-      context "without search" do
-        
-        it "renders selected month" do
+      context 'without search' do
+
+        it 'renders selected month' do
           from_params = {
-            "from_gteq(1i)" => '2013',
-            "from_gteq(2i)" => '08',
-            "from_gteq(3i)" => '01'
+            'from_gteq(1i)' => '2013',
+            'from_gteq(2i)' => '08',
+            'from_gteq(3i)' => '01'
           }
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(from_params).and_return(search)
+          expect(Punch).to receive(:search).with(from_params)
+            .and_return(search)
           get :index, q: from_params
         end
       end
-    end #END GET INDEX
+    end # END GET INDEX
 
-    describe "GET new" do
+    describe 'GET new' do
       let(:punch) { FactoryGirl.build(:punch) }
 
       before do
@@ -57,25 +58,26 @@ describe PunchesController do
         controller.stub(load_and_authorize_resource: true)
       end
 
-      it "renders new template" do
+      it 'renders new template' do
         get :new
         response.should render_template :new
       end
 
-      context "when has a last project punched" do
+      context 'when has a last project punched' do
         before do
           Punch.stub(:find_last_by_user_id).with(punch.user_id) { punch }
         end
 
-        it "builds punch with last project punched" do
+        it 'builds punch with last project punched' do
           get :new
-          last_project_id = Punch.find_last_by_user_id(punch.user_id).project_id
+          last_project_id = Punch.find_last_by_user_id(punch.user_id)
+            .project_id
           punch.project_id.should eq last_project_id
         end
       end
-    end #END GET NEW
+    end # END GET NEW
 
-    describe "GET edit" do
+    describe 'GET edit' do
       let(:punch) { FactoryGirl.build(:punch) }
 
       before do
@@ -89,7 +91,7 @@ describe PunchesController do
         controller.stub(load_and_authorize_resource: true)
       end
 
-      it "renders edit template" do
+      it 'renders edit template' do
         params = {
           id: 1
         }
@@ -97,19 +99,9 @@ describe PunchesController do
         get :edit, params
         response.should render_template :edit
       end
+    end # END GET EDIT
 
-      it "builds comment if does not exist" do
-        params = {
-          id: 1
-        }
-
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
-      end
-    end #END GET EDIT
-
-    describe "methods" do
+    describe 'methods' do
 
       let(:punch) { FactoryGirl.build(:punch) }
       let(:company) { punch.company }
@@ -121,53 +113,47 @@ describe PunchesController do
         controller.stub(current_user: user)
       end
 
-      describe "POST create" do
-        let(:punch_params) {
-            {
-              :'from(4i)'  => '08',
-              :'from(5i)'  => '00',
-              :'to(4i)'    => '17',
-              :'to(5i)'    => '00',
-              :'project_id'=> project.id.to_s
-            }
-        }
-        let(:params) {
-            params = {
-              when_day: "2013-08-20",
-              punch: punch_params
-            }
-        }
+      describe 'POST #create' do
+        def post_create
+          post :create, punch: {}
+        end
 
-        context "when authorize pass" do
-          it "creates" do
-            punch.should_receive(:company_id=).with(company.id)
-            controller.stub_chain(:current_user, :punches,
-                                  :new => punch_params).and_return(punch)
+        before do
+          controller.stub(:punch_params)
+          Punch.should_receive(:new).and_return(punch)
+        end
+
+        context 'when success' do
+          before do
             expect(punch).to receive(:save).and_return(true)
-            post :create, params
-            expect(assigns(:punch)).to eq(punch)
+          end
+
+          it 'saves the punch and redirect to punches_path' do
+            post_create
             expect(response).to redirect_to punches_path
           end
         end
 
-        context "when authorize fails" do
-          before { user.stub(company_id: punch.company.id - 1) }
+        context 'when fails' do
+          before do
+            expect(punch).to receive(:save).and_return(false)
+            punch.stub(:errors).and_return(['foo'])
+          end
 
-          it "does not create" do
-            punch.should_not receive(:save)
-            post :create, params
-            expect(response).to redirect_to(root_url)
+          it 'renders the action new' do
+            post_create
+            expect(response).to render_template(:new)
           end
         end
-      end #END POST CREATE
+      end
 
-      describe "PUT update" do
+      describe 'PUT update' do
         before do
           controller.stub_chain(:scopped_punches, find: punch)
           Punch.stub(find: punch)
         end
 
-        let(:params) {
+        let(:params) do
           {
             id: punch.id.to_s,
             when_day: '2013-08-20',
@@ -179,53 +165,66 @@ describe PunchesController do
               :'project_id' => project.id.to_s
             }
           }
-        }
+        end
 
-
-        it "updates" do
+        it 'updates' do
           put :update, params
           expect(response).to redirect_to punches_path
         end
-      end #END PUT UPDATE
-    end #END METHODS
+      end # END PUT UPDATE
+    end # END METHODS
   end
 
-  context "when user is a employer" do
-    let(:punches) { double(:punch)}
+  context 'when user is a employer' do
+    let(:punches) { double(:punch) }
     before do
       user.stub(is_admin?: false)
       punches.stub(:decorate)
     end
 
-    describe "GET index" do
+    describe 'GET index' do
       let(:search) { double(:search) }
-      context "with search" do
-        it "renders current month" do
+      context 'with search' do
+        it 'renders current month' do
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
           expect(Punch).to receive(:search).with(nil).and_return(search)
           get :index
         end
 
-
       end
 
-      context "withou search" do
-        it "renders selected month" do
+      context 'withou search' do
+        it 'renders selected month' do
           from_params = {
-            "from_gteq(1i)" => '2013',
-            "from_gteq(2i)" => '08',
-            "from_gteq(3i)" => '01'
+            'from_gteq(1i)' => '2013',
+            'from_gteq(2i)' => '08',
+            'from_gteq(3i)' => '01'
           }
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(from_params).and_return(search)
+          expect(Punch).to receive(:search).with(from_params)
+            .and_return(search)
           get :index, q: from_params
         end
       end
-    end #END GET INDEX
+    end # END GET INDEX
 
-    describe "GET new" do
+    describe 'GET new' do
+      let(:punch) { FactoryGirl.build(:punch) }
+
+      before do
+        user.stub(id: punch.user.id)
+        user.stub(company: punch.company)
+        user.stub(company_id: punch.company.id)
+        user.stub(is_admin?: false)
+        punch.stub(id: 1)
+        controller.stub(current_user: user)
+        Punch.stub(:find).with(punch.id.to_s) { punch }
+        controller.stub(load_and_authorize_resource: true)
+      end
+    end
+    describe 'GET edit' do
       let(:punch) { FactoryGirl.build(:punch) }
 
       before do
@@ -239,32 +238,7 @@ describe PunchesController do
         controller.stub(load_and_authorize_resource: true)
       end
 
-      it "builds comment" do
-        params = {
-          id: 1
-        }
-
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
-      end
-    end #END GET NEW
-
-    describe "GET edit" do
-      let(:punch) { FactoryGirl.build(:punch) }
-
-      before do
-        user.stub(id: punch.user.id)
-        user.stub(company: punch.company)
-        user.stub(company_id: punch.company.id)
-        user.stub(is_admin?: false)
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
-        Punch.stub(:find).with(punch.id.to_s) { punch }
-        controller.stub(load_and_authorize_resource: true)
-      end
-
-      it "renders edit template" do
+      it 'renders edit template' do
         params = {
           id: 1
         }
@@ -272,19 +246,9 @@ describe PunchesController do
         get :edit, params
         response.should render_template :edit
       end
+    end
 
-      it "builds comment if does not exist" do
-        params = {
-          id: 1
-        }
-
-        punch.should receive(:build_comment)
-        get :edit, params
-        response.should render_template :edit
-      end
-    end #END GET EDIT
-
-    describe "methods" do
+    describe 'methods' do
 
       let(:punch) { FactoryGirl.build(:punch) }
       let(:company) { punch.company }
@@ -297,53 +261,47 @@ describe PunchesController do
         controller.stub(current_user: user)
       end
 
-      describe "POST create" do
-        let(:punch_params) {
-            {
-              :'from(4i)'  => '08',
-              :'from(5i)'  => '00',
-              :'to(4i)'    => '17',
-              :'to(5i)'    => '00',
-              :'project_id'=> project.id.to_s
-            }
-        }
-        let(:params) {
-            params = {
-              when_day: "2013-08-20",
-              punch: punch_params
-            }
-        }
+      describe 'POST #create' do
+        def post_create
+          post :create, punch: {}
+        end
 
-        context "when authorize pass" do
-          it "creates" do
-            punch.should_receive(:company_id=).with(company.id)
-            controller.stub_chain(:current_user, :punches,
-                                  :new => punch_params).and_return(punch)
+        before do
+          controller.stub(:punch_params)
+          Punch.should_receive(:new).and_return(punch)
+        end
+
+        context 'when success' do
+          before do
             expect(punch).to receive(:save).and_return(true)
-            post :create, params
-            expect(assigns(:punch)).to eq(punch)
+          end
+
+          it 'save and return to root_path' do
+            post_create
             expect(response).to redirect_to punches_path
           end
         end
 
-        context "when authorize fails" do
-          before { user.stub(company_id: punch.company.id - 1) }
+        context 'when fails' do
+          before do
+            expect(punch).to receive(:save).and_return(false)
+            punch.stub(:errors).and_return(['foo'])
+          end
 
-          it "does not create" do
-            punch.should_not receive(:save)
-            post :create, params
-            expect(response).to redirect_to(root_url)
+          it 'fail and render action new' do
+            post_create
+            expect(response).to render_template(:new)
           end
         end
-      end #END POST CREATE
+      end
 
-      describe "PUT update" do
+      describe 'PUT update' do
         before do
           controller.stub_chain(:scopped_punches, find: punch)
           Punch.stub(find: punch)
         end
 
-        let(:params) {
+        let(:params) do
           {
             id: punch.id.to_s,
             when_day: '2013-08-20',
@@ -355,14 +313,13 @@ describe PunchesController do
               :'project_id' => project.id.to_s
             }
           }
-        }
+        end
 
-
-        it "updates" do
+        it 'updates' do
           put :update, params
           expect(response).to redirect_to punches_path
         end
-      end #END PUT UPDATE
-    end #END METHODS
+      end # END PUT UPDATE
+    end # END METHODS
   end
 end

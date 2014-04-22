@@ -1,48 +1,38 @@
 require 'spec_helper'
 
 describe CompanyController do
-	login_user
+  let(:is_admin) { true }
+  let(:user) { create :user, is_admin: is_admin }
+  let(:company) { user.company }
+  before { login user }
 
-	describe "PUT update" do
-		let(:user) { double('user') }
-		let(:company) { FactoryGirl.create(:company) }
+  describe 'PUT update' do
+    before do
+      Company.any_instance.stub(:update)
+      Company.any_instance.stub(:errors).and_return(errors)
+      put :update, id: company.id, company: { name: '' }
+    end
 
-		before do
-			controller.stub(current_user: user)
-		end
+    context 'when has valid params' do
+      let(:errors) { [] }
+      it 'should update the company settings' do
+        expect(response).to redirect_to root_url
+      end
+    end
 
-		context "when authorize pass" do
-			before do
-				Company.stub(:find).with(company.id.to_s) { company }
-				controller.stub(authenticate_user!: true)
-				controller.stub(load_and_authorize_resource: true)
-				user.stub(is_admin?: true)
-				user.stub(id: 1)
-				user.stub(company: company)
-				user.stub(company_id: company.id)
-			end
+    context 'when has no valid params' do
+      let(:errors) { [:invalid] }
+      it 'should not update company settings' do
+        expect(response).to render_template :edit
+      end
+    end
 
-			it "should update the company settings" do
-				params = {
-					id: company.id,
-					company: { name: '1234' }
-				}
-
-				expect(company).to receive(:update).and_return(true)
-				put :update, params
-				expect(response).to redirect_to root_path
-			end
-
-			it "should not update company settings" do
-				params = {
-					id: company.id,
-					company: { name: '' }
-				}
-
-				expect(company).to receive(:update).and_return(false)
-				put :update, params
-				expect(response).to render_template :edit
-			end
-		end
-	end
+    context 'when is not admin' do
+      let(:is_admin) { false }
+      let(:errors) { [] }
+      it 'redirects to root path' do
+        expect(response).to redirect_to root_url
+      end
+    end
+  end
 end

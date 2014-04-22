@@ -35,8 +35,8 @@
   <strong>Comments</strong>
   <% unless @punch.comment.nil? %>
     <p>
-      <%= gravatar_for(@punch.comment.user) %>
-      <%= @punch.comment.text %>
+      <%= gravatar_for(@punch.user) %>
+      <%= @punch.comment %>
     </P
   <% end %>
 </p>

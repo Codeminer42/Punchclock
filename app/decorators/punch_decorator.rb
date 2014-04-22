@@ -14,11 +14,11 @@ class PunchDecorator < ApplicationDecorator
   end
 
   def when
-    h.l object.from, format: "%d/%m/%Y"
+    h.l object.from, format: '%d/%m/%Y'
   end
 
   def delta
-   h.secs_to_formated_hour(object.delta)
+    h.secs_to_formated_hour(object.delta)
   end
 
   private
@@ -28,7 +28,7 @@ class PunchDecorator < ApplicationDecorator
   end
 
   def localize_time(datetime)
-    h.l datetime, format: "%H:%M"
+    h.l datetime, format: '%H:%M'
   end
 
   def localize_date(datetime)
