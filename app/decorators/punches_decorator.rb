@@ -4,4 +4,8 @@ class PunchesDecorator < Draper::CollectionDecorator
   def total_hours
     h.secs_to_formated_hour(object.total)
   end
+
+  def by_day
+    object.group_by { |punch| punch.from.to_date }
+  end
 end

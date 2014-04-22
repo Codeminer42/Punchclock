@@ -1,6 +1,7 @@
 class Period < ActiveRecord::Base
   @@DEFAULT_END_PERIOD = 15
   belongs_to :company
+  has_many :punches
   validates_associated :company
   include HasDateRange
 

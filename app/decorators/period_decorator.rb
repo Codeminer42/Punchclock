@@ -15,6 +15,10 @@ class PeriodDecorator < ApplicationDecorator
     localize_date object.end_at
   end
 
+  def punches
+    object.punches.decorate
+  end
+
   protected
 
   def months

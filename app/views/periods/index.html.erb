@@ -1,5 +1,5 @@
 <ul>
   <%- @periods.each do |period| %>
-    <li><%= period %></li>
+    <li><%= link_to period, period %></li>
   <%- end %>
 </ul>
