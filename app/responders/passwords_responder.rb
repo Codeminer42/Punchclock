@@ -6,7 +6,7 @@ class PasswordsResponder < ApplicationResponder
   protected
 
   def response_for_update
-    unless has_errors? then password_changed! else password_not_changed! end
+    if has_errors? then password_not_changed! else password_changed! end
   end
 
   def password_changed!
