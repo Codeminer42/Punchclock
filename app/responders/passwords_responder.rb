@@ -1,12 +1,12 @@
 class PasswordsResponder < ApplicationResponder
   def to_html
-    if patch? then response_for_update else super end
+    patch? ? response_for_update : super
   end
 
   protected
 
   def response_for_update
-    if has_errors? then password_not_changed! else password_changed! end
+    has_errors? ? password_not_changed! : password_changed!
   end
 
   def password_changed!
