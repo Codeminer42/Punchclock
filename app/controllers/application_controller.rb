@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   private
 
   def ensure_admin!
-    current_user.is_admin? or fail CanCan::AccessDenied
+    current_user.is_admin? || fail(CanCan::AccessDenied)
   end
 end

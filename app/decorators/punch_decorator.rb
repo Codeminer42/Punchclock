@@ -4,8 +4,8 @@ class PunchDecorator < ApplicationDecorator
   def summary
     "#{from} - #{to}"
   end
-  
-  alias :to_s :summary
+
+  alias_method :to_s, :summary
 
   def date
     localize_date(object.to)
