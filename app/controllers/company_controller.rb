@@ -1,7 +1,6 @@
 class CompanyController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_admin!
-  self.responder = ApplicationResponder
 
   def edit
     @company = current_user.company
