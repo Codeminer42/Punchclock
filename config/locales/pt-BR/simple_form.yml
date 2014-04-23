@@ -1,0 +1,15 @@
+pt-BR:
+  helpers:
+    submit:
+      punches_filter_form:
+        create: 'Filtrar'
+  simple_form:
+    placeholders:
+      punches_filter_form:
+        since: 'Desde'
+        until: 'Até'
+    include_blanks:
+      punches_filter_form:
+        project_id: "Todos os projetos"
+        user_id: "Todos os usuários"
+

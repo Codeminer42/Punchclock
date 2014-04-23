@@ -16,6 +16,14 @@ GIT
       ransack (~> 1.0)
       sass-rails
 
+GIT
+  remote: git://github.com/plataformatec/simple_form.git
+  revision: d7306558665d38fe3a0c277ce263e99f635958de
+  specs:
+    simple_form (3.1.0.rc1)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -58,7 +66,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
-    bourbon (3.2.0)
+    bourbon (3.2.1)
       sass (~> 3.2)
       thor
     builder (3.2.2)
@@ -300,9 +308,6 @@ GEM
     settingslogic (2.0.9)
     shoulda-matchers (2.6.0)
       activesupport (>= 3.0.0)
-    simple_form (3.0.2)
-      actionpack (~> 4.0)
-      activemodel (~> 4.0)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -391,7 +396,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   settingslogic
   shoulda-matchers
-  simple_form
+  simple_form!
   simplecov
   slim
   thin

@@ -1,7 +1,7 @@
 <div class="row" id="filter-form">
   <div class="col-md-2">
     <div class="btn-group">
-      <%= link_to 'Punch', new_punch_path, :class => 'btn btn-primary' %>
+      <%= link_to Punch.model_name.human, new_punch_path, :class => 'btn btn-primary' %>
     </div>
   </div>
 
@@ -9,30 +9,30 @@
 
   <br>
 <table class='table table-striped'>
-<colgroup>
-    <col width='160'>
-    <col width='100'>
-    <col width='60'>
-    <col width='60'>
-    <col>
-    <col>
-    <col>
-    <col width='24'>
-    <col width='24'>
-    <col width='24'>
+  <colgroup>
+    <col width='160'></col>
+    <col width='100'></col>
+    <col width='60'></col>
+    <col width='60'></col>
+    <col></col>
+    <col></col>
+    <col></col>
+    <col width='24'></col>
+    <col width='24'></col>
+    <col width='24'></col>
   </colgroup>
 
   <thead>
     <tr>
-      <th> User
-      <th><%= sort_link @search, :from, 'When' %>
-      <th> From
-      <th> To
-      <th> Delta
-      <th> Comment
-      <th><%= sort_link @search, :project_id, 'Project' %>
-      <th>
-      <th>
+      <th><%= Punch.human_attribute_name(:user_id) %></th>
+      <th><%= sort_link @search, :from, Punch.human_attribute_name(:when) %></th>
+      <th><%= Punch.human_attribute_name(:from) %></th>
+      <th><%= Punch.human_attribute_name(:to) %></th>
+      <th><%= Punch.human_attribute_name(:delta) %></th>
+      <th><%= Punch.human_attribute_name(:comment) %></th>
+      <th><%= sort_link @search, :project_id, Punch.human_attribute_name(:project_id) %></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -51,7 +51,7 @@
         <td><%= punch.project.name %> </td>
         <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
         <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
-        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: 'Are you sure?' }, id: "dlt-#{punch.id}" %> </td>
+        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: t('.are_you_sure') }, id: "dlt-#{punch.id}" %> </td>
       </tr>
     <% end %>
   </tbody>
@@ -59,7 +59,7 @@
   <tfoot>
     <tr>
       <td colspan="6">
-        <strong>TOTAL:</strong>
+        <strong><%= t('.total') %></strong>
         <%= @punches.total_hours %>
       </td>
     </tr>

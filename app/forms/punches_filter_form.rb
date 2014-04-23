@@ -12,6 +12,10 @@ class PunchesFilterForm
     @user_id = params[:user_id]
   end
 
+  def persisted?
+    false
+  end
+
   def apply_filters(relation)
     relation = filter_date relation
     relation = relation.where(project_id: @project_id) if @project_id.present?
