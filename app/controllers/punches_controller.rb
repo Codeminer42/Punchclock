@@ -22,10 +22,12 @@ class PunchesController < ApplicationController
 
   def new
     @punch = Punch.new
+    respond_with @punch
   end
 
   def edit
     @punch = Punch.find(params[:id])
+    respond_with @punch
   end
 
   def create
