@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ProjectsController do
-  before{ login user }
+  before { login user }
   let(:user) { create :user, is_admin: true }
   let(:project) { create :project, company: user.company }
 
