@@ -28,6 +28,9 @@ pt-BR:
       notification:
         one: "Notificação"
         other: "Notificações"
+      period:
+        one: "Folha"
+        other: "Folhas"
     attributes:
       admin_user:
         id: "ID"
