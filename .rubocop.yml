@@ -7,4 +7,5 @@ Documentation:
   Enabled: false
 ClassVars:
   Enabled: false
-
+DotPosition:
+  EnforcedStyle: leading
