@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307134845) do
+ActiveRecord::Schema.define(version: 20140419154039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140307134845) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar"
+    t.integer  "end_period"
   end
 
   create_table "notifications", force: true do |t|
@@ -83,6 +84,16 @@ ActiveRecord::Schema.define(version: 20140307134845) do
   end
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+
+  create_table "periods", force: true do |t|
+    t.date     "start_at"
+    t.date     "end_at"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "periods", ["company_id"], name: "index_periods_on_company_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name"
@@ -103,9 +114,11 @@ ActiveRecord::Schema.define(version: 20140307134845) do
     t.integer  "company_id"
     t.string   "attachment"
     t.text     "comment"
+    t.integer  "period_id"
   end
 
   add_index "punches", ["company_id"], name: "index_punches_on_company_id", using: :btree
+  add_index "punches", ["period_id"], name: "index_punches_on_period_id", using: :btree
   add_index "punches", ["project_id"], name: "index_punches_on_project_id", using: :btree
   add_index "punches", ["user_id"], name: "index_punches_on_user_id", using: :btree
 

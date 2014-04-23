@@ -1,35 +1,43 @@
-unless Company.exists?(name: 'Codeminer42')
-  puts 'Creating default company'
-  Company.create name: 'Codeminer42'
-end
+company = Company.where(name: 'Codeminer42').
+  first_or_create! name: 'Codeminer42'
 
-unless AdminUser.exists?(email: 'super@codeminer42.com')
-  puts 'Creating default super user'
-  AdminUser.create(
-    email:                 'super@codeminer42.com',
-    password:              'password',
+super_admin = AdminUser.where(email: 'super@codeminer42.com').
+  first_or_create!(
+    email: 'super@codeminer42.com',
+    password: 'password',
     password_confirmation: 'password',
-    is_super:              true,
-    company_id:            Company.find_by_name('Codeminer42').id
+    is_super: true,
+    company: company
   )
-end
 
-unless AdminUser.exists?(email: 'admin@codeminer42.com')
-  puts 'Creating default admin user'
-  AdminUser.create(
-    email:                 'admin@codeminer42.com',
-    password:              'password',
+admin_user = AdminUser.where(email: 'admin@codeminer42.com').
+  first_or_create!(
+    email: 'admin@codeminer42.com',
+    password: 'password',
     password_confirmation: 'password',
-    company_id:            Company.find_by_name('Codeminer42').id
+    company: company
   )
-end
 
-unless User.exists?(email: 'halan.pinheiro@codeminer42.com')
-  puts 'Creating default user'
-  User.create(
-    name:                  'Halan Pinheiro',
-    email:                 'halan.pinheiro@codeminer42.com',
-    password:              'password',
-    company_id:            Company.find_by_name('Codeminer42').id
+user = User.where(email: 'halan.pinheiro@codeminer42.com').
+  first_or_create!(
+    name: 'Halan Pinheiro',
+    email: 'halan.pinheiro@codeminer42.com',
+    password: 'password',
+    company: company
   )
-end
+
+project = Project.where(name: 'Punchclock').first_or_create! company: company
+
+(6.months.ago.to_date..Date.current.to_date).to_a.each do |date|
+  date = date.to_time
+  puts "Punch!"
+  [[8, 12], [13, 16]].each do |hours|
+    user.punches.create!(
+      from: date.change(hour: hours.first),
+      to: date.change(hour: hours.last),
+      company: company,
+      project: project
+    )
+  end
+end if user.punches.empty?
+

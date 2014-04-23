@@ -86,3 +86,24 @@ table {
 #filter-form  .filter-form-col .form-group {
   margin: 0 5px;
 }
+
+.punches-table {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.punches-table td {
+  vertical-align: top;
+  border: 1px solid rgba(0, 0, 0, .1);
+  padding: .3em;
+  height: 5em;
+}
+
+.punches-summary dt, .punches-summary dd {
+  float: left;
+  margin: 0 1em;
+}
+
+.punches-action {
+  float: right;
+}
