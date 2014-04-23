@@ -25,10 +25,6 @@ class ProjectsController < ApplicationController
 
   private
 
-  def ensure_admin!
-    raise NotAuthorized unless current_user.is_admin?
-  end
-
   def end_of_chain
     current_user.company.projects
   end
