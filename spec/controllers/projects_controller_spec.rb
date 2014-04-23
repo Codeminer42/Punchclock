@@ -2,11 +2,8 @@ require 'spec_helper'
 
 describe ProjectsController do
   before{ login user }
-  let(:company) { create :company }
-  let(:user) { create :user, is_admin: true, company: company }
-  let(:project) { create :project, company: company }
-
-
+  let(:user) { create :user, is_admin: true }
+  let(:project) { create :project, company: user.company }
 
   describe 'POST create' do
       it 'should create a project' do
@@ -17,6 +14,7 @@ describe ProjectsController do
 
         post :create, params
         expect(response).to redirect_to projects_path
+        expect(assigns(:project).name).to be == '1234'
       end
 
       it 'should not create a empty project' do
@@ -42,6 +40,7 @@ describe ProjectsController do
 
           put :update, params
           expect(response).to redirect_to projects_path
+          expect(assigns(:project).name).to be == '3214'
         end
 
         it 'should not update a project' do
