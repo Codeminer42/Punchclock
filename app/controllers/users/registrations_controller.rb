@@ -2,7 +2,7 @@ module Users
   class RegistrationsController < Devise::RegistrationsController
     private
 
-    def build_resource user_params
+    def build_resource(user_params)
       super({
         company: Company.new,
         is_admin: true
