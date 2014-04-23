@@ -32,7 +32,7 @@ If necessary change username and/or host.
 
 Run:
 ```console
-$rake db:seed
+$ rake db:seed
 ```
 And the following admin users will be created
 
