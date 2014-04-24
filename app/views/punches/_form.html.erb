@@ -13,14 +13,14 @@
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
       size: 10,
-      value: @punch.from.present? ? l(@punch.from, format: '%Y-%m-%d') : Time.now.strftime("%Y-%m-%d")
+      value: @punch.from.present? ? l(@punch.from, format: '%Y-%m-%d') 
+             : Time.now.strftime("%Y-%m-%d")
     }, wrapper_html: { class: %i(col-xs-2) } %>
   </div>
 
   <div class="row">
-    <%= f.input :project_id, collection: @projects.order(:name), input_html: {
-      class: %i(form-control)
-    }, wrapper_html: { class: %i(col-xs-2) } %>
+    <%= f.input :project_id, collection: @projects.order(:name),
+      wrapper_html: { class: %i(col-xs-2) } %>
     <%= f.input :attachment, wrapper_html: { class: %i(col-xs-2)} %>
     <%= f.input :remove_attachment,
       as: :boolean,
