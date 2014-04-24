@@ -24,7 +24,7 @@ describe PeriodDecorator do
     end
   end
 
- context 'having period range of 1/1 to 1/25 from 2014' do
+  context 'having period range of 1/1 to 1/25 from 2014' do
     let(:range) { Date.new(2013, 12, 15)..Date.new(2014, 1, 15) }
 
     describe '#label' do

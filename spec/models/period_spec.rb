@@ -43,7 +43,9 @@ describe Period do
 
     context 'when new period ends inner the other period' do
       let!(:new_period) do
-        build :period, range: 10.days.from_now..40.days.from_now, company: company
+        build(
+          :period, range: 10.days.from_now..40.days.from_now, company: company
+        )
       end
 
       it 'invalids the second' do
