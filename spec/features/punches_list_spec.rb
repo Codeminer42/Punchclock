@@ -22,7 +22,7 @@ feature 'Punches list' do
       I18n.localize(punch.from, format: '%Y-%m-%d'),
       I18n.localize(punch.from, format: '%H:%M'),
       I18n.localize(punch.to, format: '%H:%M')
-    ].each {|value| expect(page).to have_content value }
+    ].each { |value| expect(page).to have_content value }
     expect(page).to have_content(punch.project.name)
     expect(page).to have_content(authed_user.name)
   end

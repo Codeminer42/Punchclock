@@ -22,7 +22,6 @@ feature 'Punches filter form' do
     click_button I18n.t(:create, scope: %i(helpers submit punches_filter_form))
   end
 
-
   context 'when the user is admin' do
     let!(:user) do
       create_logged_in_user(is_admin: true, company_id: company.id)
