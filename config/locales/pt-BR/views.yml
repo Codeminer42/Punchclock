@@ -1,4 +1,10 @@
 pt-BR:
+  helpers:
+    back: 'Voltar'
+    show: 'Mostrar'
+    edit: 'Editar'
+    actions:
+      editing: 'Editando %{model}'
   application:
     user_header:
       settings: 'Configurações'

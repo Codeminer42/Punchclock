@@ -1,39 +1,42 @@
 <nav class="navbar navbar-static-top">
   <ul class="nav nav-pills">
-    <li><%= link_to 'Back', punches_path %></li>
-    <li><%= link_to 'Edit', edit_punch_path(@punch) %></li>
+    <li><%= link_to t(:back, scope: :helpers), punches_path %></li>
+    <li><%= link_to t(:edit, scope: :helpers), edit_punch_path(@punch) %></li>
   </ul>
 </nav>
 
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>When:</strong>
-  <%= l @punch.from, :format => '%Y-%m-%d' %> from
-  <%= l @punch.from, :format => '%H:%M' %> to
+<strong><%= Punch.human_attribute_name(:when)%>:</strong>
+  <%= l @punch.from, :format => '%Y-%m-%d' %>
+  <%= Punch.human_attribute_name(:from) %>
+  <%= l @punch.from, :format => '%H:%M' %>
+  <%= Punch.human_attribute_name(:to) %>
   <%= l @punch.to, :format => '%H:%M' %>
 </p>
 
 <p>
-  <strong>Project:</strong>
+<strong><%= Punch.human_attribute_name(:project) %>:</strong>
   <%= @punch.project.present? ? @punch.project.name : '' %>
 </p>
 
 <p>
-  <strong>User:</strong>
+<strong><%= Punch.human_attribute_name(:user) %>:</strong>
   <%= @punch.user.present? ? @punch.user.name : '' %>
 </p>
 
 <% if @punch.attachment? %>
   <p>
-    <strong>Attachment:</strong>
+  <strong><%= Punch.human_attribute_name(:attachment) %>:</strong>
     <%= link_to (image_tag @punch.attachment_url, width: 250, height: 250), @punch.attachment_url %>
   </p>
 <% end %></p>
 
-<p>
-  <strong>Comments</strong>
-  <% unless @punch.comment.nil? %>
+<% unless @punch.comment.nil? %>
+  <p>
+  <strong><%= Punch.human_attribute_name(:comment) %>:</strong>
+
     <p>
       <%= gravatar_for(@punch.user) %>
       <%= @punch.comment %>
