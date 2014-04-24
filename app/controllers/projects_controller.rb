@@ -1,40 +1,35 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource except: [:create]
+  before_action :ensure_admin!, only: :create
 
   def index
-    @projects = current_user.company.projects
+    @projects = end_of_chain.load
+    respond_with @projects
   end
 
   def new
-    @project = Project.new(company: current_user.company)
+    @project = end_of_chain.build
+    respond_with @project
   end
 
   def create
-    project = Project.new(project_params)
-    project.company = current_user.company
-    authorize! :create, project
-    if project.save
-      flash[:notice] = 'Project created successfully!'
-      redirect_to projects_path
-    else
-      @project = project
-      render action: :new
-    end
+    @project = end_of_chain.create project_params
+    respond_with @project, location: projects_path
   end
 
   def update
-    if @project.update(project_params)
-      redirect_to projects_path
-    else
-      render action: :edit
-    end
+    @project = end_of_chain.find(params[:id])
+    @project.update(project_params)
+    respond_with @project, location: projects_path
   end
 
   private
 
+  def end_of_chain
+    current_user.company.projects
+  end
+
   def project_params
-    allow = [:name]
-    params.require(:project).permit(allow)
+    params.require(:project).permit %w(name)
   end
 end

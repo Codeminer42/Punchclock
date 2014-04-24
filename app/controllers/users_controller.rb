@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
 
   def update
-    if @user.update(user_params)
-      flash.now[:notice] = 'User updated successfully!'
-    end
-    render :edit
+    @user = current_user
+    @user.update(user_params)
+    respond_with @user
   end
 
   private
