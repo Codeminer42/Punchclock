@@ -15,7 +15,7 @@ module Users
     end
 
     def update_resource_params
-      allow = %w(name password password_confirmation invitation_token)
+      allow = %i(name password password_confirmation invitation_token)
       params.require(:user).permit(allow)
     end
   end
