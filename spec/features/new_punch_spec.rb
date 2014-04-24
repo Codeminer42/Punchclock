@@ -9,7 +9,9 @@ feature 'Add new Punch' do
   end
   scenario 'creating punch' do
     visit '/punches/new'
-    expect(page).to have_content('New Punch')
+    expect(page).to have_content I18n.t(
+      :creating, scope: %i(helpers actions), model: Punch.model_name.human
+    )
 
     within '#new_punch' do
       fill_in 'punch[from_time]', with: '08:00'

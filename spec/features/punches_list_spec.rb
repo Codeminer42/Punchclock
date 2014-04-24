@@ -18,27 +18,25 @@ feature 'Punches list' do
 
   scenario 'follow show link' do
     click_link "shw-#{punch.id}"
-    d1 = I18n.localize(punch.from, format: '%Y-%m-%d')
-    d2 = I18n.localize(punch.from, format: '%H:%M')
-    d3 = I18n.localize(punch.to, format: '%H:%M')
-    expect(page).to have_content("#{d1} from #{d2} to #{d3}")
+    [
+      I18n.localize(punch.from, format: '%Y-%m-%d'),
+      I18n.localize(punch.from, format: '%H:%M'),
+      I18n.localize(punch.to, format: '%H:%M')
+    ].each {|value| expect(page).to have_content value }
     expect(page).to have_content(punch.project.name)
     expect(page).to have_content(authed_user.name)
   end
 
   scenario 'follow edit link' do
     click_link "edt-#{punch.id}"
-    expect(page).to have_content('Editing punch')
+    expect(page).to have_content I18n.t(
+      :editing, scope: %i(helpers actions), model: Punch.model_name.human
+    )
   end
 
   scenario 'follow destroy link' do
     click_link "dlt-#{punch.id}"
     expect(page).to have_content('Punch foi deletado com sucesso.')
-  end
-
-  scenario 'sort punches' do
-    click_link 'Project'
-    expect(page).to have_content('Project ')
   end
 
   scenario 'filter punches' do

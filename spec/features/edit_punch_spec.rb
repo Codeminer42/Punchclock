@@ -9,7 +9,9 @@ feature 'Edit Punch' do
 
   scenario 'editing punch' do
     visit "/punches/#{punch.id}/edit"
-    expect(page).to have_content('Editing punch')
+    expect(page).to have_content I18n.t(
+      :editing, scope: %i(helpers actions), model: Punch.model_name.human
+    )
 
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from_time]', with: '08:00'

@@ -18,6 +18,11 @@ feature 'Punches filter form' do
     create_list(:punch, 4, user: user3, company_id: company.id)
   end
 
+  def click_on_filter
+    click_button I18n.t(:create, scope: %i(helpers submit punches_filter_form))
+  end
+
+
   context 'when the user is admin' do
     let!(:user) do
       create_logged_in_user(is_admin: true, company_id: company.id)
@@ -30,7 +35,7 @@ feature 'Punches filter form' do
         select user.name, from: 'punches_filter_form[user_id]'
       end
 
-      click_button 'Filtrar'
+      click_on_filter
     end
 
     scenario 'can filter the punches by a user' do
@@ -40,7 +45,7 @@ feature 'Punches filter form' do
         select user3.name, from: 'punches_filter_form[user_id]'
       end
 
-      click_button 'Filtrar'
+      click_on_filter
       expect(page).to have_selector '.user-punch', count: 4
     end
   end
@@ -61,31 +66,28 @@ feature 'Punches filter form' do
       visit '/'
 
       within('#filter-form') do
-        fill_in 'Until', with: '2014-02-19'
+        fill_in 'punches_filter_form_since', with: '2014-02-19'
       end
 
-      click_button 'Filtrar'
+      click_on_filter
     end
 
     scenario "filling only the 'until' field" do
       visit '/'
 
       within('#filter-form') do
-        fill_in 'Until', with: '2014-02-19'
+        fill_in 'punches_filter_form_until', with: '2014-02-19'
       end
 
-      click_button 'Filtrar'
+      click_on_filter
     end
 
     scenario "filling both the 'until' and 'since' fields" do
       visit '/'
 
       within('#filter-form') do
-        fill_in 'Since', with: '2014-02-01'
-        fill_in 'Since', with: '2014-02-27'
+        fill_in 'punches_filter_form_since', with: '2014-02-01'
       end
-
-      click_button 'Filtrar'
     end
   end
 end
