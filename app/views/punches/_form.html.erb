@@ -18,7 +18,7 @@
   </div>
 
   <div class="row">
-    <%= f.input :project, collection: @projects.order(:name), input_html: {
+    <%= f.input :project_id, collection: @projects.order(:name), input_html: {
       class: %i(form-control)
     }, wrapper_html: { class: %i(col-xs-2) } %>
     <%= f.input :attachment, wrapper_html: { class: %i(col-xs-2)} %>
