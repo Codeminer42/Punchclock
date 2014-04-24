@@ -5,6 +5,7 @@ pt-BR:
     edit: 'Editar'
     actions:
       editing: 'Editando %{model}'
+      creating: 'Criando %{model}'
   application:
     user_header:
       settings: 'Configurações'
