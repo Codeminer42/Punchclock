@@ -1,3 +1,5 @@
+@import 'flat-colors';
+
 // Typography
 ///////////////////////////////////////////////////////////////////////////////
 $sans-serif: $helvetica;
@@ -15,20 +17,20 @@ $base-border-radius: em(3);
 // Colors
 ///////////////////////////////////////////////////////////////////////////////
 
-$blue: #477DCA;
-$dark-gray: #333;
-$medium-gray: #999;
-$light-gray: #DDD;
-$light-red: #FBE3E4;
-$light-yellow: #FFF6BF;
-$light-green: #E6EFC2;
+$blue: $flat-peter-river;
+$dark-gray: #000;
+$medium-gray: $flat-silver;
+$light-gray: $flat-clouds;
+$light-red: $flat-red-1;
+$light-yellow: $flat-yellow-1;
+$light-green: $flat-green-1;
 
 // Body Color
-$base-body-color: white;
+$base-body-color: #fff;
 
 //  Font Colors
 $base-font-color: $dark-gray;
-$base-accent-color: $blue;
+$base-accent-color: $light-red;
 
 //  Text Link Colors
 $base-link-color: $base-accent-color;
