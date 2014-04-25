@@ -5,6 +5,8 @@ ruby "2.2.3"
 gem 'rails', '~> 4.2.0'
 gem 'pg'
 
+gem 'sass', '~> 3.4.0'
+gem 'sprockets', '2.11.0'
 gem 'bootstrap-sass'
 gem 'cancancan'
 gem 'carrierwave'
