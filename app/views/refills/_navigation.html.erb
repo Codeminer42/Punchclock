@@ -1,0 +1,28 @@
+<header class="navigation">
+  <div class="menu-wrapper">
+    <p class="navigation-menu-button" id="js-mobile-menu">MENU</p>
+    <div class="nav">
+      <ul id="navigation-menu">
+        <li><a href="javascript:void(0)">Products</a></li>
+        <li><a href="javascript:void(0)">About Us</a></li>
+        <li><a href="javascript:void(0)">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  $(function() {
+    var menu = $('#navigation-menu');
+    var menuToggle = $('#js-mobile-menu');
+
+    $(menuToggle).on('click', function(e) {
+      e.preventDefault();
+      menu.slideToggle(function(){
+        if(menu.is(':hidden')) {
+          menu.removeAttr('style');
+        }
+      });
+    });
+  });
+</script>

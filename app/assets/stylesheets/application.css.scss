@@ -1,0 +1,40 @@
+@import "bourbon";
+@import "bitters/bitters";
+@import "neat";
+
+@import "refills/footer";
+@import "refills/navigation";
+@import "refills/tables-minimal";
+
+body {
+  margin: 0 0;
+  padding: 0 0;
+}
+
+.main {
+  padding: 2em;
+}
+
+.pre {
+  @include outer-container;
+  margin: 2em auto;
+  #new_punches_filter_form {
+    @include span-columns(8);
+    @include shift(1);
+    .form-group.datepicker {
+      @include span-columns(4);
+    }
+    .form-group.select, button {
+      @include span-columns(2);
+    }
+    button {
+      @include omega();
+    }
+  }
+  .avatar {
+    @include span-columns(3);
+    span, img {
+      font-size: 2em;
+    }
+  }
+}
