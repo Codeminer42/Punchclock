@@ -1,16 +1,17 @@
-<div class="clock-widget">
+<div class="hero">
+  <div class="hero-inner">
+    <a href="" class="hero-logo"><img src="https://raw.github.com/Magnus-G/Random/master/placeholder_logo_1.png" alt=""></a>
+    <div class="hero-copy">
+      <h1>O novo <b>PunchClock</b> está aqui!</h1>
+    </div>
 
-  <div class="login-div">
-    <%= simple_form_for :user, url: new_user_session_path do |f| %>
-
-      <fieldset class="span6">
+    <div class="login">
+      <%= simple_form_for :user, url: new_user_session_path do |f| %>
         <%= f.text_field :email, placeholder: 'user@codeminer42.com', autofocus: true %>
         <%= f.password_field :password, placeholder: '************' %>
-      </fieldset>
+        <%= f.submit 'Sign In' %>
+      <% end %>
+    </div>
 
-      <fieldset class="span6">
-        <%= f.submit 'Sign In', class: 'btn btn-primary' %>
-      </fieldset>
-    <% end %>
   </div>
 </div>
