@@ -1,7 +1,4 @@
-body {
-  margin: 0 0;
-  padding: 0 0;
-}
+body { margin: 0 0; padding: 0 0; }
 
 .main {
   clear: both;
@@ -10,20 +7,27 @@ body {
 
 .pre {
   @include outer-container;
-  margin: 2em auto;
+  margin: 3em auto 0 auto;
   #new_punches_filter_form {
     @include span-columns(8);
     @include shift(1);
     .form-group.datepicker {
-      @include span-columns(4);
+      @include span-columns(3);
     }
-    .form-group.select, button {
-      @include span-columns(2);
+    .form-group.select {
+      @include span-columns(3);
     }
     button {
+      @include span-columns(2);
       @include omega();
     }
   }
+
+  select {
+    border: 1px solid $flat-clouds;
+    height: 36px;
+  }
+
   .avatar {
     @include span-columns(3);
     span, img {
