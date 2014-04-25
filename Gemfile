@@ -29,6 +29,11 @@ gem 'draper'
 gem 'rails-i18n'
 gem 'responders'
 
+gem 'bourbon'
+gem 'neat'
+gem 'bitters', github: 'thoughtbot/bitters'
+gem 'refills', github: 'thoughtbot/refills'
+
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
