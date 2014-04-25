@@ -27,6 +27,10 @@ class PunchDecorator < ApplicationDecorator
     h.secs_to_formated_hour(object.delta)
   end
 
+  def delta_in_hours
+    object.delta / 1.hour
+  end
+
   private
 
   def localize_date_time(datetime)

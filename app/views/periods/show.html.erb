@@ -1,22 +1,20 @@
-<div class="btn-group punches-action">
-  <%= link_to 'Punch', new_punch_path, :class => 'btn btn-primary' %>
-</div>
-
 <h1>
   <%= link_to '&#10094;'.html_safe, periods_path %> <%= @period %>
 </h1>
 
 <table class="punches-table">
+<thead>
+  <tr>
+    <%- @period.daynames.each do |dayname| %>
+      <th><%= dayname %></th>
+    <%- end %>
+  </tr>
+</thead>
 <%- @period.weeks.each do |weekdays| %>
   <tr>
     <%- weekdays.each do |date| %>
-      <td>
-        <p><%= date.day %></p>
-        <ul>
-          <%- @period.by_date(date).each do |punch| %>
-            <li><%= link_to punch, punch %></li>
-          <%- end %>
-        </ul>
+      <td class="<%= @period.day_classes(date) %>">
+        <p class="day"><%= date.day %></p>
       </td>
     <%- end %>
   </tr>
