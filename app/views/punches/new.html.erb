@@ -1,7 +1,9 @@
 <nav class="navbar navbar-static-top">
   <ul class="nav nav-pills">
-    <li><%= link_to 'Cancel', punches_path %></li>
+    <li><%= link_to t(:back, scope: :helpers), punches_path %></li>
   </ul>
-
-<h1 class="punch-form-title"> New Punch </h1>
+</nav>
+<h1 class="punch-form-title">
+  <%= t(:creating, scope: %i(helpers actions), model: Punch.model_name.human) %>
+</h1>
 <%= render 'form' %>

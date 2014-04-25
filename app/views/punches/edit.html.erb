@@ -1,8 +1,10 @@
 <nav class="navbar navbar-static-top">
   <ul class="nav nav-pills">
-    <li><%= link_to 'Back', punches_path %></li>
-    <li><%= link_to 'Show', @punch %></li>
+    <li><%= link_to t(:back, scope: :helpers), punches_path %></li>
+    <li><%= link_to t(:show, scope: :helpers), @punch %></li>
   </ul>
 </nav>
-<h1 class="punch-form-title">Editing punch</h1>
+<h1 class="punch-form-title">
+  <%= t(:editing, scope: %i(helpers actions), model: Punch.model_name.human) %>
+</h1>
 <%= render 'form' %>

@@ -1,76 +1,37 @@
-<%= nested_form_for(@punch) do |f| %>
-  <% if @punch.errors.any? %>
-    <div class="alert alert-danger" id="error_explanation">
-      <h2><%= pluralize(@punch.errors.count, "error") %> prohibited this punch from being saved:</h2>
+<%= simple_form_for @punch do |f| %>
+  <div class="row">
+    <%= f.input :from_time, input_html: {
+      class: %i(spinner-hr),
+      size: 4,
+      value: @punch.from.present? ? l(@punch.from, format: '%H:%M') : '00:00'
+    }, wrapper_html: { class: %i(col-xs-2) } %>
+    <%= f.input :to_time, input_html: {
+      class: %i(spinner-hr),
+      size: 4,
+      value: @punch.to.present? ? l(@punch.to, format: '%H:%M') : '00:00'
+    }, wrapper_html: { class: %i(col-xs-2) } %>
+    <%= f.input :when_day, input_html: {
+      class: %i(datepicker),
+      size: 10,
+      value: @punch.from.present? ? l(@punch.from, format: '%Y-%m-%d') 
+             : Time.now.strftime("%Y-%m-%d")
+    }, wrapper_html: { class: %i(col-xs-2) } %>
+  </div>
 
-      <ul>
-      <% @punch.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="row">
+    <%= f.input :project_id, collection: @projects.order(:name),
+      wrapper_html: { class: %i(col-xs-2) } %>
+    <%= f.input :attachment, wrapper_html: { class: %i(col-xs-2)} %>
+    <%= f.input :remove_attachment,
+      as: :boolean,
+      inline_label: 'Deletar',
+      label: false,
+      wrapper_html: { class: %i(col-xs-4 checkbox) }
+    %>
+  </div>
 
-  <table border="0" cellspacing="8" cellpadding="8" class="punch-form-table">
-    <tr>
-      <th><label>From</label></th>
-      <td>
-        <%= f.text_field :from_time, size: "4", class: "spinner-hr",
-               value: @punch.from.present? ?
-               l(@punch.from, format: '%H:%M') : '00:00' %>
-      </td>
-      <th><label>To</label></th>
-      <td>
-        <%= f.text_field :to_time, size: "4", class: "spinner-hr",
-               value: @punch.to.present? ?
-               l(@punch.to, format: '%H:%M') : '00:00' %>
-      </td>
-    </tr>
-    <tr>
-      <th><label>When</label></th>
-      <td colspan="3">
-        <%= f.text_field :when_day, class: "datepicker", size: "10",
-               value: @punch.from.present? ?
-               l(@punch.from, format: '%Y-%m-%d') : Time.now.strftime("%Y-%m-%d") %>
-        <%= image_tag 'calendar.png' %>
-      </td>
-    </tr>
-    <tr>
-      <th><%= f.label :project_id, 'On' %></th>
-      <td colspan="3">
-        <%= f.collection_select :project_id, @projects.order(:name), :id, :name,
-                                {}, { class: 'form-control' } %>
-      </td>
-    </tr>
-    <tr>
-      <th><%= f.label :attachment, 'Anexo' %></th>
-      <td colspan="3">
-        <%= f.file_field :attachment %>
-        <%= f.hidden_field :attachment_cache %>
-        <p>
-          <%= f.check_box :remove_attachment %>
-          <%= f.label :remove_attachment, 'remove' %>
-        </p>
-        <p>
-          <%= image_tag @punch.attachment_url, width: 250, height: 250 if @punch.attachment? %>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <th>Comments</th>
-      <td colspan="3">
-        <%= f.text_area :comment %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <%= link_to 'Cancel', punches_path, class: 'btn btn-danger' %>
-      </td>
-      <td colspan="2">
-        <div class="actions">
-          <%= f.submit class: 'btn btn-default' %>
-        </div>
-      </td>
-    </tr>
-  </table>
-<% end %>
+  <div class="row">
+    <%= f.input :comment, wrapper_html: { class: %i(col-xs-6) } %>
+  </div>
+  <%= f.submit %>
+<%- end %>

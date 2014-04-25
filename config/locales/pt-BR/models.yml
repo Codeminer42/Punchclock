@@ -28,6 +28,9 @@ pt-BR:
       notification:
         one: "Notificação"
         other: "Notificações"
+      period:
+        one: "Folha"
+        other: "Folhas"
     attributes:
       admin_user:
         id: "ID"
@@ -95,14 +98,19 @@ pt-BR:
         confirmation_sent_at: "Confirmação enviada em"
       punch:
         id: "ID"
-        from: "De"
-        to: "Até"
         project_id: "Projeto"
         user_id: "Usuário"
+        company_id: "Empresa"
+        from: "De"
+        to: "Até"
+        from_time: "Horário inicial"
+        to_time: "Horário final"
+        when_day: "Dia"
+        when: "Quando"
         created_at: "Criado em"
         updated_at: "Atualizado em"
-        company_id: "Empresa"
         attachment: "Anexo"
+        comment: "Comentário"
       notification:
         id: "ID"
         user_id: "Usuário"

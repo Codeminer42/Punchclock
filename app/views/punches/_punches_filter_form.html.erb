@@ -1,19 +1,11 @@
 <div class="col-md-10 pull-right filter-form-col">
-
-    <%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f| %>
-
-      <%= f.input :since, as: :datepicker, label: false, placeholder: 'Since' %>
-
-      <%= f.input :until, as: :datepicker, label: false, placeholder: 'Until' %>
-
-      <%= f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: 'All projects', label: false %>
-
-      <% if current_user.is_admin? %>
-
-        <%= f.input :user_id, collection: current_user.company.users.order(:name), include_blank: 'All users', label: false %>
-
-      <% end %>
-
-      <%= f.button :button, 'Filtrar', class: 'btn btn-default' %>
+  <%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f| %>
+    <%= f.input :since, as: :datepicker, label: false, placeholder: true %>
+    <%= f.input :until, as: :datepicker, label: false, placeholder: true  %>
+    <%= f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: :translate, label: false %>
+    <% if current_user.is_admin? %>
+      <%= f.input :user_id, collection: current_user.company.users.order(:name), include_blank: :translate, label: false %>
     <% end %>
+    <%= f.submit class: 'btn btn-default' %>
+  <% end %>
 </div>
