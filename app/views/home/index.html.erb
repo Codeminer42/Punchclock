@@ -1,19 +1,16 @@
 <div class="clock-widget">
-  <div class="clock-div">
-    <canvas id='clock-canvas' width='360' height='360'></canvas>
-  </div>
 
   <div class="login-div">
     <%= simple_form_for :user, url: new_user_session_path do |f| %>
 
       <fieldset class="span6">
-      <%= f.text_field :email, placeholder: 'user@codeminer42.com', autofocus: true %>
-      <%= f.password_field :password, placeholder: '************' %>
+        <%= f.text_field :email, placeholder: 'user@codeminer42.com', autofocus: true %>
+        <%= f.password_field :password, placeholder: '************' %>
       </fieldset>
 
       <fieldset class="span6">
-      <%= f.submit 'Sign In', class: 'btn btn-primary' %>
+        <%= f.submit 'Sign In', class: 'btn btn-primary' %>
       </fieldset>
-  	<% end %>
+    <% end %>
   </div>
 </div>
