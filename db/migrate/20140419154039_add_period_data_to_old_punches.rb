@@ -1,6 +1,6 @@
 class AddPeriodDataToOldPunches < ActiveRecord::Migration
   def up
-    Punch.wrongs.fix_all
+    Punch.where.not(company_id: nil).wrongs.fix_all
   end
 
   def down

@@ -50,8 +50,7 @@ class Punch < ActiveRecord::Base
   private
 
   def attatch_to_period
-    periods = company.periods || user.company.periods
-    self.period = periods.contains_or_create from.to_date
+    self.period = company.periods.contains_or_create from.to_date
   end
 
   def mount_time(time_string)
