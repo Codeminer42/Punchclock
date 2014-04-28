@@ -1,4 +1,4 @@
-class BooleanInput < SimpleForm::Inputs::BooleanInput
+class BootstrapBooleanInput < SimpleForm::Inputs::BooleanInput
   def input(wrapper_options)
     input_html_classes.delete 'form-control'
     super
