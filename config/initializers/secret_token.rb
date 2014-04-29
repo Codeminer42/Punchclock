@@ -1,1 +1,1 @@
-Punchclock::Application.config.secret_key_base = 'bd9c547600bbc13f2444d7d218287b5ef5fb4d53d338f7e656f24c970e1539365ba885e9324662dad7f205d217a9eec4dc7f024931d1ac8f0857696fff730fdf'
+Punchclock::Application.config.secret_key_base = ENV['SECRET_KEY_BASE'] || "13f2444d7d218287b5ef5fb4d53d33"
