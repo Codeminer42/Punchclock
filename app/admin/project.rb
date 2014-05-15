@@ -30,19 +30,18 @@ ActiveAdmin.register Project do
       @project.company_id = current_company.id unless signed_in_as_super?
       new!
     end
+
+    def signed_in_as_super?
+      current_admin_user.is_super?
+    end
+
+    def current_company
+      current_admin_user.company
+    end
   end
 
   filter :company
   filter :name
   filter :created_at
   filter :updated_at
-
-  def signed_in_as_super?
-    current_admin_user.is_super?
-  end
-
-  def current_company
-    current_admin_user.company
-  end
-
 end

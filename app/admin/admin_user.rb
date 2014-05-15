@@ -45,16 +45,16 @@ ActiveAdmin.register AdminUser do
         end
       end
     end
+
+    def signed_in_as_super?
+      current_admin_user.is_super?
+    end
+
+    def current_company
+      current_admin_user.company
+    end
   end
 
   filter :email
-
-  def signed_in_as_super?
-    current_admin_user.is_super?
-  end
-
-  def current_company
-    current_admin_user.company
-  end
 
 end

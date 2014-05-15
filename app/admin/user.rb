@@ -43,17 +43,17 @@ ActiveAdmin.register User do
         end
       end
     end
+
+    def signed_in_as_super?
+      current_admin_user.is_super?
+    end
+
+    def current_company
+      current_admin_user.company
+    end
   end
 
   filter :name
   filter :email
   filter :company, if: proc { current_admin_user.is_super? }
-
-  def signed_in_as_super?
-    current_admin_user.is_super?
-  end
-
-  def current_company
-    current_admin_user.company
-  end
 end
