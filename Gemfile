@@ -34,6 +34,8 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'simplecov', :require => false
+  gem 'codeclimate-test-reporter', require: nil
+
 end
 
 group :development do

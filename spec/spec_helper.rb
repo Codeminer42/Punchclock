@@ -5,7 +5,9 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'draper/test/rspec_integration'
 require 'simplecov'
+require 'codeclimate-test-reporter'
 
+CodeClimate::TestReporter.start if ENV['CODECLIMATE_REPO_TOKEN']
 SimpleCov.start
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }

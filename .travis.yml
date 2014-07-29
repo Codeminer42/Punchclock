@@ -8,6 +8,9 @@ before_script:
   - bundle exec rake db:create db:migrate db:test:prepare
 script:
   - bundle exec rspec
+addons:
+  code_climate:
+    repo_token: 4dac70097489ef488b2053da39245252d9558a2edeb07ea0db3fb511f9c1a90b
 notifications:
   email:
     recipients:
