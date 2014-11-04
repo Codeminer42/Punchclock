@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby "2.1.0"
 
-gem 'rails', '4.1.0'
+gem 'rails', '~> 4.1.0'
 gem 'pg'
 
 gem 'bootstrap-sass'
@@ -25,7 +25,7 @@ gem 'settingslogic'
 gem 'simple_form', github: 'plataformatec/simple_form'
 gem 'slim'
 gem 'uglifier', '>= 1.3.0'
-gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activeadmin', github: 'activeadmin'
 gem 'draper', '~> 1.3'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'responders'
