@@ -11,7 +11,7 @@ A simple electronic punch clock to track hours spent on projects.
 
 ## Rails
 
-This app uses Rails 4.0.2 and Postgres >= 9.1
+This app uses Rails 4.1 and Postgres >= 9.1
 
 ## Installing
 
@@ -73,7 +73,6 @@ Please read [betterspecs.org](http://betterspecs.org/).
 At first time:
 ```console
 $ bundle exec rake db:migrate
-$ bundle exec rake test:prepare
 ```
 
 Running tests:
