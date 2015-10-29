@@ -9,7 +9,7 @@ ActiveAdmin.register Punch do
     column :from, sortable: false
     column :to, sortable: false
     column :delta, sortable: false
-    default_actions
+    actions
     div class: 'panel' do
       h3 "Total: #{collection.total_hours}"
     end

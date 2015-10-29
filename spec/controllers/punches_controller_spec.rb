@@ -45,37 +45,13 @@ describe PunchesController do
     end # END GET INDEX
 
     describe 'GET new' do
-      let(:punch) { FactoryGirl.build(:punch) }
-
-      before do
-        user.stub(id: punch.user.id)
-        user.stub(company: punch.company)
-        user.stub(company_id: punch.company.id)
-        user.stub(is_admin?: false)
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
-        Punch.stub(:find).with(punch.id.to_s) { punch }
-        controller.stub(load_and_authorize_resource: true)
-      end
+      before { controller.stub(current_user: user) }
 
       it 'renders new template' do
         get :new
         response.should render_template :new
       end
-
-      context 'when has a last project punched' do
-        before do
-          Punch.stub(:find_last_by_user_id).with(punch.user_id) { punch }
-        end
-
-        it 'builds punch with last project punched' do
-          get :new
-          last_project_id = Punch.find_last_by_user_id(punch.user_id)
-            .project_id
-          punch.project_id.should eq last_project_id
-        end
-      end
-    end # END GET NEW
+    end
 
     describe 'GET edit' do
       let(:punch) { FactoryGirl.build(:punch) }
@@ -88,7 +64,6 @@ describe PunchesController do
         punch.stub(id: 1)
         controller.stub(current_user: user)
         Punch.stub(:find).with(punch.id.to_s) { punch }
-        controller.stub(load_and_authorize_resource: true)
       end
 
       it 'renders edit template' do
@@ -235,7 +210,6 @@ describe PunchesController do
         punch.stub(id: 1)
         controller.stub(current_user: user)
         Punch.stub(:find).with(punch.id.to_s) { punch }
-        controller.stub(load_and_authorize_resource: true)
       end
 
       it 'renders edit template' do

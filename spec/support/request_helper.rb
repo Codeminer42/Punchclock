@@ -9,3 +9,7 @@ module RequestHelpers
     login_as user, scope: :user
   end
 end
+
+RSpec.configure do |config|
+  config.include RequestHelpers, type: :feature
+end

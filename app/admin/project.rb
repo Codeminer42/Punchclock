@@ -3,7 +3,7 @@ ActiveAdmin.register Project do
     column :company
     column :name
     column :created_at
-    default_actions
+    actions
   end
 
   form do |f|

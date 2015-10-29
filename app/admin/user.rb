@@ -4,7 +4,7 @@ ActiveAdmin.register User do
     column :name
     column :email
     column :hour_cost
-    default_actions
+    actions
   end
 
   form do |f|
