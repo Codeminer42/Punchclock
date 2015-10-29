@@ -28,7 +28,7 @@ user = User.where(email: 'halan.pinheiro@codeminer42.com').
 
 project = Project.where(name: 'Punchclock').first_or_create! company: company
 
-(6.months.ago.to_date..Date.current.to_date).to_a.each do |date|
+(6.months.ago.to_date..1.day.ago.to_date).to_a.each do |date|
   date = date.to_time
   puts "Punch!"
   [[8, 12], [13, 16]].each do |hours|
