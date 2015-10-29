@@ -1,9 +1,9 @@
-def login(user)
-  @request.env['devise.mapping'] = Devise.mappings[:user]
-  sign_in user
-end
-
 module SessionMacros
+  def login(user)
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    sign_in user
+  end
+
   def login_user
     before { login create :user }
   end

@@ -4,15 +4,15 @@ describe PunchesController do
   let(:user) { build_stubbed(:user) }
 
   before do
-    controller.stub(:authenticate_user!)
-    controller.stub(:current_user).and_return(user)
+    allow(controller).to receive(:authenticate_user!)
+    allow(controller).to receive(:current_user).and_return(user)
   end
 
   context 'when user is admin' do
     let(:punches) { double(:punch) }
     before do
-      user.stub(is_admin?: true)
-      punches.stub(:decorate)
+      allow(user).to receive_messages(is_admin?: true)
+      allow(punches).to receive(:decorate)
     end
 
     describe 'GET index' do
@@ -45,11 +45,11 @@ describe PunchesController do
     end # END GET INDEX
 
     describe 'GET new' do
-      before { controller.stub(current_user: user) }
+      before { allow(controller).to receive_messages(current_user: user) }
 
       it 'renders new template' do
         get :new
-        response.should render_template :new
+        expect(response).to render_template :new
       end
     end
 
@@ -57,13 +57,13 @@ describe PunchesController do
       let(:punch) { FactoryGirl.build(:punch) }
 
       before do
-        user.stub(id: punch.user.id)
-        user.stub(company: punch.company)
-        user.stub(company_id: punch.company.id)
-        user.stub(is_admin?: false)
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
-        Punch.stub(:find).with(punch.id.to_s) { punch }
+        allow(user).to receive_messages(id: punch.user.id)
+        allow(user).to receive_messages(company: punch.company)
+        allow(user).to receive_messages(company_id: punch.company.id)
+        allow(user).to receive_messages(is_admin?: false)
+        allow(punch).to receive_messages(id: 1)
+        allow(controller).to receive_messages(current_user: user)
+        allow(Punch).to receive(:find).with(punch.id.to_s) { punch }
       end
 
       it 'renders edit template' do
@@ -72,7 +72,7 @@ describe PunchesController do
         }
 
         get :edit, params
-        response.should render_template :edit
+        expect(response).to render_template :edit
       end
     end # END GET EDIT
 
@@ -84,8 +84,8 @@ describe PunchesController do
       let(:user) { punch.user }
 
       before do
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
+        allow(punch).to receive_messages(id: 1)
+        allow(controller).to receive_messages(current_user: user)
       end
 
       describe 'POST #create' do
@@ -94,28 +94,24 @@ describe PunchesController do
         end
 
         before do
-          controller.stub(:punch_params)
-          Punch.should_receive(:new).and_return(punch)
+          allow(controller).to receive(:punch_params)
+          allow(Punch).to receive(:new).and_return(punch)
         end
 
         context 'when success' do
-          before do
-            expect(punch).to receive(:save).and_return(true)
-          end
-
           it 'saves the punch and redirect to punches_path' do
+            allow(punch).to receive(:save).and_return(true)
+
             post_create
             expect(response).to redirect_to punches_path
           end
         end
 
         context 'when fails' do
-          before do
-            expect(punch).to receive(:save).and_return(false)
-            punch.stub(:errors).and_return(['foo'])
-          end
-
           it 'renders the action new' do
+            allow(punch).to receive(:save).and_return(false)
+            allow(punch).to receive(:errors).and_return(['foo'])
+
             post_create
             expect(response).to render_template(:new)
           end
@@ -124,8 +120,8 @@ describe PunchesController do
 
       describe 'PUT update' do
         before do
-          controller.stub_chain(:scopped_punches, find: punch)
-          Punch.stub(find: punch)
+          allow(controller).to receive_message_chain(:scopped_punches, find: punch)
+          allow(Punch).to receive_messages(find: punch)
         end
 
         let(:params) do
@@ -153,8 +149,8 @@ describe PunchesController do
   context 'when user is a employer' do
     let(:punches) { double(:punch) }
     before do
-      user.stub(is_admin?: false)
-      punches.stub(:decorate)
+      allow(user).to receive_messages(is_admin?: false)
+      allow(punches).to receive(:decorate)
     end
 
     describe 'GET index' do
@@ -189,27 +185,27 @@ describe PunchesController do
       let(:punch) { FactoryGirl.build(:punch) }
 
       before do
-        user.stub(id: punch.user.id)
-        user.stub(company: punch.company)
-        user.stub(company_id: punch.company.id)
-        user.stub(is_admin?: false)
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
-        Punch.stub(:find).with(punch.id.to_s) { punch }
-        controller.stub(load_and_authorize_resource: true)
+        allow(user).to receive_messages(id: punch.user.id)
+        allow(user).to receive_messages(company: punch.company)
+        allow(user).to receive_messages(company_id: punch.company.id)
+        allow(user).to receive_messages(is_admin?: false)
+        allow(punch).to receive_messages(id: 1)
+        allow(controller).to receive_messages(current_user: user)
+        allow(Punch).to receive(:find).with(punch.id.to_s) { punch }
+        allow(controller).to receive_messages(load_and_authorize_resource: true)
       end
     end
     describe 'GET edit' do
       let(:punch) { FactoryGirl.build(:punch) }
 
       before do
-        user.stub(id: punch.user.id)
-        user.stub(company: punch.company)
-        user.stub(company_id: punch.company.id)
-        user.stub(is_admin?: false)
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
-        Punch.stub(:find).with(punch.id.to_s) { punch }
+        allow(user).to receive_messages(id: punch.user.id)
+        allow(user).to receive_messages(company: punch.company)
+        allow(user).to receive_messages(company_id: punch.company.id)
+        allow(user).to receive_messages(is_admin?: false)
+        allow(punch).to receive_messages(id: 1)
+        allow(controller).to receive_messages(current_user: user)
+        allow(Punch).to receive(:find).with(punch.id.to_s) { punch }
       end
 
       it 'renders edit template' do
@@ -218,7 +214,7 @@ describe PunchesController do
         }
 
         get :edit, params
-        response.should render_template :edit
+        expect(response).to render_template :edit
       end
     end
 
@@ -230,9 +226,9 @@ describe PunchesController do
       let(:user) { punch.user }
 
       before do
-        user.stub(is_admin?: false)
-        punch.stub(id: 1)
-        controller.stub(current_user: user)
+        allow(user).to receive_messages(is_admin?: false)
+        allow(punch).to receive_messages(id: 1)
+        allow(controller).to receive_messages(current_user: user)
       end
 
       describe 'POST #create' do
@@ -241,28 +237,24 @@ describe PunchesController do
         end
 
         before do
-          controller.stub(:punch_params)
-          Punch.should_receive(:new).and_return(punch)
+          allow(controller).to receive(:punch_params)
+          allow(Punch).to receive(:new).and_return(punch)
         end
 
         context 'when success' do
-          before do
-            expect(punch).to receive(:save).and_return(true)
-          end
-
           it 'save and return to root_path' do
+            allow(punch).to receive(:save).and_return(true)
+
             post_create
             expect(response).to redirect_to punches_path
           end
         end
 
         context 'when fails' do
-          before do
-            expect(punch).to receive(:save).and_return(false)
-            punch.stub(:errors).and_return(['foo'])
-          end
-
           it 'fail and render action new' do
+            allow(punch).to receive(:save).and_return(false)
+            allow(punch).to receive(:errors).and_return(['foo'])
+
             post_create
             expect(response).to render_template(:new)
           end
@@ -271,8 +263,8 @@ describe PunchesController do
 
       describe 'PUT update' do
         before do
-          controller.stub_chain(:scopped_punches, find: punch)
-          Punch.stub(find: punch)
+          allow(controller).to receive_message_chain(:scopped_punches, find: punch)
+          allow(Punch).to receive_messages(find: punch)
         end
 
         let(:params) do
