@@ -1,6 +1,8 @@
 .footer {
   $footer-color: lighten($base-border-color, 10);
   $footer-text-color: darken($footer-color, 25);
+  clear: both;
+  text-align: center;
 
   background-color: $footer-color;
   padding: 1em 0;
