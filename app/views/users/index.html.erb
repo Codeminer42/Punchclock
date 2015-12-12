@@ -1,5 +1,4 @@
 <% @users.each do |u| %>
-  </div>
     <%= gravatar_for(u) %>
     <%= link_to "#{u.name}", current_user.is_admin? ? edit_user_path(u) : user_path(u) %>
     <br>
@@ -11,5 +10,4 @@
       <%= "Cost: #{u.hour_cost} R$/h" %>
       <%= render 'users/shared/options', user: u %>
     <% end %>
-    </div>
 <% end %>
