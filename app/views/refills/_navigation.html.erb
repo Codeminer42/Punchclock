@@ -6,12 +6,12 @@
         <li>
           <%= link_to "Punchclock - #{current_user.company.name}", root_path, class: "navbar-brand" %>
         </li>
-        <li>
+        <!--<li>
           <%= link_to periods_path do %>
             <%= Period.model_name.human.pluralize %>
             <span class="experimental">Experimental</span>
           <%- end %>
-        </li>
+        </li>-->
         <li><%= link_to Punch.model_name.human.pluralize, punches_path %></li>
         <li><%= link_to User.model_name.human.pluralize, users_path %></li>
         <li class="account">
