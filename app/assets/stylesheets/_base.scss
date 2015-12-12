@@ -41,3 +41,11 @@ body { margin: 0 0; padding: 0 0; }
     width: 20em;
   }
 }
+
+.main-actions .button {
+  @include button(pill, $base-accent-color);
+}
+
+.alert {
+  @extend %flash-notice;
+}
