@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Notification do
   let(:notification) { FactoryGirl.build(:notification) }
 
-  it { should validate_presence_of(:user_id) }
-  it { should validate_presence_of(:message) }
+  it { is_expected.to validate_presence_of(:user_id) }
+  it { is_expected.to validate_presence_of(:message) }
 
   describe 'notification has been sent from an user' do
     it 'should have a from user' do
-      notification.from.should_not be_nil
+      expect(notification.from).not_to be_nil
     end
   end
 
@@ -18,7 +18,7 @@ describe Notification do
         user_id: notification.user_id,
         message: notification.message
       )
-      n.event_path.should eq('#')
+      expect(n.event_path).to eq('#')
     end
   end
 end

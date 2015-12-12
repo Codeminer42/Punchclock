@@ -54,14 +54,8 @@ class PunchesController < ApplicationController
   private
 
   def punch_params
-    allow = %w(id from_time to_time when_day project_id attachment\
-               remove_attachment comment).map(&:to_sym)
-    params.require(:punch).permit(allow)
-  end
-
-  def verify_ownership
-    @punch = Punch.find params[:id]
-    head 403 unless @punch.user_id == current_user.id
+    allow = %i(id from_time to_time when_day project_id attachment remove_attachment comment)
+    params.require(:punch).permit(*allow)
   end
 
   def user_projects

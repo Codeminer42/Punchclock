@@ -3,7 +3,7 @@ ActiveAdmin.register AdminUser do
     column :company
     column :email
     column :is_super if current_admin_user.is_super?
-    default_actions
+    actions
   end
 
   form do |f|

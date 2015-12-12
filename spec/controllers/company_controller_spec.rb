@@ -8,8 +8,8 @@ describe CompanyController do
 
   describe 'PUT update' do
     before do
-      Company.any_instance.stub(:update)
-      Company.any_instance.stub(:errors).and_return(errors)
+      allow_any_instance_of(Company).to receive(:update)
+      allow_any_instance_of(Company).to receive(:errors).and_return(errors)
       put :update, id: company.id, company: { name: '' }
     end
 

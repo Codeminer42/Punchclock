@@ -17,7 +17,7 @@ class PasswordsResponder < ApplicationResponder
   def signin_and_notify!
     controller.sign_in(resource, bypass: true)
     NotificationMailer.
-      notify_user_password_change(resource, resource.password).deliver
+      notify_user_password_change(resource, resource.password).deliver_now
   end
 
   def password_not_changed!

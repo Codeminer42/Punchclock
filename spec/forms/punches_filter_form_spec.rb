@@ -49,9 +49,9 @@ describe PunchesFilterForm do
       end
 
       it 'apply from and to conditions' do
-        relation.should_receive(:since).with(Date.new(2013, 10, 1))
+        expect(relation).to receive(:since).with(Date.new(2013, 10, 1))
           .and_return(relation)
-        relation.should_receive(:until).with(Date.new(2013, 10, 31))
+        expect(relation).to receive(:until).with(Date.new(2013, 10, 31))
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
@@ -61,7 +61,7 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(since: '2013-10-01') }
 
       it 'apply from and to conditions' do
-        relation.should_receive(:since).with(Date.new(2013, 10, 1))
+        expect(relation).to receive(:since).with(Date.new(2013, 10, 1))
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
@@ -71,7 +71,7 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(until: '2013-10-31') }
 
       it 'apply to and to conditions' do
-        relation.should_receive(:until).with(Date.new(2013, 10, 31))
+        expect(relation).to receive(:until).with(Date.new(2013, 10, 31))
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
@@ -81,7 +81,7 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(user_id: 1) }
 
       it 'apply user_id condition' do
-        relation.should_receive(:where).with(user_id: 1).and_return(relation)
+        expect(relation).to receive(:where).with(user_id: 1).and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
     end
@@ -90,7 +90,7 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(project_id: 1) }
 
       it 'apply project_id condition' do
-        relation.should_receive(:where).with(project_id: 1)
+        expect(relation).to receive(:where).with(project_id: 1)
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end

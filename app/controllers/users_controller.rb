@@ -1,6 +1,15 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @users = User.all
+    respond_with @users
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def update
     @user = current_user
     @user.update(user_params)

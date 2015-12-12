@@ -7,27 +7,27 @@ describe NotificationMailer do
       let(:mail) { NotificationMailer.notify_user_registration(user) }
 
       it 'renders the subject' do
-        mail.subject.should == 'Welcome to Punchclock'
+        expect(mail.subject).to eq('Welcome to Punchclock')
       end
 
       it 'renders the receiver email' do
-        mail.to.should == [user.email]
+        expect(mail.to).to eq([user.email])
       end
 
       it 'renders the sender email' do
-        mail.from.should == ['do-not-reply@punchclock.com']
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
       end
 
       it 'assigns @name' do
-        mail.body.encoded.should match(user.name)
+        expect(mail.body.encoded).to match(user.name)
       end
 
       it 'assigns @email' do
-        mail.body.encoded.should match(user.email)
+        expect(mail.body.encoded).to match(user.email)
       end
 
       it 'assigns @password' do
-        mail.body.encoded.should match(user.password)
+        expect(mail.body.encoded).to match(user.password)
       end
     end
 
@@ -36,31 +36,31 @@ describe NotificationMailer do
       let(:mail) { NotificationMailer.notify_admin_registration(admin_user) }
 
       it 'renders the subject' do
-        mail.subject.should == 'You was registered on Punchclock'
+        expect(mail.subject).to eq('You was registered on Punchclock')
       end
 
       it 'renders the receiver email' do
-        mail.to.should == [admin_user.email]
+        expect(mail.to).to eq([admin_user.email])
       end
 
       it 'renders the sender email' do
-        mail.from.should == ['do-not-reply@punchclock.com']
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
       end
 
       it 'should have a company' do
-        mail.body.encoded.should match(admin_user.company.name)
+        expect(mail.body.encoded).to match(admin_user.company.name)
       end
 
       it 'assigns @email' do
-        mail.body.encoded.should match(admin_user.email)
+        expect(mail.body.encoded).to match(admin_user.email)
       end
 
       it 'assigns @password' do
-        mail.body.encoded.should match(admin_user.password)
+        expect(mail.body.encoded).to match(admin_user.password)
       end
 
       it 'assigns link to edit password path' do
-        mail.body.encoded.should have_link(
+        expect(mail.body.encoded).to have_link(
           'here', href: edit_admin_admin_user_url(admin_user)
         )
       end
@@ -78,31 +78,31 @@ describe NotificationMailer do
       let(:mail) { NotificationMailer.notify_user_registration(user) }
 
       it 'renders the subject' do
-        mail.subject.should == 'Welcome to Punchclock'
+        expect(mail.subject).to eq('Welcome to Punchclock')
       end
 
       it 'renders the receiver email' do
-        mail.to.should == [user.email]
+        expect(mail.to).to eq([user.email])
       end
 
       it 'renders the sender email' do
-        mail.from.should == ['do-not-reply@punchclock.com']
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
       end
 
       it 'assigns @name' do
-        mail.body.encoded.should match(user.name)
+        expect(mail.body.encoded).to match(user.name)
       end
 
       it 'assigns @email' do
-        mail.body.encoded.should match(user.email)
+        expect(mail.body.encoded).to match(user.email)
       end
 
       it 'assigns @password' do
-        mail.body.encoded.should match(user.password)
+        expect(mail.body.encoded).to match(user.password)
       end
 
       it 'assigns link to edit password path' do
-        mail.body.encoded.should have_link(
+        expect(mail.body.encoded).to have_link(
           'here', href: users_account_password_edit_url
         )
       end
@@ -116,27 +116,27 @@ describe NotificationMailer do
       end
 
       it 'renders the subject' do
-        mail.subject.should == 'Punchclock - Your password has been modified'
+        expect(mail.subject).to eq('Punchclock - Your password has been modified')
       end
 
       it 'renders the receiver email' do
-        mail.to.should == [user.email]
+        expect(mail.to).to eq([user.email])
       end
 
       it 'renders the sender email' do
-        mail.from.should == ['do-not-reply@punchclock.com']
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
       end
 
       it 'assigns @name' do
-        mail.body.encoded.should match(user.name)
+        expect(mail.body.encoded).to match(user.name)
       end
 
       it 'assigns @email' do
-        mail.body.encoded.should match(user.email)
+        expect(mail.body.encoded).to match(user.email)
       end
 
       it 'assigns @password' do
-        mail.body.encoded.should match(new_password)
+        expect(mail.body.encoded).to match(new_password)
       end
     end
 
@@ -148,23 +148,23 @@ describe NotificationMailer do
       end
 
       it 'renders the subject' do
-        mail.subject.should == "Punchclock - #{user.name} still inactive"
+        expect(mail.subject).to eq("Punchclock - #{user.name} still inactive")
       end
 
       it 'renders the receiver email' do
-        mail.to.should == [admin.email]
+        expect(mail.to).to eq([admin.email])
       end
 
       it 'renders the sender email' do
-        mail.from.should == ['do-not-reply@punchclock.com']
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
       end
 
       it 'assigns user @name' do
-        mail.body.encoded.should match(user.name)
+        expect(mail.body.encoded).to match(user.name)
       end
 
       it 'assigns admin @name' do
-        mail.body.encoded.should match(admin.name)
+        expect(mail.body.encoded).to match(admin.name)
       end
     end
   end
