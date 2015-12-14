@@ -43,7 +43,7 @@ ActiveAdmin.register Punch do
       if params['q'] && params['q']['from_lteq']
         params['q']['from_lteq'] += ' 23:59:59.999999'
       end
-      index!
+      super
     end
 
     def new
