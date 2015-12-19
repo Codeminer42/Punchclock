@@ -79,7 +79,7 @@ ActiveAdmin.register Punch do
   end
 
   filter :project
-  filter :user
+  filter :user, collection: proc { User.order(name: :asc) }
   filter :company
   filter :from, label: 'Interval', as: :date_range
 end
