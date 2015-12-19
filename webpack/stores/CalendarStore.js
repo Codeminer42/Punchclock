@@ -19,7 +19,8 @@ class CalendarStore {
 
     this.bindListeners({
       handleInitializeCalendar: CalendarActions.INITIALIZE_CALENDAR,
-      handleSelect: CalendarActions.SELECT
+      handleSelect: CalendarActions.SELECT,
+      handleDeselect: CalendarActions.DESELECT
     });
   }
 
@@ -39,6 +40,10 @@ class CalendarStore {
     } else {
       this.selectedDays.push(day);
     }
+  }
+
+  handleDeselect() {
+    this.selectedDays = [];
   }
 }
 

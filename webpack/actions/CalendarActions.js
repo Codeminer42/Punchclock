@@ -8,6 +8,10 @@ class CalendarActions {
   select(day) {
     this.dispatch(day);
   }
+
+  deselect() {
+    this.dispatch();
+  }
 }
 
 export default alt.createActions(CalendarActions);

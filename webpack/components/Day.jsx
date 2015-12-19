@@ -16,7 +16,11 @@ export default class extends React.Component {
         className={classNames}
         style={tdStyle}
         onClick={this.handleClick.bind(this)} >
-        {this.props.day.format('DD')}
+        <h3>{this.props.day.format('DD')}</h3>
+        <ul>
+          <li>20:00 - 10:00</li>
+          <li>10:00 - 14:40</li>
+        </ul>
       </td>
     );
   }

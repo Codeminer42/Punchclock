@@ -19,14 +19,24 @@ export default class extends React.Component {
               inner={d.inner}
               day={d.day}
               selected={_.contains(this.state.selectedDays, d.day)}
-              onSelect={this.handleClick} />);
+              onSelect={this.handleSelect} />);
           })}
         </tr>
       );
     });
 
+    let buttons = []
+    if(!_.isEmpty(this.state.selectedDays)) {
+      buttons = [
+        <button key="register" >Registrar</button>,
+        <button key="deselect" onClick={this.handleDeselect} >Descelecionar</button>,
+        <button key="erase" >Apagar</button>
+      ]
+    }
+
     return (
       <div>
+        <p>{ buttons }</p>
         <h2>{this.state.monthNames.join('/')}</h2>
         <table>
           <thead><tr>
@@ -51,7 +61,11 @@ export default class extends React.Component {
     this.setState(state);
   }
 
-  handleClick(day) {
+  handleSelect(day) {
     CalendarActions.select(day);
+  }
+
+  handleDeselect(e) {
+    CalendarActions.deselect();
   }
 };
