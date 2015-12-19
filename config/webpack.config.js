@@ -35,14 +35,13 @@ var config = {
 
   module: {
     loaders: [
-      // Set up jsx. This accepts js too thanks to regex.
       {
         test: /\.jsx?$/,
         loader: 'babel',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
         },
-        exclude: /(node_modules|bower_components)/
+        exclude: /node_modules/
       }
     ]
   },
