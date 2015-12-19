@@ -4,6 +4,10 @@ class CalendarActions {
   initializeCalendar(dateBase) {
     this.dispatch(dateBase);
   }
+
+  select(day) {
+    this.dispatch(day);
+  }
 }
 
 export default alt.createActions(CalendarActions);

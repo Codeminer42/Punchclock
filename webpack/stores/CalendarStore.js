@@ -14,10 +14,12 @@ class CalendarStore {
     this.start = null;
     this.monthNames = [];
     this.weeks = [];
-    this.weekdays = moment.weekdays();
+    this.weekdays = moment.weekdaysMin();
+    this.selectedDays = [];
 
     this.bindListeners({
-      handleInitializeCalendar: CalendarActions.INITIALIZE_CALENDAR
+      handleInitializeCalendar: CalendarActions.INITIALIZE_CALENDAR,
+      handleSelect: CalendarActions.SELECT
     });
   }
 
@@ -28,6 +30,15 @@ class CalendarStore {
     this.start = startDate(this.base);
     this.monthNames = monthNames(range);
     this.weeks = weeks(this.start, range);
+    this.selectedDays = [];
+  }
+
+  handleSelect(day) {
+    if(_.contains(this.selectedDays, day)) {
+      this.selectedDays = _.without(this.selectedDays, day);
+    } else {
+      this.selectedDays.push(day);
+    }
   }
 }
 
@@ -51,7 +62,7 @@ function innerRange(base){
 
 function monthNames(range){
   let [from, to] = range;
-  return [from.format('MMMM'), to.format('MMMM')];
+  return [from.format('MMM'), to.format('MMM')];
 }
 
 function startDate(base){

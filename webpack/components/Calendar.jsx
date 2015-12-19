@@ -1,11 +1,41 @@
 import React from 'react';
 import CalendarStore from '../stores/CalendarStore';
 import CalendarActions from '../actions/CalendarActions';
+import Day from './Day';
 
 export default class extends React.Component {
   constructor() {
     super();
     this.state = CalendarStore.getState();
+  }
+
+  render() {
+    let weeks = this.state.weeks.map((week, i)=> {
+      return (
+        <tr key={i} >
+          { week.days.map((d, ii)=> {
+            return (<Day
+              key={ii}
+              inner={d.inner}
+              day={d.day}
+              selected={_.contains(this.state.selectedDays, d.day)}
+              onSelect={this.handleClick} />);
+          })}
+        </tr>
+      );
+    });
+
+    return (
+      <div>
+        <h2>{this.state.monthNames.join('/')}</h2>
+        <table>
+          <thead><tr>
+            {this.state.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
+          </tr></thead>
+          <tbody>{weeks}</tbody>
+        </table>
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -21,29 +51,7 @@ export default class extends React.Component {
     this.setState(state);
   }
 
-  render() {
-    let weeks = this.state.weeks.map((week, i)=> {
-      return (
-        <tr key={i} >
-          { week.days.map((d, ii)=> {
-          return (<td key={ii} className={d.inner ? 'inner' : 'out'}>
-            {d.day.format('DD')}
-          </td>);
-          })}
-        </tr>
-      );
-    });
-
-    return (
-      <div>
-        <h2>{this.state.monthNames.join(' - ')}</h2>
-        <table>
-          <thead><tr>
-              {this.state.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
-          </tr></thead>
-          <tbody>{weeks}</tbody>
-        </table>
-      </div>
-    );
+  handleClick(day) {
+    CalendarActions.select(day);
   }
 };
