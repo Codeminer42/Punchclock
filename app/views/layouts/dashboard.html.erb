@@ -3,14 +3,11 @@
   <head>
     <title> Punchclock </title>
     <%= stylesheet_link_tag    "application", media: "all" %>
-    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="#{user_signed_in? ? 'signed-in' : 'signed-out'}" >
-    <div class="container row span12">
-    <%= render 'navigation' %>
-    <%= render 'shared/flash' %>
+  <body>
     <%= yield %>
+    <%= javascript_include_tag *webpack_asset_paths("application") %>
   </body>
 </html>

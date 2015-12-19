@@ -28,6 +28,7 @@ gem 'activeadmin', '1.0.0pre2'
 gem 'draper'
 gem 'rails-i18n'
 gem 'responders'
+gem 'webpack-rails'
 
 group :test do
   gem 'capybara'
@@ -61,3 +62,5 @@ group :production, :staging do
   gem 'rails_12factor'
   gem 'passenger', '>= 4.0.17'
 end
+
+gem 'foreman'
