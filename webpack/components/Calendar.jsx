@@ -1,26 +1,49 @@
 import React from 'react';
-import CalendarWeek from './CalendarWeek';
-import Calendar from '../lib/calendar';
+import CalendarStore from '../stores/CalendarStore';
+import CalendarActions from '../actions/CalendarActions';
 
-export default  React.createClass({
-  render: function() {
-    let calendar = new Calendar(this.props.base);
+export default class extends React.Component {
+  constructor() {
+    super();
+    this.state = CalendarStore.getState();
+  }
+
+  componentDidMount() {
+    CalendarStore.listen(this.onChange.bind(this));
+    CalendarActions.initializeCalendar(this.props.base);
+  }
+
+  componentWillUnmount() {
+    CalendarStore.unlisten(this.onChange.bind(this));
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  render() {
+    let weeks = this.state.weeks.map((week, i)=> {
+      return (
+        <tr key={i} >
+          { week.days.map((d, ii)=> {
+          return (<td key={ii} className={d.inner ? 'inner' : 'out'}>
+            {d.day.format('DD')}
+          </td>);
+          })}
+        </tr>
+      );
+    });
+
     return (
       <div>
-        <h2>{calendar.monthNames.join(' - ')}</h2>
+        <h2>{this.state.monthNames.join(' - ')}</h2>
         <table>
           <thead><tr>
-            {calendar.weekdays.map( (n, i)=> <th key={i}>{n}</th>)}
+              {this.state.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
           </tr></thead>
-          <tbody>
-          { calendar.weeks.map( (week, i)=> {
-              return <CalendarWeek
-                key={i}
-                calendarRange={calendar.range}
-                week={week} />}) }
-          </tbody>
+          <tbody>{weeks}</tbody>
         </table>
       </div>
-    )
+    );
   }
-});
+};
