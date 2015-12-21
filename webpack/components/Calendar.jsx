@@ -1,7 +1,9 @@
 import React from 'react';
 import CalendarStore from '../stores/CalendarStore';
+import SelectionStore from '../stores/SelectionStore';
 import CalendarActions from '../actions/CalendarActions';
 import Day from './Day';
+import Form from './Form';
 
 export default class extends React.Component {
   constructor() {
@@ -9,40 +11,28 @@ export default class extends React.Component {
     this.state = CalendarStore.getState();
   }
 
-  render() {
-    let weeks = this.state.weeks.map((week, i)=> {
+  weeksRender() {
+    return this.state.weeks.map((week, i)=> {
       return (
         <tr key={i} >
           { week.days.map((d, ii)=> {
-            return (<Day
-              key={ii}
-              inner={d.inner}
-              day={d.day}
-              selected={_.contains(this.state.selectedDays, d.day)}
-              onSelect={this.handleSelect} />);
+            return (<Day key={ii} inner={d.inner} day={d.day} />);
           })}
         </tr>
       );
     });
+  }
 
-    let buttons = []
-    if(!_.isEmpty(this.state.selectedDays)) {
-      buttons = [
-        <button key="register" >Registrar</button>,
-        <button key="deselect" onClick={this.handleDeselect} >Descelecionar</button>,
-        <button key="erase" >Apagar</button>
-      ]
-    }
-
+  render() {
     return (
       <div>
-        <p>{ buttons }</p>
+        <Form />
         <h2>{this.state.monthNames.join('/')}</h2>
         <table>
           <thead><tr>
             {this.state.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
           </tr></thead>
-          <tbody>{weeks}</tbody>
+          <tbody>{this.weeksRender()}</tbody>
         </table>
       </div>
     );
@@ -61,11 +51,8 @@ export default class extends React.Component {
     this.setState(state);
   }
 
-  handleSelect(day) {
-    CalendarActions.select(day);
-  }
-
   handleDeselect(e) {
+    e.preventDefault();
     CalendarActions.deselect();
   }
 };

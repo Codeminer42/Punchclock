@@ -1,16 +1,8 @@
 import alt from '../alt';
 
 class CalendarActions {
-  initializeCalendar(dateBase) {
-    this.dispatch(dateBase);
-  }
-
-  select(day) {
-    this.dispatch(day);
-  }
-
-  deselect() {
-    this.dispatch();
+  constructor(){
+    this.generateActions('initializeCalendar', 'toggle', 'deselect');
   }
 }
 

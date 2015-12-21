@@ -1,20 +1,38 @@
 import React from 'react';
+import SelectionStore from '../stores/SelectionStore';
+import CalendarActions from '../actions/CalendarActions';
+
+function getStateFromStore(props) {
+  let selecteds = SelectionStore.getState().selectedDays;
+  return { selected: _.contains(selecteds, props.day) };
+}
 
 export default class extends React.Component {
-  render() {
-    let classNames = [this.props.inner ? 'inner' : 'out']
-    if(this.props.selected) { classNames.push('selected'); }
-    let tdStyle = {
-      border: (this.props.selected ? '1px solid' : ''),
+  constructor(props) {
+    super(props);
+    this.state = getStateFromStore(props);
+  }
+
+  getStyle() {
+    return {
+      border: (this.state.selected ? '1px solid' : ''),
       cursor: 'pointer',
       opacity: (this.props.inner ? 1 : 0.3 ),
       WebkitUserSelect: 'none'
-    }
+    };
+  }
 
+  getClassNames() {
+    let classNames = [this.props.inner ? 'inner' : 'out']
+    if(this.state.selected) { classNames.push('selected'); }
+    return classNames;
+  }
+
+  render() {
     return (
       <td
-        className={classNames}
-        style={tdStyle}
+        className={this.getClassNames()}
+        style={this.getStyle()}
         onClick={this.handleClick.bind(this)} >
         <h3>{this.props.day.format('DD')}</h3>
         <ul>
@@ -25,8 +43,20 @@ export default class extends React.Component {
     );
   }
 
+  componentDidMount() {
+    SelectionStore.listen(this.onChange.bind(this));
+  }
+
+  componentWillUnmount() {
+    SelectionStore.unlisten(this.onChange.bind(this));
+  }
+
+  onChange(state) {
+    this.setState(getStateFromStore(this.props));
+  }
+
   handleClick(e) {
     if(!this.props.inner) return;
-    this.props.onSelect(this.props.day);
+    CalendarActions.toggle(this.props.day);
   }
 }
