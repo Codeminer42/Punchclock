@@ -1,5 +1,4 @@
 import moment from 'moment';
-import _ from 'lodash';
 import alt from '../alt';
 import CalendarActions from '../actions/CalendarActions';
 import * as Calendar from '../utils/calendar';
