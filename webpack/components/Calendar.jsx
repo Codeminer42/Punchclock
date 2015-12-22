@@ -64,9 +64,4 @@ export default class extends React.Component {
   onChange() {
     this.setState(getStateFromStore());
   }
-
-  handleDeselect(e) {
-    e.preventDefault();
-    CalendarActions.deselect();
-  }
 };
