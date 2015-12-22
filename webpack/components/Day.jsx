@@ -35,10 +35,10 @@ export default class extends React.Component {
         style={this.getStyle()}
         onClick={this.handleClick.bind(this)} >
         <h3>{this.props.day.format('DD')}</h3>
-        <ul>
-          <li>20:00 - 10:00</li>
-          <li>10:00 - 14:40</li>
-        </ul>
+        <ul>{ this.props.sheet.map( (t, i)=> {
+            return <li key={i}>{t}</li>
+          })
+        }</ul>
       </td>
     );
   }

@@ -4,7 +4,10 @@ import CalendarActions from '../actions/CalendarActions';
 
 function getStateFromStore() {
   let selecteds = SelectionStore.getState().selectedDays;
-  return { selectedCount: selecteds.length };
+  return {
+    selectedDays: selecteds,
+    selectedCount: selecteds.length
+  };
 }
 
 export default class extends React.Component {
@@ -16,17 +19,19 @@ export default class extends React.Component {
   render() {
     if(this.state.selectedCount == 0) return <p><button>Salvar!</button></p>
     return (
-      <form style={ {width: '80%', margin: '0 auto', textAlign: 'center'} }>
+      <form
+        onSubmit={this.handleSubmit.bind(this)}
+        style={ {width: '80%', margin: '0 auto', textAlign: 'center'} }>
 
-        <input placeholder="De" type="time" value="09:00" />
-        <input placeholder="Até" type="time" value="12:00" />
+        <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
+        <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />
 
-        <input placeholder="De" type="time" value="13:00" />
-        <input placeholder="Até" type="time" value="18:00" />
+        <input placeholder="De" ref="from2" type="time" defaultValue="13:00" />
+        <input placeholder="Até" ref="to2" type="time" defaultValue="18:00" />
 
         <input type="submit" value="Ok" />
         <button onClick={this.handleDeselect} >Descelecionar</button>
-        <button >Apagar</button>
+        <button onClick={this.handleErase}>Apagar</button>
         <span> Selecionado ({this.state.selectedCount})</span>
       </form>
     );
@@ -42,6 +47,19 @@ export default class extends React.Component {
 
   onChange(state) {
     this.setState(getStateFromStore());
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    CalendarActions.setTimeSheet([
+      `${this.refs.from1.value} - ${this.refs.to1.value}`,
+      `${this.refs.from2.value} - ${this.refs.to2.value}`]);
+    CalendarActions.deselect();
+  }
+
+  handleErase(e) {
+    e.preventDefault();
+    CalendarActions.erase();
   }
 
   handleDeselect(e) {

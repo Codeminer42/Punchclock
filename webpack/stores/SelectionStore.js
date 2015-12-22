@@ -5,6 +5,7 @@ import CalendarActions from '../actions/CalendarActions';
 class SelectionStore {
   constructor() {
     this.bindActions(CalendarActions);
+    this.exportPublicMethods({getSelecteds: this.getSelecteds.bind(this)});
     this.selectedDays = [];
   }
 
@@ -22,6 +23,10 @@ class SelectionStore {
 
   onDeselect() {
     this.selectedDays = [];
+  }
+
+  getSelecteds() {
+    return this.selectedDays;
   }
 }
 
