@@ -21,7 +21,7 @@ export default class extends React.Component {
     return (
       <form
         onSubmit={this.handleSubmit.bind(this)}
-        style={ {width: '80%', margin: '0 auto', textAlign: 'center'} }>
+        className='punches-toolbar' >
 
         <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
         <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />

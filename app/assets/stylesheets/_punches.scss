@@ -2,6 +2,16 @@
   th { text-align: center; }
   td {
     text-align: center;
+    cursor: pointer;
+    height: 110px;
+    &.selected {
+      background: $flat-sunflower;
+      color: white;
+    }
+
+    &.out {
+      opacity: .3;
+    }
 
     @each $status, $color in (normal: $flat-emerald, extra: $flat-sunflower, debit: $flat-pomegranate) {
       &.#{$status} {
@@ -30,6 +40,18 @@
   .punches {
     font-size: .7em;
     li { height: 1.3em; }
+  }
+}
+
+.punches-toolbar {
+  width: 80%;
+  margin: 2px auto;
+  text-align: center;
+  input[type='time'] {
+    font-size: .7em;
+    width: 100px;
+    margin: 2px;
+    display: inline-block;
   }
 }
 

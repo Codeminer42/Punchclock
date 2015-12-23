@@ -38,8 +38,8 @@ export default class extends React.Component {
     return (
       <div>
         <Form />
-        <h2>{this.state.calendar.monthNames.join('/')}</h2>
-        <table>
+        <h1>{this.state.calendar.monthNames.join('/')}</h1>
+        <table className='punches-table'>
           <thead><tr>
             {this.state.calendar.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
           </tr></thead>

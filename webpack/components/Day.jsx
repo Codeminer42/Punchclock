@@ -14,26 +14,16 @@ export default class extends React.Component {
     this.state = getStateFromStore(props);
   }
 
-  getStyle() {
-    return {
-      border: (this.state.selected ? '1px solid' : ''),
-      cursor: 'pointer',
-      opacity: (this.props.inner ? 1 : 0.3 ),
-      WebkitUserSelect: 'none'
-    };
-  }
-
   getClassNames() {
     let classNames = [this.props.inner ? 'inner' : 'out']
     if(this.state.selected) { classNames.push('selected'); }
-    return classNames;
+    return classNames.join(' ');
   }
 
   render() {
     return (
       <td
         className={this.getClassNames()}
-        style={this.getStyle()}
         onClick={this.handleClick.bind(this)} >
         <h3>{this.props.day.format('DD')}</h3>
         <ul>{ this.props.sheet.map( (t, i)=> {
