@@ -23,9 +23,41 @@ class PeriodDecorator < ApplicationDecorator
     punches.by_date.fetch date, []
   end
 
+  def hours_by_date(date)
+    by_date(date).sum(&:delta_in_hours)
+  end
+
+  def status(date, target = 8)
+    hours = hours_by_date(date)
+    if hours == target
+      :normal
+    elsif hours == 0
+      :blank
+    elsif hours > target
+      :extra
+    elsif hours < target
+      :debit
+    else
+      :blank
+    end
+  end
+
+  def current_period_class(date)
+    object.range.include?(date) ? :current : :other
+  end
+
+  def day_classes(date)
+    "weekday-#{date.wday} #{status(date)} #{current_period_class(date)}"
+  end
+
   def weeks
     range = object.range
-    (range.min.beginning_of_week..range.max.end_of_week).to_a.in_groups_of(7)
+    @weeks ||= (range.min.beginning_of_week..range.max.end_of_week)
+      .to_a.in_groups_of(7)
+  end
+
+  def daynames
+    h.t(:day_names, scope: :date)
   end
 
   protected

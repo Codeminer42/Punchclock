@@ -1,0 +1,38 @@
+.punches-table {
+  th { text-align: center; }
+  td {
+    text-align: center;
+
+    @each $status, $color in (normal: $flat-emerald, extra: $flat-sunflower, debit: $flat-pomegranate) {
+      &.#{$status} {
+        border-bottom: 2px solid $color;
+      }
+    }
+
+    &.normal, &.extra, &.debit {
+      &.weekday-1, &.weekday-0 {
+        border-color: $flat-sunflower;
+      }
+    }
+
+    &.other { opacity: .3; }
+  }
+
+  .weekday-1, .weekday-0 {
+    background: $flat-clouds;
+    color: $flat-silver;
+  }
+
+  .day {
+    font-size: 2em;
+  }
+
+  .punches {
+    font-size: .7em;
+    li { height: 1.3em; }
+  }
+}
+
+.punches-summary {
+  dt, dd { display: inline-block; padding-right: 2em }
+}

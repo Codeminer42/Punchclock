@@ -1,25 +1,30 @@
-<div class="row" id="filter-form">
-  <div class="col-md-2">
-    <div class="btn-group">
-      <%= link_to Punch.model_name.human, new_punch_path, :class => 'btn btn-primary' %>
-    </div>
+<p class="main-actions">
+  <%= link_to 'Punch', new_punch_path, :class => 'button' %>
+</p>
+
+<section class="pre">
+  <div class="avatar">
+    <%= link_to user_path(current_user) do %>
+      <%= gravatar_for current_user, size: 40 %>
+      <span><%= current_user.name %></span>
+    <%- end %>
   </div>
 
   <%= render "punches_filter_form"%>
+</section>
 
-  <br>
-<table class='table table-striped'>
-  <colgroup>
-    <col width='160'></col>
-    <col width='100'></col>
-    <col width='60'></col>
-    <col width='60'></col>
-    <col></col>
-    <col></col>
-    <col></col>
-    <col width='24'></col>
-    <col width='24'></col>
-    <col width='24'></col>
+<table class='table-minimal'>
+<colgroup>
+    <col width='160'>
+    <col width='100'>
+    <col width='60'>
+    <col width='60'>
+    <col>
+    <col>
+    <col>
+    <col width='24'>
+    <col width='24'>
+    <col width='24'>
   </colgroup>
 
   <thead>
@@ -39,10 +44,6 @@
   <tbody>
     <% @punches.each do |punch| %>
       <tr class="user-punch">
-        <td>
-          <%= gravatar_for punch.user, size: 40 %>
-          <%= link_to punch.user.name, user_path(punch.user) %>
-        </td>
         <td><%= link_to punch.object.from.strftime("%d/%m/%Y"), punch, id: "shw-#{punch.id}" %> </td>
         <td><%= punch.from %> </td>
         <td><%= punch.to %> </td>

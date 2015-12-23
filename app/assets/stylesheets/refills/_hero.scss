@@ -1,0 +1,72 @@
+.hero {
+  $hero-background: desaturate(darken($base-accent-color, 20), 30);	
+  $hero-color: white;
+
+  background: url(https://raw.github.com/Magnus-G/Random/master/lake-transparent.png);
+  background-color: $hero-background;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  padding-bottom: 4em;
+  padding-top: 3em;
+
+  min-height: 400px;;
+
+  .hero-logo img {
+      height: 3em;
+      margin-bottom: 1em;
+  }
+
+  .hero-inner {
+    @include outer-container;
+    @include clearfix;
+    padding: 3em;
+    margin: auto;
+    text-align: center;
+    color: $hero-color;
+
+    button {
+      @include button(simple, $base-accent-color);
+      font-size: $base-font-size;
+      outline: none;
+    }
+
+    .login {
+      @include span-columns(4);
+
+      #user_password {
+        @include span-columns(8);
+      }
+
+      input[type='submit'] {
+        @include span-columns(4);
+        height: 38px;
+      }
+    }
+
+    .hero-copy {
+      text-align: center;
+      @include span-columns(8);
+
+      h1 {
+        font-size: 1.4em;
+        margin-bottom: .2em;
+
+        @include media($large-screen) {
+          font-size: 3.5em;
+        }
+      }
+
+      p {
+        margin: auto;
+        margin-bottom: 3em;	
+        font-weight: 200;
+
+        @include media($large-screen) {
+          font-size: 1.2em;
+          max-width: 40%;
+        }
+      }
+    }
+  }
+}
