@@ -16,6 +16,7 @@
   display: table;
   th { text-align: center; }
   td {
+    -webkit-transition: all .3s;
     text-align: center;
     cursor: pointer;
     height: 110px;
