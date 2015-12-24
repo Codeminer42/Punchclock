@@ -17,21 +17,35 @@ export default class extends React.Component {
   }
 
   render() {
-    if(this.state.selectedCount == 0) return <p><button>Salvar!</button></p>
+    if(this.state.selectedCount == 0) return <p><button>Salvar</button></p>
     return (
       <form
         onSubmit={this.handleSubmit.bind(this)}
         className='punches-toolbar' >
 
-        <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
-        <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />
+        <p>
+          <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
+          <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />
+        </p>
 
-        <input placeholder="De" ref="from2" type="time" defaultValue="13:00" />
-        <input placeholder="Até" ref="to2" type="time" defaultValue="18:00" />
+        <p>
+          <input placeholder="De" ref="from2" type="time" defaultValue="13:00" />
+          <input placeholder="Até" ref="to2" type="time" defaultValue="18:00" />
+        </p>
 
-        <input type="submit" value="Ok" />
-        <button onClick={this.handleDeselect} >Descelecionar</button>
-        <button onClick={this.handleErase}>Apagar</button>
+        <p>
+          <select>
+            <option>Projeto</option>
+          </select>
+        </p>
+
+        <p>
+          <input type="submit" value="Ok" />
+        </p>
+
+        <p>
+          <a onClick={this.handleDeselect} >Descelecionar</a> <a onClick={this.handleErase}>Apagar</a>
+        </p>
         <span> Selecionado ({this.state.selectedCount})</span>
       </form>
     );

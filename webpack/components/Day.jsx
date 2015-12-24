@@ -15,7 +15,11 @@ export default class extends React.Component {
   }
 
   getClassNames() {
-    let classNames = [this.props.inner ? 'inner' : 'out']
+    let classNames = [`weekday-${this.props.day.day()}`];
+
+    if(this.props.inner) classNames.push('inner');
+    else classNames.push('out');
+
     if(this.state.selected) { classNames.push('selected'); }
     return classNames.join(' ');
   }
@@ -26,7 +30,7 @@ export default class extends React.Component {
         className={this.getClassNames()}
         onClick={this.handleClick.bind(this)} >
         <h3>{this.props.day.format('DD')}</h3>
-        <ul>{ this.props.sheet.map( (t, i)=> {
+        <ul className="punches">{ this.props.sheet.map( (t, i)=> {
             return <li key={i}>{t}</li>
           })
         }</ul>

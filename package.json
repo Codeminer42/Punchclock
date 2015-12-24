@@ -14,6 +14,8 @@
     "babel-preset-stage-0": "~6.3.13",
     "moment": "~2.10.6",
     "lodash": "~3.10.1",
-    "alt": "~0.17.9"
+    "alt": "~0.17.9",
+    "react-modal": "~0.6.1",
+    "immutable": "~3.7.6"
   }
 }

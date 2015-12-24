@@ -1,4 +1,19 @@
+.calendar-container {
+  @include outer-container;
+  -webkit-user-select: none;
+
+  h1 {
+    padding: .4em;
+  }
+
+  a {
+    cursor: pointer;
+  }
+}
+
 .punches-table {
+  @include span-columns(9);
+  display: table;
   th { text-align: center; }
   td {
     text-align: center;
@@ -28,7 +43,7 @@
     &.other { opacity: .3; }
   }
 
-  .weekday-1, .weekday-0 {
+  .weekday-0, .weekday-6 {
     background: $flat-clouds;
     color: $flat-silver;
   }
@@ -44,9 +59,7 @@
 }
 
 .punches-toolbar {
-  width: 80%;
-  margin: 2px auto;
-  text-align: center;
+  @include span-columns(3);
   input[type='time'] {
     font-size: .7em;
     width: 100px;
