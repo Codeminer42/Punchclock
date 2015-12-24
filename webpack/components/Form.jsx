@@ -1,23 +1,8 @@
 import React from 'react';
-import SelectionStore from '../stores/SelectionStore';
-import CalendarActions from '../actions/CalendarActions';
-
-function getStateFromStore() {
-  let selecteds = SelectionStore.getState().selectedDays;
-  return {
-    selectedDays: selecteds,
-    selectedCount: selecteds.size
-  };
-}
 
 export default class extends React.Component {
-  constructor() {
-    super();
-    this.state = getStateFromStore();
-  }
-
   render() {
-    if(this.state.selectedCount == 0) return <p><button>Salvar</button></p>
+    if(this.props.selecteds.isEmpty()) return <p><button>Salvar</button></p>
     return (
       <form
         onSubmit={this.handleSubmit.bind(this)}
@@ -46,38 +31,25 @@ export default class extends React.Component {
         <p>
           <a onClick={this.handleDeselect} >Descelecionar</a> <a onClick={this.handleErase}>Apagar</a>
         </p>
-        <span> Selecionado ({this.state.selectedCount})</span>
+        <span> Selecionado ({this.props.selecteds.size})</span>
       </form>
     );
   }
 
-  componentDidMount() {
-    SelectionStore.listen(this.onChange.bind(this));
-  }
-
-  componentWillUnmount() {
-    SelectionStore.unlisten(this.onChange.bind(this));
-  }
-
-  onChange(state) {
-    this.setState(getStateFromStore());
-  }
-
   handleSubmit(e) {
     e.preventDefault();
-    CalendarActions.setTimeSheet([
+    this.props.actions.setTimeSheet([
       `${this.refs.from1.value} - ${this.refs.to1.value}`,
       `${this.refs.from2.value} - ${this.refs.to2.value}`]);
-    CalendarActions.deselect();
   }
 
   handleErase(e) {
     e.preventDefault();
-    CalendarActions.erase();
+    this.props.actions.erase();
   }
 
   handleDeselect(e) {
     e.preventDefault();
-    CalendarActions.deselect();
+    this.props.actions.deselect();
   }
 }

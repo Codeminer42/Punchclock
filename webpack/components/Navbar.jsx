@@ -1,5 +1,4 @@
 import React from 'react';
-import CalendarActions from '../actions/CalendarActions';
 
 export default class extends React.Component {
   render() {
@@ -11,17 +10,17 @@ export default class extends React.Component {
     return (
       <h1>
         <a onClick={this.handlePrev.bind(this)}> ❮ </a>
-        {this.props.monthNames}
+        {this.props.children}
         { nextButton }
       </h1>
     );
   }
 
   handlePrev() {
-    CalendarActions.prev();
+    this.props.actions.prev();
   }
 
   handleNext() {
-    CalendarActions.next();
+    this.props.actions.next();
   }
 }
