@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 import alt from '../alt';
 import CalendarActions from '../actions/CalendarActions';
+import SheetStore from './SheetStore';
 
 const initial = Immutable.Set();
 
@@ -12,6 +13,11 @@ class SelectionStore {
   }
 
   onInitializeCalendar(date) {
+    this.selectedDays = initial;
+  }
+
+  onSetTimeSheet(sheet) {
+    this.waitFor([SheetStore]);
     this.selectedDays = initial;
   }
 

@@ -29,7 +29,11 @@ export default class extends React.Component {
         </p>
 
         <p>
-          <a onClick={this.handleDeselect} >Descelecionar</a> <a onClick={this.handleErase}>Apagar</a>
+          <a onClick={this.handleDeselect.bind(this)} >
+            Descelecionar
+          </a> - <a onClick={this.handleErase.bind(this)}>
+            Apagar
+          </a>
         </p>
         <span> Selecionado ({this.props.selecteds.size})</span>
       </form>
