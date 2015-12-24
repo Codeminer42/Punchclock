@@ -35,16 +35,25 @@ export default class extends React.Component {
   }
 
   render() {
+    let nextButton;
+
+    if(this.state.calendar.hasNext )
+      nextButton = <a onClick={this.handleNext.bind(this)}> ❯ </a>
+
     return (
-      <div>
-        <Form />
-        <h1>{this.state.calendar.monthNames.join('/')}</h1>
+      <div className="calendar-container">
+        <h1>
+          <a onClick={this.handlePrev.bind(this)}> ❮ </a>
+          {this.state.calendar.monthNames}
+          { nextButton }
+        </h1>
         <table className='punches-table'>
           <thead><tr>
             {this.state.calendar.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
           </tr></thead>
           <tbody>{this.weeksRender()}</tbody>
         </table>
+        <Form />
       </div>
     );
   }
@@ -63,5 +72,15 @@ export default class extends React.Component {
 
   onChange() {
     this.setState(getStateFromStore());
+  }
+
+  handlePrev() {
+    CalendarActions.deselect();
+    CalendarActions.prev();
+  }
+
+  handleNext() {
+    CalendarActions.deselect();
+    CalendarActions.next();
   }
 };

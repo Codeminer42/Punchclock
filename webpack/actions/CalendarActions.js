@@ -8,7 +8,9 @@ class CalendarActions {
       'deselect',
       'setTimeSheet',
       'setTimeSheetOnSelecteds',
-      'erase'
+      'erase',
+      'prev',
+      'next'
     );
   }
 }
