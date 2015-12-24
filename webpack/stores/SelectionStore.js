@@ -21,6 +21,14 @@ class SelectionStore {
     }
   }
 
+  onSelectWeek(week) {
+    week.days.forEach( (d)=> {
+      let day = d.day;
+      if(day.day() != 0 && day.day() != 6 && d.inner )
+        this.selectedDays.push(day);
+    });
+  }
+
   onDeselect() {
     this.selectedDays = [];
   }

@@ -6,6 +6,7 @@ class CalendarActions {
       'initializeCalendar',
       'toggle',
       'deselect',
+      'selectWeek',
       'setTimeSheet',
       'setTimeSheetOnSelecteds',
       'erase',
