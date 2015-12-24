@@ -1,11 +1,10 @@
 import React from 'react';
-import _ from 'lodash';
 import SelectionStore from '../stores/SelectionStore';
 import CalendarActions from '../actions/CalendarActions';
 
 function getStateFromStore(props) {
   let selecteds = SelectionStore.getState().selectedDays;
-  return { selected: _.contains(selecteds, props.day) };
+  return { selected: selecteds.has(props.day) };
 }
 
 export default class extends React.Component {

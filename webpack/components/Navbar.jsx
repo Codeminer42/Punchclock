@@ -18,12 +18,10 @@ export default class extends React.Component {
   }
 
   handlePrev() {
-    CalendarActions.deselect();
     CalendarActions.prev();
   }
 
   handleNext() {
-    CalendarActions.deselect();
     CalendarActions.next();
   }
 }

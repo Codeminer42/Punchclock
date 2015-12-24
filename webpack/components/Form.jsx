@@ -6,7 +6,7 @@ function getStateFromStore() {
   let selecteds = SelectionStore.getState().selectedDays;
   return {
     selectedDays: selecteds,
-    selectedCount: selecteds.length
+    selectedCount: selecteds.size
   };
 }
 

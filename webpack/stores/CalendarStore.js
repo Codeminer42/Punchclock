@@ -1,5 +1,6 @@
 import moment from 'moment';
 import alt from '../alt';
+import Immutable from 'immutable';
 import CalendarActions from '../actions/CalendarActions';
 import * as Calendar from '../utils/calendar';
 
@@ -12,8 +13,8 @@ class CalendarStore {
     this.base = null;
     this.start = null;
     this.hasNext = false;
-    this.monthNames = [];
-    this.weeks = [];
+    this.monthNames = Immutable.List();
+    this.weeks = Immutable.List();
     this.weekdays = moment.weekdaysMin();
   }
 

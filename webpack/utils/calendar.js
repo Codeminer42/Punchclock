@@ -1,8 +1,10 @@
-import _ from 'lodash';
+import Immutable from 'immutable';
 import moment from 'moment';
 
 const daysPerWeek = 7;
 const weeksInCalendar = 6;
+const Day = Immutable.Record({day: undefined, inner: undefined});
+const Week = Immutable.Record({days: Immutable.List()});
 
 export function prev(base){
   return base.clone().subtract(1, 'M').date(base.date());
@@ -13,16 +15,17 @@ export function next(base){
 }
 
 export function week(date, range){
-  return _.range(daysPerWeek).map((i)=> {
+  return Immutable.Range(0, daysPerWeek).map((i)=> {
     let day = date.clone().add(i, 'd');
     let [from, to] = range;
-    return {day: day, inner: day.isBetween(from, to, 'day')};
+    let inner = day.isBetween(from, to, 'day');
+    return new Day({ day: day, inner: inner});
   });
 }
 
 export function weeks(start, range){
-  return _.range(weeksInCalendar).map((i)=> {
-    return {days: week(start.clone().add(i, 'w'), range)};
+  return Immutable.Range(0, weeksInCalendar).map((i)=> {
+    return new Week({days: week(start.clone().add(i, 'w'), range)});
   });
 }
 
@@ -34,7 +37,7 @@ export function innerRange(base){
 export function monthNames(range){
   let [from, to] = range;
   if(from.year() != to.year())
-    return [from.format('MMM YYYY'), to.format('MMM YYYY')].join(' / ')
+    return [from.format('MMM YYYY'), to.format('MMM YYYY')].join(' / ');
   return [from.format('MMM'), to.format('MMM')].join(' / ') + to.format(' YYYY');
 }
 

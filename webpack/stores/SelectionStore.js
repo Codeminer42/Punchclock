@@ -1,23 +1,25 @@
-import _ from 'lodash';
+import Immutable from 'immutable';
 import alt from '../alt';
 import CalendarActions from '../actions/CalendarActions';
+
+const initial = Immutable.Set();
 
 class SelectionStore {
   constructor() {
     this.bindActions(CalendarActions);
     this.exportPublicMethods({getSelecteds: this.getSelecteds.bind(this)});
-    this.selectedDays = [];
+    this.selectedDays = initial;
   }
 
   onInitializeCalendar(date) {
-    this.selectedDays = [];
+    this.selectedDays = initial;
   }
 
   onToggle(day) {
-    if(_.contains(this.selectedDays, day)) {
-      this.selectedDays = _.without(this.selectedDays, day);
+    if(this.selectedDays.has(day)) {
+      this.selectedDays = this.selectedDays.delete(day);
     } else {
-      this.selectedDays.push(day);
+      this.selectedDays = this.selectedDays.add(day);
     }
   }
 
@@ -25,16 +27,24 @@ class SelectionStore {
     week.days.forEach( (d)=> {
       let day = d.day;
       if(day.day() != 0 && day.day() != 6 && d.inner )
-        this.selectedDays.push(day);
+        this.selectedDays = this.selectedDays.add(day);
     });
   }
 
   onDeselect() {
-    this.selectedDays = [];
+    this.selectedDays = initial;
   }
 
   getSelecteds() {
     return this.selectedDays;
+  }
+
+  onNext() {
+    this.onDeselect();
+  }
+
+  onPrev() {
+    this.onDeselect();
   }
 }
 
