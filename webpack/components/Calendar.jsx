@@ -13,7 +13,7 @@ export default class extends React.Component {
           return (<Day
             key={ii}
             inner={d.inner}
-            sheet={this.props.Sheets.sheets[d.day.format()] || []}
+            sheet={this.props.sheetFor(d)}
             actions={this.props.actions}
             selected={this.props.Selection.selectedDays.has(d.day)}
             day={d.day} />);

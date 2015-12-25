@@ -43,6 +43,14 @@ class Punch < ActiveRecord::Base
     (to - from)
   end
 
+  def date
+    from.to_date
+  end
+
+  def sheet
+    "#{from.strftime('%H:%M')} - #{to.strftime('%H:%M')}"
+  end
+
   def self.total
     all.reduce(0) { |a, e| a + e.delta }
   end
