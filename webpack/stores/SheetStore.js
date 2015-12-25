@@ -4,34 +4,45 @@ import SelectionStore from './SelectionStore';
 import CalendarActions from '../actions/CalendarActions';
 import ServerActions from '../actions/ServerActions';
 
-const initial = Immutable.Map();
+const emptyMap = Immutable.Map();
+const emptyList = Immutable.List();
+
+function key(d) {
+  return d.format('YYYY-MM-DD');
+}
 
 class SheetStore {
   constructor() {
     this.bindActions(CalendarActions);
     this.bindActions(ServerActions);
     this.exportPublicMethods({sheetFor: this.sheetFor.bind(this)});
-    this.sheets = initial;
+    this.sheets = emptyMap;
+    this.sheetsSaveds = emptyMap;
+    this.deleteds = emptyList;
   }
 
   onSetTimeSheet(sheet) {
     SelectionStore.getSelecteds().forEach( (day)=> {
-      this.sheets = this.sheets.set(day.format('YYYY-MM-DD'), sheet);
+      this.sheets = this.sheets.set(key(day), sheet);
     });
   }
 
   onErase() {
     SelectionStore.getSelecteds().forEach( (day)=> {
-      this.sheets = this.sheets.delete(day.format('YYYY-MM-DD'),  null);
+      let _key = key(day)
+      this.sheets = this.sheets.delete(_key);
+      this.sheetsSaveds = this.sheetsSaveds.delete(_key);
+      this.deleteds = this.deleteds.push(_key);
     });
   }
 
   onUpdateSheets(sheets) {
-    this.sheets = this.sheets.merge(sheets);
+    this.sheetsSaveds = this.sheetsSaveds.merge(sheets);
   }
 
   sheetFor(d) {
-    return this.sheets.get(d.day.format('YYYY-MM-DD'), []);
+    return this.sheets.get(key(d.day), null) ||
+           this.sheetsSaveds.get(key(d.day), []);
   }
 }
 
