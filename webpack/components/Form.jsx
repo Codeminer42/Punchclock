@@ -19,8 +19,8 @@ export default class extends React.Component {
           </p>
 
           <p>
-            <select>
-              <option>Projeto</option>
+            <select ref="project">
+            { Projects.map( (p, i)=> <option key={i} value={p[0]} >{p[1]}</option>) }
             </select>
           </p>
 
@@ -57,8 +57,13 @@ export default class extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.actions.setTimeSheet([
-      `${this.refs.from1.value} - ${this.refs.to1.value}`,
-      `${this.refs.from2.value} - ${this.refs.to2.value}`]);
+      { from: this.refs.from1.value,
+        to: this.refs.to1.value,
+        project_id: this.refs.project.value},
+      { from: this.refs.from2.value,
+        to: this.refs.to2.value,
+        project_id: this.refs.project.value}
+    ]);
   }
 
   handleErase(e) {

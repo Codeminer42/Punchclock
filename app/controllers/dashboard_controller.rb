@@ -15,8 +15,8 @@ class DashboardController < ApplicationController
     @punches.transaction do
       @punches.by_days(deletes).delete_all if deletes.any?
       @punches.where({
-        project: Project.first,
-        company: Company.first}).create bulk_params(params['add'])
+        company: Company.first
+      }).create(bulk_params(params['add'])) if params['add'].any?
     end
     render json: {}
   end
@@ -24,11 +24,6 @@ class DashboardController < ApplicationController
   protected
 
   def bulk_params(param)
-    param.map do |date, sheet|
-      sheet.map do |time_range|
-        from, to = time_range.split('-')
-        {from: "#{date} #{from}", to: "#{date} #{to}"}
-      end
-    end.flatten
+    param.values.flatten.map{|p| p.slice :from, :to, :project_id }
   end
 end

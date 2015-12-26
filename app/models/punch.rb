@@ -49,7 +49,7 @@ class Punch < ActiveRecord::Base
   end
 
   def sheet
-    "#{from.strftime('%H:%M')} - #{to.strftime('%H:%M')}"
+    as_json(only: [:project_id, :from, :to])
   end
 
   def self.total

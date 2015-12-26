@@ -1,4 +1,5 @@
 import React from 'react';
+import Punch from './Punch';
 
 export default class extends React.Component {
   getClassNames() {
@@ -17,10 +18,9 @@ export default class extends React.Component {
         className={this.getClassNames()}
         onClick={this.handleClick.bind(this)} >
         <h3>{this.props.day.format('DD')}</h3>
-        <ul className="punches">{ this.props.sheet.map( (t, i)=> {
-            return <li key={i}>{t}</li>
-          })
-        }</ul>
+        <ul className="punches">
+          { this.props.sheet.map( (punch, i)=> <Punch key={i} punch={punch} /> )}
+        </ul>
       </td>
     );
   }

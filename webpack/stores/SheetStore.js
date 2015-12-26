@@ -1,5 +1,6 @@
 import alt from '../alt';
 import Immutable from 'immutable';
+import moment from 'moment';
 import SelectionStore from './SelectionStore';
 import CalendarActions from '../actions/CalendarActions';
 import ServerActions from '../actions/ServerActions';
@@ -9,6 +10,16 @@ const emptySet = Immutable.Set();
 
 function key(d) {
   return d.format('YYYY-MM-DD');
+}
+
+function momentize(dayString, sheet) {
+  return sheet.map( (p)=> {
+    return {
+      from: moment(`${dayString} ${p.from}`),
+      to: moment(`${dayString} ${p.to}`),
+      project_id: p.project_id
+    };
+  });
 }
 
 class SheetStore {
@@ -26,7 +37,8 @@ class SheetStore {
   onSetTimeSheet(sheet) {
     SelectionStore.getSelecteds().forEach( (day)=> {
       let _key = key(day);
-      this.sheets = this.sheets.set(_key, sheet);
+      let _sheet = momentize(_key, sheet);
+      this.sheets = this.sheets.set(_key, Immutable.fromJS(_sheet));
       this.deleteds = this.deleteds.delete(_key);
     });
     this.changes = this.sheets.size + this.deleteds.size;
