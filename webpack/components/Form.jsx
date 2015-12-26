@@ -2,42 +2,56 @@ import React from 'react';
 
 export default class extends React.Component {
   render() {
-    if(this.props.selecteds.isEmpty()) return <p><button>Salvar</button></p>
-    return (
-      <form
-        onSubmit={this.handleSubmit.bind(this)}
-        className='punches-toolbar' >
+    if(!this.props.selecteds.isEmpty()) {
+      return (
+        <form
+          onSubmit={this.handleSubmit.bind(this)}
+          className='punches-toolbar' >
 
-        <p>
-          <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
-          <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />
-        </p>
+          <p>
+            <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
+            <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />
+          </p>
 
-        <p>
-          <input placeholder="De" ref="from2" type="time" defaultValue="13:00" />
-          <input placeholder="Até" ref="to2" type="time" defaultValue="18:00" />
-        </p>
+          <p>
+            <input placeholder="De" ref="from2" type="time" defaultValue="13:00" />
+            <input placeholder="Até" ref="to2" type="time" defaultValue="18:00" />
+          </p>
 
-        <p>
-          <select>
-            <option>Projeto</option>
-          </select>
-        </p>
+          <p>
+            <select>
+              <option>Projeto</option>
+            </select>
+          </p>
 
-        <p>
-          <input type="submit" value="Ok" />
-        </p>
+          <p>
+            <input type="submit" value="Ok" />
+          </p>
 
+          <p>
+            <a onClick={this.handleDeselect.bind(this)} >
+              Descelecionar
+            </a> - <a onClick={this.handleErase.bind(this)}>
+              Apagar
+            </a>
+          </p>
+          <span> Selecionado ({this.props.selecteds.size})</span>
+        </form>
+      );
+    }
+    if(this.props.changes > 0) {
+      return (
         <p>
-          <a onClick={this.handleDeselect.bind(this)} >
-            Descelecionar
-          </a> - <a onClick={this.handleErase.bind(this)}>
-            Apagar
-          </a>
+          <button onClick={this.handleSave.bind(this)}>Salvar</button><br />
+          Alterações ({this.props.changes})
         </p>
-        <span> Selecionado ({this.props.selecteds.size})</span>
-      </form>
-    );
+      );
+
+    } else return <p />;
+  }
+
+  handleSave(e) {
+    this.props.save();
   }
 
   handleSubmit(e) {

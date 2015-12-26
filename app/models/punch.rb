@@ -16,6 +16,7 @@ class Punch < ActiveRecord::Base
   scope :since, ->(time) { where('punches.from >= ?', time) }
   scope :until, ->(time) { where('punches.to <= ?', time) }
   scope :wrongs, -> { where period_id: nil }
+  scope :by_days, ->(days) { where('date("punches"."from") in (?)', days) }
 
   def self.fix_all
     wrongs.each { |punch| punch.save }

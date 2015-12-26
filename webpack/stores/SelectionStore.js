@@ -21,6 +21,11 @@ class SelectionStore {
     this.selectedDays = initial;
   }
 
+  onErase(sheet) {
+    this.waitFor([SheetStore]);
+    this.selectedDays = initial;
+  }
+
   onToggle(day) {
     if(this.selectedDays.has(day)) {
       this.selectedDays = this.selectedDays.delete(day);

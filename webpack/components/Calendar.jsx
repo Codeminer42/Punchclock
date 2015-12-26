@@ -39,7 +39,9 @@ export default class extends React.Component {
         </table>
         <Form
           selecteds={this.props.Selection.selectedDays}
-          actions={this.props.actions} />
+          changes={this.props.Sheets.changes}
+          actions={this.props.actions}
+          save={this.props.serverActions.saveSheets} />
       </div>
     );
   }

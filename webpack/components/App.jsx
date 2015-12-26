@@ -12,10 +12,12 @@ export default React.createClass({
     return (
       <AltContainer
         stores={
-         { Calendar: CalendarStore,
-           Selection: SelectionStore,
-           Sheets: SheetStore } }
-        actions={ { actions: CalendarActions } } >
+          { Calendar: CalendarStore,
+            Selection: SelectionStore,
+            Sheets: SheetStore } }
+        actions={
+          { actions: CalendarActions,
+            serverActions: ServerActions } } >
         <Calendar sheetFor={SheetStore.sheetFor} />
     </AltContainer>
     )

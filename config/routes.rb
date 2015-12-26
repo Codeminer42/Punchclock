@@ -16,6 +16,7 @@ Punchclock::Application.routes.draw do
   resources :notification, only: [:index, :update]
   resources :dashboard, only: [:index] do
     get :sheets, on: :collection
+    post :sheets, action: :save, on: :collection
   end
 
   authenticated :user do

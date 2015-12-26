@@ -5,7 +5,9 @@ class ServerActions {
   constructor(){
     this.generateActions(
       'updateSheets',
-      'sheetsFailed'
+      'sheetsFailed',
+      'saveSuccessSheets',
+      'sheetsSaveFailed'
     );
   }
 
@@ -16,7 +18,17 @@ class ServerActions {
       SheetSource.fetch()
         .then((response) => this.actions.updateSheets(response.body) )
         .catch((response) => this.actions.sheetsFailed(response.body) );
-    }
+    };
+  }
+
+  saveSheets() {
+    return (dispatch) => {
+      dispatch();
+
+      SheetSource.save()
+        .then((response) => this.actions.saveSuccessSheets(response.body) )
+        .catch((response) => this.actions.sheetsSaveFailed(response.body) );
+    };
   }
 }
 

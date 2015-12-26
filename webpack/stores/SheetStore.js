@@ -5,7 +5,7 @@ import CalendarActions from '../actions/CalendarActions';
 import ServerActions from '../actions/ServerActions';
 
 const emptyMap = Immutable.Map();
-const emptyList = Immutable.List();
+const emptySet = Immutable.Set();
 
 function key(d) {
   return d.format('YYYY-MM-DD');
@@ -13,31 +13,48 @@ function key(d) {
 
 class SheetStore {
   constructor() {
+    this.sheetsSaveds = emptyMap;
+    this.sheets = emptyMap;
+    this.deleteds = emptySet;
+    this.changes = this.sheets.size + this.deleteds.size;
+
     this.bindActions(CalendarActions);
     this.bindActions(ServerActions);
     this.exportPublicMethods({sheetFor: this.sheetFor.bind(this)});
-    this.sheets = emptyMap;
-    this.sheetsSaveds = emptyMap;
-    this.deleteds = emptyList;
   }
 
   onSetTimeSheet(sheet) {
     SelectionStore.getSelecteds().forEach( (day)=> {
-      this.sheets = this.sheets.set(key(day), sheet);
+      let _key = key(day);
+      this.sheets = this.sheets.set(_key, sheet);
+      this.deleteds = this.deleteds.delete(_key);
     });
+    this.changes = this.sheets.size + this.deleteds.size;
   }
 
   onErase() {
     SelectionStore.getSelecteds().forEach( (day)=> {
-      let _key = key(day)
+      let _key = key(day);
       this.sheets = this.sheets.delete(_key);
       this.sheetsSaveds = this.sheetsSaveds.delete(_key);
-      this.deleteds = this.deleteds.push(_key);
+      this.deleteds = this.deleteds.add(_key);
     });
+    this.changes = this.sheets.size + this.deleteds.size;
   }
 
   onUpdateSheets(sheets) {
     this.sheetsSaveds = this.sheetsSaveds.merge(sheets);
+  }
+
+  onSaveSuccessSheets() {
+    this.sheetsSaveds = this.sheetsSaveds.merge(this.sheets);
+    this.sheets = emptyMap;
+    this.deleteds = emptySet;
+    this.changes = this.sheets.size + this.deleteds.size;
+  }
+
+  onSheetsSaveFailed() {
+    alert('Ops...'); //IMPROVEME!
   }
 
   sheetFor(d) {
