@@ -20,7 +20,7 @@
     text-align: center;
     cursor: pointer;
     height: 110px;
-    &.selected {
+    &.selected, &.selected ul {
       background: $flat-sunflower;
       color: white;
     }
@@ -47,6 +47,9 @@
   .weekday-0, .weekday-6 {
     background: $flat-clouds;
     color: $flat-silver;
+    ul {
+      color: $flat-pomegranate;
+    }
   }
 
   .day {
