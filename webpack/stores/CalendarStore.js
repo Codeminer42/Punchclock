@@ -7,6 +7,7 @@ import * as Calendar from '../utils/calendar';
 class CalendarStore {
   constructor() {
     this.bindActions(CalendarActions);
+    this.exportPublicMethods({getDays: this.getDays.bind(this)});
 
     moment.locale('pt');
 
@@ -38,6 +39,10 @@ class CalendarStore {
     this.start = Calendar.startDate(this.base);
     this.monthNames = Calendar.monthNames(range);
     this.weeks = Calendar.weeks(this.start, range);
+  }
+
+  getDays() {
+    return this.weeks.flatMap(function(w){ return w.days; });
   }
 }
 

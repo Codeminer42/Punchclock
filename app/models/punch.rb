@@ -49,7 +49,9 @@ class Punch < ActiveRecord::Base
   end
 
   def sheet
-    as_json(only: [:project_id, :from, :to])
+    as_json(only: [:project_id, :from, :to]).merge(
+      delta: (delta/1.hour).round
+    )
   end
 
   def self.total

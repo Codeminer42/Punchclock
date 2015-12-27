@@ -37,6 +37,7 @@ export default class extends React.Component {
           </tr></thead>
           <tbody>{ this.weeksRender()}</tbody>
         </table>
+        <p>Horas: { this.props.Sheets.sum }</p>
         <Form
           selecteds={this.props.Selection.selectedDays}
           changes={this.props.Sheets.changes}
