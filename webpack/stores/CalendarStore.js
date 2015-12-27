@@ -23,12 +23,14 @@ class CalendarStore {
     this.redefine(moment(date));
   }
 
-  onPrev() {
+  onPrev(history) {
     this.redefine(Calendar.prev(this.base));
+    history.push(this.base.format('YYYY/MM'));
   }
 
-  onNext() {
+  onNext(history) {
     this.redefine(Calendar.next(this.base));
+    history.push(this.base.format('YYYY/MM'));
   }
 
   redefine(base) {

@@ -1,26 +1,28 @@
 import React from 'react';
+import { History } from 'react-router';
 
-export default class extends React.Component {
-  render() {
+export default React.createClass({
+  mixins: [ History ],
+  render: function() {
     let nextButton;
 
     if(this.props.hasNext )
-      nextButton = <a onClick={this.handleNext.bind(this)}> ❯ </a>
+      nextButton = <a onClick={this.handleNext}> ❯ </a>
 
     return (
       <h1>
-        <a onClick={this.handlePrev.bind(this)}> ❮ </a>
+        <a onClick={this.handlePrev}> ❮ </a>
         {this.props.children}
         { nextButton }
       </h1>
     );
-  }
+  },
 
-  handlePrev() {
-    this.props.actions.prev();
-  }
+  handlePrev: function() {
+    this.props.actions.prev(this.history);
+  },
 
-  handleNext() {
-    this.props.actions.next();
+  handleNext: function() {
+    this.props.actions.next(this.history);
   }
-}
+});

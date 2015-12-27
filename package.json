@@ -17,6 +17,8 @@
     "alt": "~0.17.9",
     "immutable": "~3.7.6",
     "superagent": "~1.6.1",
-    "superagent-as-promised": "~3.2.1"
+    "superagent-as-promised": "~3.2.1",
+    "history": "~1.17.0",
+    "react-router": "~1.0.3"
   }
 }

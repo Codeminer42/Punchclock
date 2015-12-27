@@ -24,7 +24,17 @@ export default React.createClass({
   },
 
   componentDidMount: function() {
-    CalendarActions.initializeCalendar(this.props.base);
+    this.initializeCalendar();
     ServerActions.fetchSheets();
+  },
+
+  componentDidUpdate: function() {
+    this.initializeCalendar();
+  },
+
+  initializeCalendar: function() {
+    CalendarActions.initializeCalendar(
+      `${this.props.params.year}-${this.props.params.month}-${this.props.route.dayBase}`
+    );
   }
 });
