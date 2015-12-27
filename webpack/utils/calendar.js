@@ -36,8 +36,13 @@ export function innerRange(base){
 
 export function monthNames(range){
   let [from, to] = range;
-  if(from.year() != to.year())
+
+  if(from.year() != to.year()) {
     return [from.format('MMM YYYY'), to.format('MMM YYYY')].join(' / ');
+  } else if(from.month() == to.month()) {
+    return from.format('MMMM YYYY');
+  }
+
   return [from.format('MMM'), to.format('MMM')].join(' / ') + to.format(' YYYY');
 }
 
