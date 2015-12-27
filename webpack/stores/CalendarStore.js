@@ -37,7 +37,8 @@ class CalendarStore {
     this.base = base;
     let range = Calendar.innerRange(this.base);
 
-    this.hasNext = range[1] < moment();
+
+    this.hasNext = moment().diff(range[1], 'day') >= 1;
     this.start = Calendar.startDate(this.base);
     this.monthNames = Calendar.monthNames(range);
     this.weeks = Calendar.weeks(this.start, range);
