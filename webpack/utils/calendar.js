@@ -2,7 +2,6 @@ import Immutable from 'immutable';
 import moment from 'moment';
 
 const daysPerWeek = 7;
-const weeksInCalendar = 6;
 const Day = Immutable.Record({day: undefined, inner: undefined});
 const Week = Immutable.Record({days: Immutable.List()});
 
@@ -24,7 +23,8 @@ export function week(date, range){
 }
 
 export function weeks(start, range){
-  return Immutable.Range(0, weeksInCalendar).map((i)=> {
+  let weeksToShow = range[1].clone().endOf('w').diff(start, 'w');
+  return Immutable.Range(0, weeksToShow).map((i)=> {
     return new Week({days: week(start.clone().add(i, 'w'), range)});
   });
 }
@@ -47,7 +47,7 @@ export function monthNames(range){
 }
 
 export function startDate(base){
-  return base.clone().subtract(1, 'M').date(base.date()).day(0);
+  return base.clone().subtract(1, 'M').date(base.date()).add(1, 'day').day(0);
 }
 
 export function current() {
