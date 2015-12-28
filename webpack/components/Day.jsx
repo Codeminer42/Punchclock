@@ -13,11 +13,17 @@ export default class extends React.Component {
   }
 
   render() {
+    let title;
+    if(this.props.day.date() == 1)
+      title = <h3>{this.props.day.format('DD')}/{this.props.day.format('MMM')}</h3>
+    else
+      title = <h3>{this.props.day.format('DD')}</h3>
+
     return (
       <td
         className={this.getClassNames()}
         onClick={this.handleClick.bind(this)} >
-        <h3>{this.props.day.format('DD')}</h3>
+        { title }
         <ul className="punches">
           { this.props.sheet.map( (punch, i)=> <Punch key={i} punch={punch} /> )}
         </ul>
