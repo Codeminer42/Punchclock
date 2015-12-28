@@ -50,3 +50,10 @@ export function startDate(base){
   return base.clone().subtract(1, 'M').date(base.date()).day(0);
 }
 
+export function current() {
+  return moment().add(1, 'M');
+}
+
+export function constraintMonth(year, month) {
+  return parseInt(current().format('YYYYMM')) < parseInt(`${year}${month}`);
+}
