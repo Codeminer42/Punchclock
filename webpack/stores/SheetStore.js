@@ -82,6 +82,19 @@ class SheetStore {
     alert('Ops...'); //IMPROVEME!
   }
 
+  onPrev() {
+    this.onNavigate();
+  }
+
+  onNext() {
+    this.onNavigate();
+  }
+
+  onNavigate() {
+    this.waitFor([CalendarStore]);
+    this.sum = this.sumHours();
+  }
+
   sheetFor(d) {
     return this.sheets.get(key(d.day), null) ||
            this.sheetsSaveds.get(key(d.day), []);
