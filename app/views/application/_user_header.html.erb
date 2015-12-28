@@ -12,12 +12,6 @@
 
   <div id="navbar-ex1-collapse" class="collapse navbar-collapse" >
     <ul class="nav navbar-nav navbar-right">
-      <li>
-        <%= link_to periods_path do %>
-          <%= Period.model_name.human.pluralize %>
-          <span class="label label-warning">Experimental</span>
-        <%- end %>
-      </li>
       <li><%= link_to Punch.model_name.human.pluralize, punches_path %></li>
       <li><%= link_to User.model_name.human.pluralize, users_path %></li>
       <li class='dropdown'>
