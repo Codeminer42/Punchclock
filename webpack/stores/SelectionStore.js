@@ -1,53 +1,54 @@
 import Immutable from 'immutable';
+import moment from 'moment';
 import alt from '../alt';
 import CalendarActions from '../actions/CalendarActions';
 import SheetStore from './SheetStore';
 
 const initial = Immutable.Set();
 
+function key(d) {
+  return d.format('YYYY-MM-DD');
+}
+
 class SelectionStore {
   constructor() {
     this.bindActions(CalendarActions);
-    this.exportPublicMethods({getSelecteds: this.getSelecteds.bind(this)});
-    this.selectedDays = initial;
+    this.exportPublicMethods({isSelected: this.isSelected.bind(this)});
+    this.selecteds = initial;
   }
 
   onInitializeCalendar(date) {
-    this.selectedDays = initial;
+    this.selecteds = initial.add(key(moment()));
   }
 
   onSetTimeSheet(sheet) {
     this.waitFor([SheetStore]);
-    this.selectedDays = initial;
+    this.selecteds = initial;
   }
 
   onErase(sheet) {
     this.waitFor([SheetStore]);
-    this.selectedDays = initial;
+    this.selecteds = initial;
   }
 
   onToggle(day) {
-    if(this.selectedDays.has(day)) {
-      this.selectedDays = this.selectedDays.delete(day);
+    if(this.isSelected(day)) {
+      this.selecteds = this.selecteds.delete(key(day));
     } else {
-      this.selectedDays = this.selectedDays.add(day);
+      this.selecteds = this.selecteds.add(key(day));
     }
   }
 
   onSelectWeek(week) {
     week.days.forEach( (d)=> {
-      let day = d.day;
-      if(day.day() != 0 && day.day() != 6 && d.inner )
-        this.selectedDays = this.selectedDays.add(day);
+      let { day, inner } = d;
+      if(day.day() != 0 && day.day() != 6 && inner )
+        this.selecteds = this.selecteds.add(key(day));
     });
   }
 
   onDeselect() {
-    this.selectedDays = initial;
-  }
-
-  getSelecteds() {
-    return this.selectedDays;
+    this.selecteds = initial;
   }
 
   onNext() {
@@ -56,6 +57,10 @@ class SelectionStore {
 
   onPrev() {
     this.onDeselect();
+  }
+
+  isSelected(day) {
+    return this.selecteds.has(key(day));
   }
 }
 

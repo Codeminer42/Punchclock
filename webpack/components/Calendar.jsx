@@ -16,7 +16,7 @@ export default class extends React.Component {
             today={d.today}
             sheet={this.props.sheetFor(d)}
             actions={this.props.actions}
-            selected={this.props.Selection.selectedDays.has(d.day)}
+            selected={this.props.isSelected(d.day)}
             day={d.day} />);
           })}
         </Week>
@@ -36,11 +36,11 @@ export default class extends React.Component {
           <thead><tr>
             {this.props.Calendar.weekdays.map((n, i)=> <th key={i}>{n}</th>)}
           </tr></thead>
-          <tbody>{ this.weeksRender()}</tbody>
+          <tbody>{ this.weeksRender() }</tbody>
         </table>
         <p>Horas: { this.props.Sheets.sum }</p>
         <Form
-          selecteds={this.props.Selection.selectedDays}
+          selecteds={this.props.Selection.selecteds}
           changes={this.props.Sheets.changes}
           actions={this.props.actions}
           save={this.props.serverActions.saveSheets} />

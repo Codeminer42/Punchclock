@@ -15,10 +15,6 @@ const Punch = Immutable.Record({
   delta: 0
 });
 
-function key(d) {
-  return d.format('YYYY-MM-DD');
-}
-
 function createPunch(dayString, sheet) {
   return sheet.map( (p)=> {
     let from = moment(`${dayString} ${p.from}`);
@@ -45,22 +41,20 @@ class SheetStore {
   }
 
   onSetTimeSheet(sheet) {
-    SelectionStore.getSelecteds().forEach( (day)=> {
-      let _key = key(day);
-      let punch = createPunch(_key, sheet);
-      this.sheets = this.sheets.set(_key, Immutable.fromJS(punch));
-      this.deleteds = this.deleteds.delete(_key);
+    SelectionStore.getState().selecteds.forEach( (day)=> {
+      let punch = createPunch(day, sheet);
+      this.sheets = this.sheets.set(day, Immutable.fromJS(punch));
+      this.deleteds = this.deleteds.delete(day);
     });
     this.changes = this.sheets.size + this.deleteds.size;
     this.sum = this.sumHours();
   }
 
   onErase() {
-    SelectionStore.getSelecteds().forEach( (day)=> {
-      let _key = key(day);
-      this.sheets = this.sheets.delete(_key);
-      this.sheetsSaveds = this.sheetsSaveds.delete(_key);
-      this.deleteds = this.deleteds.add(_key);
+    SelectionStore.getState().selecteds.forEach( (day)=> {
+      this.sheets = this.sheets.delete(day);
+      this.sheetsSaveds = this.sheetsSaveds.delete(day);
+      this.deleteds = this.deleteds.add(day);
     });
     this.changes = this.sheets.size + this.deleteds.size;
     this.sum = this.sumHours();
@@ -96,8 +90,9 @@ class SheetStore {
   }
 
   sheetFor(d) {
-    return this.sheets.get(key(d.day), null) ||
-           this.sheetsSaveds.get(key(d.day), []);
+    let dayString = d.day.format('YYYY-MM-DD')
+    return this.sheets.get(dayString, null) ||
+           this.sheetsSaveds.get(dayString, []);
   }
 
   sumHours() {

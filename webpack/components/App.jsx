@@ -18,8 +18,9 @@ export default React.createClass({
         actions={
           { actions: CalendarActions,
             serverActions: ServerActions } } >
-        <Calendar sheetFor={SheetStore.sheetFor} />
-    </AltContainer>
+        <Calendar sheetFor={SheetStore.sheetFor}
+                  isSelected={SelectionStore.isSelected} />
+      </AltContainer>
     )
   },
 
