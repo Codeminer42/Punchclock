@@ -13,6 +13,7 @@ export default class extends React.Component {
           return (<Day
             key={ii}
             inner={d.inner}
+            today={d.today}
             sheet={this.props.sheetFor(d)}
             actions={this.props.actions}
             selected={this.props.Selection.selectedDays.has(d.day)}

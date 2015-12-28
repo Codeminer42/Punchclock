@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import moment from 'moment';
 
 const daysPerWeek = 7;
-const Day = Immutable.Record({day: undefined, inner: undefined});
+const Day = Immutable.Record({day: undefined, inner: undefined, today: false});
 const Week = Immutable.Record({days: Immutable.List()});
 
 export function prev(base){
@@ -18,7 +18,8 @@ export function week(date, range){
     let day = date.clone().add(i, 'd');
     let [from, to] = range;
     let inner = day.isBetween(from, to, 'day');
-    return new Day({ day: day, inner: inner});
+    let today = day.isSame(moment(), 'day');
+    return new Day({ day: day, inner: inner, today: today });
   });
 }
 

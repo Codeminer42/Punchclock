@@ -8,7 +8,10 @@ export default class extends React.Component {
     if(this.props.inner) classNames.push('inner');
     else classNames.push('out');
 
+    if(this.props.today) classNames.push('today');
+
     if(this.props.selected) { classNames.push('selected'); }
+
     return classNames.join(' ');
   }
 

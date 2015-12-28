@@ -29,6 +29,12 @@
       opacity: .3;
     }
 
+    &.today {
+      h3 {
+        text-decoration: underline;
+      }
+    }
+
     @each $status, $color in (normal: $flat-emerald, extra: $flat-sunflower, debit: $flat-pomegranate) {
       &.#{$status} {
         border-bottom: 2px solid $color;
