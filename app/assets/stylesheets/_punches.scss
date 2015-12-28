@@ -20,8 +20,12 @@
     text-align: center;
     cursor: pointer;
     height: 110px;
-    &.selected, &.selected ul {
+
+    &.selected {
       background: $flat-sunflower;
+    }
+
+    &.selected, &.selected ul {
       color: white;
     }
 
@@ -34,20 +38,6 @@
         text-decoration: underline;
       }
     }
-
-    @each $status, $color in (normal: $flat-emerald, extra: $flat-sunflower, debit: $flat-pomegranate) {
-      &.#{$status} {
-        border-bottom: 2px solid $color;
-      }
-    }
-
-    &.normal, &.extra, &.debit {
-      &.weekday-1, &.weekday-0 {
-        border-color: $flat-sunflower;
-      }
-    }
-
-    &.other { opacity: .3; }
   }
 
   .weekday-0, .weekday-6 {
@@ -76,8 +66,4 @@
     margin: 2px;
     display: inline-block;
   }
-}
-
-.punches-summary {
-  dt, dd { display: inline-block; padding-right: 2em }
 }
