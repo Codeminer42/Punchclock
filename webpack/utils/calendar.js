@@ -31,7 +31,7 @@ export function weeks(start, range){
 
 export function innerRange(base){
   return [base.clone().subtract(1, 'M').date(base.date()),
-          moment.min(base.clone().add(1, 'd'), moment())];
+          moment.min(base.clone().add(1, 'd'), moment().add(1, 'd'))];
 }
 
 export function monthNames(range){
