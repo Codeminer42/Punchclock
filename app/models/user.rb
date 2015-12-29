@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :company
 
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
+
   def self.find_for_googleapps_oauth(access_token, signed_in_resource = nil)
     data = access_token['info']
     User.where(email: data['email']).first_or_create! name: data['name']
