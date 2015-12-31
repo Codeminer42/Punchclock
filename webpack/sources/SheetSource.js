@@ -6,8 +6,8 @@ asPromissed(request);
 
 const url = '/dashboard/sheets';
 const csrf = {
-  token: document.querySelector('[name="csrf-token"]').attributes.content.value,
-  param: document.querySelector('[name="csrf-param"]').attributes.content.value
+  token: document.querySelector('[name="csrf-token"]'),
+  param: document.querySelector('[name="csrf-param"]')
 };
 
 export default {
@@ -17,12 +17,13 @@ export default {
 
   save: function() {
     const state = SheetStore.getState();
-    return request.post(url)
-      .set('X-CSRF-Param', csrf.param)
-      .set('X-CSRF-Token', csrf.token)
-      .send({
-        delete: state.deleteds,
-        add: state.sheets
-      }).endAsync();
+    let _reqquest = request.post(url);
+
+    if(csrf.token) {
+      let _request = req.set('X-CSRF-Param', csrf.param.attributes.content.value)
+                        .set('X-CSRF-Token', csrf.token.attributes.content.value);
+    }
+
+    return _request.send({ delete: state.deleteds, add: state.sheets }).endAsync();
   }
 };

@@ -42,6 +42,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', :require => false
   gem 'codeclimate-test-reporter', require: nil
+  gem 'poltergeist'
 end
 
 group :development do
