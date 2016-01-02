@@ -18,7 +18,7 @@ class SelectionStore {
   }
 
   onInitializeCalendar(date) {
-    this.selecteds = initial.add(key(moment()));
+    this.selecteds = initial;
   }
 
   onSetTimeSheet(sheet) {
