@@ -43,6 +43,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :development do

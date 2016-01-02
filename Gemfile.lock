@@ -113,6 +113,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     daemons (1.2.3)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     devise (3.5.3)
       bcrypt (~> 3.0)
@@ -406,6 +407,7 @@ DEPENDENCIES
   certified
   codeclimate-test-reporter
   coffee-rails
+  database_cleaner
   devise
   devise_invitable
   dotenv-rails
