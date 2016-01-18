@@ -1,26 +1,51 @@
-.punches-table {
-  th { text-align: center; }
-  td {
-    text-align: center;
+.calendar-container {
+  @include outer-container;
+  -webkit-user-select: none;
 
-    @each $status, $color in (normal: $flat-emerald, extra: $flat-sunflower, debit: $flat-pomegranate) {
-      &.#{$status} {
-        border-bottom: 2px solid $color;
-      }
-    }
-
-    &.normal, &.extra, &.debit {
-      &.weekday-1, &.weekday-0 {
-        border-color: $flat-sunflower;
-      }
-    }
-
-    &.other { opacity: .3; }
+  h1 {
+    padding: .4em;
   }
 
-  .weekday-1, .weekday-0 {
+  a {
+    cursor: pointer;
+  }
+}
+
+.punches-table {
+  @include span-columns(9);
+  display: table;
+  th { text-align: center; }
+  td {
+    -webkit-transition: all .3s;
+    text-align: center;
+    cursor: pointer;
+    height: 110px;
+
+    &.selected {
+      background: $flat-sunflower;
+    }
+
+    &.selected, &.selected ul {
+      color: white;
+    }
+
+    &.out {
+      opacity: .3;
+    }
+
+    &.today {
+      h3 {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .weekday-0, .weekday-6 {
     background: $flat-clouds;
     color: $flat-silver;
+    ul {
+      color: $flat-pomegranate;
+    }
   }
 
   .day {
@@ -33,6 +58,12 @@
   }
 }
 
-.punches-summary {
-  dt, dd { display: inline-block; padding-right: 2em }
+.punches-toolbar {
+  @include span-columns(3);
+  input[type='time'] {
+    font-size: .7em;
+    width: 100px;
+    margin: 2px;
+    display: inline-block;
+  }
 }

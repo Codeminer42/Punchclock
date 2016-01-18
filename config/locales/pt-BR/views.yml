@@ -11,6 +11,7 @@ pt-BR:
       settings: 'Configurações'
       account: 'Conta'
       logout: 'Sair'
+      dashboard: 'Dashboard'
   punches:
     index:
       total: 'TOTAL'

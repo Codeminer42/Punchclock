@@ -21,3 +21,6 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db
+# Added by webpack-rails
+/node_modules
+/public/webpack

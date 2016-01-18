@@ -30,6 +30,7 @@ gem 'activeadmin', '1.0.0pre2'
 gem 'draper'
 gem 'rails-i18n'
 gem 'responders'
+gem 'webpack-rails'
 
 gem 'bourbon'
 gem 'neat'
@@ -41,6 +42,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', :require => false
   gem 'codeclimate-test-reporter', require: nil
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -68,3 +71,5 @@ group :production, :staging do
   gem 'rails_12factor'
   gem 'passenger', '>= 4.0.17'
 end
+
+gem 'foreman'
