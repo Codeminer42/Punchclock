@@ -55,7 +55,7 @@ Password: password
 Run it on development mode using `thin`
 
 ```console
-$ bundle exec rails s
+$ foreman start -f Procfile.dev
 ```
 
 ### Console
