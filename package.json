@@ -2,6 +2,9 @@
   "name": "webpack-rails-example",
   "version": "0.0.1",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "bundle exec rake webpack:compile"
+  },
   "dependencies": {
     "stats-webpack-plugin": "^0.2.1",
     "webpack": "^1.9.11",
