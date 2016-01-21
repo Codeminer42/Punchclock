@@ -17,8 +17,8 @@ const Punch = Immutable.Record({
 
 function createPunch(dayString, sheet) {
   return sheet.map( (p)=> {
-    let from = moment(`${dayString} ${p.from}`);
-    let to = moment(`${dayString} ${p.to}`);
+    let from = moment.utc(`${dayString} ${p.from}`);
+    let to = moment.utc(`${dayString} ${p.to}`);
     return new Punch({
       from: from,
       to: to,
