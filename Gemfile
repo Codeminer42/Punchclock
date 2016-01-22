@@ -4,6 +4,7 @@ ruby "2.2.4"
 
 gem 'rails', '~> 4.2.0'
 gem 'pg'
+gem 'unicorn'
 
 gem 'sass', '~> 3.4.0'
 gem 'sprockets', '2.11.0'
@@ -56,7 +57,6 @@ group :development do
   gem 'letter_opener'
   gem 'quiet_assets'
   gem 'rb-inotify', :require => false
-  gem 'thin'
 end
 
 group :development, :test do
