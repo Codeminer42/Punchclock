@@ -49,3 +49,13 @@ body { margin: 0 0; padding: 0 0; }
 .alert {
   @extend %flash-notice;
 }
+
+.error {
+  input {
+    border-color: $flat-alizarin;
+  }
+
+  .help-inline {
+    color: $flat-alizarin;
+  }
+}

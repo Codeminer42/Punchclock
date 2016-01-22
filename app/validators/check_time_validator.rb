@@ -36,14 +36,18 @@ class CheckTimeValidator < ActiveModel::Validator
 
   def cant_be_great!
     @model.errors.add(:from, "can't be greater then From time")
+    @model.errors.add(:from_time, "can't be greater then From time")
   end
 
   def cant_be_different!
     @model.errors.add(:to, "cant't be different dates")
+    @model.errors.add(:to_time, "cant't be different dates")
   end
 
   def cant_be_future!
     @model.errors.add(:to, "can't be in the future, take you time machine \
+                     and go back")
+    @model.errors.add(:to_time, "can't be in the future, take you time machine \
                      and go back")
   end
 end
