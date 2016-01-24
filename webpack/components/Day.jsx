@@ -1,18 +1,17 @@
 import React from 'react';
+import classNames from 'classnames/bind';
 import Punch from './Punch';
 
 export default class extends React.Component {
   getClassNames() {
-    let classNames = [`weekday-${this.props.day.day()}`];
-
-    if(this.props.inner) classNames.push('inner');
-    else classNames.push('out');
-
-    if(this.props.today) classNames.push('today');
-
-    if(this.props.selected) { classNames.push('selected'); }
-
-    return classNames.join(' ');
+    return classNames(
+      `weekday-${this.props.day.day()}`,
+      (this.props.inner ? 'inner' : 'out'),
+      {
+        today: this.props.today,
+        selected: this.props.selected
+      }
+    );
   }
 
   render() {
