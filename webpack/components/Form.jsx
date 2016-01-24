@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class extends React.Component {
+export default class Form extends React.Component {
   render() {
     if(!this.props.selecteds.isEmpty()) {
       return (

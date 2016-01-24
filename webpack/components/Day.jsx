@@ -3,7 +3,7 @@ import cx from 'classnames/bind';
 import Punches from './Punches';
 import DayTitle from './DayTitle';
 
-export default class extends React.Component {
+export default class Day extends React.Component {
   render() {
     let classNames = cx(
       `weekday-${this.props.day.day()}`,
