@@ -11,8 +11,8 @@ feature 'Punches list' do
 
   before do
     visit '/punches'
-    expect(page).to have_selector('.btn-primary[href="/punches/new"]')
-    expect(page).to have_selector('.table-striped')
+    expect(page).to have_selector('a[href="/punches/new"]')
+    expect(page).to have_selector('table')
     expect(page).to have_content('TOTAL:')
   end
 

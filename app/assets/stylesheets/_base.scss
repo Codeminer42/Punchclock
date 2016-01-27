@@ -1,0 +1,61 @@
+body { margin: 0 0; padding: 0 0; }
+
+.main {
+  clear: both;
+  padding: 2em;
+}
+
+.pre {
+  @include outer-container;
+  margin: 3em auto 0 auto;
+  #new_punches_filter_form {
+    @include span-columns(8);
+    @include shift(1);
+    .form-group.datepicker {
+      @include span-columns(3);
+    }
+    .form-group.select {
+      @include span-columns(3);
+    }
+    button {
+      @include span-columns(2);
+      @include omega();
+    }
+  }
+
+  select {
+    border: 1px solid $flat-clouds;
+    height: 36px;
+  }
+
+  .avatar {
+    @include span-columns(3);
+    span, img {
+      font-size: 2em;
+    }
+  }
+}
+
+#new_user{
+  .field, .actions{
+    width: 20em;
+  }
+}
+
+.main-actions .button {
+  @include button(pill, $base-accent-color);
+}
+
+.alert {
+  @extend %flash-notice;
+}
+
+.error {
+  input {
+    border-color: $flat-alizarin;
+  }
+
+  .help-inline {
+    color: $flat-alizarin;
+  }
+}

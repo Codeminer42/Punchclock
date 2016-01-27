@@ -7,10 +7,12 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="#{user_signed_in? ? 'signed-in' : 'signed-out'}" >
-    <div class="container row span12">
-    <%= render 'navigation' %>
+  <body>
+    <%= render 'refills/navigation' %>
     <%= render 'shared/flash' %>
-    <%= yield %>
+    <div class="main">
+      <%= yield %>
+    </div>
+    <%= render 'refills/footer' %>
   </body>
 </html>

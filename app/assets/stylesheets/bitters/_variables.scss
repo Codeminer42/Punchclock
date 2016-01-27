@@ -1,0 +1,45 @@
+@import 'flat-colors';
+
+// Typography
+///////////////////////////////////////////////////////////////////////////////
+$sans-serif: $helvetica;
+$serif: $georgia;
+
+$base-font-family: $sans-serif;
+$header-font-family: $base-font-family;
+
+// Sizes
+///////////////////////////////////////////////////////////////////////////////
+$base-font-size: 1em;
+$base-line-height: $base-font-size * 1.5;
+$base-border-radius: em(3);
+
+// Colors
+///////////////////////////////////////////////////////////////////////////////
+
+$blue: $flat-peter-river;
+$dark-gray: $flat-midnight-blue;;
+$medium-gray: $flat-silver;
+$light-gray: $flat-clouds;
+$light-red: $flat-pomegranate;
+$light-yellow: $flat-yellow-1;
+$light-green: $flat-green-1;
+
+// Body Color
+$base-body-color: #fff;
+
+//  Font Colors
+$base-font-color: $dark-gray;
+$base-accent-color: $light-red;
+
+//  Text Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: darken($base-accent-color, 15);
+
+// Border color
+$base-border-color: $light-gray;
+
+// Flash Colors
+$error-color: $light-red;
+$notice-color: $light-yellow;
+$success-color: $light-green;

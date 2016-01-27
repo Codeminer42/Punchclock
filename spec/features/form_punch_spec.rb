@@ -30,7 +30,7 @@ feature 'Punches filter form' do
     scenario 'the user filter field is present' do
       visit '/'
 
-      within('#filter-form') do
+      within('#new_punches_filter_form') do
         select user.name, from: 'punches_filter_form[user_id]'
       end
 
@@ -40,7 +40,7 @@ feature 'Punches filter form' do
     scenario 'can filter the punches by a user' do
       visit '/'
 
-      within('#filter-form') do
+      within('#new_punches_filter_form') do
         select user3.name, from: 'punches_filter_form[user_id]'
       end
 
@@ -64,7 +64,7 @@ feature 'Punches filter form' do
     scenario "filling only the 'since' field" do
       visit '/'
 
-      within('#filter-form') do
+      within('#new_punches_filter_form') do
         fill_in 'punches_filter_form_since', with: '2014-02-19'
       end
 
@@ -74,7 +74,7 @@ feature 'Punches filter form' do
     scenario "filling only the 'until' field" do
       visit '/'
 
-      within('#filter-form') do
+      within('#new_punches_filter_form') do
         fill_in 'punches_filter_form_until', with: '2014-02-19'
       end
 
@@ -84,7 +84,7 @@ feature 'Punches filter form' do
     scenario "filling both the 'until' and 'since' fields" do
       visit '/'
 
-      within('#filter-form') do
+      within('#new_punches_filter_form') do
         fill_in 'punches_filter_form_since', with: '2014-02-01'
       end
     end

@@ -99,6 +99,10 @@ table {
   height: 5em;
 }
 
+.punches-table td.out {
+  opacity: .3;
+}
+
 .punches-summary dt, .punches-summary dd {
   float: left;
   margin: 0 1em;

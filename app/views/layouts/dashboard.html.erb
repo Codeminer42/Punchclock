@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Punchclock </title>
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <%= render 'refills/navigation' %>
+    <div class="main">
+      <%= yield %>
+    </div>
+    <%= javascript_include_tag *webpack_asset_paths("application") %>
+    <%= render 'refills/footer' %>
+  </body>
+</html>

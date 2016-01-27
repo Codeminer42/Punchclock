@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
-ruby "2.2.3"
+ruby "2.2.4"
 
 gem 'rails', '~> 4.2.0'
 gem 'pg'
+gem 'unicorn'
 
+gem 'sass', '~> 3.4.0'
+gem 'sprockets', '2.11.0'
 gem 'bootstrap-sass'
 gem 'cancancan'
 gem 'carrierwave'
@@ -28,12 +31,20 @@ gem 'activeadmin', '1.0.0pre2'
 gem 'draper'
 gem 'rails-i18n'
 gem 'responders'
+gem 'webpack-rails'
+
+gem 'bourbon'
+gem 'neat'
+gem 'bitters', github: 'thoughtbot/bitters'
+gem 'refills', github: 'thoughtbot/refills'
 
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'simplecov', :require => false
   gem 'codeclimate-test-reporter', require: nil
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -46,7 +57,6 @@ group :development do
   gem 'letter_opener'
   gem 'quiet_assets'
   gem 'rb-inotify', :require => false
-  gem 'thin'
 end
 
 group :development, :test do
@@ -61,3 +71,5 @@ group :production, :staging do
   gem 'rails_12factor'
   gem 'passenger', '>= 4.0.17'
 end
+
+gem 'foreman'

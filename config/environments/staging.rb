@@ -27,4 +27,5 @@ Punchclock::Application.configure do
     domain: 'heroku.com',
     authentication: :plain
   }
+  config.webpack.dev_server.enabled = false
 end

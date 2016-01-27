@@ -10,6 +10,7 @@
       size: 4,
       value: @punch.to.present? ? l(@punch.to, format: '%H:%M') : '00:00'
     }, wrapper_html: { class: %i(col-xs-2) } %>
+
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
       size: 10,

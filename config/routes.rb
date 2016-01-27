@@ -14,6 +14,11 @@ Punchclock::Application.routes.draw do
   resources :projects, except: [:show]
   resources :company, only: [:edit, :update]
   resources :notification, only: [:index, :update]
+  resources :dashboard, only: [:index] do
+    get :sheets, on: :collection
+    post :sheets, action: :save, on: :collection
+    get '/:year/:month', action: :index, on: :collection
+  end
 
   authenticated :user do
     root to: 'punches#index', as: :authenticated_user
