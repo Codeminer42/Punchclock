@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
     User.where(email: data['email']).first_or_create! name: data['name']
   end
 
+  def self.find_for_database_authentication(warden_conditions)
+    active.where(warden_conditions).first
+  end
+
   def self.new_with_session(params, session)
     super.tap do |user|
       data = googleapps_user_info(session)
