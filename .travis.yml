@@ -2,7 +2,7 @@ language: ruby
 cache: bundler
 bundler_args: --without development production
 rvm:
-  - 2.1.0
+  - 2.2.4
 before_script:
   - cp config/database.yml.example config/database.yml
   - bundle exec rake db:create db:migrate db:test:prepare
@@ -15,4 +15,5 @@ notifications:
   email:
     recipients:
       - halan.pinheiro@codeminer42.com
+      - danilo.resende@codeminer42.com
 
