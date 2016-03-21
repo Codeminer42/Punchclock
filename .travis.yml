@@ -5,7 +5,8 @@ rvm:
   - 2.2.4
 before_script:
   - cp config/database.yml.example config/database.yml
-  - bundle exec rake db:create db:migrate db:test:prepare
+  - npm install
+  - bundle exec rake db:create db:migrate db:test:prepare webpack:compile
 script:
   - bundle exec rspec
 addons:
@@ -16,4 +17,3 @@ notifications:
     recipients:
       - halan.pinheiro@codeminer42.com
       - danilo.resende@codeminer42.com
-
