@@ -79,7 +79,7 @@ ActiveAdmin.register Punch do
   end
 
   filter :project
-  filter :user
+  filter :user, collection: proc { grouped_users_by_active_status }
   filter :company
   filter :from, label: 'Interval', as: :date_range
 end

@@ -4,6 +4,7 @@ ActiveAdmin.register User do
     column :name
     column :email
     column :hour_cost
+    column :active
     actions
   end
 
@@ -20,13 +21,14 @@ ActiveAdmin.register User do
         }
       end
       f.input :password
+      f.input :active
     end
     f.actions
   end
 
   controller do
     def permitted_params
-      params.permit user: [:name, :email, :company_id, :hour_cost, :password]
+      params.permit user: [:name, :email, :company_id, :hour_cost, :password, :active]
     end
 
     def new
@@ -42,6 +44,11 @@ ActiveAdmin.register User do
           redirect_to resource_path
         end
       end
+    end
+
+    def update
+      params[:user].delete("password") if params[:user][:password].blank?
+      super
     end
 
     def signed_in_as_super?

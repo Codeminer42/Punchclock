@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Punches Dashboard', js: true do
+feature 'Punches Dashboard', js: true, skip: true do
   let!(:authed_user) { create_logged_in_user }
 
   scenario 'Calendar navigation' do
