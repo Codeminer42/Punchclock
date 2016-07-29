@@ -78,7 +78,7 @@ ActiveAdmin.register Punch do
     column :delta
   end
 
-  filter :project
+  filter :project, collection: proc { Project.order('name') }
   filter :user, collection: proc { grouped_users_by_active_status }
   filter :company
   filter :from, label: 'Interval', as: :date_range
