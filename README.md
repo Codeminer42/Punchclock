@@ -4,7 +4,7 @@ Punchclock
 A simple electronic punch clock to track hours spent on projects.
 
 [![Code Climate](https://codeclimate.com/repos/52ba26a5e30ba00cad00050d/badges/72ac249ef8822a90c0c4/gpa.png)](https://codeclimate.com/repos/52ba26a5e30ba00cad00050d/feed)
-[![Build Status](https://magnum.travis-ci.com/Codeminer42/punchclock.svg?token=zUCXxt8nUPqLt2GDBwND&branch=master)](https://magnum.travis-ci.com/Codeminer42/punchclock)
+[![Build Status](http://gitlab42.com/Codeminer42/Punchclock/badges/branch/build.svg)](http://gitlab42.com/Codeminer42/Punchclock/pipelines)
 
 
 [staging][1] e [produção][2]
