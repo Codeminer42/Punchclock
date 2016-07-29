@@ -1,4 +1,4 @@
-image: ruby:2.2.4
+image: codeminer/ruby:2.2
 
 services:
   - postgres:latest
@@ -10,12 +10,13 @@ cache:
 
 variables:
   RAILS_ENV: test
+  DATABASE_URL: postgresql://postgres@postgres
 
 before_script:
   - bundle install --without development production -j $(nproc) --path .gitlab-cache
-  - cp config/database.yml.gitlab config/database.yml
+  - cp config/database.yml.example config/database.yml
   - bundle exec rake db:create db:test:prepare
 
 test:
   script:
-    - bundle exec rspec
+    - bundle exec rspec -fd
