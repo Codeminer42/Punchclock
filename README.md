@@ -3,7 +3,7 @@ Punchclock
 
 A simple electronic punch clock to track hours spent on projects.
 
-[![Build Status](http://gitlab42.com/Codeminer42/Punchclock/badges/branch/build.svg)](http://gitlab42.com/Codeminer42/Punchclock/pipelines)
+[![Build Status](http://gitlab42.com/Codeminer42/Punchclock/badges/master/build.svg)](http://gitlab42.com/Codeminer42/Punchclock/pipelines)
 
 
 [staging][1] e [produção][2]
