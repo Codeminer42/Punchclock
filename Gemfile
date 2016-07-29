@@ -45,6 +45,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'therubyracer'
 end
 
 group :development do

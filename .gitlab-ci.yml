@@ -1,0 +1,21 @@
+image: ruby:2.2.4
+
+services:
+  - postgres:latest
+
+cache:
+  key: Punchclock
+  paths:
+    - .gitlab-cache/
+
+variables:
+  RAILS_ENV: test
+
+before_script:
+  - bundle install --without development production -j $(nproc) --path .gitlab-cache
+  - cp config/database.yml.gitlab config/database.yml
+  - bundle exec rake db:create db:test:prepare
+
+test:
+  script:
+    - bundle exec rspec
