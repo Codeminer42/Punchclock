@@ -24,4 +24,7 @@ Punchclock::Application.configure do
     password: ENV['SENDGRID_PASSWORD'],
     domain: 'heroku.com'
   }
+  # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
+  config.middleware.use Letsencrypt::Middleware
+  config.force_ssl = true
 end

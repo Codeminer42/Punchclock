@@ -38,6 +38,10 @@ gem 'neat'
 gem 'bitters', github: 'thoughtbot/bitters'
 gem 'refills', github: 'thoughtbot/refills'
 
+# SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
+gem 'platform-api', github: 'jalada/platform-api', branch: 'master'
+gem 'letsencrypt-rails-heroku', group: 'production'
+
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
