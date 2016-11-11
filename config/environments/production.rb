@@ -25,6 +25,6 @@ Punchclock::Application.configure do
     domain: 'heroku.com'
   }
   # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
-  config.middleware.use Letsencrypt::Middleware
+  config.middleware.insert_before ActionDispatch::SSL, Letsencrypt::Middleware
   config.force_ssl = true
 end
