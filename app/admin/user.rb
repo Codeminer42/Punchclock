@@ -60,6 +60,10 @@ ActiveAdmin.register User do
     end
   end
 
+  show do
+    attributes_table :id, :name, :email, :hour_cost, :active, :last_sign_in_at, :created_at, :updated_at
+  end
+
   filter :name
   filter :email
   filter :company, if: proc { current_admin_user.is_super? }
