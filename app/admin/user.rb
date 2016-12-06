@@ -20,6 +20,7 @@ ActiveAdmin.register User do
           user.company.name => current_admin_user.company_id
         }
       end
+      f.input :reviewer
       f.input :password
       f.input :active
     end
