@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205184920) do
+ActiveRecord::Schema.define(version: 20161207161259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20161205184920) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean  "active",                 default: true
+    t.integer  "role"
     t.integer  "reviewer_id"
   end
 
