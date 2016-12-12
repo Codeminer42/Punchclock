@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151228022448) do
+ActiveRecord::Schema.define(version: 20161205184920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20151228022448) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean  "active",                 default: true
+    t.integer  "reviewer_id"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
@@ -147,5 +148,7 @@ ActiveRecord::Schema.define(version: 20151228022448) do
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["reviewer_id"], name: "index_users_on_reviewer_id", using: :btree
 
+  add_foreign_key "users", "users", column: "reviewer_id"
 end

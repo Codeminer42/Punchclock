@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :company
+  belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable, :confirmable, :invitable
   has_many :punches
