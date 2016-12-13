@@ -29,7 +29,7 @@ ActiveAdmin.register User do
 
   controller do
     def permitted_params
-      params.permit user: [:name, :email, :company_id, :hour_cost, :password, :active]
+      params.permit user: [:name, :email, :company_id, :reviewer_id, :hour_cost, :password, :active]
     end
 
     def new
