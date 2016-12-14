@@ -6,6 +6,7 @@ class PunchesController < ApplicationController
   def index
     @punches_filter_form = PunchesFilterForm.new(params[:punches_filter_form])
     @search = @punches_filter_form.apply_filters(scopped_punches)
+      .includes(:project)
       .search(params[:q])
 
     @search.sorts = 'from desc' if @search.sorts.empty?
