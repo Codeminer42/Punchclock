@@ -1,5 +1,9 @@
 en:
   simple_form:
+    labels:
+      evaluation:
+        user_id: 'User'
+        review: 'Review'
     "yes": 'Yes'
     "no": 'No'
     required:

@@ -15,6 +15,7 @@
           </li>
           <li><%= link_to Punch.model_name.human.pluralize, punches_path %></li>
           <li><%= link_to User.model_name.human.pluralize, users_path %></li>
+          <li><%= link_to t('evaluation.plural'), evaluations_path %></li>
           <li class="account">
             <%= link_to current_user.email, edit_user_path(current_user) %>
             <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>

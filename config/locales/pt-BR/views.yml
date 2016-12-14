@@ -16,4 +16,9 @@ pt-BR:
     index:
       total: 'TOTAL'
       are_you_sure: 'Você tem certeza?'
+  evaluations:
+    index:
+      add_review: 'Adicionar Revisão'
+    form:
+      submit: 'Salvar Revisão'
 

@@ -1,0 +1,4 @@
+<h2><%= @evaluation.user.name %></h2><hr>
+<p><strong><%= t('created_at') %></strong>: <%= l @evaluation.created_at, format: :long %></p>
+<p><strong><%= t('updated_at') %></strong>: <%= l @evaluation.updated_at, format: :long %></p>
+<p><%= @evaluation.review %></p>
