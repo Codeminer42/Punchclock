@@ -35,6 +35,10 @@ ActiveAdmin.register Punch do
   end
 
   controller do
+    def scoped_collection
+      super.includes :company, :user, :project
+    end
+
     def permitted_params
       params.permit(punch: [:from, :to, :user_id, :project_id, :company_id])
     end
