@@ -5,13 +5,18 @@
 <p>
   <div>
     <p>
-      <%= "Email: " %>
-      <%= mail_to @user.email %>
+      Email: <%= mail_to @user.email %>
     <p><%= "Custo: #{@user.hour_cost} R$/h" if current_user.is_admin? %></p>
   </div>
 
   <div>
     <p><%= "Administrator: #{@user.is_admin? ? 'yes' : 'no'}" %></p>
+  </div>
+
+  <div>
+    <p>
+      Role: <%= @user.role %>
+    </p>
   </div>
 </p>
 

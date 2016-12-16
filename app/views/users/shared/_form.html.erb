@@ -11,6 +11,11 @@
   <%= f.email_field :email %>
   </div>
 
+  <div>
+  <%= f.label :role %>
+  <%= f.select :role, User.roles.keys %>
+  </div>
+
   <% if current_user.is_admin? %>
     <div>
     <%= f.label :hour_cost %>

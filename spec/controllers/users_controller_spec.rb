@@ -10,16 +10,12 @@ describe UsersController do
       let(:user) { create :user, is_admin: true }
 
       context 'with valid informations' do
-        it 'should update user' do
-          params = {
-            id: user.id,
-            user: { name: '1234', email: '1234@1234.com', hour_cost: '20.0' }
-          }
+        let(:user_attributes)  { { name: '1234', email: '1234@1234.com', role: 'senior', hour_cost: 20.0 } }
 
-          put :update, params
-          expect(assigns(:user).name).to be == '1234'
-          expect(assigns(:user).email).to be == '1234@1234.com'
-          expect(assigns(:user).hour_cost).to be == 20.0
+        before { put(:update, id: user.id, user: user_attributes) }
+
+        it 'should update user' do
+          expect(assigns(:user)).to have_attributes(user_attributes)
         end
       end
     end
