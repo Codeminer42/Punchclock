@@ -18,6 +18,7 @@ This app uses Rails 4.1 and Postgres >= 9.1
 $ git clone git@github.com:Codeminer42/punchclock.git
 $ cd punchclock
 $ cp config/database.yml.example config/database.yml
+$ cp .env.example .env
 $ bundle install
 $ bundle exec rake db:setup
 ```
