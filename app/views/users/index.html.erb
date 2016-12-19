@@ -2,12 +2,14 @@
     <%= gravatar_for(u) %>
     <%= link_to "#{u.name}", current_user.is_admin? ? edit_user_path(u) : user_path(u) %>
     <br>
-    <%= u.email %>
+    Email: <%= u.email %>
     <br>
-    <%= "Administrador: #{u.is_admin? ? 'sim' : 'não'}" %>
+    Role: <%= u.role %>
+    <br>
+    Administrator: <%= "#{u.is_admin? ? 'yes' : 'no'}" %>
     <br>
     <% if current_user.is_admin? %>
-      <%= "Cost: #{u.hour_cost} R$/h" %>
+      Cost: <%= "#{u.hour_cost} R$/h" %>
       <%= render 'users/shared/options', user: u %>
     <% end %>
 <% end %>

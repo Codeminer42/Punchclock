@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    allow = %i(name email role)
+    allow = %i(name email)
     allow << :hour_cost if current_user.is_admin?
     params.require(:user).permit(allow)
   end
