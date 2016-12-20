@@ -11,3 +11,11 @@ pt-BR:
       - Sábado
     formats:
       month_name: '%B'
+  evaluation:
+    singular: 'Avaliação'
+    plural: 'Avaliações'
+  user: 'Usuário'
+  review: 'Revisão'
+  created_at: 'Criado em'
+  updated_at: 'Atualizado em'
+  view: 'Visualizar'

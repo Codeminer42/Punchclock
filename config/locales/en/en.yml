@@ -21,3 +21,11 @@
 
 en:
   hello: "Hello world"
+  evaluation:
+    singular: 'Evaluation'
+    plural: 'Evaluations'
+  user: 'User'
+  review: 'Review'
+  created_at: 'Created at'
+  updated_at: 'Updated at'
+  view: 'View'

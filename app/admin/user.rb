@@ -3,6 +3,7 @@ ActiveAdmin.register User do
     column :company
     column :name
     column :email
+    column :reviewer
     column :hour_cost
     column :active
     actions
@@ -29,7 +30,7 @@ ActiveAdmin.register User do
 
   controller do
     def permitted_params
-      params.permit user: [:name, :email, :company_id, :hour_cost, :password, :active]
+      params.permit user: [:name, :email, :company_id, :reviewer_id, :hour_cost, :password, :active]
     end
 
     def new
@@ -62,7 +63,17 @@ ActiveAdmin.register User do
   end
 
   show do
-    attributes_table :id, :name, :email, :hour_cost, :active, :last_sign_in_at, :created_at, :updated_at
+    attributes_table do
+      row :id
+      row :name
+      row :email
+      row :reviewer
+      row :hour_cost
+      row :active
+      row :last_sign_in_at
+      row :created_at
+      row :updated_at
+    end
   end
 
   filter :name

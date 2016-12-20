@@ -4,6 +4,10 @@ pt-BR:
       punches_filter_form:
         create: 'Filtrar'
   simple_form:
+    labels:
+      evaluation:
+        user_id: 'Usuário'
+        review: 'Revisão'
     placeholders:
       punches_filter_form:
         since: 'Desde'
