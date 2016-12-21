@@ -6,11 +6,18 @@
   <div>
     <p>
       Email: <%= mail_to @user.email %>
-    <p><%= "Custo: #{@user.hour_cost} R$/h" if current_user.is_admin? %></p>
+    </p>
+    <% if current_user.is_admin? %>
+      <p>
+        <%= @user.hour_cost %>
+      </p>
+    <% end %>
   </div>
 
   <div>
-    <p><%= "Administrator: #{@user.is_admin? ? 'yes' : 'no'}" %></p>
+    <p>
+      Administrator: <%= @user.admin_role? %>
+    </p>
   </div>
 
   <div>

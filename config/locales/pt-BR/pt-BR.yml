@@ -1,4 +1,6 @@
 pt-BR:
+  "true": 'Sim'
+  "false": 'Não'
   date:
     period_label: '%{months} de %{years}'
     day_names:

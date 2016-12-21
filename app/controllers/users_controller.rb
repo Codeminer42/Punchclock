@@ -2,12 +2,12 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @users = User.all
+    @users = User.all.decorate
     respond_with @users
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]).decorate
   end
 
   def edit
