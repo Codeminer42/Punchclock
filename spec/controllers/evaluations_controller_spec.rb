@@ -4,27 +4,60 @@ describe EvaluationsController, type: :controller do
   let(:reviewer) { create(:user) }
 
   describe 'GET #index' do
-    context 'when logged out' do
-      before { get :index }
+    context 'when listing written evaluations' do
+      context 'when logged out' do
+        before { get :index, kind: :written }
 
-      it { expect(response).to have_http_status(:found) }
-      it { expect(response).to redirect_to(new_user_session_url) }
-    end
-
-    context 'when logged in' do
-      before do
-        sign_in reviewer
-        get :index
+        it { expect(response).to have_http_status(:found) }
+        it { expect(response).to redirect_to(new_user_session_url) }
       end
 
-      it { expect(response).to have_http_status(:ok) }
-      it { expect(response).to render_template(:index) }
+      context 'when logged in' do
+        let(:evaluation) { create(:evaluation) }
+
+        before do
+          sign_in evaluation.reviewer
+          get :index, kind: :written
+        end
+
+        it 'assigns @evaluations' do
+          expect(assigns(:evaluations)).to contain_exactly(evaluation)
+        end
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(response).to render_template(:index) }
+      end
+    end
+
+    context 'when listing received evaluations' do
+      context 'when logged out' do
+        before  { get :index, kind: :received }
+
+        it { expect(response).to have_http_status(:found) }
+        it { expect(response).to redirect_to(new_user_session_url) }
+      end
+
+      context 'when logged in' do
+        let(:evaluation) { create(:evaluation) }
+
+        before do
+          sign_in evaluation.user
+          get :index, kind: :received
+        end
+
+        it 'assigns @evaluations' do
+          expect(assigns(:evaluations)).to contain_exactly(evaluation)
+        end
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(response).to render_template(:index) }
+      end
     end
   end
 
   describe 'GET #show' do
     context 'when logged out' do
-      before { get :show, id: 1 }
+      before { get :show, id: 1, kind: 'written' }
 
       it { expect(response).to have_http_status(:found) }
       it { expect(response).to redirect_to(new_user_session_url) }
@@ -33,17 +66,33 @@ describe EvaluationsController, type: :controller do
     context 'when logged in' do
       let(:evaluation) { create(:evaluation) }
 
-      before do
-        sign_in evaluation.reviewer
-        get :show, id: evaluation.id
+      context 'when written' do
+        before do
+          sign_in evaluation.reviewer
+          get :show, id: evaluation.id, kind: 'written'
+        end
+
+        it 'assigns @evaluation' do
+          expect(assigns(:evaluation)).to eq(evaluation)
+        end
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(response).to render_template(:show) }
       end
 
-      it 'assigns @evaluation' do
-        expect(assigns(:evaluation)).to eq(evaluation)
-      end
+      context 'when received' do
+        before do
+          sign_in evaluation.user
+          get :show, id: evaluation.id, kind: 'received'
+        end
 
-      it { expect(response).to have_http_status(:ok) }
-      it { expect(response).to render_template(:show) }
+        it 'assigns @evaluation' do
+          expect(assigns(:evaluation)).to eq(evaluation)
+        end
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(response).to render_template(:show) }
+      end
     end
   end
 
@@ -83,7 +132,7 @@ describe EvaluationsController, type: :controller do
         before { post :create, evaluation: { user_id: user.id, review: 'Foobar' } }
 
         it { expect(response).to have_http_status(:found) }
-        it { expect(response).to redirect_to(evaluations_url) }
+        it { expect(response).to redirect_to(kind_evaluations_url(:written)) }
 
         it 'should create an evaluation' do
           expect {
@@ -149,7 +198,7 @@ describe EvaluationsController, type: :controller do
         before { put :update, id: evaluation.id, evaluation: { review: 'Foobar' } }
 
         it { expect(response).to have_http_status(:found) }
-        it { expect(response).to redirect_to(evaluations_url) }
+        it { expect(response).to redirect_to(kind_evaluations_url(:written)) }
 
         it 'should update an evaluation' do
           evaluation.reload

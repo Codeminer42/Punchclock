@@ -1,4 +1,15 @@
-<h2><%= @evaluation.user.name %></h2><hr>
+<nav class="navbar navbar-static-top">
+  <ul class="nav nav-pills">
+    <li><%= link_to t(:back, scope: :helpers), kind_evaluations_path(@evaluation_kind) %></li>
+  </ul>
+</nav>
+<h2>
+  <% if Evaluation.written?(@evaluation_kind) %>
+    <%= @evaluation.user.name %>
+  <% else %>
+    <%= t('reviewer') %>: <%= @evaluation.reviewer.name %>
+  <% end %>
+</h2><hr>
 <p><strong><%= t('created_at') %></strong>: <%= l @evaluation.created_at, format: :long %></p>
 <p><strong><%= t('updated_at') %></strong>: <%= l @evaluation.updated_at, format: :long %></p>
 <p><%= @evaluation.review %></p>

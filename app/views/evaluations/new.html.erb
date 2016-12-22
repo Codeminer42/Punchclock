@@ -1,6 +1,6 @@
 <nav class="navbar navbar-static-top">
   <ul class="nav nav-pills">
-    <li><%= link_to t(:back, scope: :helpers), evaluations_path %></li>
+    <li><%= link_to t(:back, scope: :helpers), kind_evaluations_path(Evaluation::KINDS[:written]) %></li>
   </ul>
 </nav>
 <h1 class="punch-form-title">
