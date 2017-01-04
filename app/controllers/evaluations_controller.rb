@@ -2,11 +2,23 @@ class EvaluationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @evaluations = Evaluation.where(reviewer: current_user)
+    @evaluation_kind = evaluation_kind
+
+    if Evaluation.received?(@evaluation_kind)
+      @evaluations = current_user.received_evaluations.includes(:reviewer).order(created_at: :desc)
+    else
+      @evaluations = current_user.written_evaluations.includes(:user).order(created_at: :desc)
+    end
   end
 
   def show
-    @evaluation = find_evaluation
+    @evaluation_kind = evaluation_kind
+
+    if Evaluation.received?(@evaluation_kind)
+      @evaluation = current_user.received_evaluations.find(params[:id])
+    else
+      @evaluation = current_user.written_evaluations.find(params[:id])
+    end
   end
 
   def new
@@ -15,10 +27,10 @@ class EvaluationsController < ApplicationController
   end
 
   def create
-    @evaluation = current_user.evaluations.build(evaluation_params)
+    @evaluation = current_user.written_evaluations.build(evaluation_params)
     if @evaluation.save
       flash[:notice] = I18n.t('evaluation.create.notice', scope: :flash)
-      respond_with @evaluation, location: evaluations_path
+      respond_with @evaluation, location: kind_evaluations_path(Evaluation::KINDS[:written])
     else
       @users = find_evaluation_users
       render :new
@@ -27,14 +39,14 @@ class EvaluationsController < ApplicationController
 
   def edit
     @users = find_evaluation_users
-    @evaluation = find_evaluation
+    @evaluation = current_user.written_evaluations.find(params[:id])
   end
 
   def update
-    @evaluation = find_evaluation
+    @evaluation = current_user.written_evaluations.find(params[:id])
     if @evaluation.update(evaluation_params)
       flash[:notice] = I18n.t('evaluation.update.notice', scope: :flash)
-      respond_with @evaluation, location: evaluations_path
+      respond_with @evaluation, location: kind_evaluations_path(Evaluation::KINDS[:written])
     else
       @users = find_evaluation_users
       render :edit
@@ -42,8 +54,8 @@ class EvaluationsController < ApplicationController
   end
 
   private
-  def find_evaluation
-    current_user.evaluations.find(params[:id])
+  def evaluation_kind
+    Evaluation::KINDS.fetch(params[:kind].to_sym, Evaluation::KINDS[:written])
   end
 
   def find_evaluation_users

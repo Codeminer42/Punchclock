@@ -46,6 +46,20 @@ body { margin: 0 0; padding: 0 0; }
   @include button(pill, $base-accent-color);
 }
 
+.tabs {
+  margin-bottom: 0.75em;
+  border-bottom: 2px solid $flat-clouds;
+
+  .tab-link {
+    padding: 0.5em 0.5em 0.2em;
+    color: $flat-midnight-blue;
+
+    &.active {
+      border-bottom: 2px solid $flat-midnight-blue;
+    }
+  }
+}
+
 .alert {
   @extend %flash-notice;
 }

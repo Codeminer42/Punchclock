@@ -18,4 +18,28 @@ describe Evaluation, type: :model do
       expect(evaluation).not_to be_valid
     end
   end
+
+  describe '.written?' do
+    context 'with valid param' do
+      subject { Evaluation.written?('written') }
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with invalid param' do
+      subject { Evaluation.written?('received') }
+      it { is_expected.to eq(false) }
+    end
+  end
+
+  describe '.received?' do
+    context 'with valid param' do
+      subject { Evaluation.received?('received') }
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with invalid param' do
+      subject { Evaluation.received?('written') }
+      it { is_expected.to eq(false) }
+    end
+  end
 end

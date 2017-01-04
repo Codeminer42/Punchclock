@@ -19,7 +19,10 @@ Punchclock::Application.routes.draw do
     post :sheets, action: :save, on: :collection
     get '/:year/:month', action: :index, on: :collection
   end
-  resources :evaluations, except: [:destroy]
+
+  resources :evaluations, only: [:new, :create, :edit, :update]
+  get 'evaluations/:kind' => 'evaluations#index', as: 'kind_evaluations'
+  get 'evaluations/:kind/:id' => 'evaluations#show', as: 'show_evaluation'
 
   authenticated :user do
     root to: 'punches#index', as: :authenticated_user
