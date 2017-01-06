@@ -22,6 +22,9 @@ pt-BR:
       user:
         one: "Usuário"
         other: "Usuários"
+      evaluation:
+        one: "Avaliação"
+        other: "Avaliações"
       punch:
         one: "Punch"
         other: "Punches"
@@ -120,3 +123,10 @@ pt-BR:
         updated_at: "Atualizado em"
         from_user_id: "Do usuário"
         event_path: "Caminho do evento"
+      evaluation:
+        id: "ID"
+        user: "Avaliado"
+        reviewer: "Avaliador"
+        review: "Revisão"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
