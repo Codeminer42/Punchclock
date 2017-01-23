@@ -29,6 +29,10 @@ ActiveAdmin.register User do
   end
 
   controller do
+    def scoped_collection
+      super.includes :company, :reviewer
+    end
+
     def permitted_params
       params.permit user: [:name, :email, :company_id, :reviewer_id, :hour_cost, :password, :active]
     end
@@ -51,6 +55,10 @@ ActiveAdmin.register User do
     def update
       params[:user].delete("password") if params[:user][:password].blank?
       super
+    end
+
+    def show
+      @user = User.find(params[:id])
     end
 
     def signed_in_as_super?
