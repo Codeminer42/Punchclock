@@ -1,7 +1,11 @@
 import React from 'react';
+import Select from 'react-select2-wrapper';
 
 export default class Form extends React.Component {
   render() {
+    const projectsList = Projects.map( (p, i) =>  {
+      return {text: p[1], id: p[0]}
+    });
     if(!this.props.selecteds.isEmpty()) {
       return (
         <form
@@ -19,9 +23,7 @@ export default class Form extends React.Component {
           </p>
 
           <p>
-            <select ref="project">
-            { Projects.map( (p, i)=> <option key={i} value={p[0]} >{p[1]}</option>) }
-            </select>
+            <Select ref="project" data={projectsList}></Select>
           </p>
 
           <p>
@@ -59,10 +61,10 @@ export default class Form extends React.Component {
     this.props.actions.setTimeSheet([
       { from: this.refs.from1.value,
         to: this.refs.to1.value,
-        project_id: this.refs.project.value},
+        project_id: this.refs.project.el.val()},
       { from: this.refs.from2.value,
         to: this.refs.to2.value,
-        project_id: this.refs.project.value}
+        project_id: this.refs.project.el.val()}
     ]);
   }
 
