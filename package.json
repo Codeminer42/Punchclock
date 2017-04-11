@@ -23,12 +23,19 @@
     "moment": "~2.10.6",
     "react": "~0.14.3",
     "react-dom": "~0.14.3",
+    "react-redux": "^5.0.4",
     "react-router": "~1.0.3",
     "react-select2-wrapper": "^1.0.4-beta3",
-    "stats-webpack-plugin": "^0.2.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
+    "redux-thunk": "^2.2.0",
+    "stats-webpack-plugin": "^0.2.2",
     "superagent": "~1.6.1",
     "superagent-as-promised": "~3.2.1",
-    "webpack": "^1.9.11",
+    "webpack": "^1.14.0",
     "webpack-dev-server": "^1.9.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^1.16.3"
   }
 }
