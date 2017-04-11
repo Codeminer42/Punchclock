@@ -29,12 +29,21 @@ export default (state = initialState, action) {
         ...state,
         weekdays: action.weekdays
       }
+    case PREV:
+      return {
+        ...state,
+        base: action.base
+      }
+    case NEXT:
+      return {
+        ...state,
+        Calendar: action.Calendar
+      }
     case TOGGLE:
       return {
         ...state,
         weekdays: action.weekdays
       }
-
     default:
 
   }
@@ -77,6 +86,8 @@ export const redefine = (base) => dispatch => {
 
 export const getDays = (weeks) => dispatch {
   dispatch({
+    type:
+    base:
     weeks: weeks.flatMap(function(w){ return w.days; });
   });
 }
