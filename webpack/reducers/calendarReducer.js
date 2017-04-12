@@ -1,16 +1,11 @@
 import moment from 'moment';
 import Immutable from 'immutable';
-import * as Calendar from '../utils/calendar';
-
-const INITIALIZE = 'calendar/initializeCalendar';
-const TOGGLE = 'calendar/toggle';
-const DESELECT = 'calendar/deselect';
-const SELECT = 'calendar/selectWeek';
-const SET_TIME = 'calendar/setTimeSheet';
-const SET_TIME_ON_SELECTEDS = 'calendar/setTimeSheetOnSelecteds';
-const ERASE = 'calendar/erase';
-const PREV = 'calendar/prev';
-const NEXT = 'calendar/next';
+import * as calendar from '../utils/calendar';
+import {
+  INITIALIZE,
+  NEXT,
+  PREV
+} from '../utils/constants';
 
 const initialState = {
   base: null,
@@ -19,75 +14,76 @@ const initialState = {
   monthName: Immutable.List(),
   weeks: Immutable.List(),
   weekdays: moment.weekdaysMin(),
-  Calendar: Calendar
 };
 
-export default (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE:
       return {
         ...state,
-        weekdays: action.weekdays
-      }
+        base: action.payload.base,
+        start: action.payload.start,
+        hasNext: action.payload.hasNext,
+        monthName: action.payload.monthNames,
+        weeks: action.payload.weeks,
+      };
     case PREV:
       return {
         ...state,
-        base: action.base
-      }
+        base: action.payload.base,
+        start: action.payload.start,
+        hasNext: action.payload.hasNext,
+        monthName: action.payload.monthNames,
+        weeks: action.payload.weeks,
+      };
     case NEXT:
       return {
         ...state,
-        Calendar: action.Calendar
-      }
-    case TOGGLE:
-      return {
-        ...state,
-        weekdays: action.weekdays
-      }
+        base: action.payload.base,
+        start: action.payload.start,
+        hasNext: action.payload.hasNext,
+        monthName: action.payload.monthNames,
+        weeks: action.payload.weeks,
+      };
     default:
-
+      return state;
   }
 }
 
-export const onInitializeCalendar = (date) => dispatch => {
+export const redefine = (base) => {
+  let range = calendar.innerRange(this.base);
+  return({
+    base: base,
+    start: calendar.startDate(base),
+    hasNext: (moment().diff(range[1], 'day') >= 1),
+    monthNames: calendar.monthNames(range),
+    weeks: calendar.weeks(this.start, range),
+  });
+};
+
+export const onInitializecalendar = (date) => dispatch => {
   dispatch({
     type: INITIALIZE,
-    weekdays: redefine(moment(date).weekdaysMin());
+    payload: redefine(moment(date).weekdaysMin()),
   });
-}
+};
 
-export const onPrev = (history) => dispatch => {
+export const onPrev = (history, base) => dispatch => {
   dispatch({
     type: PREV,
-    base: redefine(Calendar.prev(this.base)),
+    payload: redefine(calendar.prev(base)),
   });
-  history.push(this.base.format('YYYY/MM'));
-}
+  history.push(base.format('YYYY/MM'));
+};
 
-export const onNext = (history) => dispatch => {
+export const onNext = (history, base) => dispatch => {
   dispatch({
     type: NEXT,
-    Calendar: redefine(Calendar.next(this.base))
+    payload: redefine(calendar.next(base)),
   });
-  history.push(this.base.format('YYYY/MM'));
-}
+  history.push(base.format('YYYY/MM'));
+};
 
-export const redefine = (base) => dispatch => {
-  let range = Calendar.innerRange(this.base);
-  dispatch({
-    type: TOGGLE,
-    base: base,
-    hasNext: moment().diff(range[1], 'day') >= 1,
-    start: Calendar.startDate(base),
-    monthNames: Calendar.monthNames(range),
-    weeks: Calendar.weeks(this.start, range)
-  });
-}
-
-export const getDays = (weeks) => dispatch {
-  dispatch({
-    type:
-    base:
-    weeks: weeks.flatMap(function(w){ return w.days; });
-  });
-}
+export const getDays = (weeks) => {
+    return weeks.flatMap(function(w){ return w.days; });
+};
