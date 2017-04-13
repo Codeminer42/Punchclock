@@ -3,7 +3,8 @@ import Week from './Week';
 import Day from './Day';
 
 export default function Weeks({Calendar, actions, sheetFor, isSelected}) {
-  return <tbody>
+  return
+  <tbody>
     { Calendar.weeks.map((week, i)=>
       <Week key={i} week={week} actions={actions} >
         { week.days.map((d, ii)=>
@@ -17,4 +18,3 @@ export default function Weeks({Calendar, actions, sheetFor, isSelected}) {
     )}
   </tbody>;
 };
-

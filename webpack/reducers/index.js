@@ -7,5 +7,5 @@ import sheetReducer from './sheetReducer';
 export default combineReducers({
   calendarReducer,
   selectionReducer,
-  sheetReducer
+  sheetReducer,
 })

@@ -13,37 +13,39 @@ var production = process.env.TARGET === 'production';
 
 var config = {
   entry: {
-    // Sources are expected to live in $app_root/webpack
-    'application': './webpack/application.jsx'
+    application: "./webpack/application.js"
   },
 
   output: {
     // Build assets directly in to public/webpack/, let webpack know
     // that all webpacked assets start with webpack/
-
     // must match config.webpack.output_dir
-    path: path.join(__dirname, '..', 'public', 'webpack'),
-    publicPath: '/webpack/',
-
-    filename: production ? '[name]-[chunkhash].js' : '[name].js'
-  },
-
-  resolve: {
-    root: path.join(__dirname, '..', 'webpack'),
-    extensions: ['', '.js', '.jsx']
+    path: path.resolve(__dirname, '..', 'public', 'webpack'),
+    filename: production ? '[name]-[chunkhash].js' : '[name].js',
+    publicPath: "/webpack/",
   },
 
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015', 'stage-0'],
+        test: /\.js?$/,
+        exclude: [
+          path.resolve(__dirname, "node_modules/")
+        ],
+        loader: "babel-loader",
+        options: {
+          presets: ["react", "es2015", "stage-0"]
         },
-        exclude: /node_modules/
       }
     ]
+  },
+
+  resolve: {
+    modules: [
+      "node_modules",
+      path.resolve(__dirname, "webpack")
+    ],
+    extensions: [".js", ".jsx"],
   },
 
   plugins: [
@@ -55,7 +57,8 @@ var config = {
       chunks: false,
       modules: false,
       assets: true
-    })]
+    })
+  ]
 };
 
 if (production) {

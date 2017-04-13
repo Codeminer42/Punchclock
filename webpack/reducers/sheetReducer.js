@@ -1,10 +1,12 @@
 import Immutable from 'immutable';
 import moment from 'moment';
 import getDays from './calendarReducer';
+import { fetch, save } from '../api';
 import {
 SET_TIME_SHEET,
 ERASE,
 UPDATE_SHEETS,
+SHEETS_FAILED,
 SAVE_SUCCESS_SHEET,
 SHEETS_SAVE_FAILED,
 PREV,
@@ -52,6 +54,10 @@ export default (state = initialState, action) => {
         ...state,
         sheetsSaveds: action.payload.sheetsSaveds,
         sum: action.payload.sum,
+      };
+    case SHEETS_FAILED:
+      return {
+        ...state,
       };
     case SAVE_SUCCESS_SHEET:
       return {
@@ -151,13 +157,20 @@ export const onErase = (selecteds, sheets, deleteds, sheetsSaveds, week) => disp
   });
 };
 
-export const onUpdateSheets = (sheets, sheetsSaveds, week) => dispatch => {
-  dispatch({
-    type: UPDATE_SHEETS,
-    payload:{
-      sheetsSaveds: sheetsSaveds.merge(sheets),
-      sum: sumHours(week),
-    },
+export const fetchSheets = () => dispatch => {
+  fetch().then((response) =>
+    dispatch({
+      type: UPDATE_SHEETS,
+      payload:{
+        sheetsSaveds: 'response.body',
+        //sum: sumHours(week),
+      },
+    })
+  )
+  .catch((response) => {
+    dispatch({
+      type: SHEETS_FAILED,
+    })
   });
 };
 
