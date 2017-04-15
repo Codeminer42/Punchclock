@@ -1,12 +1,12 @@
 import React from 'react';
 import Select from 'react-select2-wrapper';
 
-export default class Form extends React.Component {
+class Form extends React.Component {
   render() {
     const projectsList = Projects.map( (p, i) =>  {
       return {text: p[1], id: p[0]}
     });
-    if(!this.props.selecteds.isEmpty()) {
+    if(!this.props.calendar.selecteds.isEmpty()) {
       return (
         <form
           onSubmit={this.handleSubmit.bind(this)}
@@ -31,21 +31,21 @@ export default class Form extends React.Component {
           </p>
 
           <p>
-            <a onClick={this.handleDeselect.bind(this)} >
+            <a onClick={() => {this.handleDeselect()}} >
               Descelecionar
-            </a> - <a onClick={this.handleErase.bind(this)}>
+            </a> - <a onClick={() => {this.handleErase()}}>
               Apagar
             </a>
           </p>
-          <span> Selecionado ({this.props.selecteds.size})</span>
+          <span> Selecionado ({this.props.calendar.selecteds.size})</span>
         </form>
       );
     }
-    if(this.props.changes > 0) {
+    if(this.props.calendar.changes > 0) {
       return (
         <p>
           <button onClick={this.handleSave.bind(this)}>Salvar</button><br />
-          Alterações ({this.props.changes})
+          Alterações ({this.props.calendar.changes})
         </p>
       );
 
@@ -53,28 +53,41 @@ export default class Form extends React.Component {
   }
 
   handleSave(e) {
-    this.props.save();
+    this.props.onSaveSheets(
+      this.props.calendar.deleteds,
+      this.props.calendar.sheets,
+      this.props.calendar.sheetsSaveds
+    );
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.setTimeSheet([
-      { from: this.refs.from1.value,
-        to: this.refs.to1.value,
-        project_id: this.refs.project.el.val()},
-      { from: this.refs.from2.value,
-        to: this.refs.to2.value,
-        project_id: this.refs.project.el.val()}
-    ]);
+    this.props.onSetTimeSheet([
+        { from: this.refs.from1.value,
+          to: this.refs.to1.value,
+          project_id: this.refs.project.el.val()},
+        { from: this.refs.from2.value,
+          to: this.refs.to2.value,
+          project_id: this.refs.project.el.val()}
+      ],
+      this.props.calendar.selecteds,
+      this.props.calendar.sheets,
+      this.props.calendar.deleteds
+    );
   }
 
-  handleErase(e) {
-    e.preventDefault();
-    this.props.actions.erase();
+  handleErase() {
+    this.props.onErase(
+      this.props.calendar.selecteds,
+      this.props.calendar.sheets,
+      this.props.calendar.deleteds,
+      this.props.calendar.sheetsSaveds,
+    );
   }
 
-  handleDeselect(e) {
-    e.preventDefault();
-    this.props.actions.deselect();
+  handleDeselect() {
+    this.props.onDeselect();
   }
 }
+
+export default Form;

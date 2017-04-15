@@ -2,19 +2,28 @@ import React from 'react';
 import Week from './Week';
 import Day from './Day';
 
-export default function Weeks({Calendar, actions, sheetFor, isSelected}) {
-  return
-  <tbody>
-    { Calendar.weeks.map((week, i)=>
-      <Week key={i} week={week} actions={actions} >
-        { week.days.map((d, ii)=>
-          <Day key={ii}
-            sheet={sheetFor(d)}
-            actions={actions}
-            selected={isSelected(d.day)}
-            {...d.toObject()} />
+class Weeks extends React.Component{
+  render(){
+    return(
+      <tbody>
+        { this.props.calendar.weeks.map((week, i)=>
+          <Week key={i}
+            selecteds={this.props.calendar.selecteds} 
+            week={week}
+            onSelectWeek={this.props.onSelectWeek} >
+            { week.days.map((d, ii)=>
+              <Day key={ii}
+                sheet={this.props.sheetFor(d, this.props.calendar.sheets, this.props.calendar.sheetsSaveds)}
+                onToggle={this.props.onToggle}
+                selecteds={this.props.calendar.selecteds}
+                selected={this.props.isSelected(this.props.calendar.selecteds, d.day)}
+                {...d.toObject()} />
+            )}
+          </Week>
         )}
-      </Week>
-    )}
-  </tbody>;
-};
+      </tbody>
+    );
+  }
+}
+
+export default Weeks;
