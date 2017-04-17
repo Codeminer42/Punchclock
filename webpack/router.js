@@ -28,7 +28,7 @@ class Routes extends React.Component{
       <ConnectedRouter history={history}>
         <div>
           <Route path="/:year/:month" component={App} onEnter={constraint} />
-          <Redirect from="/*" to={current().format('YYYY/MM')} />
+          <Redirect to={'/'+current().format('YYYY/MM')} />
         </div>
       </ConnectedRouter>
     );

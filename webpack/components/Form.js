@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select2-wrapper';
 
-class Form extends React.Component {
+class Form extends React.Component{
   render() {
     const projectsList = Projects.map( (p, i) =>  {
       return {text: p[1], id: p[0]}
@@ -10,7 +10,7 @@ class Form extends React.Component {
       return (
         <form
           onSubmit={this.handleSubmit.bind(this)}
-          className='punches-toolbar' >
+          className='punches-toolbar'>
 
           <p>
             <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />

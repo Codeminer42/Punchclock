@@ -1,7 +1,7 @@
 import Moment from 'moment';
 import Immutable from 'immutable';
 import * as Calendar from '../utils/calendar';
-import history from '../router';
+import { push } from 'react-router-redux';
 import { fetchSheets, saveSheets } from '../api';
 import {
   INITIALIZE,
@@ -196,6 +196,7 @@ export const onPrev = (dispatch) => (base) => {
     type: PREV,
     payload: redefine(Calendar.prev(base)),
   });
+  dispatch(push('/'+Calendar.next(base).format('YYYY/MM')));
 };
 
 export const onNext = (dispatch) => (base) => {
@@ -203,6 +204,7 @@ export const onNext = (dispatch) => (base) => {
     type: NEXT,
     payload: redefine(Calendar.next(base)),
   });
+  dispatch(push('/'+Calendar.next(base).format('YYYY/MM')));
 };
 
 export const onSetTimeSheet = (dispatch) => (sheet, selecteds, sheets, deleteds) => {
