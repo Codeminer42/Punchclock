@@ -3,23 +3,25 @@ import Immutable from 'immutable';
 import * as Calendar from '../utils/calendar';
 import { push } from 'react-router-redux';
 import { fetchSheets, saveSheets } from '../api';
-import {
-  INITIALIZE,
-  NEXT,
-  PREV,
-  SET_TIME_SHEET,
-  ERASE,
-  TOGGLE,
-  SELECT_WEEK,
-  DESELECT,
-  UPDATE_SHEETS_SUCCESS,
-  UPDATE_SHEETS_FAIL,
-  SAVE_SHEET_SUCCESS,
-  SHEETS_SAVE_FAIL,
-} from '../utils/constants';
+
+//calendar actions
+export const INITIALIZE = 'calendar/initializeCalendar';
+export const TOGGLE = 'calendar/toggle';
+export const DESELECT = 'calendar/deselect';
+export const SELECT_WEEK = 'calendar/selectWeek';
+export const SET_TIME_SHEET = 'calendar/setTimeSheet';
+export const SET_TIME_ON_SELECTEDS = 'calendar/setTimeSheetOnSelecteds';
+export const ERASE = 'calendar/erase';
+export const PREV = 'calendar/prev';
+export const NEXT = 'calendar/next';
+
+//server actions
+export const UPDATE_SHEETS_SUCCESS = 'server/updateSheetsSucceded';
+export const UPDATE_SHEETS_FAIL = 'server/updateSheetsFailed';
+export const SAVE_SHEET_SUCCESS = 'server/saveSheetsSucceded';
+export const SHEETS_SAVE_FAIL = 'server/saveSheetsFailed';
 
 //setups
-const initial = Immutable.Set();
 const emptyMap = Immutable.Map();
 const emptySet = Immutable.Set();
 const Punch = Immutable.Record({
@@ -36,7 +38,7 @@ const initialState = {
   monthName: Immutable.List(),
   weeks: Immutable.List(),
   weekdays: Moment.weekdaysMin(),
-  selecteds: initial,
+  selecteds: emptySet,
   sheetsSaveds: emptyMap,
   sheets: emptyMap,
   deleteds: emptySet,
@@ -62,7 +64,7 @@ export default (state = initialState, action) => {
         hasNext: action.payload.hasNext,
         monthName: action.payload.monthNames,
         weeks: action.payload.weeks,
-        selecteds: initial,
+        selecteds: emptySet,
       };
     case NEXT:
       return {
@@ -72,7 +74,7 @@ export default (state = initialState, action) => {
         hasNext: action.payload.hasNext,
         monthName: action.payload.monthNames,
         weeks: action.payload.weeks,
-        selecteds: initial,
+        selecteds: emptySet,
       };
     case SET_TIME_SHEET:
       return {
@@ -221,7 +223,7 @@ export const onSetTimeSheet = (dispatch) => (sheet, selecteds, sheets, deleteds)
   dispatch({
     type: SET_TIME_SHEET,
     sheetsPayload:{
-      selecteds: initial,
+      selecteds: emptySet,
       sheets: newSheets,
       deleteds: newDeleteds,
       changes: newSheets.size + newDeleteds.size,
@@ -244,7 +246,7 @@ export const onErase = (dispatch) => (selecteds, sheets, deleteds, sheetsSaveds)
   dispatch({
     type: ERASE,
     sheetsPayload:{
-      selecteds: initial,
+      selecteds: emptySet,
       sheetsSaveds: newSheetsSaveds,
       sheets: newSheets,
       deleteds: newDeleteds,
@@ -290,7 +292,7 @@ export const onDeselect = (dispatch) => () => {
   dispatch({
     type: DESELECT,
     sheetsPayload: {
-      selecteds: initial
+      selecteds: emptySet
     },
   });
 };
