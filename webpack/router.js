@@ -16,19 +16,26 @@ export const history = createHistory({
 export const middleware = routerMiddleware(history);
 export const reducer = routerReducer;
 
-function constraint(next, replace) {
-  if(constraintMonth(next.params.year, next.params.month)){
-    replace(null, { pathname: '/' });
-  }
-}
-
 class Routes extends React.Component{
   render(){
+    const { dayBase } = this.props;
     return(
       <ConnectedRouter history={history}>
         <div>
-          <Route path="/:year/:month" component={App} onEnter={constraint} />
-          <Redirect to={'/'+current().format('YYYY/MM')} />
+          <Route
+            path="/:year?/:month?"
+            render={(props) => {
+              const { match: { params: { year, month } } } = props;
+              const appProps = { dayBase, year, month };
+
+              if (year && month && !constraintMonth(year, month)) {
+                return (<App {...appProps} />);
+              }
+
+              return (<Redirect to={'/'+current().format('YYYY/MM')} />);
+            }}
+          />
+
         </div>
       </ConnectedRouter>
     );

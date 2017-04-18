@@ -198,7 +198,7 @@ export const onPrev = (dispatch) => (base) => {
     type: PREV,
     payload: redefine(Calendar.prev(base)),
   });
-  dispatch(push('/'+Calendar.next(base).format('YYYY/MM')));
+  dispatch(push('/'+Calendar.prev(base).format('YYYY/MM')));
 };
 
 export const onNext = (dispatch) => (base) => {
