@@ -1,29 +1,15 @@
 import React from 'react';
-import * as Calendar from '../utils/calendar';
 
-class Navbar extends React.Component{
-  render() {
-    let nextButton;
-    if(this.props.hasNext){
-      nextButton = <a onClick={() => {this.handleNext()}}> ❯ </a>
-    }
+ const Navbar = ({ onPrev, onNext, hasNext, children, base }) => {
+  let nextButton = hasNext? <a onClick={() => {onNext(base)}}> ❯ </a> : null;
 
-    return (
-      <h1>
-        <a onClick={() => {this.handlePrev()}}> ❮ </a>
-          {this.props.children}
-          {nextButton}
-      </h1>
-    );
-  }
-
-  handlePrev() {
-    this.props.onPrev(this.props.base)
-  }
-
-  handleNext() {
-    this.props.onNext(this.props.base)
-  }
-}
+  return (
+    <h1>
+      <a onClick={() => {onPrev(base)}}> ❮ </a>
+        {children}
+        {nextButton}
+    </h1>
+  );
+};
 
 export default Navbar;

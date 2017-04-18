@@ -1,17 +1,11 @@
 import React from 'react';
 
-class Week extends React.Component {
-  render() {
-    return (
-      <tr onDoubleClick={() => {this.handleSelectWeek()}}>
-        { this.props.children }
-      </tr>
-    );
-  }
-
-  handleSelectWeek() {
-    this.props.onSelectWeek(this.props.week, this.props.selecteds);
-  }
-}
+const Week = ({ onSelectWeek, week, selecteds, children }) => {
+  return (
+    <tr onDoubleClick={() => onSelectWeek(week, selecteds)}>
+      { children }
+    </tr>
+  );
+};
 
 export default Week;

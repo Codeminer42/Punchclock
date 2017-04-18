@@ -26,41 +26,43 @@ class Calendar extends React.Component {
   }
 
   render(){
+    const { onPrev, onNext, onSelectWeek, onToggle, onSetTimeSheet, onErase, onDeselect, onSaveSheets, calendar } = this.props;
+
     return (
       <div className="calendar-container">
         <Navbar
-          hasNext={this.props.calendar.hasNext}
-          onPrev={this.props.onPrev}
-          onNext={this.props.onNext}
-          base={this.props.calendar.base}>
-          {this.props.calendar.monthName}
+          hasNext={calendar.hasNext}
+          onPrev={onPrev}
+          onNext={onNext}
+          base={calendar.base}>
+          {calendar.monthName}
         </Navbar>
 
         <table className='punches-table'>
-          <WeekNames weekdays={this.props.calendar.weekdays} />
+          <WeekNames weekdays={calendar.weekdays} />
           <Weeks
-            calendar={this.props.calendar}
+            calendar={calendar}
             sheetFor={sheetFor}
             isSelected={isSelected}
-            onSelectWeek={this.props.onSelectWeek}
-            onToggle={this.props.onToggle}
+            onSelectWeek={onSelectWeek}
+            onToggle={onToggle}
           />
         </table>
 
         <p>Horas: {
           sumHours(
-            this.props.calendar.weeks,
-            this.props.calendar.sheets,
-            this.props.calendar.sheetsSaveds
+            calendar.weeks,
+            calendar.sheets,
+            calendar.sheetsSaveds
           )}
         </p>
 
         <Form
-          calendar={this.props.calendar}
-          onSetTimeSheet={this.props.onSetTimeSheet}
-          onErase={this.props.onErase}
-          onDeselect={this.props.onDeselect}
-          onSaveSheets={this.props.onSaveSheets} />
+          calendar={calendar}
+          onSetTimeSheet={onSetTimeSheet}
+          onErase={onErase}
+          onDeselect={onDeselect}
+          onSaveSheets={onSaveSheets} />
       </div>
     );
   }
