@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-#ruby "2.3.3"
-
 gem 'rails', '~> 4.2.0'
 gem 'pg'
 gem 'unicorn'

@@ -26,7 +26,17 @@ class Calendar extends React.Component {
   }
 
   render(){
-    const { onPrev, onNext, onSelectWeek, onToggle, onSetTimeSheet, onErase, onDeselect, onSaveSheets, calendar } = this.props;
+    const {
+      onPrev,
+      onNext,
+      onSelectWeek,
+      onToggle,
+      onSetTimeSheet,
+      onErase,
+      onDeselect,
+      onSaveSheets,
+      calendar
+    } = this.props;
 
     return (
       <div className="calendar-container">
