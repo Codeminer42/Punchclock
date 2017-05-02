@@ -1,7 +1,7 @@
 import React from 'react';
 
  const Navbar = ({ onPrev, onNext, hasNext, children, base }) => {
-  const nextButton = hasNext && <a onClick={() => {onNext(base)}}> ❯ </a>
+  let nextButton = hasNext? <a onClick={() => {onNext(base)}}> ❯ </a> : null;
 
   return (
     <h1>
