@@ -32,6 +32,8 @@ gem 'rails-i18n'
 gem 'responders'
 gem 'webpack-rails'
 
+gem 'sidekiq'
+
 gem 'bourbon'
 gem 'neat'
 gem 'bitters', github: 'thoughtbot/bitters'
