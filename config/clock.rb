@@ -7,6 +7,6 @@ module Clockwork
 
   every(1.day, 'alert.email', if: lambda { |t| t.day == 16 },
     tz: 'America/Sao_Paulo', at: '00:00') do
-    AlertFillPunchJob.perform_now
+    AlertFillPunchJob.perform_async
   end
 end
