@@ -28,4 +28,9 @@ class NotificationMailer < ActionMailer::Base
     @user = user
     mail(to: @admin.email, subject: "Punchclock - #{user.name} still inactive")
   end
+
+  def notify_user_to_fill_punch(user)
+    @user = user
+    mail(to: @user.email, subject: "Pessoal\n Preencham o punch entre os dias 16 e 15.\n abs")
+  end
 end
