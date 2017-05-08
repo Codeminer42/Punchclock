@@ -33,6 +33,7 @@ gem 'responders'
 gem 'webpack-rails'
 
 gem 'sidekiq'
+gem 'clockwork', '~> 1.0.0'
 
 gem 'bourbon'
 gem 'neat'

@@ -112,6 +112,9 @@ GEM
       mime-types (>= 1.16)
     certified (1.0.0)
     cliver (0.3.2)
+    clockwork (1.0.2)
+      activesupport
+      tzinfo
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -443,6 +446,7 @@ DEPENDENCIES
   capybara
   carrierwave
   certified
+  clockwork (~> 1.0.0)
   codeclimate-test-reporter
   coffee-rails
   database_cleaner
