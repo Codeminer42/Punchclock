@@ -21,4 +21,10 @@ pt-BR:
       add_review: 'Adicionar Revisão'
     form:
       submit: 'Salvar Revisão'
+  notification_mailer:
+    body: |
+      Pessoal,
 
+      Preencham o punch entre os dias 16 e 15.
+
+      Abs
