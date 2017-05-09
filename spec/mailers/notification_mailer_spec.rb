@@ -167,5 +167,28 @@ describe NotificationMailer do
         expect(mail.body.encoded).to match(admin.name)
       end
     end
+
+    context 'when notify user to fill punch' do
+      let(:user) { build(:user) }
+      let(:mail) do
+        NotificationMailer.notify_user_to_fill_punch(user)
+      end
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq("Preencher Punch")
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([user.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body).to include('Preencham o punch entre os dias 16 e 15')
+      end
+    end
   end
 end
