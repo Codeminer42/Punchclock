@@ -3,12 +3,12 @@ require 'sidekiq/testing'
 Sidekiq::Testing.fake!
 
 RSpec.describe AlertFillPunchJob, type: :job do
- describe '.perform_async' do
+ describe '.perform_later' do
 
-    subject(:job) { described_class.perform_async }
+    subject(:job) { described_class.perform_later }
 
-    it 'is in mailer queue' do
-      expect(AlertFillPunchJob.new.queue_name).to eq('mailer')
+    it 'is in default queue' do
+      expect(AlertFillPunchJob.new.queue_name).to eq('default')
     end
 
   end
