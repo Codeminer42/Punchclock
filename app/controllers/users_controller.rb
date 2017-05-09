@@ -2,12 +2,12 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @users = User.all
+    @users = User.all.decorate
     respond_with @users
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]).decorate
   end
 
   def edit
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    allow = %i(name email role)
+    allow = %i(name email)
     allow << :hour_cost if current_user.is_admin?
     params.require(:user).permit(allow)
   end

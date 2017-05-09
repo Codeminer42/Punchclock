@@ -4,6 +4,7 @@ ActiveAdmin.register User do
     column :name
     column :email
     column :reviewer
+    column :role
     column :hour_cost
     column :active
     actions
@@ -21,6 +22,7 @@ ActiveAdmin.register User do
           user.company.name => current_admin_user.company_id
         }
       end
+      f.input :role, as: :select, collection: User.roles.keys
       f.input :reviewer
       f.input :password
       f.input :active
@@ -34,7 +36,7 @@ ActiveAdmin.register User do
     end
 
     def permitted_params
-      params.permit user: [:name, :email, :company_id, :reviewer_id, :hour_cost, :password, :active]
+      params.permit user: [:name, :email, :company_id, :role, :reviewer_id, :hour_cost, :password, :active]
     end
 
     def new
@@ -75,6 +77,7 @@ ActiveAdmin.register User do
       row :id
       row :name
       row :email
+      row :role
       row :reviewer
       row :hour_cost
       row :active

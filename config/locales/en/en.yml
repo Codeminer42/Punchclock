@@ -20,6 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  "true": 'Yes'
+  "false": 'No'
   hello: "Hello world"
   evaluation:
     singular: 'Evaluation'
