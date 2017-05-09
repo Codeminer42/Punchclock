@@ -29,7 +29,7 @@ Punchclock::Application.routes.draw do
   end
 
   authenticated :admin_user do
-    root to: 'admin/dashboard#index', as: :authenticated_super
+    root to: 'admin/admin_users#index', as: :authenticated_super
   end
 
   unauthenticated :user do

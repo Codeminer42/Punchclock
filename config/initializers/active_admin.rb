@@ -8,6 +8,7 @@ ActiveAdmin.setup do |config|
   config.comments = false
   config.batch_actions = true
   config.csv_options = { col_sep: ';', force_quotes: true }
+  config.root_to = 'admin_users#index'
 end
 
 
