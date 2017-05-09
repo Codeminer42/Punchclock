@@ -17,7 +17,7 @@ Punchclock::Application.routes.draw do
   resources :dashboard, only: [:index] do
     get :sheets, on: :collection
     post :sheets, action: :save, on: :collection
-    get '/:year/:month', action: :index, on: :collection
+    get '(/:year)(/:month)', action: :index, on: :collection
   end
 
   resources :evaluations, only: [:new, :create, :edit, :update]
