@@ -187,7 +187,7 @@ describe NotificationMailer do
       end
 
       it 'renders the body' do
-        expect(mail.body).to include('Preencham o punch entre os dias 16 e 15')
+        expect(mail.body).to match('Preencham o punch entre os dias 16 e 15')
       end
     end
   end
