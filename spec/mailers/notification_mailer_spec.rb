@@ -194,9 +194,9 @@ describe NotificationMailer do
     context 'when notify admin: user fills more than 8 hours' do
       let(:user) { build(:user) }
       let(:admin) { build(:user_admin, company_id: user.company_id) }
-      let(:datetime) { '10-05-2017' }
+      let(:datetime) { '2017-05-10' }
       let(:mail) do
-        NotificationMailer.notify_admin_have_extra_hour(admin, user, datetime)
+        NotificationMailer.notify_admin_extra_hour(admin, user, datetime)
       end
 
       it 'renders the subject' do
