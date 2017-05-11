@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
+  scope :is_admin, -> { where(is_admin: true) }
 
   enum role: %i(trainee junior pleno senior)
 
