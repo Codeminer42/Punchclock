@@ -13,7 +13,7 @@ class SendEmailWithExtraHourJob < ActiveJob::Base
 
         worked_hours = punches.inject(0) {|sum, punch| sum + (punch.to - punch.from) }
 
-        dates << date.to_s if (worked_hours/60/60).abs > MAX_ALLOWED_HOURS
+        dates << date.strftime("%d/%m/%Y") if (worked_hours/60/60).abs > MAX_ALLOWED_HOURS
       end
 
       if dates.present?

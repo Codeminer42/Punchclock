@@ -1,5 +1,3 @@
-<% @worked_days.each do |day| %>
-  <p>
-    <%= "#{@user.name} registrou mais de 8 horas no dia #{day}."%>
-  </p>
-<% end %>
+<p>
+  <%= "#{@user.name} registrou mais de 8 horas no dia #{@worked_days.join(', ')}."%>
+</p>

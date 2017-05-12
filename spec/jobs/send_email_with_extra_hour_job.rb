@@ -8,7 +8,7 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
     let(:active_user_with_hour) { create(:user, company_id: company.id, active: true) }
     let(:active_user_without_hour) { create(:user, company_id: company.id, active: true) }
     let(:inactive_user) { create(:user, company_id: company.id, active: false) }
-    let(:worked_days) { ['2017-05-10'] }
+    let(:worked_days) { ['10/05/2017'] }
 
     before do
       create(:punch, from: '2017-05-10 08:00', to: '2017-05-10 12:00', user_id: active_user_with_hour.id, company_id: company.id)
@@ -29,7 +29,7 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
     subject(:job) { described_class.perform_later }
 
     it 'is in default queue' do
-      expect(AlertFillPunchJob.new.queue_name).to eq('default')
+      expect(SendEmailWithExtraHourJob.new.queue_name).to eq('default')
     end
 
     it 'sends an email when user have more than 8 hours' do
