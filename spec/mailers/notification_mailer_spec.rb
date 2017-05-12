@@ -190,5 +190,38 @@ describe NotificationMailer do
         expect(mail.body).to match('Preencham o punch entre os dias 16 e 15')
       end
     end
+
+    context 'when notify admin: user fills more than 8 hours' do
+      let(:user) { build(:user) }
+      let(:admin) { build(:user_admin, company_id: user.company_id) }
+      let(:worked_days) { ['10/05/2017', '11/05/2017'] }
+      let(:mail) do
+        NotificationMailer.notify_admin_extra_hour(admin, user, worked_days)
+      end
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq("Punchclock - #{user.name} registrou hora extra")
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([admin.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns user @name' do
+        expect(mail.body.encoded).to match(user.name)
+      end
+
+      it 'assigns date @worked_days' do
+        expect(mail.body.encoded).to match(worked_days[0])
+      end
+
+      it 'renders the body' do
+        expect(mail.body).to match('registrou mais de 8 horas no dia 10/05/2017, 11/05/2017')
+      end
+    end
   end
 end
