@@ -1,1 +1,5 @@
-<div><%= "#{@user.name} registrou mais de 8 horas no dia #{@datetime}."%></div>
+<% @worked_days.each do |d| %>
+  <p>
+    <%= "#{@user.name} registrou mais de 8 horas no dia #{d}."%>
+  </p>
+<% end %>

@@ -194,9 +194,9 @@ describe NotificationMailer do
     context 'when notify admin: user fills more than 8 hours' do
       let(:user) { build(:user) }
       let(:admin) { build(:user_admin, company_id: user.company_id) }
-      let(:datetime) { '2017-05-10' }
+      let(:worked_days) { Array.new(['2017-05-10']) }
       let(:mail) do
-        NotificationMailer.notify_admin_extra_hour(admin, user, datetime)
+        NotificationMailer.notify_admin_extra_hour(admin, user, worked_days)
       end
 
       it 'renders the subject' do
@@ -215,9 +215,10 @@ describe NotificationMailer do
         expect(mail.body.encoded).to match(user.name)
       end
 
-      it 'assigns date @datetime' do
-        expect(mail.body.encoded).to match(datetime)
+      it 'assigns date @worked_days' do
+        expect(mail.body.encoded).to match(worked_days[0])
       end
+
     end
   end
 end
