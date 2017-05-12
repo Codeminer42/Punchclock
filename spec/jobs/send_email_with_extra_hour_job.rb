@@ -5,19 +5,19 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
   describe '#perform' do
     let(:admin) { create :user_admin }
     let(:company) { admin.company }
-    let(:active_user_with_hour) { create(:user, company_id: company.id, active: true) }
-    let(:active_user_without_hour) { create(:user, company_id: company.id, active: true) }
-    let(:inactive_user) { create(:user, company_id: company.id, active: false) }
+    let(:active_user_with_hour) { create(:user, :active_user, company_id: company.id) }
+    let(:active_user_without_hour) { create(:user, :active_user, company_id: company.id) }
+    let(:inactive_user) { create(:user, :inactive_user, company_id: company.id, active: false) }
     let(:worked_days) { ['10/05/2017'] }
 
     before do
-      create(:punch, from: '2017-05-10 08:00', to: '2017-05-10 12:00', user_id: active_user_with_hour.id, company_id: company.id)
-      create(:punch, from: '2017-05-10 13:00', to: '2017-05-10 18:00', user_id: active_user_with_hour.id, company_id: company.id)
-      create(:punch, from: '2017-05-11 08:00', to: '2017-05-11 12:00', user_id: active_user_with_hour.id, company_id: company.id)
+      create(:punch, from: '2017-05-10 08:00', to: '2017-05-10 12:00', user: active_user_with_hour, company: company)
+      create(:punch, from: '2017-05-10 13:00', to: '2017-05-10 18:00', user: active_user_with_hour, company: company)
+      create(:punch, from: '2017-05-11 08:00', to: '2017-05-11 12:00', user: active_user_with_hour, company: company)
 
-      create(:punch, from: '2017-05-10 08:00', to: '2017-05-10 12:00', user_id: active_user_without_hour.id, company_id: company.id)
-      create(:punch, from: '2017-05-10 13:00', to: '2017-05-10 17:00', user_id: active_user_without_hour.id, company_id: company.id)
-      create(:punch, from: '2017-05-11 08:00', to: '2017-05-11 12:00', user_id: active_user_without_hour.id, company_id: company.id)
+      create(:punch, from: '2017-05-10 08:00', to: '2017-05-10 12:00', user: active_user_without_hour, company: company)
+      create(:punch, from: '2017-05-10 13:00', to: '2017-05-10 17:00', user: active_user_without_hour, company: company)
+      create(:punch, from: '2017-05-11 08:00', to: '2017-05-11 12:00', user: active_user_without_hour, company: company)
     end
 
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
