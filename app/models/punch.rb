@@ -13,7 +13,6 @@ class Punch < ActiveRecord::Base
   scope :since, ->(time) { where('punches.from >= ?', time) }
   scope :until, ->(time) { where('punches.to <= ?', time) }
   scope :by_days, ->(days) { where('date("punches"."from") in (?)', days) }
-  scope :by_day, ->(day) { where('date("punches"."from") = ?', day) }
 
   def self.fix_all
     wrongs.each { |punch| punch.save }
