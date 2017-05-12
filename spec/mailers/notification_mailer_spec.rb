@@ -194,7 +194,7 @@ describe NotificationMailer do
     context 'when notify admin: user fills more than 8 hours' do
       let(:user) { build(:user) }
       let(:admin) { build(:user_admin, company_id: user.company_id) }
-      let(:worked_days) { Array.new(['2017-05-10']) }
+      let(:worked_days) { ['2017-05-10'] }
       let(:mail) do
         NotificationMailer.notify_admin_extra_hour(admin, user, worked_days)
       end

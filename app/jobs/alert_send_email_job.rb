@@ -1,21 +1,22 @@
 class AlertSendEmailJob < ActiveJob::Base
   queue_as :default
+  MAX_ALLOWED_HOURS = 8
 
   def perform
-    today = Time.zone.now
-    one_month_ago = today.prev_month
+    today = Time.zone.yesterday
+    one_month_ago = (today.prev_month + 1.day)
 
-    User.active.find_each do |user|
+    User.active.each do |user|
       dates = []
       (one_month_ago.to_date..today.to_date).each do |date|
-        punches = user.punches.by_day(date)
+        punches = user.punches.by_days(date)
 
         worked_hours = punches.inject(0) {|sum, punch| sum + (punch.to - punch.from) }
 
-        dates << date.to_s if (worked_hours/60/60).abs > 8
+        dates << date.to_s if (worked_hours/60/60).abs > MAX_ALLOWED_HOURS
       end
       unless dates.empty?
-        User.is_admin.each do |admin|
+        User.admin.each do |admin|
           NotificationMailer.notify_admin_extra_hour(admin, user, dates)
         end
       end

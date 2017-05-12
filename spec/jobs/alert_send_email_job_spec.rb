@@ -4,8 +4,7 @@ RSpec.describe AlertSendEmailJob, type: :job do
   include ActiveJob::TestHelper
 
   describe '#perform' do
-    let!(:is_admin) { true }
-    let!(:admin) { create :user, is_admin: is_admin }
+    let!(:admin) { create :user, is_admin: true }
     let!(:company) { admin.company }
     let!(:active_user_with_hour) { create(:user, company_id: company.id, active: true) }
     let!(:active_user_without_hour) { create(:user, company_id: company.id, active: true) }
