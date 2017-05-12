@@ -20,10 +20,8 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
       create(:punch, from: '2017-05-11 08:00', to: '2017-05-11 12:00', user: active_user_without_hour, company: company)
     end
 
-    let(:message_delivery) { double('null_object').as_null_object }
     before do
-      allow(NotificationMailer).to receive(:notify_admin_extra_hour).and_return(message_delivery)
-      allow(message_delivery).to receive(:deliver_later)
+      allow(NotificationMailer).to receive(:notify_admin_extra_hour).and_return(double.as_null_object)
     end
 
     subject(:job) { described_class.perform_later }
