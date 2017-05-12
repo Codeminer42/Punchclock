@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AlertSendEmailJob, type: :job do
-  include ActiveJob::TestHelper
 
   describe '#perform' do
     let(:admin) { create :user_admin }
