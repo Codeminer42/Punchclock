@@ -29,4 +29,3 @@ pt-BR:
 
       Abs
     extra_hour: "%{user} registrou mais de 8 horas no dia %{worked_days}"
-    # extra_hour: registrou mais de 8 horas no dia
