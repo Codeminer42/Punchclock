@@ -12,7 +12,7 @@ module Clockwork
 
   every(1.day, 'alert.email', if: lambda { |t| t.day == 16 },
     tz: 'America/Sao_Paulo', at: '16:00') do
-    AlertSendEmailJob.perform_later
+    SendEmailWithExtraHourJob.perform_later
   end
 
 end

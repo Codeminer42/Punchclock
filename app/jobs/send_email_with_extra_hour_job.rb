@@ -1,4 +1,4 @@
-class AlertSendEmailJob < ActiveJob::Base
+class SendEmailWithExtraHourJob < ActiveJob::Base
   queue_as :default
   MAX_ALLOWED_HOURS = 8
 

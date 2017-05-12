@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AlertSendEmailJob, type: :job do
+RSpec.describe SendEmailWithExtraHourJob, type: :job do
 
   describe '#perform' do
     let(:admin) { create :user_admin }
