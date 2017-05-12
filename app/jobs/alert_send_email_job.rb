@@ -3,7 +3,7 @@ class AlertSendEmailJob < ActiveJob::Base
 
   def perform
     today = Time.zone.now
-    one_month_ago = today.prev_month - 1.day
+    one_month_ago = today.prev_month
 
     User.active.find_each do |user|
       dates = []
@@ -14,7 +14,7 @@ class AlertSendEmailJob < ActiveJob::Base
 
         dates << date.to_s if (worked_hours/60/60).abs > 8
       end
-      if dates
+      unless dates.empty?
         User.is_admin.each do |admin|
           NotificationMailer.notify_admin_extra_hour(admin, user, dates)
         end
