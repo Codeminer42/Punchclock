@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "postinstall": "bundle exec rake webpack:compile"
+    "postinstall": "RAILS_ENV=production bundle exec rake webpack:compile"
   },
   "engines": {
     "node": "5.3.0"
