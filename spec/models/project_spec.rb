@@ -4,6 +4,17 @@ describe Project do
   let!(:active_project) { FactoryGirl.create(:project, :active) }
   let!(:inactive_project) { FactoryGirl.create(:project, :inactive) }
 
+  describe '.active' do
+    it 'returns only active projects' do
+      expect(Project.active).to match_array(active_project)
+    end
+  end
+
+  describe '.inactive' do
+    it 'returns only inactive projects' do
+      expect(Project.inactive).to match_array(inactive_project)
+    end
+  end
 
   describe '#active' do
     it 'is active' do
