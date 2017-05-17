@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20170515143002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -138,7 +137,7 @@ ActiveRecord::Schema.define(version: 20170515143002) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "company_id"
-    t.decimal  "hour_cost",              default: 0.0
+    t.decimal  "hour_cost",              default: 0.0,  null: false
     t.boolean  "is_admin"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
@@ -151,8 +150,8 @@ ActiveRecord::Schema.define(version: 20170515143002) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean  "active",                 default: true
-    t.integer  "role"
     t.integer  "reviewer_id"
+    t.integer  "role"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
