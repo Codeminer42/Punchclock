@@ -1,8 +1,14 @@
 ActiveAdmin.register Project do
+  config.sort_order = 'name_asc'
+
+  scope :active, default: true
+  scope :inactive
+
   index do
     column :company
     column :name
     column :created_at
+    column :active
     actions
   end
 
@@ -16,13 +22,14 @@ ActiveAdmin.register Project do
           project.company.name => current_admin_user.company_id
         }
       end
+      f.input :active
     end
     f.actions
   end
 
   controller do
     def permitted_params
-      params.permit project: [:name, :company_id]
+      params.permit project: [:name, :company_id, :active]
     end
 
     def new
