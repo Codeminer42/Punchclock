@@ -1,4 +1,9 @@
 ActiveAdmin.register Project do
+  config.sort_order = 'name_asc'
+
+  scope :active, default: true
+  scope :inactive
+
   index do
     column :company
     column :name
