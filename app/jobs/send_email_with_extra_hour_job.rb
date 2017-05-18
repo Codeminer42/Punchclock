@@ -17,7 +17,7 @@ class SendEmailWithExtraHourJob < ActiveJob::Base
       end
 
       if dates.present?
-        User.admin.each do |admin|
+        AdminUser.all.each do |admin|
           NotificationMailer.notify_admin_extra_hour(admin, user, dates)
         end
       end

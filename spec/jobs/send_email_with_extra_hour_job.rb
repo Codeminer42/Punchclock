@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
 
   describe '#perform' do
-    let(:admin) { create :user_admin }
+    let(:admin) { create :admin_user }
     let(:company) { admin.company }
     let(:active_user_with_hour) { create(:user, :active_user, company_id: company.id) }
     let(:active_user_without_hour) { create(:user, :active_user, company_id: company.id) }
