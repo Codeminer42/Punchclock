@@ -64,11 +64,7 @@ class PunchesController < ApplicationController
   end
 
   def scopped_punches
-    if current_user.is_admin?
-      current_user.company.punches
-    else
-      current_user.punches
-    end
+    current_user.punches
   end
 
   def import_csv_params

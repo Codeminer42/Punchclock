@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe CompanyController do
-  let(:is_admin) { true }
-  let(:user) { create :user, is_admin: is_admin }
+  let(:user) { create :user }
   let(:company) { user.company }
   before { login user }
 
@@ -15,7 +14,7 @@ describe CompanyController do
 
     context 'when has valid params' do
       let(:errors) { [] }
-      it 'should update the company settings' do
+      it 'redirects to root path' do
         expect(response).to redirect_to root_url
       end
     end
@@ -24,14 +23,6 @@ describe CompanyController do
       let(:errors) { [:invalid] }
       it 'should not update company settings' do
         expect(response).to render_template :edit
-      end
-    end
-
-    context 'when is not admin' do
-      let(:is_admin) { false }
-      let(:errors) { [] }
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_url
       end
     end
   end

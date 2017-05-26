@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515143002) do
+ActiveRecord::Schema.define(version: 20170522171337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 20170515143002) do
     t.datetime "remember_created_at"
     t.integer  "company_id"
     t.decimal  "hour_cost",              default: 0.0,  null: false
-    t.boolean  "is_admin"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
