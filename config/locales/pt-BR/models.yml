@@ -88,7 +88,6 @@ pt-BR:
         remember_created_at: "Lembrar quando foi criado"
         company_id: "Empresa"
         hour_cost: "Custo da hora"
-        is_admin: "É administrador"
         invitation_token: "Token de convite"
         invitation_created_at: "Convite criado em"
         invitation_sent_at: "Convite enviado em"
