@@ -7,17 +7,6 @@
     <p>
       Email: <%= mail_to @user.email %>
     </p>
-    <% if current_user.is_admin? %>
-      <p>
-        <%= @user.hour_cost %>
-      </p>
-    <% end %>
-  </div>
-
-  <div>
-    <p>
-      Administrator: <%= @user.admin_role? %>
-    </p>
   </div>
 
   <div>
@@ -28,4 +17,3 @@
 </p>
 
 </div>
-

@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_admin!, only: :create
 
   def index
     @projects = end_of_chain.load

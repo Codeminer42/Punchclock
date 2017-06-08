@@ -5,11 +5,10 @@ module Users
     end
 
     protected
-    
+
     def update_with_defaults
       resource.update_attributes({
         name: resource_params[:email][/(.*)@/, 1],
-        is_admin: false,
         company_id: current_user.company_id
       })
     end

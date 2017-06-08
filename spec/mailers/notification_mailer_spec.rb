@@ -142,7 +142,7 @@ describe NotificationMailer do
 
     context 'when notify admin: user dont punch makes 7 days or more' do
       let(:user) { build(:user) }
-      let(:admin) { build(:user_admin, company_id: user.company_id) }
+      let(:admin) { build(:admin_user, company_id: user.company_id) }
       let(:mail) do
         NotificationMailer.notify_admin_punches_pending(admin, user)
       end
@@ -161,10 +161,6 @@ describe NotificationMailer do
 
       it 'assigns user @name' do
         expect(mail.body.encoded).to match(user.name)
-      end
-
-      it 'assigns admin @name' do
-        expect(mail.body.encoded).to match(admin.name)
       end
     end
 
@@ -193,7 +189,7 @@ describe NotificationMailer do
 
     context 'when notify admin: user fills more than 8 hours' do
       let(:user) { build(:user) }
-      let(:admin) { build(:user_admin, company_id: user.company_id) }
+      let(:admin) { build(:admin_user, company_id: user.company_id) }
       let(:worked_days) { ['10/05/2017', '11/05/2017'] }
       let(:mail) do
         NotificationMailer.notify_admin_extra_hour(admin, user, worked_days)

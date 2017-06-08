@@ -1,7 +1,7 @@
 namespace :watcher do
   task punches: :environment do
     Company.all.each do |c|
-      admins = c.users.where("\"is_admin\" = TRUE")
+      admins = AdminUser.all
 
       #check punches
       c.users.each do |user|

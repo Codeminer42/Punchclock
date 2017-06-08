@@ -22,33 +22,6 @@ feature 'Punches filter form' do
     click_button I18n.t(:create, scope: %i(helpers submit punches_filter_form))
   end
 
-  context 'when the user is admin' do
-    let!(:user) do
-      create_logged_in_user(is_admin: true, company_id: company.id)
-    end
-
-    scenario 'the user filter field is present' do
-      visit '/'
-
-      within('#new_punches_filter_form') do
-        select user.name, from: 'punches_filter_form[user_id]'
-      end
-
-      click_on_filter
-    end
-
-    scenario 'can filter the punches by a user' do
-      visit '/'
-
-      within('#new_punches_filter_form') do
-        select user3.name, from: 'punches_filter_form[user_id]'
-      end
-
-      click_on_filter
-      expect(page).to have_selector '.user-punch', count: 4
-    end
-  end
-
   context 'when the user is a regular user' do
     let!(:user) { create_logged_in_user(company_id: company.id) }
 

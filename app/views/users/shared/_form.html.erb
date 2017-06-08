@@ -11,12 +11,5 @@
   <%= f.email_field :email %>
   </div>
 
-  <% if current_user.is_admin? %>
-    <div>
-    <%= f.label :hour_cost %>
-    <%= f.text_field :hour_cost %>
-   	</div>
-  <% end %>
-
   <div> <%= f.submit %> </div>
 <% end %>

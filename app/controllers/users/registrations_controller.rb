@@ -4,8 +4,7 @@ module Users
 
     def build_resource(user_params)
       super({
-        company: Company.new,
-        is_admin: true
+        company: Company.new
       }.merge user_params)
     end
 

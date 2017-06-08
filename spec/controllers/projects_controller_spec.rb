@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ProjectsController do
   before { login user }
-  let(:user) { create :user, is_admin: true }
+  let(:user) { create :user }
   let(:project) { create :project, company: user.company }
 
   describe 'POST create' do
