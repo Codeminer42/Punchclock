@@ -9,6 +9,7 @@ ActiveAdmin.register Punch do
     column :from, sortable: false
     column :to, sortable: false
     column :delta, sortable: false
+    column :extra_hour, sortable: false
     actions
     div class: 'panel' do
       h3 "Total: #{collection.total_hours}"
@@ -30,6 +31,7 @@ ActiveAdmin.register Punch do
       end
       f.input :from, as: :datetime_picker
       f.input :to, as: :datetime_picker
+      f.input :extra_hour, as: :datetime_picker
     end
     f.actions
   end
@@ -40,7 +42,7 @@ ActiveAdmin.register Punch do
     end
 
     def permitted_params
-      params.permit(punch: [:from, :to, :user_id, :project_id, :company_id])
+      params.permit(punch: [:from, :to, :extra_hour, :user_id, :project_id, :company_id])
     end
 
     def index
@@ -80,6 +82,7 @@ ActiveAdmin.register Punch do
     column :from
     column :to
     column :delta
+    column :extra_hour
   end
 
   filter :project, collection: proc { Project.order('name') }

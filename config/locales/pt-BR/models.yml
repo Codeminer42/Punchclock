@@ -113,6 +113,7 @@ pt-BR:
         updated_at: "Atualizado em"
         attachment: "Anexo"
         comment: "Comentário"
+        extra_hour: "Hora extra"
       notification:
         id: "ID"
         user_id: "Usuário"
