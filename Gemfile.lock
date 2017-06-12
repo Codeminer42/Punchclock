@@ -214,7 +214,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
-    json (1.8.6)
+    json (2.1.0)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -226,7 +226,7 @@ GEM
       platform-api
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    libv8 (3.16.14.17)
+    libv8 (3.16.14.19)
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -387,14 +387,14 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.3, >= 3.3.3)
-    simple_form (3.2.0)
-      actionpack (~> 4.0)
-      activemodel (~> 4.0)
-    simplecov (0.11.1)
+    simple_form (3.5.0)
+      actionpack (> 4, < 5.2)
+      activemodel (> 4, < 5.2)
+    simplecov (0.14.1)
       docile (~> 1.1.0)
-      json (~> 1.8)
+      json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.0)
+    simplecov-html (0.10.1)
     slop (3.6.0)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -405,8 +405,8 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -489,13 +489,16 @@ DEPENDENCIES
   settingslogic
   shoulda-matchers
   sidekiq
-  simple_form
-  simplecov
+  simple_form (= 3.5.0)
+  simplecov (= 0.14.1)
   sprockets (= 2.11.0)
-  therubyracer
+  therubyracer (= 0.12.3)
   uglifier
   unicorn
   webpack-rails
+
+RUBY VERSION
+   ruby 2.4.1p111
 
 BUNDLED WITH
    1.15.1
