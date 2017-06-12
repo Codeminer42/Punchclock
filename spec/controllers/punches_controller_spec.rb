@@ -26,7 +26,7 @@ describe PunchesController do
 
       end
 
-      context 'withou search' do
+      context 'without search' do
         it 'renders selected month' do
           from_params = {
             'from_gteq(1i)' => '2013',
@@ -85,7 +85,6 @@ describe PunchesController do
       let(:user) { punch.user }
 
       before do
-        allow(punch).to receive_messages(id: 1)
         allow(controller).to receive_messages(current_user: user)
       end
 
@@ -97,14 +96,26 @@ describe PunchesController do
         before do
           allow(controller).to receive(:punch_params)
           allow(Punch).to receive(:new).and_return(punch)
+          post_create
         end
 
         context 'when success' do
           it 'save and return to root_path' do
             allow(punch).to receive(:save).and_return(true)
 
-            post_create
             expect(response).to redirect_to punches_path
+          end
+
+          it "sets the 'from' attribute correctly" do
+            expect(punch.from).to eq(DateTime.new(2001, 1, 1, 8, 0, 0, 0))
+          end
+
+          it "sets the 'to' attribute correctly" do
+            expect(punch.to).to eq(DateTime.new(2001, 1, 1, 17, 0, 0, 0))
+          end
+
+          it "sets the 'extra_hour' attribute correctly" do
+            expect(punch.extra_hour).to eq('01:25')
           end
         end
 
@@ -120,30 +131,56 @@ describe PunchesController do
       end
 
       describe 'PUT update' do
+        let(:punch) { FactoryGirl.create(:punch) }
+
         before do
           allow(controller).to receive_message_chain(:scopped_punches, find: punch)
-          allow(Punch).to receive_messages(find: punch)
         end
 
         let(:params) do
           {
-            id: punch.id.to_s,
+            id: punch.id,
             when_day: '2013-08-20',
             punch: {
-              :'from(4i)'   => '8',
-              :'from(5i)'   => '0',
-              :'to(4i)'     => '17',
-              :'to(5i)'     => '0',
-              :'project_id' => project.id.to_s
+              :'when_day' => DateTime.new(2001, 1, 1),
+              :'from_time' => '10:00',
+              :'to_time' => '14:00',
+              :'extra_hour' => '02:00',
+              :'project_id' => FactoryGirl.create(:project, company: user.company).id
             }
           }
         end
 
-        it 'updates' do
-          put :update, params
-          expect(response).to redirect_to punches_path
+        context "when updating" do
+          it "updates the 'from' attribute correctly" do
+            expect { put :update, params }.to change { punch.reload.from }.
+              from(DateTime.new(2001, 1, 1, 8, 0, 0, 0)).
+                to(DateTime.new(2001, 1, 1, 10, 0, 0, 0))
+          end
+
+          it "updates the 'to' attribute correctly" do
+            expect { put :update, params }.to change { punch.reload.to }.
+              from(DateTime.new(2001, 1, 1, 17, 0, 0, 0)).
+                to(DateTime.new(2001, 1, 1, 14, 0, 0, 0))
+          end
+
+          it "updates the 'extra_hour' attribute correctly" do
+            expect { put :update, params }.to change { punch.reload.extra_hour }.
+              from('01:25').to('02:00')
+          end
+
+          it "updates the project" do
+            new_project = Project.find(params[:punch][:project_id])
+            expect { put :update, params }.to change { punch.reload.project }.
+              from(punch.project).to(new_project)
+          end
+
+          it "redirects to punches_path" do
+            put :update, params
+            expect(response).to redirect_to punches_path
+          end
         end
-      end # END PUT UPDATE
-    end # END METHODS
+      end
+    end
   end
 end
