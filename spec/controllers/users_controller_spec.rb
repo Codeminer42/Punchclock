@@ -23,7 +23,6 @@ describe UsersController do
     end
 
     it "assigns @users" do
-      user { create(:user) }
       get :index
       expect(assigns(:users)).to eq([user])
     end
