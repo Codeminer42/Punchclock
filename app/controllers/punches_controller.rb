@@ -55,7 +55,7 @@ class PunchesController < ApplicationController
   private
 
   def punch_params
-    allow = %i(id from_time to_time when_day project_id attachment remove_attachment comment)
+    allow = %i(id from_time to_time when_day project_id attachment remove_attachment comment extra_hour)
     params.require(:punch).permit(*allow)
   end
 
