@@ -8,8 +8,8 @@ describe PunchesController do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
-  context 'when user is a employer' do
-    let(:punches) { double(:punch) }
+  context 'when user is an employee' do
+    let(:punches) { double(:punch, page: Punch.page) }
     before do
       allow(punches).to receive(:decorate)
     end
@@ -40,7 +40,7 @@ describe PunchesController do
           get :index, q: from_params
         end
       end
-    end # END GET INDEX
+    end
 
     describe 'GET new' do
       let(:punch) { FactoryGirl.build(:punch) }

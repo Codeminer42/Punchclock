@@ -28,6 +28,8 @@
   </colgroup>
 
   <thead>
+  <%= paginate @punches %>
+
     <tr>
       <th><%= sort_link @search, :from, Punch.human_attribute_name(:when) %></th>
       <th><%= Punch.human_attribute_name(:from) %></th>

@@ -10,7 +10,7 @@ class PunchesController < ApplicationController
       .search(params[:q])
 
     @search.sorts = 'from desc' if @search.sorts.empty?
-    @punches = @search.result.decorate
+    @punches = @search.result.page(params[:page]).decorate
     respond_with @punches
   end
 
