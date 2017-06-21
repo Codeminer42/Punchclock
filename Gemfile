@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.0'
+ruby '2.4.1'
+
+gem 'rails', '~> 4.2.8'
 gem 'pg'
 gem 'unicorn'
 
@@ -22,7 +24,7 @@ gem 'omniauth-google-apps'
 gem 'reform'
 gem 'sass-rails'
 gem 'settingslogic'
-gem 'simple_form'
+gem 'simple_form', '3.5.0'
 gem 'uglifier'
 gem 'activeadmin', '1.0.0pre2'
 gem 'draper'
@@ -45,11 +47,11 @@ gem 'letsencrypt-rails-heroku', group: 'production'
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
-  gem 'simplecov', :require => false
+  gem 'simplecov', '0.14.1', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
   gem 'database_cleaner'
-  gem 'therubyracer'
+  gem 'therubyracer', '0.12.3'
 end
 
 group :development do

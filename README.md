@@ -10,9 +10,11 @@ A simple electronic punch clock to track hours spent on projects.
 
 ## Rails
 
-This app uses Rails 4.1 and Postgres >= 9.1
+This app uses Rails 4.2.8 and Postgres >= 9.1
 
 ## Installing
+
+Make sure you have `ruby 2.4.1` installed.
 
 ```console
 $ git clone git@github.com:Codeminer42/Punchclock.git
