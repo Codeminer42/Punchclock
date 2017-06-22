@@ -29,3 +29,10 @@ pt-BR:
 
       Abs
     extra_hour: "%{user} registrou mais de 8 horas no dia %{worked_days}"
+  views:
+    pagination:
+      first: "&laquo; Primeira"
+      last: "Última &raquo;"
+      previous: "&lsaquo; Anterior"
+      next: "Próxima &rsaquo;"
+      truncate: "&hellip;"
