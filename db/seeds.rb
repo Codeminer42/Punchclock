@@ -30,7 +30,6 @@ project = Project.where(name: 'Punchclock').first_or_create! company: company
 
 (6.months.ago.to_date..1.day.ago.to_date).to_a.each do |date|
   date = date.to_time
-  puts "Punch!"
   [[8, 12], [13, 16]].each do |hours|
     user.punches.create!(
       from: date.change(hour: hours.first),

@@ -5,7 +5,7 @@ development:
   pool: 5
   username:
   password:
-  host: localhost
+  host: <%= ENV.fetch("DATABASE_HOST", "127.0.0.1") %>
 
 test:
   adapter: postgresql
@@ -14,7 +14,7 @@ test:
   pool: 5
   username:
   password:
-  host: localhost
+  host: <%= ENV.fetch("DATABASE_HOST", "127.0.0.1") %>
 
 production:
   adapter: postgresql
@@ -23,4 +23,4 @@ production:
   pool: 5
   username:
   password:
-  host: localhost
+  host: <%= ENV.fetch("DATABASE_HOST", "127.0.0.1") %>
