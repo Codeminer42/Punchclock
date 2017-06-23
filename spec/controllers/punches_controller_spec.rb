@@ -40,6 +40,14 @@ describe PunchesController do
           get :index, q: from_params
         end
       end
+
+      context 'with many punches' do
+        it 'paginates' do
+          FactoryGirl.create_list(:punch, 5, user: user)
+          get :index, {per: 3}
+          expect(assigns(:punches)).to eq(Punch.page(1).per(3))
+        end
+      end
     end
 
     describe 'GET new' do
