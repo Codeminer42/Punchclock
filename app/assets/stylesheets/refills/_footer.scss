@@ -10,11 +10,12 @@ $footer-text-color: darken($footer-color, 25);
   color: $footer-text-color;
   padding: 3em;
 
-  hr {
+  &::before {
     border-bottom: 1px solid $footer-text-color;
-    width: 12em;
-    margin: auto;
+    content: '';
+    display: inline-block;
     margin-bottom: 1em;
+    width: 12em;
   }
 
   p {
