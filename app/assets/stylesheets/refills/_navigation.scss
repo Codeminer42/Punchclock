@@ -15,7 +15,7 @@ header.navigation {
   height: $navigation-height;
   width: 100%;
   z-index: 999;
-
+  
   .menu-wrapper {
     @include outer-container;
     position: relative;
@@ -132,7 +132,7 @@ header.navigation {
     @include button(pill, $base-accent-color);
   }
 
-  .experimental {
+  .beta {
     border-radius: 10px;
     color: $flat-pumpkin;
     background: $light-yellow;
