@@ -8,8 +8,8 @@ describe PunchesController do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
-  context 'when user is a employer' do
-    let(:punches) { double(:punch) }
+  context 'when user is an employee' do
+    let(:punches) { double(:punch, page: Punch.page) }
     before do
       allow(punches).to receive(:decorate)
     end
@@ -40,7 +40,19 @@ describe PunchesController do
           get :index, q: from_params
         end
       end
-    end # END GET INDEX
+
+      context 'with many punches' do
+        it 'paginates' do
+          FactoryGirl.create_list(:punch, 5, user: user)
+
+          params = { per: 3 }
+          get :index, params
+
+          expect(assigns(:punches))
+            .to eq(Pagination.new(Punch.all).decorated(params))
+        end
+      end
+    end
 
     describe 'GET new' do
       let(:punch) { FactoryGirl.build(:punch) }
