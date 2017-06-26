@@ -17,7 +17,7 @@ This app uses Rails 4.2.8 and Postgres >= 9.1
 Make sure you have `ruby 2.4.1` installed.
 
 ```console
-$ git clone git@github.com:Codeminer42/Punchclock.git
+$ git clone git@gitlab42.com:Codeminer42/Punchclock.git
 $ cd Punchclock
 $ cp config/database.yml.example config/database.yml
 $ cp .env.example .env
