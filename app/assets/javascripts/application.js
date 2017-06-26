@@ -3,13 +3,14 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require jquery_nested_form
+//= require datepicker
 
 $(function () {
   $('.file-field-import-csv').change(function () {
     $(this).parents('form').submit();
   });
 
-  $('input.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+  setDatePicker();
 
   $('#menu-icon').click(function () {
     $('.topnav').toggleClass('topnav-opened');

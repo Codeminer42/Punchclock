@@ -40,5 +40,10 @@
   <div class="row">
     <%= f.input :comment, wrapper_html: { class: %i(col-xs-6) } %>
   </div>
+
+  <div>
+    <%= content_tag :div, class: "temp_information", data: { national_holidays: national_holidays } do %>
+<% end %>
+  </div>
   <%= f.submit %>
 <%- end %>
