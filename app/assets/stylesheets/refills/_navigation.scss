@@ -14,12 +14,12 @@ header.navigation {
   font-family: $sans-serif;
   height: $navigation-height;
   width: 100%;
-  z-index: 999;
+  
   
   .menu-wrapper {
     @include outer-container;
     position: relative;
-    z-index: 9999;
+    width: 96%;
   }
 
   .navigation-menu-button {
@@ -57,10 +57,10 @@ header.navigation {
     overflow: hidden;
     padding: 0;
     width: 100%;
-    z-index: 9999;
+    
 
     @include media ($large-screen) {
-      display: inline;
+      display: inline-block;
       margin: 0;
       padding: 0;
     }
@@ -74,11 +74,11 @@ header.navigation {
     padding-right: .8em;
     text-align: right;
     width: 100%;
-    z-index: 9999;
+    vertical-align: top;
 
     @include media ($large-screen) {
       background: transparent;
-      display: inline;
+      display: inline-block;
       line-height: $navigation-height;
       padding-right: 2em;
       text-decoration: none;
@@ -92,6 +92,18 @@ header.navigation {
       &:hover {
         color: $navigation-color-hover;
       }
+    }
+  }
+
+  .nav-brand {
+    line-height: 1.1;
+    padding-top: 0.417em;
+    padding-bottom: 0.417em;
+    font-size: 1.2em;
+
+    small {
+      display: block;
+      font-size: 0.65em;
     }
   }
   
