@@ -94,32 +94,10 @@ header.navigation {
       }
     }
   }
-
-  .sign-up {
-    @include media ($large-screen) {
-      @include position(absolute, 0px 0px 0 0);
-      padding-right: 1em;
-
-      a {
-        @include transition (all 0.2s ease-in-out);
-        background: $navigation-nav-button-background;
-        border-radius: $base-border-radius; 
-        color: white;
-        font-size: .8em;  
-        font-weight: 800;
-        padding: .6em 1em;
-        text-transform: uppercase;
-
-        &:hover {
-          background: lighten($navigation-nav-button-background, 10);
-        }
-      }
-    }
-  }
-
+  
   li.account {
     @include position(absolute, 0px 0px null null);
-    font-size: .9em;
+    font-size: .9em; 
   }
 
   .main-actions {
