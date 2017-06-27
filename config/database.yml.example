@@ -1,26 +1,19 @@
-development:
+defaults: &defaults
   adapter: postgresql
   encoding: unicode
-  database: punchclock_development
   pool: 5
-  username:
-  password:
-  host: <%= ENV.fetch("DATABASE_HOST", "127.0.0.1") %>
+  host: <%= ENV.fetch("DB_HOST", "127.0.0.1") %>
+  username: <%= ENV.fetch("DB_USER", "postgres") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "postgres") %>
+
+development:
+  <<: *defaults
+  database: punchclock_development
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *defaults
   database: punchclock_test
-  pool: 5
-  username:
-  password:
-  host: <%= ENV.fetch("DATABASE_HOST", "127.0.0.1") %>
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *defaults
   database: punchclock_production
-  pool: 5
-  username:
-  password:
-  host: <%= ENV.fetch("DATABASE_HOST", "127.0.0.1") %>

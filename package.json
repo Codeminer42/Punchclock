@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "postinstall": "RAILS_ENV=production bundle exec rake webpack:compile"
+    "postinstall": "RAILS_ENV=production bundle exec rake webpack:compile",
+    "server": "webpack-dev-server --host 0.0.0.0 --config config/webpack.config.js"
   },
   "engines": {
     "node": "5.3.0"
@@ -36,6 +37,5 @@
     "superagent-as-promised": "~4.0.0",
     "webpack": "^2.3.3",
     "webpack-dev-server": "^1.9.0"
-  },
-  "devDependencies": {}
+  }
 }
