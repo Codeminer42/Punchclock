@@ -1,120 +1,52 @@
-$navigation-background: $dark-gray;
-$navigation-color: transparentize(white, 0.3);
-$navigation-color-hover: white;
-$navigation-height: 50px;
+$navigation-background: $flat-dark-gray;
+$navigation-color: $flat-clouds;
+$navigation-color-hover: darken($flat-dark-gray, 3%);
 
-header.navigation {
-  background-color: $navigation-background;
-  border-bottom: 1px solid darken($navigation-background, 10);
-  font-family: $sans-serif;
-  height: $navigation-height;
-  width: 100%;
-  
-  
-  .menu-wrapper {
-    @include outer-container;
-    position: relative;
-    width: 96%;
-  }
+.topnav {
+  background-color: $flat-dark-gray;
+  overflow: hidden;
 
-  .navigation-menu-button {
+  a {
     color: $navigation-color;
-    cursor: pointer;
+    float: left;
     display: block;
-    float: right;
-    font-family: $sans-serif;
-    font-weight: 700;
-    line-height: $navigation-height;
-    margin: 0;
-    padding-right: 1em;
-    text-transform: uppercase;
-
-    @include media ($large-screen) {
-      display: none;
-    }
+    padding: 0.5em 1em;
+    text-align: left;
+    text-decoration: none;
 
     &:hover {
-      color: $navigation-color-hover;
+      background-color: $navigation-color-hover;
+      transition: 0.4s;
     }
   }
 
-  .nav {
-    @include media ($large-screen) {
-      float: left;
-    }
-  }
-
-  ul#navigation-menu {    
-    clear: both;
-    -webkit-transform-style: preserve-3d; // stop webkit flicker
+  .icon {
     display: none;
-    margin: 0 auto;
-    overflow: hidden;
-    padding: 0;
-    width: 100%;
-    
-
-    @include media ($large-screen) {
-      display: inline-block;
-      margin: 0;
-      padding: 0;
-    }
   }
 
-  ul li {
-    background: $navigation-background;
-    display: block;
-    line-height: $navigation-height;
-    overflow: hidden;
-    padding-right: .8em;
-    text-align: right;
-    width: 100%;
-    vertical-align: top;
-
-    @include media ($large-screen) {
-      background: transparent;
-      display: inline-block;
-      line-height: $navigation-height;
-      padding-right: 2em;
-      text-decoration: none;
-      width: auto;
-    }
-
-    a {
-      font-weight: 400;
-      color: $navigation-color;
-
-      &:hover {
-        color: $navigation-color-hover;
-      }
-    }
-  }
-
-  .nav-brand {
+  .nav-brand a{
     line-height: 1.1;
     padding-top: 0.417em;
     padding-bottom: 0.417em;
     font-size: 1.2em;
+    float: left;
 
     small {
       display: block;
       font-size: 0.65em;
     }
   }
-  
-  li.account {
-    @include position(absolute, 0px 0px null null);
-    font-size: .9em; 
+
+  .links a {
+    padding-top: 0.813em;
+    padding-bottom: 0.813em;
   }
 
-  .main-actions {
-    @include outer-container;
-    text-align: right;
-    margin: 1em auto;
-  }
 
-  .button {
-    @include button(pill, $base-accent-color);
+  .account-options {
+    @include media($large-screen) {
+      float: right;
+    }
   }
 
   .beta {
@@ -125,5 +57,42 @@ header.navigation {
     padding: 2px 5px;
     position: relative;
     top: -10px;
+  }
+}
+
+
+
+/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: $large-screen) {
+  .topnav {
+    .links a {
+      display: none;
+    }
+
+    a.icon {
+      float: right;
+      display: block;
+      padding-top: 0.813em;
+      padding-bottom: 0.813em;
+    }
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: $large-screen) {
+  .topnav.responsive {
+    position: relative;
+    
+    a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  
+    a.icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 }
