@@ -8,35 +8,26 @@ A simple electronic punch clock to track hours spent on projects.
 | [staging][1] | [production][2] |
 |--------------|-----------------|
 
-## Rails
+## Dependencies
 
-This app uses Rails 4.2.8 and Postgres >= 9.1
+```
+Ruby 2.4.1
+Rails 4.2.8
+Postgres >= 9.1
+```
 
 ## Installing
-
-Make sure you have `ruby 2.4.1` installed.
 
 ```console
 $ git clone git@gitlab42.com:Codeminer42/Punchclock.git
 $ cd Punchclock
-$ cp config/database.yml.example config/database.yml
+$ bin/setup
 $ cp .env.example .env
-$ bundle install
-$ bundle exec rake db:setup
 ```
 
-### Postgree Notes
-If something went wrong take a look on
-config/database.yml
-If necessary change username and/or host.
+## Database
 
-### Development
-
-Run:
-```console
-$ rake db:seed
-```
-And the following admin users will be created
+After installation steps the following admin users will be created in database
 
 1. Super Admin User
 ```
@@ -60,16 +51,16 @@ Run it on development mode using `thin`
 $ foreman start -f Procfile.dev
 ```
 
-### Console
+### Docker
 
 ```console
-$ bundle exec rails c
+$ cp config/database.yml.example config/database.yml
+$ docker-compose up -d
 ```
 
 ## Testing
 
-This app uses Rspec, Factory Girl, Forgery and Faker to fake reality.
-
+This app uses RSpec, Factory Girl, Forgery and Faker to fake reality.
 Please read [betterspecs.org](http://betterspecs.org/).
 
 At first time:
@@ -82,7 +73,6 @@ Running tests:
 ```console
 $ bundle exec rake spec
 ```
-
 
 Running with [Guard](https://github.com/guard/guard-rspec):
 
