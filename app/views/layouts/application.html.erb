@@ -3,8 +3,7 @@
   <head>
     <title>Punchclock</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application" %>
+    <%= stylesheet_link_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
 
@@ -15,5 +14,6 @@
       <%= yield %>
     </div>
     <%= render 'refills/footer' %>
+    <%= javascript_include_tag "application" %>
   </body>
 </html>
