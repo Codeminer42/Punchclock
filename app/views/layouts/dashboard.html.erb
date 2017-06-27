@@ -12,6 +12,7 @@
     <div class="main">
       <%= yield %>
     </div>
+    <%= javascript_include_tag "application" %>
     <%= javascript_include_tag *webpack_asset_paths("application") %>
     <%= render 'refills/footer' %>
   </body>
