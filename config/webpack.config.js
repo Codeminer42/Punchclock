@@ -75,10 +75,13 @@ if (production) {
   );
 } else {
   config.devServer = {
+    disableHostCheck: true,
     port: devServerPort,
     headers: { 'Access-Control-Allow-Origin': '*' }
   };
-  config.output.publicPath = '//localhost:' + devServerPort + '/webpack/';
+
+  config.output.publicPath = '//0.0.0.0:' + devServerPort + '/webpack/';
+
   // Source maps
   config.devtool = 'cheap-module-eval-source-map';
 }
