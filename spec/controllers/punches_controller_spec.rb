@@ -119,11 +119,11 @@ describe PunchesController do
           end
 
           it "sets the 'from' attribute correctly" do
-            expect(punch.from).to eq(DateTime.new(2001, 1, 1, 8, 0, 0, 0))
+            expect(punch.from).to eq(DateTime.new(2001, 1, 5, 8, 0, 0, 0))
           end
 
           it "sets the 'to' attribute correctly" do
-            expect(punch.to).to eq(DateTime.new(2001, 1, 1, 17, 0, 0, 0))
+            expect(punch.to).to eq(DateTime.new(2001, 1, 5, 17, 0, 0, 0))
           end
 
           it "sets the 'extra_hour' attribute correctly" do
@@ -154,7 +154,7 @@ describe PunchesController do
             id: punch.id,
             when_day: '2013-08-20',
             punch: {
-              :'when_day' => DateTime.new(2001, 1, 1),
+              :'when_day' => DateTime.new(2001, 1, 5),
               :'from_time' => '10:00',
               :'to_time' => '14:00',
               :'extra_hour' => '02:00',
@@ -166,14 +166,14 @@ describe PunchesController do
         context "when updating" do
           it "updates the 'from' attribute correctly" do
             expect { put :update, params }.to change { punch.reload.from }.
-              from(DateTime.new(2001, 1, 1, 8, 0, 0, 0)).
-                to(DateTime.new(2001, 1, 1, 10, 0, 0, 0))
+              from(DateTime.new(2001, 1, 5, 8, 0, 0, 0)).
+                to(DateTime.new(2001, 1, 5, 10, 0, 0, 0))
           end
 
           it "updates the 'to' attribute correctly" do
             expect { put :update, params }.to change { punch.reload.to }.
-              from(DateTime.new(2001, 1, 1, 17, 0, 0, 0)).
-                to(DateTime.new(2001, 1, 1, 14, 0, 0, 0))
+              from(DateTime.new(2001, 1, 5, 17, 0, 0, 0)).
+                to(DateTime.new(2001, 1, 5, 14, 0, 0, 0))
           end
 
           it "updates the 'extra_hour' attribute correctly" do
