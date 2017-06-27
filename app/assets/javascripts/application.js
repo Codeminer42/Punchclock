@@ -41,3 +41,12 @@ function markAsRead(id){
     data: { notification: { read: true } }
   })
 }
+
+document.getElementById("menu-icon").addEventListener("click",function(){
+  let x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+      x.className += " responsive";
+  } else {
+      x.className = "topnav";
+  }
+});
