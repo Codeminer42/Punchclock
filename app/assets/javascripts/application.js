@@ -4,33 +4,21 @@
 //= require bootstrap
 //= require jquery_nested_form
 
-$(function() {
-  var menu = $('#navigation-menu');
-  var menuToggle = $('#js-mobile-menu');
-
-  $(menuToggle).on('click', function(e) {
-    e.preventDefault();
-    menu.slideToggle(function(){
-      if(menu.is(':hidden')) {
-        menu.removeAttr('style');
-      }
-    });
-  });
-
-
-  $(".file-field-import-csv").change(function() {
-      $(this).parents("form").submit();
+$(function () {
+  
+  $(".file-field-import-csv").change(function () {
+    $(this).parents("form").submit();
   });
 
   $('input.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 
 });
 
-function openNotificationCenter(){
+function openNotificationCenter() {
   document.getElementById("n-r-count").innerHTML = "Notifications <span class=\"caret\"/>";
 }
 
-function markAsRead(id){
+function markAsRead(id) {
   document.getElementById("n-r-count").innerHTML = "Notifications <span class=\"caret\"/>";
   var element = "n-rd-" + id;
   document.getElementById(element).remove();
@@ -42,11 +30,6 @@ function markAsRead(id){
   })
 }
 
-document.getElementById("menu-icon").addEventListener("click",function(){
-  let x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-      x.className += " responsive";
-  } else {
-      x.className = "topnav";
-  }
+$("#menu-icon").click(function () {
+  $('.topnav').toggleClass('responsive');
 });
