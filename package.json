@@ -16,7 +16,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "~6.24.1",
     "classnames": "^2.2.3",
-    "fsevents": "^1.1.2",
     "history": "~4.6.1",
     "immutable": "~3.8.1",
     "jquery": "^3.2.1",
