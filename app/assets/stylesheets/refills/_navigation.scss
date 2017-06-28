@@ -50,9 +50,9 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
   }
 
   .beta {
+    background: $light-yellow;
     border-radius: 10px;
     color: $flat-pumpkin;
-    background: $light-yellow;
     font-size: .6em;
     padding: 2px 5px;
     position: relative;
@@ -70,6 +70,7 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
     }
 
     a.icon {
+      cursor: pointer;
       float: right;
       display: block;
       padding-top: 0.813em;
@@ -89,7 +90,7 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
       text-align: left;
     }
   
-    a.icon {
+    .icon {
       position: absolute;
       right: 0;
       top: 0;
