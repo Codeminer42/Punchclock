@@ -5,31 +5,32 @@
 //= require jquery_nested_form
 
 $(function () {
-  
-  $(".file-field-import-csv").change(function () {
-    $(this).parents("form").submit();
+  $('.file-field-import-csv').change(function () {
+    $(this).parents('form').submit();
   });
 
   $('input.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 
+  $('#menu-icon').click(function () {
+    $('.topnav').toggleClass('responsive');
+  });
 });
 
 function openNotificationCenter() {
-  document.getElementById("n-r-count").innerHTML = "Notifications <span class=\"caret\"/>";
+  var content = 'Notifications <span class="caret"></span>';
+  document.getElementById('n-r-count').innerHTML = content;
 }
 
 function markAsRead(id) {
-  document.getElementById("n-r-count").innerHTML = "Notifications <span class=\"caret\"/>";
-  var element = "n-rd-" + id;
-  document.getElementById(element).remove();
+  openNotificationCenter();
+  document.getElementById('n-rd-'+ id).remove();
+
   $.ajax({
     type: 'PUT',
-    dataType: "json",
+    dataType: 'json',
     url: 'notification/' + id,
-    data: { notification: { read: true } }
-  })
+    data: {
+      notification: { read: true }
+    }
+  });
 }
-
-$("#menu-icon").click(function () {
-  $('.topnav').toggleClass('responsive');
-});
