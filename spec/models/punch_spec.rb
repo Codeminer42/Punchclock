@@ -74,5 +74,18 @@ describe Punch do
                        company: company,
                        project: project, user: user)).to be_valid
     end
+
+    context "with 'allow_overtime' set to true" do
+      before do
+        user.allow_overtime = true
+      end
+
+      it "is valid on holidays" do
+        expect(Punch.new(from: Time.new(2001, 12, 25, 8, 0, 0, 0), # Christimas
+                       to:   Time.new(2001, 12, 25, 17, 0, 0, 0),
+                       company: company,
+                       project: project, user: user)).to be_valid
+      end
+    end
   end
 end

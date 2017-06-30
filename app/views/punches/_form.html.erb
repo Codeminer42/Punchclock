@@ -20,6 +20,10 @@
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
       size: 10,
+      data: { 
+        national_holidays: national_holidays, 
+        allow_overtime: current_user.allow_overtime?
+      },
       value: @punch.from.present? ? l(@punch.from, format: '%Y-%m-%d')
              : Time.now.strftime("%Y-%m-%d")
     }, wrapper_html: { class: %i(col-xs-2) } %>
@@ -39,11 +43,6 @@
 
   <div class="row">
     <%= f.input :comment, wrapper_html: { class: %i(col-xs-6) } %>
-  </div>
-
-  <div>
-    <%= content_tag :div, class: "temp_information", data: { national_holidays: national_holidays } do %>
-<% end %>
   </div>
   <%= f.submit %>
 <%- end %>
