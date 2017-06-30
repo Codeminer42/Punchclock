@@ -12,7 +12,7 @@ $(function () {
   $('input.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 
   $('#menu-icon').click(function () {
-    $('.topnav').toggleClass('responsive');
+    $('.topnav').toggleClass('topnav-opened');
   });
 });
 

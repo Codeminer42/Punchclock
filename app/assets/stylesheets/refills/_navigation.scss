@@ -8,11 +8,13 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
 
   a {
     color: $navigation-color;
-    float: left;
     display: block;
     padding: 0.5em 1em;
-    text-align: left;
     text-decoration: none;
+
+    @include media($large-screen) {
+      float: left;
+    }
 
     &:hover {
       background-color: $navigation-color-hover;
@@ -20,16 +22,14 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
     }
   }
 
-  .icon {
-    display: none;
-  }
-
-  .nav-brand a{
-    line-height: 1.1;
-    padding-top: 0.417em;
-    padding-bottom: 0.417em;
-    font-size: 1.2em;
-    float: left;
+  .nav-brand {
+    a {
+      font-size: 1.2em;
+      line-height: 1.1;
+      padding-top: 0.417em;
+      padding-bottom: 0.417em;
+      padding-left: 0.8em;
+    }
 
     small {
       display: block;
@@ -37,11 +37,28 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
     }
   }
 
-  .links a {
+  .icon {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
     padding-top: 0.813em;
     padding-bottom: 0.813em;
+
+    @include media($large-screen){
+      display: none;
+    }
   }
 
+  .links a {
+    display: none;
+
+    @include media($large-screen){
+      display: block;
+      padding-top: 0.813em;
+      padding-bottom: 0.813em;
+    }
+  }
 
   .account-options {
     @include media($large-screen) {
@@ -51,49 +68,17 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
 
   .beta {
     background: $light-yellow;
-    border-radius: 10px;
+    border-radius: 0.9em;
     color: $flat-pumpkin;
     font-size: .6em;
-    padding: 2px 5px;
-    position: relative;
-    top: -10px;
+    line-height: 1;
+    padding: 0.2em 0.52em;
+    vertical-align: top;
   }
-}
 
-
-
-/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
-@media screen and (max-width: $large-screen) {
-  .topnav {
+  &-opened {
     .links a {
-      display: none;
-    }
-
-    a.icon {
-      cursor: pointer;
-      float: right;
       display: block;
-      padding-top: 0.813em;
-      padding-bottom: 0.813em;
-    }
-  }
-}
-
-/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: $large-screen) {
-  .topnav.responsive {
-    position: relative;
-    
-    a {
-      float: none;
-      display: block;
-      text-align: left;
-    }
-  
-    .icon {
-      position: absolute;
-      right: 0;
-      top: 0;
     }
   }
 }
