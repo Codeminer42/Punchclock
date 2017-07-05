@@ -34,6 +34,9 @@ pt-BR:
       period:
         one: "Folha"
         other: "Folhas"
+      office:
+        one: "Escritório"
+        other: "Escritórios"
     attributes:
       admin_user:
         id: "ID"
@@ -99,6 +102,7 @@ pt-BR:
         confirmed_at: "Confirmado em"
         confirmation_sent_at: "Confirmação enviada em"
         allow_overtime: "Permitir dias não úteis"
+        office: "Escritório"
       punch:
         id: "ID"
         project_id: "Projeto"
@@ -131,3 +135,12 @@ pt-BR:
         review: "Revisão"
         created_at: "Criado em"
         updated_at: "Atualizado em"
+      office:
+        id: "ID"
+        company: "Empresa"
+        city: "Cidade"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
+        users_quantity: "Quantidade de usuários"
+        users: "Usuários"
+        regional_holidays: "Feriados regionais"
