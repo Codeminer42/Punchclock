@@ -75,6 +75,17 @@ describe Punch do
                        project: project, user: user)).to be_valid
     end
 
+    it "is not valid on regional holidays" do
+      RegionalHoliday.create(name: 'City Holiday',
+                             day: 15,
+                             month: 5,
+                             offices: [user.office])
+      expect(Punch.new(from: Time.new(2001, 5, 15, 8, 0, 0, 0), # City Holiday
+                       to:   Time.new(2001, 5, 15, 17, 0, 0, 0),
+                       company: company,
+                       project: project, user: user)).to_not be_valid
+    end
+
     context "with 'allow_overtime' set to true" do
       before do
         user.allow_overtime = true
@@ -85,6 +96,17 @@ describe Punch do
                        to:   Time.new(2001, 12, 25, 17, 0, 0, 0),
                        company: company,
                        project: project, user: user)).to be_valid
+      end
+
+      it "is valid on regional holidays" do
+        RegionalHoliday.create(name: 'City Holiday',
+                               day: 15,
+                               month: 5,
+                               offices: [FactoryGirl.create(:office)])
+        expect(Punch.new(from: Time.new(2001, 5, 15, 8, 0, 0, 0), # City Holiday
+                         to:   Time.new(2001, 5, 15, 17, 0, 0, 0),
+                         company: company,
+                         project: project, user: user)).to be_valid
       end
     end
   end

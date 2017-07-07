@@ -10,8 +10,8 @@ module ApplicationHelper
   def national_holidays
     from = Date.today.beginning_of_year
     to = Date.today.end_of_year
-    Holidays.between(from, to, :br, :informal).map do
-      |holiday| [holiday[:date].month, holiday[:date].day]
+    Holidays.between(from, to, :br, :informal).map do |holiday|
+      [holiday[:date].month, holiday[:date].day]
     end
   end
 end

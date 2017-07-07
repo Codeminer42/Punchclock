@@ -17,6 +17,7 @@ ActiveAdmin.register User do
       f.input :name
       f.input :email
       f.input :hour_cost, input_html: { value: '0.0' }
+      f.input :office
       if current_admin_user.is_super?
         f.input :company
       else
@@ -24,7 +25,6 @@ ActiveAdmin.register User do
           user.company.name => current_admin_user.company_id
         }
       end
-      f.input :office
       f.input :role, as: :select, collection: User.roles.keys
       f.input :reviewer
       f.input :allow_overtime

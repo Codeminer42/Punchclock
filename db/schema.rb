@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170705171046) do
-=======
 ActiveRecord::Schema.define(version: 20170710132749) do
->>>>>>> 9a8a778... Associate offices with company
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +110,11 @@ ActiveRecord::Schema.define(version: 20170710132749) do
     t.integer "regional_holiday_id", null: false
   end
 
+  create_table "offices_regional_holidays", id: false, force: :cascade do |t|
+    t.integer "office_id",           null: false
+    t.integer "regional_holiday_id", null: false
+  end
+
   add_index "offices_regional_holidays", ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays", using: :btree
   add_index "offices_regional_holidays", ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices", using: :btree
 
@@ -143,6 +144,14 @@ ActiveRecord::Schema.define(version: 20170710132749) do
   add_index "punches", ["company_id"], name: "index_punches_on_company_id", using: :btree
   add_index "punches", ["project_id"], name: "index_punches_on_project_id", using: :btree
   add_index "punches", ["user_id"], name: "index_punches_on_user_id", using: :btree
+
+  create_table "regional_holidays", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "day"
+    t.integer  "month"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
