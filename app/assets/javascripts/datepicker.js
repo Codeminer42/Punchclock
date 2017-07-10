@@ -1,18 +1,25 @@
-function nationalDays(date) {
-  nationalHolidays = $('.datepicker').data('nationalHolidays');
+function isHoliday(date) {
+  const nationalHolidays = $('.datepicker').data('nationalHolidays');
+  const regionalHolidays = $('.datepicker').data('regionalHolidays');
+  const allHolidays = nationalHolidays.concat(regionalHolidays);
 
-  for (i = 0; i < nationalHolidays.length; i++) {
-    if (date.getMonth() == nationalHolidays[i][0] - 1 && date.getDate() == nationalHolidays[i][1]) {
-     return [false, ''];
-    }
+  date = [date.getMonth() + 1, date.getDate()];
+
+  if (allHolidays.find(isSameDay, {date: date})) {
+    return [false, ''];
   }
+
   return [true, ''];
 }
 
+function isSameDay(holiday) {
+  return holiday[0] ===  this.date[0] && holiday[1] === this.date[1];
+}
+
 function noWeekendsOrHolidays(date) {
-  var noWeekend = $.datepicker.noWeekends(date);
+  const noWeekend = $.datepicker.noWeekends(date);
   if (noWeekend[0]) {
-    return nationalDays(date);
+    return isHoliday(date);
   } else {
     return noWeekend;
   }

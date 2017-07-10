@@ -20,8 +20,9 @@
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
       size: 10,
-      data: { 
-        national_holidays: national_holidays, 
+      data: {
+        national_holidays: national_holidays,
+        regional_holidays: parameterize_holidays(current_user.office.regional_holidays),
         allow_overtime: current_user.allow_overtime?
       },
       value: @punch.from.present? ? l(@punch.from, format: '%Y-%m-%d')
