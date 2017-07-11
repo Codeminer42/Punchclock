@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
+cp config/database.yml.example config/database.yml
+
 bundle install
 npm install --unsafe-perm
-
-cp config/database.yml.example config/database.yml
 
 bundle exec rake db:setup
