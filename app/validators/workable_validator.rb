@@ -11,14 +11,22 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def regional_holiday?
-    pair = ->(monthday) {[monthday.month, monthday.day]}
+    punch_date = format_date(@model.from)
     @model.user.regional_holidays.any? do |holiday|
-      pair.call(holiday) == pair.call(@model.from)
+      same_day?(punch_date, format_date(holiday))
     end
   end
 
   def workable_day?
     !@model.user.allow_overtime &&
     (weekend? || @model.from.to_date.holiday?(:br) || regional_holiday?)
+  end
+
+  def same_day?(date, holiday)
+    date == holiday
+  end
+
+  def format_date(date)
+    [date.month, date.day]
   end
 end
