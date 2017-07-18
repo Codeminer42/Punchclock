@@ -12,7 +12,7 @@ class WorkableValidator < ActiveModel::Validator
 
   def regional_holiday?
     pair = ->(monthday) {[monthday.month, monthday.day]}
-    @model.user.office.regional_holidays.any? do |holiday|
+    @model.user.regional_holidays.any? do |holiday|
       pair.call(holiday) == pair.call(@model.from)
     end
   end

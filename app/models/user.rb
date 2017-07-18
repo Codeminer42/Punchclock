@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
+  delegate :regional_holidays, to: :office
+
   enum role: %i(trainee junior pleno senior)
 
   def self.find_for_googleapps_oauth(access_token, signed_in_resource = nil)
