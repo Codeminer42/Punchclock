@@ -3,23 +3,25 @@ function isHoliday(date) {
   const regionalHolidays = $('.datepicker').data('regionalHolidays');
   const allHolidays = nationalHolidays.concat(regionalHolidays);
 
-  date = [date.getMonth() + 1, date.getDate()];
+  const toPairMonthDay = date => [date.getMonth() + 1, date.getDate()];
+  const datePair = toPairMonthDay(date);
 
-  if (allHolidays.find(isSameDay, {date: date})) {
-    return [false, ''];
+  const isSamePair = today => holiday => (
+    holiday[0] == today[0] &&
+    holiday[1] == today[1]
+  );
+
+  if (allHolidays.find(isSamePair(datePair))) {
+    return false;
   }
 
-  return [true, ''];
-}
-
-function isSameDay(holiday) {
-  return holiday[0] ===  this.date[0] && holiday[1] === this.date[1];
+  return true;
 }
 
 function noWeekendsOrHolidays(date) {
   const noWeekend = $.datepicker.noWeekends(date);
   if (noWeekend[0]) {
-    return isHoliday(date);
+    return [isHoliday(date)];
   } else {
     return noWeekend;
   }
