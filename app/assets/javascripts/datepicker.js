@@ -1,21 +1,17 @@
+const extractHolidays = $el =>
+  $el.data('nationalHolidays').concat($el.data('regionalHolidays'));
+
+const toPairMonthDay = date => [date.getMonth() + 1, date.getDate()];
+
+const isSamePair = today => holiday => (
+  holiday[0] == today[0] &&
+  holiday[1] == today[1]
+);
+
 function isHoliday(date) {
-  const nationalHolidays = $('.datepicker').data('nationalHolidays');
-  const regionalHolidays = $('.datepicker').data('regionalHolidays');
-  const allHolidays = nationalHolidays.concat(regionalHolidays);
-
-  const toPairMonthDay = date => [date.getMonth() + 1, date.getDate()];
+  const allHolidays = extractHolidays($('.datepicker'));
   const datePair = toPairMonthDay(date);
-
-  const isSamePair = today => holiday => (
-    holiday[0] == today[0] &&
-    holiday[1] == today[1]
-  );
-
-  if (allHolidays.find(isSamePair(datePair))) {
-    return false;
-  }
-
-  return true;
+  return !allHolidays.find(isSamePair(datePair));
 }
 
 function noWeekendsOrHolidays(date) {
