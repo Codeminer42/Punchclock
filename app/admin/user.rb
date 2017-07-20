@@ -3,9 +3,11 @@ ActiveAdmin.register User do
     column :company
     column :name
     column :email
+    column :office
     column :reviewer
     column :role
     column :hour_cost
+    column :allow_overtime
     column :active
     actions
   end
@@ -15,6 +17,7 @@ ActiveAdmin.register User do
       f.input :name
       f.input :email
       f.input :hour_cost, input_html: { value: '0.0' }
+      f.input :office
       if current_admin_user.is_super?
         f.input :company
       else
@@ -24,6 +27,7 @@ ActiveAdmin.register User do
       end
       f.input :role, as: :select, collection: User.roles.keys
       f.input :reviewer
+      f.input :allow_overtime
       f.input :password
       f.input :active
     end
@@ -36,7 +40,8 @@ ActiveAdmin.register User do
     end
 
     def permitted_params
-      params.permit user: [:name, :email, :company_id, :role, :reviewer_id, :hour_cost, :password, :active]
+      params.permit user: [:name, :email, :company_id, :role, :reviewer_id,
+        :hour_cost, :password, :active, :allow_overtime, :office_id]
     end
 
     def new
@@ -77,9 +82,11 @@ ActiveAdmin.register User do
       row :id
       row :name
       row :email
+      row :office
       row :role
       row :reviewer
       row :hour_cost
+      row :allow_overtime
       row :active
       row :last_sign_in_at
       row :created_at

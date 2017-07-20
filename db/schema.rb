@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609142723) do
+ActiveRecord::Schema.define(version: 20170710132749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,28 @@ ActiveRecord::Schema.define(version: 20170609142723) do
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
+  create_table "offices", force: :cascade do |t|
+    t.string   "city"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "company_id"
+  end
+
+  add_index "offices", ["company_id"], name: "index_offices_on_company_id", using: :btree
+
+  create_table "offices_regional_holidays", id: false, force: :cascade do |t|
+    t.integer "office_id",           null: false
+    t.integer "regional_holiday_id", null: false
+  end
+
+  create_table "offices_regional_holidays", id: false, force: :cascade do |t|
+    t.integer "office_id",           null: false
+    t.integer "regional_holiday_id", null: false
+  end
+
+  add_index "offices_regional_holidays", ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays", using: :btree
+  add_index "offices_regional_holidays", ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices", using: :btree
+
   create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -123,8 +145,16 @@ ActiveRecord::Schema.define(version: 20170609142723) do
   add_index "punches", ["project_id"], name: "index_punches_on_project_id", using: :btree
   add_index "punches", ["user_id"], name: "index_punches_on_user_id", using: :btree
 
+  create_table "regional_holidays", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "day"
+    t.integer  "month"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",   null: false
+    t.string   "email",                  default: "",    null: false
     t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -138,7 +168,7 @@ ActiveRecord::Schema.define(version: 20170609142723) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "company_id"
-    t.decimal  "hour_cost",              default: 0.0,  null: false
+    t.decimal  "hour_cost",              default: 0.0,   null: false
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -152,6 +182,8 @@ ActiveRecord::Schema.define(version: 20170609142723) do
     t.boolean  "active",                 default: true
     t.integer  "reviewer_id"
     t.integer  "role"
+    t.boolean  "allow_overtime",         default: false
+    t.integer  "office_id"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
@@ -159,10 +191,12 @@ ActiveRecord::Schema.define(version: 20170609142723) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+  add_index "users", ["office_id"], name: "index_users_on_office_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["reviewer_id"], name: "index_users_on_reviewer_id", using: :btree
 
   add_foreign_key "evaluations", "users"
   add_foreign_key "evaluations", "users", column: "reviewer_id"
+  add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "reviewer_id"
 end

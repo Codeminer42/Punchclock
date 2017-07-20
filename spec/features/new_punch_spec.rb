@@ -14,7 +14,7 @@ feature 'Add new Punch' do
     within '#new_punch' do
       fill_in 'punch[from_time]', with: '08:00'
       fill_in 'punch[to_time]', with: '12:00'
-      fill_in 'punch[when_day]', with: '2001-01-01'
+      fill_in 'punch[when_day]', with: '2001-01-05'
       select active_project.name, from: 'punch[project_id]'
       click_button 'Criar Punch'
     end

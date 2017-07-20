@@ -32,6 +32,7 @@ gem 'rails-i18n'
 gem 'responders'
 gem 'webpack-rails'
 gem 'kaminari', '0.17.0'
+gem 'holidays', '5.6.0'
 
 gem 'sidekiq'
 gem 'clockwork', '~> 1.0.0'

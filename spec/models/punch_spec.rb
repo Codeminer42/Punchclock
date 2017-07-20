@@ -12,8 +12,8 @@ describe Punch do
     let(:punch) do
       build(
         :punch,
-        from: Time.new(2014, 1, 1, 8),
-        to: Time.new(2014, 1, 1, 12)
+        from: Time.new(2001, 1, 5, 8),
+        to: Time.new(2001, 1, 5, 12)
       )
     end
 
@@ -24,31 +24,116 @@ describe Punch do
 
   describe 'Datetime mount' do
     let(:params) do
-      { from_time: '08:00', to_time: '12:00', when_day: Date.new(2014, 1, 1) }
+      { from_time: '08:00', to_time: '12:00', when_day: Date.new(2001, 1, 5) }
     end
     subject(:punch) { FactoryGirl.create :punch, params }
 
     it 'mount datetimes correctly' do
-      expect(punch.from.utc).to eq(Time.utc(2014, 1, 1, 8, 0))
-      expect(punch.to.utc).to eq(Time.utc(2014, 1, 1, 12, 0))
+      expect(punch.from.utc).to eq(Time.utc(2001, 1, 5, 8, 0))
+      expect(punch.to.utc).to eq(Time.utc(2001, 1, 5, 12, 0))
     end
   end
 
   context 'times validation' do
     let(:project) { FactoryGirl.create(:project) }
     let(:user) { FactoryGirl.create(:user) }
+    let(:company) { FactoryGirl.create(:company) }
+    let(:punch) { FactoryGirl.build(:punch) }
 
     it 'does not allow retroactive end date' do
-
-      expect(Punch.new(from: Time.new(2001, 2, 1, 8, 0, 0, 0),
-                       to: Time.new(2001, 1, 1, 17, 0, 0, 0),
+      expect(Punch.new(from: Time.new(2001, 2, 5, 8, 0, 0, 0),
+                       to: Time.new(2001, 1, 5, 17, 0, 0, 0),
+                       company: company,
                        project: project, user: user)).not_to be_valid
     end
 
     it 'does not allow times from diferent days' do
-      expect(Punch.new(from: Time.new(2001, 1, 1, 8, 0, 0, 0),
-                       to:   Time.new(2001, 1, 2, 17, 0, 0, 0),
+      expect(Punch.new(from: Time.new(2001, 1, 4, 8, 0, 0, 0),
+                       to:   Time.new(2001, 1, 5, 17, 0, 0, 0),
+                       company: company,
                        project: project, user: user)).not_to be_valid
+    end
+
+    context "on weekends" do
+      before do
+        punch.from = Time.new(2001, 1, 6, 8, 0, 0, 0) # Saturday
+      end
+
+      it "is not valid" do
+        expect(punch).not_to be_valid
+      end
+
+      it "includes an error message" do
+        punch.validate
+        expect(punch.errors[:from]).to include('you can only select workdays')
+      end
+    end
+
+    context "on holidays" do
+      before do
+        punch.from = Time.new(2001, 12, 25, 8, 0, 0, 0) # Christimas
+      end
+
+      it "is not valid" do
+        expect(punch).not_to be_valid
+      end
+
+      it "includes an error message" do
+        punch.validate
+        expect(punch.errors[:from]).to include('you can only select workdays')
+      end
+    end
+
+    it "is valid on workdays" do
+      expect(Punch.new(from: Time.new(2001, 1, 4, 8, 0, 0, 0), # Thursday
+                       to:   Time.new(2001, 1, 4, 17, 0, 0, 0),
+                       company: company,
+                       project: project, user: user)).to be_valid
+    end
+
+    context "on regional holidays" do
+      before do
+        RegionalHoliday.create(name: 'City Holiday',
+                             day: 15,
+                             month: 5,
+                             offices: [user.office])
+        punch.user = user
+        punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0) # City Holiday
+        punch.to = Time.new(2001, 5, 15, 13, 0, 0, 0)
+      end
+
+      it "is not valid" do
+        expect(punch).to_not be_valid
+      end
+
+      it "includes an error message" do
+        punch.validate
+        expect(punch.errors[:from]).to include('you can only select workdays')
+      end
+    end
+
+    context "with 'allow_overtime' set to true" do
+      before do
+        user.allow_overtime = true
+      end
+
+      it "is valid on holidays" do
+        expect(Punch.new(from: Time.new(2001, 12, 25, 8, 0, 0, 0), # Christimas
+                       to:   Time.new(2001, 12, 25, 17, 0, 0, 0),
+                       company: company,
+                       project: project, user: user)).to be_valid
+      end
+
+      it "is valid on regional holidays" do
+        RegionalHoliday.create(name: 'City Holiday',
+                               day: 15,
+                               month: 5,
+                               offices: [FactoryGirl.create(:office)])
+        expect(Punch.new(from: Time.new(2001, 5, 15, 8, 0, 0, 0), # City Holiday
+                         to:   Time.new(2001, 5, 15, 17, 0, 0, 0),
+                         company: company,
+                         project: project, user: user)).to be_valid
+      end
     end
   end
 end

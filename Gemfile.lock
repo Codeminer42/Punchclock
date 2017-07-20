@@ -199,6 +199,7 @@ GEM
       multi_json (>= 1.9.2)
       netrc
     hike (1.2.3)
+    holidays (5.6.0)
     i18n (0.8.4)
     inherited_resources (1.6.0)
       actionpack (>= 3.2, < 5)
@@ -464,6 +465,7 @@ DEPENDENCIES
   forgery
   guard
   guard-rspec
+  holidays (= 5.6.0)
   jbuilder
   jquery-rails
   jquery-ui-rails

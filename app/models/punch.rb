@@ -7,6 +7,7 @@ class Punch < ActiveRecord::Base
 
   validates_presence_of :from, :to, :project_id, :user_id, :company_id
   validates [:from, :to], check_time: true
+  validates_with WorkableValidator, if: ->() { from.present? && user.present? }
 
   mount_uploader :attachment, AttachmentUploader
 

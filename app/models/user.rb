@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  belongs_to :office
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
   has_many :written_evaluations, class_name: :Evaluation, foreign_key: :reviewer_id
@@ -10,11 +11,14 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
   validates :company, presence: true
+  validates :office, presence: true
 
   accepts_nested_attributes_for :company
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
+
+  delegate :regional_holidays, to: :office
 
   enum role: %i(trainee junior pleno senior)
 
