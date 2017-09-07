@@ -110,11 +110,6 @@ ActiveRecord::Schema.define(version: 20170710132749) do
     t.integer "regional_holiday_id", null: false
   end
 
-  create_table "offices_regional_holidays", id: false, force: :cascade do |t|
-    t.integer "office_id",           null: false
-    t.integer "regional_holiday_id", null: false
-  end
-
   add_index "offices_regional_holidays", ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays", using: :btree
   add_index "offices_regional_holidays", ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices", using: :btree
 

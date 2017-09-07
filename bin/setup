@@ -2,6 +2,7 @@
 
 cp config/database.yml.example config/database.yml
 
+gem install bundler
 bundle install
 npm install --unsafe-perm
 

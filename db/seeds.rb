@@ -1,42 +1,36 @@
-company = Company.where(name: 'Codeminer42').
-  first_or_create! name: 'Codeminer42'
+company = Company.find_or_create_by!(name: 'Codeminer42')
+office  = Office.find_or_create_by!(city: 'Natal', company: company)
+project = Project.find_or_create_by!(name: 'Punchclock', company: company)
 
-super_admin = AdminUser.where(email: 'super@codeminer42.com').
-  first_or_create!(
-    email: 'super@codeminer42.com',
-    password: 'password',
-    password_confirmation: 'password',
-    is_super: true,
-    company: company
-  )
+ AdminUser.find_or_create_by!(email: 'super@codeminer42.com') do |admin|
+  admin.password = 'password'
+  admin.password_confirmation = 'password'
+  admin.is_super = true
+  admin.company = company
+end
 
-admin_user = AdminUser.where(email: 'admin@codeminer42.com').
-  first_or_create!(
-    email: 'admin@codeminer42.com',
-    password: 'password',
-    password_confirmation: 'password',
-    company: company
-  )
+AdminUser.find_or_create_by!(email: 'admin@codeminer42.com') do |admin|
+  admin.password = 'password'
+  admin.password_confirmation = 'password'
+  admin.company = company
+end
 
-user = User.where(email: 'halan.pinheiro@codeminer42.com').
-  first_or_create!(
-    name: 'Halan Pinheiro',
-    email: 'halan.pinheiro@codeminer42.com',
-    password: 'password',
-    company: company
-  )
+user_1 = User.find_or_create_by!(email: 'halan.pinheiro@codeminer42.com') do |user|
+  user.name = 'Halan Pinheiro'
+  user.email = 'halan.pinheiro@codeminer42.com'
+  user.password = 'password'
+  user.company = company
+  user.office = office
+end
 
-project = Project.where(name: 'Punchclock').first_or_create! company: company
-
-(6.months.ago.to_date..1.day.ago.to_date).to_a.each do |date|
+(6.months.ago.to_date..1.day.ago.to_date).reject{ |d| !(d.saturday? || d.sunday?) }.each do |date|
   date = date.to_time
   [[8, 12], [13, 16]].each do |hours|
-    user.punches.create!(
+    user_1.punches.create!(
       from: date.change(hour: hours.first),
       to: date.change(hour: hours.last),
       company: company,
       project: project
     )
   end
-end if user.punches.empty?
-
+end if user_1.punches.empty?
