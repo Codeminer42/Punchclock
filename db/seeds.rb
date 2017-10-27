@@ -23,7 +23,7 @@ user_1 = User.find_or_create_by!(email: 'halan.pinheiro@codeminer42.com') do |us
   user.office = office
 end
 
-(6.months.ago.to_date..1.day.ago.to_date).reject{ |d| (d.saturday? || d.sunday?) }.each do |date|
+(6.months.ago.to_date..1.day.ago.to_date).reject{ |d| d.saturday? || d.sunday? }.each do |date|
   date = date.to_time
   [[8, 12], [13, 16]].each do |hours|
     user_1.punches.create(
