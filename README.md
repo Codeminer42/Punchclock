@@ -11,7 +11,7 @@ A simple electronic punch clock to track hours spent on projects.
 ## Dependencies
 
 ```
-Ruby 2.4.1
+Ruby 2.4.2
 Rails 4.2.8
 Postgres >= 9.1
 ```
@@ -21,8 +21,11 @@ Postgres >= 9.1
 ```console
 $ git clone git@gitlab42.com:Codeminer42/Punchclock.git
 $ cd Punchclock
-$ bin/setup
 $ cp .env.example .env
+$ Install Postgres
+$ Install Redis
+$ Install NodeJS
+$ bin/setup
 ```
 
 ## Database
