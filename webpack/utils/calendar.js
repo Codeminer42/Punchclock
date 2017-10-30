@@ -24,7 +24,7 @@ export function week(date, range){
 }
 
 export function weeks(start, range){
-  let weeksToShow = range[1].clone().endOf('w').diff(start, 'w');
+  const weeksToShow = 4;
   return Immutable.Range(0, weeksToShow).map((i)=> {
     return new Week({days: week(start.clone().add(i, 'w'), range)});
   });
