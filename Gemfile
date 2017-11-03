@@ -52,6 +52,9 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'capybara-selenium'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'therubyracer', '0.12.3'
 end
 
