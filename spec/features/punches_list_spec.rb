@@ -40,8 +40,8 @@ feature 'Punches list' do
   end
 
   scenario 'filter punches' do
-    fill_in 'punches_filter_form_since', with: '2014-01-17'
-    fill_in 'punches_filter_form_until', with: '2014-01-20'
+    fill_in 'punches_filter_form_since', with: '17/01/2014'
+    fill_in 'punches_filter_form_until', with: '20/01/2014'
     select other_project.name, from: 'punches_filter_form_project_id'
     click_button 'Filtrar'
     expect(page).to have_content('0:00')

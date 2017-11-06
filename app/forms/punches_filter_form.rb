@@ -27,12 +27,12 @@ class PunchesFilterForm
 
   def filter_date(relation)
     if @since.present?
-      since_date = Date.strptime(@since, '%Y-%m-%d')
+      since_date = Date.strptime(@since, '%d/%m/%Y')
       relation = relation.since(since_date)
     end
 
     if @until.present?
-      until_date = Date.strptime(@until, '%Y-%m-%d')
+      until_date = Date.strptime(@until, '%d/%m/%Y')
       relation = relation.until(until_date)
     end
 
