@@ -38,7 +38,7 @@ feature 'Punches filter form' do
       visit '/'
 
       within('#new_punches_filter_form') do
-        fill_in 'punches_filter_form_since', with: '2014-02-19'
+        fill_in 'punches_filter_form_since', with: '19/02/2014'
       end
 
       click_on_filter
@@ -48,7 +48,7 @@ feature 'Punches filter form' do
       visit '/'
 
       within('#new_punches_filter_form') do
-        fill_in 'punches_filter_form_until', with: '2014-02-19'
+        fill_in 'punches_filter_form_until', with: '19/02/2014'
       end
 
       click_on_filter
