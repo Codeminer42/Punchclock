@@ -9,7 +9,7 @@
 
 <p>
 <strong><%= Punch.human_attribute_name(:when)%>:</strong>
-  <%= l @punch.from, :format => '%Y-%m-%d' %>
+  <%= l @punch.from, :format => '%d/%m/%Y' %>
   <%= Punch.human_attribute_name(:from) %>
   <%= l @punch.from, :format => '%H:%M' %>
   <%= Punch.human_attribute_name(:to) %>
