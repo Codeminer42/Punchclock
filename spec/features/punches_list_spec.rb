@@ -19,7 +19,7 @@ feature 'Punches list' do
   scenario 'follow show link' do
     click_link "shw-#{punch.id}"
     [
-      I18n.localize(punch.from, format: '%Y-%m-%d'),
+      I18n.localize(punch.from, format: '%d/%m/%Y'),
       I18n.localize(punch.from, format: '%H:%M'),
       I18n.localize(punch.to, format: '%H:%M')
     ].each { |value| expect(page).to have_content value }

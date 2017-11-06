@@ -15,9 +15,9 @@ AdminUser.find_or_create_by!(email: 'admin@codeminer42.com') do |admin|
   admin.company = company
 end
 
-user_1 = User.find_or_create_by!(email: 'halan.pinheiro@codeminer42.com') do |user|
-  user.name = 'Halan Pinheiro'
-  user.email = 'halan.pinheiro@codeminer42.com'
+user_1 = User.find_or_create_by!(email: 'user.teste@codeminer42.com') do |user|
+  user.name = 'Usuario'
+  user.email = 'user.testeo@codeminer42.com'
   user.password = 'password'
   user.company = company
   user.office = office

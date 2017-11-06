@@ -24,7 +24,7 @@ function noWeekendsOrHolidays(date) {
 }
 
 function setDatePicker() {
-  const defaultOptions = { dateFormat: 'yy-mm-dd' };
+  const defaultOptions = { dateFormat: 'dd/mm/yy' };
   const allowOvertime = $(".datepicker").data("allowOvertime");
   const options = allowOvertime
     ? defaultOptions

@@ -25,8 +25,8 @@
         regional_holidays: parameterize_holidays(current_user.regional_holidays),
         allow_overtime: current_user.allow_overtime?
       },
-      value: @punch.from.present? ? l(@punch.from, format: '%Y-%m-%d')
-             : Time.now.strftime("%Y-%m-%d")
+      value: @punch.from.present? ? l(@punch.from, format: '%d/%m/%Y')
+             : Time.now.strftime("%d/%m/%Y")
     }, wrapper_html: { class: %i(col-xs-2) } %>
   </div>
 
