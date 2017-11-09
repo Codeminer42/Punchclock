@@ -9,9 +9,22 @@ ActiveAdmin.register Project do
     column :name
     column :created_at
     column :active
-    actions
+    actions :defaults => false do |f|
+      if current_admin_user.is_super?
+        [
+        link_to('Visualizar', admin_project_path(f)), 
+        ' ',  
+        link_to('Editar',   edit_admin_project_path(f)),
+        ' ',
+        link_to('Deletar',  admin_project_path(f), data: { confirm: 'Are you sure?' }, :method => :delete)
+        ].reduce(:+).html_safe
+      else
+        link_to('Visualizar',  admin_project_path(f))
+      end
+    end
   end
 
+  
   form do |f|
     f.inputs 'Project Details' do
       f.input :name

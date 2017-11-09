@@ -9,7 +9,19 @@ ActiveAdmin.register User do
     column :hour_cost
     column :allow_overtime
     column :active
-    actions
+    actions :defaults => false do |f|
+      if current_admin_user.is_super?
+        [
+        link_to('Visualizar', admin_user_path(f)), 
+        ' ',  
+        link_to('Editar',  edit_admin_user_path(f)),
+        ' ',
+        link_to('Deletar', admin_user_path(f), data: { confirm: 'Are you sure?' }, :method => :delete)
+        ].reduce(:+).html_safe
+      else
+        link_to('Visualizar', admin_user_path(f))
+      end
+    end
   end
 
   form do |f|

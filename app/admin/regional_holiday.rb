@@ -8,8 +8,19 @@ ActiveAdmin.register RegionalHoliday do
     column :offices do |holiday|
       offices_by_holiday(holiday)
     end
-
-    actions
+    actions :defaults => false do |f|
+      if current_admin_user.is_super?
+        [
+        link_to('Visualizar', admin_regional_holiday_path(f)), 
+        ' ',  
+        link_to('Editar',  edit_admin_regional_holiday_path(f)),
+        ' ',
+        link_to('Deletar', admin_regional_holiday_path(f), data: { confirm: 'Are you sure?' }, :method => :delete)
+        ].reduce(:+).html_safe
+      else
+        link_to('Visualizar', admin_regional_holiday_path(f))
+      end
+    end
   end
 
   show do

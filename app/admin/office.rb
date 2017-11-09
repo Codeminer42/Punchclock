@@ -9,7 +9,19 @@ ActiveAdmin.register Office do
       office.users.count
     end
 
-    actions
+    actions :defaults => false do |f|
+      if current_admin_user.is_super?
+        [
+        link_to('Visualizar',  admin_office_path(f)), 
+        ' ',  
+        link_to('Editar',  edit_admin_office_path(f)),
+        ' ',
+        link_to('Deletar', admin_office_path(f), data: { confirm: 'Are you sure?' }, :method => :delete)
+        ].reduce(:+).html_safe
+      else
+        link_to('Visualizar', admin_office_path(f))
+      end
+    end
   end
 
   show title: proc{ |office| office.city } do
