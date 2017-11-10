@@ -9,6 +9,7 @@ ActiveAdmin.setup do |config|
   config.batch_actions = true
   config.csv_options = { col_sep: ';', force_quotes: true }
   config.root_to = 'admin_users#index'
+  config.authorization_adapter = ActiveAdmin::CanCanAdapter  
 end
 
 

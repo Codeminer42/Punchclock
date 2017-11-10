@@ -50,7 +50,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', '0.14.1', require: false
   gem 'codeclimate-test-reporter', require: nil
-  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'capybara-selenium'
   gem 'selenium-webdriver'

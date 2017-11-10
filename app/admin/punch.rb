@@ -10,19 +10,7 @@ ActiveAdmin.register Punch do
     column :to, sortable: false
     column :delta, sortable: false
     column :extra_hour, sortable: false
-    actions :defaults => false do |f|
-      if current_admin_user.is_super?
-        [
-        link_to('Visualizar', admin_punch_path(f)), 
-        ' ',  
-        link_to('Editar',   edit_admin_punch_path(f)),
-        ' ',
-        link_to('Deletar', admin_punch_path(f), data: { confirm: 'Are you sure?' }, :method => :delete)
-        ].reduce(:+).html_safe
-      else
-        link_to('Visualizar',  admin_punch_path(f))
-      end
-    end
+    actions
     div class: 'panel' do
       h3 "Total: #{collection.total_hours}"
     end
