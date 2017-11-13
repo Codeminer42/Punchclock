@@ -8,8 +8,7 @@ ActiveAdmin.register RegionalHoliday do
     column :offices do |holiday|
       offices_by_holiday(holiday)
     end
-
-    actions
+    actions 
   end
 
   show do

@@ -8,8 +8,7 @@ ActiveAdmin.register Office do
     column :users_quantity do |office|
       office.users.count
     end
-
-    actions
+    actions 
   end
 
   show title: proc{ |office| office.city } do
