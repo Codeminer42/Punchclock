@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.is_a?(AdminUser) 
+    if user.is_a?(AdminUser)
       admin_user_permitions(user)
     else
       user_permitions(user)
@@ -12,8 +12,9 @@ class Ability
   private
 
   def admin_user_permitions(user)
-    if user.is_super? 
+    if user.is_super?
       can :manage, :all
+      can :reset_password, AdminUser
     else
       can :read, :all
       can :update, :all

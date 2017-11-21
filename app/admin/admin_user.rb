@@ -6,6 +6,17 @@ ActiveAdmin.register AdminUser do
     actions
   end
 
+  action_item :reset_password, only: :show, if: proc { current_admin_user.is_super? } do
+    link_to reset_password_admin_admin_user_path(resource), method: :post do
+      t('admin_reset_password_button', scope: 'active_admin')
+    end
+  end
+
+  member_action :reset_password, method: :post do
+    resource.send_reset_password_instructions
+    redirect_to resource_path, notice: t('admin_reset_password', scope: 'active_admin')
+  end
+
   form do |f|
     f.inputs 'Admin Details' do
       f.input :email
