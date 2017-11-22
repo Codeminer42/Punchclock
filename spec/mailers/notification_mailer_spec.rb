@@ -36,7 +36,7 @@ describe NotificationMailer do
       let(:mail) { NotificationMailer.notify_admin_registration(admin_user) }
 
       it 'renders the subject' do
-        expect(mail.subject).to eq('You was registered on Punchclock')
+        expect(mail.subject).to eq('You were registered on Punchclock')
       end
 
       it 'renders the receiver email' do

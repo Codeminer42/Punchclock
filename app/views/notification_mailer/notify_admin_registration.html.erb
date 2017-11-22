@@ -1,8 +1,8 @@
 <div> Welcome, </div>
 <br>
-<div> You was registered as <%= @user.company.name %>'s admin on Punchclock</div>
+<div> You were registered as <%= @user.company.name %>'s admin on Punchclock</div>
 <div> Change your password soon as possible </div>
-<%= "Email: #{@user.email}" %>
+<%= "Email: #{@user.email}" %><br />
 <%= "Password: #{@user.password}" %>
 <br>
 <div> Modify your password <%= link_to('here', edit_admin_admin_user_url(@user), only_path: false) %> </div>

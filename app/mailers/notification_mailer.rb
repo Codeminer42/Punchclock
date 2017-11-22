@@ -3,7 +3,7 @@ class NotificationMailer < ActionMailer::Base
 
   def notify_admin_registration(admin_user)
     @user = admin_user
-    mail(to: @user.email, subject: 'You was registered on Punchclock')
+    mail(to: @user.email, subject: 'You were registered on Punchclock')
   end
 
   def notify_successful_signup(user)
