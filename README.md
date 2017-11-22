@@ -44,6 +44,10 @@ E-mail:   admin@codeminer42.com
 Password: password
 ```
 
+## Adding new Javascript
+
+Javascript with ES6 syntax should be compiled by webpack instead of sprockets as of now. The Javascript may work in development mode in modern browsers, but it will break in production mode, be aware.
+
 ## Running
 
 ### Server
@@ -84,14 +88,6 @@ $ bundle exec guard
 ```
 
 ## Deploy
-
-Givin errors to precompile assets must use this heroku add-on.
-
-Please read [labs-user-env-compile](https://devcenter.heroku.com/articles/labs-user-env-compile)
-
-```console
-$ heroku labs:enable user-env-compile -a punchclock
-```
 
 [1]: http://punchclock-staging.herokuapp.com
 [2]: http://punchclock.cm42.io/
