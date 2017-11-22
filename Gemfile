@@ -36,6 +36,8 @@ gem 'holidays', '5.6.0'
 gem 'sidekiq'
 gem 'clockwork', '~> 1.0.0'
 
+gem 'rollbar'
+
 gem 'bourbon'
 gem 'neat'
 gem 'bitters', github: 'thoughtbot/bitters'

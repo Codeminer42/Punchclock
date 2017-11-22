@@ -356,6 +356,8 @@ GEM
     request_store (1.2.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    rollbar (2.15.5)
+      multi_json
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -497,6 +499,7 @@ DEPENDENCIES
   refills!
   reform
   responders
+  rollbar
   rspec-rails
   sass (~> 3.4.0)
   sass-rails
