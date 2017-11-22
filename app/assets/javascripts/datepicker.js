@@ -1,12 +1,16 @@
-const extractHolidays = $el =>
-  $el.data('nationalHolidays').concat($el.data('regionalHolidays'));
 
-const toPairMonthDay = date => [date.getMonth() + 1, date.getDate()];
+const extractHolidays = function($el) {
+  return $el.data('nationalHolidays').concat($el.data('regionalHolidays'));
+}
 
-const isSamePair = today => holiday => (
-  holiday[0] == today[0] &&
-  holiday[1] == today[1]
-);
+const toPairMonthDay = function(date) { return [date.getMonth() + 1, date.getDate()]; }
+
+const isSamePair = function(today) {
+  return function(holiday) {
+    return holiday[0] == today[0] &&
+      holiday[1] == today[1]
+  }
+}
 
 function isHoliday(date) {
   const allHolidays = extractHolidays($('.datepicker'));
@@ -28,6 +32,6 @@ function setDatePicker() {
   const allowOvertime = $(".datepicker").data("allowOvertime");
   const options = allowOvertime
     ? defaultOptions
-    : { defaultOptions, beforeShowDay: noWeekendsOrHolidays };
+    : { defaultOptions: defaultOptions, beforeShowDay: noWeekendsOrHolidays };
   $('input.datepicker').datepicker(options);
 }
