@@ -76,6 +76,8 @@ GEM
     addressable (2.4.0)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
+    archive-zip (0.7.0)
+      io-like (~> 0.3.0)
     arel (6.0.4)
     autoprefixer-rails (6.1.2)
       execjs
@@ -104,13 +106,20 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-selenium (0.0.6)
+      capybara
+      selenium-webdriver
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
     certified (1.0.0)
-    cliver (0.3.2)
+    childprocess (0.8.0)
+      ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (1.1.0)
+      archive-zip (~> 0.7.0)
+      nokogiri (~> 1.6)
     clockwork (1.0.2)
       activesupport
       tzinfo
@@ -206,6 +215,7 @@ GEM
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 5)
       responders
+    io-like (0.3.0)
     jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -272,11 +282,6 @@ GEM
       rack
       rake (>= 0.8.1)
     pg (0.18.4)
-    poltergeist (1.8.1)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      multi_json (~> 1.0)
-      websocket-driver (>= 0.2.0)
     polyamorous (1.3.0)
       activerecord (>= 3.0)
     pry (0.10.3)
@@ -375,6 +380,7 @@ GEM
     ruby-openid (2.3.0)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
+    rubyzip (1.2.1)
     sass (3.4.20)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -382,6 +388,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.7.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
     settingslogic (2.0.9)
     shellany (0.0.1)
     shoulda-matchers (3.0.1)
@@ -430,9 +439,6 @@ GEM
       rack (>= 1.0)
     webpack-rails (0.9.10)
       railties (>= 3.2.0)
-    websocket-driver (0.6.3)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -449,8 +455,10 @@ DEPENDENCIES
   bullet
   cancancan
   capybara
+  capybara-selenium
   carrierwave
   certified
+  chromedriver-helper
   clockwork (~> 1.0.0)
   codeclimate-test-reporter
   coffee-rails
@@ -479,7 +487,6 @@ DEPENDENCIES
   passenger (>= 4.0.17)
   pg
   platform-api!
-  poltergeist
   pry-rails
   pry-remote (~> 0.1.8)
   quiet_assets
@@ -493,6 +500,7 @@ DEPENDENCIES
   rspec-rails
   sass (~> 3.4.0)
   sass-rails
+  selenium-webdriver
   settingslogic
   shoulda-matchers
   sidekiq
@@ -505,7 +513,7 @@ DEPENDENCIES
   webpack-rails
 
 RUBY VERSION
-   ruby 2.4.1p111
+   ruby 2.4.2p198
 
 BUNDLED WITH
-   1.15.1
+   1.16.0
