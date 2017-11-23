@@ -1,8 +1,15 @@
 ActiveAdmin.register Project do
   config.sort_order = 'name_asc'
 
+  permit_params :name, :company_id, :active
+
   scope :active, default: true
   scope :inactive
+
+  filter :company
+  filter :name
+  filter :created_at
+  filter :updated_at
 
   index do
     column :company
@@ -28,10 +35,6 @@ ActiveAdmin.register Project do
   end
 
   controller do
-    def permitted_params
-      params.permit project: [:name, :company_id, :active]
-    end
-
     def new
       @project = Project.new
       @project.company_id = current_company.id unless signed_in_as_super?
@@ -46,9 +49,4 @@ ActiveAdmin.register Project do
       current_admin_user.company
     end
   end
-
-  filter :company
-  filter :name
-  filter :created_at
-  filter :updated_at
 end

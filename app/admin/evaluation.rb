@@ -1,6 +1,11 @@
 ActiveAdmin.register Evaluation do
   actions :index, :show
 
+  filter :user
+  filter :reviewer
+  filter :created_at
+  filter :updated_at
+
   index do
     column :user
     column :reviewer
@@ -25,9 +30,4 @@ ActiveAdmin.register Evaluation do
       super.includes :user, :reviewer
     end
   end
-
-  filter :user
-  filter :reviewer
-  filter :created_at
-  filter :updated_at
 end

@@ -1,4 +1,12 @@
 ActiveAdmin.register AdminUser do
+  filter :email
+
+  permit_params do
+    params = %i[email password password_confirmation company_id]
+    params.push :is_super if current_admin_user.is_super?
+    params
+  end
+
   index do
     column :company
     column :email
@@ -54,11 +62,6 @@ ActiveAdmin.register AdminUser do
       super.includes :company
     end
 
-    def permitted_params
-      params.permit admin_user: [:email, :password, :password_confirmation,
-                                 :is_super, :company_id]
-    end
-
     def new
       @admin_user = AdminUser.new
       @admin_user.company_id = current_company.id unless signed_in_as_super?
@@ -84,7 +87,4 @@ ActiveAdmin.register AdminUser do
       current_admin_user.company
     end
   end
-
-  filter :email
-
 end
