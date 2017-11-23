@@ -17,6 +17,21 @@ ActiveAdmin.register AdminUser do
     redirect_to resource_path, notice: t('admin_reset_password', scope: 'active_admin')
   end
 
+  show do
+    attributes_table do
+      row :email
+      row :company_id
+      if current_admin_user.is_super?
+        row :is_super do |admin|
+          status_tag admin.is_super.to_s
+        end
+      end
+      row :created_at
+      row :updated_at
+      row :last_sign_in_at
+    end
+  end
+
   form do |f|
     f.inputs 'Admin Details' do
       f.input :email
