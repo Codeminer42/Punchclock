@@ -59,7 +59,9 @@ ActiveAdmin.register AdminUser do
 
   controller do
     def scoped_collection
-      super.includes :company
+      all_admins = super.includes(:company)
+      return all_admins if signed_in_as_super?
+      all_admins.not_super
     end
 
     def new
@@ -77,6 +79,11 @@ ActiveAdmin.register AdminUser do
           redirect_to resource_path
         end
       end
+    end
+
+    def update_resource(object, attributes)
+      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
+      object.send(update_method, *attributes)
     end
 
     def signed_in_as_super?
