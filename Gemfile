@@ -67,6 +67,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'letter_opener'
+  gem 'letter_opener_web'
   gem 'quiet_assets'
   gem 'rb-inotify', :require => false
 end

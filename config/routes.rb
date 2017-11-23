@@ -42,4 +42,8 @@ Punchclock::Application.routes.draw do
     to: 'passwords#update',
     via: [:patch, :put]
   )
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 end
