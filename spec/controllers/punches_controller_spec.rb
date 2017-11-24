@@ -49,7 +49,7 @@ describe PunchesController do
           get :index, params
 
           expect(assigns(:punches))
-            .to eq(Pagination.new(Punch.all).decorated(params))
+            .to match_array(Punch.limit(3).offset(2).decorate)
         end
       end
     end
