@@ -6,17 +6,29 @@ ActiveAdmin.register Project do
   scope :active, default: true
   scope :inactive
 
-  filter :company
+  filter :company, if: proc { current_admin_user.is_super? }
   filter :name
   filter :created_at
   filter :updated_at
 
   index do
-    column :company
+    column :company if current_admin_user.is_super?
     column :name
-    column :created_at
     column :active
+    column :created_at
     actions
+  end
+
+  show do
+    attributes_table do
+      row :name
+      row :active do |project|
+        status_tag project.active.to_s
+      end
+      row :created_at
+      row :updated_at
+      row :company if current_admin_user.is_super?
+    end
   end
 
   form do |f|
@@ -25,28 +37,10 @@ ActiveAdmin.register Project do
       if current_admin_user.is_super?
         f.input :company
       else
-        f.input :company, collection: {
-          project.company.name => current_admin_user.company_id
-        }
+        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
       f.input :active
     end
     f.actions
-  end
-
-  controller do
-    def new
-      @project = Project.new
-      @project.company_id = current_company.id unless signed_in_as_super?
-      new!
-    end
-
-    def signed_in_as_super?
-      current_admin_user.is_super?
-    end
-
-    def current_company
-      current_admin_user.company
-    end
   end
 end

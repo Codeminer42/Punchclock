@@ -16,7 +16,7 @@ class Ability
       can :manage, :all
     else
       can :manage, [AdminUser, User, Office, Project, Punch], company_id: user.company_id
-      can :create, AdminUser
+      can :create, [AdminUser, Office, Project, User]
     end
     cannot :manage, RegionalHoliday #disable for now
   end
