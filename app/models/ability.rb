@@ -14,11 +14,11 @@ class Ability
   def admin_user_permitions(user)
     if user.is_super?
       can :manage, :all
-      can :reset_password, AdminUser
     else
-      can [:read, :update], [AdminUser, User, Comment, Office, Project, Punch], company_id: user.company_id
-      can [:read, :update], RegionalHoliday, offices: { company_id: user.company_id }
-      can [:read, :update], Evaluation, reviewer: { company_id: user.company_id }
+      can :manage, AdminUser, company_id: user.company_id
+      # can [:read, :update], [AdminUser, User, Comment, Office, Project, Punch], company_id: user.company_id
+      # can [:read, :update], RegionalHoliday, offices: { company_id: user.company_id }
+      # can [:read, :update], Evaluation, reviewer: { company_id: user.company_id }
     end
   end
 

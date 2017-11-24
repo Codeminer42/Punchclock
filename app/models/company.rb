@@ -6,4 +6,8 @@ class Company < ActiveRecord::Base
   has_many :offices
 
   mount_uploader :avatar, CompanyAvatarUploader
+
+  def to_s
+    name
+  end
 end
