@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
   belongs_to :office
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
-  has_many :written_evaluations, class_name: :Evaluation, foreign_key: :reviewer_id
-  has_many :received_evaluations, class_name: :Evaluation, foreign_key: :user_id
   has_many :punches
   has_many :notifications
 

@@ -23,12 +23,6 @@ en:
   "true": 'Yes'
   "false": 'No'
   hello: "Hello world"
-  evaluation:
-    singular: 'Evaluation'
-    plural: 'Evaluations'
-    written: 'Written Evaluations'
-    received: 'Received Evaluations'
-    add: 'Add Evaluation'
   user: 'User'
   reviewer: 'Reviewer'
   evaluated: 'Evaluated'

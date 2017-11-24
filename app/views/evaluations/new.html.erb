@@ -1,9 +1,0 @@
-<nav class="navbar navbar-static-top">
-  <ul class="nav nav-pills">
-    <li><%= link_to t(:back, scope: :helpers), kind_evaluations_path(Evaluation::KINDS[:written]) %></li>
-  </ul>
-</nav>
-<h1 class="punch-form-title">
-  <%= t(:creating, scope: %i(helpers actions), model: t('evaluation.singular')) %>
-</h1>
-<%= render 'form', evaluation: @evaluation, users: @users %>
