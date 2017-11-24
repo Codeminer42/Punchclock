@@ -1,4 +1,5 @@
 ActiveAdmin.register RegionalHoliday do
+  permit_params :name, :day, :month, office_ids: []
 
   index do
     column :id
@@ -8,7 +9,7 @@ ActiveAdmin.register RegionalHoliday do
     column :offices do |holiday|
       offices_by_holiday(holiday)
     end
-    actions 
+    actions
   end
 
   show do
@@ -31,12 +32,6 @@ ActiveAdmin.register RegionalHoliday do
       f.input :offices
 
       f.actions
-    end
-  end
-
-  controller do
-    def permitted_params
-      params.permit(regional_holiday: [:name, :day, :month, office_ids: []])
     end
   end
 end

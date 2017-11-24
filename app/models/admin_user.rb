@@ -6,4 +6,8 @@ class AdminUser < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :company
   validates :email, :company_id, presence: true
+
+  def to_s
+    email
+  end
 end

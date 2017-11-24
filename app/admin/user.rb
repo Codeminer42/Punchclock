@@ -1,16 +1,45 @@
 ActiveAdmin.register User do
+  permit_params :name, :email, :company_id, :role, :reviewer_id, :hour_cost, :password, :active,
+    :allow_overtime, :office_id
+
+  scope :active, default: true
+  scope :inactive
+  scope :all
+
   index do
-    column :company
+    column :company if current_admin_user.is_super?
     column :name
     column :email
     column :office
-    column :reviewer
     column :role
-    column :hour_cost
+    column :hour_cost do |user|
+      number_to_currency user.hour_cost
+    end
     column :allow_overtime
     column :active
     actions
   end
+
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :email
+      row :office
+      row :role
+      row :reviewer
+      row :hour_cost
+      row :allow_overtime
+      row :active
+      row :last_sign_in_at
+      row :created_at
+      row :updated_at
+    end
+  end
+
+  filter :name
+  filter :email
+  filter :company, if: proc { current_admin_user.is_super? }
 
   form do |f|
     f.inputs do
@@ -39,11 +68,6 @@ ActiveAdmin.register User do
       super.includes :company, :reviewer
     end
 
-    def permitted_params
-      params.permit user: [:name, :email, :company_id, :role, :reviewer_id,
-        :hour_cost, :password, :active, :allow_overtime, :office_id]
-    end
-
     def new
       @user = User.new
       @user.company_id = current_company.id unless signed_in_as_super?
@@ -64,10 +88,6 @@ ActiveAdmin.register User do
       super
     end
 
-    def show
-      @user = User.find(params[:id])
-    end
-
     def signed_in_as_super?
       current_admin_user.is_super?
     end
@@ -76,25 +96,4 @@ ActiveAdmin.register User do
       current_admin_user.company
     end
   end
-
-  show do
-    attributes_table do
-      row :id
-      row :name
-      row :email
-      row :office
-      row :role
-      row :reviewer
-      row :hour_cost
-      row :allow_overtime
-      row :active
-      row :last_sign_in_at
-      row :created_at
-      row :updated_at
-    end
-  end
-
-  filter :name
-  filter :email
-  filter :company, if: proc { current_admin_user.is_super? }
 end

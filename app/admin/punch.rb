@@ -1,6 +1,8 @@
 ActiveAdmin.register Punch do
   decorate_with PunchDecorator
 
+  permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id
+
   index do
     column :company, sortable: [:company, :name]
     column :user, sortable: [:user, :name]
@@ -39,10 +41,6 @@ ActiveAdmin.register Punch do
   controller do
     def scoped_collection
       super.includes :company, :user, :project
-    end
-
-    def permitted_params
-      params.permit(punch: [:from, :to, :extra_hour, :user_id, :project_id, :company_id])
     end
 
     def index

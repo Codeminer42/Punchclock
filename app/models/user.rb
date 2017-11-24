@@ -4,10 +4,12 @@ class User < ActiveRecord::Base
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
   has_many :written_evaluations, class_name: :Evaluation, foreign_key: :reviewer_id
   has_many :received_evaluations, class_name: :Evaluation, foreign_key: :user_id
-  devise :invitable, :database_authenticatable, :recoverable, :rememberable,
-         :trackable, :validatable, :confirmable, :invitable
   has_many :punches
   has_many :notifications
+
+  devise :invitable, :database_authenticatable, :recoverable, :rememberable,
+         :trackable, :validatable, :confirmable, :invitable
+
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
   validates :company, presence: true
