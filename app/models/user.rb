@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
   has_many :punches
-  has_many :notifications
 
   devise :invitable, :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable, :confirmable, :invitable

@@ -11,25 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124134439) do
+ActiveRecord::Schema.define(version: 20171124164940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string   "namespace",     limit: 255
-    t.text     "body"
-    t.string   "resource_id",   limit: 255, null: false
-    t.string   "resource_type", limit: 255, null: false
-    t.integer  "author_id"
-    t.string   "author_type",   limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -72,18 +57,6 @@ ActiveRecord::Schema.define(version: 20171124134439) do
     t.string   "avatar",     limit: 255
     t.integer  "end_period"
   end
-
-  create_table "notifications", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "message",      limit: 255
-    t.boolean  "read"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "from_user_id"
-    t.string   "event_path",   limit: 255
-  end
-
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "offices", force: :cascade do |t|
     t.string   "city"

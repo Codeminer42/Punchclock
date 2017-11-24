@@ -22,18 +22,9 @@ pt-BR:
       user:
         one: "Usuário"
         other: "Usuários"
-      evaluation:
-        one: "Avaliação"
-        other: "Avaliações"
       punch:
         one: "Punch"
         other: "Punches"
-      notification:
-        one: "Notificação"
-        other: "Notificações"
-      period:
-        one: "Folha"
-        other: "Folhas"
       office:
         one: "Escritório"
         other: "Escritórios"
@@ -122,22 +113,6 @@ pt-BR:
         attachment: "Anexo"
         comment: "Comentário"
         extra_hour: "Hora extra"
-      notification:
-        id: "ID"
-        user_id: "Usuário"
-        message: "Mensagem"
-        read: "Lido"
-        created_at: "Criado em"
-        updated_at: "Atualizado em"
-        from_user_id: "Do usuário"
-        event_path: "Caminho do evento"
-      evaluation:
-        id: "ID"
-        user: "Avaliado"
-        reviewer: "Avaliador"
-        review: "Revisão"
-        created_at: "Criado em"
-        updated_at: "Atualizado em"
       office:
         id: "ID"
         company: "Empresa"

@@ -40,11 +40,4 @@ describe 'User' do
       end
     end
   end
-
-  describe 'shared abilities' do
-    it { is_expected.to be_able_to(:read, Notification.new(user_id: user.id)) }
-    it { is_expected.not_to be_able_to(:read, Notification.new) }
-    it { is_expected.to be_able_to(:update, Notification.new(user_id: user.id)) }
-    it { is_expected.not_to be_able_to(:update, Notification.new) }
-  end
 end

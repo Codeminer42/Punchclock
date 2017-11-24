@@ -8,7 +8,6 @@
           <span class="beta">Beta</span>
         <%- end %>
         <%= link_to Punch.model_name.human.pluralize, punches_path %>
-        <%= link_to User.model_name.human.pluralize, users_path %>
         <span class="account-options">
           <%= link_to current_user.email, edit_user_path(current_user) %>
           <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>

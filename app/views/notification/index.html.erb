@@ -1,9 +1,0 @@
-<h2> Notifications </h2>
-<% @notifications.each do |n| %>
-  <p> class: "alert alert-info"
-    <%= gravatar_for n.from unless n.from.nil? %>
-    <%= link_to n.message, n.event_path, onclick: "markAsRead(#{n.id})" %>
-    <a class="close"> <%# 'data-dismiss' => 'alert' 'href' => '#' 'onclick' =>  "markAsRead(#{n.id})"  &times; %>
-    </a>
-  </p>
-<% end %>

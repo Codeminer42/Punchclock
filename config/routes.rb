@@ -9,11 +9,7 @@ Punchclock::Application.routes.draw do
   }
 
   resources :punches
-  resources :periods, only: [:index, :show]
-  resources :users, except: [:new, :create]
-  resources :projects, except: [:show]
-  resources :company, only: [:edit, :update]
-  resources :notification, only: [:index, :update]
+  resources :users, except: %i[new create index]
   resources :dashboard, only: [:index] do
     get :sheets, on: :collection
     post :sheets, action: :save, on: :collection
