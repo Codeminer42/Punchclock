@@ -15,21 +15,4 @@ describe UsersController do
       end
     end
   end
-
-  describe 'GET index' do
-    it "returns a success response status" do
-      get :index
-      expect(response).to be_ok
-    end
-
-    it "assigns @users" do
-      get :index
-      expect(assigns(:users)).to eq([user])
-    end
-
-    it "renders the users template" do
-      get :index
-      expect(response).to render_template("users/index")
-    end
-  end
 end
