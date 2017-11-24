@@ -7,6 +7,8 @@ class AdminUser < ActiveRecord::Base
   belongs_to :company
   validates :email, :company_id, presence: true
 
+  scope :not_super, -> { where(is_super: [nil, false]) }
+
   def to_s
     email
   end
