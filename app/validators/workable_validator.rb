@@ -12,7 +12,7 @@ class WorkableValidator < ActiveModel::Validator
 
   def regional_holiday?
     punch_date = format_date(@model.from)
-    @model.user.regional_holidays.any? do |holiday|
+    @model.user.regional_holidays.present? do |holiday|
       same_day?(punch_date, format_date(holiday))
     end
   end

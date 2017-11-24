@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
-  delegate :regional_holidays, to: :office
+  delegate :regional_holidays, to: :office, allow_nil: true
 
   enum role: %i(trainee junior pleno senior)
 
