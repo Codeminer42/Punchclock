@@ -13,12 +13,6 @@ pt-BR:
       - Sábado
     formats:
       month_name: '%B'
-  evaluation:
-    singular: 'Avaliação'
-    plural: 'Avaliações'
-    written: 'Avaliações Realizadas'
-    received: 'Minhas Avaliações'
-    add: 'Adicionar Avaliação'
   user: 'Usuário'
   reviewer: 'Avaliador'
   evaluated: 'Avaliado'

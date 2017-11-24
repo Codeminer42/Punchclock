@@ -2,9 +2,17 @@ ActiveAdmin.register User do
   permit_params :name, :email, :company_id, :role, :reviewer_id, :hour_cost, :password, :active,
     :allow_overtime, :office_id
 
+  config.sort_order = 'name_asc'
+
   scope :active, default: true
   scope :inactive
   scope :all
+
+  filter :name
+  filter :email
+  filter :role, as: :select, collection: User.roles
+  filter :office
+  filter :company, if: proc { current_admin_user.is_super? }
 
   index do
     column :company if current_admin_user.is_super?
@@ -22,7 +30,6 @@ ActiveAdmin.register User do
 
   show do
     attributes_table do
-      row :id
       row :name
       row :email
       row :office
@@ -37,10 +44,6 @@ ActiveAdmin.register User do
     end
   end
 
-  filter :name
-  filter :email
-  filter :company, if: proc { current_admin_user.is_super? }
-
   form do |f|
     f.inputs do
       f.input :name
@@ -50,9 +53,7 @@ ActiveAdmin.register User do
       if current_admin_user.is_super?
         f.input :company
       else
-        f.input :company, collection: {
-          user.company.name => current_admin_user.company_id
-        }
+        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
       f.input :role, as: :select, collection: User.roles.keys
       f.input :reviewer
@@ -68,12 +69,6 @@ ActiveAdmin.register User do
       super.includes :company, :reviewer
     end
 
-    def new
-      @user = User.new
-      @user.company_id = current_company.id unless signed_in_as_super?
-      new!
-    end
-
     def create
       create! do |success, failure|
         success.html do
@@ -86,14 +81,6 @@ ActiveAdmin.register User do
     def update
       params[:user].delete("password") if params[:user][:password].blank?
       super
-    end
-
-    def signed_in_as_super?
-      current_admin_user.is_super?
-    end
-
-    def current_company
-      current_admin_user.company
     end
   end
 end

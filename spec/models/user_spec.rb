@@ -7,7 +7,4 @@ describe User, type: :model do
   describe "role" do
     it { is_expected.to define_enum_for(:role).with([:trainee, :junior, :pleno, :senior]) }
   end
-
-  it { is_expected.to have_many :written_evaluations}
-  it { is_expected.to have_many :received_evaluations}
 end

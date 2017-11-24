@@ -20,10 +20,6 @@ Punchclock::Application.routes.draw do
     get '(/:year)(/:month)', action: :index, on: :collection
   end
 
-  resources :evaluations, only: [:new, :create, :edit, :update]
-  get 'evaluations/:kind' => 'evaluations#index', as: 'kind_evaluations'
-  get 'evaluations/:kind/:id' => 'evaluations#show', as: 'show_evaluation'
-
   authenticated :user do
     root to: 'punches#index', as: :authenticated_user
   end

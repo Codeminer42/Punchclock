@@ -8,7 +8,7 @@ ActiveAdmin.register AdminUser do
   end
 
   index do
-    column :company
+    column :company if current_admin_user.is_super?
     column :email
     column :is_super if current_admin_user.is_super?
     actions
@@ -49,9 +49,7 @@ ActiveAdmin.register AdminUser do
         f.input :is_super, label: 'CAN MANAGE ALL COMPANIES?'
         f.input :company
       else
-        f.input :company, collection: {
-          current_admin_user.company.name => current_admin_user.company_id
-        }
+        f.input :company_id, as: :hidden, input_html: {value: current_admin_user.company_id}
       end
     end
     f.actions
@@ -62,12 +60,6 @@ ActiveAdmin.register AdminUser do
       all_admins = super.includes(:company)
       return all_admins if signed_in_as_super?
       all_admins.not_super
-    end
-
-    def new
-      @admin_user = AdminUser.new
-      @admin_user.company_id = current_company.id unless signed_in_as_super?
-      new!
     end
 
     def create
@@ -88,10 +80,6 @@ ActiveAdmin.register AdminUser do
 
     def signed_in_as_super?
       current_admin_user.is_super?
-    end
-
-    def current_company
-      current_admin_user.company
     end
   end
 end
