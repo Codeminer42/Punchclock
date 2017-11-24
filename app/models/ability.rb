@@ -15,9 +15,9 @@ class Ability
     if user.is_super?
       can :manage, :all
     else
-      can :manage, :all, company_id: user.company_id
-      cannot :manage, Company
+      can :manage, [AdminUser, User, Office, Project, Punch], company_id: user.company_id
     end
+    cannot :manage, RegionalHoliday #disable for now
   end
 
   def all_permitions(user)
