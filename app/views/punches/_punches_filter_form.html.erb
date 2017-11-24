@@ -1,6 +1,6 @@
 <%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f| %>
   <%= f.input :since, as: :datepicker, label: false, placeholder: true %>
   <%= f.input :until, as: :datepicker, label: false, placeholder: true  %>
-  <%= f.input :project_id, collection: current_user.company.projects.order(:name), include_blank: :translate, label: false %>
+  <%= f.input :project_id, collection: current_user.company.projects.active.order(:name), include_blank: :translate, label: false %>
   <%= f.submit class: 'btn btn-default' %>
 <% end %>
