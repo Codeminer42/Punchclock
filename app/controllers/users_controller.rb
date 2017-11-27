@@ -2,23 +2,19 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @user = User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = current_user
-    @user.update(user_params)
-    respond_with @user
+    current_user.update(user_params)
+    respond_with current_user
   end
 
   private
 
   def user_params
-    allow = %i(name email)
-    params.require(:user).permit(allow)
+    params.require(:user).permit(:name, :email)
   end
 end

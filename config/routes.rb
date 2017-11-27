@@ -1,5 +1,4 @@
 Punchclock::Application.routes.draw do
-  resources :punches
   post 'punches/import_csv'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -9,7 +8,7 @@ Punchclock::Application.routes.draw do
   }
 
   resources :punches
-  resources :users, except: %i[new create index]
+  resource :user, only: %i[show edit update]
   resources :dashboard, only: [:index] do
     get :sheets, on: :collection
     post :sheets, action: :save, on: :collection

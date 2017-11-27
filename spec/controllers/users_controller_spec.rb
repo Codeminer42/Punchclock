@@ -11,7 +11,7 @@ describe UsersController do
       before { put(:update, id: user.id, user: user_attributes) }
 
       it 'should update user' do
-        expect(assigns(:user)).to have_attributes(user_attributes)
+        expect(controller.current_user).to have_attributes(user_attributes)
       end
     end
   end

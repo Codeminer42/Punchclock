@@ -3,9 +3,15 @@ FactoryGirl.define do
     name { Faker::Name.name }
     email { Faker::Internet.email }
     password { Faker::Lorem.characters(8) }
-    company
     hour_cost { 15.0 }
-    office
+  end
+
+  trait :with_company do
+    company
+  end
+
+  trait :with_office do
+    company
   end
 
   trait :active_user do
