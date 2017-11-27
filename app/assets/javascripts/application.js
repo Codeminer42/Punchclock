@@ -2,8 +2,8 @@
 //= require jquery-ui/datepicker
 //= require jquery_ujs
 //= require bootstrap
-//= require jquery_nested_form
 //= require datepicker
+//= require punches
 
 $(function () {
   setDatePicker();

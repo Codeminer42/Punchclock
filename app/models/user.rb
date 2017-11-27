@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true, presence: true
   validates :company, presence: true
 
-  accepts_nested_attributes_for :company
-
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
