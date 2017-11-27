@@ -4,8 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
   has_many :punches
 
-  devise :invitable, :database_authenticatable, :recoverable, :rememberable,
-         :trackable, :validatable, :confirmable, :invitable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true

@@ -5,7 +5,6 @@ Devise.setup do |config|
   config.strip_whitespace_keys = [:email]
   config.skip_session_storage = [:http_auth]
   config.stretches = Rails.env.test? ? 1 : 10
-  config.invite_for = 3.days
   config.allow_unconfirmed_access_for = 2.days
   config.confirm_within = 3.days
   config.reconfirmable = false
