@@ -1,5 +1,3 @@
-require 'openid/store/filesystem'
-
 Devise.setup do |config|
   config.mailer_sender = 'do-not-reply@cm42.io'
   require 'devise/orm/active_record'
@@ -15,7 +13,4 @@ Devise.setup do |config|
   config.reset_password_within = 6.hours
   config.scoped_views = true
   config.sign_out_via = :delete
-  config.omniauth :google_apps,
-                  store: OpenID::Store::Filesystem.new('/tmp'),
-                  domain: Settings.google_apps.domain
 end
