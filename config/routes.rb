@@ -1,9 +1,7 @@
 Punchclock::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, controllers: {
-    registrations: 'users/registrations'
-  }
+  devise_for :users
 
   resources :punches
   resource :user, only: %i[show edit update]

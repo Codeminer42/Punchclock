@@ -1,6 +1,6 @@
 <h2> Edit User </h2>
 
-<%= render 'users/shared/form', user: current_user, url_path: user_path %>
+<%= render 'form', user: current_user, url_path: user_path %>
 <%= link_to 'Change Password', users_account_password_edit_path, class: 'btn btn-default' %>
 
 <%= link_to 'Back', user_path %>
