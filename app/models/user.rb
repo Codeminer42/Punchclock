@@ -18,17 +18,4 @@ class User < ActiveRecord::Base
   delegate :regional_holidays, to: :office, allow_nil: true
 
   enum role: %i(trainee junior pleno senior)
-
-  def import_punches(input_file)
-    transaction do
-      CSV.foreach(input_file) { |line| import_punch * line }
-    end
-  end
-
-  private
-
-  def import_punch(from, to, project_name)
-    project = Project.find_by name: project_name
-    punches.create! from: from, to: to, project: project, company: company
-  end
 end

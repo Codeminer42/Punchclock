@@ -14,13 +14,6 @@ class PunchesController < ApplicationController
     respond_with @punches
   end
 
-  def import_csv
-    current_user.import_punches import_csv_params[:archive].path
-    redirect_to punches_path, notice: 'Finished importing punches.'
-  rescue
-    redirect_to punches_path, alert: 'Error while importing punches.'
-  end
-
   def new
     @punch = Punch.new
     respond_with @punch
@@ -66,9 +59,5 @@ class PunchesController < ApplicationController
 
   def scopped_punches
     current_user.punches
-  end
-
-  def import_csv_params
-    params.require(:archive_csv).permit(:archive)
   end
 end
