@@ -1,15 +1,20 @@
 class PasswordsController < ApplicationController
   before_action :authenticate_user!
-  self.responder = PasswordsResponder
+
+  def edit
+  end
 
   def update
-    current_user.update_with_password(user_params[:user])
-    respond_with current_user, location: edit_user_path(current_user)
+    if current_user.update_with_password(user_params)
+      redirect_to edit_user_path
+    else
+      render :edit
+    end
   end
 
   private
 
   def user_params
-    params.permit(user: %w(current_password password password_confirmation))
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
   end
 end

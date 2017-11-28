@@ -16,11 +16,11 @@ class DashboardController < ApplicationController
 
     @punches.transaction do
       @punches.by_days(deletes).delete_all if deletes.any?
-      @punches.where({
-        company: Company.first
-      }).create(bulk_params(params['add'])) if params['add'].any?
+      @punches.where(
+        company: current_user.company
+      ).create(bulk_params(params['add'])) if params['add'].any?
     end
-    render json: {}
+    head :created
   end
 
   protected

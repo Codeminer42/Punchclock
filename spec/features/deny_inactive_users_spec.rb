@@ -8,6 +8,6 @@ feature 'Deny inactive users' do
     fill_in 'user_email', with: user.email
     fill_in 'user_password', with: 'asdfasdf'
     click_on 'Sign In'
-    expect(page).to have_content "E-mail ou senha inválidos"
+    expect(page).to have_content "Conta desativada"
   end
 end

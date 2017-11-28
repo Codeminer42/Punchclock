@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   respond_to :html, :json
-  self.responder = ApplicationResponder
 
   protect_from_forgery with: :exception
 

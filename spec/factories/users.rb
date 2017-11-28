@@ -5,7 +5,10 @@ FactoryGirl.define do
     password { Faker::Lorem.characters(8) }
     company
     hour_cost { 15.0 }
-    office
+  end
+
+  trait :with_office do
+    company
   end
 
   trait :active_user do

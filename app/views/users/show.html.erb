@@ -1,17 +1,17 @@
-<h2><%= @user.name %></h2>
+<h2><%= current_user.name %></h2>
 <div>
-<%= gravatar_for @user, size: 100 %>
+<%= gravatar_for current_user, size: 100 %>
 
 <p>
   <div>
     <p>
-      Email: <%= mail_to @user.email %>
+      Email: <%= mail_to current_user.email %>
     </p>
   </div>
 
   <div>
     <p>
-      Role: <%= @user.role %>
+      Role: <%= current_user.role %>
     </p>
   </div>
 </p>

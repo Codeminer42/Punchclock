@@ -1,6 +1,6 @@
 class PunchesController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource except: [:create]
+  load_and_authorize_resource except: :create
   before_action :user_projects
 
   def index
@@ -11,24 +11,14 @@ class PunchesController < ApplicationController
 
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = Pagination.new(@search.result).decorated(params)
-    respond_with @punches
-  end
-
-  def import_csv
-    current_user.import_punches import_csv_params[:archive].path
-    redirect_to punches_path, notice: 'Finished importing punches.'
-  rescue
-    redirect_to punches_path, alert: 'Error while importing punches.'
   end
 
   def new
     @punch = Punch.new
-    respond_with @punch
   end
 
   def edit
     @punch = Punch.find(params[:id])
-    respond_with @punch
   end
 
   def create
@@ -36,28 +26,35 @@ class PunchesController < ApplicationController
     @punch.company_id = current_user.company_id
     @punch.user_id = current_user.id
 
-    @punch.save
-    respond_with @punch, location: punches_path
+    if @punch.save
+      redirect_to punches_path, notice: I18n.t(:notice, scope: "flash.actions.create", resource_name: "Punch")
+    else
+      render :new
+    end
   end
 
   def update
     @punch = scopped_punches.find params[:id]
-    @punch.update(punch_params)
-    respond_with @punch, location: punches_path
+    @punch.attributes = punch_params
+
+    if @punch.save
+      redirect_to punches_path, notice: I18n.t(:notice, scope: "flash.actions.update", resource_name: "Punch")
+    else
+      render :new
+    end
   end
 
   def destroy
-    @punch = Punch.find(params[:id])
-    @punch.destroy
-    respond_with @punch
+    punch = Punch.find(params[:id])
+    punch.destroy
+    redirect_to root_path, notice: I18n.t(:notice, scope: "flash.actions.destroy", resource_name: "Punch")
   end
 
   private
 
   def punch_params
-    allow = %i(id from_time to_time when_day project_id
-      attachment remove_attachment comment extra_hour)
-    params.require(:punch).permit(*allow)
+    params.require(:punch).permit(:from_time, :to_time, :when_day, :project_id, :attachment,
+      :remove_attachment, :comment, :extra_hour)
   end
 
   def user_projects
@@ -66,9 +63,5 @@ class PunchesController < ApplicationController
 
   def scopped_punches
     current_user.punches
-  end
-
-  def import_csv_params
-    params.require(:archive_csv).permit(:archive)
   end
 end

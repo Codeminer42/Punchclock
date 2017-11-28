@@ -5,32 +5,21 @@ ruby '2.4.2'
 gem 'rails', '~> 4.2.8'
 gem 'pg'
 gem 'unicorn'
-gem 'sass', '~> 3.4.0'
 gem 'sprockets', '2.11.0'
 gem 'bootstrap-sass'
 gem 'cancancan'
 gem 'carrierwave'
-gem 'coffee-rails'
 gem 'devise'
-gem 'devise_invitable'
 gem 'dotenv-rails'
-gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'nested_form'
-gem 'omniauth'
-gem 'omniauth-google-apps'
-gem 'reform'
 gem 'sass-rails'
-gem 'settingslogic'
 gem 'simple_form', '3.5.0'
 gem 'uglifier'
 gem 'activeadmin', '1.0.0pre2'
 gem 'draper'
 gem 'rails-i18n'
-gem 'responders'
 gem 'webpack-rails'
-gem 'kaminari', '0.17.0'
 gem 'holidays', '5.6.0'
 
 gem 'sidekiq'
@@ -56,7 +45,6 @@ group :test do
   gem 'capybara-selenium'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  gem 'therubyracer', '0.12.3'
 end
 
 group :development do
@@ -64,12 +52,10 @@ group :development do
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'certified'
-  gem 'guard'
-  gem 'guard-rspec'
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'quiet_assets'
-  gem 'rb-inotify', :require => false
+  gem 'foreman'
 end
 
 group :development, :test do
@@ -86,4 +72,3 @@ group :production, :staging do
   gem 'passenger', '>= 4.0.17'
 end
 
-gem 'foreman'

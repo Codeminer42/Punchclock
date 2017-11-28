@@ -8,8 +8,3 @@ pt-BR:
       destroy:
         notice: '%{resource_name} foi deletado com sucesso.'
         alert: '%{resource_name} não pode ser deletado.'
-    evaluation:
-      create:
-        notice: 'Avaliação foi criada com sucesso.'
-      update:
-        notice: 'Avaliação foi atualizada com sucesso.'
