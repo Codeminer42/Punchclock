@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def update
     current_user.attributes = user_params
     if current_user.save
-      redirect_to root_path
+      redirect_to root_path, notice: "User updated"
     else
       render :edit
     end
