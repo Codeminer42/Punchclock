@@ -16,4 +16,12 @@ class User < ActiveRecord::Base
   delegate :regional_holidays, to: :office, allow_nil: true
 
   enum role: %i(trainee junior pleno senior)
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :inactive_account
+  end
 end
