@@ -7,17 +7,13 @@ class Punch < ActiveRecord::Base
 
   validates_presence_of :from, :to, :project_id, :user_id, :company_id
   validates [:from, :to], check_time: true
-  validates_with WorkableValidator, if: ->() { from.present? && user.present? }
+  validates_with WorkableValidator, if: -> { from.present? && user.present? }
 
   mount_uploader :attachment, AttachmentUploader
 
   scope :since, ->(time) { where('punches.from >= ?', time) }
   scope :until, ->(time) { where('punches.to <= ?', time) }
   scope :by_days, ->(days) { where('date("punches"."from") in (?)', days) }
-
-  def self.fix_all
-    wrongs.each { |punch| punch.save }
-  end
 
   def from_time=(time_string)
     @from_time = time_string

@@ -46,7 +46,6 @@ group :test do
   gem 'capybara-selenium'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  gem 'therubyracer', '0.12.3'
 end
 
 group :development do
@@ -54,12 +53,10 @@ group :development do
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'certified'
-  gem 'guard'
-  gem 'guard-rspec'
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'quiet_assets'
-  gem 'rb-inotify', :require => false
+  gem 'foreman'
 end
 
 group :development, :test do
@@ -76,4 +73,3 @@ group :production, :staging do
   gem 'passenger', '>= 4.0.17'
 end
 
-gem 'foreman'

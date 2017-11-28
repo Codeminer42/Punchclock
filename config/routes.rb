@@ -15,10 +15,6 @@ Punchclock::Application.routes.draw do
     root to: 'punches#index', as: :authenticated_user
   end
 
-  authenticated :admin_user do
-    root to: 'admin/admin_users#index', as: :authenticated_super
-  end
-
   unauthenticated :user do
     root to: 'home#index'
   end
