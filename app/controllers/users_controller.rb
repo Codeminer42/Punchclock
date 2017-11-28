@@ -8,8 +8,12 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.update(user_params)
-    respond_with current_user
+    current_user.attributes = user_params
+    if current_user.save
+      redirect_to root_path
+    else
+      render :edit
+    end
   end
 
   private

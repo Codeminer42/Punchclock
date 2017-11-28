@@ -23,7 +23,7 @@ Punchclock::Application.routes.draw do
     root to: 'home#index'
   end
 
-  match 'users/account/password/edit', to: 'passwords#edit', via: :get
+  get 'users/account/password/edit', to: 'passwords#edit'
   match(
     'users/account/password/update',
     to: 'passwords#update',

@@ -23,7 +23,7 @@ describe PasswordsController do
             }
 
             patch :update, params
-            expect(response).to redirect_to edit_user_path(user)
+            expect(response).to redirect_to edit_user_path
           end
         end
 

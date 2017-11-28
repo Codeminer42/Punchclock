@@ -20,7 +20,6 @@ gem 'uglifier'
 gem 'activeadmin', '1.0.0pre2'
 gem 'draper'
 gem 'rails-i18n'
-gem 'responders'
 gem 'webpack-rails'
 gem 'holidays', '5.6.0'
 

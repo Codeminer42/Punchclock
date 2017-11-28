@@ -461,7 +461,6 @@ DEPENDENCIES
   rails_12factor
   rb-inotify
   refills!
-  responders
   rollbar
   rspec-rails
   sass-rails
