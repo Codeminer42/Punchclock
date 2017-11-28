@@ -5,10 +5,12 @@ Punchclock::Application.routes.draw do
 
   resources :punches
   resource :user, only: %i[show edit update]
-  resources :dashboard, only: [:index] do
-    get :sheets, on: :collection
-    post :sheets, action: :save, on: :collection
-    get '(/:year)(/:month)', action: :index, on: :collection
+  resources :dashboard, only: :index do
+    collection do
+      get :sheets
+      post :sheets, action: :save
+      get '(/:year)(/:month)', action: :index
+    end
   end
 
   authenticated :user do

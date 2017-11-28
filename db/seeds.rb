@@ -64,9 +64,6 @@ def create_company(name:, office_cities:, project_names:)
       )
       user
     end
-
-    users.
-    Evaluation.find_or_create_by!(user:)
   end
 end
 

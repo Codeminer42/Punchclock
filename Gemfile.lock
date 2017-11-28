@@ -332,7 +332,6 @@ GEM
     selenium-webdriver (3.7.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
-    settingslogic (2.0.9)
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
     sidekiq (5.0.0)
@@ -426,7 +425,6 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   selenium-webdriver
-  settingslogic
   shoulda-matchers
   sidekiq
   simple_form (= 3.5.0)
