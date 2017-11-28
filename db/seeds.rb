@@ -47,7 +47,7 @@ def create_company(name:, office_cities:, project_names:)
       create_holiday(office: offices.sample)
     end
 
-    users = (projects.size * 10).map do |i|
+    (projects.size * 10).times do |i|
       user = User.find_or_create_by!(email: "user.teste#{i}@#{name}.com") do |user|
         user.name = "Usuario_#{name}_#{i}"
         user.email = "user.teste#{i}@#{name}.com"
@@ -62,11 +62,7 @@ def create_company(name:, office_cities:, project_names:)
         project: projects.send(:[], i % offices.size),
         user: user
       )
-      user
     end
-
-    users.
-    Evaluation.find_or_create_by!(user:)
   end
 end
 
