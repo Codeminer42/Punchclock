@@ -61,7 +61,6 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'forgery'
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'pry-remote', '~> 0.1.8'
