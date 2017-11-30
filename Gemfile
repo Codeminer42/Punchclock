@@ -23,7 +23,6 @@ gem 'webpack-rails'
 gem 'holidays', '5.6.0'
 
 gem 'sidekiq'
-gem 'clockwork', '~> 1.0.0'
 
 gem 'rollbar'
 

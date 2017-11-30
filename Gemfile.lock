@@ -119,9 +119,6 @@ GEM
     chromedriver-helper (1.1.0)
       archive-zip (~> 0.7.0)
       nokogiri (~> 1.6)
-    clockwork (1.0.2)
-      activesupport
-      tzinfo
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -392,7 +389,6 @@ DEPENDENCIES
   carrierwave
   certified
   chromedriver-helper
-  clockwork (~> 1.0.0)
   codeclimate-test-reporter
   database_cleaner
   devise
