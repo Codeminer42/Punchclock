@@ -11,10 +11,10 @@ body { margin: 0 0; padding: 0 0; }
   #new_punches_filter_form {
     @include span-columns(8);
     @include shift(1);
-    .form-group.datepicker {
+    .input.datepicker {
       @include span-columns(3);
     }
-    .form-group.select {
+    .input.select {
       @include span-columns(3);
     }
     button {
