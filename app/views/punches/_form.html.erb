@@ -1,21 +1,18 @@
 <%= simple_form_for @punch do |f| %>
   <div class="row">
     <%= f.input :from_time, input_html: {
-      class: %i(spinner-hr),
       size: 4,
       placeholder: '00:00'
-    }, wrapper_html: { class: %i(col-xs-2) } %>
+    } %>
     <%= f.input :to_time, input_html: {
-      class: %i(spinner-hr),
       size: 4,
       placeholder: '00:00'
-    }, wrapper_html: { class: %i(col-xs-2) } %>
+    } %>
 
     <%= f.input :extra_hour, input_html: {
-      class: %i(spinner-hr),
       size: 4,
       placeholder: '00:00'
-    }, wrapper_html: { class: %i(col-xs-2) } %>
+    } %>
 
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
@@ -24,24 +21,22 @@
         national_holidays: national_holidays,
         # regional_holidays: parameterize_holidays(current_user.regional_holidays), Disable for now
         # allow_overtime: current_user.allow_overtime?
-      },
-    }, wrapper_html: { class: %i(col-xs-2) } %>
+      }
+    } %>
   </div>
 
   <div class="row">
-    <%= f.input :project_id, collection: @projects.active.order(:name),
-      wrapper_html: { class: %i(col-xs-2) } %>
-    <%= f.input :attachment, wrapper_html: { class: %i(col-xs-2)} %>
+    <%= f.input :project_id, collection: @projects.active.order(:name) %>
+    <%= f.input :attachment %>
     <%= f.input :remove_attachment,
-      as: :bootstrap_boolean,
+      as: :boolean,
       inline_label: 'Deletar',
-      label: false,
-      wrapper_html: { class: %i(col-xs-4 checkbox) }
+      label: false
     %>
   </div>
 
   <div class="row">
-    <%= f.input :comment, wrapper_html: { class: %i(col-xs-6) } %>
+    <%= f.input :comment %>
   </div>
   <%= f.submit %>
-<%- end %>
+<% end %>
