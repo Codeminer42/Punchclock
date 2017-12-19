@@ -10,5 +10,4 @@ class AlertFillPunchJob < ActiveJob::Base
       NotificationMailer.notify_user_to_fill_punch(admin).deliver_later
     end
   end
-
 end
