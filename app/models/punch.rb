@@ -16,19 +16,19 @@ class Punch < ActiveRecord::Base
   scope :by_days, ->(days) { where('date("punches"."from") in (?)', days) }
 
   def from_time=(time_string)
-    @from_time = time_string
+    @from_time = time_string.presence
     mount_times
     time_string
   end
 
   def to_time=(time_string)
-    @to_time = time_string
+    @to_time = time_string.presence
     mount_times
     time_string
   end
 
   def when_day=(date)
-    @when_day = date
+    @when_day = date.presence
     mount_times
     date
   end
