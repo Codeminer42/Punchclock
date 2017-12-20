@@ -18,7 +18,6 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
   config.button_class = 'btn'
   config.error_notification_tag = :div
-  config.error_notification_class = 'alert alert-error'
-  config.label_class = 'control-label'
+  config.error_notification_class = 'alert'
   config.browser_validations = false
 end
