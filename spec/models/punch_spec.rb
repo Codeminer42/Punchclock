@@ -23,14 +23,31 @@ describe Punch do
   end
 
   describe 'Datetime mount' do
-    let(:params) do
-      { from_time: '08:00', to_time: '12:00', when_day: Date.new(2001, 1, 5) }
-    end
-    subject(:punch) { FactoryGirl.create :punch, params }
+    context 'valid data' do
+      subject(:punch) { Punch.new(from_time: '08:00', to_time: '12:00', when_day: Date.new(2001, 1, 5)) }
 
-    it 'mount datetimes correctly' do
-      expect(punch.from.utc).to eq(Time.utc(2001, 1, 5, 8, 0))
-      expect(punch.to.utc).to eq(Time.utc(2001, 1, 5, 12, 0))
+      it 'mount datetimes correctly' do
+        expect(punch.from.utc).to eq(Time.utc(2001, 1, 5, 8, 0))
+        expect(punch.to.utc).to eq(Time.utc(2001, 1, 5, 12, 0))
+      end
+    end
+
+    context 'empty data' do
+      subject(:punch) { Punch.new(from_time: '', to_time: '', when_day: '') }
+
+      it 'mount datetimes correctly' do
+        expect(punch.from).to eq nil
+        expect(punch.to).to eq nil
+      end
+    end
+
+    context 'nil data' do
+      subject(:punch) { Punch.new(from_time: nil, to_time: nil, when_day: nil) }
+
+      it 'mount datetimes correctly' do
+        expect(punch.from).to eq nil
+        expect(punch.to).to eq nil
+      end
     end
   end
 
