@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124175941) do
+ActiveRecord::Schema.define(version: 20171226225805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,19 +36,6 @@ ActiveRecord::Schema.define(version: 20171124175941) do
   add_index "admin_users", ["company_id"], name: "index_admin_users_on_company_id", using: :btree
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "comments", force: :cascade do |t|
-    t.text     "text"
-    t.integer  "user_id"
-    t.integer  "punch_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "company_id"
-  end
-
-  add_index "comments", ["company_id"], name: "index_comments_on_company_id", using: :btree
-  add_index "comments", ["punch_id"], name: "index_comments_on_punch_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",       limit: 255
