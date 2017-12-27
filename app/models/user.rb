@@ -24,4 +24,8 @@ class User < ActiveRecord::Base
   def inactive_message
     active? ? super : :inactive_account
   end
+
+  def to_s
+    name
+  end
 end

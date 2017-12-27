@@ -2,3 +2,7 @@ pt-BR:
   active_admin:
     admin_reset_password: 'Um email com instruções para reset de senha foi enviado'
     admin_reset_password_button: 'Enviar email para reset de senha'
+    filters:
+      predicates:
+        eq: "Igual à"
+

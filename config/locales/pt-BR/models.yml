@@ -93,7 +93,9 @@ pt-BR:
       punch:
         id: "ID"
         project_id: "Projeto"
+        project: "Projeto"
         user_id: "Usuário"
+        user: "Usuário"
         company_id: "Empresa"
         from: "De"
         to: "Até"

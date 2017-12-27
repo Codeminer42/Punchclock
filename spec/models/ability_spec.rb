@@ -31,13 +31,5 @@ describe 'User' do
       it { is_expected.to be_able_to(:update, User.new(id: user.id)) }
       it { is_expected.not_to be_able_to(:update, User.new) }
     end
-
-    context 'when is managing Comments' do
-      it do
-        is_expected.to be_able_to(
-          :manage, Comment.new(user_id: user.id, company_id: user.company_id)
-        )
-      end
-    end
   end
 end

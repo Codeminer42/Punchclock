@@ -35,9 +35,15 @@ ActiveAdmin.register User do
       row :office
       row :role
       row :reviewer
-      row :hour_cost
-      row :allow_overtime
-      row :active
+      row :hour_cost do |user|
+        number_to_currency user.hour_cost
+      end
+      row :allow_overtime do |user|
+        status_tag user.allow_overtime.to_s
+      end
+      row :active do |user|
+        status_tag user.active.to_s
+      end
       row :last_sign_in_at
       row :created_at
       row :updated_at
