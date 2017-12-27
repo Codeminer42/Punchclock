@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :company
+  belongs_to :client
   has_many :punches
   validates :name, :company_id, presence: true
 

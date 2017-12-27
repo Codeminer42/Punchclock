@@ -1,7 +1,7 @@
 ActiveAdmin.register Punch do
   decorate_with PunchDecorator
 
-  permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id
+  permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company
 
   filter :project, collection: proc { Project.order('name') }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
@@ -30,7 +30,7 @@ ActiveAdmin.register Punch do
       if current_admin_user.is_super?
         f.input :company
       else
-        f.input :company, as: :hidden, input_html: { value: current_admin_user.company_id }
+        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
       f.input :from, as: :datetime_picker
       f.input :to, as: :datetime_picker

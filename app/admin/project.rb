@@ -34,6 +34,7 @@ ActiveAdmin.register Project do
   form do |f|
     f.inputs 'Project Details' do
       f.input :name
+      f.input :client
       if current_admin_user.is_super?
         f.input :company
       else
