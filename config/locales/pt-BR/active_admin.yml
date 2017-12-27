@@ -5,4 +5,5 @@ pt-BR:
     filters:
       predicates:
         eq: "Igual à"
-
+        gteq_datetime: "depois de"
+        lteq_datetime: "antes de"
