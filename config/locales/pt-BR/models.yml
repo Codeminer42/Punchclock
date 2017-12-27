@@ -19,6 +19,9 @@ pt-BR:
       company:
         one: "Empresa"
         other: "Empresas"
+      client:
+        one: "Cliente"
+        other: "Clientes"
       user:
         one: "Usuário"
         other: "Usuários"
@@ -103,6 +106,7 @@ pt-BR:
         to_time: "Horário final"
         when_day: "Dia"
         when: "Quando"
+        from: "Horário inicial"
         created_at: "Criado em"
         updated_at: "Atualizado em"
         attachment: "Anexo"
