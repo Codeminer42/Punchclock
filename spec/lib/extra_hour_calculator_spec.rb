@@ -4,7 +4,7 @@ RSpec.describe ExtraHourCalculator do
 
   describe '#call' do
 
-    let(:weeks_ago) { 2.weeks.ago.to_date + 3.day }
+    let(:weeks_ago) { 2.day.ago.to_date + 1.day }
     let(:starting_morning) { weeks_ago + 8.hours }
     let(:end_of_the_morning) { weeks_ago + 12.hours }
     let(:starting_afternoon) { weeks_ago + 13.hours }
@@ -15,13 +15,13 @@ RSpec.describe ExtraHourCalculator do
 
     let(:active_user_with_hour) { create(:user, :active_user) }
     let(:active_user_without_hour) { create(:user, :active_user) }
-    
+
     let(:worked_days) { [weeks_ago.strftime("%d/%m/%Y") ] }
 
     before do
-    
+
       create(:punch, from: starting_morning,          to: end_of_the_morning,             user: active_user_with_hour, company: company)
-                                                      #adding an extra hour 
+                                                      #adding an extra hour
       create(:punch, from: starting_afternoon,        to: end_of_the_afternoon + 1.hour,  user: active_user_with_hour, company: company)
       # next day
       create(:punch, from: starting_morning + 1.day,  to: end_of_the_morning + 1.day,     user: active_user_with_hour, company: company)
