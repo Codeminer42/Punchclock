@@ -1,18 +1,10 @@
 <%= simple_form_for @punch do |f| %>
   <div class="row">
-    <%= f.input :from_time, input_html: {
-      size: 4,
-      placeholder: '00:00'
-    } %>
-    <%= f.input :to_time, input_html: {
-      size: 4,
-      placeholder: '00:00'
-    } %>
+    <%= f.input :from_time, as: :time, html5: true %>
 
-    <%= f.input :extra_hour, input_html: {
-      size: 4,
-      placeholder: '00:00'
-    } %>
+    <%= f.input :to_time, as: :time, html5: true%>
+
+    <%= f.input :extra_hour, as: :time, html5: true %>
 
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
