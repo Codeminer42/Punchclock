@@ -11,7 +11,7 @@ cache:
 variables:
   RAILS_ENV: test
   DATABASE_URL: postgresql://postgres@postgres
-  
+
 before_script:
   - bundle install --without development production -j $(nproc) --path .gitlab-cache
   - cp config/database.yml.example config/database.yml
@@ -20,4 +20,4 @@ before_script:
 
 test:
   script:
-    - bundle exec rake 
+    - bundle exec rake
