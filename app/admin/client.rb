@@ -4,6 +4,9 @@ ActiveAdmin.register Client do
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
 
+  scope :active, default: true
+  scope :inactive
+
   index do
     selectable_column
     column :company if current_admin_user.is_super?
@@ -14,6 +17,7 @@ ActiveAdmin.register Client do
   form do |f|
     f.inputs do
       f.input :name
+      f.input :active
       if current_admin_user.is_super?
         f.input :company
       else
