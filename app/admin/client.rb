@@ -11,6 +11,7 @@ ActiveAdmin.register Client do
     selectable_column
     column :company if current_admin_user.is_super?
     column :name
+    column :active
     actions
   end
 
