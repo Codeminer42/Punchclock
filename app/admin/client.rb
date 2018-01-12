@@ -1,5 +1,5 @@
 ActiveAdmin.register Client do
-  permit_params :name, :company, :company_id
+  permit_params :name, :company, :company_id, :active
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
