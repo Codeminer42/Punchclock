@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe 'User' do
-  let(:user) { FactoryGirl.build(:user, id: 1) }
+  let(:user) { FactoryBot.build(:user, id: 1) }
   subject(:ability) { Ability.new(user) }
 
   describe 'abilities' do

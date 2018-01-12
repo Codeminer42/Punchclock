@@ -3,7 +3,7 @@ require 'spec_helper'
 describe NotificationMailer do
   describe 'notification email' do
     context 'when user sign up' do
-      let(:user) { FactoryGirl.build(:user_admin) }
+      let(:user) { FactoryBot.build(:user_admin) }
       let(:mail) { NotificationMailer.notify_user_registration(user) }
 
       it 'renders the subject' do
@@ -32,7 +32,7 @@ describe NotificationMailer do
     end
 
     context 'when admin user has been registered' do
-      let(:admin_user) { FactoryGirl.create(:admin_user) }
+      let(:admin_user) { FactoryBot.create(:admin_user) }
       let(:mail) { NotificationMailer.notify_admin_registration(admin_user) }
 
       it 'renders the subject' do

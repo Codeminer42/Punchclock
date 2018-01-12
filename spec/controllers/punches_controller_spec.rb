@@ -43,7 +43,7 @@ describe PunchesController do
 
       context 'with many punches' do
         it 'paginates' do
-          FactoryGirl.create_list(:punch, 5, user: user)
+          FactoryBot.create_list(:punch, 5, user: user)
 
           params = { per: 3 }
           get :index, params
@@ -55,7 +55,7 @@ describe PunchesController do
     end
 
     describe 'GET new' do
-      let(:punch) { FactoryGirl.build(:punch) }
+      let(:punch) { FactoryBot.build(:punch) }
 
       before do
         allow(user).to receive_messages(id: punch.user.id)
@@ -68,7 +68,7 @@ describe PunchesController do
       end
     end
     describe 'GET edit' do
-      let(:punch) { FactoryGirl.build(:punch) }
+      let(:punch) { FactoryBot.build(:punch) }
 
       before do
         allow(user).to receive_messages(id: punch.user.id)
@@ -91,7 +91,7 @@ describe PunchesController do
 
     describe 'methods' do
 
-      let(:punch) { FactoryGirl.build(:punch) }
+      let(:punch) { FactoryBot.build(:punch) }
       let(:company) { punch.company }
       let(:project) { punch.project }
       let(:user) { punch.user }
@@ -143,7 +143,7 @@ describe PunchesController do
       end
 
       describe 'PUT update' do
-        let(:punch) { FactoryGirl.create(:punch) }
+        let(:punch) { FactoryBot.create(:punch) }
 
         before do
           allow(controller).to receive_message_chain(:scopped_punches, find: punch)
@@ -158,7 +158,7 @@ describe PunchesController do
               :'from_time' => '10:00',
               :'to_time' => '14:00',
               :'extra_hour' => '02:00',
-              :'project_id' => FactoryGirl.create(:project, company: user.company).id
+              :'project_id' => FactoryBot.create(:project, company: user.company).id
             }
           }
         end
