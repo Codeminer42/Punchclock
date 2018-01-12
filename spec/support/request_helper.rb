@@ -1,6 +1,6 @@
 module RequestHelpers
   def create_logged_in_user(*options)
-    user = FactoryGirl.create(:user, *options)
+    user = FactoryBot.create(:user, *options)
     login(user)
     user
   end

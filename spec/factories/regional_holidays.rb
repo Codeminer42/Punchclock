@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :regional_holiday do
     name "City Holiday"
     day 15

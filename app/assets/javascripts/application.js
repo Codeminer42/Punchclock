@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery-ui/datepicker
+//= require jquery-ui/widgets/datepicker
 //= require jquery_ujs
 //= require datepicker
 

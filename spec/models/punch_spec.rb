@@ -52,10 +52,10 @@ describe Punch do
   end
 
   context 'times validation' do
-    let(:project) { FactoryGirl.create(:project) }
-    let(:user) { FactoryGirl.create(:user) }
-    let(:company) { FactoryGirl.create(:company) }
-    let(:punch) { FactoryGirl.build(:punch) }
+    let(:project) { FactoryBot.create(:project) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:company) { FactoryBot.create(:company) }
+    let(:punch) { FactoryBot.build(:punch) }
 
     it 'does not allow retroactive end date' do
       expect(Punch.new(from: Time.new(2001, 2, 5, 8, 0, 0, 0),
@@ -145,7 +145,7 @@ describe Punch do
         RegionalHoliday.create(name: 'City Holiday',
                                day: 15,
                                month: 5,
-                               offices: [FactoryGirl.create(:office)])
+                               offices: [FactoryBot.create(:office)])
         expect(Punch.new(from: Time.new(2001, 5, 15, 8, 0, 0, 0), # City Holiday
                          to:   Time.new(2001, 5, 15, 17, 0, 0, 0),
                          company: company,

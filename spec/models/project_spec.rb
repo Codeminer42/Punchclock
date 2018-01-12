@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Project do
-  let!(:active_project) { FactoryGirl.create(:project, :active) }
-  let!(:inactive_project) { FactoryGirl.create(:project, :inactive) }
+  let!(:active_project) { FactoryBot.create(:project, :active) }
+  let!(:inactive_project) { FactoryBot.create(:project, :inactive) }
 
   describe '.active' do
     it 'returns only active projects' do

@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.4.3'
 
 gem 'rails', '~> 4.2.8'
-gem 'pg'
+gem 'pg', "~> 0.1"
 gem 'unicorn'
 gem 'sprockets', '2.11.0'
 gem 'cancancan'
@@ -31,7 +31,7 @@ gem 'bitters', github: 'thoughtbot/bitters'
 gem 'refills', github: 'thoughtbot/refills'
 
 # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
-gem 'platform-api', github: 'jalada/platform-api', branch: 'master'
+gem 'platform-api', github: 'heroku/platform-api'
 gem 'letsencrypt-rails-heroku', group: 'production'
 
 group :test do
@@ -57,7 +57,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
   gem 'pry-rails'
