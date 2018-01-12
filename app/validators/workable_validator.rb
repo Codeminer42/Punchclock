@@ -10,16 +10,16 @@ class WorkableValidator < ActiveModel::Validator
     @model.from.saturday? || @model.from.sunday?
   end
 
-  def regional_holiday?
-    punch_date = format_date(@model.from)
-    @model.user.regional_holidays.present? do |holiday|
-      same_day?(punch_date, format_date(holiday))
-    end
-  end
+  #def regional_holiday?
+  #  punch_date = format_date(@model.from)
+  #  @model.user.regional_holidays.present? do |holiday|
+  #    same_day?(punch_date, format_date(holiday))
+  #  end
+  #end
 
   def workable_day?
     !@model.user.allow_overtime &&
-    (weekend? || @model.from.to_date.holiday?(:br) || regional_holiday?)
+    (weekend? || @model.from.to_date.holiday?(:br))
   end
 
   def same_day?(date, holiday)

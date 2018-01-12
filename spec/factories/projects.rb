@@ -5,10 +5,10 @@ FactoryGirl.define do
   end
 
   trait :active do
-     active true
-   end
+    active true
+  end
 
-   trait :inactive do
-     active false
-   end
+  trait :inactive do
+    active false
+  end
 end
