@@ -22,7 +22,7 @@ describe PasswordsController do
               }
             }
 
-            patch :update, params
+            patch :update, params: params
             expect(response).to redirect_to edit_user_path
           end
         end
@@ -38,7 +38,7 @@ describe PasswordsController do
               }
             }
 
-            patch :update, params
+            patch :update, params: params
             expect(response).to render_template(:edit)
           end
         end

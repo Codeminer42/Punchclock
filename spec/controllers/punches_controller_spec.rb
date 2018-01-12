@@ -35,9 +35,10 @@ describe PunchesController do
           }
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(from_params)
+          expect(Punch).to receive(:search).with(ActionController::Parameters.new(from_params))
             .and_return(search)
-          get :index, q: from_params
+
+          get :index, params:{ q: from_params }
         end
       end
 
@@ -46,7 +47,7 @@ describe PunchesController do
           FactoryBot.create_list(:punch, 5, user: user)
 
           params = { per: 3 }
-          get :index, params
+          get :index, params: params
 
           expect(assigns(:punches))
             .to match_array(Punch.limit(3).offset(2).decorate)
@@ -84,7 +85,7 @@ describe PunchesController do
           id: 1
         }
 
-        get :edit, params
+        get :edit, params: params
         expect(response).to render_template :edit
       end
     end
@@ -102,7 +103,7 @@ describe PunchesController do
 
       describe 'POST #create' do
         def post_create
-          post :create, punch: {}
+          post :create, params: {punch: {}}
         end
 
         before do
@@ -165,30 +166,30 @@ describe PunchesController do
 
         context "when updating" do
           it "updates the 'from' attribute correctly" do
-            expect { put :update, params }.to change { punch.reload.from }.
+            expect { put :update, params: params }.to change { punch.reload.from }.
               from(DateTime.new(2001, 1, 5, 8, 0, 0, 0)).
                 to(DateTime.new(2001, 1, 5, 10, 0, 0, 0))
           end
 
           it "updates the 'to' attribute correctly" do
-            expect { put :update, params }.to change { punch.reload.to }.
+            expect { put :update, params: params }.to change { punch.reload.to }.
               from(DateTime.new(2001, 1, 5, 17, 0, 0, 0)).
                 to(DateTime.new(2001, 1, 5, 14, 0, 0, 0))
           end
 
           it "updates the 'extra_hour' attribute correctly" do
-            expect { put :update, params }.to change { punch.reload.extra_hour }.
+            expect { put :update, params: params }.to change { punch.reload.extra_hour }.
               from('01:25').to('02:00')
           end
 
           it "updates the project" do
             new_project = Project.find(params[:punch][:project_id])
-            expect { put :update, params }.to change { punch.reload.project }.
+            expect { put :update, params: params }.to change { punch.reload.project }.
               from(punch.project).to(new_project)
           end
 
           it "redirects to punches_path" do
-            put :update, params
+            put :update, params: params
             expect(response).to redirect_to punches_path
           end
         end

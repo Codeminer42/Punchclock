@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Client, type: :model do
 
-  let!(:active_client) { FactoryGirl.create(:client, :active_client) }
-  let!(:inactive_client) { FactoryGirl.create(:client, :inactive_client) }
+  let!(:active_client) { FactoryBot.create(:client, :active_client) }
+  let!(:inactive_client) { FactoryBot.create(:client, :inactive_client) }
 
   describe 'relations' do
     it { is_expected.to belong_to :company }
