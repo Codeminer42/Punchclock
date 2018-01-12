@@ -1,4 +1,4 @@
-Punchclock::Application.configure do
+Rails.application.configure do
   config.cache_classes = true
   config.eager_load = true
   config.consider_all_requests_local       = false
@@ -11,7 +11,10 @@ Punchclock::Application.configure do
   config.log_level = :debug
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
+  config.log_tags = [ :request_id ]
   config.log_formatter = ::Logger::Formatter.new
+
+  config.action_mailer.perform_caching = false
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'punchclock.cm42.io' }
