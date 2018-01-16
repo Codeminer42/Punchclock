@@ -1,4 +1,4 @@
-class RegionalHoliday < ActiveRecord::Base
+class RegionalHoliday < ApplicationRecord
   has_and_belongs_to_many :offices
   validates :name, :day, :month, presence: true
   validate :date_validation

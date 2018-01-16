@@ -1,4 +1,4 @@
-class Office < ActiveRecord::Base
+class Office < ApplicationRecord
   has_many :users
   has_and_belongs_to_many :regional_holidays
   belongs_to :company

@@ -1,4 +1,4 @@
-class Punch < ActiveRecord::Base
+class Punch < ApplicationRecord
   attr_accessor :from_time, :to_time, :when_day
 
   belongs_to :project
