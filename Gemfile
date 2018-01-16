@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.4.3'
 
-gem 'rails', '~> 4.2.8'
+gem 'rails', '~> 5.0.0'
 gem 'pg', "~> 0.1"
 gem 'unicorn'
-gem 'sprockets', '2.11.0'
+gem 'sprockets'
 gem 'cancancan'
 gem 'carrierwave'
 gem 'devise'
@@ -13,7 +13,7 @@ gem 'dotenv-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'sass-rails'
-gem 'simple_form', '3.5.0'
+gem 'simple_form'
 gem 'uglifier'
 gem 'activeadmin', '~> 1.2.0'
 gem 'draper'
@@ -25,10 +25,10 @@ gem 'sidekiq'
 
 gem 'rollbar'
 
-gem 'bourbon'
-gem 'neat'
-gem 'bitters', github: 'thoughtbot/bitters'
-gem 'refills', github: 'thoughtbot/refills'
+gem 'bourbon', "~> 4.3"
+gem 'neat', '1.7.2'
+gem 'bitters', '1.1.0'
+gem 'refills', '0.1.0'
 
 # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
 gem 'platform-api', github: 'heroku/platform-api'
@@ -43,6 +43,7 @@ group :test do
   gem 'capybara-selenium'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -52,7 +53,6 @@ group :development do
   gem 'certified'
   gem 'letter_opener'
   gem 'letter_opener_web'
-  gem 'quiet_assets'
   gem 'foreman'
 end
 

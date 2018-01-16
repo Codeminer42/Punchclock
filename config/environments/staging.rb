@@ -1,4 +1,4 @@
-Punchclock::Application.configure do
+Rails.application.configure do do
   config.cache_classes = true
   config.eager_load = true
   config.consider_all_requests_local       = true
