@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
       @punches.by_days(deletes).delete_all if deletes.any?
       @punches.where(
         company: current_user.company
-      ).create(bulk_params(params['add'])) if params['add'].any?
+      ).create(bulk_params(params['add'])) if params['add']
     end
     head :created
   end
