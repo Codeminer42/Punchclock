@@ -4,7 +4,8 @@ class Company < ApplicationRecord
   has_many :users
   has_many :punches
   has_many :offices
-
+  has_many :clients
+ 
   mount_uploader :avatar, CompanyAvatarUploader
 
   def to_s

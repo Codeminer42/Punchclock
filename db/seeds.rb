@@ -20,11 +20,14 @@ def create_holiday(office:)
   holiday.offices << office
 end
 
-def create_company(name:, office_cities:, project_names:)
+def create_company(name:, office_cities:, project_names:, clients_name:)
   ActiveRecord::Base.transaction do
     company = Company.find_or_create_by!(name: name)
     offices = office_cities.map do |city|
-      Office.find_or_create_by!(city: city, company: company)
+    Office.find_or_create_by!(city: city, company: company)
+    end
+    clients = clients_name.map do |client|
+      Client.create_with(company: company).find_or_create_by!(name: client)
     end
     projects = project_names.map do |project|
       Project.find_or_create_by!(name: project, company: company)
@@ -53,7 +56,7 @@ def create_company(name:, office_cities:, project_names:)
         user.email = "user.teste#{i}@#{name}.com"
         user.password = 'password'
         user.company = company
-        user.office = offices.send(:[], i % offices.size)
+        user.office = offices.sample
         user.skip_confirmation!
       end
 
@@ -66,5 +69,5 @@ def create_company(name:, office_cities:, project_names:)
   end
 end
 
-create_company(name: 'Codeminer42', office_cities: ['Natal', 'Brasilia', 'São Paulo'], project_names: ['Punchclock', 'Rito Gomes', 'Central'])
-create_company(name: 'WatersCo', office_cities: ['North Valerie', 'Lilachester'], project_names: ['Tres Zap', 'Latlux'])
+create_company(name: 'Codeminer42', office_cities: ['Natal', 'Brasilia', 'São Paulo'], project_names: ['Punchclock', 'Rito Gomes', 'Central'], clients_name: ['Client3','Client4'])
+create_company(name: 'WatersCo', office_cities: ['North Valerie', 'Lilachester'], project_names: ['Tres Zap', 'Latlux'], clients_name: ['Client1','Client2'])

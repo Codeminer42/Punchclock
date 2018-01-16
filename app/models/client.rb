@@ -1,5 +1,5 @@
-class Client < ApplicationRecord
-  belongs_to :company
+class Client < ActiveRecord::Base
+  belongs_to :company, optional: true
 
   validates_presence_of :name
 

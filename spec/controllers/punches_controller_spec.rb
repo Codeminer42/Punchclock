@@ -50,7 +50,7 @@ describe PunchesController do
           get :index, params: params
 
           expect(assigns(:punches))
-            .to match_array(Punch.limit(3).offset(2).decorate)
+            .to match_array(Punch.limit(3).decorate)
         end
       end
     end
