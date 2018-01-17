@@ -7,3 +7,7 @@ pt-BR:
         eq: "Igual à"
         gteq_datetime: "depois de"
         lteq_datetime: "antes de"
+    batch_actions:
+      labels:
+        disable: "Desativar"
+        enable: "Ativar"
