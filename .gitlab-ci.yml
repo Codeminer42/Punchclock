@@ -1,23 +1,31 @@
 image: codeminer42/ci-ruby:2.4
-
+        
 services:
   - postgres:latest
-
 cache:
   key: Punchclock
   paths:
     - .gitlab-cache/
-
-variables:
+variables:              
   RAILS_ENV: test
   DATABASE_URL: postgresql://postgres@postgres
-
+  CC_TEST_REPORTER_ID: 60f18b69ac3904ddf5b3875523d020e1ed419e3f3d4a3bfa0e81420e03615137
 before_script:
   - bundle install --without development production -j $(nproc) --path .gitlab-cache
   - cp config/database.yml.example config/database.yml
   - bundle exec rake db:create db:test:prepare
   - npm install
+  - rake webpack:compile
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+rspec:
+  coverage: '/\((\d+.\d+%)\) covered/'
+  script: bundle exec rake spec
+  artifacts:
+    paths:
+    - coverage/index.html
+    expire_in: 1 week
+after_script:
+  - ./cc-test-reporter after-build --exit-code $? 
 
-test:
-  script:
-    - bundle exec rake
