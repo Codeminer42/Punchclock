@@ -29,7 +29,7 @@
 // }
 
 function setDatePicker() {
-  const defaultOptions = { dateFormat: 'dd/mm/yy' };
+  var defaultOptions = { dateFormat: 'dd/mm/yy' };
   // const allowOvertime = $(".datepicker").data("allowOvertime");
   // const options = allowOvertime
   //   ? defaultOptions
