@@ -16,16 +16,16 @@ ActiveRecord::Schema.define(version: 20180111135512) do
   enable_extension "plpgsql"
 
   create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_super"
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 20180111135512) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar",     limit: 255
+    t.string   "avatar"
     t.integer  "end_period"
   end
 
@@ -68,11 +68,11 @@ ActiveRecord::Schema.define(version: 20180111135512) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
-    t.boolean  "active",                 default: true
+    t.boolean  "active",     default: true
     t.integer  "client_id"
     t.index ["client_id"], name: "index_projects_on_client_id", using: :btree
     t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20180111135512) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
-    t.string   "attachment", limit: 255
+    t.string   "attachment"
     t.text     "comment"
     t.string   "extra_hour"
     t.index ["company_id"], name: "index_punches_on_company_id", using: :btree
@@ -103,29 +103,28 @@ ActiveRecord::Schema.define(version: 20180111135512) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "",    null: false
-    t.integer  "sign_in_count",                      default: 0
+    t.string   "email",                  default: "",    null: false
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                   limit: 255
-    t.string   "encrypted_password",     limit: 255, default: ""
-    t.string   "reset_password_token",   limit: 255
+    t.string   "name"
+    t.string   "encrypted_password",     default: ""
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "company_id"
-    t.decimal  "hour_cost",                          default: "0.0", null: false
-    t.string   "confirmation_token",     limit: 255
+    t.decimal  "hour_cost",              default: "0.0", null: false
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.boolean  "active",                             default: true
-    t.boolean  "beta_access",                        default: false
+    t.boolean  "active",                 default: true
     t.integer  "reviewer_id"
     t.integer  "role"
-    t.boolean  "allow_overtime",                     default: false
+    t.boolean  "allow_overtime",         default: false
     t.integer  "office_id"
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
