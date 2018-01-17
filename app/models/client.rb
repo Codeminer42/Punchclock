@@ -5,4 +5,12 @@ class Client < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
+
+  def disable!
+    update!(active: false)
+  end
+
+  def enable!
+    update!(active: true)
+  end
 end

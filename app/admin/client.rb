@@ -7,6 +7,19 @@ ActiveAdmin.register Client do
   scope :active, default: true
   scope :inactive
 
+  batch_action :destroy, false
+  batch_action :disable, if: proc { params[:scope] != "inactive" } do |ids|
+    batch_action_collection.find(ids).each(&:disable!)
+
+    redirect_to collection_path, alert: "The client have been disabled."
+  end
+
+  batch_action :enable, if: proc { params[:scope] == "inactive" }  do |ids|
+    batch_action_collection.find(ids).each(&:enable!)
+
+    redirect_to collection_path, alert: "The client have been enabled."
+  end
+
   index do
     selectable_column
     column :company if current_admin_user.is_super?
