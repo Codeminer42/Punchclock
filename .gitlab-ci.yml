@@ -9,6 +9,7 @@ cache:
     - .gitlab-cache/
 
 variables:
+  CC_TEST_REPORTER_ID: f10b2bbed9be9667c20854644d26bf94cfd2d871ed54a650a06fba5696fb980c               
   RAILS_ENV: test
   DATABASE_URL: postgresql://postgres@postgres
 
@@ -17,7 +18,13 @@ before_script:
   - cp config/database.yml.example config/database.yml
   - bundle exec rake db:create db:test:prepare
   - npm install
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 test:
   script:
     - bundle exec rake
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $?
