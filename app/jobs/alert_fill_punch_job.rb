@@ -1,4 +1,4 @@
-class AlertFillPunchJob < ActiveJob::Base
+class AlertFillPunchJob < ApplicationJob
   queue_as :default
 
   def perform
