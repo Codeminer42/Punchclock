@@ -1,4 +1,4 @@
-class SendEmailWithExtraHourJob < ActiveJob::Base
+class SendEmailWithExtraHourJob < ApplicationJob
   queue_as :default
 
   def perform

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   belongs_to :office
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
