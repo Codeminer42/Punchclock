@@ -17,6 +17,14 @@ class User < ApplicationRecord
 
   enum role: %i(trainee junior pleno senior)
 
+  def disable!
+    update!(active: false)
+  end
+
+  def enable!
+    update!(active: true)
+  end
+
   def active_for_authentication?
     super && active?
   end
