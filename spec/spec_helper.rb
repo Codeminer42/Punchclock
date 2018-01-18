@@ -1,7 +1,7 @@
 require 'simplecov'
 
 SimpleCov.start 'rails' do
-  minimum_coverage 55
+  minimum_coverage 65
   refuse_coverage_drop
 	
   add_filter %r{^/(?!app|lib)/}
