@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe AdminUser, type: :model do
-  let(:admin) { FactoryBot.create(:admin_user, is_super: true) }
-  describe 'relations' do
+   describe 'relations' do
     it { is_expected.to belong_to :company }
   end
 
