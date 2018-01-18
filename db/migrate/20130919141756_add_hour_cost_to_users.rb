@@ -1,4 +1,4 @@
-class AddHourCostToUsers < ActiveRecord::Migration
+class AddHourCostToUsers < ActiveRecord::Migration[4.2]
   def change
     add_column :users, :hour_cost, :decimal
   end

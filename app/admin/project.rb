@@ -1,7 +1,7 @@
 ActiveAdmin.register Project do
   config.sort_order = 'name_asc'
 
-  permit_params :name, :company_id, :active
+  permit_params :name, :company_id, :active, :client_id
 
   scope :active, default: true
   scope :inactive

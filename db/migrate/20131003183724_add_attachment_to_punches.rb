@@ -1,4 +1,4 @@
-class AddAttachmentToPunches < ActiveRecord::Migration
+class AddAttachmentToPunches < ActiveRecord::Migration[4.2]
   def change
     add_column :punches, :attachment, :string
   end

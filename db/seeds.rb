@@ -24,7 +24,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
   ActiveRecord::Base.transaction do
     company = Company.find_or_create_by!(name: name)
     offices = office_cities.map do |city|
-    Office.find_or_create_by!(city: city, company: company)
+      Office.find_or_create_by!(city: city, company: company)
     end
     clients = clients_name.map do |client|
       Client.create_with(company: company).find_or_create_by!(name: client)

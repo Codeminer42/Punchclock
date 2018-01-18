@@ -11,4 +11,5 @@ Rails.application.configure do
   config.assets.debug = true
   config.assets.quiet = true
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.perform_caching = false
 end
