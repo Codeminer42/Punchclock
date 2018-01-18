@@ -1,7 +1,7 @@
 ActiveAdmin.register Punch do
   decorate_with PunchDecorator
 
-  permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company
+  permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company, :comment
 
   filter :project, collection: proc { Project.order('name') }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
