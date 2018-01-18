@@ -1,4 +1,4 @@
-class CreatePunches < ActiveRecord::Migration
+class CreatePunches < ActiveRecord::Migration[4.2]
   def change
     create_table :punches do |t|
       t.datetime :from
