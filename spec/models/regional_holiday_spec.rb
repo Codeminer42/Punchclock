@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RegionalHoliday, type: :model do
+describe RegionalHoliday do
   let(:regional_holiday) { FactoryBot.build(:regional_holiday) }
 
   it { is_expected.to validate_presence_of(:name) }

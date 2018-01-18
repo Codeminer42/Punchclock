@@ -37,7 +37,7 @@ gem 'letsencrypt-rails-heroku', group: 'production'
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
-  gem 'simplecov', '0.14.1', require: false
+  gem 'simplecov', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'capybara-selenium'
