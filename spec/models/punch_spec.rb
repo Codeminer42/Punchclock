@@ -2,11 +2,16 @@ require 'spec_helper'
 
 describe Punch do
 
-  it { is_expected.to validate_presence_of(:from) }
-  it { is_expected.to validate_presence_of(:to) }
-  it { is_expected.to validate_presence_of(:project_id) }
-  it { is_expected.to validate_presence_of(:user_id) }
-  it { is_expected.to validate_presence_of(:company_id) }
+  describe 'relations' do
+    it { is_expected.to belong_to :project }
+    it { is_expected.to belong_to :user }
+    it { is_expected.to belong_to :company }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:from) }
+    it { is_expected.to validate_presence_of(:to) }
+  end
 
   describe '#delta' do
     let(:punch) do
