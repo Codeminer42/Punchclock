@@ -1,58 +1,43 @@
 version: '2'
 
 services:
+    postgres:
+      image: 'postgres'
+      ports:
+        - 5432:5432
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
 
-  postgres:
-    image: 'postgres'
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    redis:
+      image: 'redis'
+      command: redis-server
+      volumes:
+        - .:/app
+      ports:
+        - 6379:6379
+  
+    webpack:
+      build: .
+      command: bash -c "npm run server"
+      volumes:
+        - .:/app
+      ports:
+        - 3808:3808
 
-  redis:
-    image: 'redis'
-    command: redis-server
-    volumes:
-      - .:/app
-    ports:
-      - 6379:6379
-
-  sidekiq:
-    build: .
-    environment:
-      REDIS_URL: redis://redis:6379
-    command: bundle exec foreman start worker -f Procfile.dev
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - redis
-
-  webpack:
-    build: .
-    command: npm run server
-    volumes:
-      - .:/app
-    ports:
-      - 3808:3808
-
-  app:
-    build: .
-    environment:
-      DB_HOST: postgres
-      WEBPACK_REMOTE_HOST: webpack
-    command: bash -c 'bundle exec rake db:setup && bundle exec foreman start rails -f Procfile.dev'
-    links:
-      - webpack
-    volumes:
-      - .:/app
-    ports:
-      - 3000:3000
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-      - redis
-      - webpack
+    app:
+      build: .
+      environment:
+        DB_HOST: postgres
+        WEBPACK_REMOTE_HOST: webpack
+      command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+      volumes:
+        - .:/app
+      ports:
+        - 3000:3000
+      env_file:
+        - .env
+      depends_on:
+        - postgres
+        - redis
+        - webpack

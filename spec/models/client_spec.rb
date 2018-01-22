@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Client, type: :model do
+describe Client do
 
   let!(:active_client) { FactoryBot.create(:client, :active_client) }
   let!(:inactive_client) { FactoryBot.create(:client, :inactive_client) }

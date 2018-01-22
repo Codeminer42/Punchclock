@@ -351,7 +351,7 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
-    simplecov (0.14.1)
+    simplecov (0.15.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
@@ -433,7 +433,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   simple_form
-  simplecov (= 0.14.1)
+  simplecov
   sprockets
   uglifier
   unicorn

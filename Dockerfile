@@ -16,10 +16,11 @@ RUN apt-get update \
 
 WORKDIR /app
 
-ADD Gemfile Gemfile.lock package.json ./
+ADD Gemfile Gemfile.lock package.json /app/
+RUN gem update bundler --pre
 RUN bundle install
 RUN npm install
 
-ADD . .
+ADD . /app
 
 EXPOSE 3000 3808

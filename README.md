@@ -62,7 +62,9 @@ $ foreman start -f Procfile.dev
 
 ```console
 $ cp config/database.yml.example config/database.yml
-$ docker-compose up -d
+$ sudo docker-compose up -d
+$ sudo docker-compose run app db:create db:migrate
+$ sudo docker-compose run app db:seed
 ```
 
 ## Testing

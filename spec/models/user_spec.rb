@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe User, type: :model do
+describe User do
   it { is_expected.to belong_to :reviewer }
   it { is_expected.to belong_to :office }
 
