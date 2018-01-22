@@ -21,7 +21,7 @@ before_script:
   - ./cc-test-reporter before-build
 rspec:
   coverage: '/\((\d+.\d+%)\) covered/'
-  script: bundle exec rspec
+  script: bundle exec rake spec
   artifacts:
     paths:
     - coverage/index.html
