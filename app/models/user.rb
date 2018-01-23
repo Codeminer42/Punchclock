@@ -1,14 +1,13 @@
 class User < ApplicationRecord
-  belongs_to :office
+  belongs_to :office, optional: true
   belongs_to :company
-  belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id
+  belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
   has_many :punches
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
-  validates :company, presence: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }

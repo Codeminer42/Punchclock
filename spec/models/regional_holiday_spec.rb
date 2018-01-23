@@ -3,9 +3,15 @@ require 'rails_helper'
 describe RegionalHoliday do
   let(:regional_holiday) { FactoryBot.build(:regional_holiday) }
 
-  it { is_expected.to validate_presence_of(:name) }
-  it { is_expected.to validate_presence_of(:day) }
-  it { is_expected.to validate_presence_of(:month) }
+  describe 'relations' do
+    it { is_expected.to have_and_belong_to_many :offices }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:day) }
+    it { is_expected.to validate_presence_of(:month) }
+  end
 
   context "with valid attributes" do
     it "is valid" do

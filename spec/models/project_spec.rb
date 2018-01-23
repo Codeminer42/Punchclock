@@ -4,6 +4,12 @@ describe Project do
   let!(:active_project) { FactoryBot.create(:project, :active) }
   let!(:inactive_project) { FactoryBot.create(:project, :inactive) }
 
+  describe 'relations' do
+    it { is_expected.to belong_to :company }
+    it { is_expected.to belong_to :client }
+    it { is_expected.to have_many :punches }
+  end
+
   describe '.active' do
     it 'returns only active projects' do
       expect(Project.active).to match_array(active_project)

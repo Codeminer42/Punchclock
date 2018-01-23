@@ -1,8 +1,8 @@
 class Project < ApplicationRecord
   belongs_to :company
-  belongs_to :client
+  belongs_to :client, optional: true
   has_many :punches
-  validates :name, :company_id, presence: true
+  validates :name, presence: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
