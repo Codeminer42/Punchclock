@@ -11,34 +11,37 @@ feature "Admin Users", type: :feature, js: true do
     click_button 'Entrar'
   end
 
-  scenario "admin user" do                                   
+  scenario 'index' do                                   
      expect(page).to have_content('Administradores')
     		                                                      
      fill_in 'q_email', with: admin_user.email
      click_button 'Filtrar'
+     
      expect(page).to have_content(admin_user.email)
     
-     visit '/admin/admin_users'
-    
+     click_link 'Limpar Filtros'
      fill_in 'q_email', with: "teste"
      click_button 'Filtrar'
-     expect(page).to have_content("Nenhum(a) Administradores encontrado(a)")
-     
-     visit "/admin/admin_users/#{admin_user.id}"  
-     
-     expect(page).to have_content("Detalhes do(a) Administrador")
 
-     visit "/admin/admin_users/#{admin_user.id}/edit"
+     expect(page).to have_content('Nenhum(a) Administradores encontrado(a)')
      
-     expect(page).to have_content("Editar Administrador")
+     click_link 'Administradores'
+     click_link 'Visualizar'  
+     
+     expect(page).to have_content('Detalhes do(a) Administrador')
+
+     click_link  'Editar'
+     
+     expect(page).to have_content('Editar Administrador')
   end
   
-  scenario "new admin" do
-     visit '/admin/admin_users/new'
+  scenario 'new admin' do
+     click_link 'Novo(a) Administrador'
 
-     expect(page).to have_content("Novo(a) Administrador")
+     expect(page).to have_content('Novo(a) Administrador')
      
      click_button 'Criar Administrador'
-     expect(page).to have_content("não pode ficar em branco")
+
+     expect(page).to have_content('não pode ficar em branco')
   end
 end
