@@ -1,9 +1,12 @@
 require 'simplecov'
 
 SimpleCov.start 'rails' do
-  minimum_coverage 65
+  minimum_coverage 86
   refuse_coverage_drop
-	
+  #TODO
+  #Filter in regional holiday in provisory, when this feature back to work well
+  #This filter must be removed
+  add_filter %r{^/app/admin/regional_holiday.rb}
   add_filter %r{^/(?!app|lib)/}
   add_filter %r{^/app/channels/}
   add_filter %r{^/.gitlab-cache/}
