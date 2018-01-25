@@ -1,7 +1,7 @@
 require 'simplecov'
 
 SimpleCov.start 'rails' do
-  minimum_coverage 86
+  minimum_coverage 90
   refuse_coverage_drop
   #TODO
   #Filter in regional holiday in provisory, when this feature back to work well
