@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Project", type: :feature, js: true do
+feature "Project", type: :feature do
   let(:admin_user) { FactoryBot.create(:super) }
-  let(:project) { FactoryBot.create(:project) }
+  let!(:project) { FactoryBot.create(:project) }
   
   before do
     visit '/admin/'
@@ -14,21 +14,32 @@ feature "Project", type: :feature, js: true do
 
   scenario 'index' do
      click_link 'Projetos'
+  
      expect(page).to have_content('Projetos')
-    		                                                      
+  end
+
+  scenario 'filter' do
+     click_link 'Projetos'
      fill_in 'q_name', with: project.name
      click_button 'Filtrar'
+     
      expect(page).to have_content(project.name)
              
      fill_in 'q_name', with: 'teste'
      click_button 'Filtrar'
-     expect(page).to have_content('Nenhum(a) Projetos encontrado(a)')
     
+     expect(page).to have_content('Nenhum(a) Projetos encontrado(a)')
+  end
+
+  scenario 'view' do
      click_link 'Projetos'
      click_link 'Visualizar'
-     
+  
      expect(page).to have_content('Detalhes do(a) Projeto')
+  end
 
+  scenario 'edit' do
+     click_link 'Projetos'
      click_link 'Editar'
      
      expect(page).to have_content('Editar Projeto')
@@ -42,5 +53,10 @@ feature "Project", type: :feature, js: true do
      
      click_button 'Criar Projeto'
      expect(page).to have_content('não pode ficar em branco')
+ 	
+     fill_in 'project_name', with: 'Nome Projeto'
+     click_button 'Criar Projeto'
+
+     expect(page).to have_content('Projeto foi criado com sucesso.')
   end
 end

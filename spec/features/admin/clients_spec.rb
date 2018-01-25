@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature 'Clients', type: :feature, js: true do
+feature 'Clients', type: :feature do
   let(:admin_user) { FactoryBot.create(:super) }
-  let(:client) { FactoryBot.create(:client) }
+  let!(:client) { FactoryBot.create(:client) }
 
   before do 
     visit '/admin'
@@ -16,7 +16,10 @@ feature 'Clients', type: :feature, js: true do
     click_link 'Clientes'
 
     expect(page).to have_content('Clientes')
-    
+  end
+
+  scenario 'filter' do
+    click_link 'Clientes'
     fill_in 'q_name', with: client.name
     click_button 'Filtrar'
     
@@ -26,12 +29,17 @@ feature 'Clients', type: :feature, js: true do
     click_button 'Filtrar'
     
     expect(page).to have_content('Nenhum(a) Clientes encontrado(a)')
-    
+  end
+
+  scenario 'view' do
     click_link 'Clientes'
     click_link 'Visualizar'  
     
     expect(page).to have_content('Detalhes do(a) Cliente')
-    
+  end
+
+  scenario 'edit' do
+    click_link 'Clientes'
     click_link 'Editar'
     
     expect(page).to have_content('Editar Cliente')
@@ -45,6 +53,12 @@ feature 'Clients', type: :feature, js: true do
      
     click_button 'Criar Cliente'
 
-    expect(page).to have_content('não pode ficar em branco')
+   expect(page).to have_content('não pode ficar em branco')
+
+   fill_in 'client_name', with: 'Joao'
+   click_button 'Criar Cliente'
+
+   expect(page).to have_content('Cliente foi criado com sucesso.')
+ 
   end
 end

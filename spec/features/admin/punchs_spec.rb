@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Punches", type: :feature, js: true do
+feature "Punches", type: :feature do
   let(:admin_user) { FactoryBot.create(:super) }
-  let(:punch) { FactoryBot.create(:punch) }
+  let!(:punch) { FactoryBot.create(:punch) }
   
   before do
     visit '/admin/'
@@ -15,9 +15,13 @@ feature "Punches", type: :feature, js: true do
   scenario 'index' do 
      click_link 'Punches'
      expect(page).to have_content('Punches')
-    		                                                      
+  end
+
+  scenario 'filter' do
+     click_link 'Punches'
      click_button 'Filtrar'
-     expect(page).to have_content('Não existem Punches ainda')
+
+     expect(page).to have_content(punch.user.name)
   end
   
   scenario 'new punch' do
@@ -28,5 +32,11 @@ feature "Punches", type: :feature, js: true do
      
      click_button 'Criar Punch'
      expect(page).to have_content('não pode ficar em branco')
+     
+     fill_in 'punch_from', with: DateTime.now.to_date
+     fill_in 'punch_to', with: DateTime.now.to_date
+     click_button 'Criar Punch'	
+
+     expect(page).to have_content('Punch foi criado com sucesso.')
   end
 end
