@@ -71,6 +71,8 @@ GEM
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
     arel (8.0.0)
+    autoprefixer-rails (7.2.5)
+      execjs
     bcrypt (3.1.11)
     better_errors (2.4.0)
       coderay (>= 1.0.0)
@@ -390,6 +392,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin (~> 1.2.0)
+  autoprefixer-rails
   better_errors
   binding_of_caller
   bitters (= 1.1.0)
