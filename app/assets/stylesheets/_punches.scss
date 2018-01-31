@@ -1,3 +1,5 @@
+@import "neat";
+@import "bourbon";
 .calendar-container {
   @include outer-container;
   -webkit-user-select: none;
@@ -10,7 +12,17 @@
     cursor: pointer;
   }
 }
-
+.row::after{
+  clear: both;
+  content: "";
+  display: block;
+}
+.grid-s2 {
+  @include span-columns(2)
+}
+.grid-s4 {
+  @include span-columns(4)
+}
 .punches-table {
   @include span-columns(9);
   display: table;
