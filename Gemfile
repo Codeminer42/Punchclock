@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 ruby '2.4.3'
 
 gem 'rails', '~> 5.1.0'
+
+gem "autoprefixer-rails"
 gem 'pg', "~> 0.1"
 gem 'unicorn'
 gem 'sprockets'
