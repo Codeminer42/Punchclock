@@ -5,8 +5,9 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
   describe '#perform' do
 
-    let!(:admin) { create(:admin_user) }
-    let!(:active_user) { create(:user, active: true) }
+    let!(:company) { create(:company, name: "Codeminer42") }
+    let!(:admin) { create(:admin_user, company: company) }
+    let!(:active_user) { create(:user, company: company, active: true) }
     let!(:inactive_user) { create(:user, active: false) }
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
@@ -27,7 +28,7 @@ RSpec.describe AlertFillPunchJob, type: :job do
       perform_enqueued_jobs { job }
     end
 
-    it 'do not sends an email to inactive users' do
+    it 'does not send an email to inactive users' do
       expect(NotificationMailer).not_to receive(:notify_user_to_fill_punch).with(inactive_user)
 
       perform_enqueued_jobs { job }
