@@ -113,14 +113,16 @@ describe Punch do
                        project: project, user: user)).to be_valid
     end
 
-    xcontext "on regional holidays" do
+    context "on regional holidays" do
+      let(:user) { FactoryBot.create(:user, :with_office) }
+
       before do
         RegionalHoliday.create(name: 'City Holiday',
                              day: 15,
                              month: 5,
                              offices: [user.office])
         punch.user = user
-        punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0) # City Holiday
+        punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
         punch.to = Time.new(2001, 5, 15, 13, 0, 0, 0)
       end
 

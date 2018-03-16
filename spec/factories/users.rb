@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   trait :with_office do
-    company
+    office
   end
 
   trait :active_user do

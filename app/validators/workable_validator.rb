@@ -1,7 +1,7 @@
 class WorkableValidator < ActiveModel::Validator
   def validate(model)
     @model = model
-    @model.errors.add(:from, 'you can only select workdays') if workable_day?
+    @model.errors.add(:from, 'you can only select workdays') if workable_day? || regional_holiday?
   end
 
   private
@@ -10,12 +10,12 @@ class WorkableValidator < ActiveModel::Validator
     @model.from.saturday? || @model.from.sunday?
   end
 
-  #def regional_holiday?
-  #  punch_date = format_date(@model.from)
-  #  @model.user.regional_holidays.present? do |holiday|
-  #    same_day?(punch_date, format_date(holiday))
-  #  end
-  #end
+  def regional_holiday?
+   punch_date = format_date(@model.from)
+   @model.user.regional_holidays.present? do |holiday|
+     same_day?(punch_date, format_date(holiday))
+   end
+  end
 
   def workable_day?
     !@model.user.allow_overtime &&
