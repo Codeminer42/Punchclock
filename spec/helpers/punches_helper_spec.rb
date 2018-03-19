@@ -15,4 +15,3 @@ describe PunchesHelper do
     end
   end
 end
-

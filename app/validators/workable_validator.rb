@@ -27,11 +27,15 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def regional_holiday?
-    return false if @model.user.regional_holidays.nil?
-    something?
+    return false if user_haves_regional_holidays?
+    is_today_a_regional_holiday?
   end
 
-  def something?
+  def user_haves_regional_holidays?
+    @model.user.regional_holidays.nil?
+  end
+
+  def is_today_a_regional_holiday?
     @model.user.regional_holidays.each do |holiday|
       return true if format_date(holiday) == format_date(@model.from)
     end
