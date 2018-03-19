@@ -30,7 +30,6 @@ ActiveAdmin.register RegionalHoliday do
       f.input :day
       f.input :month
       f.input :offices
-
       f.actions
     end
   end

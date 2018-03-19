@@ -23,20 +23,19 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def national_holiday?
-    # p @model.from.to_date
     @model.from.to_date.holiday?(:br)
   end
 
   def regional_holiday?
-   punch_date = format_date(@model.from)
-   # p punch_date
-   @model.user.regional_holidays.present? do |holiday|
-     same_day?(punch_date, format_date(holiday))
-   end
+    return false if @model.user.regional_holidays.nil?
+    something?
   end
 
-  def same_day?(date, holiday)
-    date == holiday
+  def something?
+    @model.user.regional_holidays.each do |holiday|
+      return true if format_date(holiday) == format_date(@model.from)
+    end
+    false
   end
 
   def format_date(date)
