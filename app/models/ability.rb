@@ -19,7 +19,6 @@ class Ability
       can :create, [AdminUser, Office, Project, User, Client]
       cannot :create, Punch
     end
-    cannot :manage, RegionalHoliday #disable for now
   end
 
   def user_permitions(user)
