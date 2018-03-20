@@ -4,5 +4,4 @@ FactoryBot.define do
     day 15
     month 6
   end
-
 end

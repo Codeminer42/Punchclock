@@ -3,5 +3,4 @@ FactoryBot.define do
     city { Faker::Address.city }
     company
   end
-
 end
