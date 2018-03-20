@@ -3,10 +3,10 @@ pt-BR:
     actions:
       create:
         notice: '%{resource_name} foi criado com sucesso.'
-        alert: '%{resource_name} não pôde ser criado'
+        alert: '%{resource_name} não pôde ser criado.'
       update:
         notice: '%{resource_name} foi atualizado com sucesso.'
-        alert: '%{resource_name} não pôde ser atualizado'
+        alert: '%{resource_name} não pôde ser atualizado.'
       destroy:
         notice: '%{resource_name} foi deletado com sucesso.'
         alert: '%{resource_name} não pôde ser deletado.'
