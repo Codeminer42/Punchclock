@@ -36,9 +36,11 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def is_today_a_regional_holiday?
-    @model.user.regional_holidays.map do |holiday|
-      format_date(holiday)
-    end.include? format_date(@model.from)
+    user_holidays.include? format_date(@model.from)
+  end
+
+  def user_holidays
+    @model.user.regional_holidays.map { |holiday| format_date(holiday) }
   end
 
   def format_date(date)
