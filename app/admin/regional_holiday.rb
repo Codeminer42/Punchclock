@@ -29,7 +29,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :name
       f.input :day
       f.input :month
-      f.input :offices
+      f.input :offices, as: :check_boxes
       f.actions
     end
   end
