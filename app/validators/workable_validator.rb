@@ -11,7 +11,7 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def cant_work!
-    @model.errors.add(:from, 'you can only select workdays')
+    @model.errors.add(:when_day, :must_be_workday)
   end
 
   def weekend?
@@ -27,16 +27,15 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def regional_holiday?
-    return false if user_haves_no_regional_holidays?
-    is_today_a_regional_holiday?
+    user_has_regional_holidays? && punch_on_a_regional_holiday?(@model.from)
   end
 
-  def user_haves_no_regional_holidays?
-    @model.user.regional_holidays.nil?
+  def user_has_regional_holidays?
+    !@model.user.regional_holidays.nil?
   end
 
-  def is_today_a_regional_holiday?
-    user_holidays.include? format_date(@model.from)
+  def punch_on_a_regional_holiday?(punch_date)
+    user_holidays.include? format_date(punch_date)
   end
 
   def user_holidays

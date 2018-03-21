@@ -61,6 +61,7 @@ describe Punch do
     let(:user) { FactoryBot.create(:user) }
     let(:company) { FactoryBot.create(:company) }
     let(:punch) { FactoryBot.build(:punch) }
+    let(:error_message) { I18n.t(:must_be_workday, scope: "activerecord.errors.models.punch.attributes.when_day") }
 
     it 'does not allow retroactive end date' do
       expect(Punch.new(from: Time.new(2001, 2, 5, 8, 0, 0, 0),
@@ -87,7 +88,7 @@ describe Punch do
 
       it "includes an error message" do
         punch.validate
-        expect(punch.errors[:from]).to include('you can only select workdays')
+        expect(punch.errors[:when_day]).to include(error_message)
       end
     end
 
@@ -102,7 +103,7 @@ describe Punch do
 
       it "includes an error message" do
         punch.validate
-        expect(punch.errors[:from]).to include('you can only select workdays')
+        expect(punch.errors[:when_day]).to include(error_message)
       end
     end
 
@@ -114,7 +115,7 @@ describe Punch do
     end
 
     context "on regional holidays" do
-      let(:user) { FactoryBot.create(:user, :with_office) }
+      let(:user) { FactoryBot.create(:user) }
 
       before do
         RegionalHoliday.create(name: 'City Holiday',
@@ -132,7 +133,25 @@ describe Punch do
 
       it "includes an error message" do
         punch.validate
-        expect(punch.errors[:from]).to include('you can only select workdays')
+        expect(punch.errors[:when_day]).to include(error_message)
+      end
+    end
+
+    context "without an office" do
+      let(:user) { FactoryBot.create(:user, :without_office) }
+
+      before do
+        RegionalHoliday.create(name: 'City Holiday',
+                             day: 15,
+                             month: 5,
+                             offices: [ FactoryBot.create(:office) ] )
+        punch.user = user
+        punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
+        punch.to = Time.new(2001, 5, 15, 13, 0, 0, 0)
+      end
+
+      it "is valid" do
+        expect(punch).to be_valid
       end
     end
 

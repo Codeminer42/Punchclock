@@ -1,5 +1,6 @@
 pt-BR:
   flash:
+    errors: 'Erros: %{errors}'
     actions:
       create:
         notice: '%{resource_name} foi criado com sucesso.'

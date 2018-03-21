@@ -1,0 +1,17 @@
+en:
+  activerecord:
+    errors:
+      models:
+        punch:
+          attributes:
+            from_time:
+              cant_be_greater: "can't be greater than to time"
+            to_time:
+                cant_be_different: "can't be in a different date"
+                cant_be_future: "can't be in the future"
+            when_day:
+                must_be_workday: "must be a workday"
+        period:
+          attributes:
+            base:
+              overlap: The chosen date overlaps with ones already registered

@@ -6,8 +6,8 @@ class PunchesController < ApplicationController
   def index
     @punches_filter_form = PunchesFilterForm.new(params[:punches_filter_form])
     @search = @punches_filter_form.apply_filters(scopped_punches)
-    .includes(:project)
-    .search(params[:q])
+      .includes(:project)
+      .search(params[:q])
 
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = Pagination.new(@search.result).decorated(params)
@@ -29,7 +29,7 @@ class PunchesController < ApplicationController
     if @punch.save
       redirect_to punches_path, notice: I18n.t(:notice, scope: "flash.actions.create", resource_name: "Punch")
     else
-      flash.now[:alert] = I18n.t(:alert, scope: "flash.actions.create", resource_name: "Punch")
+      flash_errors('create')
       render :new
     end
   end
@@ -41,7 +41,7 @@ class PunchesController < ApplicationController
     if @punch.save
       redirect_to punches_path, notice: I18n.t(:notice, scope: "flash.actions.update", resource_name: "Punch")
     else
-      flash.now[:alert] = I18n.t(:alert, scope: "flash.actions.update", resource_name: "Punch")
+      flash_errors('update')
       render :new
     end
   end
@@ -53,6 +53,22 @@ class PunchesController < ApplicationController
   end
 
   private
+
+  def flash_errors(scope)
+    flash.now[:alert] = "#{alert_message(scope)} #{error_message}"
+  end
+
+  def alert_message(scope)
+    I18n.t(:alert, scope: "flash.actions.#{scope}", resource_name: "Punch")
+  end
+
+  def errors
+    @punch.errors.full_messages.join('. ')
+  end
+
+  def error_message
+    I18n.t(:errors, scope: "flash", errors: errors)
+  end
 
   def punch_params
     params.require(:punch).permit(:from_time, :to_time, :when_day, :project_id, :attachment,

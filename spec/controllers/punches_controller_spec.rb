@@ -135,7 +135,6 @@ describe PunchesController do
         context 'when fails' do
           it 'fail and render action new' do
             allow(punch).to receive(:save).and_return(false)
-            allow(punch).to receive(:errors).and_return(['foo'])
 
             post_create
             expect(response).to render_template(:new)
