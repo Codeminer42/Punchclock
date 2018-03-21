@@ -121,6 +121,7 @@ describe Punch do
         RegionalHoliday.create(name: 'City Holiday',
                              day: 15,
                              month: 5,
+                             company: user.office.company,
                              offices: [user.office])
         punch.user = user
         punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
@@ -139,12 +140,13 @@ describe Punch do
 
     context "without an office" do
       let(:user) { FactoryBot.create(:user, :without_office) }
-
+      let(:office) { FactoryBot.create(:office) }
       before do
         RegionalHoliday.create(name: 'City Holiday',
                              day: 15,
                              month: 5,
-                             offices: [ FactoryBot.create(:office) ] )
+                             company: office.company,
+                             offices: [ office ] )
         punch.user = user
         punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
         punch.to = Time.new(2001, 5, 15, 13, 0, 0, 0)
