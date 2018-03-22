@@ -9,7 +9,7 @@ class CheckTimeValidator < ActiveModel::Validator
   def check_for_errors!
     if range?
       if negative_range?
-        cant_be_great!
+        cant_be_greater!
       elsif to_another_day?
         cant_be_different!
       elsif future?
@@ -34,20 +34,15 @@ class CheckTimeValidator < ActiveModel::Validator
     @model.to.future?
   end
 
-  def cant_be_great!
-    @model.errors.add(:from, "can't be greater then From time")
-    @model.errors.add(:from_time, "can't be greater then From time")
+  def cant_be_greater!
+    @model.errors.add(:from_time, :cant_be_greater)
   end
 
   def cant_be_different!
-    @model.errors.add(:to, "cant't be different dates")
-    @model.errors.add(:to_time, "cant't be different dates")
+    @model.errors.add(:to_time, :cant_be_different)
   end
 
   def cant_be_future!
-    @model.errors.add(:to, "can't be in the future, take you time machine \
-                     and go back")
-    @model.errors.add(:to_time, "can't be in the future, take you time machine \
-                     and go back")
+    @model.errors.add(:to_time, :cant_be_future)
   end
 end

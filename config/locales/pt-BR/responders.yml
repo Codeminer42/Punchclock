@@ -1,10 +1,13 @@
 pt-BR:
   flash:
+    errors: 'Erros: %{errors}'
     actions:
       create:
         notice: '%{resource_name} foi criado com sucesso.'
+        alert: '%{resource_name} não pôde ser criado.'
       update:
         notice: '%{resource_name} foi atualizado com sucesso.'
+        alert: '%{resource_name} não pôde ser atualizado.'
       destroy:
         notice: '%{resource_name} foi deletado com sucesso.'
-        alert: '%{resource_name} não pode ser deletado.'
+        alert: '%{resource_name} não pôde ser deletado.'

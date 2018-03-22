@@ -1,4 +1,3 @@
-
 // DISABLE FOR NOW
 // const extractHolidays = function($el) {
 //   return $el.data('nationalHolidays').concat($el.data('regionalHolidays'));

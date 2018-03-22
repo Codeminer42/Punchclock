@@ -2,6 +2,15 @@ pt-BR:
   activerecord:
     errors:
       models:
+        punch:
+          attributes:
+            from_time:
+              cant_be_greater: "não pode ser maior que horário final"
+            to_time:
+                cant_be_different: "não pode ser em data diferente"
+                cant_be_future: "não pode ser no futuro"
+            when_day:
+                must_be_workday: "deve ser um dia útil"
         period:
           attributes:
             base:

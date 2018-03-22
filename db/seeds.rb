@@ -15,6 +15,7 @@ end
 def create_holiday(office:)
   random_date = rand(Date.civil(2017, 1, 1)..Date.civil(2017, 12, 31))
   holiday = RegionalHoliday.find_or_create_by!(day: random_date.day, month: random_date.month) do |holiday|
+    holiday.company = office.company
     holiday.name = "#{Faker::Name.name} day"
   end
   holiday.offices << office

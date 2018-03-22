@@ -12,7 +12,7 @@ feature 'Edit Punch' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_content I18n.t(
       :editing, scope: %i(helpers actions), model: Punch.model_name.human
-    )
+      )
 
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from_time]', with: '08:00'
@@ -22,6 +22,22 @@ feature 'Edit Punch' do
       click_button 'Atualizar Punch'
     end
     expect(page).to have_content('Punch foi atualizado com sucesso.')
+  end
+
+  scenario 'editing punch with invalid data' do
+    visit "/punches/#{punch.id}/edit"
+    expect(page).to have_content I18n.t(
+      :editing, scope: %i(helpers actions), model: Punch.model_name.human
+      )
+
+    within "#edit_punch_#{punch.id}" do
+      fill_in 'punch[from_time]', with: '12:00'
+      fill_in 'punch[to_time]', with: '8:00'
+      fill_in 'punch[when_day]', with: '2001-01-05'
+      select active_project.name, from: 'punch[project_id]'
+      click_button 'Atualizar Punch'
+    end
+    expect(page).to have_content('Punch não pôde ser atualizado.')
   end
 
   scenario 'select box without inactive project' do
