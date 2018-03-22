@@ -1,5 +1,5 @@
 <%= simple_form_for @punch do |f| %>
-  <div class="row">
+
     <%= f.input :from_time, as: :time, html5: true %>
 
     <%= f.input :to_time, as: :time, html5: true%>
@@ -15,20 +15,21 @@
         # allow_overtime: current_user.allow_overtime?
       }
     } %>
-  </div>
 
-  <div class="row">
-    <%= f.input :project_id, collection: @projects.active.order(:name) %>
+    <div class="row">
+      <div class="grid-s2">
+        <%= f.input :project_id, as: :select2, collection: @projects.active.order(:name) %>
+      </div>
+    </div>
+
     <%= f.input :attachment %>
     <%= f.input :remove_attachment,
       as: :boolean,
       inline_label: 'Deletar',
       label: false
     %>
-  </div>
 
-  <div class="row">
     <%= f.input :comment %>
-  </div>
+
   <%= f.submit %>
 <% end %>

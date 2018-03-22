@@ -2,7 +2,8 @@
 //= require jquery-ui/widgets/datepicker
 //= require jquery_ujs
 //= require datepicker
-
+//= require select2
+//= require select2_simple_form
 $(function () {
   setDatePicker();
 
