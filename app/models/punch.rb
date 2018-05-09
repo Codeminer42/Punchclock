@@ -15,6 +15,8 @@ class Punch < ApplicationRecord
   scope :until, ->(time) { where('punches.to <= ?', time) }
   scope :by_days, ->(days) { where('date("punches"."from") in (?)', days) }
 
+  delegate :name, to: :user
+
   def from_time=(time_string)
     @from_time = time_string.presence
     mount_times
