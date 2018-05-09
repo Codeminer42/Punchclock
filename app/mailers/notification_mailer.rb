@@ -34,10 +34,9 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, subject: "Preencher Punch")
   end
 
-  def notify_admin_extra_hour(admin, user, worked_days)
-    @admin = admin
-    @user = user
-    @worked_days = worked_days
-    mail(to: @admin.email, subject: "Punchclock - #{user.name} registrou hora extra")
+  def notify_admin_extra_hour(punches, admins)
+    @admins = admins
+    @punches = punches
+    mail(to: @admins.pluck(:email), subject: "Punchclock - Horas extra registradas")
   end
 end

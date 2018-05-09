@@ -1,3 +1,16 @@
-<p>
-  <%= t('notification_mailer.extra_hour', user: @user.name, worked_days: @worked_days.join(', ')) %>
-</p>
+<% @punches.each do |user, punches| %>
+  <p>
+    <%= t '.info', user: user %>
+  </p>
+  <p>
+    <%= t '.days', count: punches.count %>
+  </p>
+  <ul>
+    <% punches.each do |punch| %>
+      <li>
+        <%= l punch.from.to_date %>
+        <%= t '.registered', count: punch.extra_hour.to_time.hour, hour: punch.extra_hour %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

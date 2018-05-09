@@ -27,7 +27,14 @@ pt-BR:
       Preencham o punch entre os dias 16 e 15.
 
       Abs
-    extra_hour: "%{user} registrou mais de 8 horas no dia %{worked_days}"
+    notify_admin_extra_hour:
+      info: "%{user} registrou hora extra:"
+      days:
+        one: No dia
+        other: Nos dias
+      registered:
+        one: "%{hour} hora"
+        other: "%{hour} horas"
   views:
     pagination:
       first: "&laquo; Primeira"
