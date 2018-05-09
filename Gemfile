@@ -22,9 +22,9 @@ gem 'draper'
 gem 'rails-i18n'
 gem 'webpack-rails'
 gem 'holidays', '5.6.0'
-gem "select2-rails"
+
 gem 'sidekiq'
-gem 'select2_simple_form', github: 'lndl/select2_simple_form', tag: '0.7.3'
+
 gem 'rollbar'
 
 gem 'bourbon', "~> 4.3"
