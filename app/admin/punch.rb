@@ -6,7 +6,8 @@ ActiveAdmin.register Punch do
   filter :project, collection: proc { Project.order('name') }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
   filter :company, if: proc { current_admin_user.is_super? }
-  filter :from, label: 'Interval', as: :date_range
+  filter :from, label: 'Intervalo', as: :date_range
+  filter :extra_hour_present, label: 'Fez Hora Extra?', as: :boolean
 
   index do
     div class: 'panel' do
@@ -19,7 +20,7 @@ ActiveAdmin.register Punch do
     column :from, sortable: false
     column :to, sortable: false
     column :delta, sortable: false
-    column :extra_hour, sortable: false
+    column :extra_hour
     actions
   end
 
