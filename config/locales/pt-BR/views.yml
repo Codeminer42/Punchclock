@@ -26,6 +26,8 @@ pt-BR:
 
       Preencham o punch entre os dias 16 e 15.
 
+      E avisem hora extra para <rodrigo.abilheira@codeminer42.com>
+
       Abs
     notify_admin_extra_hour:
       info: "%{user} registrou hora extra:"
