@@ -192,7 +192,7 @@ describe NotificationMailer do
       let(:admin) { build(:admin_user, company_id: user.company_id) }
       let(:worked_days) { ['10/05/2017', '11/05/2017'] }
       let(:mail) do
-        NotificationMailer.notify_admin_extra_hour(admin, user, worked_days)
+        NotificationMailer.notify_admin_extra_hour(worked_days, admin)
       end
 
       it 'renders the subject' do
