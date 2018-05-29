@@ -3,7 +3,7 @@ module Api
     before_action :auth
 
     def users
-      render json: company.users
+      render json: company.users.active
     end
 
     def offices
