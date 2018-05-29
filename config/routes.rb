@@ -31,6 +31,11 @@ Rails.application.routes.draw do
     via: [:patch, :put]
   )
 
+  namespace :api do
+    get ":company_id/users" => "companies#users"
+    get ":company_id/offices" => "companies#offices"
+  end
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
