@@ -7,7 +7,8 @@ ActiveAdmin.register Punch do
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
   filter :company, if: proc { current_admin_user.is_super? }
   filter :from, label: 'Intervalo', as: :date_range
-  filter :extra_hour_present, label: 'Fez Hora Extra?', as: :boolean
+  
+  filter :extra_hour, label: 'Fez Hora Extra?', as: :boolean
 
   index do
     div class: 'panel' do
@@ -35,7 +36,7 @@ ActiveAdmin.register Punch do
       end
       f.input :from, as: :datetime_picker
       f.input :to, as: :datetime_picker
-      f.input :extra_hour, as: :datetime_picker
+      f.input :extra_hour
       f.input :comment
     end
     f.actions
