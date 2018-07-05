@@ -4,7 +4,7 @@
 
     <%= f.input :to_time, as: :time, html5: true%>
 
-    <%= f.input :extra_hour, as: :time, html5: true %>
+    <%= f.input :extra_hour, as: :boolean, html5: true, hint: "Marque se este Punch é referente à hora extra" %>
 
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),

@@ -35,8 +35,8 @@ pt-BR:
         one: No dia
         other: Nos dias
       registered:
-        one: "%{hour} hora"
-        other: "%{hour} horas"
+        one: "%{count} hora"
+        other: "%{count} horas"
   views:
     pagination:
       first: "&laquo; Primeira"

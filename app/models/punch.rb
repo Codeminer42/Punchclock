@@ -45,6 +45,10 @@ class Punch < ApplicationRecord
     (to - from)
   end
 
+  def delta_as_hour
+    Time.at(delta).utc.strftime("%H:%M")
+  end
+
   def date
     from.to_date
   end

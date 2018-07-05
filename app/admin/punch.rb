@@ -7,8 +7,7 @@ ActiveAdmin.register Punch do
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
   filter :company, if: proc { current_admin_user.is_super? }
   filter :from, label: 'Intervalo', as: :date_range
-  
-  filter :extra_hour, label: 'Fez Hora Extra?', as: :boolean
+  filter :extra_hour, label: 'Fez Hora Extra?'
 
   index do
     div class: 'panel' do
