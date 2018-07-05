@@ -15,9 +15,9 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
     let(:second_company) { create :company }
     let(:second_company_admin) { create(:admin_user, company_id: second_company.id) }
 
-    before do
-      allow(ExtraHourNotificationService).to receive(:call).and_return(nil)
-    end
+    # before do
+    #   allow(ExtraHourNotificationService).to receive(:call).and_return(nil)
+    # end
 
     subject(:job) { described_class.perform_later }
 
