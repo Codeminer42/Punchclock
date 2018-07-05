@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.3'
+ruby '2.4.4'
 
 gem 'rails', '~> 5.1.0'
 
@@ -71,4 +71,3 @@ group :production, :staging do
   gem 'rails_12factor'
   gem 'passenger', '>= 4.0.17'
 end
-

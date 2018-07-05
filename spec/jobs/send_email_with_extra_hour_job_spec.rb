@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
 
   describe '#perform' do
-    
+
     let(:admin) { create :admin_user }
+    let!(:company_code) { create(:company, name:"Codeminer42") }
     let(:company) { admin.company }
     let(:active_user_with_hour) { create(:user, :active_user, company_id: company.id) }
     let(:active_user_without_hour) { create(:user, :active_user, company_id: company.id) }
@@ -23,11 +24,5 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
     it 'is in default queue' do
       expect(SendEmailWithExtraHourJob.new.queue_name).to eq('default')
     end
-
-    it 'call Extra Hours Notification Service' do
-      expect(ExtraHourNotificationService).to receive(:call)
-      perform_enqueued_jobs { job }
-    end
-
   end
 end
