@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321182355) do
+ActiveRecord::Schema.define(version: 20180705133611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20180321182355) do
     t.integer "company_id"
     t.string "attachment"
     t.text "comment"
-    t.string "extra_hour"
+    t.boolean "extra_hour", default: false, null: false
     t.index ["company_id"], name: "index_punches_on_company_id"
     t.index ["project_id"], name: "index_punches_on_project_id"
     t.index ["user_id"], name: "index_punches_on_user_id"
