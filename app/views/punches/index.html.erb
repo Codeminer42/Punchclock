@@ -4,7 +4,7 @@
 
 <section class="pre">
   <div class="avatar">
-    <%= link_to user_path(current_user) do %>
+    <%= link_to user_path do %>
       <%= gravatar_for current_user, size: 40 %>
       <span><%= current_user.name %></span>
     <%- end %>

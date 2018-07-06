@@ -21,7 +21,7 @@ class Punch < ApplicationRecord
     where from: last_month..current_month
   }
 
-  delegate :name, to: :user
+  delegate :name, to: :user, prefix: true
 
   def from_time=(time_string)
     @from_time = time_string.presence
