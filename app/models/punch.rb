@@ -14,6 +14,12 @@ class Punch < ApplicationRecord
   scope :since, ->(time) { where('punches.from >= ?', time) }
   scope :until, ->(time) { where('punches.to <= ?', time) }
   scope :by_days, ->(days) { where('date("punches"."from") in (?)', days) }
+  scope :is_extra_hour, -> { where extra_hour: true }
+  scope :from_last_month, -> {
+    current_month = Date.current.change day: 15
+    last_month = current_month.prev_month + 1.day
+    where from: last_month..current_month
+  }
 
   delegate :name, to: :user
 
