@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
+  include ActiveJob::TestHelper
 
   describe '#perform' do
 
