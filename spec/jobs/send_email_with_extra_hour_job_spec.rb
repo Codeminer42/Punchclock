@@ -1,19 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
+  include ActiveJob::TestHelper
 
   describe '#perform' do
 
-    let(:admin) { create :admin_user }
-    let!(:company_code) { create(:company, name:"Codeminer42") }
-    let(:company) { admin.company }
-    let(:active_user_with_hour) { create(:user, :active_user, company_id: company.id) }
-    let(:active_user_without_hour) { create(:user, :active_user, company_id: company.id) }
-    let(:inactive_user) { create(:user, :inactive_user, company_id: company.id, active: false) }
-    let(:worked_days) { [2.weeks.ago.to_date.strftime("%d/%m/%Y") ] }
+    let!(:company) { create :company, name: "Codeminer42" }
+    let!(:admins) { create_list :admin_user, 2, company: company }
+    let!(:active_user) { create :user, company: company, active: true, allow_overtime: true }
+    let!(:extra_hour_punches) {
+      from = Time.new 2018, 7, 3, 17, 0
+      to = from + 2.hours
+      create_list :punch, 1, extra_hour: true, user: active_user, from: from, to: to
+    }
+    let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
-    let(:second_company) { create :company }
-    let(:second_company_admin) { create(:admin_user, company_id: second_company.id) }
+    before do
+      allow(NotificationMailer).to receive(:notify_admin_extra_hour).and_return(message_delivery)
+      allow(message_delivery).to receive(:deliver_later)
+    end
 
     # before do
     #   allow(ExtraHourNotificationService).to receive(:call).and_return(nil)
@@ -23,6 +28,11 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
 
     it 'is in default queue' do
       expect(SendEmailWithExtraHourJob.new.queue_name).to eq('default')
+    end
+
+    it 'executes perform' do
+      expect(NotificationMailer).to receive(:notify_admin_extra_hour).with([[active_user.name, extra_hour_punches]], admins)
+      perform_enqueued_jobs { job }
     end
   end
 end
