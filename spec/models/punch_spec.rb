@@ -27,6 +27,19 @@ describe Punch do
     end
   end
 
+  describe '#delta_as_hour' do
+    let(:punch) do
+      from = Time.new(2018, 7, 3, 13, 29)
+      to = from + 4.hours + 2.minutes
+
+      build :punch, from: from, to: to
+    end
+
+    it 'returns delta as a string %H:%M' do
+      expect(punch.delta_as_hour).to eq '04:02'
+    end
+  end
+
   describe 'Datetime mount' do
     context 'valid data' do
       subject(:punch) { Punch.new(from_time: '08:00', to_time: '12:00', when_day: Date.new(2001, 1, 5)) }
