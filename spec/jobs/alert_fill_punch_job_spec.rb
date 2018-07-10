@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AlertFillPunchJob, type: :job do
-  include ActiveJob::TestHelper
 
   describe '#perform' do
 

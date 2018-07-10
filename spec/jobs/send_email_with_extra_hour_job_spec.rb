@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
-  include ActiveJob::TestHelper
 
   describe '#perform' do
 
@@ -19,10 +18,6 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
       allow(NotificationMailer).to receive(:notify_admin_extra_hour).and_return(message_delivery)
       allow(message_delivery).to receive(:deliver_later)
     end
-
-    # before do
-    #   allow(ExtraHourNotificationService).to receive(:call).and_return(nil)
-    # end
 
     subject(:job) { described_class.perform_later }
 
