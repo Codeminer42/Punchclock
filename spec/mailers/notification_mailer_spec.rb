@@ -167,11 +167,11 @@ describe NotificationMailer do
     context 'when notify admin: extra hour' do
       let(:user) { build :user }
       let(:admins) { build_list :admin_user, 2, company_id: user.company_id }
-      let!(:extra_hour_punches) {
-        from = Time.new 2018, 7, 3, 17, 0
+      let(:extra_hour_punches) do
+        from = "2018-07-03 17:00".to_time
         to   = from + 2.hours
         create_list :punch, 1, extra_hour: true, user: user, from: from, to: to
-      }
+      end
       let(:mail) { NotificationMailer.notify_admin_extra_hour([[user.name, extra_hour_punches]], admins) }
 
       it 'renders the subject' do
