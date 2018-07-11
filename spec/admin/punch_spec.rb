@@ -3,18 +3,18 @@ require 'spec_helper'
 describe Punch do 
   describe 'Punch' do
     let(:resource_class) { Punch }
-    let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[resource_class] }        
+    let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[resource_class] }
     
     it 'Verify resource name' do   
-      resource.resource_name.should == 'Punch'
+      expect(resource.resource_name).to eq 'Punch'
     end
 
     it 'Verifying menu display' do
-      resource.should be_include_in_menu
+      expect(resource).to be_include_in_menu
     end
 
     it 'Verifying defined actions for a resource' do
-      resource.defined_actions.should =~ [:create, :new, :update, :edit, :index, :show, :destroy]
+      expect(resource.defined_actions).to include :create, :new, :update, :edit, :index, :show, :destroy
     end
   end
 end
