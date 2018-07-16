@@ -27,17 +27,6 @@ describe Project do
     end
   end
 
-  # TODO(elias19r): what are these tests for?
-  # describe '#active' do
-  #   it 'is active' do
-  #     expect(active_project).to be_active
-  #   end
-
-  #   it 'is inactive' do
-  #     expect(inactive_project).not_to be_active
-  #   end
-  # end
-
   describe '#enable!' do
     it 'enables a project' do
       inactive_project.enable!

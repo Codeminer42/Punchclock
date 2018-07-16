@@ -11,10 +11,8 @@ describe Company do
     it { is_expected.to have_many :clients }
   end
 
-  # TODO(elias.rodrigues) what is this test for?
-  # xdescribe 'carrierwave upload a image with sucess' do
-  
-  # end
+  xdescribe 'carrierwave upload a image with sucess' do
+  end
 
   describe '#to_s' do
     let(:company) { create :company }

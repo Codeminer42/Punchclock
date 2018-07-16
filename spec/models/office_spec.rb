@@ -6,15 +6,6 @@ describe Office do
   it { is_expected.to belong_to :company }
   it { is_expected.to validate_presence_of :city }
 
-  # TODO(elias.rodrigues) What is this test for?
-  # context "with valid attributes" do
-  #   let(:params) { { city: 'Los Angeles' } }
-
-  #   it "is valid" do
-  #     expect { Office.new(params).to be_valid }
-  #   end
-  # end
-
   describe '#to_s' do
     let(:office) { create :office }
 

@@ -6,12 +6,6 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'You were registered on Punchclock')
   end
 
-  # TODO(elias.rodrigues) not being used?
-  # def notify_successful_signup(user)
-  #   @user = user
-  #   mail(to: @user.email, subject: 'Welcome to Punchclock')
-  # end
-
   def notify_user_registration(user)
     @user = user
     mail(to: @user.email, subject: 'Welcome to Punchclock')

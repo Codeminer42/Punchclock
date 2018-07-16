@@ -40,8 +40,8 @@ describe User do
   end
 
   describe '#active_for_authentication' do
-    it { expect(active_user.active_for_authentication?).to eq true }
-    it { expect(inactive_user.active_for_authentication?).to eq false }
+    it { expect(active_user).to be_active_for_authentication }
+    it { expect(inactive_user).not_to be_active_for_authentication }
   end
 
   describe '#inactive_message' do
