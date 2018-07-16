@@ -21,13 +21,16 @@ pt-BR:
     form:
       submit: 'Salvar Revisão'
   notification_mailer:
-    body: |
-      Pessoal,
-
-      Preencham o punch entre os dias 16 e 15.
-
-      E avisem hora extra para <rodrigo.abilheira@codeminer42.com>
-
+    body_html: |
+      <p>
+        Pessoal,
+      </p>
+      <p>
+        Preencham o punch entre os dias 16 e 15.
+      </p>
+      <p>
+        E avisem hora extra para <strong>"rh@codeminer42.com"</strong>
+      </p>
       Abs
     notify_admin_extra_hour:
       info: "%{user} registrou hora extra:"
