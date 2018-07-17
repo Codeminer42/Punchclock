@@ -6,4 +6,13 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, alert: exception.message
   end
+
+  # https://github.com/plataformatec/devise/issues/3461
+  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+    if devise_controller?
+      redirect_to root_path, alert: 'Already logged out'
+    else
+      raise
+    end
+  end
 end
