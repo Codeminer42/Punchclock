@@ -1,5 +1,6 @@
 class Ability
   include CanCan::Ability
+  prepend Draper::CanCanCan
 
   def initialize(user)
     if user.is_a?(AdminUser)
@@ -15,8 +16,8 @@ class Ability
     if user.is_super?
       can :manage, :all
     else
-      can :manage, [AdminUser, User, Office, Project, Punch, Client, RegionalHoliday], company_id: user.company_id
-      can :create, [AdminUser, Office, Project, User, Client]
+      can :manage, [AdminUser, User, Office, Project, Client, Punch, RegionalHoliday], company_id: user.company_id
+      can :create, [AdminUser, User, Office, Project, Client]
       cannot :create, Punch
     end
   end

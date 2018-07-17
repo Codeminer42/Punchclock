@@ -15,7 +15,7 @@ before_script:
   - cp config/database.yml.example config/database.yml
   - bundle exec rake db:create db:test:prepare
   - npm install
-  - rake webpack:compile
+  - bundle exec rake webpack:compile
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build

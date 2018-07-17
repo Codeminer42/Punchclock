@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-feature "Punches", type: :feature do
-  let(:admin_user) { FactoryBot.create(:super) }
-  let!(:punch) { FactoryBot.create(:punch) }
-  let!(:user) { FactoryBot.create(:user) }
+feature "Punches with super admin_user", type: :feature do
+  let(:admin_user) { create :super }
+  let!(:punch) { create :punch }
+  let!(:user) { create :user }
   let(:company) { user.company }
-  let!(:project) { FactoryBot.create(:project) }
+  let!(:project) { create :project }
 
   before do
     visit '/admin/'
@@ -44,5 +44,26 @@ feature "Punches", type: :feature do
     click_button 'Criar Punch'	
 
     expect(page).to have_content('Punch foi criado com sucesso.')
+  end
+end
+
+feature "Punches with normal admin_user", type: :feature do
+  let(:admin_user) { create :admin_user }
+  let!(:punch) { create :punch, company_id: admin_user.company_id }
+
+  before do
+    visit '/admin/'
+
+    fill_in 'admin_user_email', with: admin_user.email
+    fill_in 'admin_user_password', with: admin_user.password
+    click_button 'Entrar'
+  end
+
+  scenario 'index' do 
+    click_link 'Punches'
+    expect(page).to have_content('Punches') &
+      have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s) &
+      have_link("Editar", href: "/admin/punches/" + punch.id.to_s + "/edit") &
+      have_link("Remover", href: "/admin/punches/" + punch.id.to_s)
   end
 end

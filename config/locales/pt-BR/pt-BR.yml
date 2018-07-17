@@ -22,3 +22,6 @@ pt-BR:
   view: 'Visualizar'
   mine: 'Minhas'
   written: 'Realizadas'
+  errors:
+    messages:
+      not_saved: "Erro"
