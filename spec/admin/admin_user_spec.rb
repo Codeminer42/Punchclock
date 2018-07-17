@@ -3,10 +3,10 @@ require 'spec_helper'
 describe AdminUser do 
   describe 'AdminUser' do
     let(:resource_class) { AdminUser }
-    let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[resource_class] }        
+    let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[resource_class] }
     
     it 'Verify resource name' do   
-      expect(resource.resource_name).to eq'AdminUser'
+      expect(resource.resource_name).to eq 'AdminUser'
     end
 
     it 'Verifying menu display' do
@@ -14,7 +14,7 @@ describe AdminUser do
     end
 
     it 'Verifying defined actions for a resource' do
-      expect(resource.defined_actions).to  include :create, :index, :new, :update, :edit, :show, :destroy
+      expect(resource.defined_actions).to include :create, :index, :new, :update, :edit, :show, :destroy
     end
   end
 end

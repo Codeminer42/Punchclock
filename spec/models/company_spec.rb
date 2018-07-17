@@ -12,6 +12,11 @@ describe Company do
   end
 
   xdescribe 'carrierwave upload a image with sucess' do
-  
+  end
+
+  describe '#to_s' do
+    let(:company) { create :company }
+
+    it { expect(company.to_s).to eq company.name }
   end
 end

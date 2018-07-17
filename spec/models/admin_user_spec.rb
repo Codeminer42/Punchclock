@@ -20,4 +20,9 @@ describe AdminUser, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to :company }
   end
+
+  describe '#email' do
+    let(:admin_user) { build :admin_user }
+    it { expect(admin_user.to_s).to eq admin_user.email }
+  end
 end

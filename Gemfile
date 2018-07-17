@@ -31,7 +31,6 @@ gem 'bourbon', "~> 4.3"
 gem 'neat', '1.7.2'
 gem 'bitters', '1.1.0'
 gem 'refills', '0.1.0'
-gem 'autoprefixer-rails'
 
 # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
 gem 'platform-api', github: 'heroku/platform-api'
