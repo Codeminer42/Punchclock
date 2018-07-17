@@ -9,7 +9,7 @@
         <%- end %>
         <%= link_to Punch.model_name.human.pluralize, punches_path %>
         <span class="account-options">
-          <%= link_to current_user.email, edit_user_path(current_user) %>
+          <%= link_to current_user.email, edit_user_path %>
           <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
         </span>
       </div>
