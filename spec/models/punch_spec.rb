@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Punch do
+  include ActiveSupport::Testing::TimeHelpers
 
   describe 'relations' do
     it { is_expected.to belong_to :project }
@@ -13,18 +14,66 @@ describe Punch do
     it { is_expected.to validate_presence_of(:to) }
   end
 
+  describe '.from_last_month' do
+    let(:last_month_punches) do
+      punches = []
+
+      # Create AM and PM punches on valid days from 2018-06-01 to 2018-07-31.
+      ("2018-06-01".to_date.."2018-07-31".to_date).each do |day|
+        punch_am = build :punch, from: day +  9.hours, to: day + 12.hours
+        punch_pm = build :punch, from: day + 13.hours, to: day + 18.hours
+
+        [punch_am, punch_pm].each do |punch|
+          punch.save and punches << punch if punch.valid?
+        end
+      end
+
+      punches.select do |punch|
+        punch.from.between? "2018-06-16".to_date, "2018-07-15".to_date
+      end
+    end
+    
+    before do
+      travel_to "2018-07-28".to_date
+    end
+
+    after do
+      travel_back
+    end
+
+    it 'returns only punches from last month' do
+      expect(Punch.from_last_month).to match_array last_month_punches
+    end
+  end
+
   describe '#delta' do
     let(:punch) do
-      build(
-        :punch,
-        from: Time.new(2001, 1, 5, 8),
-        to: Time.new(2001, 1, 5, 12)
-      )
+      day = "2001-01-05".to_date
+      build :punch, from: day + 9.hours, to: day + 13.hours
     end
 
     it 'returns the time difference between from and to in hours'  do
       expect(punch.delta).to eq(4.hours)
     end
+  end
+
+  describe '#delta_as_hour' do
+    let(:punch) do
+      from = "2018-07-03 13:29".to_time
+      to = from + 4.hours + 2.minutes  
+
+      build :punch, from: from, to: to
+    end
+
+    it 'returns delta as a string %H:%M' do
+      expect(punch.delta_as_hour).to eq '04:02'
+    end
+  end
+
+  describe '#date' do
+    let(:punch) { build :punch }
+
+    it { expect(punch.date).to eq punch.from.to_date }
   end
 
   describe 'Datetime mount' do

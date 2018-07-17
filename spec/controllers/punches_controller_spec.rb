@@ -126,10 +126,6 @@ describe PunchesController do
           it "sets the 'to' attribute correctly" do
             expect(punch.to).to eq(DateTime.new(2001, 1, 5, 17, 0, 0, 0))
           end
-
-          it "sets the 'extra_hour' attribute correctly" do
-            expect(punch.extra_hour).to eq('01:25')
-          end
         end
 
         context 'when fails' do
@@ -157,7 +153,7 @@ describe PunchesController do
               :'when_day' => DateTime.new(2001, 1, 5),
               :'from_time' => '10:00',
               :'to_time' => '14:00',
-              :'extra_hour' => '02:00',
+              :'extra_hour' => true,
               :'project_id' => FactoryBot.create(:project, company: user.company).id
             }
           }
@@ -178,7 +174,7 @@ describe PunchesController do
 
           it "updates the 'extra_hour' attribute correctly" do
             expect { put :update, params: params }.to change { punch.reload.extra_hour }.
-              from('01:25').to('02:00')
+              from(false).to(true)
           end
 
           it "updates the project" do

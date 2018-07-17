@@ -3,13 +3,13 @@
     <%= t '.info', user: user %>
   </p>
   <p>
-    <%= t '.days', count: @punches.count %>
+    <%= t '.days', count: punches.count %>
   </p>
   <ul>
-    <% @punches.each do |punch| %>
+    <% punches.each do |punch| %>
       <li>
         <%= l punch.from.to_date %>
-        <%= t '.registered', count: punch.extra_hour.to_time.hour, hour: punch.extra_hour %>
+        <%= t '.registered', count: punch.delta_as_hour %>
       </li>
     <% end %>
   </ul>

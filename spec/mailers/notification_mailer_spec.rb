@@ -164,6 +164,21 @@ describe NotificationMailer do
       end
     end
 
+    context 'when notify admin: extra hour' do
+      let(:user) { build :user }
+      let(:admins) { build_list :admin_user, 2, company_id: user.company_id }
+      let(:extra_hour_punches) do
+        from = "2018-07-03 17:00".to_time
+        to   = from + 2.hours
+        create_list :punch, 1, extra_hour: true, user: user, from: from, to: to
+      end
+      let(:mail) { NotificationMailer.notify_admin_extra_hour([[user.name, extra_hour_punches]], admins) }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq 'Punchclock - Horas extra registradas'
+      end
+    end
+
     context 'when notify user to fill punch' do
       let(:user) { build(:user) }
       let(:mail) do
@@ -184,31 +199,6 @@ describe NotificationMailer do
 
       it 'renders the body' do
         expect(mail.body).to match('Preencham o punch entre os dias 16 e 15')
-      end
-    end
-
-    context 'when notify admin: user fills more than 8 hours' do
-      let(:user) { build(:user) }
-      let(:admin) { create_list(:admin_user, 2, company_id: user.company_id) }
-      let(:worked_days) { build_list(:punch, 2, from: DateTime.new(2017,05,10), to: DateTime.new(2017,05,11)) }
-      let(:mail) do
-        NotificationMailer.notify_admin_extra_hour(worked_days, admin)
-      end
-
-      it 'renders the subject' do
-        expect(mail.subject).to eq("Punchclock - Horas extra registradas")
-      end
-
-      it 'renders the receiver email' do
-        expect(mail.to).to eq(admin.pluck(:email))
-      end
-
-      it 'renders the sender email' do
-        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
-      end
-
-      it 'assigns date @worked_days' do
-        expect(mail.body).to match("10/05/2017")
       end
     end
   end
