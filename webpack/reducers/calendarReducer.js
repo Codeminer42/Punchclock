@@ -171,7 +171,7 @@ const createPunch = (dayString, sheet) => {
       from: from,
       to: to,
       project_id: p.project_id,
-      delta: to.diff(from, 'hour')
+      delta: Moment.duration(to.diff(from)).asHours()
     });
   });
 };
