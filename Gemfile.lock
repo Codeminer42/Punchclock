@@ -84,7 +84,6 @@ GEM
       bourbon (>= 4.2)
       sass (>= 3.4)
       thor
-    bond (0.5.1)
     bourbon (4.3.4)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -313,8 +312,6 @@ GEM
       railties (>= 4.2.0, < 5.3)
     rollbar (2.15.5)
       multi_json
-    rspec-console (0.6.1)
-      bond
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -436,7 +433,6 @@ DEPENDENCIES
   rails_12factor
   refills (= 0.1.0)
   rollbar
-  rspec-console
   rspec-rails
   sass-rails
   selenium-webdriver
