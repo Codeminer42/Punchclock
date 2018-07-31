@@ -4,8 +4,6 @@
 
     <%= f.input :to_time, as: :time, html5: true%>
 
-    <%= f.input :extra_hour, as: :boolean, html5: true, hint: "Marque se este Punch é referente à hora extra" %>
-
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
       size: 10,
@@ -15,10 +13,11 @@
         # allow_overtime: current_user.allow_overtime?
       }
     } %>
+    <%= f.input :extra_hour, as: :boolean, html5: true, hint: "Marque se este Punch é referente à hora extra" %>
   </div>
 
   <div class="row">
-    <%= f.input :project_id, collection: @projects.active.order(:name) %>
+    <%= f.input :project_id, collection: @projects %>
     <%= f.input :attachment %>
     <%= f.input :remove_attachment,
       as: :boolean,
