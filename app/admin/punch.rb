@@ -61,7 +61,9 @@ ActiveAdmin.register Punch do
     column :from
     column :to
     column :delta
-    column :extra_hour
+    column :extra_hour do |punch|
+      t punch.extra_hour.to_s
+    end
     column :comment
   end
 end
