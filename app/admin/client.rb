@@ -28,6 +28,15 @@ ActiveAdmin.register Client do
     actions
   end
 
+  show do
+    attributes_table do
+      row :name
+      row :active
+      row :created_at
+      row :updated_at
+    end
+  end
+
   form do |f|
     f.inputs do
       f.input :name

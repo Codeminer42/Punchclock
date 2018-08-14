@@ -8,7 +8,7 @@ ActiveAdmin.register Office do
 
   index do
     column :city
-    column :company
+    column :company if current_admin_user.is_super?
     column :users_quantity do |office|
       office.users.count
     end
@@ -21,7 +21,7 @@ ActiveAdmin.register Office do
       row :users_quantity do |office|
         office.users.count
       end
-      row :company
+      row :company if current_admin_user.is_super?
       row :created_at
       row :updated_at
     end

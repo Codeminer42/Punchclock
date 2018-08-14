@@ -28,8 +28,8 @@ ActiveAdmin.register AdminUser do
   show do
     attributes_table do
       row :email
-      row :company_id
       if current_admin_user.is_super?
+        row :company  
         row :is_super do |admin|
           status_tag admin.is_super.to_s
         end
@@ -46,7 +46,7 @@ ActiveAdmin.register AdminUser do
       f.input :password
       f.input :password_confirmation
       if current_admin_user.is_super?
-        f.input :is_super, label: 'CAN MANAGE ALL COMPANIES?'
+        f.input :is_super, label: 'Super admin?'
         f.input :company
       else
         f.input :company_id, as: :hidden, input_html: {value: current_admin_user.company_id}

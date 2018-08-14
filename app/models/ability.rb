@@ -16,9 +16,9 @@ class Ability
     if user.is_super?
       can :manage, :all
     else
-      can :manage, [AdminUser, User, Office, Project, Client, Punch, RegionalHoliday], company_id: user.company_id
+      can :manage, [AdminUser, User, Office, Project, Client, RegionalHoliday], company_id: user.company_id
+      can :read, Punch, company_id: user.company_id
       can :create, [AdminUser, User, Office, Project, Client]
-      cannot :create, Punch
     end
   end
 

@@ -48,10 +48,11 @@ ActiveAdmin.register Project do
   form do |f|
     f.inputs 'Project Details' do
       f.input :name
-      f.input :client
       if current_admin_user.is_super?
+        f.input :client
         f.input :company
       else
+        f.input :client, collection: current_admin_user.company.clients
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
       f.input :active

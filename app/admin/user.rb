@@ -11,7 +11,9 @@ ActiveAdmin.register User do
   filter :name
   filter :email
   filter :role, as: :select, collection: User.roles
-  filter :office
+  filter :office, collection: proc { 
+    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices 
+  }
   filter :company, if: proc { current_admin_user.is_super? }
 
   batch_action :destroy, false
@@ -69,14 +71,16 @@ ActiveAdmin.register User do
       f.input :name
       f.input :email
       f.input :hour_cost, input_html: { value: '0.0' }
-      f.input :office
-      if current_admin_user.is_super?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-      end
       f.input :role, as: :select, collection: User.roles.keys
-      f.input :reviewer
+      if current_admin_user.is_super?
+        f.input :office
+        f.input :company
+        f.input :reviewer
+      else
+        f.input :office, collection: current_admin_user.company.offices
+        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
+        f.input :reviewer, collection: current_admin_user.company.users
+      end
       f.input :allow_overtime
       f.input :password
       f.input :active

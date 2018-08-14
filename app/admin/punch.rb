@@ -3,7 +3,9 @@ ActiveAdmin.register Punch do
 
   permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company, :comment
 
-  filter :project, collection: proc { Project.order('name') }
+  filter :project, collection: proc { 
+    current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects 
+  }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
   filter :company, if: proc { current_admin_user.is_super? }
   filter :from, label: 'Intervalo', as: :date_range
@@ -24,17 +26,26 @@ ActiveAdmin.register Punch do
     actions
   end
 
+  show do
+    attributes_table do
+      row :company if current_admin_user.is_super?
+      row :user
+      row :project
+      row :when
+      row :from
+      row :to
+      row :delta
+      row :extra_hour
+    end
+  end
+
   form do |f|
     f.inputs do
-      f.input :user
-      f.input :project
-      if current_admin_user.is_super?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-      end
+      f.input :user, collection: User.all.group_by(&:company)
+      f.input :project, collection: Project.all.group_by(&:company)
+      f.input :company
       f.input :from, as: :datetime_picker
-      f.input :to, as: :datetime_picker
+      f.input :to, as: :datetime_picker 
       f.input :extra_hour
       f.input :comment
     end
