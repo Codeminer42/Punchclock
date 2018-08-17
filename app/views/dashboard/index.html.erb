@@ -1,2 +1,2 @@
-<script>Projects = <%= Project.active.order(:name).pluck(:id, :name).to_json.html_safe %></script>
+<script>Projects = <%= current_user.company.projects.active.order(:name).pluck(:id, :name).to_json.html_safe %></script>
 <div id="content" data-daybase="15" >Carregando...</div>
