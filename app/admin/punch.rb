@@ -3,8 +3,8 @@ ActiveAdmin.register Punch do
 
   permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company, :comment
 
-  filter :project, collection: proc { 
-    current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects 
+  filter :project, collection: proc {
+    current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects
   }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
   filter :company, if: proc { current_admin_user.is_super? }
@@ -41,11 +41,11 @@ ActiveAdmin.register Punch do
 
   form do |f|
     f.inputs do
-      f.input :user, collection: User.all.group_by(&:company)
-      f.input :project, collection: Project.all.group_by(&:company)
+      f.input :user, as: :select, collection: option_groups_from_collection_for_select(Company.all, :users, :name, :id, :name, f.object.user_id)
+      f.input :project, as: :select, collection: option_groups_from_collection_for_select(Company.all, :projects, :name, :id, :name, f.object.project_id)
       f.input :company
       f.input :from, as: :datetime_picker
-      f.input :to, as: :datetime_picker 
+      f.input :to, as: :datetime_picker
       f.input :extra_hour
       f.input :comment
     end
