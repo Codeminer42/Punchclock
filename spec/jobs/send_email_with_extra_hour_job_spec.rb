@@ -15,6 +15,7 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
+      allow(Time).to receive(:now).and_return(Time.new 2018, 7, 25, 17, 0)
       allow(NotificationMailer).to receive(:notify_admin_extra_hour).and_return(message_delivery)
       allow(message_delivery).to receive(:deliver_later)
     end
