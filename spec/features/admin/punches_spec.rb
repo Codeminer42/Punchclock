@@ -15,9 +15,12 @@ feature "Punches with super admin_user", type: :feature do
     click_button 'Entrar'
   end
 
-  scenario 'index' do 
+  scenario 'index' do
     click_link 'Punches'
-    expect(page).to have_content('Punches')
+    expect(page).to have_content('Punches') &
+      have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s) &
+      have_link("Editar", href: "/admin/punches/" + punch.id.to_s + "/edit") &
+      have_link("Remover", href: "/admin/punches/" + punch.id.to_s)
   end
 
   scenario 'filter' do
@@ -41,7 +44,7 @@ feature "Punches with super admin_user", type: :feature do
     select(company.name, from: 'punch_company_id').select_option
     fill_in 'punch_from', with: DateTime.now.to_date
     fill_in 'punch_to', with: DateTime.now.to_date
-    click_button 'Criar Punch'	
+    click_button 'Criar Punch'
 
     expect(page).to have_content('Punch foi criado com sucesso.')
   end
@@ -59,11 +62,9 @@ feature "Punches with normal admin_user", type: :feature do
     click_button 'Entrar'
   end
 
-  scenario 'index' do 
+  scenario 'index' do
     click_link 'Punches'
     expect(page).to have_content('Punches') &
-      have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s) &
-      have_link("Editar", href: "/admin/punches/" + punch.id.to_s + "/edit") &
-      have_link("Remover", href: "/admin/punches/" + punch.id.to_s)
+      have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s)
   end
 end
