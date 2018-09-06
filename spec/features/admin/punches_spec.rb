@@ -17,7 +17,10 @@ feature "Punches with super admin_user", type: :feature do
 
   scenario 'index' do
     click_link 'Punches'
-    expect(page).to have_content('Punches')
+    expect(page).to have_content('Punches') &
+      have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s) &
+      have_link("Editar", href: "/admin/punches/" + punch.id.to_s + "/edit") &
+      have_link("Remover", href: "/admin/punches/" + punch.id.to_s)
   end
 
   scenario 'filter' do
