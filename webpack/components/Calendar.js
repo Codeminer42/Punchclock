@@ -84,20 +84,20 @@ class Calendar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    calendar: state.calendarReducer,
+  calendar: state.calendarReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-   onInitializeCalendar: onInitializeCalendar(dispatch),
-   onFetchSheets: onFetchSheets(dispatch),
-   onSaveSheets: onSaveSheets(dispatch),
-   onPrev: onPrev(dispatch),
-   onNext: onNext(dispatch),
-   onSelectWeek: onSelectWeek(dispatch),
-   onToggle: onToggle(dispatch),
-   onSetTimeSheet: onSetTimeSheet(dispatch),
-   onErase: onErase(dispatch),
-   onDeselect: onDeselect(dispatch),
+  onInitializeCalendar: onInitializeCalendar(dispatch),
+  onFetchSheets: onFetchSheets(dispatch),
+  onSaveSheets: onSaveSheets(dispatch),
+  onPrev: onPrev(dispatch),
+  onNext: onNext(dispatch),
+  onSelectWeek: onSelectWeek(dispatch),
+  onToggle: onToggle(dispatch),
+  onSetTimeSheet: onSetTimeSheet(dispatch),
+  onErase: onErase(dispatch),
+  onDeselect: onDeselect(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

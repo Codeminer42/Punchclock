@@ -136,7 +136,7 @@ export default (state = initialState, action) => {
 
 //export functions
 export const getDays = (weeks) => {
-    return weeks.flatMap(function(w){ return w.days; });
+  return weeks.flatMap(function(w){ return w.days; });
 };
 
 export const sheetFor = (d, sheets, sheetsSaveds) => {
