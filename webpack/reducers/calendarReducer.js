@@ -2,7 +2,7 @@ import Moment from 'moment';
 import Immutable from 'immutable';
 import * as Calendar from '../utils/calendar';
 import { push } from 'react-router-redux';
-import { fetchSheets, saveSheets } from '../api';
+import { fetchSheets, fetchHolidays, saveSheets } from '../api';
 
 //calendar actions
 export const INITIALIZE = 'calendar/initializeCalendar';
@@ -18,6 +18,8 @@ export const NEXT = 'calendar/next';
 //server actions
 export const UPDATE_SHEETS_SUCCESS = 'server/updateSheetsSucceded';
 export const UPDATE_SHEETS_FAIL = 'server/updateSheetsFailed';
+export const UPDATE_HOLIDAYS_SUCCESS = 'server/updateHolidaysSucceded';
+export const UPDATE_HOLIDAYS_FAIL = 'server/updateHolidaysFailed';
 export const SAVE_SHEET_SUCCESS = 'server/saveSheetsSucceded';
 export const SHEETS_SAVE_FAIL = 'server/saveSheetsFailed';
 
@@ -40,6 +42,7 @@ const initialState = {
   weekdays: Moment.weekdaysMin(),
   selecteds: emptySet,
   sheetsSaveds: emptyMap,
+  holidays: [],
   sheets: emptyMap,
   deleteds: emptySet,
   changes: 0,
@@ -114,6 +117,15 @@ export default (state = initialState, action) => {
         sheetsSaveds: action.sheetsPayload.sheetsSaveds,
       };
     case UPDATE_SHEETS_FAIL:
+      return {
+        ...state,
+      };
+    case UPDATE_HOLIDAYS_SUCCESS:
+      return {
+        ...state,
+        holidays: action.holidaysPayload.holidays,
+      };
+    case UPDATE_HOLIDAYS_FAIL:
       return {
         ...state,
       };
@@ -256,36 +268,45 @@ export const onErase = (dispatch) => (selecteds, sheets, deleteds, sheetsSaveds)
 };
 
 export const onToggle = (dispatch) => (day, selecteds) => {
-  let newSelecteds = selecteds;
-  if(isSelected(selecteds, day)) {
-    newSelecteds = newSelecteds.delete(day);
-  } else {
-    newSelecteds = newSelecteds.add(day);
-  }
+  return dispatch((dispatch, getState) => {
+    let newSelecteds = selecteds;
+    if(isSelected(selecteds, day)) {
+      newSelecteds = newSelecteds.delete(day);
+    } else if (!Calendar.isHoliday(selecteds, day, Calendar.getHolidaysFromState(getState))) {
+      newSelecteds = newSelecteds.add(day);
+    }
 
-  dispatch({
-    type: TOGGLE,
-    sheetsPayload:{
-      selecteds: newSelecteds,
-    },
-  });
+    if (newSelecteds.size !== selecteds.size) {
+      dispatch({
+        type: TOGGLE,
+        sheetsPayload:{
+          selecteds: newSelecteds,
+        }
+      });
+    }
+  })
 };
 
 export const onSelectWeek = (dispatch) => (week, selecteds) => {
-  let newSelecteds = selecteds;
-  week.days.forEach( (d) => {
-    let { day, inner } = d;
-    if(day.day() != 0 && day.day() != 6 && inner) {
-      newSelecteds = newSelecteds.add(day);
-    }
-  });
+  return dispatch((dispatch, getState) => {
+    let newSelecteds = selecteds;
+    week.days.forEach(d => {
+      let { day, inner } = d;
+      const isDayWeekend = day.day() !== 0 && day.day() !== 6
+      if(isDayWeekend && inner) {
+        if (!Calendar.isHoliday(newSelecteds, day, Calendar.getHolidaysFromState(getState))) {
+          newSelecteds = newSelecteds.add(day);
+        }
+      }
+    });
 
-  dispatch({
-    type: SELECT_WEEK,
-    sheetsPayload: {
-      selecteds: newSelecteds
-    },
-  });
+    dispatch({
+      type: SELECT_WEEK,
+      sheetsPayload: {
+        selecteds: newSelecteds
+      },
+    });
+  })
 };
 
 export const onDeselect = (dispatch) => () => {
@@ -311,6 +332,23 @@ export const onFetchSheets = (dispatch) => () => {
       type: UPDATE_SHEETS_FAIL,
     })
   });
+};
+
+export const onFetchHolidays = (dispatch) => () => {
+  fetchHolidays().then((response) => {
+    const { body } = response
+    dispatch({
+      type: UPDATE_HOLIDAYS_SUCCESS,
+      holidaysPayload: {
+        holidays: body
+      },
+    })
+  })
+  .catch((response) => {
+    dispatch({
+      type: UPDATE_HOLIDAYS_FAIL,
+    })
+  })
 };
 
 export const onSaveSheets = (dispatch) => (deleteds, sheets, sheetsSaveds) => {

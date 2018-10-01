@@ -12,7 +12,8 @@ class User < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
-  delegate :regional_holidays, to: :office, allow_nil: true
+  delegate :regional_holidays, to: :office, allow_nil: true, prefix: true
+  delegate :holidays, to: :office, allow_nil: true, prefix: true
 
   enum role: %i(trainee junior pleno senior)
 

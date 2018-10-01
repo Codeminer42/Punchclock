@@ -16,6 +16,7 @@ const Weeks = ({ sheetFor, isSelected, calendar, onSelectWeek, onToggle }) => {
               onToggle={onToggle}
               selecteds={calendar.selecteds}
               selected={isSelected(calendar.selecteds, d.day)}
+              holidays={calendar.holidays}
               {...d.toObject()} />
           )}
         </Week>

@@ -1,5 +1,6 @@
 # Run Rails & Webpack concurrently
 # Example file from webpack-rails gem
+redis: redis-server
 rails: bundle exec rails server -b 0.0.0.0
 webpack: npm run server
 worker: bundle exec sidekiq -C config/sidekiq.yml

@@ -53,7 +53,7 @@
         <td><%= punch.project.name %> </td>
         <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
         <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
-        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: t('.are_you_sure') }, id: "dlt-#{punch.id}" %> </td>
+        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: t('.are_you_sure_remove_register') }, id: "dlt-#{punch.id}" %> </td>
       </tr>
     <% end %>
   </tbody>

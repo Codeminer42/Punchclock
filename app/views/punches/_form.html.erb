@@ -8,8 +8,7 @@
       class: %i(datepicker),
       size: 10,
       data: {
-        national_holidays: national_holidays,
-        regional_holidays: parameterize_holidays(current_user.regional_holidays),
+        holidays: current_user.office_holidays,
         allow_overtime: current_user.allow_overtime?
       }
     } %>

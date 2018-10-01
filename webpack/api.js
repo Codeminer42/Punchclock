@@ -3,18 +3,25 @@ import asPromissed from 'superagent-as-promised';
 
 asPromissed(request);
 
-const url = '/dashboard/sheets';
+const urls = {
+  sheets: '/dashboard/sheets',
+  holidays: '/api/holidays'
+};
 const csrf = {
   token: document.querySelector('[name="csrf-token"]'),
   param: document.querySelector('[name="csrf-param"]')
 };
 
 export const fetchSheets = () => {
-  return request.get(url).endAsync();
+  return request.get(urls.sheets).endAsync();
 };
 
+export const fetchHolidays = () => {
+  return request.get(urls.holidays).endAsync();
+}
+
 export const saveSheets = (deleteds, sheets) => {
-  let _request = request.post(url);
+  let _request = request.post(urls.sheets);
 
   if(csrf.token) {
     _request = _request.set('X-CSRF-Param', csrf.param.attributes.content.value)
