@@ -7,7 +7,7 @@ FactoryBot.define do
     company { user.company }
 
     trait :is_extra_hour do
-      extra_hour true
+      extra_hour { true }
     end
   end
 end

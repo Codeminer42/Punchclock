@@ -5,7 +5,7 @@ FactoryBot.define do
     company
 
     trait :super do
-      is_super true
+      is_super { true }
     end
   end
 end

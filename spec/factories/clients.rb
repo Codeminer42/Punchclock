@@ -1,14 +1,14 @@
 FactoryBot.define do
   factory :client do
-    name "MyString"
-    company nil
+    name { "MyString" }
+    company { nil }
   end
 
   trait :active_client do
-    active true
+    active { true }
   end
 
   trait :inactive_client do
-    active false
+    active { false }
   end
 end

@@ -9,14 +9,14 @@ FactoryBot.define do
   end
 
   trait :without_office do
-    office nil
+    office { nil }
   end
 
   trait :active_user do
-    active true
+    active { true }
   end
 
   trait :inactive_user do
-    active false
+    active { false }
   end
 end
