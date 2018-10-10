@@ -1,4 +1,4 @@
-FROM codeminer42/ci-ruby:2.4
+FROM codeminer42/ci-ruby:2.5
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
