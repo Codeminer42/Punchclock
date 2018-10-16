@@ -16,15 +16,15 @@ feature 'Punches Dashboard', js: true do
   scenario 'Insert and delete punches' do
     visit '/dashboard/2013/10'
 
-    find('td.inner', text: '17').click
-    find('td.inner', text: '18').click
+    find('td.inner', text: '10').click
+    find('td.inner', text: '11').click
     click_on 'Ok'
     expect(page).to have_content('Alterações (2)')
     click_on 'Salvar'
     expect(page).to have_no_content('Alterações (2)')
 
     visit '/dashboard/2013/10'
-    find('td.inner', text: '17').click
+    find('td.inner', text: '15').click
     find('a', text: 'Apagar').click
     expect(page).to have_content('Alterações (1)')
     click_on 'Salvar'

@@ -31,7 +31,7 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def user_has_regional_holidays?
-    !@model.user.regional_holidays.nil?
+    !@model.user.office_regional_holidays.nil?
   end
 
   def punch_on_a_regional_holiday?(punch_date)
@@ -39,7 +39,7 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def user_holidays
-    @model.user.regional_holidays.map { |holiday| format_date(holiday) }
+    @model.user.office_regional_holidays.map { |holiday| format_date(holiday) }
   end
 
   def format_date(date)

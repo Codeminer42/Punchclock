@@ -58,3 +58,13 @@ export function current() {
 export function constraintMonth(year, month) {
   return parseInt(current().format('YYYYMM')) < parseInt(`${year}${month}`);
 }
+
+export const isHoliday = (selecteds, day, holidays) => {
+  return holidays.findIndex((element) => ((element.month === (day.month() + 1))
+    && (element.day === day.date()))) >= 0
+}
+
+export const getHolidaysFromState = (getState) => {
+  const { calendarReducer: { holidays } } = getState();
+  return holidays;
+}

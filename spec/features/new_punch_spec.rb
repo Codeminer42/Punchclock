@@ -37,7 +37,7 @@ feature 'Add new Punch' do
     expect(page).to have_content('Punch não pôde ser criado.')
   end
 
-  context 'creating punch with national and regional holidays' do
+  context 'creating punch with all office holidays' do
     let(:company) { create(:company) }
     let(:regional_holiday) { create(:regional_holiday, company: company) }
     let(:office) { create(:office, company: company) }
@@ -52,17 +52,15 @@ feature 'Add new Punch' do
       within '#new_punch' do
         fill_in 'punch[from_time]', with: '08:00'
         fill_in 'punch[to_time]', with: '12:00'
-        national = find('#punch_when_day')['data-national-holidays']
-        regional = find('#punch_when_day')['data-regional-holidays']
-        expect(national).to eq("[[1,1],[2,13],[3,30],[4,1],[4,21],[5,1],[5,31],[9,7],[10,12],[11,2],[11,15],[12,25]]")
-        expect(regional).to eq("[]")
+        holidays = find('#punch_when_day')['data-holidays']
+        expect(holidays).to eq(user.office_holidays.to_json)
         click_button 'Criar Punch'
       end
     end
   end
 
   context 'creating punch without regional holidays' do
-    let!(:user) { create(:user, :without_office) }
+    let!(:user) { create(:user) }
 
     scenario 'test 2' do
       visit '/punches/new'
@@ -73,10 +71,8 @@ feature 'Add new Punch' do
       within '#new_punch' do
         fill_in 'punch[from_time]', with: '08:00'
         fill_in 'punch[to_time]', with: '12:00'
-        national = find('#punch_when_day')['data-national-holidays']
-        regional = find('#punch_when_day')['data-regional-holidays']
-        expect(national).to eq("[[1,1],[2,13],[3,30],[4,1],[4,21],[5,1],[5,31],[9,7],[10,12],[11,2],[11,15],[12,25]]")
-        expect(regional).to eq("[]")
+        holidays = find('#punch_when_day')['data-holidays']
+        expect(holidays).to eq(user.office_holidays.to_json)
         click_button 'Criar Punch'
       end
     end

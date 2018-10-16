@@ -1,21 +1,14 @@
 const extractHolidays = function($el) {
-  var nationalHolidays = $el.data('nationalHolidays');
-  var regionalHolidays = $el.data('regionalHolidays');
-  
-  if (regionalHolidays == undefined || regionalHolidays == '') {
-    return nationalHolidays;
-  } else {
-    return nationalHolidays.concat(regionalHolidays);;
-  }
+  return $el.data('holidays');
 }
 
 const toPairMonthDay = function(date) { 
   return [date.getMonth() + 1, date.getDate()];
 }
 
-const isSamePair = function(today) {
+const isSamePair = function(date) {
   return function(holiday) {
-    return holiday[0] == today[0] && holiday[1] == today[1]
+    return holiday.month == date[0] && holiday.day == date[1]
   }
 }
 

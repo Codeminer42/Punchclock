@@ -40,12 +40,16 @@
     }
   }
 
-  .weekday-0, .weekday-6 {
+  .weekday-0, .weekday-6, .weekday-holiday {
     background: $flat-clouds;
     color: $flat-silver;
     ul {
       color: $flat-pomegranate;
     }
+  }
+
+  .weekday-holiday {
+    cursor: not-allowed;
   }
 
   .day {
