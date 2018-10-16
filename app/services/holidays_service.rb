@@ -1,23 +1,27 @@
-class HolidaysFromOffice
-  def self.perform(office)
-    new(office).perform
+class HolidaysService
+  def self.from_office(office)
+    office.nil? ? new.nationals : new(office).from_office
   end
 
-  def initialize(office)
+  def self.nationals
+    new.nationals
+  end
+
+  def initialize(office = nil)
     @office = office
   end
 
-  def perform
-    national_holidays.concat(regional_holidays)
+  def from_office
+    nationals.concat(regional_holidays)
   end
 
-  private
-  def national_holidays
-    from = 1.year.ago
+  def nationals
+    from = 1.year.ago.to_date
     to = DateTime.current
     Holidays.between(from, to, :br, :informal).map { |holiday| format_holidays(holiday[:date]) }
   end
 
+  private
   def regional_holidays
     Array(office.regional_holidays).map(&method(:format_holidays))
   end

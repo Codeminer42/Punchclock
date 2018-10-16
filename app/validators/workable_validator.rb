@@ -5,7 +5,6 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   private
-
   def check_for_errors!
     cant_work! if (weekend? || holiday?) && !can_user_overtime?
   end
@@ -19,31 +18,15 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def holiday?
-    national_holiday? || regional_holiday?
+    all_holidays.include? format_date(@model.from)
   end
 
-  def national_holiday?
-    @model.from.to_date.holiday?(:br)
-  end
-
-  def regional_holiday?
-    user_has_regional_holidays? && punch_on_a_regional_holiday?(@model.from)
-  end
-
-  def user_has_regional_holidays?
-    !@model.user.office_regional_holidays.nil?
-  end
-
-  def punch_on_a_regional_holiday?(punch_date)
-    user_holidays.include? format_date(punch_date)
-  end
-
-  def user_holidays
-    @model.user.office_regional_holidays.map { |holiday| format_date(holiday) }
+  def all_holidays
+    @model.user.office_holidays
   end
 
   def format_date(date)
-    [date.month, date.day]
+    {month: date.month, day: date.day}
   end
 
   def can_user_overtime?
