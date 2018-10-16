@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180705132225) do
+ActiveRecord::Schema.define(version: 2018_07_05_132225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 20180705132225) do
   end
 
   create_table "offices_regional_holidays", id: false, force: :cascade do |t|
-    t.bigint "office_id", null: false
-    t.bigint "regional_holiday_id", null: false
+    t.integer "office_id", null: false
+    t.integer "regional_holiday_id", null: false
     t.index ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays"
     t.index ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices"
   end

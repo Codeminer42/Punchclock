@@ -5,10 +5,10 @@ FactoryBot.define do
   end
 
   trait :active do
-    active true
+    active { true }
   end
 
   trait :inactive do
-    active false
+    active { false }
   end
 end

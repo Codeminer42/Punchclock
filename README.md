@@ -12,7 +12,7 @@ A simple electronic punch clock to track hours spent on projects.
 
 ```
 Ruby 2.5.1
-Rails 5.1.4
+Rails 5.2.1
 Postgres >= 9.1
 ```
 

@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.5.1'
 
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2.1'
+
+gem 'bootsnap', require: false
 
 gem "autoprefixer-rails"
 gem 'pg', "~> 0.1"

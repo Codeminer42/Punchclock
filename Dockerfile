@@ -14,6 +14,11 @@ RUN apt-get update \
         build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get -yqq update \
+    && apt-get install -yqq --no-install-recommends \
+        google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 ADD Gemfile Gemfile.lock package.json /app/
