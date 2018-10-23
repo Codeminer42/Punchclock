@@ -4,6 +4,8 @@ pt-BR:
   punches:
     index:
       are_you_sure_remove_register: 'Tem certeza que deseja remover o registro?'
+      true: 'Sim'
+      false: 'Não'
   date:
     period_label: '%{months} de %{years}'
     day_names:
