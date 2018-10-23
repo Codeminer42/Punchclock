@@ -12,9 +12,6 @@ class User < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
-  delegate :regional_holidays, to: :office, allow_nil: true, prefix: true
-  delegate :holidays, to: :office, allow_nil: true, prefix: true
-
   enum role: %i(trainee junior pleno senior)
 
   def disable!
@@ -31,6 +28,10 @@ class User < ApplicationRecord
 
   def inactive_message
     active? ? super : :inactive_account
+  end
+
+  def office_holidays
+    HolidaysService.from_office(office)
   end
 
   def to_s

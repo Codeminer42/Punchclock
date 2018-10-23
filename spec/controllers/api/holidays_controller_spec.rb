@@ -3,29 +3,23 @@ require 'spec_helper'
 describe Api::HolidaysController, :type => :controller do
   let(:user) { create(:user) }
 
-  describe 'GET holidays_dashboard' do
-    context 'user logged' do
-      before do
-        login user
-      end
+  before do
+    login user
+  end
 
-      it 'should return holidays' do
-        all_holidays = HolidaysFromOffice.perform(subject.current_user.office)
-        get :holidays_dashboard
-        expect(response.body).to eq(all_holidays.to_json)
-      end
+  describe "GET /holidays_dashboard" do
+    subject { get :holidays_dashboard }
 
-      it 'should be json the response' do
-        get :holidays_dashboard
-        expect(response.content_type).to eq "application/json"
-      end
+    it { is_expected.to have_http_status(:ok) }
+
+    it "returns content type json" do
+      expect(subject.content_type).to eq "application/json"
     end
 
-    context "user isn't logged" do
-      it 'should redirect to login page' do
-        get :holidays_dashboard
-        expect(response).to redirect_to('/users/sign_in')
-      end
+    it "returns holidays" do
+      holidays = [{day: 7, month: 9}]
+      allow_any_instance_of(User).to receive(:office_holidays).and_return holidays
+      expect(subject.body).to eq(holidays.to_json)
     end
   end
 end

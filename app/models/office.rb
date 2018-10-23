@@ -7,8 +7,4 @@ class Office < ApplicationRecord
   def to_s
     city
   end
-
-  def holidays
-    HolidaysFromOffice.perform(self)
-  end
 end
