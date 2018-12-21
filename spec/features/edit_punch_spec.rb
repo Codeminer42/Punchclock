@@ -8,12 +8,29 @@ feature 'Edit Punch' do
     create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
   end
 
+  scenario 'checking filled attributes' do
+    visit "/punches/#{punch.id}/edit"
+    expect(page).to have_field(
+      'punch[from_time]',
+      with: I18n.l(punch.from, format: "%H:%M:%S.%L", locale: :en)
+    )
+
+    expect(page).to have_field(
+      'punch[to_time]',
+      with: I18n.l(punch.to, format: "%H:%M:%S.%L", locale: :en)
+    )
+
+    expect(page).to have_field(
+      'punch[when_day]',
+      with: I18n.l(punch.date, locale: :en)
+    )
+  end
+
   scenario 'editing punch' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_content I18n.t(
       :editing, scope: %i(helpers actions), model: Punch.model_name.human
-      )
-
+    )
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from_time]', with: '08:00'
       fill_in 'punch[to_time]', with: '12:00'
