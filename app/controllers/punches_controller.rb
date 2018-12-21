@@ -18,7 +18,7 @@ class PunchesController < ApplicationController
   end
 
   def edit
-    @punch = Punch.find(params[:id])
+    @punch = Punch.find(params[:id]).decorate
   end
 
   def create

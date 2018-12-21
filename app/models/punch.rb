@@ -23,9 +23,6 @@ class Punch < ApplicationRecord
 
   delegate :name, to: :user, prefix: true
 
-  alias_attribute :from_time, :from
-  alias_attribute :to_time, :to
-
   def from_time=(time_string)
     @from_time = time_string.presence
     mount_times
@@ -55,8 +52,6 @@ class Punch < ApplicationRecord
   def date
     from&.to_date
   end
-
-  alias_method :when_day, :date
 
   def sheet
     as_json(only: [:project_id, :from, :to]).merge(

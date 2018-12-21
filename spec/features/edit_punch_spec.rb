@@ -12,17 +12,17 @@ feature 'Edit Punch' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_field(
       'punch[from_time]',
-      with: I18n.l(punch.from, format: "%H:%M:%S.%L", locale: :en)
+      with: I18n.l(punch.from, format: "%H:%M")
     )
 
     expect(page).to have_field(
       'punch[to_time]',
-      with: I18n.l(punch.to, format: "%H:%M:%S.%L", locale: :en)
+      with: I18n.l(punch.to, format: "%H:%M")
     )
 
     expect(page).to have_field(
       'punch[when_day]',
-      with: I18n.l(punch.date, locale: :en)
+      with: I18n.l(punch.date)
     )
   end
 

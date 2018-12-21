@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PunchDecorator < ApplicationDecorator
   delegate_all
 
@@ -5,7 +7,7 @@ class PunchDecorator < ApplicationDecorator
     "#{from} - #{to}"
   end
 
-  alias_method :to_s, :summary
+  alias to_s summary
 
   def date
     localize_date(object.to)
