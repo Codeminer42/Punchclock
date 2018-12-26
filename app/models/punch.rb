@@ -50,7 +50,7 @@ class Punch < ApplicationRecord
   end
 
   def date
-    from.to_date
+    from&.to_date
   end
 
   def sheet

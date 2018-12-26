@@ -7,4 +7,4 @@
 <h1 class="punch-form-title">
   <%= t(:editing, scope: %i(helpers actions), model: Punch.model_name.human) %>
 </h1>
-<%= render 'form' %>
+<%= render 'form', punch: @punch %>

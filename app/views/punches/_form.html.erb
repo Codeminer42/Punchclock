@@ -1,8 +1,8 @@
-<%= simple_form_for @punch do |f| %>
+<%= simple_form_for punch do |f| %>
   <div class="row">
-    <%= f.input :from_time, as: :time, html5: true %>
+    <%= f.input :from_time, as: :time, html5: true, input_html: { value: f.object.from } %>
 
-    <%= f.input :to_time, as: :time, html5: true %>
+    <%= f.input :to_time, as: :time, html5: true, input_html: { value: f.object.to } %>
 
     <%= f.input :when_day, input_html: {
       class: %i(datepicker),
@@ -10,7 +10,8 @@
       data: {
         holidays: current_user.office_holidays,
         allow_overtime: current_user.allow_overtime?
-      }
+      },
+      value: f.object.date
     } %>
     <%= f.input :extra_hour, as: :boolean, html5: true, hint: "Marque se este Punch é referente à hora extra" %>
   </div>
