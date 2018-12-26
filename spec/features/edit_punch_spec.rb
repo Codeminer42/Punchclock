@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature 'Edit Punch' do
@@ -10,27 +12,19 @@ feature 'Edit Punch' do
 
   scenario 'checking filled attributes' do
     visit "/punches/#{punch.id}/edit"
-    expect(page).to have_field(
-      'punch[from_time]',
-      with: I18n.l(punch.from, format: "%H:%M")
-    )
 
-    expect(page).to have_field(
-      'punch[to_time]',
-      with: I18n.l(punch.to, format: "%H:%M")
-    )
-
-    expect(page).to have_field(
-      'punch[when_day]',
-      with: I18n.l(punch.date)
-    )
+    expect(page).to have_field('punch[from_time]', with: time_format(punch.from)) &
+                    have_field('punch[to_time]', with: time_format(punch.to)) &
+                    have_field('punch[when_day]', with: I18n.l(punch.date))
   end
 
   scenario 'editing punch' do
     visit "/punches/#{punch.id}/edit"
+
     expect(page).to have_content I18n.t(
-      :editing, scope: %i(helpers actions), model: Punch.model_name.human
+      :editing, scope: %i[helpers actions], model: Punch.model_name.human
     )
+
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from_time]', with: '08:00'
       fill_in 'punch[to_time]', with: '12:00'
@@ -38,14 +32,15 @@ feature 'Edit Punch' do
       select active_project.name, from: 'punch[project_id]'
       click_button 'Atualizar Punch'
     end
+
     expect(page).to have_content('Punch foi atualizado com sucesso.')
   end
 
   scenario 'editing punch with invalid data' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_content I18n.t(
-      :editing, scope: %i(helpers actions), model: Punch.model_name.human
-      )
+      :editing, scope: %i[helpers actions], model: Punch.model_name.human
+    )
 
     within "#edit_punch_#{punch.id}" do
       fill_in 'punch[from_time]', with: '12:00'
@@ -60,5 +55,9 @@ feature 'Edit Punch' do
   scenario 'select box without inactive project' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to_not have_select 'punch[project_id]', with_options: [inactive_project.name]
+  end
+
+  def time_format(time)
+    I18n.l(time, format: '%H:%M')
   end
 end
