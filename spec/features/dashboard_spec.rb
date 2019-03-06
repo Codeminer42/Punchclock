@@ -30,4 +30,23 @@ feature 'Punches Dashboard', js: true do
     click_on 'Salvar'
     expect(page).to have_no_content('Alterações (1)')
   end
+
+  scenario 'Multiple selection through sheets' do
+    visit '/dashboard/2018/02'
+
+    find('td.inner', text: '14').click
+    find('td.inner', text: '15').click
+    expect(page).to have_content('Selecionado (2)')
+    find('a', text: '❯').click
+    expect(page).to have_content('Selecionado (2)')
+
+    within 'tbody > tr:nth-child(1)' do
+      expect(page).to have_css("td.selected", text: "14") & have_css("td.selected", text: "15")
+    end
+
+    find('td.inner', text: '16').click
+    expect(page).to have_content('Selecionado (3)')
+    click_on 'Ok'
+    expect(page).to have_content('Horas: 24')
+  end
 end

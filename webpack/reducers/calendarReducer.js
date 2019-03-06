@@ -67,7 +67,6 @@ export default (state = initialState, action) => {
         hasNext: action.payload.hasNext,
         monthName: action.payload.monthNames,
         weeks: action.payload.weeks,
-        selecteds: emptySet,
       };
     case NEXT:
       return {
@@ -77,7 +76,6 @@ export default (state = initialState, action) => {
         hasNext: action.payload.hasNext,
         monthName: action.payload.monthNames,
         weeks: action.payload.weeks,
-        selecteds: emptySet,
       };
     case SET_TIME_SHEET:
       return {
@@ -188,11 +186,18 @@ const createPunch = (dayString, sheet) => {
   });
 };
 
-export const sumHours = (weeks, sheets, sheetsSaveds) => {
-  return getDays(weeks).reduce( (sum, d)=> {
+export const sumHours = (weeks, sheets, sheetsSaved, changesUnsaved) => {
+  if (changesUnsaved >= 1) {
+    return sheets.reduce((sumHours, day) =>
+      day.reduce((sumDeltas, sheetsSelected) =>
+        sumDeltas + sheetsSelected.delta,
+      sumHours),
+    0);
+  }
+  return getDays(weeks).reduce((sum, d) => {
     if(d.inner) {
-      let _sheets = sheetFor(d, sheets, sheetsSaveds);
-      return sum + _sheets.reduce( ((s, p)=> s + p.delta), 0);
+      let _sheets = sheetFor(d, sheets, sheetsSaved);
+      return sum + _sheets.reduce(((s, p) => s + p.delta), 0);
     } else return sum;
   }, 0);
 }
