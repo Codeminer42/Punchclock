@@ -2,7 +2,11 @@ const extractHolidays = function($el) {
   return $el.data('holidays');
 }
 
-const toPairMonthDay = function(date) { 
+const extractAllowOvertime = function($el) {
+  return $el.data('allow-overtime');
+}
+
+const toPairMonthDay = function(date) {
   return [date.getMonth() + 1, date.getDate()];
 }
 
@@ -29,10 +33,12 @@ function noWeekendsOrHolidays(date) {
 
 function setDatePicker() {
   const defaultFormat = 'dd/mm/yy';
-  const options = {
+  const allowOvertime = extractAllowOvertime($('.datepicker'));
+  const options = allowOvertime ? { dateFormat: defaultFormat } : {
                     dateFormat: defaultFormat,
                     defaultOptions: defaultFormat,
                     beforeShowDay: noWeekendsOrHolidays
                   };
+
   $('input.datepicker').datepicker(options);
 }
