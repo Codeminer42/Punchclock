@@ -64,7 +64,8 @@ class Calendar extends React.Component {
           sumHours(
             calendar.weeks,
             calendar.sheets,
-            calendar.sheetsSaveds
+            calendar.sheetsSaveds,
+            calendar.changes
           )}
         </p>
 
