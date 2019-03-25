@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.5.5'
 
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 5.2.2'
 
 gem 'bootsnap', require: false
 
@@ -26,6 +26,8 @@ gem 'rails-i18n'
 gem 'webpack-rails'
 gem 'holidays', '5.6.0'
 gem 'kaminari'
+
+gem 'ransack', '~> 2.1.1'
 
 gem 'sidekiq'
 

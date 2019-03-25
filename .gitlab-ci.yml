@@ -1,12 +1,12 @@
 image: codeminer42/ci-ruby:2.5
-        
+
 services:
   - postgres:latest
 cache:
-  key: Punchclock
+  key: Punchclock-123u158
   paths:
     - .gitlab-cache/
-variables:              
+variables:
   RAILS_ENV: test
   DATABASE_URL: postgresql://postgres@postgres
   CC_TEST_REPORTER_ID: 60f18b69ac3904ddf5b3875523d020e1ed419e3f3d4a3bfa0e81420e03615137
@@ -29,7 +29,7 @@ rspec:
     - coverage/index.html
     expire_in: 1 week
   after_script:
-    - ./cc-test-reporter after-build --exit-code $? 
+    - ./cc-test-reporter after-build --exit-code $?
 
 production:
   stage: deploy
