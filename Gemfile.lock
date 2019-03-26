@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/heroku/platform-api.git
+  remote: https://github.com/heroku/platform-api.git
   revision: 6209ba92d96f2b7b21d4eaec99be133eeefaf017
   specs:
     platform-api (2.2.0)
