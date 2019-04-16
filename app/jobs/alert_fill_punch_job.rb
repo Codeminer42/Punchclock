@@ -2,13 +2,22 @@ class AlertFillPunchJob < ApplicationJob
   queue_as :default
 
   def perform
-    codeminer = Company.find_by name: "Codeminer42"
-    codeminer.users.active.find_each do |user|
-      NotificationMailer.notify_user_to_fill_punch(user).deliver_later
-    end
+    if is_working_day?
+      codeminer = Company.find_by name: "Codeminer42"
+      codeminer.users.active.find_each do |user|
+        NotificationMailer.notify_user_to_fill_punch(user).deliver_later
+      end
 
-    codeminer.admin_users.find_each do |admin|
-      NotificationMailer.notify_user_to_fill_punch(admin).deliver_later
+      codeminer.admin_users.find_each do |admin|
+        NotificationMailer.notify_user_to_fill_punch(admin).deliver_later
+      end
+    else
+      perform_at(1.day.from_now)
     end
+  end
+
+  def is_working_day?(day = Date.current)
+    holidays = Holidays.on(Date.civil(day.year, day.month, day.day), :br)
+    day.wday > 0 && day.wday < 6 && holidays.empty?
   end
 end
