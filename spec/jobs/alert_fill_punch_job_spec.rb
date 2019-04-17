@@ -39,4 +39,21 @@ RSpec.describe AlertFillPunchJob, type: :job do
       perform_enqueued_jobs { job }
     end
   end
+
+  describe '#is_working_day?' do
+    it 'should return false if there is a holiday on this day' do
+      day = Date.civil(2019, 12, 25) # On Wednesday
+      expect(is_working_day? day).to equal? false
+    end
+
+    it 'should return false if is weekend' do
+      day = Date.civil(2019, 4, 6)
+      expect(is_working_day? day).to equal? false
+    end
+
+    it 'should return true if the day is a week day w/o a holiday' do
+      day = Date.civil(2019, 6, 17)
+      expect(is_working_day? day).to equal? true
+    end
+  end
 end
