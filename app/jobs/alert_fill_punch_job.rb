@@ -17,7 +17,6 @@ class AlertFillPunchJob < ApplicationJob
   end
 
   def is_working_day?(day = Date.current)
-    holidays = Holidays.on(Date.civil(day.year, day.month, day.day), :br)
-    day.wday > 0 && day.wday < 6 && holidays.empty?
+    day.on_weekday? && day.holiday?
   end
 end
