@@ -17,6 +17,6 @@ class AlertFillPunchJob < ApplicationJob
   end
 
   def is_working_day?(day = Date.current)
-    day.on_weekday? && day.holiday?
+    day.on_weekday? && !day.holiday?(:br)
   end
 end
