@@ -12,7 +12,7 @@ class AlertFillPunchJob < ApplicationJob
         NotificationMailer.notify_user_to_fill_punch(admin).deliver_later
       end
     else
-      perform_at(1.day.from_now)
+      AlertFillPunchJob.set(wait_until: 1.day.from_now).perform_later
     end
   end
 
