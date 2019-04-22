@@ -1,11 +1,13 @@
+require 'rails_helper'
+
 RSpec.describe AlertFillPunchJob, type: :job do
   let(:job) { AlertFillPunchJob.new }
 
   describe '#perform' do
-    let!(:company) { create(:company, name: "Codeminer42") }
-    let!(:admin) { create(:admin_user, company: company) }
-    let!(:active_user) { create(:user, company: company, active: true) }
-    let!(:inactive_user) { create(:user, active: false) }
+    let(:company) { create(:company, name: "Codeminer42") }
+    let(:admin) { create(:admin_user, company: company) }
+    let(:active_user) { create(:user, company: company, active: true) }
+    let(:inactive_user) { create(:user, active: false) }
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     it 'is in default queue' do
@@ -14,10 +16,15 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
     context 'when is NOT working day' do
       before do
-        allow(job).to receive(:is_working_day?).and_return(false)
+        # allow(job).to receive(:is_working_day?).and_return(false)
+        travel_to Time.new(2019, 4, 21)
 
         allow(NotificationMailer).to receive(:notify_user_to_fill_punch).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
+      end
+
+      after do
+        travel_back
       end
 
       it 'does NOT send any emails' do
@@ -34,10 +41,14 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
     context 'when is working day' do
       before do
-        allow(job).to receive(:is_working_day?).and_return(true)
-
+        # allow(job).to receive(:is_working_day?).and_return(true)
+        travel_to Time.new(2019, 6, 17)
         allow(NotificationMailer).to receive(:notify_user_to_fill_punch).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
+      end
+
+      after do
+        travel_back
       end
 
       it 'sends an email only to active users' do
