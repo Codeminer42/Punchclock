@@ -32,7 +32,7 @@ rspec:
   script: bundle exec rake spec
   artifacts:
     paths:
-    - coverage/index.html
+      - coverage/index.html
     expire_in: 1 week
   after_script:
     - ./cc-test-reporter after-build --exit-code $?
@@ -61,5 +61,3 @@ production:
     - dpl --provider=heroku --api-key=$HEROKU_PRODUCTION_API_KEY --app=punchlock
   only:
     - master
-
-
