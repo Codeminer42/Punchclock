@@ -15,7 +15,6 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
     context 'when is NOT working day' do
       before do
-        # allow(job).to receive(:is_working_day?).and_return(false)
         travel_to Time.new(2019, 4, 21)
 
         allow(NotificationMailer).to receive(:notify_user_to_fill_punch).and_return(message_delivery)
@@ -32,7 +31,6 @@ RSpec.describe AlertFillPunchJob, type: :job do
       end
 
       it 'reschedules to the next day' do
-        # binding.pry
         # TODO
       end
     end

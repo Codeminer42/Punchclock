@@ -10,7 +10,7 @@ services:
 cache:
   key: Punchclock-123u158
   paths:
-    - .gitlab-cache/
+  - .gitlab-cache/
 variables:
   RAILS_ENV: test
   DATABASE_URL: postgresql://postgres@postgres
