@@ -1,0 +1,48 @@
+<div class="container-fluid evaluation">
+  <div class="card mb-3">
+    <div class="card-header">
+      <h6>
+        <%= @evaluation.questionnaire.title %>
+      </h6>
+      <b>
+        Evaluating:
+        <%= @evaluation.evaluated %>
+      </b>
+    </div>
+    <div class="card-body">
+      <div class="evaluation-info">
+        <b>
+          Evaluated by:
+          <%= @evaluation.evaluator.name %>
+        </b>
+      </div>
+
+      <p class="card-text">
+        <%= @evaluation.questionnaire.description %>
+      </p>
+
+      <div class="card questions" >
+        <div class="card-body">
+          <% @evaluation.answers.each do | answer | %>
+            <div class="answer">
+              <h5> <%= answer.question.title %> </h5>
+              <h6> <%= answer.response %> </h6>
+            </div>
+            <hr>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Observation</h5>
+          <p><%= @evaluation.observation %></p>
+        </div>
+      </div>
+      <div class="text-right">
+        <%= link_to 'Back', root_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <div class="card-footer small text-muted"></div>
+  </div>
+</div>

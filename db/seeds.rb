@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def create_punches(company:, project:, user:)
   (6.months.ago.to_date..1.day.ago.to_date).reject{ |d| d.saturday? || d.sunday? }.each do |date|
     date = date.to_time
@@ -55,6 +56,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       user = User.find_or_create_by!(email: "user.teste#{i}@#{name}.com") do |user|
         user.name = "Usuario_#{name}_#{i}"
         user.email = "user.teste#{i}@#{name}.com"
+        user.occupation = 'administrative'
         user.password = 'password'
         user.company = company
         user.office = offices.sample
@@ -70,5 +72,36 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
   end
 end
 
-create_company(name: 'Codeminer42', office_cities: ['Natal', 'Brasilia', 'São Paulo'], project_names: ['Punchclock', 'Rito Gomes', 'Central'], clients_name: ['Client3','Client4'])
+create_company(
+  name: 'Codeminer42',
+  office_cities: [
+    'SÃO PAULO',
+     'CAMPINAS',
+     'NOVO HAMBURGO',
+     'NATAL',
+     'SOROCABA',
+     'TERESINA',
+     'ANÁPOLIS',
+     'GOIÂNIA',
+     'BATATAIS',
+     'GUARAPUAVA',
+     'SANTA MARIA',
+     'POÇOS DE CALDAS'
+  ],
+  project_names: [
+    'Punchclock',
+    'Rito Gomes',
+    'Central',
+    'Omnitrade'
+  ],
+  clients_name: [
+    'Client3',
+    'Client4',
+    'Zaca'
+  ]
+)
+
 create_company(name: 'WatersCo', office_cities: ['North Valerie', 'Lilachester'], project_names: ['Tres Zap', 'Latlux'], clients_name: ['Client1','Client2'])
+
+
+

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :client do
-    name { "MyString" }
+    name    { Faker::App.author }
     company { nil }
   end
 

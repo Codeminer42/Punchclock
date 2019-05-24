@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-feature 'Deny inactive users' do
+require 'rails_helper'
+
+describe "Deny inactive users", type: :feature do
   let(:user) { create(:user, active: false, password: 'asdfasdf') }
 
   scenario 'on login' do

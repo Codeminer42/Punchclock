@@ -1,10 +1,16 @@
-$navigation-background: $flat-dark-gray;
 $navigation-color: $flat-clouds;
-$navigation-color-hover: darken($flat-dark-gray, 3%);
 
-.topnav {
-  background-color: $flat-dark-gray;
-  overflow: hidden;
+$red: #c61515;
+$redDark: #BD1414;
+$redDarker: #9E0F0F;
+
+.navbar {
+  background: $red;
+  background: linear-gradient(top,  $red 0%, $redDark 20%, $redDarker 100%); /* FF3.6+,Chrome10+,Safari5.1+, Opera 11.10+ IE10+*/
+  background: linear-gradient(to bottom,  $red 0%,$redDark 20%,$redDarker 100%);
+  background: gradient(linear, left top, left bottom, color-stop(0%,$red), color-stop(20%,$redDark), color-stop(100%,$redDarker)); /* Chrome,Safari4+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$red', endColorstr='$redDarker',GradientType=0 ); /* IE6-9 */
+  // overflow: hidden;
 
   a {
     color: $navigation-color;
@@ -17,13 +23,15 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
     }
 
     &:hover {
-      background-color: $navigation-color-hover;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
       transition: 0.4s;
     }
   }
 
-  .nav-brand {
+  .navbar-brand {
     a {
+      text-decoration: none;
       font-size: 1.2em;
       line-height: 1.1;
       padding-top: 0.417em;
@@ -31,23 +39,26 @@ $navigation-color-hover: darken($flat-dark-gray, 3%);
       padding-left: 0.8em;
     }
 
-    small {
-      display: block;
-      font-size: 0.65em;
+    span {
+      color: white;
+      padding-left: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.5rem;
+    }
+
+    span:hover {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .logo {
+      height: 60px;
     }
   }
 
-  .icon {
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding-top: 0.813em;
-    padding-bottom: 0.813em;
-
-    @include media($large-screen){
-      display: none;
-    }
+  .navbar-dark .navbar-nav .nav-link {
+    font-size: 1.1rem;
+    color: white;
   }
 
   .links a {

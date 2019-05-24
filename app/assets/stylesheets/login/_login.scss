@@ -1,0 +1,43 @@
+.cm42_logo {
+  height: 145px;
+}
+.google_oauth_button {
+  padding-bottom: 100px;
+}
+.google_oauth_button a {
+  color: inherit;
+  text-decoration: inherit;
+}
+#customBtn {
+  display: inline-block;
+  background: white;
+  width: 190px;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+}
+
+#customBtn:hover {
+  cursor: pointer;
+}
+
+span.label {
+  font-family: serif;
+  font-weight: normal;
+}
+
+span.icon {
+  background: asset-url('google.png') transparent 5px 50% no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+}
+
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}

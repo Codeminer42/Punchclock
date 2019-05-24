@@ -1,0 +1,61 @@
+<div id="page-top" class="row">
+  <div class="container-fluid home">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>
+        Evaluate Miners:
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered users-evaluation" id="dataTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Office</th>
+                <th>Last evaluated at</th>
+                <th>Last evaluation score</th>
+                <th>Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.role %></td>
+                  <td><%= user.office_city%></td>
+                  <td>
+                    <% unless user.evaluations.last.nil? %>
+                      <%= user.last_evaluation.created_at.strftime('%e/%m/%y') %> -
+                      <%= link_to "View", evaluation_path(user.last_evaluation.id)%>
+                    <% end%>
+                  </td>
+                  <td><%= user.last_evaluation.score %></td>
+                  <td>
+                    <%= link_to(show_questionnaire_kinds_path(user_id: user.id),
+                                remote: true,
+                                method: :post,
+                                data: {toggle: 'tooltip'},
+                                title: 'Evaluation',
+                                class: 'btn btn-primary',
+                                name: 'new-evaluation') do %>
+                      <i class="fa fa-book"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer small text-muted"></div>
+    </div>
+  </div>
+
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+
+  <div data-modal="questionnaire-kinds"></div>
+</div>

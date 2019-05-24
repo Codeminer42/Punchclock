@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :project do
-    name { Faker::Company.name }
+    name { Faker::App.name }
     company
   end
 

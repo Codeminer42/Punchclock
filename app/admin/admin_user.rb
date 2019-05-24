@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register AdminUser do
   filter :email
+
+  menu priority: 2
 
   permit_params do
     params = %i[email password password_confirmation company_id]
@@ -29,10 +33,8 @@ ActiveAdmin.register AdminUser do
     attributes_table do
       row :email
       if current_admin_user.is_super?
-        row :company  
-        row :is_super do |admin|
-          status_tag admin.is_super.to_s
-        end
+        row :company
+        row :is_super
       end
       row :created_at
       row :updated_at

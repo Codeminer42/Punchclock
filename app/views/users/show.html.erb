@@ -1,19 +1,24 @@
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to t(:back, scope: :helpers), punches_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Editar Usuário', edit_user_path %></li>
+  </ul>
+
 <h2><%= current_user.name %></h2>
 <div>
 <%= gravatar_for current_user, size: 100 %>
 
-<p>
-  <div>
-    <p>
-      Email: <%= mail_to current_user.email %>
-    </p>
-  </div>
+  <p>
+    <div>
+      <p>
+        Email: <%= mail_to current_user.email %>
+      </p>
+    </div>
 
-  <div>
-    <p>
-      Role: <%= current_user.role %>
-    </p>
-  </div>
-</p>
+    <div>
+      <p>
+        Role: <%= current_user.role %>
+      </p>
+    </div>
+  </p>
 
 </div>

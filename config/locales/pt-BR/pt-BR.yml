@@ -19,14 +19,36 @@ pt-BR:
     formats:
       month_name: '%B'
   user: 'Usuário'
+  allocation: 'Alocação'
+  allocations: 'Alocações'
+  english_evaluations: 'Avaliações de Inglês'
+  not_evaluated: 'Não avaliado'
+  not_allocated: 'Não alocado'
+  users_not_allocated: 'Não alocados'
+  projects: 'Projetos'
+  perfomance_evaluations: 'Avaliações de Desempenho'
+  all: 'Todos'
+  active: 'Ativo'
+  inactive: 'Inativo'
+  not_allocated: 'Não Alocado'
+  office:
+    user_not_evaluated: "Usuários não foram todos avaliados"
   reviewer: 'Avaliador'
   evaluated: 'Avaliado'
   review: 'Revisão'
   created_at: 'Criado em'
   updated_at: 'Atualizado em'
   view: 'Visualizar'
+  new: 'Novo(a)'
+  edit: 'Editar'
+  delete: 'Remover'
+  activate: 'Ativar'
+  deactivate: 'Desativar'
   mine: 'Minhas'
   written: 'Realizadas'
   errors:
     messages:
       not_saved: "Erro"
+  refills:
+    navigation:
+      logout: "Sair"

@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    errors:
+      models:
+        allocation:
+          attributes:
+            miner:
+              blank: Select one
+            customer:
+              blank: Select one

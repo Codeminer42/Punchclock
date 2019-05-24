@@ -1,9 +1,7 @@
-<nav class="navbar navbar-static-top">
-  <ul class="nav nav-pills">
-    <li><%= link_to t(:back, scope: :helpers), punches_path %></li>
-    <li><%= link_to t(:edit, scope: :helpers), edit_punch_path(@punch) %></li>
-  </ul>
-</nav>
+<ul class="breadcrumb">
+  <li class="breadcrumb-item"><%= link_to t(:back, scope: :helpers), punches_path %></li>
+  <li class="breadcrumb-item"><%= link_to t(:edit, scope: :helpers), edit_punch_path(@punch) %></li>
+</ul>
 
 <p id="notice"><%= notice %></p>
 

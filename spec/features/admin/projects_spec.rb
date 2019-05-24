@@ -1,68 +1,106 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-feature "Project", type: :feature do
-  let(:admin_user) { FactoryBot.create(:super) }
-  let!(:project) { FactoryBot.create(:project) }
-  let!(:company) { FactoryBot.create(:company) }
+require 'rails_helper'
+
+describe 'Projects', type: :feature do
+  let(:admin_user) { create(:admin_user) }
+  let!(:project)   { create(:project, company: admin_user.company) }
 
   before do
-    visit '/admin/'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    admin_sign_in(admin_user)
+    visit '/admin/projects'
   end
 
-  scenario 'index' do
-    click_link 'Projetos'
-
-    expect(page).to have_content('Projetos')
+  describe 'Index' do
+    it 'must find fields "Nome", "Ativo" and "Criado Em" on table' do
+      within 'table' do
+        expect(page).to have_text('Nome') &
+                        have_text('Ativo') &
+                        have_text('Criado em')
+      end
+    end
   end
 
-  scenario 'filter' do
-    click_link 'Projetos'
-    fill_in 'q_name', with: project.name
-    click_button 'Filtrar'
-
-    expect(page).to have_content(project.name)
-
-    fill_in 'q_name', with: 'teste'
-    click_button 'Filtrar'
-
-    expect(page).to have_content('Nenhum(a) Projetos encontrado(a)')
+  describe 'Filters' do
+    it 'by name' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_css('label', text: 'Nome')
+      end
+    end
   end
 
-  scenario 'view' do
-    click_link 'Projetos'
-    click_link 'Visualizar'
+  describe 'Actions' do
+    describe 'New' do
+      let!(:client) { create(:client, company: admin_user.company) }
+      before do
+        within '.action_items' do
+          click_link 'Novo(a) Projeto'
+        end
+      end
 
-    expect(page).to have_content('Detalhes do(a) Projeto')
-  end
+      it 'must have the form working' do
 
-  scenario 'edit' do
-    click_link 'Projetos'
-    click_link 'Editar'
+        find('#project_name').fill_in with: 'MinerCamp'
+        find('#project_client_id').find(:option, client.name).select_option
 
-    expect(page).to have_content('Editar Projeto')
-  end
+        click_button 'Criar Projeto'
 
-  scenario 'new project' do
-    click_link 'Projetos'
-    click_link 'Novo(a) Projeto'
+        expect(page).to have_text('Projeto foi criado com sucesso.') &
+                        have_text('MinerCamp') &
+                        have_text(client.name)
+      end
+    end
 
-    expect(page).to have_content('Novo(a) Projeto')
+    describe 'Show' do
+      before do
+        visit '/admin/projects'
+        within 'table' do
+          find_link(project.name, href: "/admin/projects/#{project.id}").click
+        end
+      end
 
-    click_button 'Criar Projeto'
-    expect(page).to have_content('não pode ficar em branco')
-	
-    fill_in 'project_name', with: 'Nome Projeto'
-    click_button 'Criar Projeto'
+      it 'have edit action' do
+        expect(page).to have_link('Editar Projeto')
+      end
 
-    expect(page).to have_content('é obrigatório')
+      it 'must have labels' do
+        within '#main_content' do
+          expect(page).to have_text("Nome")  &
+                          have_text("Ativo") &
+                          have_text("Cliente") &
+                          have_text("Alocações")
+        end
+      end
 
-    select(company.name, from: 'project_company_id').select_option
-    click_button 'Criar Projeto'
+      it 'have project information' do
+        expect(page).to have_css('.row-name', text: project.name) &
+                        have_css('.row-active', text: 'Sim') &
+                        have_text(project.client)
+      end
+    end
 
-    expect(page).to have_content('Projeto foi criado com sucesso.')
+    describe 'Edit' do
+      before do
+        visit "/admin/projects/#{project.id}"
+        click_link('Editar Projeto')
+      end
+
+      it 'have labels' do
+        within 'form' do
+          expect(page).to have_text("Nome")  &
+                          have_text("Ativo") &
+                          have_text("Cliente")
+        end
+      end
+
+      it 'updates project information' do
+        find('#project_name').fill_in with: "Punch/MinerCamp"
+
+        click_button 'Atualizar Projeto'
+
+        expect(page).to have_text('Projeto foi atualizado com sucesso.') &
+                        have_css(".row-name td", text: 'Punch/MinerCamp')
+      end
+    end
   end
 end

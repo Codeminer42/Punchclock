@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Company do
-  
+
   describe 'relations' do
     it { is_expected.to have_many :admin_users }
     it { is_expected.to have_many :projects }

@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register RegionalHoliday do
   permit_params :name, :day, :month, :company_id, office_ids: []
 
+  menu parent: I18n.t("activerecord.models.company.one"), priority: 8
+
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
-  filter :offices, multiple: true, collection: proc { 
-    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices 
+  filter :offices, multiple: true, collection: proc {
+    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices
   }
   filter :day
   filter :month
@@ -40,7 +44,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :day
       f.input :month
       f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-      f.input :offices, as: :check_boxes, 
+      f.input :offices, as: :check_boxes,
         collection: current_admin_user.is_super? ? Office.all : current_admin_user.company.offices
       f.actions
     end

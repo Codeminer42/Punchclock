@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :super, class: AdminUser do
-    email { Faker::Internet.email }
+    email    { Faker::Internet.unique.email }
     password { Faker::Lorem.characters(8) }
     company
     is_super { true }

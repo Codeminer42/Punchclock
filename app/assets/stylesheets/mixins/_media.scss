@@ -1,0 +1,35 @@
+@mixin extra-small {
+  @media screen and (min-width: 0) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media screen and (min-width: $breakpoint-xs + 1px) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media screen and (min-width: $breakpoint-sm + 1px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media screen and (min-width: $breakpoint-md + 1px) {
+    @content;
+  }
+}
+
+@mixin extra-large {
+  @media screen and (min-width: $breakpoint-lg + 1px) {
+    @content;
+  }
+}
+
+@mixin extra-wide {
+  @media screen and (min-width: $breakpoint-xl + 1px) {
+    @content;
+  }
+}

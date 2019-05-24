@@ -9,7 +9,12 @@ public/assets
 public/uploads
 public/stylesheets
 
+/storage/*
+!/storage/.keep
+
 coverage/
+
+/config/master.key
 
 .rvmrc
 .versions.conf
@@ -27,3 +32,9 @@ Thumbs.db
 /node_modules
 /public/webpack
 dump.rdb
+
+/node_modules
+/yarn-error.log
+
+/public/assets
+.byebug_history

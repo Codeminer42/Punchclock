@@ -5,7 +5,7 @@ describe Client do
   let(:inactive_client) { create :client, :inactive_client }
 
   describe 'relations' do
-    it { is_expected.to belong_to :company }
+    it { is_expected.to belong_to(:company).optional }
   end
 
   describe 'validation' do

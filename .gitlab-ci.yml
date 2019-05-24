@@ -1,4 +1,4 @@
-image: codeminer42/ci-ruby:2.5
+image: codeminer42/ci-ruby:2.6
 
 stages:
   - test
@@ -40,7 +40,7 @@ rspec:
 brakeman:
   stage: security
   before_script:
-    - bundle install
+    - gem i bundler
     - gem install brakeman
   script:
     - brakeman -z -q
@@ -53,11 +53,16 @@ bundler_audit:
 
 production:
   stage: deploy
-  image: ruby:latest
   script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --api-key=$HEROKU_PRODUCTION_API_KEY --app=punchlock
+  when: manual
+staging:
+  stage: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=cm42-punchclock-staging --api-key=$HEROKU_STAGING_API_KEY
   only:
     - master

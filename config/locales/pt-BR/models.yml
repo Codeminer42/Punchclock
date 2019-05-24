@@ -19,6 +19,12 @@ pt-BR:
           attributes:
             base:
               overlap: As datas escolhidas se sobrepõem com outras já cadastradas
+        allocation:
+          attributes:
+            start_at:
+              invalid_date: "Data Inválida"
+            end_at:
+              invalid_date: "Data Inválida"
     models:
       admin_user:
         one: "Administrador"
@@ -47,6 +53,21 @@ pt-BR:
       regional_holiday:
         one: "Feriado regional"
         other: "Feriados regionais"
+      skill:
+        one: "Habilidade"
+        other: "Habilidades"
+      allocation:
+        one: "Alocação"
+        other: "Alocações"
+      questionnaire:
+        one: "Questionário"
+        other: "Questionários"
+      evaluation:
+        one: "Avaliação"
+        other: "Avaliações"
+      question:
+        one: "Pergunta"
+        other: "Perguntas"
     attributes:
       admin_user:
         id: "ID"
@@ -69,7 +90,10 @@ pt-BR:
         name: "Nome"
         created_at: "Criado em"
         updated_at: "Atualizado em"
-        company_id: "Empresa"
+        active: "Ativo"
+        access: "Acessar"
+        client: "Cliente"
+        company: "Empresa"
       comment:
         id: "ID"
         text: "Texto"
@@ -104,8 +128,27 @@ pt-BR:
         confirmation_token: "Token de confirmação"
         confirmed_at: "Confirmado em"
         confirmation_sent_at: "Confirmação enviada em"
-        allow_overtime: "Permitir dias não úteis"
+        allow_overtime: "Permitir hora extra"
         office: "Escritório"
+        company: "Empresa"
+        managed_offices: "Escritórios gerenciados"
+        occupation: "Ocupação"
+        specialty: "Especialidade"
+        skills: "Habilidades"
+        role: "Nível"
+        active: "Ativo"
+        observation: "Observação"
+        reviewer: "Padrinho"
+        has_access?: "Tem acesso?"
+        overall_score: "Pontuação Geral"
+        performance_score: "Pontuação de Desempenho"
+        english_level: "Nível de Inglês"
+        current_allocation: "Alocação Atual"
+        allocations: "Alocações"
+        evaluation: "Avaliação"
+        english_score: "Pontução de Inglês"
+        by_skills: "Por Habilidades"
+        all: "Todos"
       punch:
         id: "ID"
         project_id: "Projeto"
@@ -124,7 +167,8 @@ pt-BR:
         updated_at: "Atualizado em"
         attachment: "Anexo"
         comment: "Comentário"
-        extra_hour: "Hora extra"
+        extra_hour: "Hora extra?"
+        company: "Empresa"
       office:
         id: "ID"
         company: "Empresa"
@@ -134,6 +178,7 @@ pt-BR:
         users_quantity: "Quantidade de usuários"
         users: "Usuários"
         regional_holidays: "Feriados regionais"
+        score: "Pontuação"
       regional_holiday:
         id: "ID"
         name: "Nome"
@@ -142,3 +187,46 @@ pt-BR:
         offices: "Escritórios"
         created_at: "Criado em"
         updated_at: "Atualizado em"
+        company: "Empresa"
+      allocation:
+        id: "ID"
+        user: "Usuário"
+        project: "Projeto"
+        start_at: "Início"
+        end_at: "Término"
+        days_left: "Dias Restantes"
+        client: "Cliente"
+        project_name: "Nome do Projeto"
+        access: "Acessar"
+      evaluation:
+        id: "ID"
+        evaluator: "Avaliador"
+        evaluated: "Avaliado"
+        score: "Pontuação"
+        questionnaire: "Questionário"
+        created_at: "Criado em"
+        questionnaire_kind: "Tipo do Questionário"
+      questionnaire:
+        id: "ID"
+        title: "Título"
+        kind: "Tipo"
+        active: "Ativo"
+        description: "Descrição"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
+        questions: "Perguntas"
+      skill:
+        id: "ID"
+        title: "Título"
+      client:
+        id: "ID"
+        name: "Nome"
+        company: "Empresa"
+        active: "Ativo"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
+      question:
+        id: "ID"
+        title: "Título"
+        kind: "Tipo"
+        answer_options: "Opções de Resposta"

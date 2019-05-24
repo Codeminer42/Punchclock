@@ -1,13 +1,17 @@
+# frozen_string_literal: true
 require_relative 'boot'
 
 require 'csv'
 require "rails"
 # Pick the frameworks you want:
+require 'active_model/railtie'
 require "active_record/railtie"
 require "action_controller/railtie"
+require 'action_view/railtie'
 require "action_mailer/railtie"
-# require "action_cable/engine"
 require "sprockets/railtie"
+require 'active_job/railtie'
+require 'action_cable/engine'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -30,5 +34,8 @@ module Punchclock
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_job.queue_adapter = :sidekiq
+
+    config.load_defaults 5.2
+    config.generators.system_tests = nil
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_05_132225) do
+ActiveRecord::Schema.define(version: 2019_05_21_185456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,29 @@ ActiveRecord::Schema.define(version: 2018_07_05_132225) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "allocations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.date "start_at", null: false
+    t.date "end_at"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_allocations_on_company_id"
+    t.index ["project_id"], name: "index_allocations_on_project_id"
+    t.index ["user_id"], name: "index_allocations_on_user_id"
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "evaluation_id"
+    t.bigint "question_id"
+    t.text "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["evaluation_id"], name: "index_answers_on_evaluation_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
   create_table "clients", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "company_id"
@@ -52,11 +75,28 @@ ActiveRecord::Schema.define(version: 2018_07_05_132225) do
     t.integer "end_period"
   end
 
+  create_table "evaluations", force: :cascade do |t|
+    t.bigint "questionnaire_id"
+    t.integer "evaluator_id"
+    t.integer "evaluated_id"
+    t.text "observation"
+    t.integer "score"
+    t.integer "english_level"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_evaluations_on_company_id"
+    t.index ["questionnaire_id"], name: "index_evaluations_on_questionnaire_id"
+  end
+
   create_table "offices", id: :serial, force: :cascade do |t|
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "company_id"
+    t.integer "users_count", default: 0
+    t.float "score"
+    t.integer "head_id"
     t.index ["company_id"], name: "index_offices_on_company_id"
   end
 
@@ -94,6 +134,27 @@ ActiveRecord::Schema.define(version: 2018_07_05_132225) do
     t.index ["user_id"], name: "index_punches_on_user_id"
   end
 
+  create_table "questionnaires", force: :cascade do |t|
+    t.string "title"
+    t.integer "kind"
+    t.text "description"
+    t.boolean "active"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_questionnaires_on_company_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.bigint "questionnaire_id"
+    t.string "title"
+    t.integer "kind"
+    t.string "answer_options", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
+  end
+
   create_table "regional_holidays", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "day"
@@ -102,6 +163,23 @@ ActiveRecord::Schema.define(version: 2018_07_05_132225) do
     t.datetime "updated_at", null: false
     t.bigint "company_id"
     t.index ["company_id"], name: "index_regional_holidays_on_company_id"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "title"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_skills_on_company_id"
+  end
+
+  create_table "user_skills", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "skill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
+    t.index ["user_id"], name: "index_user_skills_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -128,6 +206,10 @@ ActiveRecord::Schema.define(version: 2018_07_05_132225) do
     t.integer "role"
     t.boolean "allow_overtime", default: false
     t.integer "office_id"
+    t.integer "occupation"
+    t.boolean "admin", default: false
+    t.text "observation"
+    t.integer "specialty"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -136,8 +218,20 @@ ActiveRecord::Schema.define(version: 2018_07_05_132225) do
     t.index ["reviewer_id"], name: "index_users_on_reviewer_id"
   end
 
+  add_foreign_key "allocations", "companies"
+  add_foreign_key "allocations", "projects"
+  add_foreign_key "allocations", "users"
+  add_foreign_key "answers", "evaluations"
+  add_foreign_key "answers", "questions"
   add_foreign_key "clients", "companies"
+  add_foreign_key "evaluations", "companies"
+  add_foreign_key "evaluations", "questionnaires"
+  add_foreign_key "questionnaires", "companies"
+  add_foreign_key "questions", "questionnaires"
   add_foreign_key "regional_holidays", "companies"
+  add_foreign_key "skills", "companies"
+  add_foreign_key "user_skills", "skills"
+  add_foreign_key "user_skills", "users"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "reviewer_id"
 end

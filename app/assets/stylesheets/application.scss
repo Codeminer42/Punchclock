@@ -1,0 +1,37 @@
+//Punch clock
+@import "bourbon";
+@import "neat";
+@import "bitters/bitters";
+
+@import "refills/footer";
+@import "refills/navigation";
+@import "refills/tables-minimal";
+@import "refills/hero";
+
+@import "base";
+@import "punches";
+@import "jui";
+@import "select2";
+
+//miner camp
+@import 'normalize-rails';
+@import 'base/base';
+@import 'mixins/*';
+@import 'functions/*';
+@import 'pages/auth';
+@import 'login/*';
+@import 'home';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+@import 'startbootstrap-sb-admin/css/sb-admin';
+@import 'bootstrap';
+@import 'evaluation';
+@import 'layout';
+
+$gray: #ededed;
+
+#user_current_password,
+#user_password,
+#user_password_confirmation {
+  background-color: $gray;
+}

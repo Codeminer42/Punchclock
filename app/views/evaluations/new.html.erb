@@ -1,0 +1,76 @@
+<div class="container-fluid evaluation">
+  <div class="card mb-3">
+    <div class="card-header">
+      <h6><%= @questionnaire.title %></h6>
+      <b>Evaluating: <%= @evaluation.evaluated %></b>
+    </div>
+
+    <%= form_for @evaluation, url: {action: :confirm} do |f| %>
+      <div class="card-body">
+        <% if @evaluation.errors.any? %>
+          <div class="alert alert-danger" role="alert">
+            Check for any missing responses, please!
+            <%= @evaluation.errors.messages %>
+          </div>
+        <% end %>
+
+        <p class="card-text"><%= @questionnaire.description %></p>
+        <%= f.hidden_field :evaluated_id %>
+        <%= f.hidden_field :evaluator_id %>
+        <%= f.hidden_field :questionnaire_id %>
+        <%= f.hidden_field :company_id %>
+
+        <%= f.fields_for :answers do |answer_f| %>
+          <div class="card questions" >
+            <div class="card-body">
+              <h5 class="card-title"><%= answer_f.object.question.title %></h5>
+
+              <%= answer_f.hidden_field :question_id %>
+              <%= answer_f.collection_radio_buttons(:response,
+                                                    answer_f.object.question.answer_options,
+                                                    :itself,
+                                                    :itself,
+                                                    {},
+                                                    { class: "custom-control-input" },
+                                                   ) do |a| %>
+                <div class="custom-control custom-radio">
+                  <%= a.radio_button %>
+                  <%= a.label(class: "custom-control-label") %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="card mb-2">
+          <div class="card-body">
+            <h5 class="card-title"><%= f.label :observation %></h5>
+            <%= f.text_area :observation, class: 'form-control', rows: 4 %>
+          </div>
+        </div>
+
+        <div class="card mb-2">
+          <div class="card-body">
+            <h5 class="card-title"><%= f.label :score %></h5>
+            <%= f.select :score, Evaluation::SCORE_RANGE, {}, { class: 'form-control col-md-1' } %>
+          </div>
+        </div>
+
+        <% if @questionnaire.english? %>
+          <div class="card mb-2">
+            <div class="card-body">
+              <h5 class="card-title"><%= f.label :english_level %></h5>
+              <%= f.select :english_level, @english_levels, {}, { class: 'form-control col-md-3' } %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="text-right">
+          <%= link_to  'Cancel', evaluations_path, class: 'btn btn-secondary' %>
+          <%= f.submit 'Next', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+    <div class="card-footer small text-muted"></div>
+  </div>
+</div>

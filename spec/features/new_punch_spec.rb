@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 feature 'Add new Punch' do
   include ActiveSupport::Testing::TimeHelpers
@@ -16,7 +18,7 @@ feature 'Add new Punch' do
     within '#new_punch' do
       fill_in 'punch[from_time]', with: '08:00'
       fill_in 'punch[to_time]', with: '12:00'
-      fill_in 'punch[when_day]', with: '2001-01-05'
+      fill_in 'punch[when_day]', with: '10/05/2019'
       select active_project.name, from: 'punch[project_id]'
       click_button 'Criar Punch'
     end
@@ -32,7 +34,7 @@ feature 'Add new Punch' do
     within '#new_punch' do
       fill_in 'punch[from_time]', with: '12:00'
       fill_in 'punch[to_time]', with: '8:00'
-      fill_in 'punch[when_day]', with: '2001-01-05'
+      fill_in 'punch[when_day]', with: '10/05/2019'
       select active_project.name, from: 'punch[project_id]'
       click_button 'Criar Punch'
     end
@@ -92,20 +94,18 @@ feature 'Add new Punch' do
 
     scenario 'creating punch selecting a holiday' do
       travel_to Date.new(2019, 3, 10) do
+
         visit '/punches/new'
 
         fill_in 'punch[from_time]', with: DateTime.new(2019, 1, 1, 8)
         fill_in 'punch[to_time]', with: DateTime.new(2019, 1, 1, 12)
+
         select active_project.name, from: 'punch[project_id]'
         check 'punch[extra_hour]'
 
-        find('#punch_when_day').click
-
-        within('.ui-datepicker-calendar tbody') do
-          # march 5th is holiday
-          # selectale days are wraped within a tag, holidays elements are wrapped within span tag
-          find('td a.ui-state-default', text: 5, exact_text: true).click
-        end
+        # march 5th is holiday
+        # selectale days are wraped within a tag, holidays elements are wrapped within span tag
+        fill_in 'punch[when_day]', with: '05/03/2019'
 
         click_button 'Criar Punch'
 

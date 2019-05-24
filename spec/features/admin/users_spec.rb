@@ -1,67 +1,240 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-feature "Users", type: :feature do
-  let(:admin_user) { FactoryBot.create(:super) }
-  let!(:user) { FactoryBot.create(:user) }
-  let!(:company) { FactoryBot.create(:company) }
+require 'rails_helper'
+
+describe 'Users', type: :feature do
+  let(:admin_user) { create(:super) }
+  let(:user)       { create(:user, :admin) }
 
   before do
-    visit '/admin/'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    admin_sign_in(admin_user)
+    visit '/admin/users'
   end
 
-  scenario 'index' do 
-    click_link 'Usuários'
+  describe 'Scopes' do
+    before do
+      create(:user)
+      create(:office, head: user)
+      create(:allocation)
+    end
 
-    expect(page).to have_content('Usuários')
+    it 'have the "all" scope' do
+      find_link('Todos', href: '/admin/users?scope=all').click
+
+      within '#index_table_users' do
+        expect(page).to have_css('tbody tr', count: 3)
+      end
+    end
+
+    it 'have the "office heads" scope' do
+      find_link('Office Heads', href: '/admin/users?scope=office_heads').click
+
+      within '#index_table_users' do
+        expect(page).to have_css('tbody tr', count: 1)
+      end
+    end
+
+    it 'have the "admins" scope' do
+      find_link('Admins', href: '/admin/users?scope=admins').click
+
+      within '#index_table_users' do
+        expect(page).to have_css('tbody tr', count: 1)
+      end
+    end
+
+    it 'have the "not allocated" scope' do
+      find_link('Não alocados', href: '/admin/users?scope=not_allocated').click
+
+      within '#index_table_users' do
+        expect(page).to have_css('tbody tr', count: 2)
+      end
+    end
   end
 
-  scenario 'filter' do
-    click_link 'Usuários'
-    fill_in 'q_name', with: user.name
-    click_button 'Filtrar'
+  describe 'Filters' do
+    it 'by name' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_css('label', text: 'Nome')
+      end
+    end
 
-    expect(page).to have_content(user.name)
+    it 'by role' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Nível', options: User.roles.keys.map(&:humanize) << 'Qualquer')
+      end
+    end
 
-    fill_in 'q_name', with: 'teste'
-    click_button 'Filtrar'
+    it 'by specialty' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Especialidade', options: User.specialties.keys.map(&:humanize) << 'Qualquer')
+      end
+    end
 
-    expect(page).to have_content('Nenhum(a) Usuários encontrado(a)')
+    it 'by office' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Escritório', options: Office.pluck(:city) << 'Qualquer')
+      end
+    end
+
+    context 'after creating a skill' do
+      let!(:skill) { create(:skill) }
+      before { refresh }
+
+      it 'finds it on by skills' do
+        within '#q_by_skills_input' do
+          expect(page).to have_text(skill.title)
+        end
+      end
+    end
   end
 
-  scenario 'view' do
-    click_link 'Usuários'
-    click_link 'Visualizar'  
+  describe 'Actions' do
+    let!(:skill)      { create(:skill) }
+    let!(:office)     { create(:office, head: user) }
+    let!(:office2)    { create(:office, head: user) }
+    let!(:evaluation) { create :evaluation, :english, evaluated: user }
+    let!(:allocation) { create(:allocation, :with_end_at, user: user) }
 
-    expect(page).to have_content('Detalhes do(a) Usuário')
-  end
+    describe 'New' do
+      before do
+        within '.action_items' do
+          click_link 'Novo(a) Usuário'
+        end
+      end
 
-  scenario 'edit' do
-    click_link 'Usuários'
-    click_link 'Editar'
+      it 'must have the form working' do
+        fill_in 'Nome', with: 'Foo Bar'
+        fill_in 'E-mail', with: 'foo@bar.com'
+        find('#user_office_id').find(:option, office.city).select_option
+        find('#user_company_id').find(:option, admin_user.company.name).select_option
+        find("#user_skill_ids_#{skill.id}").set(true)
+        choose('Engineer')
+        find('#user_specialty').find(:option, 'Backend').select_option
+        find('#user_role').find(:option, 'junior').select_option
+        check('Ativo')
+        fill_in 'Password', with: 'password'
+        fill_in 'Observação', with: 'Observation'
 
-    expect(page).to have_content('Editar Usuário')
-  end
+        click_button 'Criar Usuário'
 
-  scenario 'new User' do
-    click_link 'Usuários'
-    click_link 'Novo(a) Usuário'
+        expect(page).to have_css('.flash_notice', text: 'Usuário foi criado com sucesso.') &
+                        have_text('Foo Bar') &
+                        have_text('foo@bar.com') &
+                        have_text(office.city) &
+                        have_text(skill.title) &
+                        have_text('engineer') &
+                        have_text('Backend') &
+                        have_text('Junior') &
+                        have_css('.row-active td', text: 'Sim') &
+                        have_text('Observation')
+      end
+    end
 
-    expect(page).to have_content('Novo(a) Usuário')
+    describe 'Show' do
+      let!(:evaluations) { create_list :evaluation, 2, :performance, evaluated: user }
 
-    click_button 'Criar Usuário'
-    expect(page).to have_content('não pode ficar em branco')
+      before do
+        visit '/admin/users'
+        within 'table' do
+          find_link("#{user.name}", href: "/admin/users/#{user.id}").click
+        end
+      end
 
-    fill_in 'user_name', with: 'user'
-    fill_in 'user_email', with: 'teste2@hotmail.com'
-    fill_in 'user_password', with: 'password'
-    select(company.name, from: 'user_company_id').select_option
+      it 'have edit action' do
+        expect(page).to have_link('Editar Usuário')
+      end
 
-    click_button 'Criar Usuário'
+      it 'have delete action' do
+        expect(page).to have_link('Remover Usuário')
+      end
 
-    expect(page).to have_content('Usuário foi criado com sucesso.')
+      context 'on user tab' do
+        it 'finds user information' do
+          within '#usuario' do
+            expect(page).to have_css('.row-name td', text: user.name) &
+                            have_text(user.email) &
+                            have_text(user.office.city) &
+                            have_text(office.city) &
+                            have_text(office2.city) &
+                            have_css('.row-english_level td', text: evaluation.english_level.humanize) &
+                            have_css('.row-overall_score td', text: user.overall_score) &
+                            have_css('.row-performance_score td', text: user.performance_score) &
+                            have_css('.row-occupation td', text: user.occupation) &
+                            have_css('.row-specialty td', text: user.specialty.humanize) &
+                            have_css('.row-role td', text: user.role.humanize) &
+                            have_css('.row-observation td', text: user.observation)
+          end
+        end
+      end
+
+      context 'on User Allocations tab' do
+        it 'finds user current allocation' do
+          within '#alocacao' do
+            expect(page).to have_css('.row-current_allocation td', text: allocation.project.name)
+          end
+        end
+
+        it 'finds user current allocation even with end date undefined' do
+          allocation.end_at = nil
+          within '#alocacao' do
+            expect(page).to have_css('.row-current_allocation td', text: allocation.project.name)
+          end
+        end
+
+        it 'finds allocations table' do
+          within '#alocacao' do
+            expect(page).to have_css('.row-allocations tbody tr', count: 1)
+          end
+        end
+      end
+
+      context 'on Performance Evaluations tab' do
+        it 'finds evaluations table' do
+          within '#avaliacoes-de-desempenho' do
+            expect(page).to have_css('.row-evaluation tbody tr', count: 2)
+          end
+        end
+      end
+
+      context 'on English Evaluations tab' do
+        it 'finds correct information' do
+          within '#avaliacoes-de-ingles' do
+            expect(page).to have_css('.row-english_level td', text: evaluation.english_level.humanize)
+                            have_css('.row-english_score td', text: user.english_score)
+                            expect(page).to have_css('.row-evaluation tbody tr', count: 1)
+          end
+        end
+      end
+    end
+
+    describe 'Edit' do
+      before do
+        visit "/admin/users/#{user.id}"
+        find_link("Editar Usuário", href: "/admin/users/#{user.id}/edit").click
+      end
+
+      it 'must have labels' do
+        within 'form' do
+          expect(page).to have_text('Nome') &
+                          have_text('E-mail') &
+                          have_text('Empresa') &
+                          have_text('Escritório') &
+                          have_text('Ocupação') &
+                          have_text('Especialidade') &
+                          have_text('Nível') &
+                          have_text('Habilidades') &
+                          have_text('Observação')
+        end
+      end
+
+      it 'updates user information' do
+        find('#user_email').fill_in with: 'novo_email@codeminer42.com'
+
+        click_button 'Atualizar Usuário'
+
+        expect(page).to have_css('.flash_notice', text: 'Usuário foi atualizado com sucesso.') &
+                        have_text('novo_email@codeminer42.com')
+      end
+    end
   end
 end

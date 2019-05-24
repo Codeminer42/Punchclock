@@ -1,4 +1,5 @@
 <%= form_for(user, url: url_path) do |f| %>
+
   <%= render "shared/errors", messages: user.errors.full_messages %>
 
   <div>
@@ -11,5 +12,8 @@
   <%= f.email_field :email %>
   </div>
 
-  <div> <%= f.submit %> </div>
+  <div> 
+  <%= f.submit %> 
+  </div>
+
 <% end %>

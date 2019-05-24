@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 class Project < ApplicationRecord
   belongs_to :company
   belongs_to :client, optional: true
   has_many :punches
+  has_many :allocations, dependent: :destroy
+
   validates :name, presence: true
 
   scope :active, -> { where(active: true) }

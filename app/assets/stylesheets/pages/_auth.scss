@@ -1,0 +1,101 @@
+$bg-color: $black-haze;
+$link-color: $tory-blue;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: $bg-color;
+}
+
+.auth {
+  width: 100%;
+  padding-right: px-to-rem(8px);
+  padding-left: px-to-rem(8px);
+
+  @include small {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__form {
+    padding: px-to-rem(20px) px-to-rem(10px);
+    background-color: $white;
+    border-radius: px-to-rem(4px);
+    box-shadow:
+      px-to-rem(2px) 0 0 rgba(0, 0, 0, .12),
+      0 px-to-rem(2px) px-to-rem(2px) rgba(0, 0, 0, .2);
+
+    @include small {
+      width: px-to-rem(400px);
+    }
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__field {
+    width: 100%;
+
+    &:not(:first-of-type) {
+      margin-top: px-to-rem(10px);
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: .5em;
+    border: px-to-rem(1px) solid #dfe0e1;
+    background-color: #fff;
+    border-radius: px-to-rem(4px);
+    transition: border-color $default-transition-time ease-in-out;
+    font-size: px-to-rem(18px);
+  }
+
+  &__remember-label {
+    font-size: px-to-rem(14px);
+  }
+
+  &__button {
+    display: inline-block;
+    width: 100%;
+    height: px-to-rem(40px);
+    border: 0;
+    margin-top: px-to-rem(10px);
+    background-color: $tory-blue;
+    border-radius: px-to-rem(4px);
+    color: $white;
+    cursor: pointer;
+    font-size: px-to-rem(13px);
+    transition: background-color $default-transition-time ease-in-out;
+
+    &:hover {
+      background-color: darken($tory-blue, 5%);
+    }
+  }
+}
+
+.devise-link {
+  display: inline-block;
+  width: 100%;
+  color: $link-color;
+  font-size: px-to-rem(14px);
+  text-align: center;
+  text-decoration: none;
+}
+
+.devise-alert {
+  color: $danger-color;
+  font-size: px-to-rem(14px);
+  font-style: italic;
+  text-align: center;
+}

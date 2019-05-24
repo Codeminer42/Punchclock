@@ -1,0 +1,19 @@
+detectors:
+  IrresponsibleModule:
+    enabled: false
+
+directories:
+  "app/controllers":
+    NestedIterators:
+      max_allowed_nesting: 2
+    InstanceVariableAssumption:
+      enabled: false
+  "app/helpers":
+    UtilityFunction:
+      enabled: false
+  "app/mailers":
+    InstanceVariableAssumption:
+      enabled: false
+  "app/models":
+    InstanceVariableAssumption:
+      enabled: false

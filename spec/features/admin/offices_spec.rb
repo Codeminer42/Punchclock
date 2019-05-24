@@ -1,64 +1,145 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-feature "Offices", type: :feature do
-  let(:admin_user) { FactoryBot.create(:super) }
-  let!(:office) { FactoryBot.create(:office) } 
-  let!(:company) { FactoryBot.create(:company) }
+require 'rails_helper'
+
+describe 'Offices', type: :feature do
+  let(:admin_user) { create(:admin_user) }
+  let(:office)     { create(:office, company: admin_user.company) }
+  let!(:user)      { create(:user,
+                            :with_overall_score,
+                            :admin,
+                            office: office,
+                            company: admin_user.company) }
 
   before do
-    visit '/admin'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    admin_sign_in(admin_user)
+    visit '/admin/offices'
   end
 
-  scenario 'index' do
-    click_link 'Escritórios'
-
-    expect(page).to have_content('Escritórios')
+  describe 'Index' do
+    it 'must find fields "Office", "Users" and "Score" on table' do
+      within 'table' do
+        expect(page).to have_text('Cidade') &
+                        have_text('Head') &
+                        have_text('Quantidade de usuários') &
+                        have_text('Pontuação')
+      end
+    end
   end
 
-  scenario 'filter' do
-    click_link 'Escritórios'
-    fill_in 'q_city', with: office.city
-    click_button 'Filtrar'
+  describe 'Actions' do
+    describe 'New' do
+      before do
+        within '.action_items' do
+          click_link 'Novo(a) Escritório'
+        end
+      end
 
-    expect(page).to have_content(office.city)
+      it 'must have the form working' do
+        find('#office_head_id').find(:option, user.name).select_option
+        find('#office_city').fill_in with: 'São Francisco'
 
-    fill_in 'q_city', with: 'teste'
-    click_button 'Filtrar'
+        click_button 'Criar Escritório'
 
-    expect(page).to have_content('Nenhum(a) Escritórios encontrado(a)')
-  end
+        expect(page).to have_text('Escritório foi criado com sucesso.') &
+                        have_text('São Francisco') &
+                        have_text(user.name) &
+                        have_text(I18n.t('office.user_not_evaluated'))
+      end
+    end
 
-  scenario 'view' do
-    click_link 'Escritórios'
-    click_link 'Visualizar'  
+    describe 'Show' do
+      before do
+        visit '/admin/offices'
+        within 'table' do
+          find_link(office.city, href: "/admin/offices/#{office.id}").click
+        end
+      end
 
-    expect(page).to have_content('Detalhes do(a) Escritório')
-  end
+      it 'have edit action' do
+        expect(page).to have_link('Editar Escritório')
+      end
 
-  scenario 'edit' do
-    click_link 'Escritórios'
-    click_link 'Editar'
+      it 'have delete action' do
+        expect(page).to have_link('Remover Escritório')
+      end
 
-    expect(page).to have_content('Editar Escritório')
-  end
+      it 'must have labels' do
+        within '.attributes_table.office' do
+          expect(page).to have_text('Cidade') &
+                          have_text('Head') &
+                          have_text('Quantidade de usuários') &
+                          have_text('Pontuação')
 
-  scenario 'new office' do
-    click_link 'Escritórios'
-    click_link 'Novo(a) Escritório'
+        end
+      end
 
-    expect(page).to have_content('Novo(a) Escritório')
+      it 'have user table with correct information' do
+        expect(page).to   have_text(user.name) &
+                          have_text(user.email) &
+                          have_text(user.occupation) &
+                          have_text(user.overall_score)
+      end
+    end
 
-    click_button 'Criar Escritório'
-    expect(page).to have_content('não pode ficar em branco')
- 
-    fill_in 'office_city', with: 'Laranjeiras'
-    select(company.name, from: 'office_company_id').select_option
-    click_button 'Criar Escritório'
+    describe 'Edit' do
+      before do
+        visit "/admin/offices/#{office.id}"
+        click_link('Editar Escritório')
+      end
 
-    expect(page).to have_content('Escritório foi criado com sucesso.')
+      it 'must have labels' do
+        within 'form' do
+          expect(page).to have_text('Office') &
+                          have_text('Head')
+        end
+      end
+
+      it 'updates office information' do
+        find('#office_city').fill_in with: 'Curitiba'
+
+        click_button 'Atualizar Escritório'
+
+        expect(page).to have_css('.flash_notice', text: 'Escritório foi atualizado com sucesso.') &
+                        have_text('Curitiba') &
+                        have_text(office.score)
+      end
+    end
+
+    describe 'Destroy' do
+      let!(:office_without_users) { create(:office, company: admin_user.company) }
+
+      it 'cancel delete office', js: true do
+        visit "/admin/offices/#{office_without_users.id}"
+
+        page.dismiss_confirm do
+          find_link("Remover Escritório", href: "/admin/offices/#{office_without_users.id}").click
+        end
+
+        expect(current_path).to eql("/admin/offices/#{office_without_users.id}")
+      end
+
+      it 'confirm delete office', js: true do
+        visit "/admin/offices/#{office_without_users.id}"
+
+        page.accept_confirm do
+          find_link("Remover Escritório", href: "/admin/offices/#{office_without_users.id}").click
+        end
+
+        expect(page).to have_text('Escritório foi deletado com sucesso.') &
+                        have_no_link(office_without_users.city, href: "/admin/offices/#{office_without_users.id}")
+      end
+
+      it 'deny delete office with users', js: true do
+        visit "/admin/offices/#{office.id}"
+
+        page.accept_confirm do
+          find_link("Remover Escritório", href: "/admin/offices/#{office.id}").click
+        end
+
+        expect(page).to have_text('Escritório não pôde ser deletado.') &
+                        have_link(office.city, href: "/admin/offices/#{office.id}")
+      end
+    end
   end
 end

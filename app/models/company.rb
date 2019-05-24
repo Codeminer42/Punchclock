@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   has_many :admin_users
   has_many :projects
@@ -6,6 +8,12 @@ class Company < ApplicationRecord
   has_many :offices
   has_many :clients
   has_many :regional_holidays, through: :offices
+
+  has_many :allocations
+  has_many :questionnaires
+  has_many :evaluations
+  has_many :skills
+
 
   validates :name, presence: true
 

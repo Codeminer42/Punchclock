@@ -1,6 +1,19 @@
-<h2> Edit User </h2>
+<div class="row">
+  <div class="col-lg-6">
+    <h2> Edit User </h2>
+    <%= render 'form', user: current_user, url_path: user_path %>
+  </div>
+</div>
 
-<%= render 'form', user: current_user, url_path: user_path %>
-<%= link_to 'Change Password', users_account_password_edit_path, class: 'btn btn-default' %>
-
-<%= link_to 'Back', user_path %>
+<div class="row">
+  <div class="col-lg-6">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to 'Change Password', users_account_password_edit_path %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to 'Back', user_path %>
+      </li>
+    <ul>
+  </div>
+</div>

@@ -10,8 +10,33 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import "wigu/active_admin_theme";
+// @import "active_skin";
+
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+#allocation_start_at, #allocation_end_at {
+  width: auto;
+}
+
+#wrapper #header #utility_nav li.has_nested ul {
+  left: initial!important;
+  right: 0px;
+}
+
+.admin_users, .admin_evaluations, .show.admin_offices {
+  .row-overall_score td,
+  .row-performance_score td,
+  .row-english_score td,
+  .row-english_level td,
+  .row-score td,
+  .col-overall_score,
+  td.col-score
+  {
+    font-weight: bold;
+  }
+}

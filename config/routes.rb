@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
@@ -39,5 +40,19 @@ Rails.application.routes.draw do
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
+  root to: 'home#index'
+
+  devise_scope :user do
+    # get '/login', to: 'active_admin/devise/sessions#new', as: :miner_login
+    post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds
+    resources :evaluations, only: %i[show index]
+  end
+
+  resources :questionnaires do
+    resources :evaluations, only: %i[new create] do
+      post :confirm, on: :collection
+    end
   end
 end

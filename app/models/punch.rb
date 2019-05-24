@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Punch < ApplicationRecord
   attr_accessor :from_time, :to_time, :when_day
 

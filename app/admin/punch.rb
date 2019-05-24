@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Punch do
   decorate_with PunchDecorator
 
   permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company, :comment
+
+  menu priority: 100
 
   filter :project, collection: proc {
     current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects

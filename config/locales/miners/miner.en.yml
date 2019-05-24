@@ -1,0 +1,31 @@
+en:
+  activerecord:
+    errors:
+      models:
+        miner:
+          attributes:
+            email:
+              invalid: is invalid
+        customer:
+          attributes:
+            email:
+              invalid: is incorrect
+
+  miner:
+    available: Available
+    logged_in:
+      my_account: My Account
+      logout: Logout
+  enumerize:
+    miner:
+      occupation:
+        administrative: Administrative
+        engineer: Engineer
+      role_level:
+        intern: Intern
+        junior: Junior Engineer
+        junior_plus: Junior Plus Engineer
+        mid: Mid Engineer
+        mid_plus: Mid Plus Engineer
+        senior: Senior Engineer
+        senior_plus: Senior Plus Engineer

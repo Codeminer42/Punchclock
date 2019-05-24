@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   respond_to :html, :json
 
@@ -14,5 +15,24 @@ class ApplicationController < ActionController::Base
     else
       raise
     end
+
+  # before_action :authenticate_miner!
+
+  # def after_sign_out_path_for(_resource_or_scope)
+    # miner_login_path
+  # end
+
+  # def after_sign_in_path_for(_resource_or_scope)
+    # current_user.admin? ? admin_root_path : miner_root_path
+  # end
+
+  # def access_denied(exception)
+    # redirect_to root_path, alert: exception.message
+  end
+
+  private 
+
+  def current_company
+    @current_company ||= current_user.company 
   end
 end

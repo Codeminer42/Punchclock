@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Project do
   config.sort_order = 'name_asc'
 
   permit_params :name, :company_id, :active, :client_id
 
-  scope :active, default: true
-  scope :inactive
+  menu parent: I18n.t("activerecord.models.company.one"), priority: 4
+
+  scope proc { I18n.t('active') }, :active, default: true
+  scope proc { I18n.t('inactive') }, :inactive
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
@@ -27,7 +31,9 @@ ActiveAdmin.register Project do
   index do
     selectable_column
     column :company if current_admin_user.is_super?
-    column :name
+    column :name do |project|
+      link_to project.name, admin_project_path(project)
+    end
     column :active
     column :created_at
     actions
@@ -39,10 +45,23 @@ ActiveAdmin.register Project do
       row :active do |project|
         status_tag project.active.to_s
       end
+      row :client
+      row :company if current_admin_user.is_super?
       row :created_at
       row :updated_at
-      row :company if current_admin_user.is_super?
     end
+
+    panel I18n.t('allocations') do
+      table_for project.allocations do
+        column :user
+        column :start_at
+        column :end_at
+        column :access do |allocation|
+          link_to I18n.t('view'), admin_allocation_path(allocation)
+        end
+      end
+    end
+
   end
 
   form do |f|

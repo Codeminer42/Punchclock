@@ -1,5 +1,10 @@
+# frozen_string_literal: true
+
 class Client < ApplicationRecord
   belongs_to :company, optional: true
+
+  has_many :users, through: :allocations
+  has_many :projects
 
   validates_presence_of :name
 

@@ -18,7 +18,7 @@ describe AdminUser, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to :company }
+    it { is_expected.to belong_to(:company).optional }
   end
 
   describe '#email' do

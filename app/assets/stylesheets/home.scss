@@ -1,0 +1,24 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.table.users-evaluation {
+  td:last-child, th:last-child {
+    text-align: center;
+    white-space:nowrap;
+  }
+}
+
+.card-header{
+  font-size: 1.3rem;
+}
+
+#selectFormModal {
+  ul {
+    width: 100%;
+  }
+  a {
+    color: #495057
+  }
+}
+

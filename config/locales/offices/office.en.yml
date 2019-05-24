@@ -1,0 +1,5 @@
+en:
+  activerecord:
+    attributes:
+      office:
+        name: Office

@@ -1,11 +1,15 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Client do
   permit_params :name, :company, :company_id, :active
+
+  menu parent: I18n.t("activerecord.models.company.one"), priority: 3
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
 
-  scope :active, default: true
-  scope :inactive
+  scope proc { I18n.t('active') }, :active, default: true
+  scope proc { I18n.t('inactive') }, :inactive
 
   batch_action :destroy, false
   batch_action :disable, if: proc { params[:scope] != "inactive" } do |ids|
@@ -34,6 +38,17 @@ ActiveAdmin.register Client do
       row :active
       row :created_at
       row :updated_at
+    end
+    panel I18n.t('projects') do
+      table_for client.projects do
+        column :name do |project|
+          link_to project.name, admin_project_path(project)
+        end
+        column :active
+        column :access do |project|
+          link_to :Access, admin_project_path(project)
+        end
+      end
     end
   end
 

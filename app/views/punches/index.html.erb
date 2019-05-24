@@ -1,72 +1,54 @@
 <p class="main-actions">
-  <%= link_to 'Punch', new_punch_path, :class => 'button' %>
+  <%= link_to 'Punch', new_punch_path, class: 'button' %>
 </p>
 
 <section class="pre">
-  <div class="avatar">
-    <%= link_to user_path do %>
-      <%= gravatar_for current_user, size: 40 %>
-      <span><%= current_user.name %></span>
-    <%- end %>
-  </div>
-
-  <%= render "punches_filter_form"%>
+  <%= render "punches_filter_form" %>
 </section>
 
-<table class='table-minimal'>
-<colgroup>
-    <col width='160'>
-    <col width='100'>
-    <col width='60'>
-    <col width='60'>
-    <col>
-    <col>
-    <col>
-    <col width='24'>
-    <col width='24'>
-    <col width='24'>
-  </colgroup>
-
-  <thead>
-    <tr>
-      <th><%= sort_link @search, :from, Punch.human_attribute_name(:when) %></th>
-      <th><%= Punch.human_attribute_name(:from) %></th>
-      <th><%= Punch.human_attribute_name(:to) %></th>
-      <th><%= Punch.human_attribute_name(:delta) %></th>
-      <th><%= Punch.human_attribute_name(:extra_hour) %></th>
-      <th><%= Punch.human_attribute_name(:comment) %></th>
-      <th><%= sort_link @search, :project_id, Punch.human_attribute_name(:project_id) %></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @punches.each do |punch| %>
-      <tr class="user-punch">
-        <td><%= link_to punch.object.from.strftime("%d/%m/%Y"), punch, id: "shw-#{punch.id}" %> </td>
-        <td><%= punch.from %> </td>
-        <td><%= punch.to %> </td>
-        <td><%= punch.delta %> </td>
-        <td><%= t punch.extra_hour %></td>
-        <td><strong> <%= punch.comment %> </strong> </td>
-        <td><%= punch.project.name %> </td>
-        <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
-        <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
-        <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: t('.are_you_sure_remove_register') }, id: "dlt-#{punch.id}" %> </td>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><%= sort_link @search, :from, Punch.human_attribute_name(:when) %></th>
+        <th><%= Punch.human_attribute_name(:from) %></th>
+        <th><%= Punch.human_attribute_name(:to) %></th>
+        <th><%= Punch.human_attribute_name(:delta) %></th>
+        <th><%= Punch.human_attribute_name(:extra_hour) %></th>
+        <th><%= Punch.human_attribute_name(:comment) %></th>
+        <th><%= sort_link @search, :project_id, Punch.human_attribute_name(:project_id) %></th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
+    </thead>
 
-  <tfoot>
-    <tr>
-      <td colspan="6">
-        <strong><%= t('.total') %>:</strong>
-        <%= @punches.total_hours %>
-      </td>
-    </tr>
-  </tfoot>
-</table>
+    <tbody>
+      <% @punches.each do |punch| %>
+        <tr class="user-punch">
+          <td><%= link_to punch.object.from.strftime("%d/%m/%Y"), punch, id: "shw-#{punch.id}" %> </td>
+          <td><%= punch.from %> </td>
+          <td><%= punch.to %> </td>
+          <td><%= punch.delta %> </td>
+          <td><%= t punch.extra_hour %></td>
+          <td><strong> <%= punch.comment %> </strong> </td>
+          <td><%= punch.project.name %> </td>
+          <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
+          <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
+          <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: t('.are_you_sure_remove_register') }, id: "dlt-#{punch.id}" %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td>
+          <strong><%= t('.total') %>:</strong>
+          <%= @punches.total_hours %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 <section>
   <%= paginate @punches %>
 </section>

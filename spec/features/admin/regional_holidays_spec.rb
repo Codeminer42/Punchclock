@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature "RegionalHolidays", type: :feature do
@@ -9,11 +11,11 @@ feature "RegionalHolidays", type: :feature do
 
     fill_in 'admin_user_email', with: admin_user.email
     fill_in 'admin_user_password', with: admin_user.password
-    
+
     click_button 'Entrar'
   end
 
-  scenario 'index' do 
+  scenario 'index' do
     click_link 'Feriados regionais'
 
     expect(page).to have_content('Feriados regionais')
@@ -21,7 +23,7 @@ feature "RegionalHolidays", type: :feature do
 
   scenario 'view' do
     click_link 'Feriados regionais'
-    click_link 'Visualizar'  
+    click_link 'Visualizar'
 
     expect(page).to have_content('Detalhes do(a) Feriado regional')
   end
