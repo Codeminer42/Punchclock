@@ -77,16 +77,6 @@ $redDarker: #9E0F0F;
     }
   }
 
-  .beta {
-    background: $light-yellow;
-    border-radius: 0.9em;
-    color: $flat-pumpkin;
-    font-size: .6em;
-    line-height: 1;
-    padding: 0.2em 0.52em;
-    vertical-align: top;
-  }
-
   &-opened {
     .links a {
       display: block;
