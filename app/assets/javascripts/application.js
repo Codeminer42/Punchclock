@@ -6,7 +6,6 @@
 //= require popper
 //= require jquery.easing
 //= require bootstrap
-//= require startbootstrap-sb-admin/js/sb-admin
 //= require_tree .
 
 $(function () {

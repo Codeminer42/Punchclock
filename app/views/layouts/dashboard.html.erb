@@ -13,6 +13,7 @@
       <%= yield %>
     </div>
     <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "startbootstrap-sb-admin/js/sb-admin" %>
     <%= javascript_include_tag *webpack_asset_paths("application") %>
     <%= render 'refills/footer' %>
   </body>
