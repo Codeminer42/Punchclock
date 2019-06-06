@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "postinstall": "RAILS_ENV=production bundle exec rake webpack:compile",
     "server": "webpack-dev-server --host 0.0.0.0 --config config/webpack.config.js",
     "linter:css": "stylelint 'app/assets/stylesheets/**/*' --syntax scss"
   },
