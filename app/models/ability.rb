@@ -20,7 +20,8 @@ class Ability
     else
       can :manage, [
         AdminUser,
-        User, Office,
+        User,
+        Office,
         Project,
         Client,
         RegionalHoliday,

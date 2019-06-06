@@ -6,9 +6,13 @@ ActiveAdmin.register Evaluation do
 
   menu parent: I18n.t("activerecord.models.evaluation.other")
 
-  filter :evaluator
-  filter :evaluated
-  filter :questionnaire_kind, as: :select, collection: Questionnaire.kinds.keys
+  filter :evaluator, collection: proc {
+    current_admin_user.is_super? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.active.order(:name)
+  }
+  filter :evaluated, collection: proc {
+    current_admin_user.is_super? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.active.order(:name)
+  }
+  filter :questionnaire_kind, as: :select, collection: Questionnaire.kinds.keys.map {|key,value| [key.titleize, key]}
   filter :created_at
 
   index do

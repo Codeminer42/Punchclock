@@ -20,9 +20,9 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
-  filter :role, as: :select, collection: User.roles.map {|key,value| [key.humanize, value]}
+  filter :role, as: :select, collection: User.roles.map {|key,value| [key.titleize, value]}
   filter :office, collection: proc {
-    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices
+    current_admin_user.is_super? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :company, if: proc { current_admin_user.is_super? }
   filter :specialty, as: :select, collection: User.specialties.map {|key,value| [key.humanize, value]}
@@ -162,14 +162,14 @@ ActiveAdmin.register User do
         f.input :reviewer
         f.input :skills, as: :check_boxes
       else
-        f.input :office, collection: current_admin_user.company.offices
+        f.input :office, collection: current_admin_user.company.offices.order(:city)
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-        f.input :reviewer, collection: current_admin_user.company.users
-        f.input :skills, as: :check_boxes, collection: current_admin_user.company.skills
+        f.input :reviewer, collection: current_admin_user.company.users.order(:name)
+        f.input :skills, as: :check_boxes, collection: current_admin_user.company.skills.order(:title)
       end
       f.input :occupation, as: :radio
       f.input :specialty
-      f.input :role, as: :select, collection: User.roles.keys
+      f.input :role, as: :select, collection: User.roles.keys.map {|role| [role.titleize, role]}
       if f.object.new_record?
         f.input :password
       end

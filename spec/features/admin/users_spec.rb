@@ -60,7 +60,7 @@ describe 'Users', type: :feature do
 
     it 'by role' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.roles.keys.map(&:humanize) << 'Qualquer')
+        expect(page).to have_select('Nível', options: User.roles.keys.map(&:titleize) << 'Qualquer')
       end
     end
 
@@ -72,7 +72,7 @@ describe 'Users', type: :feature do
 
     it 'by office' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Escritório', options: Office.pluck(:city) << 'Qualquer')
+        expect(page).to have_select('Escritório', options: admin_user.company.offices.pluck(:city) << 'Qualquer')
       end
     end
 
@@ -110,7 +110,7 @@ describe 'Users', type: :feature do
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engineer')
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_role').find(:option, 'junior').select_option
+        find('#user_role').find(:option, 'Junior').select_option
         check('Ativo')
         fill_in 'Password', with: 'password'
         fill_in 'Observação', with: 'Observation'

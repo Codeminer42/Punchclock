@@ -8,7 +8,7 @@ ActiveAdmin.register Punch do
   menu priority: 100
 
   filter :project, collection: proc {
-    current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects
+    current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects.order(:name)
   }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
   filter :company, if: proc { current_admin_user.is_super? }

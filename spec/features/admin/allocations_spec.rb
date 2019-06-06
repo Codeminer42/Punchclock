@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Admin Allocation', type: :feature do
   let(:admin_user)  { create(:admin_user) }
-  let!(:user)       { create(:user, :admin) }
+  let!(:user)       { create(:user, company: admin_user.company) }
   let!(:project)    { create(:project, company: admin_user.company) }
   let!(:allocation) { create(:allocation,
                               :with_end_at,
@@ -30,15 +30,21 @@ describe 'Admin Allocation', type: :feature do
   end
 
   describe 'Filters' do
+    before do
+      create_list(:user, 2, company: admin_user.company)
+      create_list(:project, 1, company: admin_user.company)
+      visit '/admin/allocations'
+    end
+
     it 'by user' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Usuário', options: User.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Usuário', options: admin_user.company.users.pluck(:name) << 'Qualquer')
       end
     end
 
     it 'by project' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Projeto', options: Project.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Projeto', options: admin_user.company.projects.pluck(:name) << 'Qualquer')
       end
     end
   end

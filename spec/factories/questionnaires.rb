@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :questionnaire do
-    title       { Faker::Lorem.unique.word }
+    title       { Faker::Lorem.unique.sentence(3) }
     description { Faker::Lorem.paragraph }
     kind        { 'performance' }
     active      { true }
