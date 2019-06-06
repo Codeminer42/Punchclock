@@ -21,6 +21,9 @@ chdir APP_ROOT do
   puts "\n== Installing npm dependencies =="
   system! "yarn install"
 
+  puts "\n== Compile webpack =="
+  system!('RAILS_ENV' => 'staging', 'bundle exec rake webpack:compile')
+
   puts "\n== Copying sample files =="
   unless File.exist?('config/database.yml')
     cp 'config/database.yml.example', 'config/database.yml'
