@@ -28,9 +28,7 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db
-# Added by webpack-rails
-/node_modules
-/public/webpack
+
 dump.rdb
 
 /node_modules
@@ -38,3 +36,11 @@ dump.rdb
 
 /public/assets
 .byebug_history
+
+/public/packs
+/public/packs-staging
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
