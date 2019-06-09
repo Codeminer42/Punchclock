@@ -57,7 +57,7 @@ feature "Punches with normal admin_user", type: :feature do
   let!(:punch) { create :punch, company_id: admin_user.company_id }
 
   before do
-    visit '/admin/'
+    visit '/admin/punches'
 
     fill_in 'admin_user_email', with: admin_user.email
     fill_in 'admin_user_password', with: admin_user.password
@@ -65,8 +65,24 @@ feature "Punches with normal admin_user", type: :feature do
   end
 
   scenario 'index' do
-    click_link 'Punches'
     expect(page).to have_content('Punches') &
-      have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s)
+                    have_link("Visualizar", href: "/admin/punches/#{punch.id}")
+  end
+
+  describe 'Filters' do
+    before do
+    end
+
+    it 'by project' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Projeto', options: admin_user.company.projects.pluck(:name) << 'Qualquer')
+      end
+    end
+
+    it 'by user' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Usuário', options: admin_user.company.users.pluck(:name) << 'Qualquer')
+      end
+    end
   end
 end

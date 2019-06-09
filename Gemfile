@@ -98,9 +98,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-remote', '~> 0.1.8'
   gem 'dotenv-rails', '~> 2.2.1'
-end
-
-group :development, :test do
   gem 'rubocop', require: false
 end
 

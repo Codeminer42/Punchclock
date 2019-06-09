@@ -5,8 +5,12 @@ ActiveAdmin.register Allocation do
 
   menu parent: I18n.t("activerecord.models.user.other"), priority: 4
 
-  filter :user
-  filter :project
+  filter :user, collection: proc {
+    current_admin_user.is_super? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.order(:name)
+  }
+  filter :project, collection: proc {
+    current_admin_user.is_super? ? Project.all.order(:name).group_by(&:company) : current_admin_user.company.projects.order(:name)
+  }
   filter :start_at
   filter :end_at
 
@@ -31,12 +35,13 @@ ActiveAdmin.register Allocation do
 
   form html: { autocomplete: 'off' } do |f|
     inputs 'Details' do
-      input :user
       if current_admin_user.is_super?
+        input :user
         input :project
         input :company
       else
-        input :project, collection: current_admin_user.company.projects
+        input :user, as: :select, collection: current_admin_user.company.users.active.order(:name)
+        input :project, collection: current_admin_user.company.projects.active.order(:name)
         input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
       input :start_at, as: :date_picker

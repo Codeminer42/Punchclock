@@ -8,7 +8,7 @@ ActiveAdmin.register RegionalHoliday do
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
   filter :offices, multiple: true, collection: proc {
-    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices
+    current_admin_user.is_super? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :day
   filter :month
@@ -45,8 +45,8 @@ ActiveAdmin.register RegionalHoliday do
       f.input :month
       f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       f.input :offices, as: :check_boxes,
-        collection: current_admin_user.is_super? ? Office.all : current_admin_user.company.offices
-      f.actions
+        collection: current_admin_user.is_super? ? Office.all.order(:city) : current_admin_user.company.offices.order(:city)
     end
+      f.actions
   end
 end

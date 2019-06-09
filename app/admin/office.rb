@@ -9,8 +9,12 @@ ActiveAdmin.register Office do
   menu parent: I18n.t("activerecord.models.user.other"), priority: 3
 
   filter :company, if: proc { current_admin_user.is_super? }
-  filter :city, as: :select
-  filter :head
+  filter :city, as: :select, collection: proc {
+    current_admin_user.is_super? ? Office.all.group_by(&:company).order(:city) : current_admin_user.company.offices.order(:city)
+  }
+  filter :head, collection: proc {
+    current_admin_user.is_super? ? current_admin_user.users.order(:name) : current_admin_user.company.users.order(:name)
+  }
 
   index do
     column :city do |office|
@@ -53,7 +57,7 @@ ActiveAdmin.register Office do
         f.input :head
         f.input :company
       else
-        f.input :head, collection: current_admin_user.company.users
+        f.input :head, collection: current_admin_user.company.users.active.order(:name)
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
     end

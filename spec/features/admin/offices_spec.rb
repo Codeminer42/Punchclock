@@ -27,6 +27,20 @@ describe 'Offices', type: :feature do
     end
   end
 
+  describe 'Filters' do
+    it 'by city' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Cidade', options: admin_user.company.offices.pluck(:city) << 'Qualquer')
+      end
+    end
+
+    it 'by head' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Head', options: admin_user.company.users.pluck(:name) << 'Qualquer')
+      end
+    end
+  end
+
   describe 'Actions' do
     describe 'New' do
       before do

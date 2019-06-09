@@ -17,19 +17,19 @@ describe 'Admin Evaluation', type: :feature do
 
     it 'by evaluator' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Avaliador', options: User.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Avaliador', options: admin_user.company.users.pluck(:name) << 'Qualquer')
       end
     end
 
     it 'by evaluated' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Avaliado', options: User.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Avaliado', options: admin_user.company.users.pluck(:name) << 'Qualquer')
       end
     end
 
     it 'by questionnaire kind' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo do Questionário', options: Questionnaire.kinds.keys << 'Qualquer')
+        expect(page).to have_select('Tipo do Questionário', options: Questionnaire.kinds.keys.map(&:titleize) << 'Qualquer')
       end
     end
 

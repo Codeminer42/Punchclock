@@ -71,7 +71,7 @@ ActiveAdmin.register Project do
         f.input :client
         f.input :company
       else
-        f.input :client, collection: current_admin_user.company.clients
+        f.input :client, collection: current_admin_user.company.clients.active.order(:name)
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
       f.input :active
