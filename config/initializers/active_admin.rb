@@ -4,9 +4,10 @@ pre_defined_paths = Rails.application.config.i18n.load_path
 ActiveAdmin.setup do |config|
   config.site_title = proc {
     (!admin_user_signed_in? || current_admin_user.is_super?) ? "Punchclock" : "Punchclock (#{current_admin_user.company})"
-
+  
   }
 
+  config.download_links = [:csv, :json]
   config.authentication_method = :authenticate_admin_user!
   config.current_user_method = :current_admin_user
   config.logout_link_path = :destroy_admin_user_session_path
