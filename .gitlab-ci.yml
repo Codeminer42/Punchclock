@@ -20,11 +20,16 @@ rspec:
   before_script:
     - apt-get -y update
     - apt-get -y install google-chrome-stable
+    - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    - source ~/.profile
+    - nvm install v8.12.0
+    - nvm use 8.12.0
     - bundle install --without development production -j $(nproc) --path .gitlab-cache
     - cp config/database.yml.example config/database.yml
     - bundle exec rake db:create db:test:prepare
-    - npm install
-    - bundle exec rake webpack:compile
+    - npm install yarn --global
+    - yarn
+    - bundle exec rake webpacker:compile
     - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
     - chmod +x ./cc-test-reporter
     - ./cc-test-reporter before-build

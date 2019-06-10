@@ -33,7 +33,7 @@ Rails.application.configure do
   # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
   config.middleware.insert_before ActionDispatch::SSL, Letsencrypt::Middleware
   config.force_ssl = true
-  
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter

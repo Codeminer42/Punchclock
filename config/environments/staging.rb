@@ -24,5 +24,4 @@ Rails.application.configure do
     password: ENV['SENDGRID_PASSWORD'],
     domain: 'heroku.com'
   }
-  config.webpack.dev_server.enabled = false
 end
