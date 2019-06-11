@@ -148,6 +148,22 @@ ActiveAdmin.register User do
           end
         end
       end
+
+      tab :punches do
+        table_for user.punches.last_punches(60.days.ago).order(from: :desc).decorate, i18n: Punch do
+          column :company
+          column :project
+          column :when
+          column :from
+          column :to
+          column :delta
+          column :extra_hour
+        end
+        div link_to I18n.t('download_as_csv'),
+                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: Date.current - 60 }, format: :csv)
+        div link_to I18n.t('all_punches'), 
+                        admin_punches_path(q: { user_id_eq: user.id, commit: :Filter })
+      end
     end
   end
 
@@ -170,9 +186,7 @@ ActiveAdmin.register User do
       f.input :occupation, as: :radio
       f.input :specialty
       f.input :role, as: :select, collection: User.roles.keys.map {|role| [role.titleize, role]}
-      if f.object.new_record?
-        f.input :password
-      end
+      f.input :password if f.object.new_record?
       f.input :allow_overtime
       f.input :active
       f.input :observation
