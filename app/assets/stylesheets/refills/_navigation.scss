@@ -14,8 +14,10 @@ $redDarker: #9E0F0F;
 
   a {
     color: $navigation-color;
-    display: block;
-    padding: 0.5em 1em;
+    display: flex;
+    align-items: center;
+    margin: 0 1em;
+    justify-content: space-evenly;
     text-decoration: none;
 
     @include media($large-screen) {
@@ -53,6 +55,19 @@ $redDarker: #9E0F0F;
 
     .logo {
       height: 60px;
+    }
+  }
+
+  .navbar-nav {
+    a {
+      span {
+        text-transform: uppercase;
+      }
+
+      img.gravatar {
+        border-radius: 20px;
+        margin: 1em
+      }
     }
   }
 

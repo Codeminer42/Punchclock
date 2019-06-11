@@ -18,13 +18,15 @@
           <% end %>
         </div>
 
-        <ul class="navbar-nav ml-auto nav-link">
+        <div class="navbar-nav ml-auto nav-link">
           <%= link_to user_path do %>
-            <%= current_user.name %>
+            <span>
+              <%= current_user.name %>
+            </span>
             <%= gravatar_for current_user, size: 40 %>
           <% end %>
           <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
-        </ul>
+        </div>
       <% end %>
     </nav>
   </div>
