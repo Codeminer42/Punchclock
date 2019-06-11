@@ -5,11 +5,11 @@ namespace :fill do
     CODEMINER_COMPANY_ID = 8
 
     # Office Names
-    OFFICE_ANAPOLIS        = 'Anápolis'
+    OFFICE_ANAPOLIS        = 'Anapolis'
     OFFICE_BELO_HORIZONTE  = 'Belo Horizonte'
     OFFICE_BATATAIS        = 'Batatais'
     OFFICE_CAMPINAS        = 'Campinas'
-    OFFICE_GOIANIA         = 'Goiânia'
+    OFFICE_GOIANIA         = 'Goiania'
     OFFICE_GUARAPUAVA      = 'Guarapuava'
     OFFICE_NATAL           = 'Natal'
     OFFICE_NOVO_HAMBURGO   = 'Novo Hamburgo'
