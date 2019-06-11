@@ -14,6 +14,16 @@
 }
 
 #selectFormModal {
+  button{
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  .close:hover {
+    background-color: white;
+  }
+
   ul {
     width: 100%;
   }

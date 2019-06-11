@@ -12,19 +12,20 @@
           <%= link_to dashboard_index_path do %>
             <%= t('.dashboard') %>
           <%- end %>
-          <%= link_to Punch.model_name.human.pluralize, punches_path %>
           <% if can? :read, Evaluation %>
             <%= link_to t('activerecord.models.evaluation.other'), evaluations_path %>
           <% end %>
         </div>
 
-        <ul class="navbar-nav ml-auto nav-link">
+        <div class="navbar-nav ml-auto nav-link">
           <%= link_to user_path do %>
-            <%= current_user.name %>
+            <span>
+              <%= current_user.name %>
+            </span>
             <%= gravatar_for current_user, size: 40 %>
           <% end %>
           <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
-        </ul>
+        </div>
       <% end %>
     </nav>
   </div>

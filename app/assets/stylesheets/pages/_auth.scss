@@ -5,16 +5,6 @@ $link-color: $tory-blue;
   box-sizing: border-box;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: $bg-color;
-}
-
 .auth {
   width: 100%;
   padding-right: px-to-rem(8px);
