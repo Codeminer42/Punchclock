@@ -75,18 +75,20 @@ end
 create_company(
   name: 'Codeminer42',
   office_cities: [
-    'SÃO PAULO',
-     'CAMPINAS',
-     'NOVO HAMBURGO',
-     'NATAL',
-     'SOROCABA',
-     'TERESINA',
-     'ANÁPOLIS',
-     'GOIÂNIA',
-     'BATATAIS',
-     'GUARAPUAVA',
-     'SANTA MARIA',
-     'POÇOS DE CALDAS'
+    'Anápolis',
+    'Batatais',
+    'Campinas',
+    'Goiânia',
+    'Guarapuava',
+    'Natal',
+    'Novo Hamburgo',
+    'Santa Maria',
+    'Sorocaba',
+    'São Paulo',
+    'Teresina',
+    'Poços de Caldas',
+    'Belo Horizonte',
+    'Santa Catarina'
   ],
   project_names: [
     'Punchclock',
