@@ -12,7 +12,6 @@
           <%= link_to dashboard_index_path do %>
             <%= t('.dashboard') %>
           <%- end %>
-          <%= link_to Punch.model_name.human.pluralize, punches_path %>
           <% if can? :read, Evaluation %>
             <%= link_to t('activerecord.models.evaluation.other'), evaluations_path %>
           <% end %>
