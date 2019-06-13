@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   enum role: %i(trainee junior junior_plus mid mid_plus senior senior_plus)
   enum occupation: %i(administrative engineer)
-  enum specialty: %i(frontend backend devops fullstack)
+  enum specialty: %i(frontend backend devops fullstack mobile)
 
   belongs_to :office, optional: true
   belongs_to :company

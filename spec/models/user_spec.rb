@@ -60,7 +60,8 @@ RSpec.describe User, type: :model do
                                                                 frontend
                                                                 backend
                                                                 devops
-                                                                fullstack) }
+                                                                fullstack
+                                                                mobile) }
   end
 
   describe "role" do
