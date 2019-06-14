@@ -5,7 +5,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
   config.serve_static_files = false
   config.assets.js_compressor = Uglifier.new(harmony: true)
-  config.assets.compile = true
+  config.assets.compile = false
   config.assets.digest = true
   config.assets.version = '1.0'
   config.log_level = :info
