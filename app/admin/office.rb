@@ -10,7 +10,7 @@ ActiveAdmin.register Office do
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :city, as: :select, collection: proc {
-    current_admin_user.is_super? ? Office.all.group_by(&:company).order(:city) : current_admin_user.company.offices.order(:city)
+    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :head, collection: proc {
     current_admin_user.is_super? ? current_admin_user.users.order(:name) : current_admin_user.company.users.order(:name)
@@ -40,7 +40,7 @@ ActiveAdmin.register Office do
       row :users do
         table_for office.users do
           column :name do |user|
-            link_to user.name, admin_allocation_path(user)
+            link_to user.name, admin_user_path(user)
           end
           column :email
           column :occupation
