@@ -52,10 +52,8 @@ ActiveRecord::Schema.define(version: 2019_05_21_185456) do
     t.bigint "evaluation_id"
     t.bigint "question_id"
     t.text "response"
-    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_answers_on_company_id"
     t.index ["evaluation_id"], name: "index_answers_on_evaluation_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
@@ -152,10 +150,8 @@ ActiveRecord::Schema.define(version: 2019_05_21_185456) do
     t.string "title"
     t.integer "kind"
     t.string "answer_options", default: [], array: true
-    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_questions_on_company_id"
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
@@ -210,7 +206,7 @@ ActiveRecord::Schema.define(version: 2019_05_21_185456) do
     t.integer "role"
     t.boolean "allow_overtime", default: false
     t.integer "office_id"
-    t.integer "occupation", null: false
+    t.integer "occupation"
     t.boolean "admin", default: false
     t.text "observation"
     t.integer "specialty"
@@ -225,14 +221,12 @@ ActiveRecord::Schema.define(version: 2019_05_21_185456) do
   add_foreign_key "allocations", "companies"
   add_foreign_key "allocations", "projects"
   add_foreign_key "allocations", "users"
-  add_foreign_key "answers", "companies"
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
   add_foreign_key "clients", "companies"
   add_foreign_key "evaluations", "companies"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "questionnaires", "companies"
-  add_foreign_key "questions", "companies"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "regional_holidays", "companies"
   add_foreign_key "skills", "companies"
