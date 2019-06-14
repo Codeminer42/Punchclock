@@ -81,9 +81,7 @@ ActiveAdmin.register User do
           row :hour_cost do |user|
             number_to_currency user.hour_cost
           end
-          row :allow_overtime do |user|
-            user.allow_overtime.to_s
-          end
+          row :allow_overtime
           row :active
           row :last_sign_in_at
           row :created_at
