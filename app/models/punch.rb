@@ -22,6 +22,7 @@ class Punch < ApplicationRecord
     last_month = current_month.prev_month + 1.day
     where from: last_month..current_month
   }
+  scope :last_punches, -> (initial_date) { where('punches.from >= ?', initial_date.to_date) }
 
   delegate :name, to: :user, prefix: true
 

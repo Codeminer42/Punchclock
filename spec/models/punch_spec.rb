@@ -46,6 +46,26 @@ describe Punch do
     end
   end
 
+  describe '.last_punches' do 
+    let(:today) { DateTime.new(2019, 6, 13, 12, 0, 0) }
+
+    let(:last_2_days_punches) do
+      [
+        create(:punch, from: today - 3.hours, to: today),
+        create(:punch, from: 1.day.ago, to: 1.day.ago + 3.hours),
+        create(:punch, from: 2.days.ago, to: 2.days.ago + 3.hours)
+      ]
+    end
+
+    around do |example|
+      travel_to today, &example
+    end
+
+    it 'returns only punches from last 2 days' do
+      expect(Punch.last_punches(2.days.ago)).to match_array last_2_days_punches
+    end
+  end
+
   describe '#delta' do
     let(:punch) do
       day = "2001-01-05".to_date
