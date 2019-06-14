@@ -16,7 +16,7 @@
 
 <p>
   <strong><%= Punch.human_attribute_name(:extra_hour) %>:</strong>
-  <%= @punch.extra_hour %>
+  <%= t @punch.extra_hour %>
 </p>
 
 <p>
@@ -29,20 +29,16 @@
   <%= @punch.user.present? ? @punch.user.name : '' %>
 </p>
 
+<p>
+  <strong><%= Punch.human_attribute_name(:comment) %>:</strong>
+  <p>
+    <%= @punch.comment %>
+  </p>
+</p>
+
 <% if @punch.attachment? %>
   <p>
     <strong><%= Punch.human_attribute_name(:attachment) %>:</strong>
     <%= link_to (image_tag @punch.attachment_url, width: 250, height: 250), @punch.attachment_url %>
-  </p>
-<% end %></p>
-
-<% unless @punch.comment.nil? %>
-  <p>
-    <strong><%= Punch.human_attribute_name(:comment) %>:</strong>
-
-    <p>
-      <%= gravatar_for(@punch.user) %>
-      <%= @punch.comment %>
-    </p>
   </p>
 <% end %>

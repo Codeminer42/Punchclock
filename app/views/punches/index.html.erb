@@ -15,7 +15,6 @@
         <th><%= Punch.human_attribute_name(:to) %></th>
         <th><%= Punch.human_attribute_name(:delta) %></th>
         <th><%= Punch.human_attribute_name(:extra_hour) %></th>
-        <th><%= Punch.human_attribute_name(:comment) %></th>
         <th><%= sort_link @search, :project_id, Punch.human_attribute_name(:project_id) %></th>
         <th></th>
         <th></th>
@@ -30,7 +29,6 @@
           <td><%= punch.to %> </td>
           <td><%= punch.delta %> </td>
           <td><%= t punch.extra_hour %></td>
-          <td><strong> <%= punch.comment %> </strong> </td>
           <td><%= punch.project.name %> </td>
           <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
           <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
