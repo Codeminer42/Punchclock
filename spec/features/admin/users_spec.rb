@@ -199,9 +199,28 @@ describe 'Users', type: :feature do
       context 'on English Evaluations tab' do
         it 'finds correct information' do
           within '#avaliacoes-de-ingles' do
-            expect(page).to have_css('.row-english_level td', text: evaluation.english_level.humanize)
-                            have_css('.row-english_score td', text: user.english_score)
-                            expect(page).to have_css('.row-evaluation tbody tr', count: 1)
+            expect(page).to have_css('.row-english_level td', text: evaluation.english_level.humanize) &
+                            have_css('.row-english_score td', text: user.english_score) &
+                            have_css('.row-evaluation tbody tr', count: 1)
+          end
+        end
+      end
+
+      context 'on Punches tab' do
+        let!(:punch) { create :punch, user: user, from: DateTime.new(2019, 6, 6, 8, 8, 0, 0), to: DateTime.new(2019, 6, 6, 8, 12, 0, 0)}
+        before { refresh }
+        it 'finds all elements correctly' do
+          within 'div#punches' do
+            expect(page).to have_table('') &
+                            have_css('.col.col-company', text: punch.company) &
+                            have_css('.col.col-project', text: punch.project) &
+                            have_css('.col.col-when', text: punch.when_day) &
+                            have_css('.col.col-from', text: punch.from_time) &
+                            have_css('.col.col-to', text: punch.to_time) &
+                            have_css('.col.col-delta', text: punch.delta_as_hour) &
+                            have_css('.col.col-extra_hour', text: punch.extra_hour) &
+                            have_link(I18n.t('download_as_csv'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: Date.current - 60 }, format: :csv)) &
+                            have_link(I18n.t('all_punches'), href: admin_punches_path(q: { user_id_eq: user.id, commit: :Filter }))
           end
         end
       end

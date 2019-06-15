@@ -15,6 +15,8 @@ ActiveAdmin.register Punch do
   filter :from, label: 'Intervalo', as: :date_range
   filter :extra_hour, label: 'Fez Hora Extra?'
 
+  config.sort_order = 'from_desc'
+
   index do
     div class: 'panel' do
       h3 "Total: #{collection.total_hours}"

@@ -2,7 +2,6 @@
 
 class UserDecorator < Draper::Decorator
   delegate_all
-  decorates_association :punches
 
   def current_allocation
     current_allocation = model.current_allocation

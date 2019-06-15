@@ -46,6 +46,8 @@ pt-BR:
   deactivate: 'Desativar'
   mine: 'Minhas'
   written: 'Realizadas'
+  download_as_csv: 'Baixar CSV'
+  all_punches: 'Todos os Punches'
   errors:
     messages:
       not_saved: "Erro"
