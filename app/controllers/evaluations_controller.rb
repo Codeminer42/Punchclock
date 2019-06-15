@@ -10,7 +10,7 @@ class EvaluationsController < ApplicationController
 
   def index
     session[:evaluation_params] = nil
-    @users = current_company.users.active.order(:name).decorate
+    @users = current_company.users.engineer.active.order(:name).decorate
   end
 
   def show
