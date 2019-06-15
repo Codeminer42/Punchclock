@@ -8,7 +8,7 @@ stages:
 services:
   - postgres:latest
 cache:
-  key: Punchclock-123u158
+  key: Punchclock-123uf15
   paths:
   - .gitlab-cache/
 variables:

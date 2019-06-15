@@ -4,29 +4,28 @@ require 'rails_helper'
 
 feature 'Punches list' do
   let!(:authed_user) { create_logged_in_user }
-  let!(:punch) do
-    create(
-      :punch, user_id: authed_user.id, company_id: authed_user.company_id
-    )
-  end
-  let!(:other_project) { create(:project, company: authed_user.company) }
+  let!(:punch) {
+    create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
+  }
+  let!(:other_punch) {
+    create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
+  }
 
   before do
     visit '/punches'
-    expect(page).to have_selector('a[href="/punches/new"]')
-    expect(page).to have_selector('table')
-    expect(page).to have_content('TOTAL:')
+    expect(page).to have_selector('a[href="/punches/new"]') &
+                    have_selector('table') &
+                    have_content('TOTAL:')
   end
 
   scenario 'follow show link' do
     click_link "shw-#{punch.id}"
-    [
-      I18n.localize(punch.from, format: '%d/%m/%Y'),
-      I18n.localize(punch.from, format: '%H:%M'),
-      I18n.localize(punch.to, format: '%H:%M')
-    ].each { |value| expect(page).to have_content value }
-    expect(page).to have_content(punch.project.name)
-    expect(page).to have_content(authed_user.name)
+
+    expect(page).to have_content(I18n.localize(punch.from, format: '%d/%m/%Y')) &
+                    have_content(I18n.localize(punch.from, format: '%H:%M')) &
+                    have_content(I18n.localize(punch.to, format: '%H:%M')) &
+                    have_content(punch.project.name) &
+                    have_content(authed_user.name)
   end
 
   scenario 'follow edit link' do
@@ -42,10 +41,11 @@ feature 'Punches list' do
   end
 
   scenario 'filter punches' do
-    fill_in 'punches_filter_form_since', with: '17/01/2014'
-    fill_in 'punches_filter_form_until', with: '20/01/2014'
-    select other_project.name, from: 'punches_filter_form_project_id'
+    fill_in 'punches_filter_form_since', with: I18n.localize(other_punch.from, format: '%d/%m/%Y')
+    fill_in 'punches_filter_form_until', with: I18n.localize(other_punch.to + 1.day, format: '%d/%m/%Y')
+    select other_punch.project.name, from: 'punches_filter_form_project_id'
     click_button 'Filtrar'
-    expect(page).to have_content('0:00')
+
+    expect(page).to have_css('tbody tr', count: 1)
   end
 end
