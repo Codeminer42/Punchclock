@@ -22,8 +22,8 @@ rspec:
     - apt-get -y install google-chrome-stable
     - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
     - source ~/.profile
-    - nvm install v8.12.0
-    - nvm use 8.12.0
+    - nvm install v12.4.0
+    - nvm use 12.4.0
     - bundle install --without development production -j $(nproc) --path .gitlab-cache
     - cp config/database.yml.example config/database.yml
     - bundle exec rake db:create db:test:prepare
@@ -71,4 +71,6 @@ staging:
   script:
     - gem install dpl
     - dpl --provider=heroku --app=punchclock-staging --api-key=$HEROKU_PRODUCTION_API_KEY
-  when: manual
+  only:
+    - master
+
