@@ -17,7 +17,7 @@ var isSamePair = function(date) {
 }
 
 function isHoliday(date) {
-  var allHolidays = extractHolidays($('.datepicker'));
+  var allHolidays = extractHolidays($('.hasDatepicker'));
   var datePair = toPairMonthDay(date);
   return !allHolidays.find(isSamePair(datePair));
 }

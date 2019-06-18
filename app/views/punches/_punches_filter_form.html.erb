@@ -1,6 +1,20 @@
 <%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f| %>
-  <%= f.input :since, as: :datepicker, label: false, placeholder: true %>
-  <%= f.input :until, as: :datepicker, label: false, placeholder: true  %>
+  <%= f.input :since, label: false, placeholder: true, input_html: {
+      class: %i(datepicker),
+      data: {
+        holidays: current_user.office_holidays,
+        allow_overtime: current_user.allow_overtime?
+      }
+    }
+   %>
+  <%= f.input :until, label: false, placeholder: true, input_html: {
+      class: %i(datepicker),
+      data: {
+        holidays: current_user.office_holidays,
+        allow_overtime: current_user.allow_overtime?
+      }
+    }
+  %>
   <%= f.input :project_id, collection: Project.distinct.joins(:punches).where(punches: {user_id: current_user.id}).order(:name), include_blank: :translate, label: false %>
   <%= f.submit class: 'btn btn-default' %>
 <% end %>
