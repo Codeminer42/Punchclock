@@ -9,7 +9,7 @@
   #new_punches_filter_form {
     @include span-columns(8);
     @include shift(1);
-    .input.datepicker {
+    .punches_filter_form_since, .punches_filter_form_until{
       @include span-columns(3);
     }
     .input.select {

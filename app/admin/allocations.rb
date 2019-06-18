@@ -44,8 +44,8 @@ ActiveAdmin.register Allocation do
         input :project, collection: current_admin_user.company.projects.active.order(:name)
         input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       end
-      input :start_at, as: :date_picker
-      input :end_at, as: :date_picker
+        input :start_at, as: :date_picker, input_html: { :value => f.object.start_at.try(:strftime, '%Y-%m-%d') }
+        input :end_at, as: :date_picker, input_html: { :value => f.object.end_at.try(:strftime, '%Y-%m-%d') }
     end
     actions
   end
