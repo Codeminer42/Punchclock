@@ -1,4 +1,23 @@
 namespace :create do
+  desc "Create an Allocation based on user first punch in the same"
+  task allocations: :environment do
+    Project.all.each do |project|
+      project.punches.order(:from).uniq(&:user_id).each do |first_punch|
+        allocation = first_punch.user.allocations.new(
+          project: project,
+          start_at: first_punch.from,
+          company_id: project.company_id,
+        )
+
+        last_punch = first_punch.user.punches.where(project: project).order(to: :desc).first
+        if last_punch.to < 1.month.ago
+          allocation.end_at = last_punch.to
+        end
+        allocation.save
+      end
+    end
+  end
+
   desc "Find or Create Questionnaire then find or create questions for these questionnaires"
   task questionnaires: :environment do
     # Configs
