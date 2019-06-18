@@ -27,7 +27,7 @@ gem 'draper'
 gem 'draper-cancancan'
 gem 'rails-i18n'
 gem 'webpacker', '~> 4.x'
-gem 'holidays', '5.6.0'
+gem 'holidays', '7.1.0'
 gem 'kaminari'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
 

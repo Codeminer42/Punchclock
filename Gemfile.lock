@@ -198,7 +198,7 @@ GEM
       excon
       moneta
       multi_json (>= 1.9.2)
-    holidays (5.6.0)
+    holidays (7.1.0)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     inherited_resources (1.10.0)
@@ -505,7 +505,7 @@ DEPENDENCIES
   faker
   font-awesome-sass (~> 5.8.1)
   foreman
-  holidays (= 5.6.0)
+  holidays (= 7.1.0)
   jquery-easing-rails
   jquery-rails
   jquery-ui-rails
