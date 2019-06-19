@@ -13,6 +13,6 @@ class Allocation < ApplicationRecord
   def days_until_finish
     return unless end_at
 
-    (end_at - Date.current).to_i
+    end_at > Date.current ? (end_at - Date.current).to_i : I18n.t('finished')
   end
 end

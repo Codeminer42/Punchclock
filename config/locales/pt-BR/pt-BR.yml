@@ -54,3 +54,4 @@ pt-BR:
   refills:
     navigation:
       logout: "Sair"
+  finished: 'Finalizado'
