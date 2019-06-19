@@ -8,4 +8,9 @@ namespace :notification do
   task verify_extra_hour: :environment do
     SendEmailWithExtraHourJob.perform_later
   end
+
+  desc 'Verify and send email to users and admin about unregistered punches'
+  task unregistered_punches: :environment do
+    SendEmailWithUnregisteredPunchesJob.perform_later
+  end
 end
