@@ -201,5 +201,29 @@ describe NotificationMailer do
         expect(mail.body).to match('Preencham o punch entre os dias 16 e 15')
       end
     end
+
+    context 'when notify user about unregistered punches' do
+      let(:user) { build(:user) }
+      let(:unregistered_punches) { {Date.new(2019, 06, 18) => 0} }
+      let(:mail) do
+        NotificationMailer.notify_unregistered_punches(user, unregistered_punches)
+      end
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq("Punchclock - #{user.name} com Punches não cadastrados no sistema")
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to contain_exactly(user.email)
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to contain_exactly('do-not-reply@punchclock.com')
+      end
+
+      it 'renders the body' do
+        expect(mail.body).to match('18/06/2019')
+      end
+    end
   end
 end

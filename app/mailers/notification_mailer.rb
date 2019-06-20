@@ -34,4 +34,11 @@ class NotificationMailer < ActionMailer::Base
     @punches = punches
     mail(to: @admins.pluck(:email), subject: "Punchclock - Horas extra registradas")
   end
+
+  def notify_unregistered_punches(user, unregistered_punches)
+    @unregistered_punches = unregistered_punches
+    @user = user
+    admin_email = ENV['ADMIN_EMAIL']
+    mail(to: @user.email, bcc: admin_email, subject: "Punchclock - #{user.name} com Punches não cadastrados no sistema")
+  end
 end

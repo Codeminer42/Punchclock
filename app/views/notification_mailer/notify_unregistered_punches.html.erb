@@ -1,0 +1,11 @@
+<p>Olá, <%= @user.name %></p>
+<p>Os seguintes Punches, referentes ao período do dia 16 do mês passado 
+até o dia 15 do mês corrente, ainda não foram registrados no Punchclock: </p>
+<ul>
+  <% @unregistered_punches.each do |key, value| %>
+    <li>
+      <%= key %> <%= " - apenas #{value} Punch registrado " if value > 0 %>
+    </li>
+  <% end %>
+</ul>
+
