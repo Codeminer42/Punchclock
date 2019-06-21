@@ -30,7 +30,7 @@ class User < ApplicationRecord
   scope :active,         -> { where(active: true) }
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
-  scope :not_allocated,  -> { where.not(id: Allocation.select(:user_id)) }
+  scope :not_allocated,  -> { active.where.not(id: Allocation.select(:user_id)) }
   scope :with_access,    -> { where.not(encrypted_password: '') }
   scope :without_access, -> { where(encrypted_password: '') }
   scope :admins,         -> { where(admin: true) }
