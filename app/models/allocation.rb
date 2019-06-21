@@ -10,6 +10,9 @@ class Allocation < ApplicationRecord
 
   delegate :office_name, to: :user
 
+  scope :ongoing, -> { where("end_at > :today OR end_at is NULL", today: Date.current).order(start_at: :desc) }
+  scope :finished, -> { where("end_at < :today", today: Date.current).order(end_at: :desc) }
+
   def days_until_finish
     return unless end_at
 

@@ -5,6 +5,10 @@ ActiveAdmin.register Allocation do
 
   menu parent: I18n.t("activerecord.models.user.other"), priority: 4
 
+  scope :ongoing, default: true
+  scope :finished
+  scope :all
+
   filter :user, collection: proc {
     current_admin_user.is_super? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.order(:name)
   }
