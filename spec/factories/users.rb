@@ -7,6 +7,7 @@ FactoryBot.define do
     occupation            { 'engineer' }
     role                  { 'junior' }
     specialty             { 'backend' }
+    github                { 'gitUser' }
     hour_cost             { 15.0 }
     association :office, factory: :office
     company

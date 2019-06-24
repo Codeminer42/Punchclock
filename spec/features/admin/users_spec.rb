@@ -105,6 +105,7 @@ describe 'Users', type: :feature do
       it 'must have the form working' do
         fill_in 'Nome', with: 'Foo Bar'
         fill_in 'E-mail', with: 'foo@bar.com'
+        fill_in 'Github', with: 'userGithub'
         find('#user_office_id').find(:option, office.city).select_option
         find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
@@ -120,6 +121,7 @@ describe 'Users', type: :feature do
         expect(page).to have_css('.flash_notice', text: 'Usuário foi criado com sucesso.') &
                         have_text('Foo Bar') &
                         have_text('foo@bar.com') &
+                        have_text('userGithub') &
                         have_text(office.city) &
                         have_text(skill.title) &
                         have_text('engineer') &
@@ -153,6 +155,7 @@ describe 'Users', type: :feature do
           within '#usuario' do
             expect(page).to have_css('.row-name td', text: user.name) &
                             have_text(user.email) &
+                            have_text(user.github) &
                             have_text(user.office.city) &
                             have_text(office.city) &
                             have_text(office2.city) &

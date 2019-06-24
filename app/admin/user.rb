@@ -7,7 +7,7 @@ ActiveAdmin.register User do
 
   menu parent: I18n.t("activerecord.models.user.other"), priority: 1
 
-  permit_params :name, :email, :company_id, :role, :reviewer_id, :hour_cost,
+  permit_params :name, :email, :github, :company_id, :role, :reviewer_id, :hour_cost,
                 :password, :active, :allow_overtime, :office_id, :occupation,
                 :admin, :observation, :specialty, skill_ids: []
 
@@ -66,6 +66,7 @@ ActiveAdmin.register User do
         attributes_table do
           row :name
           row :email
+          row :github
           row :office
           row :managed_offices
           row :english_level
@@ -169,6 +170,7 @@ ActiveAdmin.register User do
     f.inputs do
       f.input :name
       f.input :email
+      f.input :github
       f.input :hour_cost, input_html: { value: '0.0' }
       if current_admin_user.is_super?
         f.input :office
