@@ -20,6 +20,10 @@ class UserDecorator < Draper::Decorator
     model.specialty.try(:humanize) || 'N/A'
   end
 
+  def contract_type
+    model.contract_type.try(:humanize) || 'N/A'
+  end
+
   def english_level
     model.english_level.try(:humanize) || I18n.t('not_evaluated')
   end
