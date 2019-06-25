@@ -7,7 +7,7 @@ ActiveAdmin.register User do
 
   menu parent: I18n.t("activerecord.models.user.other"), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :role, :contract_type, :reviewer_id, :hour_cost,
+  permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
                 :password, :active, :allow_overtime, :office_id, :occupation,
                 :admin, :observation, :specialty, skill_ids: []
 
@@ -20,7 +20,7 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
-  filter :role, as: :select, collection: User.roles.map {|key,value| [key.titleize, value]}
+  filter :level, as: :select, collection: User.levels.map {|key,value| [key.titleize, value]}
   filter :office, collection: proc {
     current_admin_user.is_super? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
@@ -49,7 +49,7 @@ ActiveAdmin.register User do
       link_to user.name, admin_user_path(user)
     end
     column :office
-    column :role
+    column :level
     column :specialty
     column :hour_cost do |user|
       number_to_currency user.hour_cost
@@ -75,7 +75,7 @@ ActiveAdmin.register User do
           row :performance_score
           row :occupation
           row :specialty
-          row :role
+          row :level
           row :contract_type
           row :skills do
             user.skills.pluck(:title).to_sentence
@@ -186,7 +186,7 @@ ActiveAdmin.register User do
       end
       f.input :occupation, as: :radio
       f.input :specialty
-      f.input :role, as: :select, collection: User.roles.keys.map {|role| [role.titleize, role]}
+      f.input :level, as: :select, collection: User.levels.keys.map {|level| [level.titleize, level]}
       f.input :contract_type
       f.input :password if f.object.new_record?
       f.input :allow_overtime

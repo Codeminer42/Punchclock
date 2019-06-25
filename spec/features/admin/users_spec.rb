@@ -58,9 +58,9 @@ describe 'Users', type: :feature do
       end
     end
 
-    it 'by role' do
+    it 'by level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.roles.keys.map(&:titleize) << 'Qualquer')
+        expect(page).to have_select('Nível', options: User.levels.keys.map(&:titleize) << 'Qualquer')
       end
     end
 
@@ -117,7 +117,7 @@ describe 'Users', type: :feature do
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engineer')
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_role').find(:option, 'Junior').select_option
+        find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Internship').select_option
         check('Ativo')
         fill_in 'Password', with: 'password'
@@ -172,7 +172,7 @@ describe 'Users', type: :feature do
                             have_css('.row-performance_score td', text: user.performance_score) &
                             have_css('.row-occupation td', text: user.occupation) &
                             have_css('.row-specialty td', text: user.specialty.humanize) &
-                            have_css('.row-role td', text: user.role.humanize) &
+                            have_css('.row-level td', text: user.level.humanize) &
                             have_css('.row-contract_type td', text: user.contract_type.humanize) &
                             have_css('.row-observation td', text: user.observation)
           end

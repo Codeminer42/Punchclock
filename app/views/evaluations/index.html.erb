@@ -11,7 +11,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Role</th>
+                <th>Level</th>
                 <th>Office</th>
                 <th>Last evaluated at</th>
                 <th>Last evaluation score</th>
@@ -22,7 +22,7 @@
               <% @users.each do |user| %>
                 <tr>
                   <td><%= user.name %></td>
-                  <td><%= user.role %></td>
+                  <td><%= user.level %></td>
                   <td><%= user.office_city%></td>
                   <td>
                     <% unless user.evaluations.last.nil? %>
