@@ -3,7 +3,7 @@
 ActiveAdmin.register Skill do
   permit_params :title, :company_id
 
-  menu parent: I18n.t("activerecord.models.user.other"), priority: 5
+  menu parent: User.model_name.human(count: 2), priority: 5
 
   config.sort_order = 'title_asc'
 

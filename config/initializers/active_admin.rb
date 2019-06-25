@@ -20,7 +20,7 @@ ActiveAdmin.setup do |config|
   # == Menu System
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
-      menu.add label: 'Usuários' do |submenu|
+      menu.add label: User.model_name.human(count: 2) do |submenu|
         submenu.add label: 'Não Alocados', url: '/admin/users?scope=not_allocated', priority: 2
       end
     end

@@ -3,7 +3,7 @@
 ActiveAdmin.register Allocation do
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id
 
-  menu parent: I18n.t("activerecord.models.user.other"), priority: 4
+  menu parent: User.model_name.human(count: 2), priority: 4
 
   scope :ongoing, default: true
   scope :finished

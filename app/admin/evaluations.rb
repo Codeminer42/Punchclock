@@ -4,7 +4,7 @@ ActiveAdmin.register Evaluation do
   permit_params :evaluator_id, :evaluated_id, :company_id
   actions :index, :show
 
-  menu parent: I18n.t("activerecord.models.evaluation.other")
+  menu parent: Evaluation.model_name.human(count: 2)
 
   filter :evaluator, collection: proc {
     current_admin_user.is_super? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.active.order(:name)

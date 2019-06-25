@@ -3,13 +3,13 @@
 ActiveAdmin.register Client do
   permit_params :name, :company, :company_id, :active
 
-  menu parent: I18n.t("activerecord.models.company.one"), priority: 3
+  menu parent: Company.model_name.human
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name
 
-  scope proc { I18n.t('active') }, :active, default: true
-  scope proc { I18n.t('inactive') }, :inactive
+  scope :active, default: true
+  scope :inactive
 
   batch_action :destroy, false
   batch_action :disable, if: proc { params[:scope] != "inactive" } do |ids|

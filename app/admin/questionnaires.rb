@@ -6,32 +6,32 @@ ActiveAdmin.register Questionnaire do
                   id title kind raw_answer_options _destroy updated_at
                 ]
 
-  menu parent: I18n.t("activerecord.models.evaluation.other")
+  menu parent: Evaluation.model_name.human(count: 2)
 
   config.clear_action_items!
 
   action_item :new, only: :index do
-    link_to "#{I18n.t('new')} #{I18n.t('activerecord.models.questionnaire.one')}",
+    link_to "#{I18n.t('new')} #{Questionnaire.model_name.human}",
             new_admin_questionnaire_path
   end
 
   action_item :edit, only: :show, if: -> { questionnaire.evaluations.empty? } do
-    link_to "#{I18n.t('edit')} #{I18n.t('activerecord.models.questionnaire.one')}",
+    link_to "#{I18n.t('edit')} #{Questionnaire.model_name.human}",
             edit_admin_questionnaire_path(questionnaire)
   end
 
   action_item :destroy, only: :show, if: -> { questionnaire.evaluations.empty? } do
-    link_to "#{I18n.t('delete')} #{I18n.t('activerecord.models.questionnaire.one')}",
+    link_to "#{I18n.t('delete')} #{Questionnaire.model_name.human}",
             admin_questionnaire_path(questionnaire), method: :delete, data: { confirm: 'Are you sure you want to delete this?' }
   end
 
   action_item :update, only: :show, if: -> { !questionnaire.active? } do
-    link_to "#{I18n.t('activate')} #{I18n.t('activerecord.models.questionnaire.one')}",
+    link_to "#{I18n.t('activate')} #{Questionnaire.model_name.human}",
             toggle_active_admin_questionnaire_path(questionnaire), method: :put
   end
 
   action_item :update, only: :show, if: -> { questionnaire.active? } do
-    link_to "#{I18n.t('deactivate')} #{I18n.t('activerecord.models.questionnaire.one')}",
+    link_to "#{I18n.t('deactivate')} #{Questionnaire.model_name.human}",
             toggle_active_admin_questionnaire_path(questionnaire), method: :put
   end
 
@@ -39,7 +39,7 @@ ActiveAdmin.register Questionnaire do
     resource.toggle_active
     redirect_to admin_questionnaire_path(resource),
                 notice: I18n.t('flash.actions.update.notice',
-                              resource_name: I18n.t('activerecord.models.questionnaire.one'))
+                              resource_name: Questionnaire.model_name.human)
 
   end
 
@@ -77,7 +77,7 @@ ActiveAdmin.register Questionnaire do
   end
 
   form do |f|
-    f.inputs 'Questionnaire' do
+    f.inputs Questionnaire.model_name.human do
       f.input :title
       f.input :kind
       if current_admin_user.is_super?
