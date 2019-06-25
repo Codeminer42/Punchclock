@@ -31,7 +31,7 @@ class User < ApplicationRecord
   scope :active,         -> { where(active: true) }
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
-  scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.select(:user_id)) }
+  scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
   scope :admins,         -> { where(admin: true) }
 
 
