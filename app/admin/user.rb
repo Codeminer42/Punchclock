@@ -7,7 +7,7 @@ ActiveAdmin.register User do
 
   menu parent: I18n.t("activerecord.models.user.other"), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :role, :reviewer_id, :hour_cost,
+  permit_params :name, :email, :github, :company_id, :role, :contract_type, :reviewer_id, :hour_cost,
                 :password, :active, :allow_overtime, :office_id, :occupation,
                 :admin, :observation, :specialty, skill_ids: []
 
@@ -26,6 +26,7 @@ ActiveAdmin.register User do
   }
   filter :company, if: proc { current_admin_user.is_super? }
   filter :specialty, as: :select, collection: User.specialties.map {|key,value| [key.humanize, value]}
+  filter :contract_type, as: :select, collection: User.contract_types.map { |key,value| [key.humanize, value] }
   filter :by_skills, as: :check_boxes, collection: proc { Skill.order(:title) }
 
 
@@ -75,6 +76,7 @@ ActiveAdmin.register User do
           row :occupation
           row :specialty
           row :role
+          row :contract_type
           row :skills do
             user.skills.pluck(:title).to_sentence
           end
@@ -186,6 +188,7 @@ ActiveAdmin.register User do
       f.input :occupation, as: :radio
       f.input :specialty
       f.input :role, as: :select, collection: User.roles.keys.map {|role| [role.titleize, role]}
+      f.input :contract_type
       f.input :password if f.object.new_record?
       f.input :allow_overtime
       f.input :active

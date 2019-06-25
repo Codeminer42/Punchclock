@@ -76,6 +76,12 @@ describe 'Users', type: :feature do
       end
     end
 
+    it 'by contract type' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Tipo de Contrato', options: User.contract_types.keys.map(&:humanize) << 'Qualquer')
+      end
+    end
+
     context 'after creating a skill' do
       let!(:skill) { create(:skill) }
       before { refresh }
@@ -112,6 +118,7 @@ describe 'Users', type: :feature do
         choose('Engineer')
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_role').find(:option, 'Junior').select_option
+        find('#user_contract_type').find(:option, 'Internship').select_option
         check('Ativo')
         fill_in 'Password', with: 'password'
         fill_in 'Observação', with: 'Observation'
@@ -127,6 +134,7 @@ describe 'Users', type: :feature do
                         have_text('engineer') &
                         have_text('Backend') &
                         have_text('Junior') &
+                        have_text('Internship') &
                         have_css('.row-active td', text: 'Sim') &
                         have_text('Observation')
       end
@@ -165,6 +173,7 @@ describe 'Users', type: :feature do
                             have_css('.row-occupation td', text: user.occupation) &
                             have_css('.row-specialty td', text: user.specialty.humanize) &
                             have_css('.row-role td', text: user.role.humanize) &
+                            have_css('.row-contract_type td', text: user.contract_type.humanize) &
                             have_css('.row-observation td', text: user.observation)
           end
         end
@@ -243,6 +252,7 @@ describe 'Users', type: :feature do
                           have_text('Escritório') &
                           have_text('Ocupação') &
                           have_text('Especialidade') &
+                          have_text('Tipo de Contrato') &
                           have_text('Nível') &
                           have_text('Habilidades') &
                           have_text('Observação')

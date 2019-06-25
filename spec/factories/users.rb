@@ -9,6 +9,7 @@ FactoryBot.define do
     specialty             { 'backend' }
     github                { 'gitUser' }
     hour_cost             { 15.0 }
+    contract_type         { 'employee' }
     association :office, factory: :office
     company
 

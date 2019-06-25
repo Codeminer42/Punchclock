@@ -25,6 +25,7 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
+    it { is_expected.to validate_presence_of :contract_type }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     it { is_expected.to validate_presence_of(:occupation) }
 
@@ -73,6 +74,13 @@ RSpec.describe User, type: :model do
                                                            "mid_plus",
                                                            "senior",
                                                            "senior_plus" ] }
+  end
+
+  describe 'contract type' do
+    it { is_expected.to define_enum_for(:contract_type).with_values %i[
+                                                            internship
+                                                            employee
+                                                            contractor] }
   end
 
   describe 'scopes' do

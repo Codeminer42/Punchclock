@@ -134,6 +134,7 @@ pt-BR:
         managed_offices: "Escritórios gerenciados"
         occupation: "Ocupação"
         specialty: "Especialidade"
+        contract_type: 'Tipo de Contrato'
         skills: "Habilidades"
         role: "Nível"
         active: "Ativo"

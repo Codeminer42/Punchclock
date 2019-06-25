@@ -9,6 +9,7 @@ class User < ApplicationRecord
   enum role: %i(trainee junior junior_plus mid mid_plus senior senior_plus)
   enum occupation: %i(administrative engineer)
   enum specialty: %i(frontend backend devops fullstack mobile)
+  enum contract_type: %i[internship employee contractor]
 
   belongs_to :office, optional: true
   belongs_to :company
@@ -21,7 +22,7 @@ class User < ApplicationRecord
   has_many :evaluations, foreign_key: :evaluated_id, dependent: :restrict_with_error
   has_many :managed_offices, class_name: 'Office', foreign_key: :head_id
 
-  validates :name, :occupation, presence: true
+  validates :name, :occupation, :contract_type, presence: true
   validates :email, uniqueness: true, presence: true
   validates :role, presence: true, if: -> { occupation == 'engineer' }
   delegate :name, to: :office, prefix: true
