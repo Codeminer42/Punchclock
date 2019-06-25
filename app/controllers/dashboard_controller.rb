@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
 
   def sheets
     @punches = current_user.punches.group_by(&:date)
-    render json: Hash[@punches.map{ |k, v| [k, v.to(1).map(&:sheet)] }]
+    render json: Hash[@punches.map{ |k, v| [k.to_s(:db), v.to(1).map(&:sheet)] }]
   end
 
   def save
