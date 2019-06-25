@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_201412) do
+ActiveRecord::Schema.define(version: 2019_06_25_222806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_201412) do
     t.text "observation"
     t.integer "specialty"
     t.string "github"
-    t.integer "contract_type"
+    t.integer "contract_type", default: 1
     t.integer "role", default: 0
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
