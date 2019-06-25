@@ -8,7 +8,7 @@ class User < ApplicationRecord
   enum occupation: %i[administrative engineer]
   enum specialty: %i[frontend backend devops fullstack mobile]
   enum contract_type: %i[internship employee contractor]
-  enum role: %i[user evaluator admin super_admin]
+  enum role: %i[normal evaluator admin super_admin]
 
   belongs_to :office, optional: true
   belongs_to :company

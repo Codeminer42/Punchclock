@@ -10,7 +10,7 @@ ActiveAdmin.register User do
   menu parent: I18n.t("activerecord.models.user.other"), priority: 1
 
   permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
-                :password, :active, :allow_overtime, :office_id, :occupation,
+                :password, :active, :allow_overtime, :office_id, :occupation, :role,
                 :observation, :specialty, skill_ids: []
 
   scope proc { I18n.t('all') }, :all
