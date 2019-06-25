@@ -32,8 +32,6 @@ class User < ApplicationRecord
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.select(:user_id)) }
-  scope :with_access,    -> { where.not(encrypted_password: '') }
-  scope :without_access, -> { where(encrypted_password: '') }
   scope :admins,         -> { where(admin: true) }
 
 
@@ -102,16 +100,8 @@ class User < ApplicationRecord
     allocations.where("start_at <= :date", date: Date.today).order(end_at: :desc).first.try(:project)
   end
 
-  def has_access?
-    encrypted_password.present?
-  end
-
   def office_head?
     managed_offices.present?
-  end
-
-  def remove_access
-    update(encrypted_password: '')
   end
 
   def update_with_password(params, *options)

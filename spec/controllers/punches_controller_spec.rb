@@ -20,7 +20,7 @@ describe PunchesController do
         it 'renders current month' do
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(nil).and_return(search)
+          expect(Punch).to receive(:ransack).with(nil).and_return(search)
           get :index
         end
 
@@ -35,7 +35,7 @@ describe PunchesController do
           }
           expect(search).to receive(:sorts).and_return('from desc')
           expect(search).to receive(:result).and_return(punches)
-          expect(Punch).to receive(:search).with(ActionController::Parameters.new(from_params))
+          expect(Punch).to receive(:ransack).with(ActionController::Parameters.new(from_params))
             .and_return(search)
 
           get :index, params:{ q: from_params }

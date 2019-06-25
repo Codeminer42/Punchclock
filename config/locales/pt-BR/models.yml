@@ -140,7 +140,6 @@ pt-BR:
         active: "Ativo"
         observation: "Observação"
         reviewer: "Padrinho"
-        has_access?: "Tem acesso?"
         overall_score: "Pontuação Geral"
         performance_score: "Pontuação de Desempenho"
         english_level: "Nível de Inglês"

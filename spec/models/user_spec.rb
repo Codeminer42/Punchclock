@@ -148,25 +148,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-### MERGE DO MINERCAMP - NECESSITA REAVALIAÇÃO
-  describe '#has_access?' do
-    context 'when user have access to MinerCamp' do
-      let(:user) { build_stubbed(:user, encrypted_password: 'password') }
-
-      it 'returns true' do
-        expect(user).to have_access
-      end
-    end
-
-    context 'when user have no access to MinerCamp' do
-      let(:user) { build_stubbed(:user, encrypted_password: '') }
-
-      it 'returns false' do
-        expect(user).not_to have_access
-      end
-    end
-  end
-
   describe '#office_head?' do
     let(:user)   { create(:user) }
 
@@ -184,15 +165,6 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
-  describe '#remove_access' do
-    let(:user) { create(:user) }
-
-    it 'revokes user access to MinerCamp by deleting encrypted password' do
-      expect { user.remove_access }.to change(user, :has_access?).from(true).to(false)
-    end
-  end
-####
 
   describe '#enable!' do
     it 'enables a user' do
