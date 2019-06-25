@@ -84,7 +84,7 @@ RSpec.describe User, type: :model do
 
   describe 'role' do
     it { is_expected.to define_enum_for(:role).with_values %i[
-                                                            user
+                                                            normal
                                                             evaluator
                                                             admin
                                                             super_admin] }

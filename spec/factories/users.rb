@@ -10,7 +10,7 @@ FactoryBot.define do
     github                { 'gitUser' }
     hour_cost             { 15.0 }
     contract_type         { 'employee' }
-    role                  { 'user' }
+    role                  { 'normal' }
     association :office, factory: :office
     company
 
