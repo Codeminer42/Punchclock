@@ -5,7 +5,7 @@ FactoryBot.define do
     password              { 'password' }
     password_confirmation { 'password' }
     occupation            { 'engineer' }
-    role                  { 'junior' }
+    level                 { 'junior' }
     specialty             { 'backend' }
     github                { 'gitUser' }
     hour_cost             { 15.0 }

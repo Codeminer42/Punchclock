@@ -6,7 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
 
-  enum role: %i(trainee junior junior_plus mid mid_plus senior senior_plus)
+  enum level: %i(trainee junior junior_plus mid mid_plus senior senior_plus)
   enum occupation: %i(administrative engineer)
   enum specialty: %i(frontend backend devops fullstack mobile)
   enum contract_type: %i[internship employee contractor]
@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   validates :name, :occupation, :contract_type, presence: true
   validates :email, uniqueness: true, presence: true
-  validates :role, presence: true, if: -> { occupation == 'engineer' }
+  validates :level, presence: true, if: -> { occupation == 'engineer' }
   delegate :name, to: :office, prefix: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 

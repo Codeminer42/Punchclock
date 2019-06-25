@@ -136,7 +136,7 @@ pt-BR:
         specialty: "Especialidade"
         contract_type: 'Tipo de Contrato'
         skills: "Habilidades"
-        role: "Nível"
+        level: "Nível"
         active: "Ativo"
         observation: "Observação"
         reviewer: "Padrinho"

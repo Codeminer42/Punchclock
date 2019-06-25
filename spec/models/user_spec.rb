@@ -47,11 +47,11 @@ RSpec.describe User, type: :model do
 
     context 'when user is engineer' do
       subject { build :user, occupation: 'engineer'}
-      it { is_expected.to validate_presence_of(:role) }
+      it { is_expected.to validate_presence_of(:level) }
     end
 
-    context 'when user is engineer with no role' do
-      subject { build :user, occupation: 'engineer', role: '' }
+    context 'when user is engineer with no level' do
+      subject { build :user, occupation: 'engineer', level: '' }
       it { is_expected.to be_invalid }
     end
   end
@@ -65,8 +65,8 @@ RSpec.describe User, type: :model do
                                                                 mobile) }
   end
 
-  describe "role" do
-    it { is_expected.to define_enum_for(:role).with_values [
+  describe "level" do
+    it { is_expected.to define_enum_for(:level).with_values [
                                                            "trainee",
                                                            "junior",
                                                            "junior_plus",
