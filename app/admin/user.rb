@@ -77,6 +77,7 @@ ActiveAdmin.register User do
           row :specialty
           row :level
           row :contract_type
+          row :role
           row :skills do
             user.skills.pluck(:title).to_sentence
           end
@@ -188,6 +189,7 @@ ActiveAdmin.register User do
       f.input :specialty
       f.input :level, as: :select, collection: User.levels.keys.map {|level| [level.titleize, level]}
       f.input :contract_type
+      f.input :role, as: :select, collection: User.roles.keys.map { |role| [role.titleize, role] }
       f.input :password if f.object.new_record?
       f.input :allow_overtime
       f.input :active

@@ -83,6 +83,14 @@ RSpec.describe User, type: :model do
                                                             contractor] }
   end
 
+  describe 'role' do
+    it { is_expected.to define_enum_for(:role).with_values %i[
+                                                            user
+                                                            evaluator
+                                                            admin
+                                                            super_admin] }
+  end
+
   describe 'scopes' do
     let(:ruby)          { create(:skill, title: 'ruby') }
     let(:vuejs)         { create(:skill, title: 'vuejs') }

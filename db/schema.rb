@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_190236) do
+ActiveRecord::Schema.define(version: 2019_06_25_201412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_190236) do
     t.datetime "confirmation_sent_at"
     t.boolean "active", default: true
     t.integer "reviewer_id"
-    t.integer "role"
+    t.integer "level"
     t.boolean "allow_overtime", default: false
     t.integer "office_id"
     t.integer "occupation"
@@ -212,6 +212,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_190236) do
     t.integer "specialty"
     t.string "github"
     t.integer "contract_type"
+    t.integer "role", default: 0
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
