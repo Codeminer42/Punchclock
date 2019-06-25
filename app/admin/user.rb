@@ -3,6 +3,8 @@
 ActiveAdmin.register User do
   decorate_with UserDecorator
 
+  includes :company, :reviewer
+
   config.sort_order = 'name_asc'
 
   menu parent: I18n.t("activerecord.models.user.other"), priority: 1
@@ -56,9 +58,7 @@ ActiveAdmin.register User do
     end
     column :allow_overtime
     column :active
-    actions defaults: false do |user|
-      link_to I18n.t('view'), admin_user_path(user)
-    end
+    actions
   end
 
   show do
@@ -182,7 +182,7 @@ ActiveAdmin.register User do
       else
         f.input :office, collection: current_admin_user.company.offices.order(:city)
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-        f.input :reviewer, collection: current_admin_user.company.users.order(:name)
+        f.input :reviewer, collection: current_admin_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_admin_user.company.skills.order(:title)
       end
       f.input :occupation, as: :radio
@@ -199,10 +199,6 @@ ActiveAdmin.register User do
   end
 
   controller do
-    def scoped_collection
-      super.includes :company, :reviewer
-    end
-
     def create
       create! do |success, failure|
         success.html do

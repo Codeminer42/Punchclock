@@ -6,9 +6,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
 
-  enum level: %i(trainee junior junior_plus mid mid_plus senior senior_plus)
-  enum occupation: %i(administrative engineer)
-  enum specialty: %i(frontend backend devops fullstack mobile)
+  enum level: %i[trainee junior junior_plus mid mid_plus senior senior_plus]
+  enum occupation: %i[administrative engineer]
+  enum specialty: %i[frontend backend devops fullstack mobile]
   enum contract_type: %i[internship employee contractor]
   enum role: %i[user evaluator admin super_admin]
 
@@ -23,9 +23,9 @@ class User < ApplicationRecord
   has_many :evaluations, foreign_key: :evaluated_id, dependent: :restrict_with_error
   has_many :managed_offices, class_name: 'Office', foreign_key: :head_id
 
-  validates :name, :occupation, :contract_type, presence: true
+  validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
-  validates :level, presence: true, if: -> { occupation == 'engineer' }
+  validates :level, presence: true, if: :engineer?
   delegate :name, to: :office, prefix: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 
@@ -38,7 +38,7 @@ class User < ApplicationRecord
 
   # FIXME: Remove n+1 query
   scope :by_skills_in, -> (*skill_ids) do
-    users_with_all_skills = skill_ids.map { |id| User.joins(:skills).where('skills.id': id) }.reduce(:&)
+    users_with_all_skills = skill_ids.map { |id| User.joins(:skills).where(skills: {id: id}) }.reduce(:&)
     where(id: users_with_all_skills)
   end
 
@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def english_level
-    evaluations.by_kind(:english).order('created_at').last.try(:english_level)
+    evaluations.by_kind(:english).order(:created_at).last.try(:english_level)
   end
 
   def performance_score
@@ -92,13 +92,13 @@ class User < ApplicationRecord
 
   def overall_score
     return if [performance_score, english_score].include?(nil)
-    return unless [performance_score, english_score].all? { |n| n.positive? }
+    return unless [performance_score, english_score].all?(&:positive?)
 
     (performance_score.to_f + english_score.to_f) / 2.0
   end
 
   def current_allocation
-    allocations.where("start_at <= :date", date: Date.today).order(end_at: :desc).first.try(:project)
+    allocations.where("start_at <= :date", date: Date.current).order(end_at: :desc).first.try(:project)
   end
 
   def office_head?

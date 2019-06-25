@@ -17,6 +17,10 @@ ActiveAdmin.setup do |config|
   config.root_to = 'admin_users#index'
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
 
+  # config.scope_to unless: -> { current_admin_user.is_super? } do
+  #   current_admin_user.company 
+  # end
+
   # == Menu System
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
