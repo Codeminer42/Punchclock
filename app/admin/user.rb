@@ -88,7 +88,6 @@ ActiveAdmin.register User do
           row :created_at
           row :updated_at
           row :admin
-          row :has_access?
           row :observation
         end
       end

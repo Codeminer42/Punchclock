@@ -65,7 +65,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
 
       create_punches(
         company: company,
-        project: projects.send(:[], i % offices.size),
+        project: projects[i % offices.size],
         user: user
       )
     end
