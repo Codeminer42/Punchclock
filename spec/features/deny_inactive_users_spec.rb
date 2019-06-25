@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe "Deny inactive users", type: :feature do
-  let(:user) { create(:user, active: false, password: 'asdfasdf') }
+  let(:user) { create(:user, active: false, password: 'asdfasdf', password_confirmation: 'asdfasdf') }
 
   scenario 'on login' do
     visit "/"

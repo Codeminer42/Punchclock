@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_222806) do
+ActiveRecord::Schema.define(version: 2019_06_25_224719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,7 +207,6 @@ ActiveRecord::Schema.define(version: 2019_06_25_222806) do
     t.boolean "allow_overtime", default: false
     t.integer "office_id"
     t.integer "occupation"
-    t.boolean "admin", default: false
     t.text "observation"
     t.integer "specialty"
     t.string "github"

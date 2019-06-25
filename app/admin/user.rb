@@ -11,13 +11,13 @@ ActiveAdmin.register User do
 
   permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
                 :password, :active, :allow_overtime, :office_id, :occupation,
-                :admin, :observation, :specialty, skill_ids: []
+                :observation, :specialty, skill_ids: []
 
   scope proc { I18n.t('all') }, :all
   scope proc { I18n.t('active') }, :active, default: true
   scope proc { I18n.t('inactive') }, :inactive
   scope :office_heads
-  scope :admins
+  scope :admin
   scope proc { I18n.t('users_not_allocated') }, :not_allocated
 
   filter :name
@@ -90,7 +90,6 @@ ActiveAdmin.register User do
           row :last_sign_in_at
           row :created_at
           row :updated_at
-          row :admin
           row :observation
         end
       end

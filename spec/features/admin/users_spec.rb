@@ -35,7 +35,7 @@ describe 'Users', type: :feature do
     end
 
     it 'have the "admins" scope' do
-      find_link('Admins', href: '/admin/users?scope=admins').click
+      find_link('Admin', href: '/admin/users?scope=admin').click
 
       within '#index_table_users' do
         expect(page).to have_css('tbody tr', count: 1)

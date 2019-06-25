@@ -19,13 +19,12 @@ RSpec.describe User, type: :model do
   end
 
   describe 'delegations' do
-    it { is_expected.to delegate_method(:name).to(:office).with_prefix(true) }
+    it { is_expected.to delegate_method(:city).to(:office).with_prefix(true).allow_nil }
   end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
-    it { is_expected.to validate_presence_of :contract_type }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     it { is_expected.to validate_presence_of(:occupation) }
 

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  extend ActiveModel::Naming
-
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
 
@@ -26,15 +24,13 @@ class User < ApplicationRecord
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, presence: true, if: :engineer?
-  delegate :name, to: :office, prefix: true
+  
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
-  scope :admins,         -> { where(admin: true) }
-
 
   # FIXME: Remove n+1 query
   scope :by_skills_in, -> (*skill_ids) do
@@ -64,10 +60,6 @@ class User < ApplicationRecord
 
   def office_holidays
     HolidaysService.from_office(office)
-  end
-
-  def password_required?
-    false
   end
 
   def to_s
