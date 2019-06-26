@@ -3,7 +3,7 @@
 ActiveAdmin.register RegionalHoliday do
   permit_params :name, :day, :month, :company_id, office_ids: []
 
-  menu parent: I18n.t("activerecord.models.company.one"), priority: 8
+  menu parent: Company.model_name.human
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name

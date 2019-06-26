@@ -5,10 +5,10 @@ ActiveAdmin.register Project do
 
   permit_params :name, :company_id, :active, :client_id
 
-  menu parent: I18n.t("activerecord.models.company.one"), priority: 4
+  menu parent: Company.model_name.human
 
-  scope proc { I18n.t('active') }, :active, default: true
-  scope proc { I18n.t('inactive') }, :inactive
+  scope :active, default: true
+  scope :inactive
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :name

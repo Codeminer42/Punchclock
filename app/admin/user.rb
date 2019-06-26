@@ -7,18 +7,18 @@ ActiveAdmin.register User do
 
   config.sort_order = 'name_asc'
 
-  menu parent: I18n.t("activerecord.models.user.other"), priority: 1
+  menu parent: User.model_name.human(count: 2), priority: 1
 
   permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
                 :password, :active, :allow_overtime, :office_id, :occupation, :role,
                 :observation, :specialty, skill_ids: []
 
-  scope proc { I18n.t('all') }, :all
-  scope proc { I18n.t('active') }, :active, default: true
-  scope proc { I18n.t('inactive') }, :inactive
+  scope :all
+  scope :active, default: true
+  scope :inactive
   scope :office_heads
   scope :admin
-  scope proc { I18n.t('users_not_allocated') }, :not_allocated
+  scope :not_allocated  
 
   filter :name
   filter :email
@@ -63,7 +63,7 @@ ActiveAdmin.register User do
 
   show do
     tabs do
-      tab I18n.t('user') do
+      tab User.model_name.human do
         attributes_table do
           row :name
           row :email

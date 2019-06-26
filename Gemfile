@@ -22,7 +22,7 @@ gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'uglifier'
-gem 'activeadmin'
+gem 'activeadmin', path: "../activeadmin"
 gem 'draper'
 gem 'draper-cancancan'
 gem 'rails-i18n'

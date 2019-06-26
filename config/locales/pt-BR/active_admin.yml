@@ -11,3 +11,11 @@ pt-BR:
       labels:
         disable: "Desativar"
         enable: "Ativar"
+    scopes:
+      all: Todos
+      active: 'Ativo'
+      inactive: 'Inativo'
+    resources:
+      user:
+        scopes:
+          not_allocated: 'Não Alocado'

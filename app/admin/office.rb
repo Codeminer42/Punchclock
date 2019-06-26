@@ -6,7 +6,7 @@ ActiveAdmin.register Office do
 
   permit_params :company_id, :city, :head_id
 
-  menu parent: I18n.t("activerecord.models.user.other"), priority: 3
+  menu parent: User.model_name.human(count: 2), priority: 3
 
   filter :company, if: proc { current_admin_user.is_super? }
   filter :city, as: :select, collection: proc {
