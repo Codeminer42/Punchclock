@@ -3,29 +3,32 @@
 ActiveAdmin.register User do
   decorate_with UserDecorator
 
+  includes :company, :reviewer
+
   config.sort_order = 'name_asc'
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :role, :reviewer_id, :hour_cost,
-                :password, :active, :allow_overtime, :office_id, :occupation,
-                :admin, :observation, :specialty, skill_ids: []
+  permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
+                :password, :active, :allow_overtime, :office_id, :occupation, :role,
+                :observation, :specialty, skill_ids: []
 
   scope :all
   scope :active, default: true
   scope :inactive
   scope :office_heads
-  scope :admins
+  scope :admin
   scope :not_allocated  
 
   filter :name
   filter :email
-  filter :role, as: :select, collection: User.roles.map {|key,value| [key.titleize, value]}
+  filter :level, as: :select, collection: User.levels.map {|key,value| [key.titleize, value]}
   filter :office, collection: proc {
     current_admin_user.is_super? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :company, if: proc { current_admin_user.is_super? }
   filter :specialty, as: :select, collection: User.specialties.map {|key,value| [key.humanize, value]}
+  filter :contract_type, as: :select, collection: User.contract_types.map { |key,value| [key.humanize, value] }
   filter :by_skills, as: :check_boxes, collection: proc { Skill.order(:title) }
 
 
@@ -48,16 +51,14 @@ ActiveAdmin.register User do
       link_to user.name, admin_user_path(user)
     end
     column :office
-    column :role
+    column :level
     column :specialty
     column :hour_cost do |user|
       number_to_currency user.hour_cost
     end
     column :allow_overtime
     column :active
-    actions defaults: false do |user|
-      link_to I18n.t('view'), admin_user_path(user)
-    end
+    actions
   end
 
   show do
@@ -74,6 +75,8 @@ ActiveAdmin.register User do
           row :performance_score
           row :occupation
           row :specialty
+          row :level
+          row :contract_type
           row :role
           row :skills do
             user.skills.pluck(:title).to_sentence
@@ -87,8 +90,6 @@ ActiveAdmin.register User do
           row :last_sign_in_at
           row :created_at
           row :updated_at
-          row :admin
-          row :has_access?
           row :observation
         end
       end
@@ -180,12 +181,14 @@ ActiveAdmin.register User do
       else
         f.input :office, collection: current_admin_user.company.offices.order(:city)
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-        f.input :reviewer, collection: current_admin_user.company.users.order(:name)
+        f.input :reviewer, collection: current_admin_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_admin_user.company.skills.order(:title)
       end
       f.input :occupation, as: :radio
       f.input :specialty
-      f.input :role, as: :select, collection: User.roles.keys.map {|role| [role.titleize, role]}
+      f.input :level, as: :select, collection: User.levels.keys.map {|level| [level.titleize, level]}
+      f.input :contract_type
+      f.input :role, as: :select, collection: User.roles.keys.map { |role| [role.titleize, role] }
       f.input :password if f.object.new_record?
       f.input :allow_overtime
       f.input :active
@@ -195,10 +198,6 @@ ActiveAdmin.register User do
   end
 
   controller do
-    def scoped_collection
-      super.includes :company, :reviewer
-    end
-
     def create
       create! do |success, failure|
         success.html do

@@ -134,12 +134,13 @@ pt-BR:
         managed_offices: "Escritórios gerenciados"
         occupation: "Ocupação"
         specialty: "Especialidade"
+        contract_type: 'Tipo de Contrato'
+        role: 'Função'
         skills: "Habilidades"
-        role: "Nível"
+        level: "Nível"
         active: "Ativo"
         observation: "Observação"
         reviewer: "Padrinho"
-        has_access?: "Tem acesso?"
         overall_score: "Pontuação Geral"
         performance_score: "Pontuação de Desempenho"
         english_level: "Nível de Inglês"

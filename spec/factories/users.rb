@@ -5,10 +5,12 @@ FactoryBot.define do
     password              { 'password' }
     password_confirmation { 'password' }
     occupation            { 'engineer' }
-    role                  { 'junior' }
+    level                 { 'junior' }
     specialty             { 'backend' }
     github                { 'gitUser' }
     hour_cost             { 15.0 }
+    contract_type         { 'employee' }
+    role                  { 'normal' }
     association :office, factory: :office
     company
 
@@ -29,7 +31,7 @@ FactoryBot.define do
     end
 
     trait :admin do
-      admin { true }
+      role { :admin }
     end
 
     trait :with_observation do

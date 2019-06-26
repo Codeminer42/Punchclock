@@ -12,12 +12,20 @@ class UserDecorator < Draper::Decorator
     end
   end
 
-  def role
-    model.role.try(:humanize) || 'N/A'
+  def level
+    model.level.try(:humanize) || 'N/A'
   end
 
   def specialty
     model.specialty.try(:humanize) || 'N/A'
+  end
+
+  def contract_type
+    model.contract_type.try(:humanize) || 'N/A'
+  end
+
+  def role
+    model.role.try(:humanize) || 'N/A'
   end
 
   def english_level

@@ -19,7 +19,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'delegations' do
-    it { is_expected.to delegate_method(:name).to(:office).with_prefix(true) }
+    it { is_expected.to delegate_method(:city).to(:office).with_prefix(true).allow_nil }
   end
 
   describe 'validations' do
@@ -46,11 +46,11 @@ RSpec.describe User, type: :model do
 
     context 'when user is engineer' do
       subject { build :user, occupation: 'engineer'}
-      it { is_expected.to validate_presence_of(:role) }
+      it { is_expected.to validate_presence_of(:level) }
     end
 
-    context 'when user is engineer with no role' do
-      subject { build :user, occupation: 'engineer', role: '' }
+    context 'when user is engineer with no level' do
+      subject { build :user, occupation: 'engineer', level: '' }
       it { is_expected.to be_invalid }
     end
   end
@@ -64,8 +64,8 @@ RSpec.describe User, type: :model do
                                                                 mobile) }
   end
 
-  describe "role" do
-    it { is_expected.to define_enum_for(:role).with_values [
+  describe "level" do
+    it { is_expected.to define_enum_for(:level).with_values [
                                                            "trainee",
                                                            "junior",
                                                            "junior_plus",
@@ -73,6 +73,21 @@ RSpec.describe User, type: :model do
                                                            "mid_plus",
                                                            "senior",
                                                            "senior_plus" ] }
+  end
+
+  describe 'contract type' do
+    it { is_expected.to define_enum_for(:contract_type).with_values %i[
+                                                            internship
+                                                            employee
+                                                            contractor] }
+  end
+
+  describe 'role' do
+    it { is_expected.to define_enum_for(:role).with_values %i[
+                                                            normal
+                                                            evaluator
+                                                            admin
+                                                            super_admin] }
   end
 
   describe 'scopes' do
@@ -140,25 +155,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-### MERGE DO MINERCAMP - NECESSITA REAVALIAÇÃO
-  describe '#has_access?' do
-    context 'when user have access to MinerCamp' do
-      let(:user) { build_stubbed(:user, encrypted_password: 'password') }
-
-      it 'returns true' do
-        expect(user).to have_access
-      end
-    end
-
-    context 'when user have no access to MinerCamp' do
-      let(:user) { build_stubbed(:user, encrypted_password: '') }
-
-      it 'returns false' do
-        expect(user).not_to have_access
-      end
-    end
-  end
-
   describe '#office_head?' do
     let(:user)   { create(:user) }
 
@@ -176,15 +172,6 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
-  describe '#remove_access' do
-    let(:user) { create(:user) }
-
-    it 'revokes user access to MinerCamp by deleting encrypted password' do
-      expect { user.remove_access }.to change(user, :has_access?).from(true).to(false)
-    end
-  end
-####
 
   describe '#enable!' do
     it 'enables a user' do

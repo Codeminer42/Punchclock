@@ -55,7 +55,7 @@ class Ability
     can :edit, User, id: user.id
     can :update, User, id: user.id
 
-    if user.office_head?
+    if !user.normal? || user.office_head?
       can :manage, Evaluation, company_id: user.company_id
       cannot [:destroy, :edit, :update], Evaluation
     end

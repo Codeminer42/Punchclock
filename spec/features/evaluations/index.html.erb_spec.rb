@@ -18,10 +18,10 @@ describe "Visit Evaluations", type: :feature do
     expect(page).to have_css 'table'
   end
 
-  it 'finds fields "Name", "Role", Office", "Last evaluated at", "Score" and "Evaluate" on table' do
+  it 'finds fields "Name", "Level", Office", "Last evaluated at", "Score" and "Evaluate" on table' do
     within 'table' do
       expect(page).to have_text('Name') &
-                      have_text('Role') &
+                      have_text('Level') &
                       have_text('Office') &
                       have_text('Last evaluated at') &
                       have_text('Last evaluation score') &

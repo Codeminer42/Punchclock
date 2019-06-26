@@ -38,7 +38,7 @@ ActiveAdmin.register Office do
         office.users.active.size
       end
       row :users do
-        table_for office.users do
+        table_for office.users.active do
           column :name do |user|
             link_to user.name, admin_user_path(user)
           end

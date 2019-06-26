@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  extend ActiveModel::Naming
-
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
 
-  enum role: %i(trainee junior junior_plus mid mid_plus senior senior_plus)
-  enum occupation: %i(administrative engineer)
-  enum specialty: %i(frontend backend devops fullstack mobile)
+  enum level: %i[trainee junior junior_plus mid mid_plus senior senior_plus]
+  enum occupation: %i[administrative engineer]
+  enum specialty: %i[frontend backend devops fullstack mobile]
+  enum contract_type: %i[internship employee contractor]
+  enum role: %i[normal evaluator admin super_admin]
 
   belongs_to :office, optional: true
   belongs_to :company
@@ -23,22 +23,18 @@ class User < ApplicationRecord
 
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
-  validates :role, presence: true, if: -> { occupation == 'engineer' }
-  delegate :name, to: :office, prefix: true
+  validates :level, presence: true, if: :engineer?
+  
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
-  scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.select(:user_id)) }
-  scope :with_access,    -> { where.not(encrypted_password: '') }
-  scope :without_access, -> { where(encrypted_password: '') }
-  scope :admins,         -> { where(admin: true) }
-
+  scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
 
   # FIXME: Remove n+1 query
   scope :by_skills_in, -> (*skill_ids) do
-    users_with_all_skills = skill_ids.map { |id| User.joins(:skills).where('skills.id': id) }.reduce(:&)
+    users_with_all_skills = skill_ids.map { |id| User.joins(:skills).where(skills: {id: id}) }.reduce(:&)
     where(id: users_with_all_skills)
   end
 
@@ -66,10 +62,6 @@ class User < ApplicationRecord
     HolidaysService.from_office(office)
   end
 
-  def password_required?
-    false
-  end
-
   def to_s
     name
   end
@@ -79,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def english_level
-    evaluations.by_kind(:english).order('created_at').last.try(:english_level)
+    evaluations.by_kind(:english).order(:created_at).last.try(:english_level)
   end
 
   def performance_score
@@ -92,25 +84,17 @@ class User < ApplicationRecord
 
   def overall_score
     return if [performance_score, english_score].include?(nil)
-    return unless [performance_score, english_score].all? { |n| n.positive? }
+    return unless [performance_score, english_score].all?(&:positive?)
 
     (performance_score.to_f + english_score.to_f) / 2.0
   end
 
   def current_allocation
-    allocations.where("start_at <= :date", date: Date.today).order(end_at: :desc).first.try(:project)
-  end
-
-  def has_access?
-    encrypted_password.present?
+    allocations.where("start_at <= :date", date: Date.current).order(end_at: :desc).first.try(:project)
   end
 
   def office_head?
     managed_offices.present?
-  end
-
-  def remove_access
-    update(encrypted_password: '')
   end
 
   def update_with_password(params, *options)

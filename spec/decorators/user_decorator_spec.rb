@@ -23,20 +23,20 @@ RSpec.describe UserDecorator do
     end
   end
 
-  describe '#role' do
-    context 'when role is set' do
-      subject(:user) { build_stubbed(:user, role: 'trainee').decorate }
+  describe '#level' do
+    context 'when level is set' do
+      subject(:user) { build_stubbed(:user, level: 'trainee').decorate }
 
-      it 'returns user role' do
-        expect(subject.role).to eq('Trainee')
+      it 'returns user level' do
+        expect(subject.level).to eq('Trainee')
       end
     end
 
-    context 'when role is nil' do
-      subject(:user) { build_stubbed(:user, role: nil).decorate }
+    context 'when level is nil' do
+      subject(:user) { build_stubbed(:user, level: nil).decorate }
 
       it 'returns N/A' do
-        expect(subject.role).to eq('N/A')
+        expect(subject.level).to eq('N/A')
       end
     end
   end

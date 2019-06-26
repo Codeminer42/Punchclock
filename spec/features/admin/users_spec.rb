@@ -35,7 +35,7 @@ describe 'Users', type: :feature do
     end
 
     it 'have the "admins" scope' do
-      find_link('Admins', href: '/admin/users?scope=admins').click
+      find_link('Admin', href: '/admin/users?scope=admin').click
 
       within '#index_table_users' do
         expect(page).to have_css('tbody tr', count: 1)
@@ -58,9 +58,9 @@ describe 'Users', type: :feature do
       end
     end
 
-    it 'by role' do
+    it 'by level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.roles.keys.map(&:titleize) << 'Qualquer')
+        expect(page).to have_select('Nível', options: User.levels.keys.map(&:titleize) << 'Qualquer')
       end
     end
 
@@ -73,6 +73,12 @@ describe 'Users', type: :feature do
     it 'by office' do
       within '#filters_sidebar_section' do
         expect(page).to have_select('Escritório', options: admin_user.company.offices.pluck(:city) << 'Qualquer')
+      end
+    end
+
+    it 'by contract type' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Tipo de Contrato', options: User.contract_types.keys.map(&:humanize) << 'Qualquer')
       end
     end
 
@@ -111,7 +117,9 @@ describe 'Users', type: :feature do
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engineer')
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_role').find(:option, 'Junior').select_option
+        find('#user_level').find(:option, 'Junior').select_option
+        find('#user_contract_type').find(:option, 'Internship').select_option
+        find('#user_role').find(:option, 'Admin').select_option
         check('Ativo')
         fill_in 'Password', with: 'password'
         fill_in 'Observação', with: 'Observation'
@@ -127,6 +135,8 @@ describe 'Users', type: :feature do
                         have_text('engineer') &
                         have_text('Backend') &
                         have_text('Junior') &
+                        have_text('Internship') &
+                        have_text('Admin') &
                         have_css('.row-active td', text: 'Sim') &
                         have_text('Observation')
       end
@@ -164,6 +174,8 @@ describe 'Users', type: :feature do
                             have_css('.row-performance_score td', text: user.performance_score) &
                             have_css('.row-occupation td', text: user.occupation) &
                             have_css('.row-specialty td', text: user.specialty.humanize) &
+                            have_css('.row-level td', text: user.level.humanize) &
+                            have_css('.row-contract_type td', text: user.contract_type.humanize) &
                             have_css('.row-role td', text: user.role.humanize) &
                             have_css('.row-observation td', text: user.observation)
           end
@@ -243,6 +255,8 @@ describe 'Users', type: :feature do
                           have_text('Escritório') &
                           have_text('Ocupação') &
                           have_text('Especialidade') &
+                          have_text('Tipo de Contrato') &
+                          have_text('Função') &
                           have_text('Nível') &
                           have_text('Habilidades') &
                           have_text('Observação')

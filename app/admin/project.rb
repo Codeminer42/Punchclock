@@ -42,17 +42,15 @@ ActiveAdmin.register Project do
   show do
     attributes_table do
       row :name
-      row :active do |project|
-        status_tag project.active.to_s
-      end
+      row :active
       row :client
       row :company if current_admin_user.is_super?
       row :created_at
       row :updated_at
     end
 
-    panel I18n.t('allocations') do
-      table_for project.allocations do
+    panel Allocation.model_name.human(count: 2) do
+      table_for project.allocations.ongoing do
         column :user
         column :start_at
         column :end_at
