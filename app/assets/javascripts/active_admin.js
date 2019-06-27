@@ -3,11 +3,18 @@
 
 $(document).ready(function() {
   $('[data-select="true"]').select2();
-  setLinkForUser()
+  setLinkForUser();
+  setLinkForOffice();
 });
 
 function setLinkForUser() {
   $("#user_id").change(function() {
-     $("#search_link").attr("href","/admin/users/" + encodeURIComponent( $(this).val() ) );
+     $("#search-user-link").attr("href","/admin/users/" + encodeURIComponent( $(this).val() ) );
   });
-}
+};
+
+function setLinkForOffice() {
+  $("#office_id").change(function() {
+     $("#search-office-link").attr("href","/admin/offices/" + encodeURIComponent( $(this).val() ) );
+  });
+};

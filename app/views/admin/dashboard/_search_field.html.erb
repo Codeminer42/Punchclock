@@ -6,5 +6,5 @@
       input_html: {data: {select: true}}
     %>
   <% end %>
-  <%= link_to t(:search, scope: :active_admin), url_path, id: "search_link" %>
+  <%= link_to t(:search, scope: :active_admin), url_path, id: "search-#{search_model.name.downcase}-link" %>
 <% end %>
