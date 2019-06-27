@@ -3,7 +3,7 @@ module Api
     before_action :auth
 
     def users
-      render json: company.users.active
+      render json: company.users.active.engineer.as_json(only: %i[email name github office_id])
     end
 
     def offices
