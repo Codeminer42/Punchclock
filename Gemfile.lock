@@ -6,22 +6,6 @@ GIT
       heroics (~> 0.0.25)
       moneta (~> 1.0.0)
 
-PATH
-  remote: ../activeadmin
-  specs:
-    activeadmin (2.1.0)
-      arbre (~> 1.2, >= 1.2.1)
-      formtastic (~> 3.1)
-      formtastic_i18n (~> 0.4)
-      inherited_resources (~> 1.7)
-      jquery-rails (~> 4.2)
-      kaminari (~> 1.0, >= 1.0.1)
-      railties (>= 5.0, < 6.1)
-      ransack (~> 2.1, >= 2.1.1)
-      sassc-rails (~> 2.1)
-      sprockets (>= 3.0, < 4.1)
-      sprockets-es6 (~> 0.9, >= 0.9.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,6 +37,18 @@ GEM
     active_admin_flat_skin (0.1.2)
     active_admin_theme (1.0.3)
     active_skin (0.0.12)
+    activeadmin (2.1.0)
+      arbre (~> 1.2, >= 1.2.1)
+      formtastic (~> 3.1)
+      formtastic_i18n (~> 0.4)
+      inherited_resources (~> 1.7)
+      jquery-rails (~> 4.2)
+      kaminari (~> 1.0, >= 1.0.1)
+      railties (>= 5.0, < 6.0)
+      ransack (~> 2.1, >= 2.1.1)
+      sassc-rails (~> 2.1)
+      sprockets (>= 3.0, < 4.1)
+      sprockets-es6 (~> 0.9, >= 0.9.2)
     activejob (5.2.2.1)
       activesupport (= 5.2.2.1)
       globalid (>= 0.3.6)
@@ -481,7 +477,7 @@ DEPENDENCIES
   active_admin_flat_skin
   active_admin_theme
   active_skin
-  activeadmin!
+  activeadmin
   autoprefixer-rails
   better_errors
   binding_of_caller
