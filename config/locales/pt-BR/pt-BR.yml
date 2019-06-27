@@ -24,6 +24,7 @@ pt-BR:
   users_not_allocated: 'Não alocados'
   projects: 'Projetos'
   perfomance_evaluations: 'Avaliações de Desempenho'
+  allocation: 'Alocação'
   office:
     user_not_evaluated: "Usuários não foram todos avaliados"
   reviewer: 'Avaliador'

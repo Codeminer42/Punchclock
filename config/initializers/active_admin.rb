@@ -4,7 +4,7 @@ pre_defined_paths = Rails.application.config.i18n.load_path
 ActiveAdmin.setup do |config|
   config.site_title = proc {
     (!admin_user_signed_in? || current_admin_user.is_super?) ? "Punchclock" : "Punchclock (#{current_admin_user.company})"
-  
+
   }
 
   config.download_links = [:csv, :json]
@@ -18,14 +18,14 @@ ActiveAdmin.setup do |config|
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
 
   # config.scope_to unless: -> { current_admin_user.is_super? } do
-  #   current_admin_user.company 
+  #   current_admin_user.company
   # end
 
   # == Menu System
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
       menu.add label: User.model_name.human(count: 2) do |submenu|
-        submenu.add label: 'Não Alocados', url: '/admin/users?scope=not_allocated', priority: 2
+        submenu.add label: 'Não alocados', url: '/admin/users?scope=not_allocated', priority: 2
       end
     end
   end

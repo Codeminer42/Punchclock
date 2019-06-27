@@ -18,7 +18,7 @@ RSpec.describe UserDecorator do
 
     context 'when no allocation is set' do
       it 'returns not allocated' do
-        expect(user.current_allocation).to eq('Não Alocado')
+        expect(user.current_allocation).to eq('Não alocado')
       end
     end
   end

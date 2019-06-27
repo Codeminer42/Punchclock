@@ -18,4 +18,4 @@ pt-BR:
     resources:
       user:
         scopes:
-          not_allocated: 'Não Alocado'
+          not_allocated: 'Não alocado'
