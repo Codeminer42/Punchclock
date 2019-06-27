@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
+  get '/admin/offices/search_by_id', to: 'admin/offices#search_by_id'
   get '/admin/users/search_by_id', to: 'admin/users#search_by_id'
   ActiveAdmin.routes(self)
   devise_for :users
