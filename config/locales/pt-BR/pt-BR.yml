@@ -50,3 +50,5 @@ pt-BR:
       logout: "Sair"
       dashboard: 'Dashboard'
   finished: 'Finalizado'
+  admin:
+    search_by: "Por %{model_name}"

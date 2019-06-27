@@ -45,6 +45,13 @@ ActiveAdmin.register User do
     redirect_to collection_path, alert: "The users have been enabled."
   end
 
+  controller do
+    def search_by_id
+      @user = User.find(params[:user][:id])
+      redirect_to admin_user_path(@user)
+    end
+  end
+
   index do
     selectable_column
     column :name do |user|
