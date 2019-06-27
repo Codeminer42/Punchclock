@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router';
+import { Router, Route, Redirect } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 import {
-  ConnectedRouter,
   routerMiddleware,
   routerReducer
 } from 'react-router-redux';
@@ -20,24 +19,21 @@ class Routes extends React.Component{
   render(){
     const { dayBase } = this.props;
     return(
-      <ConnectedRouter history={history}>
-        <div>
-          <Route
-            path="/:year?/:month?"
-            render={(props) => {
-              const { match: { params: { year, month } } } = props;
-              const appProps = { dayBase, year, month };
+      <Router history={history}>
+        <Route
+          path="/:year?/:month?"
+          render={(props) => {
+            const { match: { params: { year, month } } } = props;
+            const appProps = { dayBase, year, month };
 
-              if (year && month && !constraintMonth(year, month)) {
-                return (<App {...appProps} />);
-              }
+            if (year && month && !constraintMonth(year, month)) {
+              return (<App {...appProps} />);
+            }
 
-              return (<Redirect to={'/'+current().format('YYYY/MM')} />);
-            }}
-          />
-
-        </div>
-      </ConnectedRouter>
+            return (<Redirect to={'/'+current().format('YYYY/MM')} />);
+          }}
+        />
+      </Router>
     );
   }
 }
