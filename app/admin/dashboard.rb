@@ -13,7 +13,6 @@ ActiveAdmin.register_page "Dashboard" do
 
                             [user_label, user.id]
                           end
-
       render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
     end
   end
