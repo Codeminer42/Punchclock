@@ -40,12 +40,11 @@
   }
 }
 
-.formtastic.user {
-  margin-bottom: 20px;
+fieldset.inputs, fieldset.actions {
+  padding: 0px;
 }
 
-#search-user-link,
-#search-office-link {
+#search_link {
   border-radius: 4px;
   background-color: #5ea3d3;
   padding: 10px 20px;

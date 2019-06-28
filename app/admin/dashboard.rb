@@ -18,9 +18,10 @@ ActiveAdmin.register_page "Dashboard" do
       offices_collection = current_company.offices.order(:city).decorate.map do |office| 
         [
           "#{office.city.titleize} - #{office.head} - #{office.score}",
-          office.id 
+          office.id
         ]
       end
+
       render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
       render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
     end
