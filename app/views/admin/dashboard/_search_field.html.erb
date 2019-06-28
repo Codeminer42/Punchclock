@@ -1,0 +1,10 @@
+<%= semantic_form_for search_model.name.downcase do |f| %>
+  <%= f.inputs do %>
+    <% f.input :id,
+      collection: collection,
+      label: I18n.t(:search_by, scope: :active_admin, model_name: search_model.model_name.human),
+      input_html: {data: {select: true}}
+    %>
+  <% end %>
+  <%= link_to t(:search, scope: :active_admin), url_path, id: "search_link" %>
+<% end %>

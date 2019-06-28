@@ -3,6 +3,9 @@ pt-BR:
     admin_reset_password: 'Um email com instruções para reset de senha foi enviado'
     admin_reset_password_button: 'Enviar email para reset de senha'
     allocated_user_punches: 'Punches do Usuário Alocado'
+    search: "Buscar"
+    search_fields: "Campos de Busca"
+    search_by: "Por %{model_name}"
     filters:
       predicates:
         eq: "Igual à"

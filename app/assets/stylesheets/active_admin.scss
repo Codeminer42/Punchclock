@@ -11,8 +11,7 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 @import "wigu/active_admin_theme";
-// @import "active_skin";
-
+@import "select2";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
@@ -39,4 +38,18 @@
   {
     font-weight: bold;
   }
+}
+
+fieldset.inputs, fieldset.actions {
+  padding: 0px;
+}
+
+#search_link {
+  border-radius: 4px;
+  background-color: #5ea3d3;
+  padding: 10px 20px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.0em;
+  font-weight: bold;
 }
