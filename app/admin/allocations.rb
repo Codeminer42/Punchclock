@@ -35,6 +35,26 @@ ActiveAdmin.register Allocation do
       row :end_at
       row :days_left, &:days_until_finish
     end
+
+    panel t('allocated_user_punches', scope: 'active_admin') do
+      paginated_collection(allocation.user_punches.page(params[:page]).per(10), download_links: false) do
+        table_for(collection.decorate, sortable: false, i18n: Punch) do
+          column :when
+          column :from
+          column :to
+          column :delta
+          column :extra_hour
+          column :access do |punch|
+            link_to I18n.t('view'), admin_punch_path(punch)
+          end
+        end
+      end
+      div link_to I18n.t('download_as_csv'),
+                    admin_punches_path(q: { project_id_eq: allocation.project.id,
+                                            user_id_eq: allocation.user.id,
+                                            from_greater_than: 60.days.ago.to_date
+                                          }, format: :csv)
+    end
   end
 
   form html: { autocomplete: 'off' } do |f|

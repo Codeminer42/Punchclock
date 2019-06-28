@@ -13,22 +13,28 @@ RSpec.describe Allocation, type: :model do
   end
 
   describe '#days_until_finish' do
-    let(:allocation) { build_stubbed(:allocation, end_at: end_at) }
-
     context 'when end_at is nil' do
-      let(:end_at) { nil }
+      subject { build_stubbed(:allocation, end_at: nil) }
 
-      subject { allocation.days_until_finish }
-
-      it { is_expected.to be_nil }
+      it 'returns nil' do
+        expect(subject.days_until_finish).to be_nil
+      end
     end
 
     context 'when end_at is not nil' do
-      let(:end_at) { Date.current.next_month }
+      subject { build_stubbed(:allocation, end_at: Date.current.next_month) }
 
-      subject { allocation.days_until_finish }
+      it 'returns how many days left' do
+        expect(subject.days_until_finish).to eq(subject.end_at - Date.current)
+      end
+    end
 
-      it { is_expected.to eq(end_at - Date.current)  }
+    context 'when its already finished' do
+      subject { build_stubbed(:allocation, end_at: Date.current - 1.month) }
+
+      it 'returns finished' do
+        expect(subject.days_until_finish).to eq('Finalizado')
+      end
     end
   end
 end

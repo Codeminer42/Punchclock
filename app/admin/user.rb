@@ -150,7 +150,7 @@ ActiveAdmin.register User do
       end
 
       tab :punches do
-        table_for user.punches.last_punches(60.days.ago).order(from: :desc).decorate, i18n: Punch do
+        table_for user.punches.since(60.days.ago).order(from: :desc).decorate, i18n: Punch do
           column :company
           column :project
           column :when
@@ -161,7 +161,7 @@ ActiveAdmin.register User do
         end
         div link_to I18n.t('download_as_csv'),
                         admin_punches_path(q: { user_id_eq: user.id, from_greater_than: Date.current - 60 }, format: :csv)
-        div link_to I18n.t('all_punches'), 
+        div link_to I18n.t('all_punches'),
                         admin_punches_path(q: { user_id_eq: user.id, commit: :Filter })
       end
     end

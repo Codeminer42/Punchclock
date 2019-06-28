@@ -32,7 +32,7 @@ describe Punch do
         punch.from.between? "2018-06-16".to_date, "2018-07-15".to_date
       end
     end
-    
+
     before do
       travel_to "2018-07-28".to_date
     end
@@ -43,26 +43,6 @@ describe Punch do
 
     it 'returns only punches from last month' do
       expect(Punch.from_last_month).to match_array last_month_punches
-    end
-  end
-
-  describe '.last_punches' do 
-    let(:today) { DateTime.new(2019, 6, 13, 12, 0, 0) }
-
-    let(:last_2_days_punches) do
-      [
-        create(:punch, from: today - 3.hours, to: today),
-        create(:punch, from: 1.day.ago, to: 1.day.ago + 3.hours),
-        create(:punch, from: 2.days.ago, to: 2.days.ago + 3.hours)
-      ]
-    end
-
-    around do |example|
-      travel_to today, &example
-    end
-
-    it 'returns only punches from last 2 days' do
-      expect(Punch.last_punches(2.days.ago)).to match_array last_2_days_punches
     end
   end
 
@@ -80,7 +60,7 @@ describe Punch do
   describe '#delta_as_hour' do
     let(:punch) do
       from = "2018-07-03 13:29".to_time
-      to = from + 4.hours + 2.minutes  
+      to = from + 4.hours + 2.minutes
 
       build :punch, from: from, to: to
     end
