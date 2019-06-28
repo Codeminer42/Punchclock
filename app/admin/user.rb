@@ -101,7 +101,8 @@ ActiveAdmin.register User do
         end
       end
 
-      tab I18n.t('allocation') do
+      # tab t('models.allocation.other', scope: 'activerecord') do
+      tab Allocation.model_name.human(count: 2) do
         attributes_table do
           row :current_allocation
           row :allocations do

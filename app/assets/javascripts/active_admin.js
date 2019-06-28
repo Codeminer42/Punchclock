@@ -5,6 +5,7 @@ $(document).ready(function() {
   $('[data-select]').select2();
   setLinkForUser();
   setLinkForOffice();
+  setLinkForProject();
 });
 
 function setLinkForUser() {
@@ -16,5 +17,11 @@ function setLinkForUser() {
 function setLinkForOffice() {
   $("#office_id").change(function() {
     $("#search-office-link").attr("href","/admin/offices/" + encodeURIComponent( $(this).val() ) );
+  });
+};
+
+function setLinkForProject() {
+  $("#project_id").change(function() {
+     $("#search-project-link").attr("href","/admin/projects/" + encodeURIComponent( $(this).val() ) );
   });
 };
