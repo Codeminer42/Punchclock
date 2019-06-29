@@ -2,26 +2,16 @@
 //= require 'select2/dist/js/select2.js'
 
 $(document).ready(function() {
-  $('[data-select]').select2();
-  setLinkForUser();
-  setLinkForOffice();
-  setLinkForProject();
+  var $seachFields = $('[data-select]')
+  $seachFields.select2();
+
+  $seachFields.each((_, field) => setLinkForResource($(field)));
 });
 
-function setLinkForUser() {
-  $("#user_id").change(function() {
-    $("#search-user-link").attr("href","/admin/users/" + encodeURIComponent( $(this).val() ) );
-  });
-};
-
-function setLinkForOffice() {
-  $("#office_id").change(function() {
-    $("#search-office-link").attr("href","/admin/offices/" + encodeURIComponent( $(this).val() ) );
-  });
-};
-
-function setLinkForProject() {
-  $("#project_id").change(function() {
-     $("#search-project-link").attr("href","/admin/projects/" + encodeURIComponent( $(this).val() ) );
+function setLinkForResource($resource) {
+  var resourceName = $resource.data("select");
+  $resource.change(function() {
+    $(`[data-select-search="${resourceName}"]`)
+      .attr("href",`/admin/${resourceName}/${encodeURIComponent($(this).val())}`);
   });
 };

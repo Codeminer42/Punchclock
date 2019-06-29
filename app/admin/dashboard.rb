@@ -24,15 +24,12 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
 
-      projects_collection = current_admin_user
-                              .company
-                              .projects
-                              .active
-                              .order(:name)
-                              .map { |project| [
-                                "#{project.name}" \
-                                "#{ project.client.try(:name) ? ' - '+project.client.name: '' }",
-                                project.id ]}
+      projects_collection = current_company.projects.active.order(:name).map do |project| 
+        [
+          "#{project.name} #{project.client ? " - #{project.client}": '' }",
+          project.id 
+        ]
+      end
 
       render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
       render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
