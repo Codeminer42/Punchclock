@@ -5,11 +5,16 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 0, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-      end
+    panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
+      users_collection = current_admin_user.company.users.active.includes(:office).order(:name).map do |user| 
+                            user_label = "#{user.name.titleize} - #{user.email} - "
+                            user_label += "#{user.level.humanize} - " if user.engineer?
+                            user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
+
+                            [user_label, user.id]
+                          end
+
+      render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
     end
   end
 end

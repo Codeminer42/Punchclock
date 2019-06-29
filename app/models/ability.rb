@@ -32,6 +32,7 @@ class Ability
       ], company_id: user.company_id
 
       can :read, Punch, company_id: user.company_id
+      can :read, ActiveAdmin::Page, name: "Dashboard"
 
       can :create, [
         AdminUser,

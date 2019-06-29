@@ -90,7 +90,7 @@ class User < ApplicationRecord
   end
 
   def current_allocation
-    allocations.where("start_at <= :date", date: Date.current).order(end_at: :desc).first.try(:project)
+    allocations.ongoing.first.try(:project)
   end
 
   def office_head?

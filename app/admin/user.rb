@@ -18,7 +18,7 @@ ActiveAdmin.register User do
   scope :inactive
   scope :office_heads
   scope :admin
-  scope :not_allocated  
+  scope :not_allocated
 
   filter :name
   filter :email

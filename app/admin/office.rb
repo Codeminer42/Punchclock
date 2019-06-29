@@ -13,7 +13,7 @@ ActiveAdmin.register Office do
     current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :head, collection: proc {
-    current_admin_user.is_super? ? current_admin_user.users.order(:name) : current_admin_user.company.users.order(:name)
+    current_admin_user.is_super? ? User.all.order(:name) : current_admin_user.company.users.order(:name)
   }
 
   index do
