@@ -3,8 +3,11 @@
     <% f.input :id,
       collection: collection,
       label: I18n.t(:search_by, scope: :active_admin, model_name: search_model.model_name.human),
-      input_html: {data: {select: true}}
+      input_html: {data: {select: search_model.name.pluralize.downcase}}
     %>
   <% end %>
-  <%= link_to t(:search, scope: :active_admin), url_path, id: "search-#{search_model.name.downcase}-link" %>
+  <%= link_to t(:search, scope: :active_admin), url_path,
+  	class: "button",
+  	data: { "select-search": search_model.name.pluralize.downcase} 
+  %>
 <% end %>

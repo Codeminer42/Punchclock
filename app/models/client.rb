@@ -18,4 +18,8 @@ class Client < ApplicationRecord
   def enable!
     update!(active: true)
   end
+
+  def to_s
+    name
+  end
 end
