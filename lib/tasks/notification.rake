@@ -11,6 +11,6 @@ namespace :notification do
 
   desc 'Verify and send email to users and admin about unregistered punches'
   task unregistered_punches: :environment do
-    SendEmailWithUnregisteredPunchesJob.perform_later
+    NotifyUnregisteredPunchesJob.perform_later
   end
 end
