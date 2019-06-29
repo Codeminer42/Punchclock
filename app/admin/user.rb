@@ -45,13 +45,6 @@ ActiveAdmin.register User do
     redirect_to collection_path, alert: "The users have been enabled."
   end
 
-  controller do
-    def search_by_id
-      @user = User.find(params[:user][:id])
-      redirect_to admin_user_path(@user)
-    end
-  end
-
   index do
     selectable_column
     column :name do |user|
@@ -101,7 +94,6 @@ ActiveAdmin.register User do
         end
       end
 
-      # tab t('models.allocation.other', scope: 'activerecord') do
       tab Allocation.model_name.human(count: 2) do
         attributes_table do
           row :current_allocation
@@ -185,9 +177,11 @@ ActiveAdmin.register User do
         f.input :office
         f.input :company
         f.input :reviewer
+        f.input :role, as: :select, collection: User.roles.keys.map { |role| [role.titleize, role] }
         f.input :skills, as: :check_boxes
       else
         f.input :office, collection: current_admin_user.company.offices.order(:city)
+        f.input :role, as: :select, collection: User.roles.except(:super_admin).keys.map { |role| [role.titleize, role] }
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
         f.input :reviewer, collection: current_admin_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_admin_user.company.skills.order(:title)
@@ -196,7 +190,6 @@ ActiveAdmin.register User do
       f.input :specialty
       f.input :level, as: :select, collection: User.levels.keys.map {|level| [level.titleize, level]}
       f.input :contract_type
-      f.input :role, as: :select, collection: User.roles.keys.map { |role| [role.titleize, role] }
       f.input :password if f.object.new_record?
       f.input :allow_overtime
       f.input :active
@@ -207,7 +200,7 @@ ActiveAdmin.register User do
 
   controller do
     def create
-      create! do |success, failure|
+      create! do |success, _failure|
         success.html do
           NotificationMailer.notify_user_registration(@user).deliver
           redirect_to resource_path
