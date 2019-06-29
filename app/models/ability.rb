@@ -53,12 +53,11 @@ class Ability
   def user_permitions(user)
     can :manage, Punch, company_id: user.company_id, user_id: user.id
     can :read, User, company_id: user.company_id
-    can :edit, User, id: user.id
-    can :update, User, id: user.id
+    can %i[edit update], User, id: user.id 
 
     if !user.normal? || user.office_head?
       can :manage, Evaluation, company_id: user.company_id
-      cannot [:destroy, :edit, :update], Evaluation
+      cannot %i[destroy edit update], Evaluation
     end
   end
 end
