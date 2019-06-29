@@ -16,6 +16,13 @@ ActiveAdmin.register Office do
     current_admin_user.is_super? ? User.all.order(:name) : current_admin_user.company.users.order(:name)
   }
 
+  controller do
+    def search_by_id
+      @office = Office.find(params[:office][:id])
+      redirect_to admin_office_path(@office)
+    end
+  end
+
   index do
     column :city do |office|
       link_to office.city, admin_office_path(office)

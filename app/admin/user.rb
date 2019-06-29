@@ -45,6 +45,13 @@ ActiveAdmin.register User do
     redirect_to collection_path, alert: "The users have been enabled."
   end
 
+  controller do
+    def search_by_id
+      @user = User.find(params[:user][:id])
+      redirect_to admin_user_path(@user)
+    end
+  end
+
   index do
     selectable_column
     column :name do |user|
@@ -94,7 +101,8 @@ ActiveAdmin.register User do
         end
       end
 
-      tab I18n.t('allocation') do
+      # tab t('models.allocation.other', scope: 'activerecord') do
+      tab Allocation.model_name.human(count: 2) do
         attributes_table do
           row :current_allocation
           row :allocations do

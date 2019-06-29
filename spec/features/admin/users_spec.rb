@@ -184,20 +184,20 @@ describe 'Users', type: :feature do
 
       context 'on User Allocations tab' do
         it 'finds user current allocation' do
-          within '#alocacao' do
+          within '#alocacoes' do
             expect(page).to have_css('.row-current_allocation td', text: allocation.project.name)
           end
         end
 
         it 'finds user current allocation even with end date undefined' do
           allocation.end_at = nil
-          within '#alocacao' do
+          within '#alocacoes' do
             expect(page).to have_css('.row-current_allocation td', text: allocation.project.name)
           end
         end
 
         it 'finds allocations table' do
-          within '#alocacao' do
+          within '#alocacoes' do
             expect(page).to have_css('.row-allocations tbody tr', count: 1)
           end
         end
