@@ -48,4 +48,5 @@ pt-BR:
   refills:
     navigation:
       logout: "Sair"
+      dashboard: 'Dashboard'
   finished: 'Finalizado'

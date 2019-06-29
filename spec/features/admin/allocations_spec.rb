@@ -8,6 +8,7 @@ describe 'Admin Allocation', type: :feature do
   let!(:project)    { create(:project, company: admin_user.company) }
   let!(:allocation) { create(:allocation,
                               :with_end_at,
+                              start_at: Date.new(2019, 6, 17),
                               user: user,
                               project: project,
                               company: admin_user.company )}
@@ -71,6 +72,12 @@ describe 'Admin Allocation', type: :feature do
     end
 
     describe 'Show' do
+      let!(:punch) { create(:punch,
+                            user: user,
+                            project: project,
+                            from: DateTime.new(2019, 6, 17, 8, 0, 0, 0),
+                            to: DateTime.new(2019, 6, 17, 12, 0, 0, 0) ).decorate }
+
       before do
         visit '/admin/allocations'
         within 'table' do
@@ -87,7 +94,7 @@ describe 'Admin Allocation', type: :feature do
       end
 
       it 'must have labels' do
-        within 'table' do
+        within '.attributes_table.allocation' do
           expect(page).to have_text("Usuário")  &
                           have_text("Projeto") &
                           have_text("Início") &
@@ -100,6 +107,24 @@ describe 'Admin Allocation', type: :feature do
                         have_css(".row-project td", text: allocation.project.name) &
                         have_css(".row-start_at td", text: I18n.l(allocation.start_at, format: :long)) &
                         have_css(".row-end_at td", text: I18n.l(allocation.end_at, format: :long))
+      end
+
+      it 'have allocation punches information' do
+        within "#punch_#{punch.id}" do
+          expect(page).to have_text(punch.when) &
+                          have_text(punch.from) &
+                          have_text(punch.to) &
+                          have_text(punch.delta) &
+                          have_text('Não')
+        end
+      end
+
+      it 'have button to download allocation punches' do
+        expect(page).to have_link('Baixar CSV',
+                                    href: admin_punches_path(q: { project_id_eq: allocation.project.id,
+                                                                  user_id_eq: allocation.user.id,
+                                                                  from_greater_than: Date.current - 60
+                                                                }, format: :csv) )
       end
     end
 

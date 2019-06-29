@@ -18,4 +18,13 @@ class Allocation < ApplicationRecord
 
     end_at > Date.current ? (end_at - Date.current).to_i : I18n.t('finished')
   end
+
+  def user_punches
+    project
+      .punches
+      .where(user: user)
+      .since(start_at)
+      .order(from: :desc)
+      .decorate
+  end
 end
