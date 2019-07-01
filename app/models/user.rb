@@ -24,7 +24,7 @@ class User < ApplicationRecord
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, presence: true, if: :engineer?
-  
+
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
@@ -84,7 +84,6 @@ class User < ApplicationRecord
 
   def overall_score
     return if [performance_score, english_score].include?(nil)
-    return unless [performance_score, english_score].all?(&:positive?)
 
     (performance_score.to_f + english_score.to_f) / 2.0
   end

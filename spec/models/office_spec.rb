@@ -36,12 +36,6 @@ RSpec.describe Office, type: :model do
         create(:evaluation, :english, score: 7, evaluated: bad_user)
       end
 
-      context 'but at least one dont have average score' do
-        it 'set no score for office' do
-          expect(office.score).to eq(nil)
-        end
-      end
-
       context 'and all have overall score' do
         before { create(:evaluation, score: 4, evaluated: bad_user) }
 
@@ -54,6 +48,10 @@ RSpec.describe Office, type: :model do
     context 'when its users dont have evaluations' do
       it 'set no score for office' do
         expect { office.calculate_score }.not_to change(office, :score)
+      end
+
+      it 'returns nil' do
+        expect(office.score).to eq(nil)
       end
     end
   end

@@ -13,10 +13,10 @@ class Office < ApplicationRecord
   end
 
   def calculate_score
-    users_overall_scores = users.map(&:overall_score)
+    users_overall_scores = users.map(&:overall_score).compact
+    return if users_overall_scores.empty?
 
-    return if users_overall_scores.include?(nil) || users_overall_scores.empty?
-    users_average_score = users_overall_scores.sum / users.count
+    users_average_score = users_overall_scores.sum / users_overall_scores.size
     update(score: users_average_score)
   end
 end
