@@ -40,41 +40,45 @@ class Calendar extends React.Component {
     } = this.props;
 
     return (
-      <div className="calendar-container">
-        <Navbar
-          hasNext={calendar.hasNext}
-          onPrev={onPrev}
-          onNext={onNext}
-          base={calendar.base}>
-          {calendar.monthName}
-        </Navbar>
+      <div className="calendar-container container">
+        <div>
 
-        <table className='punches-table'>
-          <WeekNames weekdays={calendar.weekdays} />
-          <Weeks
+          <Navbar
+            hasNext={calendar.hasNext}
+            onPrev={onPrev}
+            onNext={onNext}
+            base={calendar.base}>
+            {calendar.monthName}
+          </Navbar>
+
+          <table className='punches-table'>
+            <WeekNames weekdays={calendar.weekdays} />
+            <Weeks
+              calendar={calendar}
+              sheetFor={sheetFor}
+              isSelected={isSelected}
+              onSelectWeek={onSelectWeek}
+              onToggle={onToggle}
+            />
+          </table>
+        </div>
+        <div className='punches-toolbar'>
+          <p>Horas: {
+            sumHours(
+              calendar.weeks,
+              calendar.sheets,
+              calendar.sheetsSaveds,
+              calendar.changes
+            )}
+          </p>
+
+          <Form
             calendar={calendar}
-            sheetFor={sheetFor}
-            isSelected={isSelected}
-            onSelectWeek={onSelectWeek}
-            onToggle={onToggle}
-          />
-        </table>
-
-        <p>Horas: {
-          sumHours(
-            calendar.weeks,
-            calendar.sheets,
-            calendar.sheetsSaveds,
-            calendar.changes
-          )}
-        </p>
-
-        <Form
-          calendar={calendar}
-          onSetTimeSheet={onSetTimeSheet}
-          onErase={onErase}
-          onDeselect={onDeselect}
-          onSaveSheets={onSaveSheets} />
+            onSetTimeSheet={onSetTimeSheet}
+            onErase={onErase}
+            onDeselect={onDeselect}
+            onSaveSheets={onSaveSheets} />
+        </div>
       </div>
     );
   }

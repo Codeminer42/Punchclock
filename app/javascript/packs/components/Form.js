@@ -9,17 +9,36 @@ class Form extends React.Component{
     if(!this.props.calendar.selecteds.isEmpty()) {
       return (
         <form
-          onSubmit={this.handleSubmit.bind(this)}
-          className='punches-toolbar'>
+          onSubmit={this.handleSubmit.bind(this)}>
 
           <p>
-            <input placeholder="De" ref="from1" type="time" defaultValue="09:00" />
-            <input placeholder="Até" ref="to1" type="time" defaultValue="12:00" />
+            <input
+              placeholder="De"
+              ref="from1"
+              type="time"
+              defaultValue="09:00"
+              className="form-control form-control-sm" />
+            <input
+              placeholder="Até"
+              ref="to1"
+              type="time"
+              defaultValue="12:00"
+              className="form-control form-control-sm" />
           </p>
 
           <p>
-            <input placeholder="De" ref="from2" type="time" defaultValue="13:00" />
-            <input placeholder="Até" ref="to2" type="time" defaultValue="18:00" />
+            <input
+              placeholder="De"
+              ref="from2"
+              type="time"
+              defaultValue="13:00"
+              className="form-control form-control-sm" />
+            <input
+              placeholder="Até"
+              ref="to2"
+              type="time"
+              defaultValue="18:00"
+              className="form-control form-control-sm"/>
           </p>
 
           <p>
