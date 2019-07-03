@@ -2,22 +2,20 @@
 	<table border="0" cellspacing="8" cellpadding="8">
     <tr>
       <th><%= f.label 'Current Password' %></th>
-      <th><%= f.password_field :current_password %></th>
+      <th><%= f.password_field :current_password, class: 'form-control'%></th>
     </tr>
 		<tr>
 			<th><%= f.label 'Password' %></th>
-			<th><%= f.password_field :password %></th>
+			<th><%= f.password_field :password, class: 'form-control' %></th>
 		</tr>
 		<tr>
 			<th><%= f.label 'Password Confirmation' %></th>
-			<th><%= f.password_field :password_confirmation %></th>
+			<th><%= f.password_field :password_confirmation, class: 'form-control' %></th>
 		</tr>
     <tr>
       <td colspan="2">
-        <%= link_to 'Cancel', edit_user_path, class: 'btn btn-danger' %>
-      </td>
-      <td colspan="2">
         <div class="actions">
+          <%= link_to 'Cancel', edit_user_path, class: 'btn btn-secondary' %>
           <%= f.submit('Update', { class: 'btn btn-primary' }) %>
         </div>
       </td>

@@ -31,7 +31,6 @@ RSpec.describe AlertFillPunchJob, type: :job do
       end
 
       it 'reschedules to the next day' do
-        # TODO
       end
     end
 

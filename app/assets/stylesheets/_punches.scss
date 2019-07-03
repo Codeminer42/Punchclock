@@ -1,5 +1,11 @@
+$flat-clouds: #ECF0F1;
+$flat-silver: #BDC3C7;
+$flat-pomegranate: #C0392B;
+$flat-sunflower: #F1C40F;
+
+
 .calendar-container {
-  @include outer-container;
+  display: flex;
   -webkit-user-select: none;
 
   h1 {
@@ -9,17 +15,22 @@
   a {
     cursor: pointer;
   }
+
+
 }
 
 .punches-table {
-  @include span-columns(9);
-  display: table;
-  th { text-align: center; }
+
+  th {
+    text-align: center;
+  }
+
   td {
     -webkit-transition: all .3s;
     text-align: center;
     cursor: pointer;
     height: 110px;
+    width: 110px;
 
     &.selected {
       background: $flat-sunflower;
@@ -58,17 +69,29 @@
 
   .punches {
     font-size: .7em;
-    li { height: 1.3em; }
+    margin-left: -40px;
+
+    li {
+      height: 1.3em;
+      list-style-type: none;
+    }
   }
 }
 
 .punches-toolbar {
-  @include span-columns(3);
-  input[type='time'] {
-    font-size: .7em;
-    width: 100px;
-    margin: 2px;
-    display: inline-block;
+  margin: 6em 0 0em 1em;
+
+  form {
+
+    float: left;
+    display: block;
+
+    input[type='time'] {
+      font-size: .7em;
+      width: 100px;
+      margin: 2px;
+      display: inline-block;
+    }
   }
 }
 

@@ -1,0 +1,76 @@
+html,
+body {
+  position: relative;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased
+}
+
+
+
+.main {
+  clear: both;
+  padding: 2em;
+
+  a {
+    color:$tory-blue !important;
+  }
+
+
+}
+
+.pre {
+  margin: 3em auto 2em auto;
+
+  .avatar {
+    span, img {
+      font-size: 2em;
+    }
+  }
+}
+
+.table-responsive, .breadcrumb {
+  a {
+    color:$tory-blue !important;
+  }
+}
+
+#new_user{
+  .field, .actions{
+    width: 20em;
+  }
+}
+
+.tabs {
+  margin-bottom: 0.75em;
+  border-bottom: 2px solid #ECF0F1;
+
+  .tab-link {
+    padding: 0.5em 0.5em 0.2em;
+    color: $flat-midnight-blue;
+
+    &.active {
+      border-bottom: 2px solid $flat-midnight-blue;
+    }
+  }
+}
+
+.error {
+  input {
+    border-color: $flat-alizarin;
+  }
+
+  .help-inline {
+    color: $flat-alizarin;
+  }
+}
+
+
+.form-inline {
+  justify-content: center;
+  align-items: inherit;
+
+  input {
+    margin: 0 .5em;
+  }
+}

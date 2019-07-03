@@ -1,28 +1,18 @@
-$navigation-color: $flat-clouds;
-
-$red: #c61515;
-$redDark: #BD1414;
-$redDarker: #9E0F0F;
-
 .navbar {
   background: $red;
   background: linear-gradient(top,  $red 0%, $redDark 20%, $redDarker 100%); /* FF3.6+,Chrome10+,Safari5.1+, Opera 11.10+ IE10+*/
   background: linear-gradient(to bottom,  $red 0%,$redDark 20%,$redDarker 100%);
   background: gradient(linear, left top, left bottom, color-stop(0%,$red), color-stop(20%,$redDark), color-stop(100%,$redDarker)); /* Chrome,Safari4+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$red', endColorstr='$redDarker',GradientType=0 ); /* IE6-9 */
-  // overflow: hidden;
 
   a {
-    color: $navigation-color;
+    color: $white;
     display: flex;
     align-items: center;
     margin: 0 1em;
     justify-content: space-evenly;
     text-decoration: none;
-
-    @include media($large-screen) {
-      float: left;
-    }
+    font-weight: 600;
 
     &:hover {
       color: rgba(255, 255, 255, 0.75);
@@ -73,23 +63,14 @@ $redDarker: #9E0F0F;
 
   .navbar-dark .navbar-nav .nav-link {
     font-size: 1.1rem;
+  }
+
+  .links {
     color: white;
-  }
+    display: flex;
+    padding-top: 0.813em;
+    padding-bottom: 0.813em;
 
-  .links a {
-    display: none;
-
-    @include media($large-screen){
-      display: block;
-      padding-top: 0.813em;
-      padding-bottom: 0.813em;
-    }
-  }
-
-  .account-options {
-    @include media($large-screen) {
-      float: right;
-    }
   }
 
   &-opened {

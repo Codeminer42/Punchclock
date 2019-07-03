@@ -37,11 +37,6 @@ gem 'sidekiq'
 
 gem 'rollbar'
 
-gem 'bourbon', "~> 4.3"
-gem 'neat', '1.7.2'
-gem 'bitters', '1.1.0'
-gem 'refills', '0.1.0'
-
 # MinerCamp
 gem 'normalize-rails', '~> 4.1.1'
 gem 'validates_timeliness', '~> 5.0.0.alpha3'

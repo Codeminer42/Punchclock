@@ -1,5 +1,5 @@
 .hero {
-  $hero-background: desaturate(darken($base-accent-color, 20), 30);	
+  $hero-background: $baseRedBackground;
   $hero-color: white;
 
   background: url(https://raw.github.com/Magnus-G/Random/master/lake-transparent.png);
@@ -10,7 +10,12 @@
   padding-bottom: 4em;
   padding-top: 3em;
 
-  min-height: 400px;;
+  min-height: 400px;
+
+  &-container {
+    display: flex;
+    justify-content: center;
+  }
 
   .hero-logo img {
       height: 3em;
@@ -18,54 +23,52 @@
   }
 
   .hero-inner {
-    @include outer-container;
-    @include clearfix;
+
     padding: 3em;
     margin: auto;
     text-align: center;
     color: $hero-color;
 
-    button {
-      @include button(simple, $base-accent-color);
-      font-size: $base-font-size;
-      outline: none;
+    .login {
+
+      input[type='submit'] {
+        height: 38px;
+      }
     }
 
     .login {
-      @include span-columns(4);
+      flex: 0.75;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-      #user_password {
-        @include span-columns(8);
-      }
+      form {
+        width: 71%;
 
-      input[type='submit'] {
-        @include span-columns(4);
-        height: 38px;
+        .password {
+          justify-content: space-between;
+          margin: 0 -6px;
+        }
       }
     }
 
     .hero-copy {
       text-align: center;
-      @include span-columns(8);
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1.25;
 
       h1 {
-        font-size: 1.4em;
         margin-bottom: .2em;
+        font-size: 4.5em;
 
-        @include media($large-screen) {
-          font-size: 3.5em;
-        }
       }
 
       p {
         margin: auto;
-        margin-bottom: 3em;	
+        margin-bottom: 3em;
         font-weight: 200;
 
-        @include media($large-screen) {
-          font-size: 1.2em;
-          max-width: 40%;
-        }
       }
     }
   }
