@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 describe 'Users', type: :feature do
-  let(:admin_user) { create(:super) }
+  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
   let(:user)       { create(:user, :admin) }
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
     visit '/admin/users'
   end
 
@@ -22,7 +22,7 @@ describe 'Users', type: :feature do
       find_link('Todos', href: '/admin/users?scope=all').click
 
       within '#index_table_users' do
-        expect(page).to have_css('tbody tr', count: 3)
+        expect(page).to have_css('tbody tr', count: 4)
       end
     end
 
@@ -38,7 +38,7 @@ describe 'Users', type: :feature do
       find_link('Admin', href: '/admin/users?scope=admin').click
 
       within '#index_table_users' do
-        expect(page).to have_css('tbody tr', count: 1)
+        expect(page).to have_css('tbody tr', count: 2)
       end
     end
 
@@ -98,7 +98,7 @@ describe 'Users', type: :feature do
     let!(:skill)      { create(:skill) }
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
-    let!(:evaluation) { create :evaluation, :english, evaluated: user }
+    let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
     let!(:allocation) { create(:allocation, :with_end_at, user: user) }
 
     describe 'New' do

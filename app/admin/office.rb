@@ -8,12 +8,12 @@ ActiveAdmin.register Office do
 
   menu parent: User.model_name.human(count: 2), priority: 3
 
-  filter :company, if: proc { current_admin_user.is_super? }
+  filter :company, if: proc { current_admin_user.super_admin? }
   filter :city, as: :select, collection: proc {
-    current_admin_user.is_super? ? Office.all.group_by(&:company) : current_admin_user.company.offices.order(:city)
+    current_admin_user.super_admin? ? Office.all.group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :head, collection: proc {
-    current_admin_user.is_super? ? User.all.order(:name) : current_admin_user.company.users.order(:name)
+    current_admin_user.super_admin? ? User.all.order(:name) : current_admin_user.company.users.order(:name)
   }
 
   controller do
@@ -27,7 +27,7 @@ ActiveAdmin.register Office do
     column :city do |office|
       link_to office.city, admin_office_path(office)
     end
-    column :company if current_admin_user.is_super?
+    column :company if current_admin_user.super_admin?
     column :head
     column :users_quantity do |office|
       office.users.active.size
@@ -38,7 +38,7 @@ ActiveAdmin.register Office do
   show title: proc{ |office| office.city } do
     attributes_table do
       row :city
-      row :company if current_admin_user.is_super?
+      row :company if current_admin_user.super_admin?
       row :head
       row :score
       row :users_quantity do |office|
@@ -60,7 +60,7 @@ ActiveAdmin.register Office do
   form do |f|
     f.inputs "Office details" do
       f.input :city
-      if current_admin_user.is_super?
+      if current_admin_user.super_admin?
         f.input :head
         f.input :company
       else

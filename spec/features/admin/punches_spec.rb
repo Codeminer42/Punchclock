@@ -3,18 +3,14 @@
 require 'spec_helper'
 
 feature "Punches with super admin_user", type: :feature do
-  let(:admin_user) { create :super }
+  let(:admin_user) { create :user, :super_admin }
   let!(:punch) { create :punch }
   let!(:user) { create :user }
   let(:company) { user.company }
   let!(:project) { create :project }
 
   before do
-    visit '/admin/'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    sign_in(admin_user)
   end
 
   scenario 'index' do
@@ -59,15 +55,13 @@ feature "Punches with super admin_user", type: :feature do
 end
 
 feature "Punches with normal admin_user", type: :feature do
-  let(:admin_user) { create :admin_user }
+  let(:admin_user) { create :user, :admin, occupation: :administrative }
   let!(:punch) { create :punch, company_id: admin_user.company_id }
 
   before do
-    visit '/admin/punches'
+    sign_in(admin_user)
 
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    visit '/admin/punches'
   end
 
   scenario 'index' do

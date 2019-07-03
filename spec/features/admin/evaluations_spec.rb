@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 describe 'Admin Evaluation', type: :feature do
-  let(:admin_user) { create(:admin_user) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
   end
 
   describe 'Filters' do

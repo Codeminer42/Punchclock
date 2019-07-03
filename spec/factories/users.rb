@@ -11,8 +11,8 @@ FactoryBot.define do
     hour_cost             { 15.0 }
     contract_type         { 'employee' }
     role                  { 'normal' }
-    association :office, factory: :office
     company
+    office                { create(:office, company: company) }
 
     trait :head_office do
       office { create(:office, head: :user) }
@@ -32,6 +32,10 @@ FactoryBot.define do
 
     trait :admin do
       role { :admin }
+    end
+
+    trait :super_admin do
+      role { :super_admin }
     end
 
     trait :with_observation do

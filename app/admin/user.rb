@@ -24,9 +24,9 @@ ActiveAdmin.register User do
   filter :email
   filter :level, as: :select, collection: User.levels.map {|key,value| [key.titleize, value]}
   filter :office, collection: proc {
-    current_admin_user.is_super? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
+    current_admin_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
-  filter :company, if: proc { current_admin_user.is_super? }
+  filter :company, if: proc { current_admin_user.super_admin? }
   filter :specialty, as: :select, collection: User.specialties.map {|key,value| [key.humanize, value]}
   filter :contract_type, as: :select, collection: User.contract_types.map { |key,value| [key.humanize, value] }
   filter :by_skills, as: :check_boxes, collection: proc { Skill.order(:title) }
@@ -173,7 +173,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :hour_cost, input_html: { value: '0.0' }
-      if current_admin_user.is_super?
+      if current_admin_user.super_admin?
         f.input :office
         f.input :company
         f.input :reviewer

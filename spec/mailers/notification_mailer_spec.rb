@@ -31,41 +31,6 @@ describe NotificationMailer do
       end
     end
 
-    context 'when admin user has been registered' do
-      let(:admin_user) { FactoryBot.create(:admin_user) }
-      let(:mail) { NotificationMailer.notify_admin_registration(admin_user) }
-
-      it 'renders the subject' do
-        expect(mail.subject).to eq('You were registered on Punchclock')
-      end
-
-      it 'renders the receiver email' do
-        expect(mail.to).to eq([admin_user.email])
-      end
-
-      it 'renders the sender email' do
-        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
-      end
-
-      it 'should have a company' do
-        expect(mail.body.encoded).to match(admin_user.company.name)
-      end
-
-      it 'assigns @email' do
-        expect(mail.body.encoded).to match(admin_user.email)
-      end
-
-      it 'assigns @password' do
-        expect(mail.body.encoded).to match(admin_user.password)
-      end
-
-      it 'assigns link to edit password path' do
-        expect(mail.body.encoded).to have_link(
-          'here', href: edit_admin_admin_user_url(admin_user)
-        )
-      end
-    end
-
     context 'when user has been registered' do
       let(:user) do
         User.new(

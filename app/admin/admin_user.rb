@@ -1,40 +1,27 @@
 # frozen_string_literal: true
 
-ActiveAdmin.register AdminUser do
+ActiveAdmin.register User, as: 'AdminUser' do
   filter :email
+
+  actions :index, :show
 
   menu priority: 2
 
-  permit_params do
-    params = %i[email password password_confirmation company_id]
-    params.push :is_super if current_admin_user.is_super?
-    params
-  end
-
   index do
-    column :company if current_admin_user.is_super?
+    column :company
     column :email
-    column :is_super if current_admin_user.is_super?
-    actions
-  end
-
-  action_item :reset_password, only: :show, if: proc { current_admin_user.is_super? } do
-    link_to reset_password_admin_admin_user_path(resource), method: :post do
-      t('admin_reset_password_button', scope: 'active_admin')
+    column :role do |user|
+      user.role.titleize
     end
-  end
-
-  member_action :reset_password, method: :post do
-    resource.send_reset_password_instructions
-    redirect_to resource_path, notice: t('admin_reset_password', scope: 'active_admin')
+    actions only: :show
   end
 
   show do
     attributes_table do
       row :email
-      if current_admin_user.is_super?
-        row :company
-        row :is_super
+      row :company
+      row :role do |user|
+        user.role.titleize
       end
       row :created_at
       row :updated_at
@@ -42,46 +29,13 @@ ActiveAdmin.register AdminUser do
     end
   end
 
-  form do |f|
-    f.inputs 'Admin Details' do
-      f.input :email
-      f.input :password
-      f.input :password_confirmation
-      if current_admin_user.is_super?
-        f.input :is_super, label: 'Super admin?'
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: {value: current_admin_user.company_id}
-      end
-    end
-    f.actions
-  end
-
   controller do
     def scoped_collection
-      all_admins = super.includes(:company)
-      return all_admins if signed_in_as_super?
-      all_admins.not_super
-    end
-
-    def create
-      create! do |success, failure|
-        success.html do
-          if signed_in_as_super?
-            NotificationMailer.notify_admin_registration(@admin_user).deliver
-          end
-          redirect_to resource_path
-        end
-      end
-    end
-
-    def update_resource(object, attributes)
-      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
-      object.send(update_method, *attributes)
+      signed_in_as_super? ? User.admin : User.where(role: :admin, company_id: current_admin_user.company_id)
     end
 
     def signed_in_as_super?
-      current_admin_user.is_super?
+      current_admin_user.super_admin?
     end
   end
 end

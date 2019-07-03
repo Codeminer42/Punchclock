@@ -5,7 +5,7 @@ ActiveAdmin.register Client do
 
   menu parent: Company.model_name.human
 
-  filter :company, if: proc { current_admin_user.is_super? }
+  filter :company, if: proc { current_admin_user.super_admin? }
   filter :name
 
   scope :active, default: true
@@ -26,7 +26,7 @@ ActiveAdmin.register Client do
 
   index do
     selectable_column
-    column :company if current_admin_user.is_super?
+    column :company if current_admin_user.super_admin?
     column :name
     column :active
     actions
@@ -56,7 +56,7 @@ ActiveAdmin.register Client do
     f.inputs do
       f.input :name
       f.input :active
-      if current_admin_user.is_super?
+      if current_admin_user.super_admin?
         f.input :company
       else
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }

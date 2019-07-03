@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Offices', type: :feature do
-  let(:admin_user) { create(:admin_user) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
   let(:office)     { create(:office, company: admin_user.company) }
   let!(:user)      { create(:user,
                             :with_overall_score,
@@ -12,7 +12,7 @@ describe 'Offices', type: :feature do
                             company: admin_user.company) }
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
     visit '/admin/offices'
   end
 

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Admin Allocation', type: :feature do
-  let(:admin_user)  { create(:admin_user) }
+  let(:admin_user)  { create(:user, :admin, occupation: :administrative) }
   let!(:user)       { create(:user, company: admin_user.company) }
   let!(:project)    { create(:project, company: admin_user.company) }
   let!(:allocation) { create(:allocation,
@@ -14,7 +14,7 @@ describe 'Admin Allocation', type: :feature do
                               company: admin_user.company )}
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
     visit '/admin/allocations'
   end
 

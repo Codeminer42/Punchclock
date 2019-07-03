@@ -80,7 +80,7 @@ ActiveAdmin.register Questionnaire do
     f.inputs Questionnaire.model_name.human do
       f.input :title
       f.input :kind
-      if current_admin_user.is_super?
+      if current_admin_user.super_admin?
         f.input :company
       else
         f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }

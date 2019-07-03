@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 feature "Company", type: :feature do
-  let(:admin_user) { create(:super) }
+  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
   let!(:company) { create(:company) }
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
   end
 
   scenario 'index' do
