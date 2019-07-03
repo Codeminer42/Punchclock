@@ -1,16 +1,22 @@
 <div class="hero">
   <div class="hero-inner">
-    <a href="" class="hero-logo"><img src="https://raw.github.com/Magnus-G/Random/master/placeholder_logo_1.png" alt=""></a>
-    <div class="hero-copy">
-      <h1>O novo <b>PunchClock</b> está aqui!</h1>
-    </div>
+    <div class="hero-container">
+      <div class="hero-copy">
+        <h1>O novo <b>PunchClock</b> está aqui!</h1>
+      </div>
 
-    <div class="login">
-      <%= simple_form_for :user, url: new_user_session_path do |f| %>
-        <%= f.text_field :email, placeholder: 'user@codeminer42.com', autofocus: true %>
-        <%= f.password_field :password, placeholder: '************' %>
-        <%= f.submit 'Sign In' %>
-      <% end %>
+      <div class="login">
+        <a href="" class="hero-logo"><img src="https://raw.github.com/Magnus-G/Random/master/placeholder_logo_1.png" alt=""></a>
+        <%= simple_form_for :user, url: new_user_session_path do |f| %>
+          <div class="form-group">
+            <%= f.text_field :email, placeholder: 'user@codeminer42.com', autofocus: true, class: 'form-control' %>
+          </div>
+          <div class="form-group form-inline password">
+            <%= f.password_field :password, placeholder: '************', class: 'form-control' %>
+            <%= f.submit 'Sign In' %>
+          </div>
+        <% end %>
+      </div>
     </div>
 
   </div>
