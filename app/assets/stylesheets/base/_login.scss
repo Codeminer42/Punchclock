@@ -57,15 +57,11 @@
       display: flex;
       flex-wrap: wrap;
       flex: 1.25;
-      //@include span-columns(8);
 
       h1 {
         margin-bottom: .2em;
         font-size: 4.5em;
 
-        // @include media($large-screen) {
-        //   font-size: 3.5em;
-        // }
       }
 
       p {
@@ -73,10 +69,6 @@
         margin-bottom: 3em;
         font-weight: 200;
 
-        // @include media($large-screen) {
-        //   font-size: 1.2em;
-        //   max-width: 40%;
-        // }
       }
     }
   }

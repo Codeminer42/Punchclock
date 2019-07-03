@@ -6,9 +6,17 @@ body {
   -webkit-font-smoothing: antialiased
 }
 
+
+
 .main {
   clear: both;
   padding: 2em;
+
+  a {
+    color:$tory-blue !important;
+  }
+
+
 }
 
 .pre {
@@ -18,6 +26,12 @@ body {
     span, img {
       font-size: 2em;
     }
+  }
+}
+
+.table-responsive, .breadcrumb {
+  a {
+    color:$tory-blue !important;
   }
 }
 
