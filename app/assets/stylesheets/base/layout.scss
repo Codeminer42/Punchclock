@@ -1,8 +1,8 @@
 html,
 body {
-  display: block;
-  padding: 0 0;
-  height: 100vh;
+  position: relative;
+  padding-bottom: 6rem;
+  min-height: 100%;
   -webkit-font-smoothing: antialiased
 }
 
