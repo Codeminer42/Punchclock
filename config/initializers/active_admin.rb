@@ -3,7 +3,7 @@ pre_defined_paths = Rails.application.config.i18n.load_path
 
 ActiveAdmin.setup do |config|
   config.site_title = proc {
-    (!admin_user_signed_in? || current_admin_user.is_super?) ? "Punchclock" : "Punchclock (#{current_admin_user.company})"
+    (!admin_user_signed_in? || current_admin_user.super_admin?) ? "Punchclock" : "Punchclock (#{current_admin_user.company})"
   }
 
   config.download_links = [:csv]

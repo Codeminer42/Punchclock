@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'cancan/matchers'
 
 describe 'User' do	
-  let(:admin_user) { FactoryBot.create(:admin_user) } 
-  let(:admin_user_super) { FactoryBot.create(:super) }
+  let(:admin_user) { create(:user, :admin) }
+  let(:admin_user_super) { create(:user, :super_admin, occupation: :administrative) }
   let(:user) { FactoryBot.build(:user, id: 1) }
   subject(:ability) { Ability.new(user) }
  

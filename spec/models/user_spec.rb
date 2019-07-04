@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create :user }
+  let(:admin_user) { create :user, :admin, occupation: :administrative}
+  let(:super_admin) { create :user, :super_admin, occupation: :administrative}
   let(:active_user) { create :user, :active_user }
   let(:inactive_user) { create :user, :inactive_user }
 
@@ -199,5 +201,11 @@ RSpec.describe User, type: :model do
   describe '#inactive_message' do
     it { expect(inactive_user.inactive_message).to eq :inactive_account }
     it { expect(active_user.inactive_message).to eq :unconfirmed }
+  end
+
+  describe '#access_admin' do
+    it { expect(admin_user.access_admin?).to be true }
+    it { expect(super_admin.access_admin?).to be true }
+    it { expect(user.access_admin?).to be false }
   end
 end

@@ -5,7 +5,7 @@ class Ability
   prepend Draper::CanCanCan
 
   def initialize(user)
-    if user.is_a?(AdminUser)
+    if user.access_admin?
       admin_user_permitions(user)
     else
       user_permitions(user)
@@ -15,7 +15,7 @@ class Ability
   private
 
   def admin_user_permitions(user)
-    if user.is_super?
+    if user.super_admin?
       can :manage, :all
     else
       can :manage, [
