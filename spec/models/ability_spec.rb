@@ -10,27 +10,31 @@ describe 'User' do
   describe 'abilities admin' do
     let(:ability_admin) { Ability.new(admin_user) }
 
-    it 'cant delete punch' do
+    it "can't delete punch" do
       expect(ability_admin).to_not be_able_to :destroy, Punch.new
     end
 
-    it 'cant delete Company' do
+    it "can't delete Company" do
      expect(ability_admin).to_not be_able_to :destroy, Company.new
     end
 
-    it 'cant delete Projects' do
+    it "can't delete Projects" do
      expect(ability_admin).to_not be_able_to :destroy, Project.new
     end
   
-    it 'can edit punch' do
+    it "can't edit punch" do
       expect(ability_admin).to_not be_able_to :edit, Punch.new
     end
 
-    it 'can edit Company' do
-     expect(ability_admin).to_not be_able_to :destroy, Company.new
+    it "can't delete punch" do
+      expect(ability_admin).to_not be_able_to :destroy, Punch.new
     end
 
-    it 'can edit Projects' do
+    it "can't manage Company" do
+     expect(ability_admin).to_not be_able_to :manage, Company.new
+    end
+
+    it "can't destroy Projects" do
      expect(ability_admin).to_not be_able_to :destroy, Project.new
     end
   end
@@ -39,15 +43,15 @@ describe 'User' do
     let(:ability_admin_super) { Ability.new(admin_user_super) }
 
     it 'able to manage punch' do
-      expect(ability_admin_super).to be_able_to :destroy, Punch.new
+      expect(ability_admin_super).to be_able_to :manage, Punch.new
     end
 
-    it 'when is trying to manage Company' do
-     expect(ability_admin_super).to be_able_to :destroy, Company.new
+    it 'able to manage Company' do
+     expect(ability_admin_super).to be_able_to :manage, Company.new
     end
 
-    it 'when is trying to manage Projects' do
-     expect(ability_admin_super).to be_able_to :destroy, Project.new
+    it 'able to manage Projects' do
+     expect(ability_admin_super).to be_able_to :manage, Project.new
     end
   end
 

@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create :user }
-  let(:admin_user) { create :user, :admin, occupation: :administrative}
-  let(:super_admin) { create :user, :super_admin, occupation: :administrative}
+  let(:admin_user) { create :user, :admin}
+  let(:super_admin) { create :user, :super_admin}
   let(:active_user) { create :user, :active_user }
   let(:inactive_user) { create :user, :inactive_user }
 
@@ -162,7 +162,7 @@ RSpec.describe User, type: :model do
 
     context 'when user is not head' do
       it 'returns false' do
-        expect(user.office_head?).to eq false
+        expect(user).to_not be_office_head
       end
     end
 
@@ -170,7 +170,7 @@ RSpec.describe User, type: :model do
       let!(:office) { create(:office, head: user) }
 
       it 'returns true' do
-        expect(user.office_head?).to eq true
+        expect(user).to be_office_head
       end
     end
   end
@@ -204,8 +204,16 @@ RSpec.describe User, type: :model do
   end
 
   describe '#access_admin' do
-    it { expect(admin_user.access_admin?).to be true }
-    it { expect(super_admin.access_admin?).to be true }
-    it { expect(user.access_admin?).to be false }
+    it "allows admin access for user with admin role" do 
+      expect(admin_user).to have_admin_access
+    end
+    
+    it "allow admin access for user with super_admin role" do 
+      expect(super_admin).to have_admin_access 
+    end
+
+    it "not allows admin access for user without admin or super_admin roles" do 
+      expect(user).to_not have_admin_access
+    end
   end
 end

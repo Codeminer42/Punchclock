@@ -18,11 +18,17 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin_user!
-    redirect_to root_path unless !current_admin_user.nil? && current_admin_user.access_admin?
+    unless !current_admin_user.nil? && current_admin_user.has_admin_access?
+      redirect_to root_path, alert: "Acesso negado"
+    end
   end
 
   def after_sign_in_path_for(user)
-    !user.nil? && user.access_admin? ? admin_dashboard_path : root_path 
+    if (user.admin? && user.administrative?) || user.super_admin?
+      admin_dashboard_path 
+    else
+      root_path 
+    end
   end
 
   private

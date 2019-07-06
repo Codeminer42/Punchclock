@@ -156,10 +156,6 @@ describe 'Users', type: :feature do
         expect(page).to have_link('Editar Usuário')
       end
 
-      it 'have delete action' do
-        expect(page).to have_link('Remover Usuário')
-      end
-
       context 'on user tab' do
         it 'finds user information' do
           within '#usuario' do

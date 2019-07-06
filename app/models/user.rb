@@ -98,8 +98,8 @@ class User < ApplicationRecord
     managed_offices.present?
   end
 
-  def access_admin?
-    (administrative? && admin?) || super_admin?
+  def has_admin_access?
+    admin? || super_admin?
   end
 
   def update_with_password(params, *options)
