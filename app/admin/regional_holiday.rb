@@ -5,17 +5,17 @@ ActiveAdmin.register RegionalHoliday do
 
   menu parent: Company.model_name.human
 
-  filter :company, if: proc { current_admin_user.is_super? }
+  filter :company, if: proc { current_admin_user.super_admin? }
   filter :name
   filter :offices, multiple: true, collection: proc {
-    current_admin_user.is_super? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
+    current_admin_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
   }
   filter :day
   filter :month
 
 
   index do
-    column :company if current_admin_user.is_super?
+    column :company if current_admin_user.super_admin?
     column :name
     column :day
     column :month
@@ -27,7 +27,7 @@ ActiveAdmin.register RegionalHoliday do
 
   show do
     attributes_table do
-      row :company if current_admin_user.is_super?
+      row :company if current_admin_user.super_admin?
       row :id
       row :name
       row :day
@@ -45,7 +45,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :month
       f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
       f.input :offices, as: :check_boxes,
-        collection: current_admin_user.is_super? ? Office.all.order(:city) : current_admin_user.company.offices.order(:city)
+        collection: current_admin_user.super_admin? ? Office.all.order(:city) : current_admin_user.company.offices.order(:city)
     end
       f.actions
   end

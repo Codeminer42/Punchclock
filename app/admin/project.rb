@@ -10,7 +10,7 @@ ActiveAdmin.register Project do
   scope :active, default: true
   scope :inactive
 
-  filter :company, if: proc { current_admin_user.is_super? }
+  filter :company, if: proc { current_admin_user.super_admin? }
   filter :name
   filter :created_at
   filter :updated_at
@@ -30,7 +30,7 @@ ActiveAdmin.register Project do
 
   index do
     selectable_column
-    column :company if current_admin_user.is_super?
+    column :company if current_admin_user.super_admin?
     column :name do |project|
       link_to project.name, admin_project_path(project)
     end
@@ -44,7 +44,7 @@ ActiveAdmin.register Project do
       row :name
       row :active
       row :client
-      row :company if current_admin_user.is_super?
+      row :company if current_admin_user.super_admin?
       row :created_at
       row :updated_at
     end
@@ -65,7 +65,7 @@ ActiveAdmin.register Project do
   form do |f|
     f.inputs 'Project Details' do
       f.input :name
-      if current_admin_user.is_super?
+      if current_admin_user.super_admin?
         f.input :client
         f.input :company
       else

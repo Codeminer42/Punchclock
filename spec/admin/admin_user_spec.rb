@@ -14,7 +14,7 @@ describe AdminUser do
     end
 
     it 'Verifying defined actions for a resource' do
-      expect(resource.defined_actions).to include :create, :index, :new, :update, :edit, :show, :destroy
+      expect(resource.defined_actions).to include :index, :show
     end
   end
 end

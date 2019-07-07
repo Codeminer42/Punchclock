@@ -3,15 +3,11 @@
 require 'spec_helper'
 
 feature 'Clients', type: :feature do
-  let(:admin_user) { FactoryBot.create(:super) }
-  let!(:client) { FactoryBot.create(:client) }
+  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
+  let!(:client) { create(:client) }
 
   before do
-    visit '/admin'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    sign_in(admin_user)
   end
 
   scenario 'index' do

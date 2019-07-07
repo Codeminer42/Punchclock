@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Dashboard', type: :feature do
-  let(:admin_user) { create(:super) }
+  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
   let!(:user)      { create(:user, company: admin_user.company) }
   let!(:user2)     { create(:user, company: admin_user.company) }
   let!(:office)    { create(:office, company: admin_user.company, head: user) }
@@ -9,7 +9,7 @@ describe 'Dashboard', type: :feature do
   let!(:project)    { create(:project, company: admin_user.company, client: client) }
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
     visit '/admin/dashboard'
   end
 

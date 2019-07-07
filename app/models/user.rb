@@ -31,6 +31,7 @@ class User < ApplicationRecord
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
+  scope :admin,          -> { where(role: [:admin, :super_admin]) }
 
   # FIXME: Remove n+1 query
   scope :by_skills_in, -> (*skill_ids) do
@@ -94,6 +95,10 @@ class User < ApplicationRecord
 
   def office_head?
     managed_offices.present?
+  end
+
+  def has_admin_access?
+    admin? || super_admin?
   end
 
   def update_with_password(params, *options)

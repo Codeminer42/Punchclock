@@ -8,10 +8,10 @@ ActiveAdmin.register Punch do
   menu priority: 100
 
   filter :project, collection: proc {
-    current_admin_user.is_super? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects.order(:name)
+    current_admin_user.super_admin? ? Project.order(active: :desc, name: :asc).group_by(&:company) : current_admin_user.company.projects.order(:name)
   }
   filter :user, collection: proc { grouped_users_by_active_status(current_admin_user.company) }
-  filter :company, if: proc { current_admin_user.is_super? }
+  filter :company, if: proc { current_admin_user.super_admin? }
   filter :from, label: 'Intervalo', as: :date_range
   filter :extra_hour, label: 'Fez Hora Extra?'
 
@@ -21,7 +21,7 @@ ActiveAdmin.register Punch do
     div class: 'panel' do
       h3 "Total: #{collection.total_hours}"
     end
-    column :company, sortable: [:company, :name] if current_admin_user.is_super?
+    column :company, sortable: [:company, :name] if current_admin_user.super_admin?
     column :user, sortable: [:user, :name]
     column :project, sortable: [:project, :name]
     column :when, sortable: :from
@@ -34,7 +34,7 @@ ActiveAdmin.register Punch do
 
   show do
     attributes_table do
-      row :company if current_admin_user.is_super?
+      row :company if current_admin_user.super_admin?
       row :user
       row :project
       row :when

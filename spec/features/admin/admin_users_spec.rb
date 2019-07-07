@@ -3,14 +3,10 @@
 require 'spec_helper'
 
 feature "Admin Users", type: :feature do
-  let(:admin_user) { FactoryBot.create(:super) }
-  let!(:company) { FactoryBot.create(:company) }
+  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
+  let!(:company) { create(:company) }
   before do
-    visit '/admin/'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-    click_button 'Entrar'
+    sign_in(admin_user)
     click_link 'Administradores'
   end
 
@@ -35,29 +31,5 @@ feature "Admin Users", type: :feature do
     click_link 'Visualizar'
 
     expect(page).to have_content('Detalhes do(a) Administrador')
-  end
-
-  scenario 'edit' do
-    click_link  'Editar'
-
-    expect(page).to have_content('Editar Administrador')
-  end
-
-  scenario 'new admin' do
-    click_link 'Novo(a) Administrador'
-
-    expect(page).to have_content('Novo(a) Administrador')
-
-    click_button 'Criar Administrador'
-
-    expect(page).to have_content('não pode ficar em branco')
-
-    fill_in 'admin_user_email', with: 'teste@hotmail.com'
-    fill_in 'admin_user_password', with:  'password'
-    fill_in 'admin_user_password_confirmation', with:'password'
-    select company.name, from: 'admin_user_company_id'
-    click_button 'Criar Administrador'
-
-    expect(page).to have_content('Administrador foi criado com sucesso.')
   end
 end

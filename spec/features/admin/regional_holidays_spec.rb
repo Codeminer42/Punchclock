@@ -3,16 +3,11 @@
 require 'spec_helper'
 
 feature "RegionalHolidays", type: :feature do
-  let(:admin_user) { create(:super) }
+  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
 
   background do
     create(:regional_holiday)
-    visit '/admin/'
-
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-
-    click_button 'Entrar'
+    sign_in(admin_user)
   end
 
   scenario 'index' do

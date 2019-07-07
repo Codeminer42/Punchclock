@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 describe 'Projects', type: :feature do
-  let(:admin_user) { create(:admin_user) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
   let!(:project)   { create(:project, company: admin_user.company) }
 
   before do
-    admin_sign_in(admin_user)
+    sign_in(admin_user)
     visit '/admin/projects'
   end
 
