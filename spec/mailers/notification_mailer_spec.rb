@@ -3,7 +3,7 @@ require 'spec_helper'
 describe NotificationMailer do
   describe 'notification email' do
     context 'when user sign up' do
-      let(:user) { FactoryBot.build(:user_admin) }
+      let(:user) { FactoryBot.build(:user, :admin) }
       let(:mail) { NotificationMailer.notify_user_registration(user) }
 
       it 'renders the subject' do
@@ -107,7 +107,7 @@ describe NotificationMailer do
 
     context 'when notify admin: user dont punch makes 7 days or more' do
       let(:user) { build(:user) }
-      let(:admin) { build(:admin_user, company_id: user.company_id) }
+      let(:admin) { build(:user, :admin, company_id: user.company_id) }
       let(:mail) do
         NotificationMailer.notify_admin_punches_pending(admin, user)
       end
@@ -131,13 +131,13 @@ describe NotificationMailer do
 
     context 'when notify admin: extra hour' do
       let(:user) { build :user }
-      let(:admins) { build_list :admin_user, 2, company_id: user.company_id }
+      let(:admins) { build_list :user, 2, :admin, company_id: user.company_id }
       let(:extra_hour_punches) do
         from = "2018-07-03 17:00".to_time
         to   = from + 2.hours
         create_list :punch, 1, extra_hour: true, user: user, from: from, to: to
       end
-      let(:mail) { NotificationMailer.notify_admin_extra_hour([[user.name, extra_hour_punches]], admins) }
+      let(:mail) { NotificationMailer.notify_admin_extra_hour([[user.name, extra_hour_punches]], admins.map(&:email)) }
 
       it 'renders the subject' do
         expect(mail.subject).to eq 'Punchclock - Horas extra registradas'

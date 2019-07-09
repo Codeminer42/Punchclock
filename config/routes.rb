@@ -2,10 +2,6 @@
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
-
-  get '/admin/offices/search_by_id', to: 'admin/offices#search_by_id'
-  get '/admin/users/search_by_id', to: 'admin/users#search_by_id'
   ActiveAdmin.routes(self)
   devise_for :users
 
@@ -47,7 +43,6 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   devise_scope :user do
-    # get '/login', to: 'active_admin/devise/sessions#new', as: :miner_login
     post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds
     resources :evaluations, only: %i[show index]
   end

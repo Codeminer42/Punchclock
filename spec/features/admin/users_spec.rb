@@ -38,7 +38,7 @@ describe 'Users', type: :feature do
       find_link('Admin', href: '/admin/users?scope=admin').click
 
       within '#index_table_users' do
-        expect(page).to have_css('tbody tr', count: 2)
+        expect(page).to have_css('tbody tr', count: 1)
       end
     end
 

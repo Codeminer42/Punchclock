@@ -8,10 +8,11 @@ ActiveAdmin.register User, as: 'AdminUser' do
   menu priority: 2
 
   index do
-    column :company
+    column :name
     column :email
-    column :role do |user|
-      user.role.titleize
+    if current_user.super_admin?
+      column :role 
+      column :company
     end
     actions only: :show
   end
@@ -19,10 +20,8 @@ ActiveAdmin.register User, as: 'AdminUser' do
   show do
     attributes_table do
       row :email
-      row :company
-      row :role do |user|
-        user.role.titleize
-      end
+      row :company if current_user.super_admin?
+      row :role
       row :created_at
       row :updated_at
       row :last_sign_in_at
@@ -31,11 +30,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
 
   controller do
     def scoped_collection
-      signed_in_as_super? ? User.admin : User.where(role: :admin, company_id: current_admin_user.company_id)
-    end
-
-    def signed_in_as_super?
-      current_admin_user.super_admin?
+      current_user.super_admin? ? User.where(role: [:admin, :super_admin]) : User.admin.where(company_id: current_user.company_id)
     end
   end
 end

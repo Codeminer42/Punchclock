@@ -24,9 +24,9 @@ ActiveAdmin.register User do
   filter :email
   filter :level, as: :select, collection: User.levels.map {|key,value| [key.titleize, value]}
   filter :office, collection: proc {
-    current_admin_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_admin_user.company.offices.order(:city)
+    current_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_user.company.offices.order(:city)
   }
-  filter :company, if: proc { current_admin_user.super_admin? }
+  filter :company, if: proc { current_user.super_admin? }
   filter :specialty, as: :select, collection: User.specialties.map {|key,value| [key.humanize, value]}
   filter :contract_type, as: :select, collection: User.contract_types.map { |key,value| [key.humanize, value] }
   filter :by_skills, as: :check_boxes, collection: proc { Skill.order(:title) }
@@ -173,18 +173,18 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :hour_cost, input_html: { value: '0.0' }
-      if current_admin_user.super_admin?
+      if current_user.super_admin?
         f.input :office
         f.input :company
         f.input :reviewer
         f.input :role, as: :select, collection: User.roles.keys.map { |role| [role.titleize, role] }
         f.input :skills, as: :check_boxes
       else
-        f.input :office, collection: current_admin_user.company.offices.order(:city)
+        f.input :office, collection: current_user.company.offices.order(:city)
         f.input :role, as: :select, collection: User.roles.except(:super_admin).keys.map { |role| [role.titleize, role] }
-        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
-        f.input :reviewer, collection: current_admin_user.company.users.active.order(:name)
-        f.input :skills, as: :check_boxes, collection: current_admin_user.company.skills.order(:title)
+        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
+        f.input :reviewer, collection: current_user.company.users.active.order(:name)
+        f.input :skills, as: :check_boxes, collection: current_user.company.skills.order(:title)
       end
       f.input :occupation, as: :radio
       f.input :specialty

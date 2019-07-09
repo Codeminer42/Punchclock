@@ -10,10 +10,10 @@ ActiveAdmin.register Allocation do
   scope :all
 
   filter :user, collection: proc {
-    current_admin_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.order(:name)
+    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
   }
   filter :project, collection: proc {
-    current_admin_user.super_admin? ? Project.all.order(:name).group_by(&:company) : current_admin_user.company.projects.order(:name)
+    current_user.super_admin? ? Project.all.order(:name).group_by(&:company) : current_user.company.projects.order(:name)
   }
   filter :start_at
   filter :end_at
@@ -59,14 +59,14 @@ ActiveAdmin.register Allocation do
 
   form html: { autocomplete: 'off' } do |f|
     inputs 'Details' do
-      if current_admin_user.super_admin?
+      if current_user.super_admin?
         input :user
         input :project
         input :company
       else
-        input :user, as: :select, collection: current_admin_user.company.users.active.order(:name)
-        input :project, collection: current_admin_user.company.projects.active.order(:name)
-        input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
+        input :user, as: :select, collection: current_user.company.users.active.order(:name)
+        input :project, collection: current_user.company.projects.active.order(:name)
+        input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
         input :start_at, as: :date_picker, input_html: { value: f.object.start_at.try(:strftime, '%Y-%m-%d') }
         input :end_at, as: :date_picker, input_html: { value: f.object.end_at.try(:strftime, '%Y-%m-%d') }

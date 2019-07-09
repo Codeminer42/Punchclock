@@ -5,7 +5,7 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
   describe '#perform' do
 
     let!(:company) { create :company, name: "Codeminer42" }
-    let!(:admins) { create_list :admin_user, 2, company: company }
+    let!(:admins) { create_list :user, 2, :admin, company: company }
     let!(:active_user) { create :user, company: company, active: true, allow_overtime: true }
     let!(:extra_hour_punches) {
       from = Time.new 2018, 7, 3, 17, 0
@@ -27,7 +27,8 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
     end
 
     it 'executes perform' do
-      expect(NotificationMailer).to receive(:notify_admin_extra_hour).with([[active_user.name, extra_hour_punches]], admins)
+      expect(NotificationMailer).to receive(:notify_admin_extra_hour)
+        .with([[active_user.name, extra_hour_punches]], a_collection_containing_exactly(*admins.map(&:email)))
       perform_enqueued_jobs { job }
     end
   end

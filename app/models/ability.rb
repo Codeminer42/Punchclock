@@ -19,7 +19,6 @@ class Ability
       can :manage, :all
     else
       can :manage, [
-        AdminUser,
         User,
         Office,
         Project,
@@ -35,7 +34,6 @@ class Ability
       can :read, ActiveAdmin::Page, name: "Dashboard"
 
       can :create, [
-        AdminUser,
         User,
         Office,
         Project,
