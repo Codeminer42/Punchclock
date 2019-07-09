@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_09_224453) do
+ActiveRecord::Schema.define(version: 2019_07_09_232421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +32,8 @@ ActiveRecord::Schema.define(version: 2019_07_09_224453) do
     t.bigint "evaluation_id"
     t.bigint "question_id"
     t.text "response"
-    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_answers_on_company_id"
     t.index ["evaluation_id"], name: "index_answers_on_evaluation_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
@@ -132,10 +130,8 @@ ActiveRecord::Schema.define(version: 2019_07_09_224453) do
     t.string "title"
     t.integer "kind"
     t.string "answer_options", default: [], array: true
-    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_questions_on_company_id"
     t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
@@ -157,13 +153,13 @@ ActiveRecord::Schema.define(version: 2019_07_09_224453) do
     t.index ["company_id"], name: "index_skills_on_company_id"
   end
 
-  create_table "user_skills", force: :cascade do |t|
+  create_table "skills_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "skill_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
-    t.index ["user_id"], name: "index_user_skills_on_user_id"
+    t.index ["skill_id"], name: "index_skills_users_on_skill_id"
+    t.index ["user_id"], name: "index_skills_users_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -207,19 +203,17 @@ ActiveRecord::Schema.define(version: 2019_07_09_224453) do
   add_foreign_key "allocations", "companies"
   add_foreign_key "allocations", "projects"
   add_foreign_key "allocations", "users"
-  add_foreign_key "answers", "companies"
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
   add_foreign_key "clients", "companies"
   add_foreign_key "evaluations", "companies"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "questionnaires", "companies"
-  add_foreign_key "questions", "companies"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "regional_holidays", "companies"
   add_foreign_key "skills", "companies"
-  add_foreign_key "user_skills", "skills"
-  add_foreign_key "user_skills", "users"
+  add_foreign_key "skills_users", "skills"
+  add_foreign_key "skills_users", "users"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "reviewer_id"
 end

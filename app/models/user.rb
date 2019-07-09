@@ -14,12 +14,11 @@ class User < ApplicationRecord
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
   has_many :punches
-  has_many :user_skills, dependent: :destroy
-  has_many :skills, through: :user_skills
   has_many :allocations, dependent: :restrict_with_error
   has_many :projects, through: :allocations
   has_many :evaluations, foreign_key: :evaluated_id, dependent: :restrict_with_error
   has_many :managed_offices, class_name: 'Office', foreign_key: :head_id
+  has_and_belongs_to_many :skills
 
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true

@@ -15,8 +15,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:punches) }
     it { is_expected.to have_many(:allocations) }
     it { is_expected.to have_many(:projects).through(:allocations) }
-    it { is_expected.to have_many(:user_skills) }
-    it { is_expected.to have_many(:skills).through(:user_skills) }
+    it { is_expected.to have_and_belong_to_many(:skills) }
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
   end
 
@@ -95,9 +94,7 @@ RSpec.describe User, type: :model do
   describe 'scopes' do
     let(:ruby)          { create(:skill, title: 'ruby') }
     let(:vuejs)         { create(:skill, title: 'vuejs') }
-
     let!(:full_stack)   { create(:user, skills: [ruby, vuejs]) }
-    let!(:ruby_users)  { create_list(:user_skill, 3, skill: ruby) }
 
     context '#by_skills' do
       it 'returns the users that have all the skills selected' do
