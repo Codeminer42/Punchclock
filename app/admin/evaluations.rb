@@ -7,10 +7,10 @@ ActiveAdmin.register Evaluation do
   menu parent: Evaluation.model_name.human(count: 2)
 
   filter :evaluator, collection: proc {
-    current_admin_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.active.order(:name)
+    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.active.order(:name)
   }
   filter :evaluated, collection: proc {
-    current_admin_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_admin_user.company.users.active.order(:name)
+    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.active.order(:name)
   }
   filter :questionnaire_kind, as: :select, collection: Questionnaire.kinds.keys.map {|key,value| [key.titleize, key]}
   filter :created_at

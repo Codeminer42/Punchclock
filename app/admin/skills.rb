@@ -18,10 +18,10 @@ ActiveAdmin.register Skill do
   form do |f|
     f.inputs "Skills details" do
       f.input :title
-      if current_admin_user.super_admin?
+      if current_user.super_admin?
         f.input :company
       else
-        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
+        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
     end
     f.actions

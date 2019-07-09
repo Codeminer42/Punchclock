@@ -80,17 +80,17 @@ ActiveAdmin.register Questionnaire do
     f.inputs Questionnaire.model_name.human do
       f.input :title
       f.input :kind
-      if current_admin_user.super_admin?
+      if current_user.super_admin?
         f.input :company
       else
-        f.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
+        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
       f.input :active
       f.input :description
       f.has_many :questions, allow_destroy: true, new_record: true do |q|
         q.input :title
         q.input :kind
-        q.input :company_id, as: :hidden, input_html: { value: current_admin_user.company_id }
+        q.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
         q.input :raw_answer_options, label: 'Answer options separated by ;', input_html: {
           value: q.object.answer_options_to_string,
           autocomplete: 'off'

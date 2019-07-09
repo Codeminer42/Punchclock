@@ -6,7 +6,7 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
-      current_company = current_admin_user.company
+      current_company = current_user.company
 
       users_collection = current_company.users.active.includes(:office).order(:name).map do |user| 
         user_label = "#{user.name.titleize} - #{user.email} - "

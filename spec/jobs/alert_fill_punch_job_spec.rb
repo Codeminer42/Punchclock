@@ -4,7 +4,7 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
   describe '#perform' do
     let!(:company) { create(:company, name: "Codeminer42") }
-    let(:admin) { create(:admin_user, company: company) }
+    let(:admin) { create(:user, :admin, company: company) }
     let(:active_user) { create(:user, company: company, active: true) }
     let(:inactive_user) { create(:user, active: false) }
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
@@ -15,14 +15,13 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
     context 'when is NOT working day' do
       before do
-        travel_to Time.new(2019, 4, 21)
 
         allow(NotificationMailer).to receive(:notify_user_to_fill_punch).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
       end
 
-      after do
-        travel_back
+      around do |example|
+        travel_to Time.new(2019, 4, 21), &example
       end
 
       it 'does NOT send any emails' do
