@@ -64,6 +64,8 @@ ActiveAdmin.register User do
     actions
   end
 
+  sidebar 'Filtro', only: :show, if: proc{ true }, partial: 'custom-filter-punches'
+
   show do
     tabs do
       tab User.model_name.human do
@@ -153,7 +155,10 @@ ActiveAdmin.register User do
       end
 
       tab :punches do
-        table_for user.punches.since(60.days.ago).order(from: :desc).decorate, i18n: Punch do
+        from = params.dig(:punch, :from_gteq) || 10.days.ago
+        to = params.dig(:punch, :from_lteq) || Time.zone.now
+
+        table_for user.punches.where(from: from..to).order(from: :desc).decorate, i18n: Punch do
           column :company
           column :project
           column :when
@@ -163,7 +168,9 @@ ActiveAdmin.register User do
           column :extra_hour
         end
         div link_to I18n.t('download_as_csv'),
-                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: Date.current - 60 }, format: :csv)
+                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :csv)
+        div link_to I18n.t('download_as_xml'),
+                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :xml)
         div link_to I18n.t('all_punches'),
                         admin_punches_path(q: { user_id_eq: user.id, commit: :Filter })
       end

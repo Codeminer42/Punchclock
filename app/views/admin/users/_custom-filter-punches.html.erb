@@ -1,0 +1,16 @@
+<%= simple_form_for :punch, method: :get,  html: {
+    class: %i(form_adm_filter_punch)
+  } do |f| %>
+
+  <label class="label">Intervalo</label>
+  <div class="input_container">
+    <%= f.input :from_gteq, label: false, as: :string, placeholder: 'A partir de', :input_html => {
+      class: %i(datepicker)
+    } %>
+    <%= f.input :from_lteq, label: false, as: :string, placeholder: 'Até', :input_html => {
+      class: %i(datepicker)
+    } %>
+  </div>
+  <%= f.button :submit, "Filtrar"%> 
+  <%= link_to('Limpar Filtro', '#', html_options = {}) %>
+<% end %>

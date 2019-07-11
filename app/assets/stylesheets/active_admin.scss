@@ -28,3 +28,33 @@
 .formtastic.user {
   margin-bottom: 20px;
 }
+
+.form_adm_filter_punch {
+  label{
+    color: #8494a8;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+  .input_container {
+    display: flex;
+    margin-bottom: 10px;
+    input[type='text'] {
+      border: 1px solid #e6e9ee;
+      border-radius: 3px;
+      box-sizing: border-box;
+      font-size: 0.95em;
+      margin-right: 4px;
+      padding: 8px 10px 7px;
+      width: 114px;
+    }
+  }
+  a {
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: #FFFFFF;
+    border: solid 1px #c7c7c7;
+    color: #5E6469;
+  }
+}
