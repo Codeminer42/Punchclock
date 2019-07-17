@@ -29,8 +29,11 @@ ActiveAdmin.register User do
   filter :company, if: proc { current_user.super_admin? }
   filter :specialty, as: :select, collection: User.specialties.map {|key,value| [key.humanize, value]}
   filter :contract_type, as: :select, collection: User.contract_types.map { |key,value| [key.humanize, value] }
-  filter :by_skills, as: :check_boxes, collection: proc { Skill.order(:title) }
-
+  filter :by_skills, as: :check_boxes, collection: proc {
+    Skill.order(:title).map do |skill|
+      [skill.title, skill.id, checked: params.dig(:q, :by_skills_in)&.include?(skill.id.to_s)]
+    end
+  }
 
   batch_action :destroy, false
   batch_action :disable, if: proc { params[:scope] != "inactive" } do |ids|

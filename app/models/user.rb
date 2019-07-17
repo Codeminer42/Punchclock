@@ -30,11 +30,10 @@ class User < ApplicationRecord
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
+  scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
 
-  # FIXME: Remove n+1 query
-  scope :by_skills_in, -> (*skill_ids) do
-    users_with_all_skills = skill_ids.map { |id| User.joins(:skills).where(skills: {id: id}) }.reduce(:&)
-    where(id: users_with_all_skills)
+  def self.ransackable_scopes_skip_sanitize_args
+    [:by_skills_in]
   end
 
   def self.ransackable_scopes(_auth_object)
