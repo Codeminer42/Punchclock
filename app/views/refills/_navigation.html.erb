@@ -24,7 +24,7 @@
             </span>
             <%= gravatar_for current_user, size: 40 %>
           <% end %>
-          <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
+          <%= link_to t('.logout'), destroy_user_session_path %>
         </div>
       <% end %>
     </nav>
