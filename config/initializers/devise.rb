@@ -16,5 +16,5 @@ Devise.setup do |config|
   config.scoped_views = true
   config.expire_all_remember_me_on_sign_out = true
   config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
-  config.sign_out_via = :delete
+  config.sign_out_via = :get
 end
