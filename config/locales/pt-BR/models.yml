@@ -1,4 +1,12 @@
 pt-BR:
+  activemodel:
+    attributes:
+      allocate_users_form:
+        not_allocated_users: Usuários não alocados
+        company: Empresa
+        start_at: Início
+        end_at: Término
+        sucess: Usuários alocados com sucesso
   activerecord:
     errors:
       models:

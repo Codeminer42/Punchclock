@@ -5,6 +5,8 @@ ActiveAdmin.register Project do
 
   permit_params :name, :company_id, :active, :client_id
 
+  before_action :create_form, only: :show
+
   menu parent: Company.model_name.human
 
   scope :active, default: true
@@ -28,6 +30,15 @@ ActiveAdmin.register Project do
     redirect_to collection_path, alert: "The projects have been enabled."
   end
 
+  collection_action :allocate_users, method: :post do
+    @allocate_users_form = AllocateUsersForm.new(permited_allocation_params)
+    if @allocate_users_form.save
+      redirect_to admin_allocations_path, notice: I18n.t('allocate_users_form.success')
+    else
+      redirect_to admin_project_path(@allocate_users_form.project_id), alert: I18n.t('allocate_users_form.error')
+    end
+  end
+
   index do
     selectable_column
     column :company if current_user.super_admin?
@@ -40,26 +51,33 @@ ActiveAdmin.register Project do
   end
 
   show do
-    attributes_table do
-      row :name
-      row :active
-      row :client
-      row :company if current_user.super_admin?
-      row :created_at
-      row :updated_at
-    end
+    tabs do
+      tab I18n.t('main') do
+        attributes_table do
+          row :name
+          row :active
+          row :client
+          row :company if current_user.super_admin?
+          row :created_at
+          row :updated_at
+        end
 
-    panel Allocation.model_name.human(count: 2) do
-      table_for project.allocations.ongoing do
-        column :user
-        column :start_at
-        column :end_at
-        column :access do |allocation|
-          link_to I18n.t('view'), admin_allocation_path(allocation)
+        panel Allocation.model_name.human(count: 2) do
+          table_for project.allocations.ongoing do
+            column :user
+            column :start_at
+            column :end_at
+            column :access do |allocation|
+              link_to I18n.t('view'), admin_allocation_path(allocation)
+            end
+          end
         end
       end
-    end
 
+      tab I18n.t('allocate_users') do
+        render 'allocate_users'
+      end
+    end
   end
 
   form do |f|
@@ -75,5 +93,15 @@ ActiveAdmin.register Project do
       f.input :active
     end
     f.actions
+  end
+
+  controller do
+    def create_form
+      @allocate_users_form = AllocateUsersForm.new
+    end
+
+    def permited_allocation_params
+      params.require(:allocate_users_form).permit(:company_id, :project_id, :start_at, :end_at, not_allocated_users: [])
+    end
   end
 end

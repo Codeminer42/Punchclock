@@ -42,6 +42,8 @@ pt-BR:
   written: 'Realizadas'
   download_as_csv: 'Baixar CSV'
   all_punches: 'Todos os Punches'
+  allocate_users: Alocar Usuários
+  main: Principal
   errors:
     messages:
       not_saved: "Erro"
@@ -52,3 +54,7 @@ pt-BR:
   finished: 'Finalizado'
   admin:
     search_by: "Por %{model_name}"
+  allocate_users_form:
+    success: Alocações salvas com sucesso.
+    error: Cheque os dados e tente novamente.
+    create: Criar Alocações
