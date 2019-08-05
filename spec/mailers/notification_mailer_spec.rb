@@ -18,8 +18,12 @@ describe NotificationMailer do
         expect(mail.from).to eq(['do-not-reply@punchclock.com'])
       end
 
-      it 'assigns @name' do
-        expect(mail.body.encoded).to match(user.name)
+      it 'assigns @name on html_part' do
+        expect(mail.html_part.decoded).to match(user.name)
+      end
+
+      it 'assigns @name on text_part' do
+        expect(mail.text_part.decoded).to match(user.name)
       end
 
       it 'assigns @email' do
