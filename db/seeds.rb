@@ -35,17 +35,24 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       Project.find_or_create_by!(name: project, company: company)
     end
 
-    AdminUser.find_or_create_by!(email: "super@#{name}.com") do |admin|
+    User.find_or_create_by!(email: "super@#{name}.com") do |admin|
+      admin.name = 'super'
+      admin.occupation = :administrative
       admin.password = 'password'
       admin.password_confirmation = 'password'
-      admin.is_super = true
+      admin.role = :super_admin
       admin.company = company
+      admin.skip_confirmation!
     end
 
-    AdminUser.find_or_create_by!(email: "admin@#{name}.com") do |admin|
+    User.find_or_create_by!(email: "admin@#{name}.com") do |admin|
+      admin.name = 'admin'
+      admin.occupation = :administrative
       admin.password = 'password'
       admin.password_confirmation = 'password'
+      admin.role = :admin
       admin.company = company
+      admin.skip_confirmation!
     end
 
     rand(offices.size * 10).times do |i|
