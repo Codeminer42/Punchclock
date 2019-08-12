@@ -98,7 +98,7 @@ RSpec.describe User, type: :model do
 
     context '#by_skills' do
       it 'returns the users that have all the skills selected' do
-        expect(User.by_skills_in([ruby.id, vuejs.id]).first).to eq(full_stack)
+        expect(User.by_skills_in(ruby.id, vuejs.id).first).to eq(full_stack)
       end
     end
   end
