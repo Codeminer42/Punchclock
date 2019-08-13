@@ -30,6 +30,7 @@ gem 'webpacker', '~> 4.x'
 gem 'holidays', '7.1.0'
 gem 'kaminari'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
+gem 'spreadsheet'
 
 gem 'ransack', '~> 2.1.1'
 
