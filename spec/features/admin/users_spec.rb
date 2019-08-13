@@ -218,7 +218,8 @@ describe 'Users', type: :feature do
       end
 
       context 'on Punches tab' do
-        let!(:punch) { create :punch, user: user, from: DateTime.new(2019, 6, 6, 8, 8, 0, 0), to: DateTime.new(2019, 6, 6, 8, 12, 0, 0)}
+        let(:datetime_first_monday) { (DateTime.now - 1.month).monday }
+        let!(:punch) { create :punch, user: user, from: datetime_first_monday.change({ hour: 8, min: 8, sec: 0 }), to: datetime_first_monday.change({ hour: 12, min: 0, sec: 0 }) }
         before { refresh }
         it 'finds all elements correctly' do
           within 'div#punches' do
@@ -230,8 +231,26 @@ describe 'Users', type: :feature do
                             have_css('.col.col-to', text: punch.to_time) &
                             have_css('.col.col-delta', text: punch.delta_as_hour) &
                             have_css('.col.col-extra_hour', text: punch.extra_hour) &
-                            have_link(I18n.t('download_as_csv'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: Date.current - 60 }, format: :csv)) &
+                            have_link(I18n.t('download_as_csv'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now}, format: :csv)) &
+                            have_link(I18n.t('download_as_xml'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now }, format: :xml)) &
                             have_link(I18n.t('all_punches'), href: admin_punches_path(q: { user_id_eq: user.id, commit: :Filter }))
+          end
+        end
+      end
+
+      context 'on Punches tab and filtering results' do
+        let!(:punch1) { create :punch, user: user, from: DateTime.new(2019, 6, 6, 8, 8, 0, 0), to: DateTime.new(2019, 6, 6, 8, 12, 0, 0)}
+        let!(:punch2) { create :punch, user: user, from: DateTime.new(2019, 6, 10, 8, 8, 0, 0), to: DateTime.new(2019, 6, 10, 8, 12, 0, 0)}
+        before { refresh }
+        it 'finds all elements correctly' do
+          within '#filtro_sidebar_section' do
+            fill_in 'punch_from_gteq', with: DateTime.new(2019, 6, 5, 8, 8, 0, 0)
+            fill_in 'punch_from_lteq', with: DateTime.new(2019, 6, 7, 8, 8, 0, 0)
+            click_button 'Filtrar'
+          end
+          within 'div#punches' do
+            expect(page).to have_selector("#punch_#{punch1.id}", count: 1)
+            expect(page).not_to have_selector("#punch_#{punch2.id}")
           end
         end
       end

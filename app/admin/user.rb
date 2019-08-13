@@ -64,7 +64,7 @@ ActiveAdmin.register User do
     actions
   end
 
-  sidebar 'Filtro', only: :show, if: proc{ true }, partial: 'custom-filter-punches'
+  sidebar 'Filtro', only: :show, class: 'hide_custom_filter', partial: 'custom-filter-punches'
 
   show do
     tabs do
@@ -155,10 +155,10 @@ ActiveAdmin.register User do
       end
 
       tab :punches do
-        from = params.dig(:punch, :from_gteq) || 10.days.ago
+        from = params.dig(:punch, :from_gteq) || 60.days.ago
         to = params.dig(:punch, :from_lteq) || Time.zone.now
 
-        table_for user.punches.where(from: from..to).order(from: :desc).decorate, i18n: Punch do
+        table_for user.punches.where(from: from..to).order(from: :desc).decorate, i18n: Punch, id: 'table_admin_punches' do
           column :company
           column :project
           column :when
