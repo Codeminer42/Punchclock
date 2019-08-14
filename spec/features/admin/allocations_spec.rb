@@ -55,17 +55,18 @@ describe 'Admin Allocation', type: :feature do
       before { click_link 'Novo(a) Alocação' }
 
       it 'must have the form working' do
+        start_at = 1.week.after
 
         find('#allocation_user_id').find(:option, user.name).select_option
         find('#allocation_project_id').find(:option, project.name).select_option
-        find('#allocation_start_at').fill_in with: '2019-06-30'
+        find('#allocation_start_at').fill_in with: start_at.strftime("%Y-%m-%d")
 
         click_button 'Criar Alocação'
 
         expect(page).to have_text('Alocação foi criado com sucesso') &
                         have_css('.row-user', text: user.name) &
                         have_text(project.name) &
-                        have_text('30 de Junho de 2019') &
+                        have_text(I18n.l(start_at, format: "%d de %B de %Y")) &
                         have_css('.row-end_at', text: 'Vazio') &
                         have_css('.row-days_left', text: 'Vazio')
       end
