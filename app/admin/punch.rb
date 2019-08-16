@@ -67,7 +67,12 @@ ActiveAdmin.register Punch do
       if params['q'] && params['q']['from_lteq']
         params['q']['from_lteq'] += ' 23:59:59.999999'
       end
-      super
+      super do |format|
+        format.xls do
+          spreadsheet = PunchesSpreadsheet.new @punches
+          send_data spreadsheet.generate_xls, filename: 'punches.xls'
+        end
+      end
     end
   end
 

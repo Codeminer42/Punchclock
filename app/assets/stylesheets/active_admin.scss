@@ -3,6 +3,13 @@
 @import "wigu/active_admin_theme";
 @import "select2";
 
+$active-admin-label: #8494a8;
+$active-admin-input-border: #e6e9ee;
+
+$active-admin-a: #5E6469;
+$active-admin-a-background: #FFFFFF;
+$active-admin-a-border: #c7c7c7;
+
 #allocation_start_at, #allocation_end_at {
   width: auto;
 }
@@ -30,19 +37,19 @@
 }
 
 .form_adm_filter_punch {
-  label{
-    color: #8494a8;
-    font-size: 0.9em;
+  .label{
+    color: $active-admin-label;
+    font-size: .9em;
     font-weight: bold;
   }
   .input_container {
     display: flex;
     margin-bottom: 10px;
     input[type='text'] {
-      border: 1px solid #e6e9ee;
+      border: 1px solid $active-admin-input-border;
       border-radius: 3px;
       box-sizing: border-box;
-      font-size: 0.95em;
+      font-size: .95em;
       margin-right: 4px;
       padding: 8px 10px 7px;
       width: 114px;
@@ -53,9 +60,9 @@
     font-weight: bold;
     padding: 10px 20px;
     text-decoration: none;
-    background-color: #FFFFFF;
-    border: solid 1px #c7c7c7;
-    color: #5E6469;
+    background-color: $active-admin-a-background;
+    border: solid 1px $active-admin-a-border;
+    color: $active-admin-a;
   }
 }
 

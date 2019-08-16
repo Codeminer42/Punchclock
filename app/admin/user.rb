@@ -169,8 +169,8 @@ ActiveAdmin.register User do
         end
         div link_to I18n.t('download_as_csv'),
                         admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :csv)
-        div link_to I18n.t('download_as_xml'),
-                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :xml)
+        div link_to I18n.t('download_as_xls'),
+                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :xls)
         div link_to I18n.t('all_punches'),
                         admin_punches_path(q: { user_id_eq: user.id, commit: :Filter })
       end
