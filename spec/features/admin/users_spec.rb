@@ -240,7 +240,8 @@ describe 'Users', type: :feature do
 
       context 'on Punches tab and filtering results' do
         let!(:punch1) { create :punch, user: user, from: DateTime.new(2019, 6, 6, 8, 8, 0, 0), to: DateTime.new(2019, 6, 6, 8, 12, 0, 0)}
-        let!(:punch2) { create :punch, user: user, from: DateTime.new(2019, 6, 10, 8, 8, 0, 0), to: DateTime.new(2019, 6, 10, 8, 12, 0, 0)}
+        let!(:punch2) { create :punch, user: user, from: DateTime.new(2019, 6, 4, 8, 8, 0, 0), to: DateTime.new(2019, 6, 4, 8, 12, 0, 0) }
+
         before { refresh }
         it 'finds all elements correctly' do
           within '#filtro_sidebar_section' do
