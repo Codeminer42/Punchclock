@@ -30,8 +30,11 @@ pt-BR:
         allocation:
           attributes:
             start_at:
+              endless: "Esse usuário possui uma alocação com data final aberta"
+              overlapped_period: "Já existe uma alocação desse usuário nesse período"
               invalid_date: "Data Inválida"
             end_at:
+              cant_be_lesser: "A data de término deve ser maior que a data de início"
               invalid_date: "Data Inválida"
     models:
       admin_user:
