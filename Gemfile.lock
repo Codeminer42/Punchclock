@@ -366,6 +366,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-ole (1.2.12.2)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
@@ -407,6 +408,8 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     slop (3.6.0)
+    spreadsheet (1.2.4)
+      ruby-ole (>= 1.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -522,6 +525,7 @@ DEPENDENCIES
   sidekiq
   simple_form
   simplecov
+  spreadsheet
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets

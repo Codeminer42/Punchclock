@@ -1,0 +1,22 @@
+<%= simple_form_for :punch, url: admin_user_path(@user, anchor: "punches"), method: :get, html: {
+    class: :form_adm_filter_punch
+  } do |f| %>
+  <label class="label">Intervalo</label>
+  <div class="input_container">
+  <% 
+  from_gteq_value = params.dig(:punch, :from_gteq)
+  from_lteq_value = params.dig(:punch, :from_lteq)
+  %>
+    <%= f.input :from_gteq, label: false, as: :string, placeholder: 'A partir de', input_html: {
+      class: :datepicker,
+      value: from_gteq_value
+    } %>
+    <%= f.input :from_lteq, label: false, as: :string, placeholder: 'Até', input_html: {
+      class: :datepicker,
+      value: from_lteq_value
+    } %>
+  </div>
+  <%= f.button :submit, "Filtrar"%> 
+
+  <%= link_to('Limpar Filtro',  "#{admin_user_path(@user)}#punches", method: :get) %>
+<% end %>
