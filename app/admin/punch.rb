@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Punch do
-  index download_links: [:csv,:xls]
+  index download_links: [:csv, :xls]
 
   decorate_with PunchDecorator
   permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company, :comment
