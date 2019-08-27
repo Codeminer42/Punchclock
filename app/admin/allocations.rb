@@ -73,4 +73,14 @@ ActiveAdmin.register Allocation do
     end
     actions
   end
+
+  csv encoding: 'utf-8' do
+    column :id
+    column :user
+    column :project
+    column :start_at
+    column :end_at
+    column :created_at
+    column :updated_at
+  end
 end

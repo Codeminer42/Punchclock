@@ -6,7 +6,7 @@ ActiveAdmin.setup do |config|
     (!user_signed_in? || current_user.super_admin?) ? "Punchclock" : "Punchclock (#{current_user.company})"
   }
 
-  config.download_links = [:csv, :xls]
+  config.download_links = [:csv]
   config.authentication_method = :authenticate_admin_user!
   config.current_user_method = :current_user
   config.logout_link_path = :destroy_user_session_path
