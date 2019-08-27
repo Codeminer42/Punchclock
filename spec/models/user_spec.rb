@@ -92,6 +92,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'scopes' do
+    let(:user_not_in_experience){ create(:user, created_at: 5.months.ago)}
     let(:ruby)          { create(:skill, title: 'ruby') }
     let(:vuejs)         { create(:skill, title: 'vuejs') }
     let!(:full_stack)   { create(:user, skills: [ruby, vuejs]) }
@@ -99,6 +100,12 @@ RSpec.describe User, type: :model do
     context '#by_skills' do
       it 'returns the users that have all the skills selected' do
         expect(User.by_skills_in(ruby.id, vuejs.id).first).to eq(full_stack)
+      end
+    end
+
+    context '#not_in_experience' do
+      it 'returns the user that are not in experience period' do
+        expect(User.not_in_experience).to contain_exactly(user_not_in_experience)
       end
     end
   end
