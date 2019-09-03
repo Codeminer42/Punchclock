@@ -49,10 +49,42 @@ FactoryBot.define do
     end
 
     trait :with_overall_score do
-      after(:create) do |user|
-        create(:evaluation, score: 5, evaluated: user)
-        create(:evaluation, :english, score: 10, evaluated: user)
+      transient do
+        score { 7 }
       end
+
+      after(:create) do |user, evaluator|
+        create(:evaluation, score: evaluator.score, evaluated: user)
+        create(:evaluation, :english, score: evaluator.score, evaluated: user)
+      end
+    end
+
+    trait :level_trainee do
+      level { :trainee }
+    end
+
+    trait :level_junior do
+      level { :junior }
+    end
+
+    trait :level_junior_plus do
+      level { :junior_plus }
+    end
+
+    trait :level_mid do
+      level { :mid }
+    end
+
+    trait :level_mid_plus do
+      level { :mid_plus }
+    end
+
+    trait :level_senior do
+      level { :senior }
+    end
+
+    trait :level_senior_plus do
+      level { :senior_plus }
     end
   end
 
