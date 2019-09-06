@@ -64,12 +64,18 @@ ActiveAdmin.register Allocation do
         input :project
         input :company
       else
-        input :user, as: :select, collection: current_user.company.users.active.order(:name)
+        company_users_not_allocated = UsersByCompanyQuery
+                                      .new(current_user.company)
+                                      .not_allocated_including(f.object.user)
+                                      .select(:id, :name)
+
+        input :user, as: :select, collection: company_users_not_allocated
         input :project, collection: current_user.company.projects.active.order(:name)
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
-        input :start_at, as: :date_picker, input_html: { value: f.object.start_at.try(:strftime, '%Y-%m-%d') }
-        input :end_at, as: :date_picker, input_html: { value: f.object.end_at.try(:strftime, '%Y-%m-%d') }
+
+      input :start_at, as: :date_picker, input_html: { value: f.object.start_at.try(:to_s, :date) }
+      input :end_at, as: :date_picker, input_html: { value: f.object.end_at.try(:to_s, :date) }
     end
     actions
   end
