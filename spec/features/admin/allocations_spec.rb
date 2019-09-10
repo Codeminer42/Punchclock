@@ -52,19 +52,35 @@ describe 'Admin Allocation', type: :feature do
 
   describe 'Actions' do
     describe 'New' do
+      let!(:user_not_allocated) { create(:user, company: admin_user.company) }
+      let!(:project_not_active) { create(:project, :inactive, company: admin_user.company) } 
+
       before { click_link 'Novo(a) Alocação' }
+
+      it 'should not render users allocated' do
+        expect(page).not_to have_text(user.name)
+      end
+
+      it 'should not render project inactive' do
+        expect(page).not_to have_text(project_not_active.name)
+      end
+
+      it 'should render users not allocated' do
+        expect(page).to have_text(user_not_allocated.name) &
+                        have_text(project.name)
+      end
 
       it 'must have the form working' do
         start_at = 1.week.after
 
-        find('#allocation_user_id').find(:option, user.name).select_option
+        find('#allocation_user_id').find(:option, user_not_allocated.name).select_option
         find('#allocation_project_id').find(:option, project.name).select_option
         find('#allocation_start_at').fill_in with: start_at.strftime("%Y-%m-%d")
 
         click_button 'Criar Alocação'
 
         expect(page).to have_text('Alocação foi criado com sucesso') &
-                        have_css('.row-user', text: user.name) &
+                        have_css('.row-user', text: user_not_allocated.name) &
                         have_text(project.name) &
                         have_text(I18n.l(start_at, format: "%d de %B de %Y")) &
                         have_css('.row-end_at', text: 'Vazio') &
@@ -148,6 +164,7 @@ describe 'Admin Allocation', type: :feature do
 
       it 'updates user information' do
         find('#allocation_end_at').fill_in with: Date.today.next_month
+
         click_button 'Atualizar Alocação'
 
         expect(page).to have_css('.flash_notice', text: 'Alocação foi atualizado com sucesso.') &
