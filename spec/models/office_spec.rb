@@ -9,6 +9,18 @@ RSpec.describe Office, type: :model do
     it { is_expected.to belong_to(:head).class_name('User').optional }
     it { is_expected.to have_and_belong_to_many :regional_holidays }
     it { is_expected.to belong_to :company }
+
+    describe "has_many users_without_head" do
+      let(:office) { create(:office, :with_head) }
+      let(:user1)  { create(:user, office: office) }
+      let(:user2)  { create(:user, office: office) }
+
+      it "returns users that are not the head of the office" do
+        users = office.users_without_head
+
+        expect(users).to contain_exactly(user1, user2)
+      end
+    end
   end
 
   context 'Validations' do
@@ -25,9 +37,11 @@ RSpec.describe Office, type: :model do
   end
 
   describe '#calculate_score' do
-    let!(:office)    { create(:office) }
-    let!(:good_user) { create(:user, office: office) }
-    let!(:bad_user) { create(:user, office: office) }
+    let(:not_experience) { 4.month.ago }
+    let(:office)    { create(:office) }
+    let!(:good_user) { create(:user, office: office, created_at: not_experience) }
+    let!(:bad_user) { create(:user, office: office, created_at: not_experience) }
+    let!(:experience_user) { create(:user, office: office) }
 
     context 'when its users have evaluations' do
       before do

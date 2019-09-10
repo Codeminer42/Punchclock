@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  EXPERIENCE_PERIOD = 3.months
+
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
 
@@ -31,6 +33,7 @@ class User < ApplicationRecord
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
+  scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]
