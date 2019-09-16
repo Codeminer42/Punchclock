@@ -154,6 +154,8 @@ describe NotificationMailer do
         NotificationMailer.notify_user_to_fill_punch(user)
       end
 
+      before { ENV['HOST'] = 'punchclock.cm42.io' }
+
       it 'renders the subject' do
         expect(mail.subject).to eq("Preencher Punch")
       end
@@ -167,7 +169,8 @@ describe NotificationMailer do
       end
 
       it 'renders the body' do
-        expect(mail.body).to match('Preencham o punch entre os dias 16 e 15')
+        expect(mail.body).to match('Preencham o punch entre os dias 16 e 15') &
+          match('https://punchclock.cm42.io')
       end
     end
 
