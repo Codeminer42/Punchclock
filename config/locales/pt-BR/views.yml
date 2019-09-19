@@ -29,6 +29,9 @@ pt-BR:
         Preencham o punch entre os dias 16 e 15.
       </p>
       <p>
+        <a href='https://%{host}'>%{host}</a>
+      </p>
+      <p>
         E avisem hora extra para <strong>"rh@codeminer42.com"</strong>
       </p>
       Abs
