@@ -7,9 +7,17 @@ Capybara.register_driver :headless_chrome do |app|
     chromeOptions: {  args: %w[no-sandbox headless disable-gpu window-size=1280,1024] }
   )
 
-  Capybara::Selenium::Driver.new app,
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless no-sandbox disable-gpu]
+  )
+
+
+  Capybara::Selenium::Driver.new(
+    app,
     browser: :chrome,
-    desired_capabilities: capabilities
+    desired_capabilities: capabilities,
+    options: options
+  )
 end
 
 Capybara.javascript_driver = :headless_chrome
