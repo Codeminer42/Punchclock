@@ -34,6 +34,7 @@ class User < ApplicationRecord
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
+  scope :with_level,       -> value { where(level: value) }
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]
@@ -41,6 +42,13 @@ class User < ApplicationRecord
 
   def self.ransackable_scopes(_auth_object)
     [:by_skills_in]
+  end
+
+  def self.overall_score_average
+    overall_scores = all.map(&:overall_score).compact
+
+    return 0 if overall_scores.empty?
+    (overall_scores.sum / overall_scores.size).round(2)
   end
 
   def disable!

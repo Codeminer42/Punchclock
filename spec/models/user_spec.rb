@@ -115,6 +115,38 @@ RSpec.describe User, type: :model do
     let!(:evaluations) { create_list :evaluation, 2, :performance, evaluated: user }
     let!(:english_evaluation) { create(:evaluation, :english, english_level: 'beginner', evaluated: user) }
 
+    describe '#ovelall_score_average' do
+      subject { User.overall_score_average }
+
+      before do
+        allow(User).to receive(:all).and_return([user1, user2, user3])
+      end
+
+      context "all users with score" do
+        let(:user1) { double(:user1, overall_score: 2.3) }
+        let(:user2) { double(:user2, overall_score: 7.5) }
+        let(:user3) { double(:user3, overall_score: 8) }
+
+        it { is_expected.to eq(5.93) }
+      end
+
+      context "users with and without score" do
+        let(:user1) { double(:user1, overall_score: 2.3) }
+        let(:user2) { double(:user2, overall_score: nil) }
+        let(:user3) { double(:user3, overall_score: 8) }
+
+        it { is_expected.to eq(5.15) }
+      end
+
+      context "all users without score" do
+        let(:user1) { double(:user1, overall_score: nil) }
+        let(:user2) { double(:user2, overall_score: nil) }
+        let(:user3) { double(:user3, overall_score: nil) }
+
+        it { is_expected.to eq(0) }
+      end
+    end
+
     describe '#english_level' do
       let!(:new_evaluation) { create(:evaluation, :english, english_level: 'advanced', evaluated: user) }
 
@@ -208,15 +240,15 @@ RSpec.describe User, type: :model do
   end
 
   describe '#access_admin' do
-    it "allows admin access for user with admin role" do 
+    it "allows admin access for user with admin role" do
       expect(admin_user).to have_admin_access
     end
-    
-    it "allow admin access for user with super_admin role" do 
-      expect(super_admin).to have_admin_access 
+
+    it "allow admin access for user with super_admin role" do
+      expect(super_admin).to have_admin_access
     end
 
-    it "not allows admin access for user without admin or super_admin roles" do 
+    it "not allows admin access for user without admin or super_admin roles" do
       expect(user).to_not have_admin_access
     end
   end

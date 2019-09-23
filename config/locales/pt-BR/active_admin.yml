@@ -5,6 +5,7 @@ pt-BR:
     allocated_user_punches: 'Punches do Usuário Alocado'
     search: "Buscar"
     search_fields: "Campos de Busca"
+    levels_average: "Média dos Níveis"
     search_by: "Por %{model_name}"
     filters:
       predicates:
