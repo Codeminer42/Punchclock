@@ -47,7 +47,7 @@ describe "Visit Evaluations", type: :feature do
       find('[name=new-evaluation]').click
 
       within '.modal-body' do
-        expect(find('a')[:href]).to eq("/questionnaires/#{questionnaire.id}/evaluations/new?evaluated_user_id=#{user.id}")
+        expect(page).to have_link(nil, href: "/questionnaires/#{questionnaire.id}/evaluations/new?evaluated_user_id=#{user.id}")
       end
     end
   end
