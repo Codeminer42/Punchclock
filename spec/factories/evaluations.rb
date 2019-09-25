@@ -18,7 +18,7 @@ FactoryBot.define do
     end
 
     trait :english do
-      english_level { Evaluation.english_levels.keys.sample }
+      english_level { Evaluation.english_level.values.sample }
       questionnaire { create(:questionnaire, :kind_english) }
     end
 

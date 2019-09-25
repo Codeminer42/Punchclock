@@ -41,7 +41,7 @@ gem 'rollbar'
 # MinerCamp
 gem 'normalize-rails', '~> 4.1.1'
 gem 'validates_timeliness', '~> 5.0.0.alpha3'
-gem 'enumerize', '~> 2.2.2'
+gem 'enumerize', '~> 2.3.1'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'active_admin_theme'
 gem 'font-awesome-sass', '~> 5.8.1'

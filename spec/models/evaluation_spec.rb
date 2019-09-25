@@ -17,7 +17,10 @@ RSpec.describe Evaluation, type: :model do
     it { is_expected.to validate_presence_of(:questionnaire) }
     it { is_expected.to validate_presence_of(:score) }
     it { is_expected.to validate_inclusion_of(:score).in_array (1..10).to_a }
-    it { is_expected.to define_enum_for(:english_level).with_values %i(beginner intermediate advanced fluent) }
+    it { is_expected.to enumerize(:english_level).in( :beginner,
+                                                      :intermediate,
+                                                      :advanced,
+                                                      :fluent) }
 
     context 'when english kind' do
       before { allow(subject).to receive(:english?).and_return(true) }

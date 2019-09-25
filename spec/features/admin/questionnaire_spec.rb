@@ -24,7 +24,7 @@ describe 'Admin Questionaire', type: :feature do
       visit '/admin/questionnaires'
 
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo', options: Questionnaire.kinds.keys << 'Qualquer')
+        expect(page).to have_select('Tipo', options: Questionnaire.kind.values << 'Qualquer')
       end
     end
 

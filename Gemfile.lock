@@ -158,7 +158,7 @@ GEM
       activesupport (~> 5.0)
       request_store (~> 1.0)
     draper-cancancan (1.1.1)
-    enumerize (2.2.2)
+    enumerize (2.3.1)
       activesupport (>= 3.2)
     erubi (1.8.0)
     erubis (2.7.0)
@@ -490,7 +490,7 @@ DEPENDENCIES
   dotenv-rails (~> 2.2.1)
   draper
   draper-cancancan
-  enumerize (~> 2.2.2)
+  enumerize (~> 2.3.1)
   factory_bot_rails
   faker
   font-awesome-sass (~> 5.8.1)

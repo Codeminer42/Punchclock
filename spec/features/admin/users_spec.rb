@@ -60,13 +60,13 @@ describe 'Users', type: :feature do
 
     it 'by level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.levels.keys.map(&:titleize) << 'Qualquer')
+        expect(page).to have_select('Nível', options: User.level.values.map(&:titleize) << 'Qualquer')
       end
     end
 
     it 'by specialty' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Especialidade', options: User.specialties.keys.map(&:humanize) << 'Qualquer')
+        expect(page).to have_select('Especialidade', options: User.specialty.values.map(&:humanize) << 'Qualquer')
       end
     end
 
@@ -78,7 +78,7 @@ describe 'Users', type: :feature do
 
     it 'by contract type' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo de Contrato', options: User.contract_types.keys.map(&:humanize) << 'Qualquer')
+        expect(page).to have_select('Tipo de Contrato', options: User.contract_type.values.map(&:humanize) << 'Qualquer')
       end
     end
 
@@ -125,7 +125,6 @@ describe 'Users', type: :feature do
         fill_in 'Observação', with: 'Observation'
 
         click_button 'Criar Usuário'
-
         expect(page).to have_css('.flash_notice', text: 'Usuário foi criado com sucesso.') &
                         have_text('Foo Bar') &
                         have_text('foo@bar.com') &

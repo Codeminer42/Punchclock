@@ -29,7 +29,7 @@ describe 'Admin Evaluation', type: :feature do
 
     it 'by questionnaire kind' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo do Questionário', options: Questionnaire.kinds.keys.map(&:titleize) << 'Qualquer')
+        expect(page).to have_select('Tipo do Questionário', options: Questionnaire.kind.values.map(&:titleize) << 'Qualquer')
       end
     end
 

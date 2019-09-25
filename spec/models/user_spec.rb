@@ -43,7 +43,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "occupation" do
-    it { is_expected.to define_enum_for(:occupation).with_values %i( administrative engineer ) }
+    it { is_expected.to enumerize(:occupation).in( :administrative, :engineer ) }
 
     context 'when user is engineer' do
       subject { build :user, occupation: 'engineer'}
@@ -57,38 +57,35 @@ RSpec.describe User, type: :model do
   end
 
   describe "specialty" do
-    it { is_expected.to define_enum_for(:specialty).with_values %i(
-                                                                frontend
-                                                                backend
-                                                                devops
-                                                                fullstack
-                                                                mobile) }
+    it { is_expected.to enumerize(:specialty).in( :frontend,
+                                                  :backend,
+                                                  :devops,
+                                                  :fullstack,
+                                                  :mobile) }
   end
 
   describe "level" do
-    it { is_expected.to define_enum_for(:level).with_values [
-                                                           "trainee",
-                                                           "junior",
-                                                           "junior_plus",
-                                                           "mid",
-                                                           "mid_plus",
-                                                           "senior",
-                                                           "senior_plus" ] }
+    it { is_expected.to enumerize(:level).in( :trainee,
+                                              :junior,
+                                              :junior_plus,
+                                              :mid,
+                                              :mid_plus,
+                                              :senior,
+                                              :senior_plus ) }
+
   end
 
   describe 'contract type' do
-    it { is_expected.to define_enum_for(:contract_type).with_values %i[
-                                                            internship
-                                                            employee
-                                                            contractor] }
+    it { is_expected.to enumerize(:contract_type).in( :internship,
+                                                      :employee,
+                                                      :contractor) }
   end
 
   describe 'role' do
-    it { is_expected.to define_enum_for(:role).with_values %i[
-                                                            normal
-                                                            evaluator
-                                                            admin
-                                                            super_admin] }
+    it { is_expected.to enumerize(:role).in(  :normal,
+                                              :evaluator,
+                                              :admin,
+                                              :super_admin) }
   end
 
   describe 'scopes' do
