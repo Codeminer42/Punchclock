@@ -6,7 +6,7 @@ RSpec.describe Questionnaire, type: :model do
   describe 'Validations' do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:kind) }
-    it { is_expected.to enumerize(:kind).in(:english, :performance) }
+    it { is_expected.to enumerize(:kind).in(english:  0, performance: 1) }
 
     context 'when questionnaire is being used' do
       let(:evaluation)    { create(:evaluation) }

@@ -13,9 +13,9 @@ class Questionnaire < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
-  enumerize :kind, in: { 
-    english: 0, performance: 1 
-    }, scope: :shallow, predicates: true
+  enumerize :kind,  in: { english: 0, performance: 1 },
+                    scope: :shallow,
+                    predicates: true
 
   def being_used
     errors.add(:base, 'cannot be changed. It\'s being used') unless evaluations.empty? || active_changed?

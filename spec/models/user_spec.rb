@@ -43,7 +43,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "occupation" do
-    it { is_expected.to enumerize(:occupation).in( :administrative, :engineer ) }
+    it { is_expected.to enumerize(:occupation).in(administrative: 0, engineer: 1) }
 
     context 'when user is engineer' do
       subject { build :user, occupation: 'engineer'}
@@ -57,35 +57,35 @@ RSpec.describe User, type: :model do
   end
 
   describe "specialty" do
-    it { is_expected.to enumerize(:specialty).in( :frontend,
-                                                  :backend,
-                                                  :devops,
-                                                  :fullstack,
-                                                  :mobile) }
+    it { is_expected.to enumerize(:specialty).in( frontend: 0,
+                                                  backend: 1,
+                                                  devops: 2,
+                                                  fullstack: 3,
+                                                  mobile: 4) }
   end
 
   describe "level" do
-    it { is_expected.to enumerize(:level).in( :trainee,
-                                              :junior,
-                                              :junior_plus,
-                                              :mid,
-                                              :mid_plus,
-                                              :senior,
-                                              :senior_plus ) }
+    it { is_expected.to enumerize(:level).in( trainee: 0,
+                                              junior: 1,
+                                              junior_plus: 2,
+                                              mid: 3,
+                                              mid_plus: 4,
+                                              senior: 5,
+                                              senior_plus: 6 ) }
 
   end
 
   describe 'contract type' do
-    it { is_expected.to enumerize(:contract_type).in( :internship,
-                                                      :employee,
-                                                      :contractor) }
+    it { is_expected.to enumerize(:contract_type).in( internship: 0,
+                                                      employee: 1,
+                                                      contractor: 2) }
   end
 
   describe 'role' do
-    it { is_expected.to enumerize(:role).in(  :normal,
-                                              :evaluator,
-                                              :admin,
-                                              :super_admin) }
+    it { is_expected.to enumerize(:role).in(  normal: 0,
+                                              evaluator: 1,
+                                              admin: 2,
+                                              super_admin: 3) }
   end
 
   describe 'scopes' do

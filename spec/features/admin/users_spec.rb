@@ -60,13 +60,14 @@ describe 'Users', type: :feature do
 
     it 'by level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.level.values.map(&:titleize) << 'Qualquer')
+        expect(page).to have_select('Nível', options: User.level.values.map { |key| key.text.titleize } << 'Qualquer' )
       end
     end
 
     it 'by specialty' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Especialidade', options: User.specialty.values.map(&:humanize) << 'Qualquer')
+        expect(page).to have_select('Especialidade', options: User.specialty.values.map { |key| key.text.humanize } << 'Qualquer')
+
       end
     end
 
@@ -78,7 +79,7 @@ describe 'Users', type: :feature do
 
     it 'by contract type' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo de Contrato', options: User.contract_type.values.map(&:humanize) << 'Qualquer')
+        expect(page).to have_select('Tipo de Contrato', options:  User.contract_type.values.map { |key| key.text.humanize } << 'Qualquer')
       end
     end
 
@@ -115,10 +116,10 @@ describe 'Users', type: :feature do
         find('#user_office_id').find(:option, office.city).select_option
         find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
-        choose('Engineer')
+        choose('Engenheiro')
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_level').find(:option, 'Junior').select_option
-        find('#user_contract_type').find(:option, 'Internship').select_option
+        find('#user_level').find(:option, 'Engenheiro Junior').select_option
+        find('#user_contract_type').find(:option, 'Estagiário').select_option
         find('#user_role').find(:option, 'Admin').select_option
         check('Ativo')
         fill_in 'Password', with: 'password'
@@ -150,7 +151,7 @@ describe 'Users', type: :feature do
           find_link("#{user.name}", href: "/admin/users/#{user.id}").click
         end
       end
-
+      
       it 'have edit action' do
         expect(page).to have_link('Editar Usuário')
       end

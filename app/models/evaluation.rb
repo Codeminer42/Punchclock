@@ -26,7 +26,9 @@ class Evaluation < ApplicationRecord
 
   enumerize :english_level, in: {
     beginner: 0, intermediate: 1, advanced: 2, fluent: 3
-  }, scope: :shallow, predicates: true
+  },  scope: :shallow,
+      predicates: true,
+      i18n_scope: 'enumerize.evaluation.english_level'
 
   private
 

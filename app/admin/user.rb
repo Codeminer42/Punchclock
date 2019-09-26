@@ -23,13 +23,13 @@ ActiveAdmin.register User do
   filter :name
   filter :email
   
-  filter :level, as: :select, collection: User.level.values.map { |key| [key.titleize, key.value] }
+  filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
   filter :office, collection: proc {
     current_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_user.company.offices.order(:city)
   }
   filter :company, if: proc { current_user.super_admin? }
-  filter :specialty, as: :select, collection: User.specialty.values.map { |key| [key.humanize, key.value] }
-  filter :contract_type, as: :select, collection: User.contract_type.values.map { |key| [key.humanize, key.value] }
+  filter :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty.value] }
+  filter :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }
   filter :by_skills, as: :check_boxes, collection: proc {
     Skill.order(:title).map do |skill|
       [skill.title, skill.id, checked: params.dig(:q, :by_skills_in)&.include?(skill.id.to_s)]
@@ -188,19 +188,19 @@ ActiveAdmin.register User do
         f.input :office
         f.input :company
         f.input :reviewer
-        f.input :role, as: :select, collection: User.role.values.map { |role| [role.titleize, role] }
+        f.input :role, as: :select, collection: User.role.values.map { |role| [role.text.titleize, role] }
         f.input :skills, as: :check_boxes
       else
         f.input :office, collection: current_user.company.offices.order(:city)
-        f.input :role, as: :select, collection: User.role.values.reject{ |value| value == 'super_admin' }.map { |role| [role.titleize, role] }
+        f.input :role, as: :select, collection: User.role.values.reject{ |value| value == 'super_admin' }.map { |role| [role.text.titleize, role] }
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
         f.input :reviewer, collection: current_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_user.company.skills.order(:title)
       end
       f.input :occupation, as: :radio
-      f.input :specialty, as: :select, collection: User.specialty.values.map { |key| [key.humanize, key] }
-      f.input :level, as: :select, collection: User.level.values.map { |key| [key.titleize,key] }
-      f.input :contract_type, as: :select, collection: User.contract_type.values.map { |key| [key.humanize, key] }
+      f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
+      f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
+      f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
       f.input :password if f.object.new_record?
       f.input :allow_overtime
       f.input :active

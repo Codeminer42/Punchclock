@@ -1,0 +1,42 @@
+pt-BR:
+  enumerize:
+      miner:
+        occupation:
+          administrative: Administrativo
+          engineer: Engenheiro
+        role_level:
+          trainee: Estagiário
+          junior: Engenheiro Junior
+          junior_plus: Engenheiro Junior Plus
+          mid: Engenheiro Pleno
+          mid_plus: Engenheiro Pleno Plus
+          senior: Engenheiro Senior
+          senior_plus: Engenheiro Senior Plus
+        specialty:
+          frontend: Frontend
+          backend:  Backend
+          devops: Devops
+          fullstack:  Fullstack
+          mobile: Mobile
+        contract_type:
+          internship: Estagiário
+          employee: Funcionário
+          contractor: Contratante
+        role: 
+          normal: Normal
+          evaluator: Avaliador
+          admin:  Admin
+          super_admin: Super Admin
+      question:
+        kind:
+          multiple_choice: Multipla Escolha
+      questionnaire:
+        kind:
+          english: Inglês
+          performance: Desempenho
+      evaluation:
+        english_level:
+          beginner: Iniciante
+          internmediate: Intermediário
+          advanced: Avançado
+          fluent: Fluente
