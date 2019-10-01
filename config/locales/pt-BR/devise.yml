@@ -1,3 +1,5 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
 pt-BR:
   devise:
     confirmations:
@@ -14,8 +16,9 @@ pt-BR:
       timeout: 'Sua sessão expirou, por favor, efetue login novamente para continuar.'
       unauthenticated: 'Para continuar, efetue login ou registre-se.'
       unconfirmed: 'Antes de continuar, confirme a sua conta.'
-      not_found_in_database: 'E-mail ou senha inválidos.'
       inactive_account: "Conta desativada"
+      last_attempt: "Você tem mais uma tentativa antes de sua conta ser bloqueada."
+      is_not_admin: 'Você não é um admin.'
     mailer:
       confirmation_instructions:
         subject: 'Instruções de confirmação'
@@ -26,6 +29,10 @@ pt-BR:
     omniauth_callbacks:
       failure: 'Não foi possível autenticá-lo como %{kind} porque "%{reason}".'
       success: 'Autenticado com sucesso com uma conta de %{kind}.'
+      email_changed:
+        subject: "Email trocado"
+      password_change:
+        subject: "Senha trocada"
     passwords:
       no_token: "Você só pode acessar essa página através de um e-mail de troca de senha. Se já estiver acessando por um e-mail, verifique se a URL fornecida está completa."
       send_instructions: 'Dentro de minutos, você receberá um e-mail com instruções para a troca da sua senha.'
@@ -51,13 +58,13 @@ pt-BR:
       send_instructions: 'Dentro de minutos, você receberá um email com instruções para o desbloqueio da sua conta.'
       send_paranoid_instructions: 'Se sua conta existir, você receberá um e-mail com instruções para desbloqueá-la em alguns minutos.'
       unlocked: 'Sua conta foi desbloqueada com sucesso. Efetue login para continuar.'
-    errors:
-      messages:
-        already_confirmed: "já foi confirmado"
-        confirmation_period_expired: "precisa ser confirmada em até %{period}, por favor, solicite uma nova"
-        expired: "expirou, por favor, solicite uma nova"
-        not_found: "não encontrado"
-        not_locked: "não foi bloqueado"
-        not_saved:
-          one: "Não foi possível salvar %{resource}: 1 erro"
-          other: "Não foi possível salvar %{resource}: %{count} erros."
+  errors:
+    messages:
+      already_confirmed: "já foi confirmado"
+      confirmation_period_expired: "precisa ser confirmada em até %{period}, por favor, solicite uma nova"
+      expired: "expirou, por favor, solicite uma nova"
+      not_found: "não encontrado"
+      not_locked: "não foi bloqueado"
+      not_saved:
+        one: "Não foi possível salvar %{resource}: 1 erro"
+        other: "Não foi possível salvar %{resource}: %{count} erros."
