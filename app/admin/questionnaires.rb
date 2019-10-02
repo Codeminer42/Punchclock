@@ -79,7 +79,7 @@ ActiveAdmin.register Questionnaire do
   form do |f|
     f.inputs Questionnaire.model_name.human do
       f.input :title
-      f.input :kind, as: :select, collection: Questionnaire.kind.values.map { |key| [key.titleize, key] }
+      f.input :kind, as: :select, collection: Questionnaire.kind.values.map { |key| [key.text.titleize, key] }
       if current_user.super_admin?
         f.input :company
       else

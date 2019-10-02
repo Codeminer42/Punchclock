@@ -1,10 +1,10 @@
 pt-BR:
   enumerize:
-      miner:
+      user:
         occupation:
           administrative: Administrativo
           engineer: Engenheiro
-        role_level:
+        level:
           trainee: Estagiário
           junior: Engenheiro Junior
           junior_plus: Engenheiro Junior Plus

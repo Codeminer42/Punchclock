@@ -11,32 +11,27 @@ class User < ApplicationRecord
   enumerize :level, in: { 
     trainee: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6 
     },  scope: :shallow,
-        predicates: true,
-        i18n_scope: 'enumerize.miner.role_level'
+        predicates: true
 
   enumerize :occupation, in: { 
     administrative: 0, engineer: 1 
     },  scope: :shallow,
-        predicates: true,
-        i18n_scope: 'enumerize.miner.occupation'
+        predicates: true
 
   enumerize :specialty, in: {
     frontend: 0, backend: 1, devops: 2, fullstack: 3, mobile: 4
     },  scope: :shallow,
-        predicates: true,
-        i18n_scope: 'enumerize.miner.specialty'
+        predicates: true
 
   enumerize :contract_type, in: {
     internship: 0, employee: 1, contractor: 2
     },  scope: :shallow,
-        predicates: true,
-        i18n_scope: 'enumerize.miner.contract_type'
+        predicates: true
   
   enumerize :role, in: {
     normal: 0, evaluator: 1, admin: 2, super_admin: 3
     },  scope: :shallow,
-        predicates: true,
-        i18n_scope: 'enumerize.miner.role'
+        predicates: true
 
   belongs_to :office, optional: true
   belongs_to :company

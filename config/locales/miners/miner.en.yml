@@ -17,11 +17,11 @@ en:
       my_account: My Account
       logout: Logout
   enumerize:
-    miner:
+    user:
       occupation:
         administrative: Administrative
         engineer: Engineer
-      role_level:
+      level:
         trainee: Intern
         junior: Junior Engineer
         junior_plus: Junior Plus Engineer
