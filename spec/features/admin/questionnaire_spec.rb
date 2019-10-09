@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Admin Questionaire', type: :feature do
   let(:admin_user)     { create(:user, :admin, occupation: :administrative) }
-  let!(:questionnaire) { create(:questionnaire, active: true, company: admin_user.company) }
+  let!(:questionnaire) { create(:questionnaire, :with_questions, active: true, company: admin_user.company) }
 
   before do
     sign_in(admin_user)
@@ -84,6 +84,15 @@ describe 'Admin Questionaire', type: :feature do
       context 'when questionnaire is not being used' do
         before do
           visit "/admin/questionnaires/#{questionnaire.id}"
+        end
+
+        it 'have list of answers ' do
+          question_id = questionnaire.questions.first.id
+          answers = questionnaire.questions.first.answer_options
+          within "#question_#{question_id}" do
+              expect(page).to have_selector('ol') &
+                              have_selector('li', count: answers.length  )
+          end
         end
 
         it 'have edit action' do
