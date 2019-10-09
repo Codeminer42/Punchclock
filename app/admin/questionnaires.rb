@@ -59,7 +59,7 @@ ActiveAdmin.register Questionnaire do
   end
 
   show do
-    attributes_table do
+    attributes_table do 
       row :title
       row :kind
       row :active
@@ -67,10 +67,13 @@ ActiveAdmin.register Questionnaire do
       row :created_at
       row :updated_at
       row :questions do
-        table_for questionnaire.questions do
+        table_for questionnaire.questions do 
           column :title
           column :kind
-          column :answer_options
+          column (:answer_options) do |question| 
+            answers = question.answer_options.sum { |answer| "<li>#{ answer }</li>" }
+            raw "<ol>#{ answers }</ol>"
+          end
         end
       end
     end
