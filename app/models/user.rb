@@ -1,16 +1,37 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  extend Enumerize
+  
   EXPERIENCE_PERIOD = 3.months
 
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
+  
+  enumerize :level, in: { 
+    trainee: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6 
+    },  scope: :shallow,
+        predicates: true
 
-  enum level: %i[trainee junior junior_plus mid mid_plus senior senior_plus]
-  enum occupation: %i[administrative engineer]
-  enum specialty: %i[frontend backend devops fullstack mobile]
-  enum contract_type: %i[internship employee contractor]
-  enum role: %i[normal evaluator admin super_admin]
+  enumerize :occupation, in: { 
+    administrative: 0, engineer: 1 
+    },  scope: :shallow,
+        predicates: true
+
+  enumerize :specialty, in: {
+    frontend: 0, backend: 1, devops: 2, fullstack: 3, mobile: 4
+    },  scope: :shallow,
+        predicates: true
+
+  enumerize :contract_type, in: {
+    internship: 0, employee: 1, contractor: 2
+    },  scope: :shallow,
+        predicates: true
+  
+  enumerize :role, in: {
+    normal: 0, evaluator: 1, admin: 2, super_admin: 3
+    },  scope: :shallow,
+        predicates: true
 
   belongs_to :office, optional: true
   belongs_to :company

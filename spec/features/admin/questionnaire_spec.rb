@@ -24,7 +24,7 @@ describe 'Admin Questionaire', type: :feature do
       visit '/admin/questionnaires'
 
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo', options: Questionnaire.kinds.keys << 'Qualquer')
+        expect(page).to have_select('Tipo', options: Questionnaire.kind.values.map { |kind| kind } << 'Qualquer')
       end
     end
 
@@ -53,11 +53,10 @@ describe 'Admin Questionaire', type: :feature do
 
       it 'must have the form working' do
         find('#questionnaire_title').fill_in with: 'Performance v2.5'
-        find('#questionnaire_kind').find(:option, 'Performance').select_option
+        find('#questionnaire_kind').find(:option, 'Desempenho').select_option
         fill_in 'Descrição', with: 'Simple Description'
 
         click_button 'Criar Questionário'
-
         expect(page).to have_text('Questionário foi criado com sucesso.') &
                         have_text('Performance v2.5') &
                         have_text('performance') &

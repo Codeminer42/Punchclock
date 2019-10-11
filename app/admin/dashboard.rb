@@ -37,7 +37,7 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
     panel t('average_score', scope: 'active_admin'), class: 'average-score' do
-      table_for User.levels.keys do
+      table_for User.level.values do
         column(:level, &:humanize)
         column(:users_average) { |level| User.with_level(level).overall_score_average }
       end

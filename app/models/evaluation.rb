@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Evaluation < ApplicationRecord
+  extend Enumerize
   SCORE_RANGE = (1..10).to_a.freeze
 
   after_create :update_office_score
@@ -23,9 +24,10 @@ class Evaluation < ApplicationRecord
 
   scope :by_kind, -> (kind) { joins(:questionnaire).merge(Questionnaire.public_send(kind)) }
 
-  enum english_level: [
-    :beginner, :intermediate, :advanced, :fluent
-  ]
+  enumerize :english_level, in: {
+    beginner: 0, intermediate: 1, advanced: 2, fluent: 3
+  },  scope: :shallow,
+      predicates: true
 
   private
 

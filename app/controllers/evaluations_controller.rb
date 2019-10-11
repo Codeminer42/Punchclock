@@ -83,6 +83,6 @@ class EvaluationsController < ApplicationController
   end
 
   def set_evaluation_score_options
-    @english_levels = Evaluation.english_levels.keys if @questionnaire.english?
+    @english_levels = Evaluation.english_level.values if @questionnaire.english?
   end
 end

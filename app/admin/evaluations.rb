@@ -12,7 +12,7 @@ ActiveAdmin.register Evaluation do
   filter :evaluated, collection: proc {
     current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.active.order(:name)
   }
-  filter :questionnaire_kind, as: :select, collection: Questionnaire.kinds.keys.map {|key,value| [key.titleize, key]}
+  filter :questionnaire_kind, as: :select, collection: Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind] }
   filter :created_at
 
   index do

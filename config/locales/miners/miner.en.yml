@@ -17,15 +17,43 @@ en:
       my_account: My Account
       logout: Logout
   enumerize:
-    miner:
+    user:
       occupation:
         administrative: Administrative
         engineer: Engineer
-      role_level:
-        intern: Intern
+      level:
+        trainee: Intern
         junior: Junior Engineer
         junior_plus: Junior Plus Engineer
         mid: Mid Engineer
         mid_plus: Mid Plus Engineer
         senior: Senior Engineer
         senior_plus: Senior Plus Engineer
+      specialty:
+        frontend: Frontend
+        backend:  Backend
+        devops: Devops
+        fullstack:  Fullstack
+        mobile: Mobile
+      contract_type:
+        internship: Internship
+        employee: Employee
+        contractor: Contractor
+      role: 
+        normal: Normal
+        evaluator: Evaluator
+        admin:  Admin
+        super_admin: Super Admin
+    question:
+      kind:
+        multiple_choice: Multiple Choice
+    questionnaire:
+      kind:
+        english: English
+        performance: Performance
+    evaluation:
+      english_level:
+        beginner: Beginner
+        internmediate: Internmediate
+        advanced: Advanced
+        fluent: Fluent
