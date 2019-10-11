@@ -64,13 +64,10 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'codeclimate-test-reporter', require: nil
-  gem 'database_cleaner'
   gem 'capybara-selenium'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
   gem 'rails-controller-testing'
   gem 'capybara-screenshot'
-  gem 'webdrivers', '~> 3.0'
 end
 
 group :development do
