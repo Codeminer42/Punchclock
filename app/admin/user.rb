@@ -168,8 +168,6 @@ ActiveAdmin.register User do
           column :delta
           column :extra_hour
         end
-        div link_to I18n.t('download_as_csv'),
-                        admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :csv)
         div link_to I18n.t('download_as_xls'),
                         admin_punches_path(q: { user_id_eq: user.id, from_greater_than: from, from_lteq: to }, format: :xls)
         div link_to I18n.t('all_punches'),
@@ -218,5 +216,17 @@ ActiveAdmin.register User do
         end
       end
     end
+  end
+
+  csv do
+    column :name
+    column :email
+    column :level
+    column :office
+    column :role
+    column :specialty
+    column :occupation
+    column :contract_type
+    column :github
   end
 end
