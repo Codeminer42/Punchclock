@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register User, as: 'AdminUser' do
-  filter :email
-
+    filter :email
   actions :index, :show
 
   menu priority: 2
 
-  index do
+  index download_links: [:xls] do
     column :name
     column :email
     if current_user.super_admin?
-      column :role 
+      column :role
       column :company
     end
     actions only: :show
@@ -31,6 +30,15 @@ ActiveAdmin.register User, as: 'AdminUser' do
   controller do
     def scoped_collection
       current_user.super_admin? ? User.where(role: [:admin, :super_admin]) : User.admin.where(company_id: current_user.company_id)
+    end
+
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = AdminsSpreadsheet.new @admin_users
+          send_data spreadsheet.generate_xls, filename: 'admins.xls'
+        end
+      end
     end
   end
 end
