@@ -71,7 +71,7 @@ ActiveAdmin.register Punch do
       super do |format|
         format.xls do
           spreadsheet = PunchesSpreadsheet.new @punches
-          send_data spreadsheet.generate_xls, filename: 'punches.xls'
+          send_data spreadsheet.to_string_io, filename: 'punches.xls'
         end
       end
     end

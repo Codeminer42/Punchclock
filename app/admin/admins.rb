@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register User, as: 'AdminUser' do
-    filter :email
+  filter :email
   actions :index, :show
 
   menu priority: 2
@@ -36,7 +36,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
       super do |format|
         format.xls do
           spreadsheet = AdminsSpreadsheet.new @admin_users
-          send_data spreadsheet.generate_xls, filename: 'admins.xls'
+          send_data spreadsheet.to_string_io, filename: 'admins.xls'
         end
       end
     end
