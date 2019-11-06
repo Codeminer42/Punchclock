@@ -73,7 +73,7 @@ describe 'Users', type: :feature do
 
     it 'by office' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Escritório', options: admin_user.company.offices.pluck(:city) << 'Qualquer')
+        expect(page).to have_select('Escritório', options: Office.pluck(:city) << 'Qualquer')
       end
     end
 
@@ -151,7 +151,7 @@ describe 'Users', type: :feature do
           find_link("#{user.name}", href: "/admin/users/#{user.id}").click
         end
       end
-      
+
       it 'have edit action' do
         expect(page).to have_link('Editar Usuário')
       end
@@ -231,7 +231,6 @@ describe 'Users', type: :feature do
                             have_css('.col.col-to', text: punch.to_time) &
                             have_css('.col.col-delta', text: punch.delta_as_hour) &
                             have_css('.col.col-extra_hour', text: punch.extra_hour) &
-                            have_link(I18n.t('download_as_csv'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now }, format: :csv)) &
                             have_link(I18n.t('download_as_xls'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now }, format: :xls)) &
                             have_link(I18n.t('all_punches'), href: admin_punches_path(q: { user_id_eq: user.id, commit: :Filter }))
           end
