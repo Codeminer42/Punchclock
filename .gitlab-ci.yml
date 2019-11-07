@@ -54,6 +54,7 @@ bundler_audit:
   stage: security
   before_script:
     - gem install bundler-audit
+    - bundle audit --update
   script: bundle audit
 
 production:
