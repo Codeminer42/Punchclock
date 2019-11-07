@@ -48,7 +48,7 @@ ActiveAdmin.register Questionnaire do
   filter :kind, as: :select
   filter :created_at
 
-  index do
+  index download_links: [:xls] do
     column :title do |questionnaire|
       link_to questionnaire.title, admin_questionnaire_path(questionnaire)
     end
@@ -59,7 +59,7 @@ ActiveAdmin.register Questionnaire do
   end
 
   show do
-    attributes_table do 
+    attributes_table do
       row :title
       row :kind
       row :active
@@ -67,10 +67,10 @@ ActiveAdmin.register Questionnaire do
       row :created_at
       row :updated_at
       row :questions do
-        table_for questionnaire.questions do 
+        table_for questionnaire.questions do
           column :title
           column :kind
-          column (:answer_options) do |question| 
+          column (:answer_options) do |question|
             answers = question.answer_options.sum { |answer| "<li>#{ answer }</li>" }
             raw "<ol>#{ answers }</ol>"
           end
@@ -101,5 +101,16 @@ ActiveAdmin.register Questionnaire do
       end
     end
     f.actions
+  end
+
+  controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = QuestionnairesSpreadsheet.new @questionnaires
+          send_data spreadsheet.to_string_io, filename: 'questionnaires.xls'
+        end
+      end
+    end
   end
 end
