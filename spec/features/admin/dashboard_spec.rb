@@ -8,7 +8,7 @@ describe 'Dashboard', type: :feature do
   let!(:client)    { create(:client, company: admin_user.company) }
   let!(:project)   { create(:project, company: admin_user.company, client: client) }
 
-  before(:all) do
+  before do
     create(:user, :with_overall_score, :level_trainee, score: 8)
     create(:user, :with_overall_score, :level_trainee, score: 3)
     create(:user, :with_overall_score, :level_junior, score: 7)
@@ -23,9 +23,7 @@ describe 'Dashboard', type: :feature do
     create(:user, :with_overall_score, :level_senior, score: 8)
     create(:user, :with_overall_score, :level_senior_plus, score: 9)
     create(:user, :with_overall_score, :level_senior_plus, score: 9)
-  end
 
-  before do
     sign_in(admin_user)
     visit '/admin/dashboard'
   end
