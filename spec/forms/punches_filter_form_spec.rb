@@ -51,7 +51,7 @@ describe PunchesFilterForm do
       it 'apply from and to conditions' do
         expect(relation).to receive(:since).with(Date.new(2013, 10, 1))
           .and_return(relation)
-        expect(relation).to receive(:until).with(Date.new(2013, 10, 31))
+        expect(relation).to receive(:until).with(Date.new(2013, 10, 31).end_of_day)
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
@@ -71,7 +71,7 @@ describe PunchesFilterForm do
       let!(:form) { PunchesFilterForm.new(until: '31/10/2013') }
 
       it 'apply to and to conditions' do
-        expect(relation).to receive(:until).with(Date.new(2013, 10, 31))
+        expect(relation).to receive(:until).with(Date.new(2013, 10, 31).end_of_day)
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
       end
@@ -93,6 +93,44 @@ describe PunchesFilterForm do
         expect(relation).to receive(:where).with(project_id: 1)
           .and_return(relation)
         expect(form.apply_filters(relation)).to eq(relation)
+      end
+    end
+
+    context 'when there are punches that pass in filter criteria' do
+      subject(:filtered_punches) { form.apply_filters(relation) }
+
+      let(:relation) { Punch.where(user_id: user.id) }
+      let(:user) { create(:user) }
+      let(:form) do
+        PunchesFilterForm.new(since: '04/11/2019', until: '04/11/2019', user_id: user.id)
+      end
+      let!(:valid_punch) do
+        create(:punch, from: Date.new(2019, 11, 4), to: Date.new(2019, 11, 4), user: user  )
+      end
+      let!(:punches) do
+        create_list(:punch, 3,  from: Date.new(2019, 11, 1), to: Date.new(2019, 11, 1), user: user  )
+      end
+
+      it 'returns the valid punch' do
+        expect(filtered_punches[0]).to eq(valid_punch)
+      end
+    end
+
+    context 'when there are not punches that pass in filter criteria' do
+      subject(:filtered_punches) { form.apply_filters(relation) }
+
+      let(:relation) { Punch.where(user_id: user.id) }
+      let(:user) { create(:user) }
+      let(:form) do
+        PunchesFilterForm.new(since: '04/11/2019', until: '04/11/2019', user_id: user.id)
+      end
+
+      let!(:punches) do
+        create_list(:punch, 3,  from: Date.new(2019, 11, 1), to: Date.new(2019, 11, 1), user: user  )
+      end
+
+      it 'returns empty' do
+        expect(filtered_punches).to be_empty
       end
     end
   end

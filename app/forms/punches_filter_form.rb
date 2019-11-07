@@ -32,7 +32,7 @@ class PunchesFilterForm
     end
 
     if @until.present?
-      until_date = Date.strptime(@until, '%d/%m/%Y')
+      until_date = Date.strptime(@until, '%d/%m/%Y').end_of_day
       relation = relation.until(until_date)
     end
 
