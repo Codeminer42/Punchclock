@@ -15,7 +15,7 @@ ActiveAdmin.register Evaluation do
   filter :questionnaire_kind, as: :select, collection: Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind] }
   filter :created_at
 
-  index do
+  index download_links: [:xls] do
     column :evaluator
     column :evaluated
     column :score
@@ -38,6 +38,17 @@ ActiveAdmin.register Evaluation do
         table_for evaluation.answers do
           column :question
           column :response
+        end
+      end
+    end
+  end
+
+  controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = EvaluationsSpreadsheet.new @evaluations
+          send_data spreadsheet.to_string_io, filename: 'evaluations.xls'
         end
       end
     end
