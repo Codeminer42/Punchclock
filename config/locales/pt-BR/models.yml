@@ -212,11 +212,14 @@ pt-BR:
         access: "Acessar"
       evaluation:
         id: "ID"
+        observation: "Observação"
         evaluator: "Avaliador"
         evaluated: "Avaliado"
         score: "Pontuação"
         questionnaire: "Questionário"
+        english_level: "Nível de Inglês"
         created_at: "Criado em"
+        updated_at: "Atualizado em"
         questionnaire_kind: "Tipo do Questionário"
       questionnaire:
         id: "ID"

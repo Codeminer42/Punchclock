@@ -15,7 +15,7 @@ describe 'Performance Evaluation', type: :feature do
 
     find("label[for=evaluation_answers_attributes_0_response_#{questionnaire.questions.first.answer_options[1].downcase}]").click
     find("label[for=evaluation_answers_attributes_1_response_#{questionnaire.questions.last.answer_options[1].downcase}]").click
-    fill_in 'Observation', with: 'Lots of Obs'
+    fill_in 'Observação', with: 'Lots of Obs'
     select '5', from: 'Pontuação'
 
     click_on 'Next'
@@ -29,7 +29,7 @@ describe 'Performance Evaluation', type: :feature do
 
     find("label[for=evaluation_answers_attributes_0_response_#{questionnaire.questions.first.answer_options[0].downcase}]").click
     find("label[for=evaluation_answers_attributes_1_response_#{questionnaire.questions.last.answer_options[0].downcase}]").click
-    fill_in 'Observation', with: 'Many Obs'
+    fill_in 'Observação', with: 'Many Obs'
     select '7', from: 'Pontuação'
 
     click_on 'Next'

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe EvaluationsSpreadsheet do
-  let(:evaluation) { create(:evaluation) }
+  let(:evaluation) { create(:evaluation, :english) }
   let(:evaluation_spreadsheet) { EvaluationsSpreadsheet.new([evaluation]) }
   let(:header_attributes) do
     [
@@ -21,9 +21,9 @@ RSpec.describe EvaluationsSpreadsheet do
       evaluation.id,
       evaluation.observation,
       evaluation.score,
-      evaluation.english_level,
-      evaluation.created_at,
-      evaluation.updated_at
+      evaluation.english_level.text,
+      I18n.l(evaluation.created_at, format: :long),
+      I18n.l(evaluation.created_at, format: :long)
     ]
   end
 
@@ -38,8 +38,10 @@ RSpec.describe EvaluationsSpreadsheet do
     it 'returns spreadsheet data' do
       is_expected.to include(
         evaluation.observation,
-        evaluation.english_level.to_s
-                             )
+        evaluation.english_level.text,
+        I18n.l(evaluation.created_at, format: :long),
+        I18n.l(evaluation.created_at, format: :long)
+      )
     end
 
     it 'returns spreadsheet with header' do

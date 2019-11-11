@@ -14,9 +14,9 @@ describe 'English Evaluation', type: :feature do
 
     find("label[for=evaluation_answers_attributes_0_response_#{questionnaire.questions.first.answer_options[1].downcase}]").click
     find("label[for=evaluation_answers_attributes_1_response_#{questionnaire.questions.last.answer_options[0].downcase}]").click
-    fill_in 'Observation', with: 'Lots of Text'
+    fill_in 'Observação', with: 'Lots of Text'
     select '7', from: 'Pontuação'
-    select 'fluent', from: 'English level'
+    select 'fluent', from: 'Nível de Inglês'
 
     click_on 'Next'
 
@@ -30,9 +30,9 @@ describe 'English Evaluation', type: :feature do
 
     find("label[for=evaluation_answers_attributes_0_response_#{questionnaire.questions.first.answer_options[0].downcase}]").click
     find("label[for=evaluation_answers_attributes_1_response_#{questionnaire.questions.last.answer_options[1].downcase}]").click
-    fill_in 'Observation', with: 'Lots, and lots, of Text'
+    fill_in 'Observação', with: 'Lots, and lots, of Text'
     select '9', from: 'Pontuação'
-    select 'advanced', from: 'English level'
+    select 'advanced', from: 'Nível de Inglês'
 
     click_on 'Next'
 
