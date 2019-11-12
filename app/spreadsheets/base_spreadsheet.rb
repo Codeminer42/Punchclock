@@ -42,6 +42,10 @@ class BaseSpreadsheet
     I18n.l(date, format: :long)
   end
 
+  def translate_enumerize(enumerize)
+    enumerize&.text
+  end
+
   def set_header
     row = @sheet.row(0)
     row.concat(header)

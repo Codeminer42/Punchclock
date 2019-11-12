@@ -6,9 +6,9 @@ class EvaluationsSpreadsheet < BaseSpreadsheet
       evaluation.id,
       evaluation.observation,
       evaluation.score,
-      evaluation.english_level.text,
-      I18n.l(evaluation.created_at, format: :long),
-      I18n.l(evaluation.created_at, format: :long)
+      translate_enumerize(evaluation.english_level),
+      translate_date(evaluation.created_at),
+      translate_date(evaluation.created_at)
     ]
   end
 
