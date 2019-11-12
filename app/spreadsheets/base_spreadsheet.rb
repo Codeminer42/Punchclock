@@ -36,6 +36,12 @@ class BaseSpreadsheet
     end
   end
 
+  def translate_date(date)
+    return if date.nil?
+
+    I18n.l(date, format: :long)
+  end
+
   def set_header
     row = @sheet.row(0)
     row.concat(header)
