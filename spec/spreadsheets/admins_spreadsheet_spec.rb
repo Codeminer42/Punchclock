@@ -26,16 +26,19 @@ RSpec.describe AdminsSpreadsheet do
       updated_at
     ].map { |attribute| User.human_attribute_name(attribute) }
   end
-
+  let (:date_attributes) do
+    [
+      user.last_sign_in_at, user.confirmed_at, user.created_at,
+      user.updated_at
+    ].map { |attr| attr.nil? ? nil : I18n.l(attr, format: :long) }
+  end
   let (:body_attributes) do
     [
       user.id,
       user.email,
-      user.last_sign_in_at,
       user.last_sign_in_ip,
       user.name,
       user.hour_cost,
-      user.confirmed_at,
       user.active,
       user.allow_overtime,
       user.occupation,
@@ -43,10 +46,8 @@ RSpec.describe AdminsSpreadsheet do
       user.specialty,
       user.github,
       user.contract_type,
-      user.role,
-      I18n.l(user.created_at, format: :long),
-      I18n.l(user.updated_at, format: :long)
-    ]
+      user.role
+    ].concat(date_attributes)
   end
 
   describe '#to_string_io' do

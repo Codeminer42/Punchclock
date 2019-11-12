@@ -5,11 +5,11 @@ class AdminsSpreadsheet < BaseSpreadsheet
     [
       user.id,
       user.email,
-      user.last_sign_in_at,
+      translate_date(user.last_sign_in_at),
       user.last_sign_in_ip,
       user.name,
       user.hour_cost,
-      user.confirmed_at,
+      translate_date(user.confirmed_at),
       user.active,
       user.allow_overtime,
       user.occupation,
@@ -18,8 +18,8 @@ class AdminsSpreadsheet < BaseSpreadsheet
       user.github,
       user.contract_type,
       user.role,
-      I18n.l(user.created_at, format: :long),
-      I18n.l(user.updated_at, format: :long)
+      translate_date(user.created_at),
+      translate_date(user.updated_at)
     ]
   end
 
