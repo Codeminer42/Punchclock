@@ -8,8 +8,8 @@ class QuestionnairesSpreadsheet < BaseSpreadsheet
       questionnaire.kind,
       questionnaire.description,
       questionnaire.active,
-      questionnaire.created_at,
-      questionnaire.updated_at
+      translate_date(questionnaire.created_at),
+      translate_date(questionnaire.updated_at)
     ]
   end
 

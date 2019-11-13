@@ -24,8 +24,8 @@ RSpec.describe QuestionnairesSpreadsheet do
       questionnaire.kind,
       questionnaire.description,
       questionnaire.active,
-      questionnaire.created_at,
-      questionnaire.updated_at
+      I18n.l(questionnaire.created_at, format: :long),
+      I18n.l(questionnaire.updated_at, format: :long),
     ]
   end
 
