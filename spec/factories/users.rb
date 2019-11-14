@@ -87,7 +87,6 @@ FactoryBot.define do
       level { :senior_plus }
     end
 
-
     trait :with_started_at do
       started_at { Date.today }
     end

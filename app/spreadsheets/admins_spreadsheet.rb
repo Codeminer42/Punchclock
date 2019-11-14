@@ -18,6 +18,7 @@ class AdminsSpreadsheet < BaseSpreadsheet
       user.github,
       user.contract_type,
       user.role,
+      translate_date(user.started_at),
       translate_date(user.created_at),
       translate_date(user.updated_at)
     ]
@@ -40,6 +41,7 @@ class AdminsSpreadsheet < BaseSpreadsheet
       github
       contract_type
       role
+      started_at
       created_at
       updated_at
     ].map { |attribute| User.human_attribute_name(attribute) }
