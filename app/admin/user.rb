@@ -10,7 +10,7 @@ ActiveAdmin.register User do
   menu parent: User.model_name.human(count: 2), priority: 1
 
   permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
-                :password, :active, :allow_overtime, :office_id, :occupation, :role,
+                :password, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, skill_ids: []
 
   scope :all
@@ -93,6 +93,7 @@ ActiveAdmin.register User do
           end
           row :allow_overtime
           row :active
+          row :started_at
           row :last_sign_in_at
           row :created_at
           row :updated_at
@@ -182,6 +183,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :hour_cost, input_html: { value: '0.0' }
+      f.input :started_at, as: :date_picker
       if current_user.super_admin?
         f.input :office
         f.input :company
