@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Users', type: :feature do
   let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let(:user)       { create(:user, :admin) }
+  let(:user)       { create(:user, :admin, :with_started_at) }
 
   before do
     sign_in(admin_user)
@@ -110,9 +110,12 @@ describe 'Users', type: :feature do
       end
 
       it 'must have the form working' do
+        started_at = 1.week.ago
+
         fill_in 'Nome', with: 'Foo Bar'
         fill_in 'E-mail', with: 'foo@bar.com'
         fill_in 'Github', with: 'userGithub'
+        find('#user_started_at').fill_in with: started_at.strftime("%Y-%m-%d")
         find('#user_office_id').find(:option, office.city).select_option
         find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
@@ -130,6 +133,7 @@ describe 'Users', type: :feature do
                         have_text('Foo Bar') &
                         have_text('foo@bar.com') &
                         have_text('userGithub') &
+                        have_text(I18n.l(started_at, format: "%d de %B de %Y")) &
                         have_text(office.city) &
                         have_text(skill.title) &
                         have_text('engineer') &
@@ -165,6 +169,7 @@ describe 'Users', type: :feature do
                             have_text(user.office.city) &
                             have_text(office.city) &
                             have_text(office2.city) &
+                            have_css('.row-started_at td', text:I18n.l(user.started_at, format: :long)) &
                             have_css('.row-english_level td', text: evaluation.english_level.humanize) &
                             have_css('.row-overall_score td', text: user.overall_score) &
                             have_css('.row-performance_score td', text: user.performance_score) &
@@ -274,6 +279,7 @@ describe 'Users', type: :feature do
                           have_text('Tipo de Contrato') &
                           have_text('Função') &
                           have_text('Nível') &
+                          have_text('Iniciou em') &
                           have_text('Habilidades') &
                           have_text('Observação')
         end
