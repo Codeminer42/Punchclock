@@ -10,7 +10,7 @@ class PunchesController < ApplicationController
       .ransack(params[:q])
 
     @search.sorts = 'from desc' if @search.sorts.empty?
-    @punches = Pagination.new(@search.result).decorated(params)
+    @punches = PunchesPaginationDecorator.new(params, @search.result)
   end
 
   def new

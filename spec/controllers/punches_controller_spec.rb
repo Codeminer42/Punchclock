@@ -10,6 +10,7 @@ describe PunchesController do
 
   context 'when user is an employee' do
     let(:punches) { double(:punch, page: Punch.page) }
+
     before do
       allow(punches).to receive(:decorate)
     end
