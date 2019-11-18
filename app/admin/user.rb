@@ -22,7 +22,7 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
-  
+
   filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
   filter :office, collection: proc {
     current_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_user.company.offices.order(:city)
@@ -49,7 +49,7 @@ ActiveAdmin.register User do
     redirect_to collection_path, alert: "The users have been enabled."
   end
 
-  index do
+  index download_links: [:xls] do
     selectable_column
     column :name do |user|
       link_to user.name, admin_user_path(user)
@@ -208,6 +208,15 @@ ActiveAdmin.register User do
   end
 
   controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = UsersSpreadsheet.new @users
+          send_data spreadsheet.to_string_io, filename: 'users.xls'
+        end
+      end
+    end
+
     def create
       create! do |success, _failure|
         success.html do
