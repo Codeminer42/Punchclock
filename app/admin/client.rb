@@ -24,7 +24,7 @@ ActiveAdmin.register Client do
     redirect_to collection_path, alert: "The client have been enabled."
   end
 
-  index do
+  index download_links: [:xls] do
     selectable_column
     column :company if current_user.super_admin?
     column :name
@@ -64,4 +64,16 @@ ActiveAdmin.register Client do
     end
     f.actions
   end
+
+  controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = ClientsSpreadsheet.new @clients
+          send_data spreadsheet.to_string_io, filename: 'clients.xls'
+        end
+      end
+    end
+  end
+
 end
