@@ -39,7 +39,7 @@ ActiveAdmin.register Project do
     end
   end
 
-  index do
+  index download_links: [:xls] do
     selectable_column
     column :company if current_user.super_admin?
     column :name do |project|
@@ -102,6 +102,15 @@ ActiveAdmin.register Project do
 
     def permited_allocation_params
       params.require(:allocate_users_form).permit(:company_id, :project_id, :start_at, :end_at, not_allocated_users: [])
+    end
+
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = ProjectsSpreadsheet.new(@projects)
+          send_data spreadsheet.to_string_io, filename: 'projects.xls'
+        end
+      end
     end
   end
 end
