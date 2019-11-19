@@ -14,7 +14,7 @@ ActiveAdmin.register RegionalHoliday do
   filter :month
 
 
-  index do
+  index download_links: [:xls] do
     column :company if current_user.super_admin?
     column :name
     column :day
@@ -49,4 +49,16 @@ ActiveAdmin.register RegionalHoliday do
     end
       f.actions
   end
+
+  controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = RegionalHolidaysSpreadsheet.new @regional_holidays
+          send_data spreadsheet.to_string_io, filename: 'regional_holidays.xls'
+        end
+      end
+    end
+  end
+
 end
