@@ -86,6 +86,11 @@ FactoryBot.define do
     trait :level_senior_plus do
       level { :senior_plus }
     end
+
+    trait :with_started_at do
+      started_at { Date.today }
+    end
+
   end
 
   factory :invalid_user, parent: :user do

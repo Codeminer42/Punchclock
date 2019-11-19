@@ -151,6 +151,7 @@ pt-BR:
         level: "Nível"
         active: "Ativo"
         observation: "Observação"
+        started_at: "Iniciou em"
         reviewer: "Padrinho"
         overall_score: "Pontuação Geral"
         performance_score: "Pontuação de Desempenho"

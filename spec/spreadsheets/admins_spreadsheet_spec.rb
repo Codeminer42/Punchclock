@@ -22,6 +22,7 @@ RSpec.describe AdminsSpreadsheet do
       github
       contract_type
       role
+      started_at
       created_at
       updated_at
     ].map { |attribute| User.human_attribute_name(attribute) }
@@ -29,7 +30,7 @@ RSpec.describe AdminsSpreadsheet do
   let (:date_attributes) do
     [
       user.last_sign_in_at, user.confirmed_at, user.created_at,
-      user.updated_at
+      user.updated_at, user.started_at
     ].map { |attr| attr.nil? ? nil : I18n.l(attr, format: :long) }
   end
   let (:body_attributes) do

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Users', type: :feature do
   let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let(:user)       { create(:user, :admin) }
+  let(:user)       { create(:user, :admin, :with_started_at) }
 
   before do
     sign_in(admin_user)
@@ -60,14 +60,13 @@ describe 'Users', type: :feature do
 
     it 'by level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.level.values.map { |key| key.text.titleize } << 'Qualquer' )
+        expect(page).to have_select('Nível', options: User.level.values.map { |key| key.text.titleize } << 'Qualquer')
       end
     end
 
     it 'by specialty' do
       within '#filters_sidebar_section' do
         expect(page).to have_select('Especialidade', options: User.specialty.values.map { |key| key.text.humanize } << 'Qualquer')
-
       end
     end
 
@@ -79,7 +78,7 @@ describe 'Users', type: :feature do
 
     it 'by contract type' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Tipo de Contrato', options:  User.contract_type.values.map { |key| key.text.humanize } << 'Qualquer')
+        expect(page).to have_select('Tipo de Contrato', options: User.contract_type.values.map { |key| key.text.humanize } << 'Qualquer')
       end
     end
 
@@ -101,6 +100,7 @@ describe 'Users', type: :feature do
     let!(:office2)    { create(:office, head: user) }
     let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
     let!(:allocation) { create(:allocation, :with_end_at, user: user) }
+    let(:started_at) { 1.week.ago }
 
     describe 'New' do
       before do
@@ -113,6 +113,7 @@ describe 'Users', type: :feature do
         fill_in 'Nome', with: 'Foo Bar'
         fill_in 'E-mail', with: 'foo@bar.com'
         fill_in 'Github', with: 'userGithub'
+        find('#user_started_at').fill_in with: started_at.strftime('%Y-%m-%d')
         find('#user_office_id').find(:option, office.city).select_option
         find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
@@ -130,6 +131,7 @@ describe 'Users', type: :feature do
                         have_text('Foo Bar') &
                         have_text('foo@bar.com') &
                         have_text('userGithub') &
+                        have_text(I18n.l(started_at, format: '%d de %B de %Y')) &
                         have_text(office.city) &
                         have_text(skill.title) &
                         have_text('engineer') &
@@ -148,7 +150,7 @@ describe 'Users', type: :feature do
       before do
         visit '/admin/users'
         within 'table' do
-          find_link("#{user.name}", href: "/admin/users/#{user.id}").click
+          find_link(user.name.to_s, href: "/admin/users/#{user.id}").click
         end
       end
 
@@ -165,6 +167,7 @@ describe 'Users', type: :feature do
                             have_text(user.office.city) &
                             have_text(office.city) &
                             have_text(office2.city) &
+                            have_css('.row-started_at td', text: I18n.l(user.started_at, format: :long)) &
                             have_css('.row-english_level td', text: evaluation.english_level.humanize) &
                             have_css('.row-overall_score td', text: user.overall_score) &
                             have_css('.row-performance_score td', text: user.performance_score) &
@@ -219,26 +222,28 @@ describe 'Users', type: :feature do
 
       context 'on Punches tab' do
         let(:datetime_first_monday) { (DateTime.now - 1.month).monday }
-        let!(:punch) { create :punch, user: user, from: datetime_first_monday.change({ hour: 8, min: 8, sec: 0 }), to: datetime_first_monday.change({ hour: 12, min: 0, sec: 0 }) }
+        let!(:punch) { create :punch, user: user, from: datetime_first_monday.change(hour: 8, min: 8, sec: 0), to: datetime_first_monday.change(hour: 12, min: 0, sec: 0) }
         before { refresh }
         it 'finds all elements correctly' do
           within 'div#punches' do
-            expect(page).to have_table('') &
-                            have_css('.col.col-company', text: punch.company) &
-                            have_css('.col.col-project', text: punch.project) &
-                            have_css('.col.col-when', text: punch.when_day) &
-                            have_css('.col.col-from', text: punch.from_time) &
-                            have_css('.col.col-to', text: punch.to_time) &
-                            have_css('.col.col-delta', text: punch.delta_as_hour) &
-                            have_css('.col.col-extra_hour', text: punch.extra_hour) &
-                            have_link(I18n.t('download_as_xls'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now }, format: :xls)) &
-                            have_link(I18n.t('all_punches'), href: admin_punches_path(q: { user_id_eq: user.id, commit: :Filter }))
+            freeze_time do
+              expect(page).to have_table('') &
+                              have_css('.col.col-company', text: punch.company) &
+                              have_css('.col.col-project', text: punch.project) &
+                              have_css('.col.col-when', text: punch.when_day) &
+                              have_css('.col.col-from', text: punch.from_time) &
+                              have_css('.col.col-to', text: punch.to_time) &
+                              have_css('.col.col-delta', text: punch.delta_as_hour) &
+                              have_css('.col.col-extra_hour', text: punch.extra_hour) &
+                              have_link(I18n.t('download_as_xls'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now }, format: :xls)) &
+                              have_link(I18n.t('all_punches'), href: admin_punches_path(q: { user_id_eq: user.id, commit: :Filter }))
+            end
           end
         end
       end
 
       context 'on Punches tab and filtering results' do
-        let!(:punch1) { create :punch, user: user, from: DateTime.new(2019, 6, 6, 8, 8, 0, 0), to: DateTime.new(2019, 6, 6, 8, 12, 0, 0)}
+        let!(:punch1) { create :punch, user: user, from: DateTime.new(2019, 6, 6, 8, 8, 0, 0), to: DateTime.new(2019, 6, 6, 8, 12, 0, 0) }
         let!(:punch2) { create :punch, user: user, from: DateTime.new(2019, 6, 4, 8, 8, 0, 0), to: DateTime.new(2019, 6, 4, 8, 12, 0, 0) }
 
         before { refresh }
@@ -260,7 +265,7 @@ describe 'Users', type: :feature do
     describe 'Edit' do
       before do
         visit "/admin/users/#{user.id}"
-        find_link("Editar Usuário", href: "/admin/users/#{user.id}/edit").click
+        find_link('Editar Usuário', href: "/admin/users/#{user.id}/edit").click
       end
 
       it 'must have labels' do
@@ -274,6 +279,7 @@ describe 'Users', type: :feature do
                           have_text('Tipo de Contrato') &
                           have_text('Função') &
                           have_text('Nível') &
+                          have_text('Iniciou em') &
                           have_text('Habilidades') &
                           have_text('Observação')
         end
