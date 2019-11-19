@@ -23,7 +23,7 @@ ActiveAdmin.register Office do
     end
   end
 
-  index do
+  index download_links: [:xls] do
     column :city do |office|
       link_to office.city, admin_office_path(office)
     end
@@ -69,5 +69,16 @@ ActiveAdmin.register Office do
       end
     end
     f.actions
+  end
+
+  controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = OfficesSpreadsheet.new(@offices)
+          send_data spreadsheet.to_string_io, filename: 'offices.xls'
+        end
+      end
+    end
   end
 end
