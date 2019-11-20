@@ -183,7 +183,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :hour_cost, input_html: { value: '0.0' }
-      f.input :started_at, as: :date_picker
+      f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at.try(:to_s, :date) }
       if current_user.super_admin?
         f.input :office
         f.input :company
