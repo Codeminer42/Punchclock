@@ -4,9 +4,8 @@ class ProjectsSpreadsheet < BaseSpreadsheet
   def body(project)
     [
       project.name,
-      project.active.to_s,
+      I18n.t(project.active.to_s),
       project.client&.name,
-      project.company&.name,
       translate_date(project.created_at),
       translate_date(project.created_at)
     ]
@@ -17,7 +16,6 @@ class ProjectsSpreadsheet < BaseSpreadsheet
       name
       active
       client
-      company
       created_at
       updated_at
     ].map { |attribute| Project.human_attribute_name(attribute) }

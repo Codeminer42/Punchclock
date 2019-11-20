@@ -10,7 +10,6 @@ RSpec.describe ProjectsSpreadsheet do
       name
       active
       client
-      company
       created_at
       updated_at
     ].map { |attribute| Project.human_attribute_name(attribute) }
@@ -19,9 +18,8 @@ RSpec.describe ProjectsSpreadsheet do
   let(:body_attributes) do
     [
       project.name,
-      project.active.to_s,
+      I18n.t(project.active.to_s),
       project.client&.name,
-      project.company&.name,
       I18n.l(project.created_at, format: :long),
       I18n.l(project.updated_at, format: :long)
     ]
@@ -37,7 +35,7 @@ RSpec.describe ProjectsSpreadsheet do
 
     it 'returns spreadsheet data' do
       expect(to_string_io).to include(project.name,
-                             project.company&.name,
+                             I18n.t(project.active.to_s),
                              I18n.l(project.created_at, format: :long),
                              I18n.l(project.updated_at, format: :long))
     end
