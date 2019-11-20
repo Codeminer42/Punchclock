@@ -4,7 +4,6 @@ class OfficesSpreadsheet < BaseSpreadsheet
   def body(office)
     [
       office.city,
-      office.company&.name,
       office.head&.name,
       office.users.active.size,
       office.score,
@@ -16,7 +15,6 @@ class OfficesSpreadsheet < BaseSpreadsheet
   def header
     %w[
       city
-      company
       head
       users_quantity
       score

@@ -8,7 +8,6 @@ RSpec.describe OfficesSpreadsheet do
   let(:header_attributes) do
     %w[
       city
-      company
       head
       users_quantity
       score
@@ -20,7 +19,6 @@ RSpec.describe OfficesSpreadsheet do
   let (:body_attributes) do
     [
       office.city,
-      office.company&.name,
       office.head&.name,
       office.users.active.size,
       office.score,
@@ -40,7 +38,6 @@ RSpec.describe OfficesSpreadsheet do
     it 'returns spreadsheet data' do
       expect(to_string_io).to include(
         office.city,
-        office.company&.name,
         '0',
         I18n.l(office.created_at, format: :long),
         I18n.l(office.created_at, format: :long)
