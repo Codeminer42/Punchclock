@@ -59,3 +59,6 @@ pt-BR:
     success: Alocações salvas com sucesso.
     error: Cheque os dados e tente novamente.
     create: Criar Alocações
+  average_score: 'Média de engenheiros por nível'
+  level: 'Nível'
+  users_average: 'Média'
