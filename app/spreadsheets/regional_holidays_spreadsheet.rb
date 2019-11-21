@@ -6,7 +6,6 @@ class RegionalHolidaysSpreadsheet < BaseSpreadsheet
       regional_holiday.name,
       regional_holiday.day.to_s,
       regional_holiday.month.to_s,
-      regional_holiday.company&.name,
       translate_date(regional_holiday.created_at),
       translate_date(regional_holiday.updated_at)
     ]
@@ -17,7 +16,6 @@ class RegionalHolidaysSpreadsheet < BaseSpreadsheet
       name
       day
       month
-      company
       created_at
       updated_at
     ].map { |attribute| RegionalHoliday.human_attribute_name(attribute) }

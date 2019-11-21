@@ -10,7 +10,6 @@ RSpec.describe RegionalHolidaysSpreadsheet do
       name
       day
       month
-      company
       created_at
       updated_at
     ].map { |attribute| RegionalHoliday.human_attribute_name(attribute) }
@@ -21,7 +20,6 @@ RSpec.describe RegionalHolidaysSpreadsheet do
       regional_holiday.name,
       regional_holiday.day.to_s,
       regional_holiday.month.to_s,
-      regional_holiday.company&.name,
       I18n.l(regional_holiday.created_at, format: :long),
       I18n.l(regional_holiday.updated_at, format: :long)
     ]
