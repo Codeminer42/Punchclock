@@ -8,7 +8,6 @@ RSpec.describe ClientsSpreadsheet do
   let(:header_attributes) do
     %w[
       name
-      company
       active
       created_at
       updated_at
@@ -18,8 +17,7 @@ RSpec.describe ClientsSpreadsheet do
   let(:body_attributes) do
     [
       client.name,
-      client.company&.name,
-      client.active.to_s,
+      I18n.t(client.active.to_s),
       I18n.l(client.created_at, format: :long),
       I18n.l(client.updated_at, format: :long)
     ]
@@ -35,8 +33,9 @@ RSpec.describe ClientsSpreadsheet do
 
     it 'returns spreadsheet data' do
       expect(to_string_io).to include(client.name,
-                             I18n.l(client.created_at, format: :long),
-                             I18n.l(client.updated_at, format: :long))
+                                      I18n.t(client.active.to_s),
+                                      I18n.l(client.created_at, format: :long),
+                                      I18n.l(client.updated_at, format: :long))
     end
 
     it 'returns spreadsheet with header' do

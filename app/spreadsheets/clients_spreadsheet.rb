@@ -4,8 +4,7 @@ class ClientsSpreadsheet < BaseSpreadsheet
   def body(client)
     [
       client.name,
-      client.company&.name,
-      client.active.to_s,
+      I18n.t(client.active.to_s),
       translate_date(client.created_at),
       translate_date(client.created_at)
     ]
@@ -14,7 +13,6 @@ class ClientsSpreadsheet < BaseSpreadsheet
   def header
     %w[
       name
-      company
       active
       created_at
       updated_at
