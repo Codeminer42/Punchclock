@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Punch do
-  index download_links: [:csv, :xls]
-
   decorate_with PunchDecorator
   permit_params :from, :to, :extra_hour, :user_id, :project_id, :company_id, :company, :comment
 
@@ -18,11 +16,7 @@ ActiveAdmin.register Punch do
 
   config.sort_order = 'from_desc'
 
-  index do
-    div class: 'panel' do
-      h3 "Total: #{collection.total_hours}"
-    end
-    column :company, sortable: [:company, :name] if current_user.super_admin?
+  index download_links: [:xls] do
     column :user, sortable: [:user, :name]
     column :project, sortable: [:project, :name]
     column :when, sortable: :from
@@ -75,18 +69,5 @@ ActiveAdmin.register Punch do
         end
       end
     end
-  end
-
-  csv encoding: 'utf-8' do
-    column :user
-    column :project
-    column :when
-    column :from
-    column :to
-    column :delta
-    column :extra_hour do |punch|
-      t punch.extra_hour.to_s
-    end
-    column :comment
   end
 end
