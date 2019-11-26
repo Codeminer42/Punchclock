@@ -2,19 +2,19 @@
 
 class User < ApplicationRecord
   extend Enumerize
-  
+
   EXPERIENCE_PERIOD = 3.months
 
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable, :confirmable
-  
-  enumerize :level, in: { 
-    trainee: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6 
+
+  enumerize :level, in: {
+    trainee: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
     },  scope: :shallow,
         predicates: true
 
-  enumerize :occupation, in: { 
-    administrative: 0, engineer: 1 
+  enumerize :occupation, in: {
+    administrative: 0, engineer: 1
     },  scope: :shallow,
         predicates: true
 
@@ -27,7 +27,7 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2
     },  scope: :shallow,
         predicates: true
-  
+
   enumerize :role, in: {
     normal: 0, evaluator: 1, admin: 2, super_admin: 3
     },  scope: :shallow,
@@ -46,7 +46,7 @@ class User < ApplicationRecord
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, presence: true, if: :engineer?
-
+  validates :github, uniqueness: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }

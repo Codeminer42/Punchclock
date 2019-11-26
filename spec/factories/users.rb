@@ -7,7 +7,7 @@ FactoryBot.define do
     occupation            { 'engineer' }
     level                 { 'junior' }
     specialty             { 'backend' }
-    github                { 'gitUser' }
+    github                { Faker::Internet.unique.username }
     hour_cost             { 15.0 }
     contract_type         { 'employee' }
     role                  { 'normal' }
