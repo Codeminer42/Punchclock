@@ -18,7 +18,7 @@ ActiveAdmin.register Allocation do
   filter :start_at
   filter :end_at
 
-  index do
+  index download_links: [:xls] do
     column :user
     column :project
     column :start_at
@@ -80,13 +80,14 @@ ActiveAdmin.register Allocation do
     actions
   end
 
-  csv encoding: 'utf-8' do
-    column :id
-    column :user
-    column :project
-    column :start_at
-    column :end_at
-    column :created_at
-    column :updated_at
+  controller do
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = AllocationsSpreadsheet.new @allocations
+          send_data spreadsheet.to_string_io, filename: 'allocations.xls'
+        end
+      end
+    end
   end
 end
