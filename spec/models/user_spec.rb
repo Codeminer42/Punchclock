@@ -26,7 +26,6 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
-    it { is_expected.to validate_uniqueness_of(:github) }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     it { is_expected.to validate_presence_of(:occupation) }
 
@@ -48,7 +47,14 @@ RSpec.describe User, type: :model do
 
     context 'when user is engineer' do
       subject { build :user, occupation: 'engineer'}
-      it { is_expected.to validate_presence_of(:level) }
+
+      context 'level validation' do
+        it { is_expected.to validate_presence_of(:level) }
+      end
+
+      context 'github validation' do
+        it { is_expected.to validate_uniqueness_of(:github) }
+      end
     end
 
     context 'when user is engineer with no level' do

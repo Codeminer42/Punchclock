@@ -219,6 +219,12 @@ ActiveAdmin.register User do
       end
     end
 
+    def save_resource(object)
+      object.github = nil if object.github == ''
+
+      super
+    end
+
     def create
       create! do |success, _failure|
         success.html do
