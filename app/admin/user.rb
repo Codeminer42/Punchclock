@@ -57,9 +57,6 @@ ActiveAdmin.register User do
     column :office
     column :level
     column :specialty
-    column :hour_cost do |user|
-      number_to_currency user.hour_cost
-    end
     column :allow_overtime
     column :active
     actions
