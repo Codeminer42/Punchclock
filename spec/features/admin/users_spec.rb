@@ -119,7 +119,7 @@ describe 'Users', type: :feature do
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_level').find(:option, 'Engenheiro Junior').select_option
+        find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
         find('#user_role').find(:option, 'Admin').select_option
         check('Ativo')
