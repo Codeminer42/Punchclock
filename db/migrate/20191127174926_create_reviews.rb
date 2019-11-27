@@ -5,7 +5,6 @@ class CreateReviews < ActiveRecord::Migration[5.2]
       t.references :contribution, index: true
       t.integer :state, null: false
       t.datetime :created_at, null: false
-      t.timestamps
     end
   end
 end

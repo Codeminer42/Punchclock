@@ -2,7 +2,7 @@
 
 class Office < ApplicationRecord
   has_many :users, dependent: :restrict_with_error
-  has_many :contribution
+  has_many :contributions
   has_many :users_without_head, ->(office) {where.not(id: office.head_id)}, class_name: 'User'
   has_and_belongs_to_many :regional_holidays
   belongs_to :company

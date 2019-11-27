@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 class Contribution < ApplicationRecord
+  include AASM
 
   belongs_to :user
   belongs_to :office
+  has_many :reviews
 
   aasm column: 'state' do
     state :received, initial: true
@@ -11,14 +15,17 @@ class Contribution < ApplicationRecord
     state :closed
 
     event :approve do
-      transitions from: [:received, :contested], to: :approved
+      transitions from: %i[received contested], to: :approved
     end
-    event :reject do
-      transitions from: [:received, :contested], to: :rejected
+
+    event :refuse do
+      transitions from: %i[received contested], to: :refused
     end
+
     event :close do
       transitions from: [:approved], to: :closed
     end
+
     event :contest do
       transitions from: [:refused], to: :contested
     end
