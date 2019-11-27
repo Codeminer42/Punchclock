@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
   create_table "contributions", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "office_id"
-    t.string "link"
-    t.string "state"
+    t.string "link", null: false
+    t.string "state", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["office_id"], name: "index_contributions_on_office_id"
@@ -157,6 +157,16 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.index ["company_id"], name: "index_regional_holidays_on_company_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "contribution_id"
+    t.integer "state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contribution_id"], name: "index_reviews_on_contribution_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "title"
     t.bigint "company_id"
@@ -228,6 +238,7 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
   add_foreign_key "questionnaires", "companies"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "regional_holidays", "companies"
+  add_foreign_key "reviews", "users"
   add_foreign_key "skills", "companies"
   add_foreign_key "skills_users", "skills"
   add_foreign_key "skills_users", "users"

@@ -3,8 +3,8 @@ class CreateContributions < ActiveRecord::Migration[5.2]
     create_table :contributions do |t|
       t.references :user, index: true, foreign_key: true
       t.references :office, index: true
-      t.string :link
-      t.string :state
+      t.string :link, null: false
+      t.string :state, null: false
       t.timestamps
     end
 
