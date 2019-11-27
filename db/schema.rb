@@ -55,6 +55,18 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.integer "end_period"
   end
 
+  create_table "contributions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "office_id"
+    t.string "link"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["office_id"], name: "index_contributions_on_office_id"
+    t.index ["user_id", "link"], name: "index_contributions_on_user_id_and_link", unique: true
+    t.index ["user_id"], name: "index_contributions_on_user_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.bigint "questionnaire_id"
     t.integer "evaluator_id"
@@ -210,6 +222,7 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
   add_foreign_key "clients", "companies"
+  add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "companies"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "questionnaires", "companies"

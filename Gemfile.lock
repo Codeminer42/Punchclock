@@ -9,6 +9,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.0.6)
+      concurrent-ruby (~> 1.0)
     acme-client (0.4.1)
       faraday (~> 0.9, >= 0.9.1)
     actioncable (5.2.2.1)
@@ -455,6 +457,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm (~> 5.0, >= 5.0.6)
   active_admin_flat_skin
   active_admin_theme
   active_skin

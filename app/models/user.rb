@@ -39,6 +39,7 @@ class User < ApplicationRecord
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
   has_many :punches
+  has_many :contribution
   has_many :allocations, dependent: :restrict_with_error
   has_many :projects, through: :allocations
   has_many :evaluations, foreign_key: :evaluated_id, dependent: :restrict_with_error
