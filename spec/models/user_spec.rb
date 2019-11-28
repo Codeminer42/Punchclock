@@ -61,7 +61,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to enumerize(:specialty).in( frontend: 0,
                                                   backend: 1,
                                                   devops: 2,
-                                                  fullstack: 3,
                                                   mobile: 4) }
   end
 
@@ -79,7 +78,8 @@ RSpec.describe User, type: :model do
   describe 'contract type' do
     it { is_expected.to enumerize(:contract_type).in( internship: 0,
                                                       employee: 1,
-                                                      contractor: 2) }
+                                                      contractor: 2,
+                                                      associate: 3) }
   end
 
   describe 'role' do

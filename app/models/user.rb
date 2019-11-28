@@ -19,12 +19,12 @@ class User < ApplicationRecord
         predicates: true
 
   enumerize :specialty, in: {
-    frontend: 0, backend: 1, devops: 2, fullstack: 3, mobile: 4
+    frontend: 0, backend: 1, devops: 2, mobile: 4
     },  scope: :shallow,
         predicates: true
 
   enumerize :contract_type, in: {
-    internship: 0, employee: 1, contractor: 2
+    internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
 

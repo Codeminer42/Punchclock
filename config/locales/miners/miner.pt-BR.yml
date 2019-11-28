@@ -6,22 +6,22 @@ pt-BR:
           engineer: Engenheiro
         level:
           trainee: Estagiário
-          junior: Engenheiro Junior
-          junior_plus: Engenheiro Junior Plus
-          mid: Engenheiro Pleno
-          mid_plus: Engenheiro Pleno Plus
-          senior: Engenheiro Senior
-          senior_plus: Engenheiro Senior Plus
+          junior: Junior
+          junior_plus: Junior Plus
+          mid: Pleno
+          mid_plus: Pleno Plus
+          senior: Senior
+          senior_plus: Senior Plus
         specialty:
           frontend: Frontend
           backend:  Backend
           devops: Devops
-          fullstack:  Fullstack
           mobile: Mobile
         contract_type:
           internship: Estagiário
           employee: Funcionário
-          contractor: Contratante
+          contractor: PJ
+          associate: Associado
         role:
           normal: Normal
           evaluator: Avaliador

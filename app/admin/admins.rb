@@ -29,7 +29,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
 
   controller do
     def scoped_collection
-      current_user.super_admin? ? User.where(role: [:admin, :super_admin]) : User.admin.where(company_id: current_user.company_id)
+      current_user.super_admin? ? User.active.where(role: [:admin, :super_admin]) : User.active.admin.where(company_id: current_user.company_id)
     end
 
     def index
