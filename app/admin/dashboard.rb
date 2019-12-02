@@ -70,6 +70,13 @@ ActiveAdmin.register_page "Dashboard" do
                                                                                           .number_of_contributions }
           end
         end
+                                                                                          
+        panel t(I18n.t('contribution_status'), scope: 'active_admin'), class: 'average-score' do
+          table_for Contribution.aasm.states.map(&:name) do
+            column('status') { |state| I18n.t(state) }
+            column(I18n.t('amount')) { |state| Contribution.where("state = ?", state).count }
+          end
+        end
       end
     end
   end
