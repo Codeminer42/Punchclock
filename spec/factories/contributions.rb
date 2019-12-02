@@ -3,24 +3,16 @@
 FactoryBot.define do
   factory :contribution do
     user { create(:user) }
-    office { create(:office) }
-    state { 'received' }
-    link { Faker::Internet.url(host: 'github.com') }
+    company { create(:company) }
+    state { :received }
+    link { Faker::Internet.url(host: 'github.com/example/pull/') }
 
     trait :rejected do
-      state { 'reject' }
+      state { :reject }
     end
 
     trait :approved do
-      state { 'approve' }
-    end
-
-    trait :closed do
-      state { 'close' }
-    end
-
-    trait :contested do
-      state { 'contest' }
+      state { :approved }
     end
   end
 end

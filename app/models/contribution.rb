@@ -4,30 +4,20 @@ class Contribution < ApplicationRecord
   include AASM
 
   belongs_to :user
-  belongs_to :office
-  has_many :reviews
+  belongs_to :company
+  has_many :reviews, dependent: :destroy
 
   aasm column: 'state' do
     state :received, initial: true
     state :approved
     state :refused
-    state :contested
-    state :closed
 
     event :approve do
-      transitions from: %i[received contested], to: :approved
+      transitions from: %i[received], to: :approved
     end
 
     event :refuse do
-      transitions from: %i[received contested], to: :refused
-    end
-
-    event :close do
-      transitions from: [:approved], to: :closed
-    end
-
-    event :contest do
-      transitions from: [:refused], to: :contested
+      transitions from: %i[received], to: :refused
     end
   end
 

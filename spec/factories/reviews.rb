@@ -11,13 +11,5 @@ FactoryBot.define do
     trait :approved do
       state { :approve }
     end
-
-    trait :closed do
-      state { :close }
-    end
-
-    trait :contested do
-      state { :contest }
-    end
   end
 end

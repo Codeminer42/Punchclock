@@ -6,7 +6,8 @@ require 'aasm/rspec'
 RSpec.describe Contribution, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:office) }
+    it { is_expected.to belong_to(:company) }
+    it { is_expected.to have_many(:reviews).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -29,53 +30,21 @@ RSpec.describe Contribution, type: :model do
       it 'can transition to refused' do
         expect(contribution).to transition_from(:received).to(:refused).on_event(:refuse)
       end
+    end
 
-      context 'and contribution is approved' do
-        before { contribution.approve }
+    context 'when the contribution is approved' do
+      before { contribution.approve }
 
-        it 'has state approved' do
-          expect(contribution).to have_state(:approved)
-        end
-
-        it 'can transition to closed' do
-          expect(contribution).to transition_from(:approved).to(:closed).on_event(:close)
-        end
-
-        context 'and contribution is closed' do
-          before { contribution.close }
-
-          it 'has state approved' do
-            expect(contribution).to have_state(:closed)
-          end
-        end
+      it 'has state approved' do
+        expect(contribution).to have_state(:approved)
       end
+    end
 
-      context 'and contribution is refused' do
-        before { contribution.refuse }
+    context 'when the contribution is refused' do
+      before { contribution.refuse }
 
-        it 'has state refused' do
-          expect(contribution).to have_state(:refused)
-        end
-
-        it 'can transition to contest' do
-          expect(contribution).to transition_from(:refused).to(:contested).on_event(:contest)
-        end
-
-        context 'and contribution is contest' do
-          before { contribution.contest }
-
-          it 'has state contested' do
-            expect(contribution).to have_state(:contested)
-          end
-
-          it 'can transition to approved' do
-            expect(contribution).to transition_from(:contested).to(:approved).on_event(:approve)
-          end
-
-          it 'can transition to closed' do
-            expect(contribution).to transition_from(:contested).to(:refused).on_event(:refuse)
-          end
-        end
+      it 'has state refused' do
+        expect(contribution).to have_state(:refused)
       end
     end
   end
