@@ -6,19 +6,21 @@ RSpec.describe AllocationsSpreadsheet do
   let(:allocation) { create(:allocation, :with_end_at) }
   let(:allocation_spreadsheet) { AllocationsSpreadsheet.new([allocation]) }
   let(:header_attributes) do
-    %w[
-      user
-      project
-      start_at
-      end_at
-      created_at
-      updated_at
-    ].map { |attribute| Allocation.human_attribute_name(attribute) }
+    [
+      User.human_attribute_name('name'),
+      User.human_attribute_name('specialty'),
+      Allocation.human_attribute_name('project'),
+      Allocation.human_attribute_name('start_at'),
+      Allocation.human_attribute_name('end_at'),
+      Allocation.human_attribute_name('created_at'),
+      Allocation.human_attribute_name('updated_at'),
+    ]
   end
 
   let (:body_attributes) do
     [
       allocation.user.name,
+      allocation.user.specialty,
       allocation.project.name,
       I18n.l(allocation.start_at, format: :long),
       I18n.l(allocation.end_at, format: :long),
