@@ -20,6 +20,9 @@ ActiveAdmin.register Allocation do
 
   index download_links: [:xls] do
     column :user
+    column User.human_attribute_name('specialty') do |allocation|
+      allocation.user.specialty.try(:humanize)
+    end
     column :project
     column :start_at
     column :end_at
