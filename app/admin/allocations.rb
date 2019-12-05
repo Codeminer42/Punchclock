@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
+  config.sort_order = 'end_at ASC NULLS FIRST'
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id
 
   menu parent: User.model_name.human(count: 2), priority: 4
 
   scope :ongoing, default: true
   scope :finished
-  scope :all
+  scope :all do
+    AllocationsAndUnalocatedUsersQuery.call(current_user.company)
+  end
 
   filter :user, collection: proc {
     current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
@@ -21,13 +24,19 @@ ActiveAdmin.register Allocation do
   index download_links: [:xls] do
     column :user
     column User.human_attribute_name('specialty') do |allocation|
-      allocation.user.specialty.try(:humanize)
+      allocation.user.specialty.humanize
     end
     column :project
     column :start_at
     column :end_at
     column :days_left, &:days_until_finish
-    actions
+    column do |allocation|
+      if allocation.id
+        a I18n.t('view'), href: admin_allocation_path(allocation)
+        a I18n.t('delete'), href: admin_allocation_path(allocation), method: :delete
+        a I18n.t('edit'), href: edit_admin_allocation_path(allocation)
+      end
+    end
   end
 
   show do
