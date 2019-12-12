@@ -7,7 +7,7 @@ class AllocationsAndUnalocatedUsersQuery
         users: { occupation: User.occupation.engineer.value, company: company },
         company: [company, nil])
       .includes(:user)
-      .order('end_at ASC NULLS FIRST')
+      .order('end_at ASC NULLS FIRST, start_at ASC NULLS FIRST')
     end
   end
 end

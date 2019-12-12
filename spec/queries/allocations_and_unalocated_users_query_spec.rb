@@ -56,7 +56,6 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
 
         it 'returns first users without allocation and
           then returns the last allocation of users who have allocated' do
-          binding.pry
           expect(described_class.call(company).map(&:attributes)).to eq(expect_attributes.map(&:attributes))
         end
       end

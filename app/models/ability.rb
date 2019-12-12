@@ -24,11 +24,14 @@ class Ability
         Project,
         Client,
         RegionalHoliday,
-        Allocation,
         Evaluation,
         Questionnaire,
         Skill
       ], company_id: user.company_id
+
+      can :manage, Allocation, ["id IS NOT NULL" ] do |allocation|
+        allocation.id?
+      end
 
       can :read, Punch, company_id: user.company_id
       can :read, ActiveAdmin::Page, name: "Dashboard"
@@ -52,7 +55,7 @@ class Ability
   def user_permitions(user)
     can :manage, Punch, company_id: user.company_id, user_id: user.id
     can :read, User, company_id: user.company_id
-    can %i[edit update], User, id: user.id 
+    can %i[edit update], User, id: user.id
 
     if !user.normal? || user.office_head?
       can :manage, Evaluation, company_id: user.company_id
