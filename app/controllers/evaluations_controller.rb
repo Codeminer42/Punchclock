@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class EvaluationsController < ApplicationController
-  load_and_authorize_resource except: :create
-
   before_action :authenticate_user!
+  load_and_authorize_resource except: :create
+  
   before_action :set_questionnaire, only: %i[new confirm]
   before_action :set_evaluation, only: :show
   before_action :set_evaluation_score_options, only: :new
