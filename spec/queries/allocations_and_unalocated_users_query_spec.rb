@@ -4,60 +4,72 @@ require 'rails_helper'
 
 RSpec.describe AllocationsAndUnalocatedUsersQuery do
   describe '.call' do
+    subject(:call) { described_class.new(Allocation, company).call }
+
     let(:company) { create(:company) }
-    context 'when user not have allocation' do
-      context 'and is not engineer' do
-        let!(:user) { create(:user, occupation: 'administrative', company: company) }
 
-        it 'returns empty relation' do
-          expect(described_class.call(company)).to be_empty
-        end
-      end
+    context 'when there are no allocations' do
+      let!(:john) { create(:user, name: 'John Doe', company: company) }
+      let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
 
-      context 'and is engineer' do
-        let!(:user) { create(:user, company: company) }
-        it 'returns relation with allocations attributes
-          null and with user_id equal user.id' do
+      let(:names) { call.map { |allocation| allocation.user.name } }
 
-          expect(described_class.call(company)[0].user_id).to eq(user.id)
-        end
+      it 'returns unallocateds ordered by name' do
+        expect(names).to eq ['Alex Doratov', 'John Doe']
       end
     end
 
-    context 'when user have allocation' do
-      let(:user) { create(:user, company: company) }
-      let!(:last_allocation) do
-        create(:allocation,
-               start_at: Date.new(2019, 1, 13),
-               end_at: Date.new(2019, 1, 17),
-               user: user,
-               company: company,
-               created_at: Date.today,
-               updated_at: Date.today)
-      end
+    context 'when there are active allocations' do
+      let!(:john) { create(:user, name: 'John Doe', company: company) }
+      let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
+      let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
+      let!(:brian) { create(:user, name: 'Brian May', company: company) }
+
+      let(:names) { call.map { |allocation| allocation.user.name } }
 
       before do
         create(:allocation,
-               :with_end_at,
-               start_at: Date.new(2019, 1, 6),
-               end_at: Date.new(2019, 1, 8),
-               user: user,
+               start_at: 2.months.after,
+               end_at: 3.months.after,
+               user: roan,
+               company: company)
+
+        create(:allocation,
+               start_at: 3.months.after,
+               end_at: 4.months.after,
+               user: brian,
                company: company)
       end
 
-      it 'return last allocation' do
-        expect(described_class.call(company)[0]).to eql(last_allocation)
+      it 'returns unallocateds and actives' do
+        expect(names).to eq ['Alex Doratov', 'John Doe', 'Roan Britt', 'Brian May']
+      end
+    end
+
+    context 'when there are closed allocations' do
+      let!(:john) { create(:user, name: 'John Doe', company: company) }
+      let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
+      let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
+      let!(:brian) { create(:user, name: 'Brian May', company: company) }
+
+      let(:names) { call.map { |allocation| allocation.user.name } }
+
+      before do
+        create(:allocation,
+               start_at: 3.months.after,
+               end_at: 4.months.after,
+               user: roan,
+               company: company)
+
+        create(:allocation,
+               start_at: 3.months.ago,
+               end_at: 2.months.ago,
+               user: brian,
+               company: company)
       end
 
-      context 'and has users without allocation' do
-        let!(:user_not_allocated) { create(:user, company: company) }
-        let(:allocation) { Allocation.new(user_id: user_not_allocated.id) }
-        let(:expect_attributes) { [allocation, last_allocation] }
-
-        it 'returns first users without allocation and
-          then returns the last allocation of users who have allocated' do
-          expect(described_class.call(company).map(&:attributes)).to eq(expect_attributes.map(&:attributes))
-        end
+      it 'returns unallocateds, closed and actives' do
+        expect(names).to eq ['Alex Doratov', 'John Doe', 'Brian May', 'Roan Britt']
       end
     end
   end

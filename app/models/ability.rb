@@ -4,6 +4,18 @@ class Ability
   include CanCan::Ability
   prepend Draper::CanCanCan
 
+  # Actions used by admins and super admins
+  ACTIONS = [
+    User,
+    Office,
+    Project,
+    Client,
+    RegionalHoliday,
+    Evaluation,
+    Questionnaire,
+    Skill
+  ]
+
   def initialize(user)
     if user.has_admin_access?
       admin_permitions(user)
@@ -16,37 +28,20 @@ class Ability
 
   def admin_permitions(user)
     if user.super_admin?
-      can :manage, :all
-    else
-      can :manage, [
-        User,
-        Office,
-        Project,
-        Client,
-        RegionalHoliday,
-        Evaluation,
-        Questionnaire,
-        Skill
-      ], company_id: user.company_id
-
-      can :manage, Allocation, ["id IS NOT NULL" ] do |allocation|
-        allocation.id?
-      end
-
-      can :read, Punch, company_id: user.company_id
-      can :read, ActiveAdmin::Page, name: "Dashboard"
-
-      can :create, [
-        User,
-        Office,
-        Project,
-        Client,
-        Allocation,
-        Evaluation,
-        Questionnaire,
-        RegionalHoliday,
-        Skill
+      can :manage, ACTIONS + [
+        Company,
+        Punch
       ]
+    else
+      can :manage, ACTIONS, company_id: user.company_id
+      can :read, Punch, company_id: user.company_id
+      can :create, ACTIONS
+    end
+
+    can :read, ActiveAdmin::Page, name: "Dashboard"
+    can :create, [Allocation]
+    can :manage, Allocation, ['1=1'] do |allocation|
+      allocation.id?
     end
 
     cannot :destroy, [User, Project]

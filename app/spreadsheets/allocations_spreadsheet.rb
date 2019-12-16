@@ -4,7 +4,7 @@ class AllocationsSpreadsheet < BaseSpreadsheet
     [
       allocation.user.name,
       allocation.user.specialty,
-      allocation.project.name,
+      allocation.project&.name,
       translate_date(allocation.start_at),
       translate_date(allocation.end_at),
       translate_date(allocation.created_at),
