@@ -1,5 +1,6 @@
 //= require active_admin/base
 //= require 'select2/dist/js/select2.js'
+//= require ./active_admin/user.js
 
 $(document).ready(function() {
   var $seachFields = $('[data-select]')

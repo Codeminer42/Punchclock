@@ -142,6 +142,15 @@ describe 'Users', type: :feature do
                         have_css('.row-active td', text: 'Sim') &
                         have_text('Observation')
       end
+
+      it "must deactivate User specialty and level when 'administrative' occupation is selected", js: true do
+        find('#user_specialty').find(:option, 'Backend').select_option
+        find('#user_level').find(:option, 'Junior').select_option
+        
+        choose('Administrativo')
+        expect(page).to have_select('user_specialty', { disabled: true, selected: '' }) &
+                        have_select('user_level', { disabled: true, selected: '' })
+      end
     end
 
     describe 'Show' do
