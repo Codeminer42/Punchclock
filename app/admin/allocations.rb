@@ -29,7 +29,7 @@ ActiveAdmin.register Allocation do
     column '#' do |allocation|
       if allocation.id.blank?
         'D'
-      elsif allocation.end_at < Date.current
+      elsif allocation.end_at && allocation.end_at < Date.current
         'F'
       else
         'A'
