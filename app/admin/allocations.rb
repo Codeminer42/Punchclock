@@ -3,11 +3,16 @@
 ActiveAdmin.register Allocation do
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id
 
+  config.batch_actions = false
+
   menu parent: User.model_name.human(count: 2), priority: 4
 
   scope :ongoing, default: true
   scope :finished
-  scope :all
+  scope :all do |relation|
+    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company)
+                                      .call
+  end
 
   filter :user, collection: proc {
     current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
@@ -19,13 +24,24 @@ ActiveAdmin.register Allocation do
   filter :end_at
 
   index download_links: [:xls] do
+    # Temporary, we have a ticket to handle that column properly in
+    # a near future
+    column '#' do |allocation|
+      if allocation.id.blank?
+        'D'
+      elsif allocation.end_at < Date.current
+        'F'
+      else
+        'A'
+      end
+    end
     column :user
     column User.human_attribute_name('specialty') do |allocation|
-      allocation.user.specialty.try(:humanize)
+      allocation.user.specialty.humanize
     end
     column :project
-    column :start_at
-    column :end_at
+    column :start_at, sortable: false
+    column :end_at, sortable: false
     column :days_left, &:days_until_finish
     actions
   end
