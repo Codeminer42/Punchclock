@@ -1,6 +1,5 @@
 module Api
-  class ContributionsController < ActionController::API
-
+  class ContributionsController < ApiController
     def create
       result = CreateContributionService.new.call(contributions_params)
 

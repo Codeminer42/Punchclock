@@ -3,11 +3,14 @@
 require 'spec_helper'
 
 describe Api::ContributionsController, type: :controller do
+  let!(:token_user) { create(:user, :with_token) }
   let!(:user) { create(:user, github: 'github') }
-  let(:params) { { token: 'ApiToken', user: 'github', link: 'https://github.com/user/project/pull/1' } }
+  let(:params) { { user: 'github', link: 'https://github.com/user/project/pull/1' } }
+  let(:headers) { { token: token_user.token } }
 
   describe 'POST open-source/contributions' do
     subject { post :create, params: params }
+    before { request.headers.merge!(headers) }
 
     context 'when contribution params are valid' do
       it { is_expected.to have_http_status(:created) }
