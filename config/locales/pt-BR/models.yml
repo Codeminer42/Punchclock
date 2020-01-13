@@ -82,6 +82,9 @@ pt-BR:
       repository:
         one: "Repositório"
         other: "Repositórios"
+      contribution:
+        one: "Contribuição"
+        other: "Contribuições"
     attributes:
       admin_user:
         id: "ID"
@@ -258,5 +261,16 @@ pt-BR:
         id: "ID"
         link: "Link"
         company: "Empresa"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
+      contribution:
+        id: "ID"
+        user: "Usuário"
+        company: "Empresa"
+        link: "Link"
+        state: "Estado"
+        state/received: "Recebido"
+        state/approved: "Aprovado"
+        state/refused:  "Recusado"
         created_at: "Criado em"
         updated_at: "Atualizado em"
