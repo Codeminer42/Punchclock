@@ -48,4 +48,17 @@ RSpec.describe Contribution, type: :model do
       end
     end
   end
+
+  describe 'scopes' do
+    let!(:today_contribution) { create :contribution }
+    let!(:last_week_contribution) { create :contribution, created_at: 1.week.ago }
+
+    it 'is in this week' do
+      expect(described_class.this_week.first).to eq(today_contribution)
+    end
+
+    it 'is in last week' do
+      expect(described_class.last_week.first).to eq(last_week_contribution)
+    end
+  end
 end
