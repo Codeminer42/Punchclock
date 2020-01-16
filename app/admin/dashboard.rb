@@ -45,10 +45,31 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
-    panel t(I18n.t('average_score'), scope: 'active_admin'), class: 'average-score' do
-      table_for User.level.values do
-        column(I18n.t('level'), &:humanize)
-        column(I18n.t('users_average')) { |level| User.with_level(level).overall_score_average }
+    columns do
+      column do
+        panel t(I18n.t('average_score'), scope: 'active_admin'), class: 'average-score' do
+          table_for User.level.values do
+            column(I18n.t('level'), &:humanize)
+            column(I18n.t('users_average')) { |level| User.with_level(level).overall_score_average }
+          end
+        end
+      end
+      
+      column do
+        panel t(I18n.t('offices_leaderboard'), scope: 'active_admin') do
+          collection = current_user.super_admin? ? ContributionsByOfficeQuery.new : ContributionsByOfficeQuery.new(Office.where(company: current_user.company))
+          table_for collection.leaderboard.this_week.approved.to_relation do
+            column(Office.human_attribute_name(:city)) { |office| office.city }
+            column(I18n.t('this_week_contributions')) { |office| office.number_of_contributions }
+            column(I18n.t('last_week_contributions')) { |office| ContributionsByOfficeQuery
+                                                                                          .new(Office.where(city: office.city))
+                                                                                          .n_weeks_ago(1)
+                                                                                          .approved
+                                                                                          .to_relation
+                                                                                          .first
+                                                                                          .number_of_contributions }
+          end
+        end
       end
     end
   end
