@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     get "users" => "companies#users"
     get "offices" => "companies#offices"
     get "holidays" => "holidays#holidays_dashboard"
+    post "open-source/contributions" => "contributions#create"
   end
 
   if Rails.env.development?
