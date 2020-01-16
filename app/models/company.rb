@@ -12,6 +12,7 @@ class Company < ApplicationRecord
   has_many :questionnaires
   has_many :evaluations
   has_many :skills
+  has_many :repositories
 
 
   validates :name, presence: true

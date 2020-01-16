@@ -79,6 +79,9 @@ pt-BR:
       question:
         one: "Pergunta"
         other: "Perguntas"
+      repository:
+        one: "Repositório"
+        other: "Repositórios"
     attributes:
       admin_user:
         id: "ID"
@@ -251,3 +254,7 @@ pt-BR:
         title: "Título"
         kind: "Tipo"
         answer_options: "Opções de Resposta"
+      repository:
+        id: "ID"
+        link: "Link"
+        company: "Empresa"
