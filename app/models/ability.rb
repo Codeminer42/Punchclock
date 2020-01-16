@@ -13,7 +13,8 @@ class Ability
     RegionalHoliday,
     Evaluation,
     Questionnaire,
-    Skill
+    Skill,
+    Repository
   ]
 
   def initialize(user)
