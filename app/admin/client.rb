@@ -69,7 +69,7 @@ ActiveAdmin.register Client do
     def index
       super do |format|
         format.xls do
-          spreadsheet = ClientsSpreadsheet.new @clients
+          spreadsheet = ClientsSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'clients.xls'
         end
       end

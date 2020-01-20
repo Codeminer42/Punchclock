@@ -107,7 +107,7 @@ ActiveAdmin.register Questionnaire do
     def index
       super do |format|
         format.xls do
-          spreadsheet = QuestionnairesSpreadsheet.new @questionnaires
+          spreadsheet = QuestionnairesSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'questionnaires.xls'
         end
       end

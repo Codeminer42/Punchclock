@@ -103,7 +103,7 @@ ActiveAdmin.register Allocation do
     def index
       super do |format|
         format.xls do
-          spreadsheet = AllocationsSpreadsheet.new @allocations
+          spreadsheet = AllocationsSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'allocations.xls'
         end
       end

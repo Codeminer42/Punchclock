@@ -210,7 +210,7 @@ ActiveAdmin.register User do
     def index
       super do |format|
         format.xls do
-          spreadsheet = UsersSpreadsheet.new @users
+          spreadsheet = UsersSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'users.xls'
         end
       end
@@ -230,17 +230,5 @@ ActiveAdmin.register User do
         end
       end
     end
-  end
-
-  csv do
-    column :name
-    column :email
-    column :level
-    column :office
-    column :role
-    column :specialty
-    column :occupation
-    column :contract_type
-    column :github
   end
 end

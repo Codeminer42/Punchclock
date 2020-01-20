@@ -107,7 +107,7 @@ ActiveAdmin.register Project do
     def index
       super do |format|
         format.xls do
-          spreadsheet = ProjectsSpreadsheet.new(@projects)
+          spreadsheet = ProjectsSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'projects.xls'
         end
       end
