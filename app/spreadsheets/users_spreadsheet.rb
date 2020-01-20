@@ -6,7 +6,7 @@ class UsersSpreadsheet < BaseSpreadsheet
       user.name,
       user.email,
       user.level,
-      user.office.city,
+      user.office&.city,
       user.role,
       user.specialty,
       translate_enumerize(user.occupation),
