@@ -14,7 +14,8 @@ class Ability
     Evaluation,
     Questionnaire,
     Skill,
-    Repository
+    Repository,
+    Contribution
   ]
 
   def initialize(user)
