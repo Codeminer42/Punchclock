@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_contributions_on_company_id"
-    t.index ["user_id", "link"], name: "index_contributions_on_user_id_and_link", unique: true
+    t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["user_id"], name: "index_contributions_on_user_id"
   end
 
@@ -155,6 +155,15 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.datetime "updated_at", null: false
     t.bigint "company_id"
     t.index ["company_id"], name: "index_regional_holidays_on_company_id"
+  end
+
+  create_table "repositories", force: :cascade do |t|
+    t.string "link", null: false
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id", "link"], name: "index_repositories_on_company_id_and_link", unique: true
+    t.index ["company_id"], name: "index_repositories_on_company_id"
   end
 
   create_table "reviews", force: :cascade do |t|
