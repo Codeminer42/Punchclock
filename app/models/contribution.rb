@@ -21,6 +21,6 @@ class Contribution < ApplicationRecord
     end
   end
 
-  validates :user, uniqueness: { scope: :link }
+  validates :link, uniqueness: true
   validates :link, :state, presence: true
 end

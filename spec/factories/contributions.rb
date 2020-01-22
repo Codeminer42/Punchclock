@@ -5,7 +5,9 @@ FactoryBot.define do
     user { create(:user) }
     company { create(:company) }
     state { :received }
-    link { Faker::Internet.url(host: 'github.com/example/pull/') }
+    sequence :link do |n| 
+      "https://www.github.com/company/example/pull/#{n}"
+    end
 
     trait :rejected do
       state { :reject }

@@ -8,6 +8,6 @@ class CreateContributions < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :contributions, %i[user_id link], unique: true
+    add_index :contributions, :link, unique: true
   end
 end
