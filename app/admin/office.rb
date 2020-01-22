@@ -75,7 +75,7 @@ ActiveAdmin.register Office do
     def index
       super do |format|
         format.xls do
-          spreadsheet = OfficesSpreadsheet.new(@offices)
+          spreadsheet = OfficesSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'offices.xls'
         end
       end

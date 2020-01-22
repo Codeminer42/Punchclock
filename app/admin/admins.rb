@@ -35,7 +35,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
     def index
       super do |format|
         format.xls do
-          spreadsheet = AdminsSpreadsheet.new @admin_users
+          spreadsheet = AdminsSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'admins.xls'
         end
       end

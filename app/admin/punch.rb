@@ -64,7 +64,7 @@ ActiveAdmin.register Punch do
       end
       super do |format|
         format.xls do
-          spreadsheet = PunchesSpreadsheet.new @punches
+          spreadsheet = PunchesSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'punches.xls'
         end
       end

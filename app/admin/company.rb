@@ -20,7 +20,7 @@ ActiveAdmin.register Company do
     def index
       super do |format|
         format.xls do
-          spreadsheet = CompaniesSpreadsheet.new @companies
+          spreadsheet = CompaniesSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'companies.xls'
         end
       end

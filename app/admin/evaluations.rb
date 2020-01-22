@@ -47,7 +47,7 @@ ActiveAdmin.register Evaluation do
     def index
       super do |format|
         format.xls do
-          spreadsheet = EvaluationsSpreadsheet.new @evaluations
+          spreadsheet = EvaluationsSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: 'evaluations.xls'
         end
       end
