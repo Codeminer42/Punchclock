@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :repository do
     company
-    link { 'https://github.com/Codeminer42/cm42-central' }
+    sequence :link do |n| 
+      "https://github.com/Codeminer42/project-#{n}"
+    end
   end
 end

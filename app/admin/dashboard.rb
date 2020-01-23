@@ -67,7 +67,7 @@ ActiveAdmin.register_page "Dashboard" do
                                                                                           .approved
                                                                                           .to_relation
                                                                                           .first
-                                                                                          .number_of_contributions }
+                                                                                          &.number_of_contributions || 0 }
           end
         end
 
