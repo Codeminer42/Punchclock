@@ -49,12 +49,12 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel t(I18n.t('average_score'), scope: 'active_admin'), class: 'average-score' do
           table_for User.level.values do
-            column(I18n.t('level'), &:humanize)
+            column(User.human_attribute_name(:level)) { |level| User.human_attribute_name(level) }
             column(I18n.t('users_average')) { |level| User.with_level(level).overall_score_average }
           end
         end
       end
-      
+
       column do
         panel t(I18n.t('offices_leaderboard'), scope: 'active_admin') do
           collection = current_user.super_admin? ? ContributionsByOfficeQuery.new : ContributionsByOfficeQuery.new(Office.where(company: current_user.company))
@@ -68,6 +68,13 @@ ActiveAdmin.register_page "Dashboard" do
                                                                                           .to_relation
                                                                                           .first
                                                                                           .number_of_contributions }
+          end
+        end
+
+        panel t(I18n.t('contribution_state'), scope: 'active_admin'), class: 'average-score' do
+          table_for Contribution.aasm.states.map(&:name) do
+            column(Contribution.human_attribute_name(:state)) { |state| Contribution.human_attribute_name("state/#{state}") }
+            column(I18n.t('amount')) { |state| Contribution.where("state = ?", state).count }
           end
         end
       end
