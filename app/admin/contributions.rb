@@ -19,7 +19,7 @@ ActiveAdmin.register Contribution do
   scope Contribution.human_attribute_name('state/approved'), :approved, group: :state
   scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
 
-  index do
+  index download_links: [:xls] do
     column :user
     column :company
     column :link
@@ -58,6 +58,15 @@ ActiveAdmin.register Contribution do
     def refuse
       resource.refuse!
       redirect_to resource_path, notice: I18n.t('contribution_refused')
+    end
+
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = ContributionsSpreadsheet.new find_collection(except: :pagination)
+          send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
+        end
+      end
     end
   end
 
