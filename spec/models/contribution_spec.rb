@@ -7,7 +7,6 @@ RSpec.describe Contribution, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:company) }
-    it { is_expected.to have_many(:reviews).dependent(:destroy) }
   end
 
   describe 'validations' do
