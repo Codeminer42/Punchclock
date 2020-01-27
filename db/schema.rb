@@ -166,14 +166,6 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.index ["company_id"], name: "index_repositories_on_company_id"
   end
 
-  create_table "reviews", force: :cascade do |t|
-    t.integer "reviewer_id"
-    t.bigint "contribution_id"
-    t.integer "state", null: false
-    t.datetime "created_at", null: false
-    t.index ["contribution_id"], name: "index_reviews_on_contribution_id"
-  end
-
   create_table "skills", force: :cascade do |t|
     t.string "title"
     t.bigint "company_id"

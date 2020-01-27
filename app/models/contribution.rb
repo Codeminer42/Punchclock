@@ -5,7 +5,6 @@ class Contribution < ApplicationRecord
 
   belongs_to :user
   belongs_to :company
-  has_many :reviews, dependent: :destroy
 
   aasm column: 'state' do
     state :received, initial: true
