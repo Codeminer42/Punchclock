@@ -6,7 +6,7 @@ FactoryBot.define do
     company { create(:company) }
     state { :received }
     sequence :link do |n| 
-      "https://www.github.com/company/example/pull/#{n}"
+      "https://www.github.com/company/example-#{n}/pull/#{n}"
     end
 
     trait :rejected do
@@ -15,6 +15,14 @@ FactoryBot.define do
 
     trait :approved do
       state { :approved }
+    end
+
+    trait :with_valid_repository do
+      before(:create) do |contribution|
+        create(:repository,
+                link: contribution.link.sub(/\/pull\/[0-9]*/, ''),
+                company: contribution.company)
+      end
     end
   end
 end
