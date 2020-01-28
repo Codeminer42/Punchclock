@@ -57,17 +57,24 @@ ActiveAdmin.register_page "Dashboard" do
 
       column do
         panel t(I18n.t('offices_leaderboard'), scope: 'active_admin') do
-          collection = current_user.super_admin? ? ContributionsByOfficeQuery.new : ContributionsByOfficeQuery.new(Office.where(company: current_user.company))
-          table_for collection.leaderboard.this_week.approved.to_relation do
-            column(Office.human_attribute_name(:city)) { |office| office.city }
-            column(I18n.t('this_week_contributions')) { |office| office.number_of_contributions }
-            column(I18n.t('last_week_contributions')) { |office| ContributionsByOfficeQuery
-                                                                                          .new(Office.where(city: office.city))
-                                                                                          .n_weeks_ago(1)
-                                                                                          .approved
-                                                                                          .to_relation
-                                                                                          .first
-                                                                                          &.number_of_contributions || 0 }
+          collection = current_user.super_admin? ? 
+                        ContributionsByOfficeQuery.new.leaderboard.this_week.approved : 
+                        ContributionsByOfficeQuery.new(Office.where(company: current_user.company)).leaderboard.this_week.approved
+
+          unless collection.to_relation.empty?
+            table_for collection.to_relation do
+              column(Office.human_attribute_name(:city)) { |office| office.city }
+              column(I18n.t('this_week_contributions')) { |office| office.number_of_contributions }
+              column(I18n.t('last_week_contributions')) { |office| ContributionsByOfficeQuery
+                                                                    .new(Office.where(city: office.city))
+                                                                    .n_weeks_ago(1)
+                                                                    .approved
+                                                                    .to_relation
+                                                                    .first
+                                                                    &.number_of_contributions || 0 }
+            end
+          else
+            blank_slate(I18n.t("active_admin.blank_slate.content", resource_name: Contribution.model_name.human(count: 2)))
           end
         end
 
