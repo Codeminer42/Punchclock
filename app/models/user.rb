@@ -3,7 +3,8 @@
 class User < ApplicationRecord
   extend Enumerize
   include Tokenable
-
+  
+  attr_accessor :has_api_token
   EXPERIENCE_PERIOD = 3.months
 
   devise :database_authenticatable, :recoverable,
