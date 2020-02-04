@@ -91,6 +91,9 @@ FactoryBot.define do
       started_at { Date.today }
     end
 
+    trait :with_token do
+      token { 'test_token' }
+    end
   end
 
   factory :invalid_user, parent: :user do

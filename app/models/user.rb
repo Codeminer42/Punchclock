@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   extend Enumerize
+  include Tokenable
 
   EXPERIENCE_PERIOD = 3.months
 
