@@ -7,72 +7,77 @@ class Form extends React.Component{
   }
 
   render() {
-    const projectsList = Projects.map( (p, i) =>  {
+    const { calendar: { selecteds } } = this.props;
+    const isSelectedsEmpty = selecteds.isEmpty();
+
+    if(isSelectedsEmpty) {
+      return null
+    }
+
+    const projectsList = Projects.map((p) =>  {
       return {text: p[1], id: p[0]}
     });
-    if(!this.props.calendar.selecteds.isEmpty()) {
-      return (
-        <form
-          onSubmit={this.handleSubmit.bind(this)}>
 
-          <div className="selected-days-container mb-2">
-            <h4> Selecionado ({this.props.calendar.selecteds.size})</h4>
-            <span>
-              <a onClick={() => {this.handleDeselect()}} >
-                Descelecionar
-              </a> - <a onClick={() => {this.handleErase()}}>
-                Apagar
-              </a>
-            </span>
-          </div>
+    return (
+      <form
+        onSubmit={this.handleSubmit.bind(this)}>
 
-          <div className="mb-3">
-            <h5>Projeto</h5>
-            <div className="w-100">
-              <Select ref="project" data={projectsList}></Select>
-            </div>
-          </div>
+        <div className="selected-days-container mb-2">
+          <h4>Selecionado ({this.props.calendar.selecteds.size})</h4>
+          <span>
+            <a onClick={() => {this.handleDeselect()}} >
+              Descelecionar
+            </a> - <a onClick={() => {this.handleErase()}}>
+              Apagar
+            </a>
+          </span>
+        </div>
 
-          <h5>Turno Matutino</h5>
-          <div className="d-flex align-items-center mb-3">
-            <input
-              placeholder="De"
-              ref="from1"
-              type="time"
-              defaultValue="09:00"
-              className="form-control form-control-sm w-auto" />
-            <span className="mx-2">-</span>
-            <input
-              placeholder="Até"
-              ref="to1"
-              type="time"
-              defaultValue="12:00"
-              className="form-control form-control-sm w-auto" />
+        <div className="mb-3">
+          <h5>Projeto</h5>
+          <div className="w-100">
+            <Select ref="project" data={projectsList}></Select>
           </div>
-          <h5>Turno Vespertino</h5>
-          <div className="d-flex align-items-center mb-3">
-            <input
-              placeholder="De"
-              ref="from2"
-              type="time"
-              defaultValue="13:00"
-              className="form-control form-control-sm w-auto" />
-            <span className="mx-2">-</span>
-            <input
-              placeholder="Até"
-              ref="to2"
-              type="time"
-              defaultValue="18:00"
-              className="form-control form-control-sm w-auto"/>
-          </div>
+        </div>
 
-          <p>
-            <input type="submit" value="Ok" />
-          </p>
-        </form>
-      );
-    }
-    return null;
+        <h5>Manhã</h5>
+        <div className="d-flex align-items-center mb-3">
+          <input
+            placeholder="De"
+            ref="from1"
+            type="time"
+            defaultValue="09:00"
+            className="form-control form-control-sm w-auto" />
+          <span className="mx-2">-</span>
+          <input
+            placeholder="Até"
+            ref="to1"
+            type="time"
+            defaultValue="12:00"
+            className="form-control form-control-sm w-auto" />
+        </div>
+        <h5>Tarde</h5>
+        <div className="d-flex align-items-center mb-3">
+          <input
+            placeholder="De"
+            ref="from2"
+            type="time"
+            defaultValue="13:00"
+            className="form-control form-control-sm w-auto" />
+          <span className="mx-2">-</span>
+          <input
+            placeholder="Até"
+            ref="to2"
+            type="time"
+            defaultValue="18:00"
+            className="form-control form-control-sm w-auto"/>
+        </div>
+
+        <p>
+          <input type="submit" value="Salvar" />
+        </p>
+      </form>
+    );
   }
 
   /* Removes the double confirmation prompt */
