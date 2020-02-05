@@ -42,12 +42,18 @@ class Calendar extends React.Component {
     return (
       <div className="calendar-container container">
         <div>
-
           <Navbar
             hasNext={calendar.hasNext}
             onPrev={onPrev}
             onNext={onNext}
-            base={calendar.base}>
+            base={calendar.base}
+            totalHours={sumHours(
+              calendar.weeks,
+              calendar.sheets,
+              calendar.sheetsSaveds,
+              calendar.changes
+            )}
+          >
             {calendar.monthName}
           </Navbar>
 
@@ -63,15 +69,6 @@ class Calendar extends React.Component {
           </table>
         </div>
         <div className='punches-toolbar'>
-          <p>Horas: {
-            sumHours(
-              calendar.weeks,
-              calendar.sheets,
-              calendar.sheetsSaveds,
-              calendar.changes
-            )}
-          </p>
-
           <Form
             calendar={calendar}
             onSetTimeSheet={onSetTimeSheet}

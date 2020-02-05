@@ -2,73 +2,90 @@ import React from 'react';
 import Select from 'react-select2-wrapper';
 
 class Form extends React.Component{
+  state = {
+    hasConfirmedOperation: false
+  }
+
   render() {
-    const projectsList = Projects.map( (p, i) =>  {
+    const { calendar: { selecteds } } = this.props;
+    const isSelectedsEmpty = selecteds.isEmpty();
+
+    if(isSelectedsEmpty) {
+      return null
+    }
+
+    const projectsList = Projects.map((p) =>  {
       return {text: p[1], id: p[0]}
     });
-    if(!this.props.calendar.selecteds.isEmpty()) {
-      return (
-        <form
-          onSubmit={this.handleSubmit.bind(this)}>
 
-          <p>
-            <input
-              placeholder="De"
-              ref="from1"
-              type="time"
-              defaultValue="09:00"
-              className="form-control form-control-sm" />
-            <input
-              placeholder="Até"
-              ref="to1"
-              type="time"
-              defaultValue="12:00"
-              className="form-control form-control-sm" />
-          </p>
+    return (
+      <form
+        onSubmit={this.handleSubmit.bind(this)}>
 
-          <p>
-            <input
-              placeholder="De"
-              ref="from2"
-              type="time"
-              defaultValue="13:00"
-              className="form-control form-control-sm" />
-            <input
-              placeholder="Até"
-              ref="to2"
-              type="time"
-              defaultValue="18:00"
-              className="form-control form-control-sm"/>
-          </p>
-
-          <p>
-            <Select ref="project" data={projectsList}></Select>
-          </p>
-
-          <p>
-            <input type="submit" value="Ok" />
-          </p>
-
-          <p>
+        <div className="selected-days-container mb-2">
+          <h4>Selecionado ({this.props.calendar.selecteds.size})</h4>
+          <span>
             <a onClick={() => {this.handleDeselect()}} >
               Descelecionar
             </a> - <a onClick={() => {this.handleErase()}}>
               Apagar
             </a>
-          </p>
-          <span> Selecionado ({this.props.calendar.selecteds.size})</span>
-        </form>
-      );
-    }
-    if(this.props.calendar.changes > 0) {
-      return (
-        <p>
-          <button onClick={this.handleSave.bind(this)}>Salvar</button><br />
-          Alterações ({this.props.calendar.changes})
-        </p>
-      );
+          </span>
+        </div>
 
-    } else return <p />;
+        <div className="mb-3">
+          <h5>Projeto</h5>
+          <div className="w-100">
+            <Select ref="project" data={projectsList}></Select>
+          </div>
+        </div>
+
+        <h5>Manhã</h5>
+        <div className="d-flex align-items-center mb-3">
+          <input
+            placeholder="De"
+            ref="from1"
+            type="time"
+            defaultValue="09:00"
+            className="form-control form-control-sm w-auto" />
+          <span className="mx-2">-</span>
+          <input
+            placeholder="Até"
+            ref="to1"
+            type="time"
+            defaultValue="12:00"
+            className="form-control form-control-sm w-auto" />
+        </div>
+        <h5>Tarde</h5>
+        <div className="d-flex align-items-center mb-3">
+          <input
+            placeholder="De"
+            ref="from2"
+            type="time"
+            defaultValue="13:00"
+            className="form-control form-control-sm w-auto" />
+          <span className="mx-2">-</span>
+          <input
+            placeholder="Até"
+            ref="to2"
+            type="time"
+            defaultValue="18:00"
+            className="form-control form-control-sm w-auto"/>
+        </div>
+
+        <p>
+          <input type="submit" value="Salvar" />
+        </p>
+      </form>
+    );
+  }
+
+  /* Removes the double confirmation prompt */
+  componentDidUpdate() {
+    if (this.state.hasConfirmedOperation) {
+      this.handleSave();
+      this.setState({ hasConfirmedOperation: false })
+    }
   }
 
   handleSave(e) {
@@ -93,6 +110,7 @@ class Form extends React.Component{
       this.props.calendar.sheets,
       this.props.calendar.deleteds
     );
+    this.setState({ hasConfirmedOperation: true })
   }
 
   handleErase() {
@@ -102,6 +120,7 @@ class Form extends React.Component{
       this.props.calendar.deleteds,
       this.props.calendar.sheetsSaveds,
     );
+    this.setState({ hasConfirmedOperation: true })
   }
 
   handleDeselect() {
