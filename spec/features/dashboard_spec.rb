@@ -20,17 +20,13 @@ feature 'Punches Dashboard', js: true do
 
     find('td.inner', text: '10').click
     find('td.inner', text: '11').click
-    click_on 'Ok'
-    expect(page).to have_content('Alterações (2)')
     click_on 'Salvar'
-    expect(page).to have_no_content('Alterações (2)')
+    expect(page).to have_no_content("Selecionado")
 
     visit '/dashboard/2013/10'
     find('td.inner', text: '15').click
     find('a', text: 'Apagar').click
-    expect(page).to have_content('Alterações (1)')
-    click_on 'Salvar'
-    expect(page).to have_no_content('Alterações (1)')
+    expect(page).to have_no_content("Selecionado")
   end
 
   scenario 'Multiple selection through sheets' do
@@ -48,7 +44,7 @@ feature 'Punches Dashboard', js: true do
 
     find('td.inner', text: '16').click
     expect(page).to have_content('Selecionado (3)')
-    click_on 'Ok'
+    click_on 'Salvar'
     expect(page).to have_content('Horas: 24')
   end
 end
