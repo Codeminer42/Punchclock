@@ -6,9 +6,10 @@ $flat-sunflower: #F1C40F;
 
 .calendar-container {
   display: flex;
+  justify-content: center;
   -webkit-user-select: none;
 
-  h1 {
+  h2 {
     padding: .4em;
   }
 
@@ -97,4 +98,10 @@ $flat-sunflower: #F1C40F;
 
 .pagination {
   text-align: center;
+}
+
+.selected-days-container {
+  a {
+    cursor: pointer;
+  }
 }
