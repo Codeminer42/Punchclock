@@ -40,43 +40,46 @@ class Calendar extends React.Component {
     } = this.props;
 
     return (
-      <div className="calendar-container container">
-        <div>
-          <Navbar
-            hasNext={calendar.hasNext}
-            onPrev={onPrev}
-            onNext={onNext}
-            base={calendar.base}
-            totalHours={sumHours(
-              calendar.weeks,
-              calendar.sheets,
-              calendar.sheetsSaveds,
-              calendar.changes
-            )}
-          >
-            {calendar.monthName}
-          </Navbar>
-
-          <table className='punches-table'>
-            <WeekNames weekdays={calendar.weekdays} />
-            <Weeks
-              calendar={calendar}
-              sheetFor={sheetFor}
-              isSelected={isSelected}
-              onSelectWeek={onSelectWeek}
-              onToggle={onToggle}
-            />
-          </table>
-        </div>
-        <div className='punches-toolbar'>
+      <>
+        <div className="container">
           <Form
             calendar={calendar}
             onSetTimeSheet={onSetTimeSheet}
             onErase={onErase}
             onDeselect={onDeselect}
-            onSaveSheets={onSaveSheets} />
+            onSaveSheets={onSaveSheets}
+          />
         </div>
-      </div>
+        <div className="d-flex justify-content-center container">
+          <div className="calendar-container">
+            <Navbar
+              hasNext={calendar.hasNext}
+              onPrev={onPrev}
+              onNext={onNext}
+              base={calendar.base}
+              totalHours={sumHours(
+                calendar.weeks,
+                calendar.sheets,
+                calendar.sheetsSaveds,
+                calendar.changes
+              )}
+            >
+              {calendar.monthName}
+            </Navbar>
+
+            <table className='punches-table'>
+              <WeekNames weekdays={calendar.weekdays} />
+              <Weeks
+                calendar={calendar}
+                sheetFor={sheetFor}
+                isSelected={isSelected}
+                onSelectWeek={onSelectWeek}
+                onToggle={onToggle}
+              />
+            </table>
+          </div>
+        </div>
+      </>
     );
   }
 

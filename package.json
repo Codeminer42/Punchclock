@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.8",
     "@rails/webpacker": "^4.0.7",
     "babel-core": "^6.18.2",
     "babel-loader": "^8.0.0",

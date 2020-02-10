@@ -21,12 +21,12 @@ feature 'Punches Dashboard', js: true do
     find('td.inner', text: '10').click
     find('td.inner', text: '11').click
     click_on 'Salvar'
-    expect(page).to have_no_content("Selecionado")
+    expect(page).to have_content("Selecionado (0)")
 
     visit '/dashboard/2013/10'
     find('td.inner', text: '15').click
-    find('a', text: 'Apagar').click
-    expect(page).to have_no_content("Selecionado")
+    find('button', text: 'Apagar').click
+    expect(page).to have_content("Selecionado (0)")
   end
 
   scenario 'Multiple selection through sheets' do
