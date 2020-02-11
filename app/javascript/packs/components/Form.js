@@ -1,7 +1,5 @@
 import React from 'react';
 import Select from 'react-select2-wrapper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon, faTrash, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 class Form extends React.Component{
   state = {
@@ -29,7 +27,7 @@ class Form extends React.Component{
                 type="button"
                 onClick={() => {this.handleDeselect()}}
               >
-                Remover seleção <FontAwesomeIcon fixedWidth size="sm" icon={faTimesCircle} />
+                Remover seleção <i className="fa fa-times-circle fa-sm"></i>
               </button>
               <button
                 className="btn btn-outline-danger btn-sm text-danger"
@@ -37,7 +35,7 @@ class Form extends React.Component{
                 type="button"
                 onClick={() => {this.handleErase()}}
               >
-                  Apagar <FontAwesomeIcon color="#c61515" fixedWidth size="sm" icon={faTrash} />
+                  Apagar <i style={{color: "#c61515"}} className="fa fa-trash fa-sm"></i>
               </button>
             </div>
           </div>
@@ -53,7 +51,7 @@ class Form extends React.Component{
             </div>
             <div className="col">
               <div className="d-flex align-items-center">
-                <FontAwesomeIcon fixedWidth color={isSelectedsEmpty ? "#9ea8ad" : "#555"} icon={faSun} size="lg" />
+                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-sun fa-lg"></i>
                 <input
                   disabled={isSelectedsEmpty}
                   placeholder="De"
@@ -73,7 +71,7 @@ class Form extends React.Component{
             </div>
             <div className="col">
               <div className="d-flex align-items-center">
-                <FontAwesomeIcon fixedWidth color={isSelectedsEmpty ? "#9ea8ad" : "#555"} icon={faMoon} size="lg" />
+                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-moon fa-lg"></i>
                 <input
                   disabled={isSelectedsEmpty}
                   placeholder="De"
