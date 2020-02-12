@@ -483,22 +483,22 @@
 /* Select2 styles overwrite */
 
 .select2-container--default .select2-selection--single {
-  border: 1px solid #ced4da !important;
+  border: 1px solid #ced4da;
 }
 
 .select2-container .select2-selection--single {
-  height: 36px !important;
+  height: 36px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height: 36px !important;
+  line-height: 36px;
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--single {
-  background-color: #e9ecef !important;
+  background-color: #e9ecef;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
-  color: #444 !important;
-  font-size: 18px !important;
+  color: #444;
+  font-size: 18px;
 }
