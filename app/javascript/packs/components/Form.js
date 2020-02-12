@@ -10,72 +10,90 @@ class Form extends React.Component{
     const { calendar: { selecteds } } = this.props;
     const isSelectedsEmpty = selecteds.isEmpty();
 
-    if(isSelectedsEmpty) {
-      return null
-    }
-
     const projectsList = Projects.map((p) =>  {
       return {text: p[1], id: p[0]}
     });
 
     return (
-      <form
-        onSubmit={this.handleSubmit.bind(this)}>
-
-        <div className="selected-days-container mb-2">
-          <h4>Selecionado ({this.props.calendar.selecteds.size})</h4>
-          <span>
-            <a onClick={() => {this.handleDeselect()}} >
-              Descelecionar
-            </a> - <a onClick={() => {this.handleErase()}}>
-              Apagar
-            </a>
-          </span>
-        </div>
-
-        <div className="mb-3">
-          <h5>Projeto</h5>
-          <div className="w-100">
-            <Select ref="project" data={projectsList}></Select>
+      <form onSubmit={this.handleSubmit.bind(this)}>
+        <div className="form-container mb-4">
+          {/* Form Header */}
+          <div className="d-flex justify-content-between align-items-baseline selected-days-container">
+            <h6>Selecionado ({this.props.calendar.selecteds.size})</h6>
+            <div className="d-flex align-items-center">
+              <button
+                className="btn btn-outline-secondary btn-sm text-dark mr-2"
+                disabled={isSelectedsEmpty}
+                type="button"
+                onClick={() => {this.handleDeselect()}}
+              >
+                Remover seleção <i className="fa fa-times-circle fa-sm"></i>
+              </button>
+              <button
+                className="btn btn-outline-danger btn-sm text-danger"
+                disabled={isSelectedsEmpty}
+                type="button"
+                onClick={() => {this.handleErase()}}
+              >
+                  Apagar <i style={{color: "#c61515"}} className="fa fa-trash fa-sm"></i>
+              </button>
+            </div>
+          </div>
+          {/* Form Inputs Control */}
+          <div className="row p-3">
+            <div className="col select-container">
+              <Select
+                ref="project"
+                data={projectsList}
+                disabled={isSelectedsEmpty}
+                options={{ placeholder: 'Projeto' }}
+              />
+            </div>
+            <div className="col">
+              <div className="d-flex align-items-center">
+                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-sun fa-lg"></i>
+                <input
+                  disabled={isSelectedsEmpty}
+                  placeholder="De"
+                  ref="from1"
+                  type="time"
+                  defaultValue="09:00"
+                  className="form-control form-control-sm w-auto ml-1" />
+                <span className="mx-1">-</span>
+                <input
+                  disabled={isSelectedsEmpty}
+                  placeholder="Até"
+                  ref="to1"
+                  type="time"
+                  defaultValue="12:00"
+                  className="form-control form-control-sm w-auto" />
+              </div>
+            </div>
+            <div className="col">
+              <div className="d-flex align-items-center">
+                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-moon fa-lg"></i>
+                <input
+                  disabled={isSelectedsEmpty}
+                  placeholder="De"
+                  ref="from2"
+                  type="time"
+                  defaultValue="13:00"
+                  className="form-control form-control-sm w-auto ml-1" />
+                <span className="mx-1">-</span>
+                <input
+                  disabled={isSelectedsEmpty}
+                  placeholder="Até"
+                  ref="to2"
+                  type="time"
+                  defaultValue="18:00"
+                  className="form-control form-control-sm w-auto"/>
+              </div>
+            </div>
+            <div className="col">
+              <input className="w-100" disabled={isSelectedsEmpty} type="submit" value="Salvar" />
+            </div>
           </div>
         </div>
-
-        <h5>Manhã</h5>
-        <div className="d-flex align-items-center mb-3">
-          <input
-            placeholder="De"
-            ref="from1"
-            type="time"
-            defaultValue="09:00"
-            className="form-control form-control-sm w-auto" />
-          <span className="mx-2">-</span>
-          <input
-            placeholder="Até"
-            ref="to1"
-            type="time"
-            defaultValue="12:00"
-            className="form-control form-control-sm w-auto" />
-        </div>
-        <h5>Tarde</h5>
-        <div className="d-flex align-items-center mb-3">
-          <input
-            placeholder="De"
-            ref="from2"
-            type="time"
-            defaultValue="13:00"
-            className="form-control form-control-sm w-auto" />
-          <span className="mx-2">-</span>
-          <input
-            placeholder="Até"
-            ref="to2"
-            type="time"
-            defaultValue="18:00"
-            className="form-control form-control-sm w-auto"/>
-        </div>
-
-        <p>
-          <input type="submit" value="Salvar" />
-        </p>
       </form>
     );
   }
