@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Users', type: :feature do
   let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let(:user)       { create(:user, :admin, :with_started_at) }
+  let(:user)       { create(:user, :admin, :with_started_at, :with_token) }
 
   before do
     sign_in(admin_user)
@@ -174,6 +174,7 @@ describe 'Users', type: :feature do
                             have_text(user.email) &
                             have_text(user.github) &
                             have_text(user.office.city) &
+                            have_text(user.token)
                             have_text(office.city) &
                             have_text(office2.city) &
                             have_css('.row-started_at td', text: I18n.l(user.started_at, format: :long)) &

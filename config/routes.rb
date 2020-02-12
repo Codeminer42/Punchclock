@@ -33,8 +33,8 @@ Rails.application.routes.draw do
   )
 
   namespace :api do
-    get ":company_id/users" => "companies#users"
-    get ":company_id/offices" => "companies#offices"
+    get "users" => "companies#users"
+    get "offices" => "companies#offices"
     get "holidays" => "holidays#holidays_dashboard"
   end
 

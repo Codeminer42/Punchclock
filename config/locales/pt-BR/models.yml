@@ -163,6 +163,8 @@ pt-BR:
         english_score: "Pontução de Inglês"
         by_skills: "Por Habilidades"
         all: "Todos"
+        token: "API Token"
+        has_api_token: "Possui API Token"
       punch:
         id: "ID"
         project_id: "Projeto"
