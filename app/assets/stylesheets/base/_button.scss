@@ -25,6 +25,12 @@
     font-size: 1em;
     font-weight: bold !important;
     line-height: 1em;
-  }
 
+    &:hover {
+      border: 1px solid scale-color($color: #C0392B, $lightness: -15%);
+      background-image: linear-gradient(scale-color($color: #C0392B, $lightness: -15%), scale-color($color: #9a2519, $lightness: -15%));
+      text-shadow: 0 1px 0 scale-color($color: #801a0f, $lightness: -15%);
+      box-shadow: inset 0 1px 0 0 scale-color($color: #d36f65, $lightness: -15%);
+    }
+  }
 }

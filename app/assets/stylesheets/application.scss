@@ -13,12 +13,12 @@
 @import 'font-awesome';
 @import 'bootstrap';
 @import 'evaluation';
-
+@import 'access_form';
 
 $gray: #ededed;
 
-#user_current_password,
+/* #user_current_password,
 #user_password,
 #user_password_confirmation {
   background-color: $gray;
-}
+} */

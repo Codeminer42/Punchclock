@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   end
 
   unauthenticated :user do
-    root to: 'home#index'
+    devise_scope :user do
+      root to: 'devise/sessions#new'
+    end
   end
 
   get 'users/account/password/edit', to: 'passwords#edit'

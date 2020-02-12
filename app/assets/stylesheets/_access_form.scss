@@ -1,0 +1,23 @@
+.access-form-container {
+  max-width: 450px;
+  padding: 1.5rem;
+  border-top: 5px solid #c61515;
+  border-radius: 3px;
+  margin-right: auto;
+  margin-left: auto;
+  background: #f7f7f7;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+
+  .input-group,
+  .form-actions {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    font-size: .8rem;
+  }
+
+  input[type=submit] {
+    height: 44px;
+  }
+}
