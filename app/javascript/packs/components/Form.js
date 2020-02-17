@@ -51,7 +51,7 @@ class Form extends React.Component{
             </div>
             <div className="col">
               <div className="d-flex align-items-center">
-                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-sun fa-lg"></i>
+                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-coffee fa-lg"></i>
                 <input
                   disabled={isSelectedsEmpty}
                   placeholder="De"
@@ -71,7 +71,7 @@ class Form extends React.Component{
             </div>
             <div className="col">
               <div className="d-flex align-items-center">
-                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-moon fa-lg"></i>
+                <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} className="fa fa-utensils fa-lg"></i>
                 <input
                   disabled={isSelectedsEmpty}
                   placeholder="De"
