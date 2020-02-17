@@ -13,8 +13,9 @@ cache:
   - .gitlab-cache/
 variables:
   RAILS_ENV: test
-  DATABASE_URL: postgresql://postgres@localhost
+  DATABASE_URL: postgresql://postgres:postgres@localhost
   CC_TEST_REPORTER_ID: 60f18b69ac3904ddf5b3875523d020e1ed419e3f3d4a3bfa0e81420e03615137
+  POSTGRES_PASSWORD: postgres
 rspec:
   stage: test
   before_script:
