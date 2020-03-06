@@ -35,6 +35,7 @@ class Ability
     else
       can :manage, ACTIONS, company_id: user.company_id
       can :read, Punch, company_id: user.company_id
+      can :manage, Punch, user_id: user.id
       can :create, ACTIONS
     end
 

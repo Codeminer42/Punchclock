@@ -10,6 +10,10 @@ describe 'User' do
   describe 'abilities admin' do
     let(:ability_admin) { Ability.new(admin_user) }
 
+    it "can manage it's own punches" do
+      expect(ability_admin).to be_able_to :manage, Punch.new(user: admin_user)
+    end
+
     it "can't delete Company" do
      expect(ability_admin).to_not be_able_to :destroy, Company.new
     end
