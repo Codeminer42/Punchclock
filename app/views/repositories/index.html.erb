@@ -1,0 +1,11 @@
+<div class="container">
+  <h1><%= t(".open_source_repositories") %></h1>
+
+  <div class="list-group">
+    <% @repositories.each do |repository| %>
+      <%= link_to repository.link, class: "list-group-item list-group-item-action", target: "_blank" do %>
+        <i class="fab fa-github"></i> <%= repository.link %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
