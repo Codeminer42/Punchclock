@@ -62,3 +62,14 @@ pt-BR:
   average_score: 'Média de engenheiros por nível'
   level: 'Nível'
   users_average: 'Média'
+  offices_leaderboard: 'Escritórios que mais contribuiram esta semana'
+  this_week_contributions: 'Contribuições esta semana'
+  last_week_contributions: 'Contribuições da semana passada'
+  amount: 'Quantidade'
+  contribution_state: 'Número de contribuições por status'
+  contribution_approved: "A contribuição foi aprovada"
+  contribution_refused: "A contribuição foi recusada"
+  approve: "Aprovar"
+  refuse:  "Recusar"
+  this_week: "Semana atual"
+  last_week: "Última semana"

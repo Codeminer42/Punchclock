@@ -55,6 +55,18 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.integer "end_period"
   end
 
+  create_table "contributions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "company_id"
+    t.string "link", null: false
+    t.string "state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_contributions_on_company_id"
+    t.index ["link"], name: "index_contributions_on_link", unique: true
+    t.index ["user_id"], name: "index_contributions_on_user_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.bigint "questionnaire_id"
     t.integer "evaluator_id"
@@ -145,6 +157,15 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
     t.index ["company_id"], name: "index_regional_holidays_on_company_id"
   end
 
+  create_table "repositories", force: :cascade do |t|
+    t.string "link", null: false
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id", "link"], name: "index_repositories_on_company_id_and_link", unique: true
+    t.index ["company_id"], name: "index_repositories_on_company_id"
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "title"
     t.bigint "company_id"
@@ -210,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_02_03_135746) do
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
   add_foreign_key "clients", "companies"
+  add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "companies"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "questionnaires", "companies"

@@ -51,7 +51,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'active_skin'
 gem 'active_admin_flat_skin'
-
+gem 'aasm', '~> 5.0', '>= 5.0.6'
 
 
 

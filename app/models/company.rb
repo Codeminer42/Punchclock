@@ -7,11 +7,12 @@ class Company < ApplicationRecord
   has_many :offices
   has_many :clients
   has_many :regional_holidays, through: :offices
-
+  has_many :contributions
   has_many :allocations
   has_many :questionnaires
   has_many :evaluations
   has_many :skills
+  has_many :repositories
 
 
   validates :name, presence: true

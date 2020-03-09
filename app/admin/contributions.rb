@@ -1,0 +1,73 @@
+ActiveAdmin.register Contribution do
+  permit_params :state
+  actions :index, :show
+  
+  menu parent: Contribution.model_name.human(count: 2), priority: 1
+
+  filter :user, as: :select
+  filter :company, as: :select, if: proc { current_user.super_admin? }
+  
+  member_action :approve, method: :put, only: :index
+  member_action :refuse, method: :put, only: :index
+
+  scope :all, default: true
+  
+  scope I18n.t(:this_week), :this_week, group: :time
+  scope I18n.t(:last_week), :last_week, group: :time
+
+  scope Contribution.human_attribute_name('state/received'), :received, group: :state
+  scope Contribution.human_attribute_name('state/approved'), :approved, group: :state
+  scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
+
+  index download_links: [:xls] do
+    column :user
+    column :company
+    column :link
+    column :state do |contribution|
+      Contribution.human_attribute_name("state/#{contribution.state}")
+    end
+
+    actions defaults: true do |contribution|
+      if contribution.received?
+        item I18n.t('approve'), approve_admin_contribution_path(contribution), method: :put, class: "member_link"
+        item I18n.t('refuse'), refuse_admin_contribution_path(contribution), method: :put, class: "member_link"
+      end
+    end
+  end
+
+  show do
+    attributes_table do
+      row :user
+      row :company
+      row :link
+      row :state do |contribution|
+        Contribution.human_attribute_name("state/#{contribution.state}")
+      end
+      row :created_at
+      row :updated_at
+    end
+  end
+
+
+  controller do
+    def approve
+      resource.approve!
+      redirect_to resource_path, notice: I18n.t('contribution_approved')
+    end
+
+    def refuse
+      resource.refuse!
+      redirect_to resource_path, notice: I18n.t('contribution_refused')
+    end
+
+    def index
+      super do |format|
+        format.xls do
+          spreadsheet = ContributionsSpreadsheet.new find_collection(except: :pagination)
+          send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
+        end
+      end
+    end
+  end
+
+end
