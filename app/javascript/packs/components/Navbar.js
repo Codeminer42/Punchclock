@@ -4,9 +4,9 @@ import React from 'react';
   return (
     <div className="d-flex align-items-center">
       <h2>
-        <a className="mr-1" onClick={() => {onPrev(base)}}> ❮ </a>
+        <a className="nav-arrow mr-1" onClick={() => {onPrev(base)}}> ❮ </a>
         {children}
-        {hasNext && <a className="ml-1" onClick={() => {onNext(base)}}> ❯ </a>}
+        {hasNext && <a className="nav-arrow ml-1" onClick={() => {onNext(base)}}> ❯ </a>}
       </h2>
       <h6 className="ml-2">Horas: <b>{totalHours}</b></h6>
     </div>
