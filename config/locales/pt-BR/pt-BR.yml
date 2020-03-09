@@ -52,6 +52,10 @@ pt-BR:
     navigation:
       logout: "Sair"
       dashboard: 'Dashboard'
+      open_source: "Open Source"
+  repositories:
+    index:
+      open_source_repositories: "Projetos Open Source"
   finished: 'Finalizado'
   admin:
     search_by: "Por %{model_name}"

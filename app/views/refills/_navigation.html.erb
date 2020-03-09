@@ -17,6 +17,12 @@
           <% end %>
         </div>
 
+        <div class="links">
+          <%= link_to repositories_path do %>
+            <%= t('.open_source') %>
+          <%- end %>
+        </div>
+
         <div class="navbar-nav ml-auto nav-link">
           <%= link_to user_path do %>
             <span>
