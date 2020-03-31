@@ -104,37 +104,3 @@ $ bundle exec guard
 
 [1]: http://punchclock-staging.herokuapp.com
 [2]: http://punchclock.cm42.io/
-
-
-# Miner Camp
-
-### 1. Install gems and packages
-
-    bundle install
-    yarn install
-
-### 2. Environment configuration
-Copy the contents of the .env.sample file to the .env file and change it with the credentials of your local environment
-
-    cp .env.sample .env
-
-### 3. Create database
-
-    rails db:create
-
-### 4. Migrate database
-
-    rails db:migrate
-
-### 5. Populate database
-Populate the database with the current offices
-
-    rails db:seed
-
-### Running the server
-
-    rails s
-
-### Running the test switch
-
-    bundle exec rspec
