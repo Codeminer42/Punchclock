@@ -1,43 +1,79 @@
-version: '2'
+version: '3.7'
 
 services:
-    postgres:
-      image: 'postgres'
-      ports:
-        - 5432:5432
-      environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+  app: &app
+    build:
+      context: .
+    volumes:
+      - .:/var/www/app
+      - bundle_path:/bundle
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - REDIS_URL=redis://redis:6379/
+      - DATABASE_URL=postgresql://postgres:postgres@postgres/punchclock_development
+    depends_on:
+      - postgres
+      - redis
+    tmpfs:
+      - /tmp
 
-    redis:
-      image: 'redis'
-      command: redis-server
-      volumes:
-        - .:/app
-      ports:
-        - 6379:6379
-  
-    webpack:
-      build: .
-      command: bash -c "npm run server"
-      volumes:
-        - .:/app
-      ports:
-        - 3808:3808
+  runner:
+    <<: *app
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    networks:
+      default:
+      internal:
 
-    app:
-      build: .
-      environment:
-        DB_HOST: postgres
-        WEBPACK_REMOTE_HOST: webpack
-      command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-      volumes:
-        - .:/app
-      ports:
-        - 3000:3000
-      env_file:
-        - .env
-      depends_on:
-        - postgres
-        - redis
-        - webpack
+  runner_tests:
+    <<: *app
+    stdin_open: true
+    tty: true
+    command: echo "off by default"
+    shm_size: '2gb'
+    networks:
+      default:
+      internal:
+    environment:
+      - RAILS_ENV=${RAILS_ENV:-test}
+      - DATABASE_URL=postgresql://postgres:postgres@postgres/punchclock_test
+
+  server:
+    <<: *app
+    stdin_open: true
+    tty: true
+    command: bundle exec foreman start -f Procfile.dev
+    networks:
+      default:
+      internal:
+        aliases:
+          - backend-server
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:3.2-alpine
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres:
+  redis:
+  bundle_path:
+
+networks:
+  internal:

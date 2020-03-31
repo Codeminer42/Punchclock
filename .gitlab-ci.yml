@@ -10,30 +10,27 @@ services:
 cache:
   key: Punchclock-123uf158
   paths:
-  - .gitlab-cache/
+    - .gitlab-cache/
+    - .gems/
+    - node_modules/
+    - bin/cc-test-reporter
 variables:
   RAILS_ENV: test
-  DATABASE_URL: postgresql://postgres:postgres@localhost
+  DATABASE_URL: postgresql://postgres:postgres@localhost/punchclock_test
   CC_TEST_REPORTER_ID: 60f18b69ac3904ddf5b3875523d020e1ed419e3f3d4a3bfa0e81420e03615137
   POSTGRES_PASSWORD: postgres
 rspec:
   stage: test
   before_script:
-    - apt-get -y update
-    - apt-get -y install google-chrome-stable
-    - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-    - source ~/.profile
-    - nvm install v12.4.0
-    - nvm use 12.4.0
-    - bundle install --without development production -j $(nproc)
-    - cp config/database.yml.example config/database.yml
+    - cp .env.example .env
+    - bundle install --without development production -j $(nproc) --path .gems
     - bundle exec rake db:create db:test:prepare
     - npm install yarn --global
-    - yarn
+    - yarn install --frozen-lock
     - bundle exec rake webpacker:compile
-    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-    - chmod +x ./cc-test-reporter
-    - ./cc-test-reporter before-build
+    - '[ -f ./bin/cc-test-reporter ] || curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-0.6.3-linux-amd64 > ./bin/cc-test-reporter'
+    - chmod +x ./bin/cc-test-reporter
+    - ./bin/cc-test-reporter before-build
   coverage: '/\((\d+.\d+%)\) covered/'
   script: bundle exec rake spec
   artifacts:
@@ -41,7 +38,7 @@ rspec:
       - coverage/index.html
     expire_in: 1 week
   after_script:
-    - ./cc-test-reporter after-build --exit-code $?
+    - ./bin/cc-test-reporter after-build --exit-code $?
 
 brakeman:
   stage: security

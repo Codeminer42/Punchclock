@@ -57,13 +57,25 @@ Run it on development mode using `thin`
 $ foreman start -f Procfile.dev
 ```
 
-### Docker
+### Docker environment for development
 
 ```console
-$ cp config/database.yml.example config/database.yml
-$ sudo docker-compose up -d
-$ sudo docker-compose run app db:create db:migrate
-$ sudo docker-compose run app db:seed
+$ cp .env.example .env
+$ docker-compose build
+$ docker-compose run --rm runner bundle install
+$ docker-compose run --rm runner yarn install --frozen-lockfile
+$ docker-compose run --rm runner bundle exec rake db:reset
+$ docker-compose run --rm runner_tests bundle exec rake db:create
+```
+
+If you want to run tests:
+```console
+$ docker-compose run --rm runner_tests bundle exec rspec
+```
+
+Now run the servers:
+```console
+$ docker-compose up
 ```
 
 ## Testing
@@ -92,37 +104,3 @@ $ bundle exec guard
 
 [1]: http://punchclock-staging.herokuapp.com
 [2]: http://punchclock.cm42.io/
-
-
-# Miner Camp
-
-### 1. Install gems and packages
-
-    bundle install
-    yarn install
-
-### 2. Environment configuration
-Copy the contents of the .env.sample file to the .env file and change it with the credentials of your local environment
-
-    cp .env.sample .env
-
-### 3. Create database
-
-    rails db:create
-
-### 4. Migrate database
-
-    rails db:migrate
-
-### 5. Populate database
-Populate the database with the current offices
-
-    rails db:seed
-
-### Running the server
-
-    rails s
-
-### Running the test switch
-
-    bundle exec rspec
