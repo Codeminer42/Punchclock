@@ -29,8 +29,8 @@ rspec:
     - yarn install --frozen-lock
     - bundle exec rake webpacker:compile
     - '[ -f ./bin/cc-test-reporter ] || curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-0.6.3-linux-amd64 > ./bin/cc-test-reporter'
-    - chmod +x ./cc-test-reporter
-    - ./cc-test-reporter before-build
+    - chmod +x ./bin/cc-test-reporter
+    - ./bin/cc-test-reporter before-build
   coverage: '/\((\d+.\d+%)\) covered/'
   script: bundle exec rake spec
   artifacts:
@@ -38,7 +38,7 @@ rspec:
       - coverage/index.html
     expire_in: 1 week
   after_script:
-    - ./cc-test-reporter after-build --exit-code $?
+    - ./bin/cc-test-reporter after-build --exit-code $?
 
 brakeman:
   stage: security
