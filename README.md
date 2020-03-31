@@ -57,13 +57,25 @@ Run it on development mode using `thin`
 $ foreman start -f Procfile.dev
 ```
 
-### Docker
+### Docker environment for development
 
 ```console
-$ cp config/database.yml.example config/database.yml
-$ sudo docker-compose up -d
-$ sudo docker-compose run app db:create db:migrate
-$ sudo docker-compose run app db:seed
+$ cp .env.example .env
+$ docker-compose build
+$ docker-compose run --rm runner bundle install
+$ docker-compose run --rm runner yarn install --frozen-lockfile
+$ docker-compose run --rm runner bundle exec rake db:reset
+$ docker-compose run --rm runner_tests bundle exec rake db:create
+```
+
+If you want to run tests:
+```console
+$ docker-compose run --rm runner_tests bundle exec rspec
+```
+
+Now run the servers:
+```console
+$ docker-compose up
 ```
 
 ## Testing
