@@ -10,7 +10,10 @@ services:
 cache:
   key: Punchclock-123uf158
   paths:
-  - .gitlab-cache/
+    - .gitlab-cache/
+    - .gems/
+    - node_modules/
+    - bin/cc-test-reporter
 variables:
   RAILS_ENV: test
   DATABASE_URL: postgresql://postgres:postgres@localhost/punchclock_test
@@ -19,12 +22,13 @@ variables:
 rspec:
   stage: test
   before_script:
-    - bundle install --without development production -j $(nproc)
+    - cp .env.example .env
+    - bundle install --without development production -j $(nproc) --path .gems
     - bundle exec rake db:create db:test:prepare
     - npm install yarn --global
-    - yarn
+    - yarn install --frozen-lock
     - bundle exec rake webpacker:compile
-    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - '[ -f ./bin/cc-test-reporter ] || curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-0.6.3-linux-amd64 > ./bin/cc-test-reporter'
     - chmod +x ./cc-test-reporter
     - ./cc-test-reporter before-build
   coverage: '/\((\d+.\d+%)\) covered/'
