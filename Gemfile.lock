@@ -501,7 +501,7 @@ DEPENDENCIES
   platform-api!
   pry-rails
   pry-remote (~> 0.1.8)
-  rails (~> 5.2.4.2)
+  rails (~> 5.2.4)
   rails-controller-testing
   rails-i18n
   rails_12factor
