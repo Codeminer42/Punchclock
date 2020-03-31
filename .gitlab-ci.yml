@@ -19,14 +19,7 @@ variables:
 rspec:
   stage: test
   before_script:
-    - apt-get -y update
-    - apt-get -y install google-chrome-stable
-    - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-    - source ~/.profile
-    - nvm install v12.4.0
-    - nvm use 12.4.0
     - bundle install --without development production -j $(nproc)
-    - cp config/database.yml.example config/database.yml
     - bundle exec rake db:create db:test:prepare
     - npm install yarn --global
     - yarn
