@@ -25,15 +25,15 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(user)
     if (user.admin? && user.administrative?) || user.super_admin?
-      admin_dashboard_path 
+      admin_dashboard_path
     else
-      root_path 
+      root_path
     end
   end
 
   private
 
   def current_company
-    @current_company ||= current_user.company 
+    @current_company ||= current_user.company
   end
 end

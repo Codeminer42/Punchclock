@@ -19,8 +19,10 @@ class Ability
   ]
 
   def initialize(user)
-    if user.has_admin_access?
+    if user.is_admin?
       admin_permitions(user)
+    elsif user.open_source_manager?
+      open_source_manager_permitions(user)
     else
       user_permitions(user)
     end
@@ -59,5 +61,15 @@ class Ability
       can :manage, Evaluation, company_id: user.company_id
       cannot %i[destroy edit update], Evaluation
     end
+  end
+
+  def open_source_manager_permitions(user)
+    can :manage, Punch, company_id: user.company_id, user_id: user.id
+    can :read, User, company_id: user.company_id
+    can %i[edit update], User, id: user.id
+
+    can :read, ActiveAdmin::Page, name: 'Dashboard', namespace_name: 'admin'
+    can :manage, Repository, company_id: user.company_id
+    can :manage, Contribution, company_id: user.company_id
   end
 end
