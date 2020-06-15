@@ -26,6 +26,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(user)
     if (user.admin? && user.administrative?) || user.super_admin?
       admin_dashboard_path
+    elsif user.open_source_manager?
+      admin_repositories_path
     else
       root_path
     end
