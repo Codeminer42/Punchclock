@@ -38,6 +38,10 @@ FactoryBot.define do
       role { :super_admin }
     end
 
+    trait :open_source_manager do
+      role { :open_source_manager }
+    end
+
     trait :with_observation do
       observation { Faker::Lorem.sentence }
     end

@@ -6,6 +6,7 @@ RSpec.describe User, type: :model do
   let(:user) { create :user }
   let(:admin_user) { create :user, :admin}
   let(:super_admin) { create :user, :super_admin}
+  let(:open_source_manager) { create :user, :open_source_manager }
   let(:active_user) { create :user, :active_user }
   let(:inactive_user) { create :user, :inactive_user }
 
@@ -92,7 +93,8 @@ RSpec.describe User, type: :model do
     it { is_expected.to enumerize(:role).in(  normal: 0,
                                               evaluator: 1,
                                               admin: 2,
-                                              super_admin: 3) }
+                                              super_admin: 3,
+                                              open_source_manager: 4) }
   end
 
   describe 'scopes' do
@@ -243,13 +245,17 @@ RSpec.describe User, type: :model do
     it { expect(active_user.inactive_message).to eq :unconfirmed }
   end
 
-  describe '#access_admin' do
+  describe '#has_admin_access' do
     it "allows admin access for user with admin role" do
       expect(admin_user).to have_admin_access
     end
 
     it "allow admin access for user with super_admin role" do
       expect(super_admin).to have_admin_access
+    end
+
+    it "allow admin access for user with open source manager role" do
+      expect(open_source_manager).to have_admin_access
     end
 
     it "not allows admin access for user without admin or super_admin roles" do

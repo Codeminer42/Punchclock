@@ -31,7 +31,7 @@ class User < ApplicationRecord
         predicates: true
 
   enumerize :role, in: {
-    normal: 0, evaluator: 1, admin: 2, super_admin: 3
+    normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4
     },  scope: :shallow,
         predicates: true
 
@@ -130,6 +130,10 @@ class User < ApplicationRecord
   end
 
   def has_admin_access?
+    admin? || super_admin? || open_source_manager?
+  end
+
+  def is_admin?
     admin? || super_admin?
   end
 

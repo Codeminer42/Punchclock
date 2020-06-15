@@ -1,9 +1,10 @@
 require 'spec_helper'
 require 'cancan/matchers'
 
-describe 'User' do	
+describe 'User' do
   let(:admin_user) { create(:user, :admin) }
   let(:admin_user_super) { create(:user, :super_admin, occupation: :administrative) }
+  let(:open_source_manager_user) { create(:user, :open_source_manager) }
   let(:user) { FactoryBot.build(:user, id: 1) }
   subject(:ability) { Ability.new(user) }
  
@@ -48,6 +49,22 @@ describe 'User' do
 
     it 'able to manage Projects' do
      expect(ability_admin_super).to be_able_to :manage, Project.new
+    end
+  end
+
+  describe 'abilities open source manager' do
+    let(:ability_open_source_manager) { Ability.new(open_source_manager_user) }
+
+    it 'able to manage Repository' do
+      expect(ability_open_source_manager).to be_able_to :manage, Repository
+    end
+
+    it 'able to manage Contribution' do
+      expect(ability_open_source_manager).to be_able_to :manage, Contribution
+    end
+
+    it "can't manage User on active admin" do
+      expect(ability_open_source_manager).to_not be_able_to :manage, User
     end
   end
 
