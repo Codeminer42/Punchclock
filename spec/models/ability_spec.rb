@@ -62,6 +62,10 @@ describe 'User' do
     it 'able to manage Contribution' do
       expect(ability_open_source_manager).to be_able_to :manage, Contribution
     end
+
+    it "can't manage User on active admin" do
+      expect(ability_open_source_manager).to_not be_able_to :manage, User
+    end
   end
 
   describe 'abilities user' do

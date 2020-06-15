@@ -68,8 +68,9 @@ class Ability
     can :read, User, company_id: user.company_id
     can %i[edit update], User, id: user.id
 
-    can :read, ActiveAdmin::Page, name: 'Dashboard', namespace_name: 'admin'
     can :manage, Repository, company_id: user.company_id
     can :manage, Contribution, company_id: user.company_id
+    
+    cannot :manage, User
   end
 end
