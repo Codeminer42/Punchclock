@@ -15,6 +15,7 @@ describe 'Repository', type: :feature do
     it 'must find fields "Link" and "Company" on table' do
       within 'table' do
           expect(page).to have_text('Link') &
+                        have_text('Linguagem') &
                         have_text('Empresa')
       end
     end
@@ -23,7 +24,7 @@ describe 'Repository', type: :feature do
   describe 'Filters' do
     it 'by link' do
       within '#filters_sidebar_section' do
-        expect(page).to have_text('Link')
+        expect(page).to have_text('Link') & have_text('Linguagem')
       end
     end
 
@@ -45,6 +46,7 @@ describe 'Repository', type: :feature do
       it 'must have labels' do
         expect(page).to have_text('Empresa') &
                         have_text('Link') &
+                        have_text('Linguagem') &
                         have_text('Criado em') &
                         have_text('Atualizado em')
       end
@@ -52,6 +54,7 @@ describe 'Repository', type: :feature do
       it 'have repository table with correct information' do
         expect(page).to have_text(repository.company) &
                         have_text(repository.link) &
+                        have_text(repository.language) &
                         have_text(repository.created_at.try(:humanize)) &
                         have_text(repository.updated_at.try(:humanize))
       end
@@ -67,10 +70,12 @@ describe 'Repository', type: :feature do
       it 'must have the form working' do
         find('#repository_company_id').find(:option, repository.company).select_option
         fill_in 'Link', with: 'https://github.com/example'
+        fill_in 'Linguagem', with: 'Ruby on Rails'
 
         click_button 'Criar Repositório'
         expect(page).to have_css('.flash_notice', text: 'Repositório foi criado com sucesso.') &
                         have_text(repository.company) &
+                        have_text('Ruby on Rails') &
                         have_text('https://github.com/example')
       end
     end
@@ -84,17 +89,20 @@ describe 'Repository', type: :feature do
       it 'must have labels' do
         within 'form' do
           expect(page).to have_text('Link') &
+                          have_text('Linguagem') &
                           have_text('Empresa')
         end
       end
 
       it 'updates repository information' do
         find('#repository_link').fill_in with: 'https://github.com/new_link'
+        find('#repository_language').fill_in with: 'Javascript'
 
         click_button 'Atualizar Repositório'
 
         expect(page).to have_css('.flash_notice', text: 'Repositório foi atualizado com sucesso.') &
-                        have_text('https://github.com/new_link')
+                        have_text('https://github.com/new_link') &
+                        have_text('Javascript') 
       end
     end
   end
