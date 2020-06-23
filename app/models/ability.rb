@@ -65,6 +65,7 @@ class Ability
 
   def open_source_manager_permitions(user)
     can :manage, Punch, company_id: user.company_id, user_id: user.id
+    can :read, ActiveAdmin::Page, name: "Dashboard"
     can :read, User, company_id: user.company_id
     can %i[edit update], User, id: user.id
 
