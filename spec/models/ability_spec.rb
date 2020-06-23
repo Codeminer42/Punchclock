@@ -63,6 +63,10 @@ describe 'User' do
       expect(ability_open_source_manager).to be_able_to :manage, Contribution
     end
 
+    it 'able to read dashboard' do
+      expect(ability_open_source_manager).to be_able_to :read, ActiveAdmin::Page, name: "Dashboard"
+    end
+
     it "can't manage User on active admin" do
       expect(ability_open_source_manager).to_not be_able_to :manage, User
     end
