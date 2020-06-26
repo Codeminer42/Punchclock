@@ -3,12 +3,11 @@
 require 'rails_helper'
 
 feature 'Login', type: :feature do
-
-  context 'when user is not active'  do
+  context 'when user is not active' do
     let(:inactive_user) { create(:user, active: false) }
     it 'show a error message' do
       sign_in(inactive_user)
-      expect(page).to have_content "Conta desativada"
+      expect(page).to have_content 'Conta desativada'
     end
   end
 
@@ -30,9 +29,9 @@ feature 'Login', type: :feature do
 
   context 'when user is open source manager' do
     let(:open_source_manager_user) { create(:user, :open_source_manager) }
-    it 'login to /admin/repositories' do
+    it 'login to /admin/dashboard' do
       sign_in(open_source_manager_user)
-      expect(current_path).to eq(admin_repositories_path)
+      expect(current_path).to eq(admin_dashboard_path)
     end
   end
 
@@ -40,7 +39,7 @@ feature 'Login', type: :feature do
     let(:admin_user) { create(:user, :admin, occupation: :engineer) }
     it 'login to /admin/dashboard' do
       sign_in(admin_user)
-      expect(current_path).to eq(root_path)
+      expect(current_path).to eq(admin_dashboard_path)
     end
   end
 
