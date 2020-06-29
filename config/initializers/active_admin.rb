@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-
 pre_defined_paths = Rails.application.config.i18n.load_path
 
 ActiveAdmin.setup do |config|
   config.site_title = proc {
-    !user_signed_in? || current_user.super_admin? ? 'Punchclock' : "Punchclock (#{current_user.company})"
+    (!user_signed_in? || current_user.super_admin?) ? "Punchclock" : "Punchclock (#{current_user.company})"
   }
 
   config.download_links = [:csv]
@@ -15,7 +14,6 @@ ActiveAdmin.setup do |config|
   config.batch_actions = true
   config.csv_options = { col_sep: ';', force_quotes: true }
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
-  config.cancan_ability_class = AbilityAdmin
 
   # == Menu System
   config.namespace :admin do |admin|
@@ -26,6 +24,7 @@ ActiveAdmin.setup do |config|
     end
   end
 end
+
 
 # Hotfix for https://github.com/gregbell/active_admin/issues/434
 I18n.enforce_available_locales = false
