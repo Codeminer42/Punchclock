@@ -69,6 +69,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'rails-controller-testing'
   gem 'capybara-screenshot'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
