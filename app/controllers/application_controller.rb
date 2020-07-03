@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   respond_to :html, :json
 
@@ -9,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   # https://github.com/plataformatec/devise/issues/3461
-  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+  rescue_from ActionController::InvalidAuthenticityToken do |_exception|
     if devise_controller?
       redirect_to root_path, alert: 'Already logged out'
     else
@@ -17,17 +18,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def access_denied(exception)
+    redirect_to after_sign_in_path_for(current_user), alert: exception.message
+  end 
+
   def authenticate_admin_user!
     unless !current_user.nil? && current_user.has_admin_access?
-      redirect_to root_path, alert: "Acesso negado"
+      redirect_to root_path, alert: 'Acesso negado'
     end
   end
 
   def after_sign_in_path_for(user)
-    if (user.admin? && user.administrative?) || user.super_admin?
+    if user.has_admin_access?
       admin_dashboard_path
-    elsif user.open_source_manager?
-      admin_repositories_path
     else
       root_path
     end

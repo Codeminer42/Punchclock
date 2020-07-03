@@ -304,5 +304,22 @@ describe 'Users', type: :feature do
                         have_text('novo_email@codeminer42.com')
       end
     end
+        
+    describe 'Edit yourself' do
+      before do 
+        visit "/admin/users/#{admin_user.id}"
+        find_link('Editar Usuário', href: "/admin/users/#{admin_user.id}/edit").click
+      end
+
+      it 'updates yourself role information' do
+        find('#user_role').find(:option, 'Open Source Manager').select_option
+
+        click_button 'Atualizar Usuário'
+
+        expect(current_path).to eq admin_dashboard_path
+
+        expect(page).to have_css('.flash_alert', text: 'Você não tem permissão para realizar o solicitado')
+      end      
+    end
   end
 end
