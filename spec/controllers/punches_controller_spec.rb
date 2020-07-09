@@ -91,6 +91,56 @@ describe PunchesController do
       end
     end
 
+    describe 'POST #create' do
+      let(:user) { create(:user) }
+      let(:project) { create(:project, company: user.company) }
+      
+      subject { post :create, params: { punch: punch_params } }
+      
+      before { login(user) }
+
+      context 'when success' do
+        let(:punch_params) { 
+          {
+            "from_time"=>"08:00", 
+            "to_time"=>"18:00", 
+            "when_day"=>"02/01/2020",
+            "project_id" => "#{project.id}"
+          }
+        }
+
+        
+        it { expect { subject }.to change(Punch, :count).by(1) }
+        it { is_expected.to redirect_to(punches_path) }
+        it 'creates a new punch attributes' do
+          subject
+          expect(assigns(:punch)).to have_attributes(
+            from: Time.utc(2020, 1, 2, 8, 0, 0),
+            to: Time.utc(2020, 1, 2, 18, 0, 0),
+            project_id: project.id,
+            user_id: user.id,
+            company_id: user.company_id,
+            extra_hour: false
+          )
+        end
+      end
+
+      context 'when fails' do
+        let(:punch_params) { 
+          {
+            "from_time"=>"04:00", 
+            "to_time"=>"18:00", 
+            "when_day"=>"01/01/2020",
+            "project_id" => "#{project.id}"
+          }
+        }
+
+        it 'fail and render action new' do
+          is_expected.to render_template(:new) 
+        end
+      end
+    end    
+
     describe 'methods' do
 
       let(:punch) { FactoryBot.build(:punch) }
@@ -102,42 +152,7 @@ describe PunchesController do
         allow(controller).to receive_messages(current_user: user)
       end
 
-      describe 'POST #create' do
-        def post_create
-          post :create, params: {punch: {}}
-        end
 
-        before do
-          allow(controller).to receive(:punch_params)
-          allow(Punch).to receive(:new).and_return(punch)
-          post_create
-        end
-
-        context 'when success' do
-          it 'save and return to root_path' do
-            allow(punch).to receive(:save).and_return(true)
-
-            expect(response).to redirect_to punches_path
-          end
-
-          it "sets the 'from' attribute correctly" do
-            expect(punch.from).to eq(DateTime.new(2001, 1, 5, 8, 0, 0, 0))
-          end
-
-          it "sets the 'to' attribute correctly" do
-            expect(punch.to).to eq(DateTime.new(2001, 1, 5, 17, 0, 0, 0))
-          end
-        end
-
-        context 'when fails' do
-          it 'fail and render action new' do
-            allow(punch).to receive(:save).and_return(false)
-
-            post_create
-            expect(response).to render_template(:new)
-          end
-        end
-      end
 
       describe 'PUT update' do
         let(:punch) { FactoryBot.create(:punch) }

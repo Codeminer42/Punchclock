@@ -1,4 +1,4 @@
-FROM codeminer42/ci-ruby:2.6
+FROM codeminer42/ci-ruby:2.7
 
 LABEL MAINTAINER Codeminer42 <contact@codeminer42.com>
 
