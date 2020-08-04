@@ -21,7 +21,7 @@ class User < ApplicationRecord
         predicates: true
 
   enumerize :specialty, in: {
-    frontend: 0, backend: 1, devops: 2, mobile: 4
+    frontend: 0, backend: 1, devops: 2, mobile: 4, qa: 5
     },  scope: :shallow,
         predicates: true
 
