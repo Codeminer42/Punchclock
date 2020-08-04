@@ -31,6 +31,7 @@ gem 'holidays', '7.1.0'
 gem 'kaminari'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
 gem 'spreadsheet'
+gem 'httparty'
 
 gem 'ransack', '~> 2.1.1'
 
@@ -68,6 +69,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'rails-controller-testing'
   gem 'capybara-screenshot'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
