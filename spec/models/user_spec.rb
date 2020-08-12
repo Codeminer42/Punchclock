@@ -68,7 +68,8 @@ RSpec.describe User, type: :model do
     it { is_expected.to enumerize(:specialty).in( frontend: 0,
                                                   backend: 1,
                                                   devops: 2,
-                                                  mobile: 4) }
+                                                  mobile: 4,
+                                                  qa: 5) }
   end
 
   describe "level" do
