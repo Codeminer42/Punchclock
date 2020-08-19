@@ -21,7 +21,7 @@ describe 'User' do
     end
 
     context 'when is trying to perform operations on Users' do
-      it { is_expected.to be_able_to(:read, User.new(id: user.id)) }
+      it { is_expected.to be_able_to(:read, User.new(company_id: user.company_id, id: user.id)) }
       it { is_expected.not_to be_able_to(:read, User.new) }
       it { is_expected.to be_able_to(:edit, User.new(id: user.id)) }
       it { is_expected.not_to be_able_to(:edit, User.new) }

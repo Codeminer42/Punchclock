@@ -6,7 +6,7 @@ class Ability
 
   def initialize(user)
     can :manage, Punch, company_id: user.company_id, user_id: user.id
-    can :read, User, id: user.id
+    can :read, User, company_id: user.company_id, id: user.id
     can %i[edit update], User, id: user.id
 
     if !user.normal? || user.office_head?
