@@ -108,7 +108,6 @@ describe PunchesController do
             "project_id" => "#{project.id}"
           }
         }
-
         
         it { expect { subject }.to change(Punch, :count).by(1) }
         it { is_expected.to redirect_to(punches_path) }
