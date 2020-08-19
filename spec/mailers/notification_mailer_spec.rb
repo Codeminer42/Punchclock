@@ -78,7 +78,7 @@ describe NotificationMailer do
     end
 
     context 'when user change your own password' do
-      let(:new_password) { Faker::Lorem.characters(8) }
+      let(:new_password) { Faker::Lorem.characters(number: 8) }
       let(:user) { create(:user) }
       let(:mail) do
         NotificationMailer.notify_user_password_change(user, new_password)

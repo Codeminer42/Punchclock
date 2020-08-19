@@ -10,8 +10,8 @@ A simple electronic punch clock to track hours spent on projects.
 ## Dependencies
 
 ```
-Ruby 2.6.2
-Rails 5.2.1
+Ruby 2.7.1
+Rails 6.0.3
 Postgres >= 9.1
 ```
 
