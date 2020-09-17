@@ -32,6 +32,7 @@ gem 'kaminari'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
 gem 'spreadsheet'
 gem 'httparty'
+gem "github_api"
 
 gem 'ransack', '~> 2.3'
 
@@ -48,7 +49,6 @@ gem 'active_admin_theme'
 gem 'font-awesome-sass', '~> 5.13'
 gem 'bootstrap', '~> 4.5'
 gem 'jquery-easing-rails'
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'active_skin'
 gem 'active_admin_flat_skin'

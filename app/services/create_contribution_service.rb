@@ -6,16 +6,14 @@ class CreateContributionService
   def call(contribution_params)
     user = find_user(contribution_params[:user])
 
-    if user.nil?
-      return Result.new({ message: 'User not found' }, :not_found) 
-    else
-      contribution = user.company.contributions.new(user: user, link: contribution_params[:link])
+    return Result.new({ message: 'User not found' }, :not_found) if user.nil?
+    
+    contribution = user.company.contributions.new(user: user, link: contribution_params[:link])
 
-      if contribution.save
-        Result.new(contribution, :created) 
-      else
-        Result.new({ message: contribution.errors }, :unprocessable_entity)
-      end
+    if contribution.save
+      Result.new(contribution, :created) 
+    else
+      Result.new({ message: contribution.errors }, :unprocessable_entity)
     end
   end
 
