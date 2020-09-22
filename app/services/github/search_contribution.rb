@@ -3,16 +3,16 @@
 module Github
   class SearchContribution
     def initialize
-      @github = Github.new oauth_token: GITHUB_OAUTH_TOKEN
+      @github = Github.new oauth_token: ENV['GITHUB_OAUTH_TOKEN']
     end
 
     attr_reader :github
 
     def perform
       repositories = ::Repository.pluck(:link)
-                               .map(&method(:split_to_gh_pattern))
-                               .compact
-                               .uniq
+                                 .map(&method(:split_to_gh_pattern))
+                                 .compact
+                                 .uniq
 
       profiles = User.engineer.active.pluck(:github)
 

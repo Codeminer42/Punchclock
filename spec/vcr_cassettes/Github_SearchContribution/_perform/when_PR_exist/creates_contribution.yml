@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/forem/forem/pulls?access_token=02ff48f3b61b8acddbdd2b5f53c321247dd72fb5
+    uri: https://api.github.com/repos/forem/forem/pulls?access_token=github-api-token
     body:
       encoding: US-ASCII
       string: ''
@@ -44,8 +44,8 @@ http_interactions:
       X-Github-Media-Type:
       - github.v3; format=json
       Link:
-      - <https://api.github.com/repositories/73648678/pulls?access_token=02ff48f3b61b8acddbdd2b5f53c321247dd72fb5&page=2>;
-        rel="next", <https://api.github.com/repositories/73648678/pulls?access_token=02ff48f3b61b8acddbdd2b5f53c321247dd72fb5&page=3>;
+      - <https://api.github.com/repositories/73648678/pulls?access_token=github-api-token&page=2>;
+        rel="next", <https://api.github.com/repositories/73648678/pulls?access_token=github-api-token&page=3>;
         rel="last"
       X-Ratelimit-Limit:
       - '5000'
