@@ -9,7 +9,7 @@ module Github
     attr_reader :github
 
     def perform
-      repositories = Repository.pluck(:link)
+      repositories = ::Repository.pluck(:link)
                                .map(&method(:split_to_gh_pattern))
                                .compact
                                .uniq
