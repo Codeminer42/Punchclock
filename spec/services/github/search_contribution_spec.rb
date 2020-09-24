@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Github::SearchContribution, type: :service do
@@ -7,24 +9,45 @@ RSpec.describe Github::SearchContribution, type: :service do
     with_temp_env('GITHUB_OAUTH_TOKEN' => 'github-api-token', &example)
   end
 
-  describe '.perform' do
-    subject { described_class.new.perform }
+  describe '.call' do
+    subject { described_class.call }
 
-    context 'when PR exist', vcr: true do
-      let!(:repository) { create(:repository, link: 'https://github.com/forem/forem') }
+    context 'when there are repositories on database' do
       let!(:user) { create(:user, github: 'brunnohenrique') }
 
-      it 'creates contribution' do
-        expect { subject }.to change(Contribution, :count).by(1)
+      context 'when there are contributions', vcr: true do
+        let!(:repository) { create(:repository, link: 'https://github.com/forem/forem') }
+
+        it 'return the attributes for contribution' do
+          expect(subject.first).to have_attributes(
+            profile: 'brunnohenrique',
+            link: 'https://github.com/forem/forem/pull/10384'
+          )
+        end
+      end
+
+      context 'when there are no contributions for a given repository', vcr: true do
+        let!(:repository) { create(:repository, link: 'https://github.com/ruby/ruby') }
+
+        it 'return no one contribution' do
+          is_expected.to be_empty
+        end
       end
     end
 
-    context 'when PR does not exist', vcr: true do
-      let!(:repository) { create(:repository, link: 'https://github.com/ruby/ruby') }
+    context 'when there are no repositories on database' do
       let!(:user) { create(:user, github: 'brunnohenrique') }
 
-      it 'do not creates contribution' do 
-        expect { subject }.to change(Contribution, :count).by(0)
+      it 'return no one contribution' do
+        is_expected.to be_empty
+      end
+    end
+
+    context 'when there are no users present' do
+      let!(:repository) { create(:repository, link: 'https://github.com/ruby/ruby') }
+
+      it 'return no one contribution' do
+        is_expected.to be_empty
       end
     end
   end

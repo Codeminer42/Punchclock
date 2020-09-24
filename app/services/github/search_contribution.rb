@@ -2,45 +2,39 @@
 
 module Github
   class SearchContribution
-    def initialize
-      @github = Github.new oauth_token: ENV['GITHUB_OAUTH_TOKEN']
-    end
+    Contribution = Struct.new(:profile, :link)
 
-    attr_reader :github
+    class << self
+      def call
+        github = Github.new(oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
 
-    def perform
-      repositories = ::Repository.pluck(:link)
-                                 .map(&method(:split_to_gh_pattern))
-                                 .compact
-                                 .uniq
+        profiles = active_engineers_github_profiles
 
-      profiles = User.engineer.active.pluck(:github)
+        return [] if profiles.empty?
 
-      prs = repositories.map do |owner, repo|
-        github.pull_requests.list(owner, repo)
+        repositories_github_format_links
+          .flat_map { |owner, repo| filter_miners_pull_requests(github, profiles, owner, repo) }
+          .map { |item| Contribution.new(item.user.login, item._links.html.href) }
       end
 
-      miners_contributions = prs.flat_map do |pr|
-        pr.body.select { |body| profiles.include? body.user.login }
+      private
+
+      def repositories_github_format_links
+        ::Repository.pluck(:link)
+                    .uniq
+                    .map { |url| url.split('/')[-2..-1] }
+                    .compact
       end
 
-      ActiveRecord::Base.transaction do
-        miners_contributions.each do |contribution|
-          create_contribution(contribution)
-        end
+      def active_engineers_github_profiles
+        User.engineer.active.pluck(:github)
       end
-    end
 
-    private
-
-    def split_to_gh_pattern(url)
-      url.split('/')[-2..-1]
-    end
-
-    def create_contribution(contribution)
-      profile = contribution.user.login
-      link = contribution._links.html.href
-      CreateContributionService.new.call(user: profile, link: link)
+      def filter_miners_pull_requests(github, profiles, owner, repo)
+        github.pull_requests
+              .list(owner, repo)
+              .select { |pr| profiles.include? pr.user.login }
+      end
     end
   end
 end

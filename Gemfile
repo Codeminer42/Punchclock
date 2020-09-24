@@ -32,7 +32,7 @@ gem 'kaminari'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
 gem 'spreadsheet'
 gem 'httparty'
-gem "github_api"
+gem 'github_api', '~> 0.18.2'
 
 gem 'ransack', '~> 2.3'
 
