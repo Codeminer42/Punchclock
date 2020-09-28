@@ -6,7 +6,8 @@ namespace :github do
 
   desc "Search and create miners contributions"
   task import_contributions: :environment do
-    contributions = Github::SearchContribution.call
+    CODE_COMPANY_ID = ENV['CODE_COMPANY_ID']
+    contributions = Github::SearchContribution.call(CODE_COMPANY_ID)
 
     ActiveRecord::Base.transaction do
       contributions.each do |contribution|
