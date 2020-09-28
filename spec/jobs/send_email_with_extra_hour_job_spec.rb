@@ -31,12 +31,12 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
 
     it "executes perform" do
       expect(NotificationMailer).to receive(:notify_admin_extra_hour)
-                                      .with(
-                                        [[active_user.name, extra_hour_punches]],
-                                        a_collection_containing_exactly(
-                                          "active@codeminer42.com"
-                                        )
-                                      )
+          .with(
+            [[active_user.name, extra_hour_punches]],
+            a_collection_containing_exactly(
+              "active@codeminer42.com"
+            )
+          )
 
       perform_enqueued_jobs { job }
     end
