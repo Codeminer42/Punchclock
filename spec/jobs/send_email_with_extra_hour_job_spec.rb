@@ -1,17 +1,20 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
-
-  describe '#perform' do
-
+  describe "#perform" do
     let!(:company) { create :company, name: "Codeminer42" }
-    let!(:admins) { create_list :user, 2, :admin, company: company }
+    let!(:admins) do
+      [
+        create(:user, :admin, email: "active@codeminer42.com", company: company, active: true),
+        create(:user, :admin, email: "inactive@codeminer42.com", company: company, active: false),
+      ]
+    end
     let!(:active_user) { create :user, company: company, active: true, allow_overtime: true }
-    let!(:extra_hour_punches) {
+    let!(:extra_hour_punches) do
       from = Time.new 2018, 7, 3, 17, 0
       to = from + 2.hours
       create_list :punch, 1, extra_hour: true, user: active_user, from: from, to: to
-    }
+    end
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
@@ -22,13 +25,19 @@ RSpec.describe SendEmailWithExtraHourJob, type: :job do
 
     subject(:job) { described_class.perform_later }
 
-    it 'is in default queue' do
-      expect(SendEmailWithExtraHourJob.new.queue_name).to eq('default')
+    it "is in default queue" do
+      expect(SendEmailWithExtraHourJob.new.queue_name).to eq("default")
     end
 
-    it 'executes perform' do
+    it "executes perform" do
       expect(NotificationMailer).to receive(:notify_admin_extra_hour)
-        .with([[active_user.name, extra_hour_punches]], a_collection_containing_exactly(*admins.map(&:email)))
+                                      .with(
+                                        [[active_user.name, extra_hour_punches]],
+                                        a_collection_containing_exactly(
+                                          "active@codeminer42.com"
+                                        )
+                                      )
+
       perform_enqueued_jobs { job }
     end
   end
