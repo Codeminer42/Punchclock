@@ -3,7 +3,7 @@ class SendEmailWithExtraHourJob < ApplicationJob
 
   def perform
     codeminer = Company.find_by(name: "Codeminer42")
-    admins_emails = codeminer.users.admin.pluck(:email)
+    admins_emails = codeminer.users.admin.active.pluck(:email)
 
     extra_hour_punches = codeminer.punches
       .is_extra_hour
