@@ -1,21 +1,16 @@
 namespace :github do
-  desc 'Fill the programming languages of the repositories'
-  task repositories_languages: :environment do
-    UpdateRepositoryLanguageService.new.perform
-  end
-
-  desc "Search and create miners contributions"
+  desc "Search users contributions and save on database"
   task import_contributions: :environment do
-    CODE_COMPANY_ID = ENV['CODE_COMPANY_ID']
-    contributions = Github::SearchContribution.call(CODE_COMPANY_ID)
+    Rails.logger = Logger.new(STDOUT)
+
+    client = Github.new(oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
+    company = Company.find(ENV['COMPANY_ID'])
 
     ActiveRecord::Base.transaction do
-      contributions.each do |contribution|
-        CreateContributionService.new.call(
-          user: contribution.profile,
-          link: contribution.link
-        )
-      end
+      Github::Contributions::Create
+        .new(company: company, client: client)
+        .call
+        .tap { |result| Rails.logger.info("[GH] -- Processed: #{result.size}") }
     end
-  end  
+  end
 end

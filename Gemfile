@@ -6,23 +6,23 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
-gem 'rails', '~> 6.0', '>= 6.0.3.3'
+gem 'rails', '~> 6.0', '>= 6.0.3.4'
 
 gem 'bootsnap', require: false
 
-gem "autoprefixer-rails"
+gem 'autoprefixer-rails', '~> 9.8.6'
 gem 'pg', '~> 1.2'
 gem 'unicorn'
 gem 'sprockets'
 gem 'cancancan', '~> 3.1'
 gem 'carrierwave'
-gem 'devise', '~> 4.7'
+gem 'devise', '~> 4.7.3'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'simple_form', '~> 5.0'
 gem 'uglifier'
-gem 'activeadmin'
+gem 'activeadmin', '~> 2.8.1'
 gem 'draper'
 gem 'draper-cancancan'
 gem 'rails-i18n'
@@ -77,7 +77,7 @@ group :development do
   gem 'bullet'
   gem 'certified'
   gem 'letter_opener'
-  gem 'letter_opener_web'
+  gem 'letter_opener_web', '~> 1.4'
   gem 'foreman'
   gem 'web-console', '~> 4.0'
   gem 'listen', '~> 3.2'
@@ -87,7 +87,7 @@ end
 
 group :development, :test do
   gem 'factory_bot_rails'
-  gem 'faker'
+  gem 'faker', '~> 2.14.0'
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'pry-remote', '~> 0.1.8'

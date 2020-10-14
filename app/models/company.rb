@@ -14,7 +14,6 @@ class Company < ApplicationRecord
   has_many :skills
   has_many :repositories
 
-
   validates :name, presence: true
 
   mount_uploader :avatar, CompanyAvatarUploader
