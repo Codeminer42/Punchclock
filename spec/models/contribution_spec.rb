@@ -14,20 +14,10 @@ RSpec.describe Contribution, type: :model do
     it { is_expected.to validate_presence_of :state }
 
     context 'after the contribution is created' do
-      context 'without a valid repository' do
-        subject(:contribution) { create :contribution }
+      subject(:contribution) { create :contribution, :with_valid_repository }
 
-        it 'has to transition to refused' do
-          expect(contribution).to have_state(:refused)
-        end
-      end
-
-      context 'with a valid repository' do
-        subject(:contribution) { create :contribution, :with_valid_repository }
-
-        it 'has to maintain received state' do
-          expect(contribution).to have_state(:received)
-        end
+      it 'has received state' do
+        expect(contribution).to have_state(:received)
       end
     end
   end

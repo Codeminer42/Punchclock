@@ -1,17 +1,17 @@
 ActiveAdmin.register Contribution do
   permit_params :state
   actions :index, :show
-  
+
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
   filter :user, as: :select
   filter :company, as: :select, if: proc { current_user.super_admin? }
-  
+
   member_action :approve, method: :put, only: :index
   member_action :refuse, method: :put, only: :index
 
   scope :all, default: true
-  
+
   scope I18n.t(:this_week), :this_week, group: :time
   scope I18n.t(:last_week), :last_week, group: :time
 
@@ -22,7 +22,10 @@ ActiveAdmin.register Contribution do
   index download_links: [:xls] do
     column :user
     column :company
-    column :link
+    column :link do |contribution|
+      link_to contribution.link, contribution.link, target: :blank
+    end
+    column :created_at
     column :state do |contribution|
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
