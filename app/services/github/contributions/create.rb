@@ -14,8 +14,13 @@ module Github
         Rails.logger.info("[GH] -- Contributions: #{collect_all_contributions.size}")
 
         collect_all_contributions
-          .map { |result| [result.uid, result.pull_request._links.html.href] }
-          .map { |uid, link| Contribution.find_or_create_by(user_id: uid, link: link, company: company) }
+          .map do |result|
+            find_or_create_contribution(
+              result.uid,
+              result.pull_request._links.html.href,
+              result.pull_request.created_at
+            )
+          end
       end
 
       private
@@ -25,6 +30,15 @@ module Github
       def collect_all_contributions
         @collect_all_contributions ||=
           Collect.new(company: company, client: client).all
+      end
+
+      def find_or_create_contribution(uid, link, created_at)
+        Contribution.find_or_create_by(
+          user_id: uid,
+          link: link,
+          company: company,
+          created_at: created_at
+        )
       end
     end
   end
