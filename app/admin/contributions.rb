@@ -4,8 +4,10 @@ ActiveAdmin.register Contribution do
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
-  filter :user, as: :select
   filter :company, as: :select, if: proc { current_user.super_admin? }
+  filter :user, as: :select
+  filter :state, as: :select, collection: Contribution.aasm.states_for_select
+  filter :created_at
 
   member_action :approve, method: :put, only: :index
   member_action :refuse, method: :put, only: :index
