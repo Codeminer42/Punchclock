@@ -5,7 +5,9 @@ ActiveAdmin.register Contribution do
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
   filter :company, as: :select, if: proc { current_user.super_admin? }
-  filter :user, as: :select
+  filter :user, as: :select, collection: proc {
+    current_user.super_admin? ? User.engineer.active.order(:name).group_by(&:company) : current_user.company.users.engineer.active.order(:name)
+  }
   filter :state, as: :select, collection: Contribution.aasm.states_for_select
   filter :created_at
 
