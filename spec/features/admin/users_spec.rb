@@ -231,7 +231,7 @@ describe 'Users', type: :feature do
       end
 
       context 'on Punches tab' do
-        let(:datetime_first_monday) { (DateTime.now - 1.month).monday }
+        let(:datetime_first_monday) { DateTime.new(2020, 10, 19).monday }
         let!(:punch) { create :punch, user: user, from: datetime_first_monday.change(hour: 8, min: 8, sec: 0), to: datetime_first_monday.change(hour: 12, min: 0, sec: 0) }
         before { refresh }
         it 'finds all elements correctly' do
