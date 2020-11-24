@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ContributionsByOfficeQuery do
@@ -5,7 +7,7 @@ RSpec.describe ContributionsByOfficeQuery do
   let(:offices) { create_list(:office, 3, { company: company }) }
 
   subject { ContributionsByOfficeQuery.new }
-  
+
   context 'to_relation' do
     before do
       user = create(:user, company: company, office: offices.first)
@@ -14,11 +16,32 @@ RSpec.describe ContributionsByOfficeQuery do
     end
 
     it 'return the office' do
-      expect(subject.to_relation.first.city).to eq(offices.first.city) 
+      expect(subject.to_relation.first.city).to eq(offices.first.city)
     end
 
     it 'return the right number of contributions' do
       expect(subject.to_relation.first.number_of_contributions).to eq(6)
+    end
+  end
+
+  context 'by_company' do
+    before do
+      user = create(:user, company: company, office: offices.first)
+
+      other_company = create(:company)
+      @other_office = create(:office, { company: other_company })
+      other_user = create(:user, company: other_company, office: @other_office)
+
+      create_list(:contribution, 3, { user: user, company: company })
+      create_list(:contribution, 5, { user: other_user, company: other_company })
+    end
+
+    it 'return contributions of company' do
+      expect(subject.by_company(company).to_relation.map(&:city)).to include(offices.first.city)
+    end
+
+    it 'does not return contributions of other_company' do
+      expect(subject.by_company(company).to_relation.map(&:city)).not_to include(@other_office.city)
     end
   end
 
@@ -30,7 +53,7 @@ RSpec.describe ContributionsByOfficeQuery do
         create_list(:contribution, 3 - n, { user: user, company: company })
       end
     end
-    
+
     it 'limits the size of relation' do
       expect(subject.leaderboard(limit = 2).to_relation.length).to eq(2)
     end
@@ -51,6 +74,19 @@ RSpec.describe ContributionsByOfficeQuery do
 
     it 'return the right number of contributions' do
       expect(subject.this_week.to_relation.first.number_of_contributions).to eq(3)
+    end
+  end
+
+  context 'per_month' do
+    before do
+      user = create(:user, company: company, office: offices.first)
+
+      create_list(:contribution, 3, { user: user, company: company })
+      create_list(:contribution, 3, { user: user, company: company, created_at: Date.new(2020, 0o6) })
+    end
+
+    it 'return the right number of contributions' do
+      expect(subject.per_month(6).to_relation.first.number_of_contributions).to eq(3)
     end
   end
 

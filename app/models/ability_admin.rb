@@ -44,6 +44,7 @@ class AbilityAdmin
     end
 
     can :read, ActiveAdmin::Page, name: 'Dashboard'
+    can :read, ActiveAdmin::Page, name: 'Stats'
     can :create, [Allocation]
     can :manage, Allocation, ['1=1'], &:id?
 
@@ -52,6 +53,7 @@ class AbilityAdmin
 
   def open_source_manager_permitions(user)
     can :read, ActiveAdmin::Page, name: 'Dashboard'
+    can :read, ActiveAdmin::Page, name: 'Stats'
     can :manage, Repository, company_id: user.company_id
     can :manage, Contribution, company_id: user.company_id
     can :create, Repository
