@@ -146,7 +146,7 @@ describe 'Users', type: :feature do
       it "must deactivate User specialty and level when 'administrative' occupation is selected", js: true do
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
-        
+
         choose('Administrativo')
         expect(page).to have_select('user_specialty', { disabled: true, selected: '' }) &
                         have_select('user_level', { disabled: true, selected: '' })
@@ -239,12 +239,12 @@ describe 'Users', type: :feature do
           within 'div#punches' do
             freeze_time do
               expect(page).to have_table('') &
-                              have_css('.col.col-company', text: punch.company) &
-                              have_css('.col.col-project', text: punch.project) &
+                              have_text('Empresa') &
+                              have_text('Projeto') &
                               have_css('.col.col-when', text: punch.when_day) &
                               have_css('.col.col-from', text: punch.from_time) &
                               have_css('.col.col-to', text: punch.to_time) &
-                              have_css('.col.col-delta', text: punch.delta_as_hour) &
+                              have_text('Delta') &
                               have_css('.col.col-extra_hour', text: punch.extra_hour) &
                               have_link(I18n.t('download_as_xls'), href: admin_punches_path(q: { user_id_eq: user.id, from_greater_than: 60.days.ago, from_lteq: Time.zone.now }, format: :xls)) &
                               have_link(I18n.t('all_punches'), href: admin_punches_path(q: { user_id_eq: user.id, commit: :Filter }))
@@ -305,9 +305,9 @@ describe 'Users', type: :feature do
                         have_text('novo_email@codeminer42.com')
       end
     end
-        
+
     describe 'Edit yourself' do
-      before do 
+      before do
         visit "/admin/users/#{admin_user.id}"
         find_link('Editar Usuário', href: "/admin/users/#{admin_user.id}/edit").click
       end
@@ -320,7 +320,7 @@ describe 'Users', type: :feature do
         expect(current_path).to eq admin_dashboard_path
 
         expect(page).to have_css('.flash_alert', text: 'Você não tem permissão para realizar o solicitado')
-      end      
+      end
     end
   end
 end
