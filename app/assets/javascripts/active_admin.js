@@ -1,6 +1,9 @@
 //= require active_admin/base
 //= require 'select2/dist/js/select2.js'
 //= require ./active_admin/user.js
+//= require stats.js
+//= require chartkick
+//= require Chart.bundle
 
 $(document).ready(function() {
   var $seachFields = $('[data-select]')
