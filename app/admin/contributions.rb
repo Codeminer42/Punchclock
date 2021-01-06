@@ -14,6 +14,16 @@ ActiveAdmin.register Contribution do
   member_action :approve, method: :put, only: :index
   member_action :refuse, method: :put, only: :index
 
+  batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
+    batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
+
+    redirect_to collection_path, alert: "The contributions have been refused."
+  end
+  batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
+    batch_action_collection.find(ids).each {|contribution| contribution.approve! if contribution.state == "received"}
+
+    redirect_to collection_path, alert: "The contributions have been approved."
+  end
   scope :all, default: true
 
   scope I18n.t(:this_week), :this_week, group: :time
@@ -24,6 +34,7 @@ ActiveAdmin.register Contribution do
   scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
 
   index download_links: [:xls] do
+    selectable_column
     column :user
     column :company
     column :link do |contribution|
