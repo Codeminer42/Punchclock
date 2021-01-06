@@ -16,6 +16,8 @@ pt-BR:
       labels:
         disable: "Desativar"
         enable: "Ativar"
+        refuse: 'Recusar'
+        approve: 'Aprovar'
     scopes:
       all: Todos
       active: 'Ativo'
