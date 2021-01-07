@@ -62,6 +62,11 @@ export function constraintMonth(year, month) {
 export const isHoliday = (selecteds, day, holidays) => {
   return holidays.findIndex((element) => ((element.month === (day.month() + 1))
     && (element.day === day.date()))) >= 0
+    && !overtimeAllowed()
+}
+
+export const overtimeAllowed = () => {
+  return OvertimeAllowed
 }
 
 export const getHolidaysFromState = (getState) => {
