@@ -14,6 +14,12 @@ ActiveAdmin.register Contribution do
   member_action :approve, method: :put, only: :index
   member_action :refuse, method: :put, only: :index
 
+  collection_action :reload, method: :post, only: :index
+
+  action_item :reload, only: :index do
+    link_to "Reload", reload_admin_contributions_path(), method: :post
+  end
+
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
 
@@ -76,6 +82,18 @@ ActiveAdmin.register Contribution do
     def refuse
       resource.refuse!
       redirect_to resource_path, notice: I18n.t('contribution_refused')
+    end
+
+    def reload
+      client = Github.new(oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
+      company = Company.find(current_user.company_id)
+
+      ActiveRecord::Base.transaction do
+        Github::Contributions::Create
+          .new(company: company, client: client)
+          .call
+      end
+      redirect_to collection_path, notice: "Deu reload"
     end
 
     def index
