@@ -85,14 +85,7 @@ ActiveAdmin.register Contribution do
     end
 
     def reload
-      client = Github.new(oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
-      company = Company.find(current_user.company_id)
-
-      ActiveRecord::Base.transaction do
-        Github::Contributions::Create
-          .new(company: company, client: client)
-          .call
-      end
+      ReloadGithubContributionsJob.perform_later current_user.company
       redirect_to collection_path, notice: I18n.t('contributions_reloaded')
     end
 
