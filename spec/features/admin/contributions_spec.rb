@@ -84,5 +84,16 @@ describe 'Contribution', type: :feature do
                         have_text('Recusado')
       end
     end
+
+    describe 'Reload' do
+      before do
+        find_link('Recarregar contribuições', href: "/admin/contributions/reload").click
+      end
+
+      it "reloads github contributions" do
+        expect(page).to have_css('.flash_notice', text: 'As Contribuições foram recarregadas')
+      end
+
+    end
   end
 end
