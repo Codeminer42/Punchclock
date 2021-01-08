@@ -73,6 +73,8 @@ pt-BR:
   contribution_state: 'Número de contribuições por status'
   contribution_approved: "A contribuição foi aprovada"
   contribution_refused: "A contribuição foi recusada"
+  reload_contributions: "Recarregar contribuições"
+  contributions_reloaded: "As Contribuições foram recarregadas"
   approve: "Aprovar"
   refuse:  "Recusar"
   this_week: "Semana atual"

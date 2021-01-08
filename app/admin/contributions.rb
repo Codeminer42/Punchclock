@@ -17,7 +17,7 @@ ActiveAdmin.register Contribution do
   collection_action :reload, method: :post, only: :index
 
   action_item :reload, only: :index do
-    link_to "Reload", reload_admin_contributions_path(), method: :post
+    link_to I18n.t('reload_contributions'), reload_admin_contributions_path(), method: :post
   end
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
@@ -93,7 +93,7 @@ ActiveAdmin.register Contribution do
           .new(company: company, client: client)
           .call
       end
-      redirect_to collection_path, notice: "Deu reload"
+      redirect_to collection_path, notice: I18n.t('contributions_reloaded')
     end
 
     def index
