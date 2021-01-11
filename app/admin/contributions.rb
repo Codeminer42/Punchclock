@@ -17,12 +17,12 @@ ActiveAdmin.register Contribution do
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
 
-    redirect_to collection_path, alert: "The contributions have been refused."
+    redirect_to collection_path, notice: "The contributions have been refused."
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.approve! if contribution.state == "received"}
 
-    redirect_to collection_path, alert: "The contributions have been approved."
+    redirect_to collection_path, notice: "The contributions have been approved."
   end
   scope :all, default: true
 
