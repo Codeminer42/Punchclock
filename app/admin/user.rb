@@ -40,13 +40,13 @@ ActiveAdmin.register User do
   batch_action :disable, if: proc { params[:scope] != "inactive" } do |ids|
     batch_action_collection.find(ids).each(&:disable!)
 
-    redirect_to collection_path, alert: "The users have been disabled."
+    redirect_to collection_path, notice: "The users have been disabled."
   end
 
   batch_action :enable, if: proc { params[:scope] == "inactive" }  do |ids|
     batch_action_collection.find(ids).each(&:enable!)
 
-    redirect_to collection_path, alert: "The users have been enabled."
+    redirect_to collection_path, notice: "The users have been enabled."
   end
 
   index download_links: [:xls] do
