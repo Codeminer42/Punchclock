@@ -43,17 +43,17 @@ feature 'Punches Dashboard', js: true do
     scenario 'Multiple selection through sheets' do
       visit '/dashboard/2018/02'
 
-      find('td.inner', text: '14').click
-      find('td.inner', text: '15').click
+      find('td.inner', text: '19').click
+      find('td.inner', text: '20').click
       expect(page).to have_content('Selecionado (2)')
-      find('a', text: '❯').click
       expect(page).to have_content('Selecionado (2)')
+
 
       within 'tbody > tr:nth-child(1)' do
-        expect(page).to have_css("td.selected", text: "14") & have_css("td.selected", text: "15")
+        expect(page).to have_css("td.selected", text: "19") & have_css("td.selected", text: "20")
       end
 
-      find('td.inner', text: '16').click
+      find('td.inner', text: '21').click
       expect(page).to have_content('Selecionado (3)')
       click_on 'Salvar'
       expect(page).to have_content('Horas: 24')
