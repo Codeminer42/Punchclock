@@ -39,7 +39,7 @@ ActiveAdmin.register Contribution do
   scope Contribution.human_attribute_name('state/approved'), :approved, group: :state
   scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
 
-  index download_links: [:xls] do
+  index download_links: [:xls, :text] do
     selectable_column
     column :user
     column :company
@@ -94,6 +94,10 @@ ActiveAdmin.register Contribution do
         format.xls do
           spreadsheet = ContributionsSpreadsheet.new find_collection(except: :pagination)
           send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
+        end
+        format.text do
+          text_service = ContributionsTextService.new find_collection(except: :pagination)
+          send_data text_service.generate
         end
       end
     end
