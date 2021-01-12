@@ -96,8 +96,7 @@ ActiveAdmin.register Contribution do
           send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
         end
         format.text do
-          text_service = ContributionsTextService.new find_collection(except: :pagination)
-          send_data text_service.generate
+          send_data ContributionsTextService.call(find_collection(except: :pagination))
         end
       end
     end

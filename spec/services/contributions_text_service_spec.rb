@@ -8,14 +8,13 @@ RSpec.describe ContributionsTextService do
       let!(:contribution) {create(:contribution,user: user)}
 
       it "returns contribution data" do
-        subject = described_class.new user.contributions
-        text = subject.generate
+        text = described_class.call user.contributions
         expect(text).to include(contribution.link)
         expect(text).to include(user.name)
         expect(text).to include(user.github)
         expect(text).to include(user.office.city)
-        expect(text).to include("1 PR")
-        expect(text).to include("1 miner")
+        expect(text).to include("1 PR's")
+        expect(text).to include("1 Miners")
       end
 
     end
@@ -27,8 +26,7 @@ RSpec.describe ContributionsTextService do
       let!(:contribution3) {create(:contribution,user: user)}
 
       it "returns contribution data" do
-        subject = described_class.new user.contributions
-        text = subject.generate
+        text = described_class.call user.contributions
         expect(text).to include(contribution1.link)
         expect(text).to include(contribution2.link)
         expect(text).to include(contribution3.link)
@@ -36,7 +34,7 @@ RSpec.describe ContributionsTextService do
         expect(text).to include(user.github)
         expect(text).to include(user.office.city)
         expect(text).to include("3 PR's")
-        expect(text).to include("1 miner")
+        expect(text).to include("1 Miners")
       end
     end
 
@@ -47,8 +45,7 @@ RSpec.describe ContributionsTextService do
       let!(:contribution2) {create(:contribution,user: user2)}
 
       it "returns contribution data" do
-        subject = described_class.new(Contribution.where("user_id = ? OR user_id = ?",user1.id,user2.id))
-        text = subject.generate
+        text = described_class.call(Contribution.where("user_id = ? OR user_id = ?",user1.id,user2.id))
         expect(text).to include(contribution1.link)
         expect(text).to include(user1.name)
         expect(text).to include(user1.github)
@@ -58,7 +55,7 @@ RSpec.describe ContributionsTextService do
         expect(text).to include(user2.github)
         expect(text).to include(user2.office.city)
         expect(text).to include("2 PR's")
-        expect(text).to include("2 miners")
+        expect(text).to include("2 Miners")
       end
     end
   end
