@@ -3,8 +3,8 @@ require 'rails_helper'
 feature 'Repositories list' do
   let!(:authed_user) { create_logged_in_user }
 
-  let!(:repository) { create(:repository, company_id: authed_user.company_id) }
-  let!(:second_repository) { create(:repository, company_id: authed_user.company_id) }
+  let!(:repository) { create(:repository, company_id: authed_user.company_id).decorate }
+  let!(:second_repository) { create(:repository, company_id: authed_user.company_id).decorate }
 
   before do
     visit repositories_path
@@ -17,5 +17,10 @@ feature 'Repositories list' do
   it 'have all links for repositories' do
     expect(page).to have_link(repository.link, href: repository.link) &
                     have_link(second_repository.link, href: second_repository.link)
+  end
+
+  it 'have all languages for repositories' do
+    expect(page).to have_text(repository.languages) &
+                    have_text(second_repository.languages)
   end
 end
