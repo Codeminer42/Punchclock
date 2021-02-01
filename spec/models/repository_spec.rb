@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Repository, type: :model do
-  describe 'Associations' do
-    it { is_expected.to belong_to(:company) }
-  end
+  it { is_expected.to belong_to(:company) }
+  it { is_expected.to have_many(:contributions).dependent(:nullify) }
 
-  context 'Validations' do
+  describe 'validations' do
     subject { build :repository }
 
     it { is_expected.to validate_presence_of(:link) }

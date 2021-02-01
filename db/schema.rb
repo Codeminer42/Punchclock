@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_22_145714) do
+ActiveRecord::Schema.define(version: 2021_01_31_175922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,10 @@ ActiveRecord::Schema.define(version: 2020_06_22_145714) do
     t.string "state", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "repository_id"
     t.index ["company_id"], name: "index_contributions_on_company_id"
     t.index ["link"], name: "index_contributions_on_link", unique: true
+    t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
   end
 
@@ -232,6 +234,7 @@ ActiveRecord::Schema.define(version: 2020_06_22_145714) do
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
   add_foreign_key "clients", "companies"
+  add_foreign_key "contributions", "repositories"
   add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "companies"
   add_foreign_key "evaluations", "questionnaires"
