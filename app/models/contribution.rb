@@ -5,6 +5,7 @@ class Contribution < ApplicationRecord
 
   belongs_to :user
   belongs_to :company
+  belongs_to :repository
 
   aasm column: 'state' do
     state :received, initial: true

@@ -4,17 +4,15 @@ require 'rails_helper'
 require 'aasm/rspec'
 
 RSpec.describe Contribution, type: :model do
-  describe 'associations' do
-    it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:company) }
-  end
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:company) }
+  it { is_expected.to belong_to(:repository) }
+  it { is_expected.to validate_presence_of :link }
+  it { is_expected.to validate_presence_of :state }
 
-  describe 'validations' do
-    it { is_expected.to validate_presence_of :link }
-    it { is_expected.to validate_presence_of :state }
-
+  describe 'defaults' do
     context 'after the contribution is created' do
-      subject(:contribution) { create :contribution, :with_valid_repository }
+      subject(:contribution) { create(:contribution) }
 
       it 'has received state' do
         expect(contribution).to have_state(:received)
@@ -23,7 +21,7 @@ RSpec.describe Contribution, type: :model do
   end
 
   describe 'states' do
-    subject(:contribution) { build :contribution }
+    subject(:contribution) { build(:contribution) }
 
     context 'when the contribution is created' do
       it 'has state received' do

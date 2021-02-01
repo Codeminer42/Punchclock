@@ -26,8 +26,10 @@ ActiveAdmin.register_page "Dashboard" do
 
 
         projects_collection = current_company.projects.active.order(:name).map do |project|
+          description = [project.name, project.client].compact.join(' - ')
+
           [
-            "#{project.name} #{project.client ? " - #{project.client}": '' }",
+            description,
             project.id
           ]
         end

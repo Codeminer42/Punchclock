@@ -8,6 +8,7 @@ describe ActiveAdmin::StatsHelper do
     let!(:office) { create(:office, { company: company }) }
     let!(:office_with_no_contribution) { create(:office, { company: company }) }
     let(:user) { create(:user, company: company, office: office) }
+
     let!(:contribution) { create(:contribution, :approved, user: user, company: company) }
 
     describe 'returned hash' do

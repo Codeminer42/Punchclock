@@ -5,7 +5,7 @@ require 'rails_helper'
 
 describe 'Contribution', type: :feature do
   let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let!(:contribution) { create(:contribution, :with_valid_repository) }
+  let!(:contribution) { create(:contribution) }
 
   before do
     sign_in(admin_user)

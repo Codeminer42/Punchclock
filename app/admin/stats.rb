@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 include ActiveAdmin::StatsHelper
+
 ActiveAdmin.register_page 'Stats' do
   page_action :show do
     query = ContributionsByOfficeQuery.new.by_company(current_user.company).approved
+
     relation = params[:month].empty? ? query.to_relation : query.per_month(params[:month].to_i).to_relation
     @stats = ActiveAdmin::StatsHelper.stats_data(relation)
+
     render json: @stats
   end
 
@@ -13,7 +16,8 @@ ActiveAdmin.register_page 'Stats' do
        label: proc { I18n.t('stats') }
 
   content title: proc { I18n.t('stats') } do
-    @months = I18n.t('date.month_names').drop(1).zip(1..12).take(Date.today.month)
+    @months = I18n.t('date.month_names').drop(1).map(&:capitalize).zip(1..12).take(Date.today.month)
+
     relation = ContributionsByOfficeQuery.new.by_company(current_user.company).approved.to_relation
     @stats = ActiveAdmin::StatsHelper.stats_data(relation)
     @max = @stats.values.max

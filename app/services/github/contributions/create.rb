@@ -17,6 +17,7 @@ module Github
           .map do |result|
             find_or_create_contribution(
               result.uid,
+              result.rid,
               result.pull_request._links.html.href,
               result.pull_request.created_at
             )
@@ -32,9 +33,10 @@ module Github
           Collect.new(company: company, client: client).all
       end
 
-      def find_or_create_contribution(uid, link, created_at)
+      def find_or_create_contribution(uid, rid, link, created_at)
         Contribution.find_or_create_by(
           user_id: uid,
+          repository_id: rid,
           link: link,
           company: company,
           created_at: created_at
