@@ -10,7 +10,7 @@ gem 'rails', '~> 6.0', '>= 6.0.3.4'
 
 gem 'bootsnap', require: false
 
-gem 'autoprefixer-rails', '~> 9.8.6'
+gem 'autoprefixer-rails', '~> 10.2.4.0'
 gem 'pg', '~> 1.2'
 gem 'unicorn'
 gem 'sprockets'
