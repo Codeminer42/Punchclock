@@ -14,6 +14,7 @@ ActiveAdmin.register Evaluation do
   }
   filter :questionnaire_kind, as: :select, collection: Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind] }
   filter :created_at
+  filter :evaluation_date, as: :date_range
 
   index download_links: [:xls] do
     column :evaluator
@@ -21,6 +22,7 @@ ActiveAdmin.register Evaluation do
     column :score
     column :questionnaire
     column :created_at
+    column :evaluation_date
 
     actions
   end
@@ -34,6 +36,7 @@ ActiveAdmin.register Evaluation do
       row :created_at
       row :questionnaire
       row :observation
+      row :evaluation_date
       row :answers do
         table_for evaluation.answers do
           column :question

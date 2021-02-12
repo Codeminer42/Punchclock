@@ -18,7 +18,7 @@ class Evaluation < ApplicationRecord
   delegate :english?, to: :questionnaire
 
 
-  validates :evaluated, :evaluator, :questionnaire, :score, presence: true
+  validates :evaluated, :evaluator, :questionnaire, :score, :evaluation_date, presence: true
   validates :score, inclusion: { in: SCORE_RANGE }
   validates :english_level, presence: true, if: :english?
 

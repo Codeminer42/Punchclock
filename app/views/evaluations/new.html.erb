@@ -51,6 +51,13 @@
 
         <div class="card mb-2">
           <div class="card-body">
+            <h5 class="card-title"><%= f.label :evaluation_date %></h5>
+            <%= f.date_field :evaluation_date, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="card mb-2">
+          <div class="card-body">
             <h5 class="card-title"><%= f.label :score %></h5>
             <%= f.select :score, Evaluation::SCORE_RANGE, {}, { class: 'form-control col-md-1' } %>
           </div>

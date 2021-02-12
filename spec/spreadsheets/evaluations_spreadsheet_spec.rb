@@ -12,7 +12,8 @@ RSpec.describe EvaluationsSpreadsheet do
       Evaluation.human_attribute_name('score'),
       Evaluation.human_attribute_name('english_level'),
       Evaluation.human_attribute_name('created_at'),
-      Evaluation.human_attribute_name('updated_at')
+      Evaluation.human_attribute_name('updated_at'),
+      Evaluation.human_attribute_name('evaluation_date')
     ]
   end
 
@@ -23,7 +24,8 @@ RSpec.describe EvaluationsSpreadsheet do
       evaluation.score,
       evaluation.english_level.text,
       I18n.l(evaluation.created_at, format: :long),
-      I18n.l(evaluation.created_at, format: :long)
+      I18n.l(evaluation.created_at, format: :long),
+      I18n.l(evaluation.evaluation_date, format: :long)
     ]
   end
 

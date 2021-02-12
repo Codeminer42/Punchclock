@@ -8,7 +8,8 @@ class EvaluationsSpreadsheet < BaseSpreadsheet
       evaluation.score,
       translate_enumerize(evaluation.english_level),
       translate_date(evaluation.created_at),
-      translate_date(evaluation.created_at)
+      translate_date(evaluation.created_at),
+      translate_date(evaluation.evaluation_date)
     ]
   end
 
@@ -20,6 +21,7 @@ class EvaluationsSpreadsheet < BaseSpreadsheet
       english_level
       created_at
       updated_at
+      evaluation_date
     ].map { |attribute| Evaluation.human_attribute_name(attribute) }
   end
 end

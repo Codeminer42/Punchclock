@@ -8,6 +8,7 @@ FactoryBot.define do
     questionnaire
     score       { rand 1..10 }
     observation { Faker::Lorem.paragraph }
+    evaluation_date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
 
     trait :with_answers do |evaluation|
       transient do

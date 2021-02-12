@@ -71,6 +71,7 @@ class EvaluationsController < ApplicationController
   def evaluation_params
     params.require(:evaluation).permit(:evaluator_id, :evaluated_id, :english_level,
                                        :questionnaire_id, :observation,  :score, :company_id,
+                                       :evaluation_date,
                                        answers_attributes: %i[question_id response] )
   end
 

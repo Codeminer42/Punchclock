@@ -11,10 +11,14 @@
     </div>
     <div class="card-body">
       <div class="evaluation-info">
-        <b>
-          Evaluated by:
-          <%= @evaluation.evaluator.name %>
-        </b>
+        <span>
+          <b>
+            Evaluated by:
+            <%= @evaluation.evaluator.name %>
+          </b>
+          &ndash;
+          Evaluation date: <%= @evaluation.evaluation_date%>
+        </span>
       </div>
 
       <p class="card-text">
