@@ -38,6 +38,12 @@ describe 'Admin Evaluation', type: :feature do
         expect(page).to have_css('label', text: 'Criado em')
       end
     end
+
+    it 'by evaluation date' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_css('label', text: 'Evaluation date')
+      end
+    end
   end
 
   describe 'Actions' do
@@ -68,8 +74,9 @@ describe 'Admin Evaluation', type: :feature do
                         have_css('a',  text: evaluation.evaluator.name) &
                         have_css('a',  text: evaluation.evaluated.name) &
                         have_css('td', text: I18n.l(evaluation.evaluator.created_at, format: :long)) &
-                        have_css('td',  text: evaluation.questionnaire.title) &
-                        have_css('td', text: evaluation.observation)
+                        have_css('td', text: evaluation.questionnaire.title) &
+                        have_css('td', text: evaluation.observation) &
+                        have_css('td', text: I18n.l(evaluation.evaluation_date, format: :long))
       end
 
       it 'have no edit action' do
