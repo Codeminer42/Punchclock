@@ -52,7 +52,8 @@
         <div class="card mb-2">
           <div class="card-body">
             <h5 class="card-title"><%= f.label :evaluation_date %></h5>
-            <%= f.date_field :evaluation_date, class: 'form-control' %>
+            <%= f.date_field :evaluation_date, class: 'form-control', 
+              value: @evaluation.evaluation_date %>
           </div>
         </div>
 

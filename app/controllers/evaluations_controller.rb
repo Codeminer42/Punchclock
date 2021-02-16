@@ -18,14 +18,14 @@ class EvaluationsController < ApplicationController
 
   def new
     if session[:evaluation_params].present?
-      @evaluation = Evaluation.new(session[:evaluation_params])
+      @evaluation = Evaluation.new(session[:evaluation_params]).decorate
     else
       @evaluation = Evaluation.new(
         evaluator_id: current_user.id,
         evaluated_id: params[:evaluated_user_id],
         questionnaire_id: @questionnaire.id,
-        company: current_company
-      )
+        company: current_company,
+      ).decorate
       @questionnaire.questions.each { |question| @evaluation.answers.build(question: question) }
     end
   end
