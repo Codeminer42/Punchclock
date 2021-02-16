@@ -21,7 +21,7 @@ class Evaluation < ApplicationRecord
   validates :score, inclusion: { in: SCORE_RANGE }
   validates :english_level, presence: true, if: :english?
 
-  attribute :evaluation_date, :date, default: Date.today
+  attribute :evaluation_date, :date, default: Time.zone.today
 
   scope :by_kind, -> (kind) { joins(:questionnaire).merge(Questionnaire.public_send(kind)) }
 

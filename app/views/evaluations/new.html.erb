@@ -5,7 +5,7 @@
       <b>Evaluating: <%= @evaluation.evaluated %></b>
     </div>
 
-    <%= form_for @evaluation, url: {action: :confirm} do |f| %>
+    <%= simple_form_for @evaluation, url: {action: :confirm} do |f| %>
       <div class="card-body">
         <% if @evaluation.errors.any? %>
           <div class="alert alert-danger" role="alert">
@@ -52,8 +52,14 @@
         <div class="card mb-2">
           <div class="card-body">
             <h5 class="card-title"><%= f.label :evaluation_date %></h5>
-            <%= f.date_field :evaluation_date, class: 'form-control', 
-              value: @evaluation.evaluation_date %>
+            <%= f.input :evaluation_date, as: :datepicker,
+              label: false, input_html: {
+              class: %i(datepicker form-control),
+              data: {
+                holidays: []
+              },
+              value: f.object.evaluation_date
+            } %>
           </div>
         </div>
 
