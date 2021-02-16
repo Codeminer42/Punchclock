@@ -93,7 +93,7 @@ GEM
       activesupport (>= 3.0.0, < 6.2)
       ruby2_keywords (>= 0.0.2, < 1.0)
     ast (2.4.1)
-    autoprefixer-rails (9.8.6.5)
+    autoprefixer-rails (10.2.4.0)
       execjs
     bcrypt (3.1.16)
     better_errors (2.9.1)
@@ -505,7 +505,7 @@ DEPENDENCIES
   active_admin_theme
   active_skin
   activeadmin (~> 2.8.1)
-  autoprefixer-rails (~> 9.8.6)
+  autoprefixer-rails (~> 10.2.4.0)
   better_errors
   binding_of_caller
   bootsnap
