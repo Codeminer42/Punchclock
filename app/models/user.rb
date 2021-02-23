@@ -7,8 +7,10 @@ class User < ApplicationRecord
   attr_accessor :has_api_token
   EXPERIENCE_PERIOD = 3.months
 
-  devise :database_authenticatable, :recoverable,
-         :rememberable, :trackable, :validatable, :confirmable
+  devise :recoverable,
+         :rememberable, :trackable, :validatable, :confirmable,
+         :two_factor_authenticatable,
+         :otp_secret_encryption_key => ENV['TEST_KEY']
 
   enumerize :level, in: {
     trainee: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6

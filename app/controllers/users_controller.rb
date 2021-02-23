@@ -1,3 +1,5 @@
+require 'qr_code_generator_service'
+
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
@@ -16,8 +18,23 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+  def twofactor
+    generate_otp_secret
+    @img = gen_qr_code(current_user.otp_secret, current_user.email)
+    enable_two_factor
+    render :enabletwofactor
+  end
 
+  private
+  def generate_otp_secret
+    current_user.otp_secret = User.generate_otp_secret
+  end
+
+  def enable_two_factor
+    current_user.otp_required_for_login = true
+    current_user.save!
+  end
+  
   def user_params
     params.require(:user).permit(:name, :email)
   end

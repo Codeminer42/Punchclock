@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Devise.setup do |config|
+  config.warden do |manager|
+    manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
+  end
+
   config.mailer_sender = 'do-not-reply@cm42.io'
   require 'devise/orm/active_record'
   config.case_insensitive_keys = [:email]

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   
   authenticated :user do
     root to: 'punches#index', as: :authenticated_user
+    get 'two-factor', to: 'users#twofactor'
   end
 
   unauthenticated :user do
