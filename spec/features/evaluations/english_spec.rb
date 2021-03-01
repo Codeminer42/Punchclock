@@ -15,7 +15,7 @@ describe 'English Evaluation', type: :feature do
     find("label[for=evaluation_answers_attributes_0_response_#{questionnaire.questions.first.answer_options[1].downcase}]").click
     find("label[for=evaluation_answers_attributes_1_response_#{questionnaire.questions.last.answer_options[0].downcase}]").click
     fill_in 'Observação', with: 'Lots of Text'
-    fill_in 'Evaluation date', with: '05/05/2021'
+    page.execute_script("$('#evaluation_evaluation_date').datepicker('setDate', '09/09/2021')")
     select '7', from: 'Pontuação'
     select 'fluent', from: 'Nível de Inglês'
 
