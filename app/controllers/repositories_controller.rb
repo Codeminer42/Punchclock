@@ -1,13 +1,18 @@
+require('repository_query')
+
 class RepositoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :company_repositories
+  before_action :query_params
 
   def index
+    @repositories = RepositoryQuery.new(current_company, { langs: @languages })
+      .fetch
+      .decorate
   end
 
   private
 
-  def company_repositories
-    @repositories = current_user.company.repositories.order(:link).decorate
+  def query_params
+    @languages = params[:languages] ? params[:languages].split(',') : nil
   end
 end

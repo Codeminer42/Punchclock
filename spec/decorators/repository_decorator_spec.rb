@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 RSpec.describe RepositoryDecorator do
   describe '#languages' do
@@ -19,7 +19,7 @@ RSpec.describe RepositoryDecorator do
     end
 
     context 'when repository has no languages' do
-      let(:repository) { create(:repository, language: '').decorate }
+      let(:repository) { create(:repository, language: nil).decorate }
 
       it 'returns empty string' do
         expect(repository.languages).to eq ''

@@ -1,0 +1,67 @@
+#input-div {
+  border: 1px solid #DDD;
+  border-radius: 5px;
+  padding: 1px;
+}
+
+#search {
+  display: flex;
+  flex-direction: row;
+  max-width: 1110px;
+  margin-bottom: 10px;
+
+  .input-box {
+    margin-right: 5px;
+  }
+
+  .search-form, .input-box {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+
+    .input-languages-span {
+      width: 100%;
+
+      input {
+        outline: none;
+        width: 100%;
+        min-width: 30px;
+        display: inline-block;
+        border: transparent;
+        height: 36px;
+      }
+    }
+
+    #languages-list {
+      display: flex;
+      width: fit-content;
+      max-width: 1016px;
+      flex-direction: row;
+
+      .lang-pill {
+        position: relative;
+        background: #EEE;
+        border-radius: 3px;
+        color: #999;
+        height: 26px;
+        line-height: 26px;
+        padding: 0 5px;
+        margin: 5px 10px 5px 5px;
+        text-decoration: none;
+        -webkit-transition: color 0.2s;
+
+        .delete-button {
+          background-color: white;
+          border-radius: 50px;
+          padding: 0 6px 2px;
+          margin-left: 5px;
+        }
+      }
+
+      .lang-pill:hover {
+        background-color: #DDD;
+        cursor: pointer;
+      }
+    }
+  }
+}

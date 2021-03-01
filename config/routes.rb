@@ -14,8 +14,13 @@ Rails.application.routes.draw do
       get '(/:year)(/:month)', action: :index
     end
   end
-  resources :repositories, only: :index
-
+  
+  resources :repositories, only: :index do 
+    collection do
+      get "(/:languages)", action: :index
+    end
+  end
+  
   authenticated :user do
     root to: 'punches#index', as: :authenticated_user
   end

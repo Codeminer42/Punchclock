@@ -105,7 +105,7 @@ feature 'Add new Punch' do
 
         # march 5th is holiday
         # selectale days are wraped within a tag, holidays elements are wrapped within span tag
-        fill_in 'punch[when_day]', with: '05/03/2019'
+        fill_in 'punch[when_day]', with: '05-03-2019'
 
         click_button 'Criar Punch'
 
