@@ -24,7 +24,7 @@ class EvaluationsController < ApplicationController
         evaluator_id: current_user.id,
         evaluated_id: params[:evaluated_user_id],
         questionnaire_id: @questionnaire.id,
-        company: current_company
+        company: current_company,
       )
       @questionnaire.questions.each { |question| @evaluation.answers.build(question: question) }
     end
@@ -71,6 +71,7 @@ class EvaluationsController < ApplicationController
   def evaluation_params
     params.require(:evaluation).permit(:evaluator_id, :evaluated_id, :english_level,
                                        :questionnaire_id, :observation,  :score, :company_id,
+                                       :evaluation_date,
                                        answers_attributes: %i[question_id response] )
   end
 

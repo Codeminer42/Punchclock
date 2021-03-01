@@ -16,6 +16,7 @@ describe 'Performance Evaluation', type: :feature do
     find("label[for=evaluation_answers_attributes_0_response_#{questionnaire.questions.first.answer_options[1].downcase}]").click
     find("label[for=evaluation_answers_attributes_1_response_#{questionnaire.questions.last.answer_options[1].downcase}]").click
     fill_in 'Observação', with: 'Lots of Obs'
+    page.execute_script("$('#evaluation_evaluation_date').datepicker('setDate', '09/09/2021')")
     select '5', from: 'Pontuação'
 
     click_on 'Next'

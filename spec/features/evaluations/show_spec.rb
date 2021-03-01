@@ -16,6 +16,10 @@ describe "Visit Show", type: :feature do
     expect(page).to have_content("Evaluated by: #{evaluation.evaluator.name}")
   end
 
+  it "finds evaluation date" do
+    expect(page).to have_content("Evaluation date: #{evaluation.evaluation_date}")
+  end
+
   it "finds evaluated name" do
     expect(page).to have_content("Evaluating: #{evaluation.evaluated.name}")
   end
