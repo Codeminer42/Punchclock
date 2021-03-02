@@ -3,9 +3,9 @@ class RepositoryQuery
   module Scopes
     def filter_by_languages(langs)
       return self if langs.blank?
-  
-      condition = '^' + langs.map { |l| "(?=.*\\m#{l}\\M)" }.join + ".*$"
-  
+
+      condition = '^' + langs.map { |l| "(?=.*#{Regexp.escape(l)})" }.join + ".*$"
+
       where("language ~* ?", condition)
     end
   end
