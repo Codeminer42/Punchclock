@@ -1,10 +1,8 @@
 require 'rqrcode'
 
-def gen_qr_code(content, user_email)
-  code = ROTP::TOTP.new(content, issuer: 'Punchclock').provisioning_uri(user_email)
-  qrcode = RQRCode::QRCode.new(code)
-
-  png = qrcode.as_png(
+class QrCodeGeneratorService
+  ISSUER_NAME = 'Punchclock'.freeze
+  DEFAULT_PNG_SETTINGS = {
     bit_depth: 1,
     border_modules: 4,
     color_mode: ChunkyPNG::COLOR_GRAYSCALE,
@@ -15,5 +13,14 @@ def gen_qr_code(content, user_email)
     resize_exactly_to: false,
     resize_gte_to: false,
     size: 120
-  )
+  }
+
+  def self.call(user)
+    label = "#{ISSUER_NAME}:#{user.email}"
+    otp_url = user.otp_provisioning_uri(label, issuer: ISSUER_NAME)
+
+    RQRCode::QRCode.new(otp_url)
+      .as_png(DEFAULT_PNG_SETTINGS)
+      .to_data_url
+  end
 end
