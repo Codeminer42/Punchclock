@@ -50,4 +50,29 @@ feature 'Login', type: :feature do
       expect(current_path).to eq(root_path)
     end
   end
+
+  describe 'when user has 2FA enabled' do
+    let(:normal_user) { create(:user) }
+
+    before do
+      normal_user.otp_secret = normal_user.class.generate_otp_secret
+      normal_user.otp_required_for_login = true
+      normal_user.save
+    end
+    
+    context 'with valid information' do
+      it 'login to Punchclock root page' do
+        sign_in(normal_user)
+        expect(current_path).to eq(root_path)
+      end
+    end
+
+    context 'with invalid information' do
+      it 'do not login to Punchclock root ' do
+        sign_in(normal_user, otp: '000X00')
+
+        expect(page).to have_content 'E-mail ou senha inválidos.'
+      end
+    end
+  end
 end

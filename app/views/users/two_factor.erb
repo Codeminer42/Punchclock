@@ -6,6 +6,11 @@
   </div>
 
   <div class="qr-code-div" >
-    <%= image_tag @img.to_data_url, class: 'qr-code-image' %>
+    <%= image_tag @image_data, class: 'qr-code-image' %>
   </div>
+
+  <%= form_tag confirm_otp_path do |f| %>
+    <%= text_field_tag 'otp_attempt' %>
+    <%= submit_tag 'Confirmar', class: 'button' %>
+  <% end %>
 </div>

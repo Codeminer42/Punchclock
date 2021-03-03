@@ -45,7 +45,6 @@ class ApplicationController < ActionController::Base
 
   protected
     def configure_permitted_parameters
-      puts params
       devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
     end
 end

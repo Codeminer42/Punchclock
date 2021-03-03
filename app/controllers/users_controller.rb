@@ -1,5 +1,3 @@
-require 'qr_code_generator_service'
-
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
@@ -18,16 +16,30 @@ class UsersController < ApplicationController
     end
   end
 
-  def twofactor
-    generate_otp_secret
-    @img = gen_qr_code(current_user.otp_secret, current_user.email)
-    enable_two_factor
-    render :enabletwofactor
+  def two_factor
+    if current_user.otp_secret.blank?
+      current_user.otp_secret = User.generate_otp_secret
+      current_user.save!
+    end
+
+    @image_data = QrCodeGeneratorService.call(current_user)
+  end
+
+  def confirm_otp
+    otp_attempt = params[:otp_attempt]
+
+    if validate_otp(otp_attempt)
+      enable_two_factor
+      redirect_to root_path, notice: t('2fa_enabled')
+    else
+      redirect_to two_factor_path, alert: t('otp_fail')
+    end
   end
 
   private
-  def generate_otp_secret
-    current_user.otp_secret = User.generate_otp_secret
+
+  def validate_otp(otp_attempt)
+    otp_attempt == current_user.current_otp
   end
 
   def enable_two_factor
