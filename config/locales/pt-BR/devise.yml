@@ -9,7 +9,7 @@ pt-BR:
     failure:
       already_authenticated: 'Você já está logado.'
       inactive: 'Sua conta ainda não foi ativada.'
-      invalid: 'E-mail ou senha inválidos.'
+      invalid: 'E-mail, senha ou código OTP inválidos.'
       invalid_token: 'O token de autenticação não é válido.'
       locked: 'Sua conta está bloqueada.'
       not_found_in_database: 'E-mail ou senha inválidos.'

@@ -71,7 +71,7 @@ feature 'Login', type: :feature do
       it 'do not login to Punchclock root ' do
         sign_in(normal_user, otp: '000X00')
 
-        expect(page).to have_content 'E-mail ou senha inválidos.'
+        expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
       end
     end
   end
