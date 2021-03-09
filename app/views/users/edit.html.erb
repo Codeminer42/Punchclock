@@ -17,3 +17,13 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-6">
+    <% if current_user.otp_required_for_login.blank? %>
+      <%= link_to 'Enable 2FA', '/two_factor', class: 'button' %>
+    <% else %>
+      <%= link_to 'Disable 2FA', '', class: 'button' %>
+    <% end %>
+  </div>
+</div>
+

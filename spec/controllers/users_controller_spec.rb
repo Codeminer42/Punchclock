@@ -28,4 +28,45 @@ describe UsersController do
       end
     end
   end
+
+  describe 'GET enable 2FA' do
+    before do
+      allow(QrCodeGeneratorService)
+        .to receive(:call)
+        .and_return('fake_image_data')
+    end
+
+    context 'with valid information' do
+      it 'renders "two_factor" view' do
+        get :two_factor
+
+        expect(response).to render_template 'two_factor'
+        expect(assigns(:image_data)).to eq('fake_image_data')
+      end
+    end
+  end
+
+  describe 'POST confirm otp' do
+    before do
+      user.otp_secret = user.class.generate_otp_secret
+      user.save
+    end
+    
+    context 'with valid information' do
+      it 'redirects to root_path' do
+        post :confirm_otp, params: { otp_attempt: user.current_otp }
+
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'with invalid information' do
+      it 'renders "two_factor" view' do
+        otp = user.current_otp
+        post :confirm_otp, params: { otp_attempt: otp.chars.shuffle.join }
+
+        expect(response).to redirect_to two_factor_path
+      end
+    end
+  end
 end

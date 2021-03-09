@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   respond_to :html, :json
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   protect_from_forgery with: :exception
 
@@ -41,4 +42,9 @@ class ApplicationController < ActionController::Base
   def current_company
     @current_company ||= current_user.company
   end
+
+  protected
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
+    end
 end

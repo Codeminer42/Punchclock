@@ -1,0 +1,16 @@
+<div id="twofactor-container" >
+  <div class="instruction-text" >
+    <h2>Atenção</h2><br>
+    <h5>Escaneie seu QR code com um aplicativo de autenticação antes de sair desta página.</h5><br>
+    <h5>Este codigo é único e só será mostrado esta vez.</h5>
+  </div>
+
+  <div class="qr-code-div" >
+    <%= image_tag @image_data, class: 'qr-code-image' %>
+  </div>
+
+  <%= form_tag confirm_otp_path do |f| %>
+    <%= text_field_tag 'otp_attempt' %>
+    <%= submit_tag 'Confirmar', class: 'button' %>
+  <% end %>
+</div>

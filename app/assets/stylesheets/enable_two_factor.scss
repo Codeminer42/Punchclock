@@ -1,0 +1,12 @@
+#twofactor-container{
+  display: flex;
+  flex-direction: column;
+
+  justify-items: center;
+  align-items: center;
+
+  .qr-code-div, .qr-code-image {
+    height: 300px;
+    width: 300px;
+  }
+}
