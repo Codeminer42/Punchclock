@@ -6,7 +6,12 @@ class Project < ApplicationRecord
   has_many :punches
   has_many :allocations, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, 
+    presence: true, 
+    uniqueness: { 
+      scope: :company_id, 
+      message: 'Project name already taken' 
+    }
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }

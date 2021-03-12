@@ -32,6 +32,8 @@ describe 'Projects', type: :feature do
   describe 'Actions' do
     describe 'New' do
       let!(:client) { create(:client, company: admin_user.company) }
+      let(:project) { create(:project, company: client.company, name: 'TRZ') }
+      
       before do
         within '.action_items' do
           click_link 'Novo(a) Projeto'
@@ -48,6 +50,16 @@ describe 'Projects', type: :feature do
         expect(page).to have_text('Projeto foi criado com sucesso.') &
                         have_text('MinerCamp') &
                         have_text(client.name)
+      end
+
+      it 'must not work with a project with the same name' do
+
+        find('#project_name').fill_in with: 'TRZ'
+        find('#project_client_id').find(:option, client.name).select_option
+
+        click_button 'Criar Projeto'
+
+        expect(page).to have_text('Projeto não pôde ser criado.')
       end
     end
 

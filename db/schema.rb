@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_171607) do
+ActiveRecord::Schema.define(version: 2021_03_11_183116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_171607) do
     t.integer "client_id"
     t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
+    t.index ["name", "company_id"], name: "index_projects_on_name_and_company_id", unique: true
   end
 
   create_table "punches", id: :serial, force: :cascade do |t|
@@ -227,6 +228,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_171607) do
     t.string "encrypted_otp_secret_salt"
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
+    t.string "otp_backup_codes", array: true
     t.index ["authy_id"], name: "index_users_on_authy_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
