@@ -56,7 +56,7 @@ describe UsersController do
       it 'redirects to root_path' do
         post :confirm_otp, params: { otp_attempt: user.current_otp }
 
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to backup_codes_path
       end
     end
 

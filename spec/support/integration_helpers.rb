@@ -13,4 +13,10 @@ module IntegrationHelpers
 
     click_button 'Login'
   end
+
+  def logout()
+    visit root_path
+
+    find('a', text: 'Sair').click
+  end
 end

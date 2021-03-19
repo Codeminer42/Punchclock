@@ -10,6 +10,7 @@ class User < ApplicationRecord
   devise :recoverable,
          :rememberable, :trackable, :validatable, :confirmable,
          :two_factor_authenticatable,
+         :two_factor_backupable,
          :otp_secret_encryption_key => ENV['OTP_ENCRYPTION_KEY']
 
   enumerize :level, in: {

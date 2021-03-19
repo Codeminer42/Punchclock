@@ -74,5 +74,32 @@ feature 'Login', type: :feature do
         expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
       end
     end
+
+    context 'using backup codes' do
+      let(:backup_codes) { get_backup_codes(normal_user) }
+
+      it 'should login with valid code' do
+        sign_in(normal_user, otp: backup_codes.first)
+
+        expect(current_path).to eq(root_path)
+      end
+
+      it 'should not login with invalid code' do
+        sign_in(normal_user, otp: backup_codes.first)
+        
+        logout()
+
+        sign_in(normal_user, otp: backup_codes.first)
+
+        expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
+      end
+    end
+  end
+
+  def get_backup_codes(user)
+    codes = user.generate_otp_backup_codes!
+    user.save
+
+    codes
   end
 end

@@ -1,0 +1,24 @@
+<div class="container">
+  <div id="backup-codes-container">
+    <h2>Códigos de Recuperação</h2>
+    <p>
+    Salve estes códigos de recuperação para em caso de perda de acesso ao aplicativo com seus códigos OTP.<br><br>
+
+    Estes códigos servem de substitutos para o código OTP de 6 dígitos utilizados no login.<br>
+    Cada código é único e será inutilizado assim que você usá-lo para acesso, então cuidado para não usar todos.<br>
+    É possível gerar novos, inutilizando <strong>todos</strong> os anteriores.<br><br>
+
+    Estes códigos não serão mostrados novamente, guarde-os bem, pois são sua última forma de recuperação.<br><br>
+    <strong>Não guarde os códigos em um local que tenha 2FA ativado!</strong><br>
+    <strong>Em caso de perda dos códigos de recuperação, gere novos imediatamente.</strong>
+    
+    </p>
+    <div class="backup-codes-div">
+      <div id="backup-codes-list">
+        <% @codes.each do |code| %>
+          <p class="backup-code"> <%= code %> </p>
+        <% end %>
+      </div>
+    <div>
+  </div>
+</div>
