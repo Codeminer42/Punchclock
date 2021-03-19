@@ -1,0 +1,20 @@
+#backup-codes-container {
+  display: flex;
+  flex-direction: column;
+  
+  align-items: center;
+
+  .backup-codes-div{
+    flex-direction: row;
+    background-color: lightgray;
+  
+    align-self: center;
+    justify-self: center;
+
+    padding: 10px 35px;
+
+    .backup-code {
+      font-weight: bold;
+    }
+  }
+}

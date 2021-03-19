@@ -30,10 +30,15 @@ class UsersController < ApplicationController
 
     if validate_otp(otp_attempt)
       enable_two_factor
-      redirect_to root_path, notice: t('2fa_enabled')
+      redirect_to backup_codes_path, notice: t('2fa_enabled')
     else
       redirect_to two_factor_path, alert: t('otp_fail')
     end
+  end
+
+  def backup_codes
+    @codes = current_user.generate_otp_backup_codes!
+    current_user.save!
   end
 
   private

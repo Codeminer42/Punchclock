@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     root to: 'punches#index', as: :authenticated_user
     get 'two_factor', to: 'users#two_factor'
     post 'confirm_otp', to: 'users#confirm_otp'
+    get 'backup_codes', to: 'users#backup_codes'
   end
 
   unauthenticated :user do

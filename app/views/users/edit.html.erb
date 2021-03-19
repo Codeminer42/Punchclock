@@ -16,14 +16,30 @@
     <%= render 'form', user: current_user, url_path: user_path %>
   </div>
 </div>
+<br>
+<div id="user-security-section-div">
+  <div class="section-heading-title">
+    <h3>Segurança</h3>
+  </div>
+  
+  <div class="2fa-div">
+    <div>
+      <div class="col-lg-6">
+        <h3>Autenticação em dois Fatores</h3>
 
-<div class="row">
-  <div class="col-lg-6">
-    <% if current_user.otp_required_for_login.blank? %>
-      <%= link_to 'Enable 2FA', '/two_factor', class: 'button' %>
-    <% else %>
-      <%= link_to 'Disable 2FA', '', class: 'button' %>
-    <% end %>
+        <% if current_user.otp_required_for_login.blank? %>
+          <%= link_to 'Ativar', two_factor_path, class: 'button', id: 'activate-2fa-button' %>
+        <% else %>
+          <%= link_to 'Desativar', '', class: 'button' %>
+        <% end %>
+      </div>
+
+      <% if current_user.otp_required_for_login.present? %>
+        <div class="col-lg-6">
+          <h3> Códigos de recuperação </h3>
+          <%= link_to 'Gerar', backup_codes_path, class: 'button', id: 'generate-backup-codes' %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
-

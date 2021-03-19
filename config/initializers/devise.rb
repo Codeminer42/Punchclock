@@ -2,7 +2,7 @@
 
 Devise.setup do |config|
   config.warden do |manager|
-    manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
+    manager.default_strategies(:scope => :user).unshift :two_factor_backupable
   end
 
   config.mailer_sender = 'do-not-reply@cm42.io'
