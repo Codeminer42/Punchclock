@@ -48,18 +48,17 @@ describe UsersController do
 
   describe 'POST confirm otp' do
     before do
-      user.otp_secret = user.class.generate_otp_secret
-      user.save
+      set_2fa
     end
     
     context 'with valid information' do
       it 'redirects to root_path' do
         post :confirm_otp, params: { otp_attempt: user.current_otp }
-
+        
         expect(response).to redirect_to backup_codes_path
       end
     end
-
+    
     context 'with invalid information' do
       it 'renders "two_factor" view' do
         otp = user.current_otp
@@ -68,5 +67,41 @@ describe UsersController do
         expect(response).to redirect_to two_factor_path
       end
     end
+  end
+
+  describe 'GET disable 2FA' do
+    it 'renders the deactivate 2FA view' do
+      get :deactivate_two_factor
+
+      expect(response).to render_template 'deactivate_two_factor'
+    end
+  end
+
+  describe 'POST disable 2FA' do
+    before do
+      set_2fa
+    end
+
+    context 'with valid information' do
+      it 'deactivate 2FA' do
+        post :deactivate_otp, params: { otp_attempt: user.current_otp }
+  
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'with invalid info' do
+      it 'does not deactivate 2FA' do
+        otp = user.current_otp
+        post :deactivate_otp, params: { otp_attempt: otp.chars.shuffle.join }
+
+        expect(response).to redirect_to deactivate_two_factor_path
+      end
+    end
+  end
+
+  def set_2fa
+    user.otp_secret = user.class.generate_otp_secret
+    user.save
   end
 end

@@ -27,12 +27,24 @@ class UsersController < ApplicationController
 
   def confirm_otp
     otp_attempt = params[:otp_attempt]
+    check_otp(otp_attempt, backup_codes_path, two_factor_path, '2fa_enabled')
+  end
 
+  def deactivate_two_factor
+  end
+
+  def deactivate_otp
+    otp_attempt = params[:otp_attempt]
+    check_otp(otp_attempt, root_path, deactivate_two_factor_path, '2fa_disabled')
+  end
+
+  def check_otp(otp_attempt, on_success, on_fail, notice)
     if validate_otp(otp_attempt)
-      enable_two_factor
-      redirect_to backup_codes_path, notice: t('2fa_enabled')
+      toggle_two_factor
+      
+      redirect_to on_success, notice: t(notice)
     else
-      redirect_to two_factor_path, alert: t('otp_fail')
+      redirect_to on_fail, alert: t('otp_fail')
     end
   end
 
@@ -47,11 +59,11 @@ class UsersController < ApplicationController
     otp_attempt == current_user.current_otp
   end
 
-  def enable_two_factor
-    current_user.otp_required_for_login = true
+  def toggle_two_factor
+    current_user.otp_required_for_login = !current_user.otp_required_for_login
     current_user.save!
   end
-  
+
   def user_params
     params.require(:user).permit(:name, :email)
   end
