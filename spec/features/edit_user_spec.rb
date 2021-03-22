@@ -54,9 +54,7 @@ feature 'Edit User' do
   describe 'when having 2FA enabled' do
 
     before do
-      authed_user.otp_secret = authed_user.class.generate_otp_secret
-      authed_user.otp_required_for_login = true
-      authed_user.save
+      enable_2fa_to_user(authed_user)
   
       visit '/user/edit'  
     end
@@ -66,5 +64,37 @@ feature 'Edit User' do
 
       expect(page).to have_css('#backup-codes-list .backup-code', :count => 5)
     end
+
+  end
+  
+  describe 'disabling 2FA' do
+    before do
+      enable_2fa_to_user(authed_user)
+
+      visit '/user/edit'
+    end
+    
+    it 'opens deactivation page' do
+      find('#deactivate-2fa-button').click
+  
+      expect(page).to have_content('Desativando Autenticação em Dois Fatores...')
+      expect(page).to have_content('Não recomendamos seguir em frente com isso. Mas se você deseja, confirme seu código uma última vez.')
+    end
+
+    it 'deactivates 2FA' do
+      find('#deactivate-2fa-button').click
+
+      fill_in 'otp_attempt', with: authed_user.current_otp
+      click_button 'Confirmar'
+
+      expect(page).to have_content('Autenticação de dois fatores desativada')
+    end
+  end
+
+
+  def enable_2fa_to_user(user)
+    user.otp_secret = user.class.generate_otp_secret
+    user.otp_required_for_login = true
+    user.save
   end
 end

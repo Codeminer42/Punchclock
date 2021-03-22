@@ -30,7 +30,7 @@
         <% if current_user.otp_required_for_login.blank? %>
           <%= link_to 'Ativar', two_factor_path, class: 'button', id: 'activate-2fa-button' %>
         <% else %>
-          <%= link_to 'Desativar', '', class: 'button' %>
+          <%= link_to 'Desativar', deactivate_two_factor_path, class: 'button', id: 'deactivate-2fa-button' %>
         <% end %>
       </div>
 

@@ -1,0 +1,20 @@
+#deactivate-two-factor-container {
+  display: flex;
+  flex-direction: column;
+
+  justify-items: center;
+  align-items: center;
+
+  .deactivate-otp-descritpion {
+    p {
+      margin-top: 25px;
+    }
+  }
+
+  .otp-input-div{
+    input {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+}

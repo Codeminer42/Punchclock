@@ -1,0 +1,16 @@
+<div id="deactivate-two-factor-container">
+  <div class="deactivate-otp-descritpion">
+    <h2>Desativando Autenticação em Dois Fatores...</h2>
+    <p>
+      Não recomendamos seguir em frente com isso.<br>
+      Mas se você deseja, confirme seu código uma última vez.
+    </p>
+  </div>
+    
+  <div class="otp-input-div">
+    <%= form_tag deactivate_otp_path do |f| %>
+      <%= text_field_tag 'otp_attempt', nil, placeholder: 'código de 6 dígitos', autocomplete: "off" %>
+      <%= submit_tag 'Confirmar', class: 'button' %>
+    <% end %>
+  </div>
+<div>

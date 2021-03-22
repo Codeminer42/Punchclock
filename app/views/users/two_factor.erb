@@ -10,7 +10,7 @@
   </div>
 
   <%= form_tag confirm_otp_path do |f| %>
-    <%= text_field_tag 'otp_attempt' %>
+    <%= text_field_tag 'otp_attempt', nil, placeholder: 'código de 6 dígitos', autocomplete: "off" %>
     <%= submit_tag 'Confirmar', class: 'button' %>
   <% end %>
 </div>

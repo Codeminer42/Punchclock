@@ -83,4 +83,5 @@ pt-BR:
   contributions_by_office: Contribuições por escritório
   filter_by_month: Filtrar por Mês
   2fa_enabled: Autenticação de dois fatores ativada
+  2fa_disabled: Autenticação de dois fatores desativada
   otp_fail: Código inválido
