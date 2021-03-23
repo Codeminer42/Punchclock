@@ -38,7 +38,7 @@ class User < ApplicationRecord
     },  scope: :shallow,
         predicates: true
 
-  belongs_to :office, optional: true
+  belongs_to :office, optional: false
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
   has_many :punches

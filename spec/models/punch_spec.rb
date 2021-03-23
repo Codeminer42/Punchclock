@@ -187,25 +187,6 @@ describe Punch do
       end
     end
 
-    context "without an office" do
-      let(:user) { FactoryBot.create(:user, :without_office) }
-      let(:office) { FactoryBot.create(:office) }
-      before do
-        RegionalHoliday.create(name: 'City Holiday',
-                             day: 15,
-                             month: 5,
-                             company: office.company,
-                             offices: [ office ] )
-        punch.user = user
-        punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
-        punch.to = Time.new(2001, 5, 15, 13, 0, 0, 0)
-      end
-
-      it "is valid" do
-        expect(punch).to be_valid
-      end
-    end
-
     context "with 'allow_overtime' set to true" do
       before do
         user.allow_overtime = true
