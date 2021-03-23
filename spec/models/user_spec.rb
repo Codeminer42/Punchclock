@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
   let(:inactive_user) { create :user, :inactive_user }
 
   describe 'associations' do
-    it { is_expected.to belong_to(:office).optional }
+    it { is_expected.to belong_to(:office).required }
     it { is_expected.to belong_to(:reviewer).optional }
     it { is_expected.to have_many(:punches) }
     it { is_expected.to have_many(:allocations) }
