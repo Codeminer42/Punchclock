@@ -48,6 +48,7 @@ feature 'Edit User' do
 
       expect(page).to have_content('Escaneie seu QR code com um aplicativo de autenticação antes de sair desta página.')
       expect(page).to have_content('Este codigo é único e só será mostrado esta vez.')
+      expect(page).to have_css('.secret-string', text: authed_user.otp_secret)
     end
   end
 

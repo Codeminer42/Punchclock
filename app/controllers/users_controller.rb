@@ -22,6 +22,7 @@ class UsersController < ApplicationController
       current_user.save!
     end
 
+    @otp_secret = current_user.otp_secret
     @image_data = QrCodeGeneratorService.call(current_user)
   end
 
