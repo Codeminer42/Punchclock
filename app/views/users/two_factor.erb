@@ -9,6 +9,16 @@
     <%= image_tag @image_data, class: 'qr-code-image' %>
   </div>
 
+  <div class="otp-secret-string-div" >
+    <h5>Ou adicione manualmente: </h5>
+    
+    <p class="secret-string">
+      <strong>
+        <h4> <%= @otp_secret %> </h4>
+      </strong>
+    </p>
+  </div>
+
   <%= form_tag confirm_otp_path do |f| %>
     <%= text_field_tag 'otp_attempt', nil, placeholder: 'código de 6 dígitos', autocomplete: "off" %>
     <%= submit_tag 'Confirmar', class: 'button' %>
