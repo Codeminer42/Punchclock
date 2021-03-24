@@ -4,7 +4,7 @@ class QrCodeGeneratorService
   ISSUER_NAME = 'Punchclock'.freeze
   DEFAULT_PNG_SETTINGS = {
     bit_depth: 1,
-    border_modules: 4,
+    border_modules: 1,
     color_mode: ChunkyPNG::COLOR_GRAYSCALE,
     color: 'black',
     file: nil,
