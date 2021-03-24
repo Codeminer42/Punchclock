@@ -12,10 +12,12 @@ describe 'Users', type: :feature do
   end
 
   describe 'Scopes' do
+    let(:allocated_user) { create(:user) }
+
     before do
       create(:user)
       create(:office, head: user)
-      create(:allocation)
+      create(:allocation, user: allocated_user)
     end
 
     it 'have the "all" scope' do
@@ -31,6 +33,13 @@ describe 'Users', type: :feature do
 
       within '#index_table_users' do
         expect(page).to have_css('tbody tr', count: 1)
+        expect(page).to have_css('.col-name', text: user.name)
+        expect(page).to have_css('.col-office', text: user.office.city)
+        expect(page).to have_css('.col-level', text: user.level.humanize)
+        expect(page).to have_css('.col-specialty', text: user.specialty.humanize)
+        expect(page).to have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime))
+        expect(page).to have_css('.col-active', text: I18n.t(user.active))
+        expect(page).to have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
       end
     end
 
@@ -155,8 +164,13 @@ describe 'Users', type: :feature do
 
     describe 'Show' do
       let!(:evaluations) { create_list :evaluation, 2, :performance, evaluated: user }
+      let!(:user_2fa) { create(:user, :active_user) }
 
       before do
+        user_2fa.otp_secret = user_2fa.class.generate_otp_secret
+        user_2fa.otp_required_for_login = true
+        user_2fa.save
+
         visit '/admin/users'
         within 'table' do
           find_link(user.name.to_s, href: "/admin/users/#{user.id}").click
@@ -179,6 +193,8 @@ describe 'Users', type: :feature do
                             have_text(office2.city) &
                             have_css('.row-started_at td', text: I18n.l(user.started_at, format: :long)) &
                             have_css('.row-english_level td', text: evaluation.english_level.humanize) &
+                            have_css('.row-2fa td', text: I18n.t(user.otp_required_for_login)) &
+                            have_css('.row-active td', text: I18n.t(user.active)) &
                             have_css('.row-overall_score td', text: user.overall_score) &
                             have_css('.row-performance_score td', text: user.performance_score) &
                             have_css('.row-occupation td', text: user.occupation) &

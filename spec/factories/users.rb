@@ -12,6 +12,7 @@ FactoryBot.define do
     contract_type         { 'employee' }
     role                  { 'normal' }
     company
+    otp_required_for_login { false }
     office                { create(:office, company: company) }
 
     trait :head_office do

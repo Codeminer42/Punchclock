@@ -59,6 +59,9 @@ ActiveAdmin.register User do
     column :specialty
     column :allow_overtime
     column :active
+    column :"2fa" do | user |
+      user.otp_required_for_login
+    end
     actions
   end
 
@@ -70,6 +73,9 @@ ActiveAdmin.register User do
         attributes_table do
           row :name
           row :email
+          row :"2fa" do 
+            user.otp_required_for_login
+          end
           row :github
           row :token
           row :office
