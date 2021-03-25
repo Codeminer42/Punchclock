@@ -4,9 +4,13 @@ ActiveAdmin.register Office do
   decorate_with OfficeDecorator
   config.sort_order = 'city_asc'
 
-  permit_params :company_id, :city, :head_id
+  permit_params :company_id, :city, :head_id, :active
 
   menu parent: User.model_name.human(count: 2), priority: 3
+
+  scope :all
+  scope :active, default: true
+  scope :inactive
 
   filter :company, if: proc { current_user.super_admin? }
   filter :city, as: :select, collection: proc {
@@ -33,6 +37,7 @@ ActiveAdmin.register Office do
       office.users.active.size
     end
     column :score
+    column :active
   end
 
   show title: proc{ |office| office.city } do
@@ -41,6 +46,7 @@ ActiveAdmin.register Office do
       row :company if current_user.super_admin?
       row :head
       row :score
+      row :active
       row :users_quantity do |office|
         office.users.active.size
       end
@@ -67,6 +73,7 @@ ActiveAdmin.register Office do
         f.input :head, collection: current_user.company.users.active.order(:name)
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
+      f.input :active
     end
     f.actions
   end

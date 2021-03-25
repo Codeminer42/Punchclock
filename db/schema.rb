@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_183116) do
+ActiveRecord::Schema.define(version: 2021_03_24_195122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_183116) do
     t.integer "users_count", default: 0
     t.float "score"
     t.integer "head_id"
+    t.boolean "active", default: true
     t.index ["company_id"], name: "index_offices_on_company_id"
   end
 
