@@ -9,7 +9,9 @@ class Office < ApplicationRecord
 
   validates :city, presence: true, uniqueness: { scope: :company_id }
 
-  scope :by_company, -> (company) { where(company: company) }
+  scope :by_company,  -> (company) { where(company: company) }
+  scope :active,      -> { where(active: true) }
+  scope :inactive,    -> { where(active: false) }
 
   def to_s
     city

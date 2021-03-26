@@ -25,7 +25,7 @@ ActiveAdmin.register User do
 
   filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
   filter :office, collection: proc {
-    current_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_user.company.offices.order(:city)
+    current_user.super_admin? ? Office.active.order(:city).group_by(&:company) : current_user.company.offices.active.order(:city)
   }
   filter :company, if: proc { current_user.super_admin? }
   filter :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty.value] }

@@ -201,6 +201,7 @@ pt-BR:
         users: "Usuários"
         regional_holidays: "Feriados regionais"
         score: "Pontuação"
+        active: "Ativo"
       regional_holiday:
         id: "ID"
         name: "Nome"

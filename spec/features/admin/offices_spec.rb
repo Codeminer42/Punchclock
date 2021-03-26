@@ -17,12 +17,13 @@ describe 'Offices', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "Office", "Users" and "Score" on table' do
+    it 'must find fields "Office", "Users", "Score" and "Active" on table' do
       within 'table' do
         expect(page).to have_text('Cidade') &
                         have_text('Head') &
                         have_text('Quantidade de usuários') &
-                        have_text('Pontuação')
+                        have_text('Pontuação') &
+                        have_text('Ativo')
       end
     end
   end
@@ -83,7 +84,8 @@ describe 'Offices', type: :feature do
           expect(page).to have_text('Cidade') &
                           have_text('Head') &
                           have_text('Quantidade de usuários') &
-                          have_text('Pontuação')
+                          have_text('Pontuação') &
+                          have_text('Ativo')
 
         end
       end
@@ -93,6 +95,15 @@ describe 'Offices', type: :feature do
                           have_text(user.email) &
                           have_text(user.occupation) &
                           have_text(user.overall_score)
+      end
+
+      it 'have the correct office information' do
+        expect(page).to   have_text(office.city) &
+                          have_text(office.company) &
+                          have_text(office.head) &
+                          have_text(office.score) &
+                          have_css('.row-active td', text: office.active ? "Sim" : "Não") &
+                          have_css('.row-users_quantity td', text: office.users.count)
       end
     end
 
@@ -117,6 +128,17 @@ describe 'Offices', type: :feature do
         expect(page).to have_css('.flash_notice', text: 'Escritório foi atualizado com sucesso.') &
                         have_text('Curitiba') &
                         have_text(office.score)
+      end
+
+      it 'deactivates office' do
+        find('#office_active').click
+
+        click_button 'Atualizar Escritório'
+
+        expect(page).to have_css('.flash_notice', text: 'Escritório foi atualizado com sucesso.') &
+                        have_text(office.city) &
+                        have_text(office.score) &
+                        have_css('.row-active td', text: 'Não')
       end
     end
 

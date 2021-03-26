@@ -8,7 +8,7 @@ ActiveAdmin.register RegionalHoliday do
   filter :company, if: proc { current_user.super_admin? }
   filter :name
   filter :offices, multiple: true, collection: proc {
-    current_user.super_admin? ? Office.all.order(:city).group_by(&:company) : current_user.company.offices.order(:city)
+    current_user.super_admin? ? Office.active.order(:city).group_by(&:company) : current_user.company.offices.active.order(:city)
   }
   filter :day
   filter :month
