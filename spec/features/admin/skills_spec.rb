@@ -30,6 +30,20 @@ describe 'Admin Skill', type: :feature do
                       have_css('td', text: 'Ruby')
     end
 
+    it 'do not create the same skill in the same company' do
+      click_link 'Novo(a) Habilidade'
+      fill_in 'Título', with: 'Ruby'
+      click_button 'Criar Habilidade'
+
+      visit '/admin/skills'
+
+      click_link 'Novo(a) Habilidade'
+      fill_in 'Título', with: 'Ruby'
+      click_button 'Criar Habilidade'
+
+      expect(page).to have_text('Habilidade não pôde ser criado.')
+    end
+
     it 'have edit action' do
       visit '/admin/skills'
       find_link("#{skill.title}", href: "/admin/skills/#{skill.id}").click
