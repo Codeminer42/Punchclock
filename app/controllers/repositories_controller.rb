@@ -7,6 +7,7 @@ class RepositoriesController < ApplicationController
   def index
     @repositories = RepositoryQuery.new(current_company, { langs: @languages })
       .fetch
+      .page(@page)
       .decorate
   end
 
@@ -14,5 +15,6 @@ class RepositoriesController < ApplicationController
 
   def query_params
     @languages = params[:languages] ? params[:languages].split(',') : nil
+    @page = params[:page]
   end
 end

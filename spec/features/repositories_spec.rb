@@ -12,8 +12,12 @@ feature 'Repositories list' do
       visit repositories_path
     end
   
-    it 'has the right count of repositories' do
-      expect(page).to have_css('.list-group .list-group-item', :count => 2)
+    it 'has the right count of 25 repositories' do
+      create_list(:repository, 26, company_id: authed_user.company_id)
+  
+      visit repositories_path
+
+      expect(page).to have_css('.list-group .list-group-item', :count => 25)
     end
   
     it 'have all links for repositories' do

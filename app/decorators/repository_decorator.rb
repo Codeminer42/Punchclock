@@ -1,6 +1,10 @@
 class RepositoryDecorator < ApplicationDecorator
   delegate_all
 
+  def self.collection_decorator_class
+    PaginatingDecorator
+  end
+  
   def languages
     return '' unless language
 
