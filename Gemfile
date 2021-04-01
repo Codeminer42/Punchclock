@@ -4,9 +4,9 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
+ruby '2.7.2'
 
-gem 'rails', '~> 6.0', '>= 6.0.3.5'
+gem 'rails', '~> 6.0.3.6'
 
 gem 'bootsnap', require: false
 
@@ -15,7 +15,7 @@ gem 'pg', '~> 1.2'
 gem 'unicorn'
 gem 'sprockets'
 gem 'cancancan', '~> 3.1'
-gem 'carrierwave', '~> 2.1.1'
+gem 'carrierwave', '~> 2.2.1', github: 'carrierwaveuploader/carrierwave'
 gem 'devise', '~> 4.7.3'
 gem 'devise-two-factor'
 gem 'rqrcode'

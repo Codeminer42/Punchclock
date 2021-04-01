@@ -15,8 +15,8 @@ RSpec.describe PunchesPaginationDecorator do
 
     context 'when have punches' do
       let(:punch) do
-        create(:punch, from: DateTime.new(2019, 4, 2, 1, 0, 0),
-                       to: DateTime.new(2019, 4, 2, 2, 0, 0))
+        create(:punch, from: DateTime.new(2021, 3, 3, 1, 0, 0),
+                       to: DateTime.new(2021, 3, 3, 2, 0, 0))
       end
       let(:punches) { Punch.where(id: punch.id) }
 

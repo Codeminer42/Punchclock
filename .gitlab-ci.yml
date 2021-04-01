@@ -8,15 +8,16 @@ stages:
 services:
   - postgres:latest
 cache:
-  key: Punchclock-123uf159
+  key: ${CI_PROJECT_ID}
   paths:
+    - vendor/ruby
+    - node_modules/
     - .gitlab-cache/
     - .gems/
-    - node_modules/
     - bin/cc-test-reporter
 variables:
   RAILS_ENV: test
-  DATABASE_URL: postgresql://postgres:postgres@localhost/punchclock_test
+  DATABASE_URL: postgresql://postgres:postgres@postgres/punchclock_test
   CC_TEST_REPORTER_ID: 60f18b69ac3904ddf5b3875523d020e1ed419e3f3d4a3bfa0e81420e03615137
   POSTGRES_PASSWORD: postgres
   OTP_ENCRYPTION_KEY: 1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1e
@@ -24,8 +25,10 @@ rspec:
   stage: test
   before_script:
     - cp .env.example .env
-    - gem install bundler:1.17.3
-    - bundle install --without development production -j $(nproc) --path .gems
+    - gem install bundler
+    - bundle config set path '.gems'
+    - bundle config set without 'development production'
+    - bundle install -j $(nproc)
     - bundle exec rake db:create db:test:prepare
     - npm install yarn --global
     - yarn install --frozen-lock
@@ -35,6 +38,9 @@ rspec:
     - ./bin/cc-test-reporter before-build
   coverage: '/\((\d+.\d+%)\) covered/'
   script: bundle exec rake spec
+  only:
+    - merge_requests
+    - master
   artifacts:
     paths:
       - coverage/index.html
