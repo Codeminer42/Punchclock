@@ -7,11 +7,3 @@
 //= require jquery.easing
 //= require bootstrap
 //= require_tree .
-
-$(function () {
-  setDatePicker();
-
-  $('#menu-icon').click(function () {
-    $('.topnav').toggleClass('topnav-opened');
-  });
-});
