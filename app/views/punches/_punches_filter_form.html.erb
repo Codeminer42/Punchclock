@@ -1,4 +1,4 @@
-<%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline' } do |f| %>
+<%= simple_form_for @punches_filter_form, url: punches_path, method: :get, html: { class: 'form-inline', autocomplete: "off" } do |f| %>
   <%= f.input :since, label: false, placeholder: true, input_html: {
       class: %i(datepicker),
       data: {

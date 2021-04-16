@@ -1,3 +1,7 @@
+$(window).on('load', function() {
+  setDatePicker();
+});
+
 var extractHolidays = function($el) {
   return $el.data('holidays');
 }
