@@ -95,7 +95,8 @@ RSpec.describe User, type: :model do
                                               evaluator: 1,
                                               admin: 2,
                                               super_admin: 3,
-                                              open_source_manager: 4) }
+                                              open_source_manager: 4,
+                                              hr: 5) }
   end
 
   describe 'scopes' do

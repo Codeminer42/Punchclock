@@ -27,6 +27,7 @@ pt-BR:
           evaluator: Avaliador
           admin:  Admin
           super_admin: Super Admin
+          hr: RH
       question:
         kind:
           multiple_choice: Multipla Escolha
