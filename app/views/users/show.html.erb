@@ -1,14 +1,57 @@
-  <ul class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to t(:back, scope: :helpers), punches_path %></li>
-    <li class="breadcrumb-item"><%= link_to 'Editar Usuário', edit_user_path %></li>
-  </ul>
+<div id="user-container">
+  <div id="user-content">
+    <div id="profile-photo">
+      <%= gravatar_for current_user, size: 100 %>
+    </div>
 
-<h2><%= current_user.name %></h2>
-<div>
-  <%= gravatar_for current_user, size: 100 %>  
-  <div>
-    <p>
-      Email: <%= mail_to current_user.email %>
-    </p>
+    <div id="profile-info">
+      <div class="user-name">
+        <h2><%= current_user.name %></h2>
+      </div>
+
+      <div class="user-github">
+        <p>Github: <%= current_user.github %></p>
+      </div>
+
+      <div>
+        <p>
+          Email: <%= mail_to current_user.email %>
+        </p>
+      </div>
+
+      <%= link_to 'Editar Usuário', edit_user_path, class: 'button' %>
+    </div>
+
+    <div id="user-security-section-div">
+      <div class="section-heading-title">
+        <h3>Segurança</h3>
+      </div>
+    
+      <div class="2fa-div">
+        <div>
+          <div class="col-lg-6">
+            <h5>Autenticação em dois Fatores</h5>
+
+            <% if current_user.otp_required_for_login.blank? %>
+              <%= link_to 'Ativar', two_factor_path, class: 'button', id: 'activate-2fa-button' %>
+            <% else %>
+              <%= link_to 'Desativar', deactivate_two_factor_path, class: 'button', id: 'deactivate-2fa-button' %>
+            <% end %>
+          </div>
+
+          <% if current_user.otp_required_for_login.present? %>
+            <div class="col-lg-6">
+              <h5> Códigos de recuperação </h5>
+              <%= link_to 'Gerar', backup_codes_path, class: 'button', id: 'generate-backup-codes' %>
+            </div>
+          <% end %>
+
+            <div class="col-lg-6">
+              <h5> Atualizar senha </h5>
+              <%= link_to t('Atualizar senha'), users_account_password_edit_path, class: 'button' %>
+            </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

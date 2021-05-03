@@ -1,0 +1,23 @@
+#user-content {
+  display: flex;
+  flex-direction: row;
+
+  #profile-photo {
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+  #profile-info {
+    margin-left: 30px;
+  }
+}
+
+#user-security-section-div {
+  margin-left: 80px;
+  width: 600px;
+}
+
+#user-container {
+  display: flex;
+  justify-content: center;
+}
