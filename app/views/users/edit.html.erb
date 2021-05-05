@@ -1,45 +1,7 @@
 <div class="row">
   <div class="col-lg-6">
-    <ul class="breadcrumb">
-      <li class="breadcrumb-item">
-        <%= link_to 'Back', user_path %>
-      </li>
-      <li class="breadcrumb-item">
-        <%= link_to 'Change Password', users_account_password_edit_path %>
-      </li>
-    <ul>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-6">
     <h2> Edit User </h2>
     <%= render 'form', user: current_user, url_path: user_path %>
   </div>
 </div>
 <br>
-<div id="user-security-section-div">
-  <div class="section-heading-title">
-    <h3>Segurança</h3>
-  </div>
-  
-  <div class="2fa-div">
-    <div>
-      <div class="col-lg-6">
-        <h3>Autenticação em dois Fatores</h3>
-
-        <% if current_user.otp_required_for_login.blank? %>
-          <%= link_to 'Ativar', two_factor_path, class: 'button', id: 'activate-2fa-button' %>
-        <% else %>
-          <%= link_to 'Desativar', deactivate_two_factor_path, class: 'button', id: 'deactivate-2fa-button' %>
-        <% end %>
-      </div>
-
-      <% if current_user.otp_required_for_login.present? %>
-        <div class="col-lg-6">
-          <h3> Códigos de recuperação </h3>
-          <%= link_to 'Gerar', backup_codes_path, class: 'button', id: 'generate-backup-codes' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>

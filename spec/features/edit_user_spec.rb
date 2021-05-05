@@ -43,6 +43,10 @@ feature 'Edit User' do
   end
 
   describe 'Enabling two factor authentication' do
+    before do
+      visit '/user'
+    end
+
     it 'open the QR code page' do
       find('#activate-2fa-button').click
 
@@ -57,7 +61,7 @@ feature 'Edit User' do
     before do
       enable_2fa_to_user(authed_user)
   
-      visit '/user/edit'  
+      visit '/user'  
     end
 
     it 'generates 5 backup codes' do
@@ -72,7 +76,7 @@ feature 'Edit User' do
     before do
       enable_2fa_to_user(authed_user)
 
-      visit '/user/edit'
+      visit '/user'
     end
     
     it 'opens deactivation page' do

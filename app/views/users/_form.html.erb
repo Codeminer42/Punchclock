@@ -3,13 +3,18 @@
   <%= render "shared/errors", messages: user.errors.full_messages %>
 
   <div>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
   </div>
 
   <div>
-  <%= f.label :email %>
-  <%= f.email_field :email %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+  
+  <div>
+    <%= f.label :github %>
+    <%= f.text_field :github %>
   </div>
 
   <div>
