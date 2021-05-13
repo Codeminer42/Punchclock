@@ -2,14 +2,31 @@
 
 include ActiveAdmin::StatsHelper
 
+def contributions_by_offices(month)
+  query = ContributionsByOfficeQuery.new.by_company(current_user.company).approved
+
+  relation = month.empty? ? query.to_relation : query.per_month(month.to_i).to_relation
+  ActiveAdmin::StatsHelper.constributions_offices_data(relation)
+end
+
+def contributions_by_users(month)
+  query = ContributionsByUserQuery.new.by_company(current_user.company).approved
+  limitQuantity = 5
+
+  per_users = month.empty? ? query.to_hash : query.per_month(month.to_i).to_hash
+  ActiveAdmin::StatsHelper.constributions_users_data(
+    contributions: per_users,
+    limit: limitQuantity
+  )
+end
+
 ActiveAdmin.register_page 'Stats' do
-  page_action :show do
-    query = ContributionsByOfficeQuery.new.by_company(current_user.company).approved
+  page_action :show, method: :get do
+    month = params[:month]
 
-    relation = params[:month].empty? ? query.to_relation : query.per_month(params[:month].to_i).to_relation
-    @stats = ActiveAdmin::StatsHelper.stats_data(relation)
+    return render json: contributions_by_users(month) if params[:by_user]
 
-    render json: @stats
+    render json: contributions_by_offices(month)
   end
 
   menu parent: Contribution.model_name.human(count: 2), priority: 3,
@@ -19,8 +36,15 @@ ActiveAdmin.register_page 'Stats' do
     @months = I18n.t('date.month_names').drop(1).map(&:capitalize).zip(1..12).take(Date.today.month)
 
     relation = ContributionsByOfficeQuery.new.by_company(current_user.company).approved.to_relation
-    @stats = ActiveAdmin::StatsHelper.stats_data(relation)
+    @stats = ActiveAdmin::StatsHelper.constributions_offices_data(relation)
     @max = @stats.values.max
+
+    per_users = ContributionsByUserQuery.new.by_company(current_user.company).approved.to_hash
+    @per_user_stats = ActiveAdmin::StatsHelper.constributions_users_data(
+      contributions: per_users,
+      limit: 5
+    )
+    @per_user_max = @per_user_stats.values.max
 
     columns do
       column do
@@ -38,15 +62,40 @@ ActiveAdmin.register_page 'Stats' do
                               prompt: I18n.t('filter_by_month'),
                               wrapper_html: { style: 'display: grid;' },
                               input_html: { style: 'font-size: 15px;
-                                  font-weight: bold;
+                                   font-weight: bold;
                                   margin-bottom: 10px;',
-                                            id: 'month-selector' },
+                                            id: 'by-office-month-selector' },
                               collection: @months
             end
           end
 
-          div id: 'graph-div', style: 'height: 300px;' do
+          div id: 'graph-by-office-div', style: 'height: 300px;' do
             column_chart @stats, max: @max
+          end
+        end
+      end
+
+      column do
+        panel I18n.t('contributions_by_user') do
+          div do
+            hidden_field_tag 'per_user_max', @per_user_max
+          end
+
+          div do
+            semantic_form_for 'per_user_stats', url: '#' do |f|
+              f.input :month_by_user, label: false, required: false, as: :select,
+                              prompt: I18n.t('filter_by_month'),
+                              wrapper_html: { style: 'display: grid;' },
+                              input_html: { style: 'font-size: 15px;
+                                  font-weight: bold;
+                                  margin-bottom: 10px;',
+                                            id: 'by-user-month-selector' },
+                              collection: @months
+            end
+          end
+
+          div id: 'graph-by-user-div', style: 'height: 300px;' do
+            column_chart @per_user_stats, max: @per_user_max
           end
         end
       end
