@@ -3,7 +3,7 @@ def create_punches(company:, project:, user:)
   (6.months.ago.to_date..1.day.ago.to_date).reject{ |d| d.saturday? || d.sunday? }.each do |date|
     date = date.to_time
     [[8, 12], [13, 16]].each do |hours|
-      user.punches.create(
+      user.punches.create!(
         from: date.change(hour: hours.first),
         to: date.change(hour: hours.last),
         company: company,
@@ -23,18 +23,29 @@ def create_holiday(office:)
 end
 
 def create_company(name:, office_cities:, project_names:, clients_name:)
+  puts "Creating company #{name}..."
   ActiveRecord::Base.transaction do
     company = Company.find_or_create_by!(name: name)
+
+    print "..creating company offices..."
     offices = office_cities.map do |city|
       Office.find_or_create_by!(city: city, company: company)
     end
+    puts " done."
+
+    print "..creating company clients..."
     clients = clients_name.map do |client|
       Client.create_with(company: company).find_or_create_by!(name: client)
     end
+    puts " done."
+
+    print "..creating company projects..."
     projects = project_names.map do |project|
       Project.find_or_create_by!(name: project, company: company)
     end
+    puts " done."
 
+    print "..creating Admins..."
     User.find_or_create_by!(email: "super@#{name}.com") do |admin|
       admin.name = 'super'
       admin.occupation = :administrative
@@ -42,6 +53,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       admin.password_confirmation = 'password'
       admin.role = :super_admin
       admin.company = company
+      admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
       admin.skip_confirmation!
     end
@@ -53,37 +65,91 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       admin.password_confirmation = 'password'
       admin.role = :admin
       admin.company = company
+      admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
       admin.token = '9X9ti7nAeN3J2w9hn1om9ztpPMHrT7Mj' if name == 'Codeminer42'
       admin.skip_confirmation!
     end
+    puts " done."
 
+    print "..creating offices holidays..."
     rand(offices.size * 10).times do |i|
       create_holiday(office: offices.sample)
     end
+    puts " done."
 
+    puts "..creating company devs..."
+    print "....creating dev punches..."
     (projects.size * 10).times do |i|
-      user = User.find_or_create_by!(email: "user.teste#{i}@#{name}.com") do |user|
-        user.name = "Usuario_#{name}_#{i}"
-        user.email = "user.teste#{i}@#{name}.com"
-        user.occupation = :engineer
-        user.password = 'password'
-        user.company = company
-        user.office = offices.sample
-        user.level = User.level.values.sample
-        user.specialty = User.specialty.values.sample
-        user.github = "#{name}.user.teste#{i}"
-        user.skip_confirmation!
-      end
+      user = create_user(company: company, number: i)
 
       create_punches(
         company: company,
-        project: projects[i % offices.size],
+        project: projects.sample,
         user: user
       )
     end
+    puts " done."
+    puts "..done."
   end
+  puts "done."
   Company.find_by(name: name)
+end
+
+def create_user(company:, number:)
+  user = User.find_or_create_by!(email: "user.teste#{number}@#{company.name}.com") do |user|
+    user.name = "Usuario_#{company.name}_#{number}"
+    user.email = "user.teste#{number}@#{company.name}.com"
+    user.occupation = :engineer
+    user.password = 'password'
+    user.company = company
+    user.office = company.offices.sample
+    user.level = User.level.values.sample
+    user.specialty = User.specialty.values.sample
+    user.github = "#{company.name}.user.teste#{number}"
+    user.allow_overtime = true
+    user.skip_confirmation!
+  end
+end
+
+def create_user_contribution(user:, repository:, date:)
+  link = "#{repository.link}/pull/#{Faker::Number.digit}"
+
+  ActiveRecord::Base.transaction do
+    Contribution.find_or_create_by!(link: link) do |contrib|
+      contrib.link = link
+      contrib.user_id = user.id
+      contrib.company_id = user.company.id
+      contrib.repository = repository
+      contrib.created_at = date
+      contrib.approve
+      contrib.save!
+    end
+  end
+end
+
+def create_contributions(company:, repositories:, dates:)
+  print "Creating users contributions..."
+
+  8.times do |i|
+    aUser = company.users.sample
+
+    dates.each do |contribution_date|
+      rand(5).times do
+        create_user_contribution(
+          user: aUser,
+          repository: repositories.sample,
+          date: contribution_date
+        )
+      end
+    end
+  end
+
+  puts "Done."
+end
+
+def create_repository(link:, company:)
+  Repository.create! link: link, company: company
 end
 
 codeminer42 = create_company(
@@ -243,7 +309,26 @@ repositories = [
   'https://github.com/ruby-i18n/i18n'
 ]
 
-repositories.each do |repository|
-  Repository.create! link: repository, company: codeminer42
-  Repository.create! link: repository, company: waters_co
+print "Creating codeminer42 open source repositories..."
+repos = repositories.collect do |repository|
+  create_repository(link: repository, company: codeminer42)
 end
+puts " done."
+
+print "Creating waters co open source repositories..."
+repos = repositories.collect do |repository|
+  create_repository(link: repository, company: waters_co)
+end
+puts " done."
+
+contributions_dates = []
+
+12.times do |i|
+  contributions_dates.push(i.months.ago.to_date)
+end
+
+contributions = create_contributions(
+  company: codeminer42,
+  repositories: repos,
+  dates: contributions_dates
+)
