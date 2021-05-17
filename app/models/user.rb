@@ -34,7 +34,7 @@ class User < ApplicationRecord
         predicates: true
 
   enumerize :role, in: {
-    normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4
+    normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4, hr: 5
     },  scope: :shallow,
         predicates: true
 
@@ -133,11 +133,11 @@ class User < ApplicationRecord
   end
 
   def has_admin_access?
-    admin? || super_admin? || open_source_manager?
+    admin? || super_admin? || open_source_manager? || hr?
   end
 
   def is_admin?
-    admin? || super_admin?
+    admin? || super_admin? || hr?
   end
 
   def update_with_password(params, *options)
