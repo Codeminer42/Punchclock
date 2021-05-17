@@ -3,6 +3,8 @@
 module Github
   module Repositories
     class Sync
+      MAX_LANGUAGES_NUMBER = 6
+
       def initialize(company:, client:)
         @company = company
         @client = client
@@ -19,7 +21,7 @@ module Github
           request = client.repos.languages(repository_owner, repository_name)
 
           if request.success?
-            languages = request.body.keys.join(', ')
+            languages = request.body.keys[0..MAX_LANGUAGES_NUMBER-1].join(', ')
 
             repository.update(language: languages)
           end
