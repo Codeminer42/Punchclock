@@ -26,7 +26,7 @@
                   <td><%= user.office_city%></td>
                   <td>
                     <% unless user.evaluations.last.nil? %>
-                      <%= user.last_evaluation.evaluation_date %> -
+                      <%= user.last_evaluation.evaluation_date || user.last_evaluation.created_at.strftime('%e/%m/%Y') %> -
                       <%= link_to "View", evaluation_path(user.last_evaluation.id)%>
                     <% end%>
                   </td>
