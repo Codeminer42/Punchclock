@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :punches
   resource :user, only: %i[show edit update]
+
   resources :dashboard, only: :index do
     collection do
       get :sheets
@@ -14,13 +15,13 @@ Rails.application.routes.draw do
       get '(/:year)(/:month)', action: :index
     end
   end
-  
-  resources :repositories, only: :index do 
+
+  resources :repositories, only: :index do
     collection do
       get "(/:languages)", action: :index
     end
   end
-  
+
   authenticated :user do
     root to: 'punches#index', as: :authenticated_user
     get 'two_factor', to: 'users#two_factor'
@@ -57,6 +58,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds
     resources :evaluations, only: %i[show index]
+    get "users/:user_id/notes/new" => "notes#new", as: :new_users_note
+    post "users/:user_id/notes" => "notes#create", as: :user_notes
   end
 
   resources :questionnaires do

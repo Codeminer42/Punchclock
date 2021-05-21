@@ -17,7 +17,8 @@ class AbilityAdmin
       Questionnaire,
       Skill,
       Repository,
-      Contribution
+      Contribution,
+      Note
     ]
     if user.is_admin?
       admin_permitions(user)
