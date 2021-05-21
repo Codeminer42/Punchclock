@@ -1,0 +1,10 @@
+<%= simple_form_for [note.user,  note] do |f| %>
+  <div class="row">
+    <div class="col-lg-8">
+
+      <%= f.input :comment %>
+      <%= f.input :rate %>
+    </div>
+  </div>
+  <%= f.submit %>
+<% end %>

@@ -6,7 +6,7 @@ ActiveAdmin.register Questionnaire do
                   id title kind raw_answer_options _destroy updated_at
                 ]
 
-  menu parent: Evaluation.model_name.human(count: 2)
+  menu parent: Evaluation.model_name.human(count: 2), priority: 2
 
   config.clear_action_items!
 

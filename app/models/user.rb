@@ -47,6 +47,8 @@ class User < ApplicationRecord
   has_many :projects, through: :allocations
   has_many :evaluations, foreign_key: :evaluated_id, dependent: :restrict_with_error
   has_many :managed_offices, class_name: 'Office', foreign_key: :head_id
+  has_many :notes
+  has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_and_belongs_to_many :skills
 
   validates :name, :occupation, presence: true

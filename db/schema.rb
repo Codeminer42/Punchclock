@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_173624) do
+ActiveRecord::Schema.define(version: 2021_05_21_111224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,19 @@ ActiveRecord::Schema.define(version: 2021_03_26_173624) do
     t.date "evaluation_date"
     t.index ["company_id"], name: "index_evaluations_on_company_id"
     t.index ["questionnaire_id"], name: "index_evaluations_on_questionnaire_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text "comment"
+    t.string "rate"
+    t.bigint "user_id"
+    t.bigint "author_id"
+    t.bigint "company_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_notes_on_author_id"
+    t.index ["company_id"], name: "index_notes_on_company_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "offices", id: :serial, force: :cascade do |t|
@@ -222,16 +235,12 @@ ActiveRecord::Schema.define(version: 2021_03_26_173624) do
     t.integer "role", default: 0
     t.date "started_at"
     t.string "token"
-    t.string "authy_id"
-    t.datetime "last_sign_in_with_authy"
-    t.boolean "authy_enabled", default: false
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
-    t.index ["authy_id"], name: "index_users_on_authy_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -252,6 +261,9 @@ ActiveRecord::Schema.define(version: 2021_03_26_173624) do
   add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "companies"
   add_foreign_key "evaluations", "questionnaires"
+  add_foreign_key "notes", "companies"
+  add_foreign_key "notes", "users"
+  add_foreign_key "notes", "users", column: "author_id"
   add_foreign_key "questionnaires", "companies"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "regional_holidays", "companies"
