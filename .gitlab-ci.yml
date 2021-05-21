@@ -40,7 +40,6 @@ rspec:
   script: bundle exec rake spec
   only:
     - merge_requests
-    - master
   artifacts:
     paths:
       - coverage/index.html
@@ -55,6 +54,8 @@ brakeman:
     - gem install brakeman
   script:
     - brakeman -z -q
+  only:
+    - merge_requests
 
 bundler_audit:
   stage: security
@@ -62,6 +63,8 @@ bundler_audit:
     - gem install bundler-audit
     - bundle audit --update
   script: bundle audit
+  only:
+    - merge_requests
 
 production:
   stage: deploy
