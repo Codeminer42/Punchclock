@@ -1,8 +1,8 @@
 <%= simple_form_for [note.user,  note] do |f| %>
   <div class="row">
     <div class="col-lg-8">
-
-      <%= f.input :comment %>
+      <%= f.input :title %>
+      <%= f.input :comment, input_html: { maxlength: 500 } %>
       <%= f.input :rate %>
     </div>
   </div>

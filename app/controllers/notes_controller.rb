@@ -23,6 +23,22 @@ class NotesController < ApplicationController
 
   private
   def note_params
-    params.require(:note).permit(:comment, :rate)
+    params.require(:note).permit(:title, :comment, :rate)
+  end
+
+  def flash_errors(scope)
+    flash.now[:alert] = "#{alert_message(scope)} #{error_message}"
+  end
+
+  def alert_message(scope)
+    I18n.t(:alert, scope: "flash.actions.#{scope}", resource_name: "Note")
+  end
+
+  def errors
+    @note.errors.full_messages.join('. ')
+  end
+
+  def error_message
+    I18n.t(:errors, scope: "flash", errors: errors)
   end
 end

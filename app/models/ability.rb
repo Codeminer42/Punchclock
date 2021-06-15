@@ -14,5 +14,9 @@ class Ability
       can :manage, Note, company_id: user.company_id
       cannot %i[destroy edit update], Evaluation
     end
+
+    if user.is_admin? || user.office_head?
+      can :manage, Note, company_id: user.company_id
+    end
   end
 end

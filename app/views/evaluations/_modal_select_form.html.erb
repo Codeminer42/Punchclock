@@ -16,10 +16,13 @@
                 <%= questionnaire.title %>
               <% end %>
             <% end %>
-            <%= link_to new_users_note_path(user_id: evaluated_user_id), class: 'list-group-item list-group-item-action' do %>
-                <i class="fas fa-globe-americas "></i>
-                Add Note
+
+            <% if can?(:create, Note) %>
+              <%= link_to new_users_note_path(user_id: evaluated_user_id), class: 'list-group-item list-group-item-action' do %>
+                  <i class="fas fa-globe-americas "></i>
+                  Add Note
               <% end %>
+            <% end %>
           </ul>
         </div>
       </div>
