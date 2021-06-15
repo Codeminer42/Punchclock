@@ -81,8 +81,8 @@ RSpec.describe ContributionsByOfficeQuery do
     before do
       user = create(:user, company: company, office: offices.first)
 
-      create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 3, { user: user, company: company, created_at: Date.new(Date.today.year, 0o6) })
+      create_list(:contribution, 3, user: user, company: company)
+      create_list(:contribution, 3, user: user, company: company, created_at: 1.month.ago)
     end
 
     it 'return the right number of contributions' do
