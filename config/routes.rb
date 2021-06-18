@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   ActiveAdmin.routes(self)
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'user/sessions' }
 
   resources :punches
   resource :user, only: %i[show edit update]
