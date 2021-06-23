@@ -1,7 +1,10 @@
   <div class="access-form-container mt-2">
     <h2 class="text-center mb-3">Sign In</h2>
 
-    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= simple_form_for(resource,
+                        as: resource_name,
+                        url: session_path(resource_name),
+                        html: { novalidate: false }) do |f| %>
       <div class="form-inputs">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -34,7 +37,6 @@
           </div>
           <%= f.input_field :otp_attempt,
                     label: false,
-                    required: true,
                     placeholder: "6 digit code",
                     class: "form-control" %>
         </div>
