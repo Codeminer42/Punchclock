@@ -45,6 +45,10 @@ ActiveAdmin.register_page 'Stats' do
       limit: 5
     )
     @per_user_max = @per_user_stats.values.max
+    
+    panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
+      render "search_field", collection: @months
+    end
 
     columns do
       column do
@@ -54,19 +58,6 @@ ActiveAdmin.register_page 'Stats' do
         panel I18n.t('contributions_by_office') do
           div do
             hidden_field_tag 'max', @max
-          end
-
-          div do
-            semantic_form_for 'stats', url: '#' do |f|
-              f.input :month, label: false, required: false, as: :select,
-                              prompt: I18n.t('filter_by_month'),
-                              wrapper_html: { style: 'display: grid;' },
-                              input_html: { style: 'font-size: 15px;
-                                   font-weight: bold;
-                                  margin-bottom: 10px;',
-                                            id: 'by-office-month-selector' },
-                              collection: @months
-            end
           end
 
           div id: 'graph-by-office-div', style: 'height: 300px;' do
@@ -79,19 +70,6 @@ ActiveAdmin.register_page 'Stats' do
         panel I18n.t('contributions_by_user') do
           div do
             hidden_field_tag 'per_user_max', @per_user_max
-          end
-
-          div do
-            semantic_form_for 'per_user_stats', url: '#' do |f|
-              f.input :month_by_user, label: false, required: false, as: :select,
-                              prompt: I18n.t('filter_by_month'),
-                              wrapper_html: { style: 'display: grid;' },
-                              input_html: { style: 'font-size: 15px;
-                                  font-weight: bold;
-                                  margin-bottom: 10px;',
-                                            id: 'by-user-month-selector' },
-                              collection: @months
-            end
           end
 
           div id: 'graph-by-user-div', style: 'height: 300px;' do

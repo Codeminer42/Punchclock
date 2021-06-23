@@ -1,0 +1,9 @@
+<%= semantic_form_for 'stats' do |f| %>
+  <%= f.inputs do %>
+    <% f.input :id,
+      collection: collection,
+      label: I18n.t('filter_by_month'),
+      input_html: {data: {select: 'Mês'}, id: 'by-month-selector'}
+    %>
+  <% end %>
+<% end %>

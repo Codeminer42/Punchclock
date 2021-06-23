@@ -14,7 +14,7 @@ $(document).ready(function() {
   // when onChange in dropdown of months
   // by ajax
 
-  $('#by-office-month-selector').on('change', async function(){
+  $('#by-month-selector').on('change', async function(){
     data = await getContributionsAjax(
       payload_data = {
         'month': this.value,
@@ -26,7 +26,7 @@ $(document).ready(function() {
     new Chartkick['ColumnChart']('graph-by-office-div', data, {max:max});
   });
 
-  $('#by-user-month-selector').on('change', async function(){
+  $('#by-month-selector').on('change', async function(){
     data = await getContributionsAjax(
       payload_data = {
         'month': this.value,
