@@ -64,7 +64,7 @@ services:
       - 5432:5432
 
   redis:
-    image: redis:3.2-alpine
+    image: redis:6.2.4-buster
     volumes:
       - redis:/data
     ports:
