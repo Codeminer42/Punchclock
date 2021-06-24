@@ -2,10 +2,10 @@
 
 class User::SessionsController < Devise::SessionsController
   def new
-    super do |user|
-      if user.valid_password?(user.password)
-        user.errors.add(:email, :invalid_authentication)
-        user.errors.add(:password, :invalid_authentication)
+    super do |resource|
+      if params[:commit].present?
+        resource.errors.add(:email, :invalid_authentication)
+        resource.errors.add(:password, :invalid_authentication)
       end
     end
   end
