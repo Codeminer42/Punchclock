@@ -14,27 +14,23 @@ $(document).ready(function() {
   // when onChange in dropdown of months
   // by ajax
 
-  $('#by-office-month-selector').on('change', async function(){
-    data = await getContributionsAjax(
+  $('#by-month-selector').on('change', async function(){
+    byOfficeData = await getContributionsAjax(
       payload_data = {
         'month': this.value,
         'by_office': true
     });
 
-    max = Object.values(data)[0]
-
-    new Chartkick['ColumnChart']('graph-by-office-div', data, {max:max});
-  });
-
-  $('#by-user-month-selector').on('change', async function(){
-    data = await getContributionsAjax(
+    byUserData = await getContributionsAjax(
       payload_data = {
         'month': this.value,
         'by_user': true
     });
 
-    max = Object.values(data)[0]
+    byOfficeMax = Object.values(byOfficeData)[0]
+    byUserMax = Object.values(byUserData)[0]
 
-    new Chartkick['ColumnChart']('graph-by-user-div', data, { max: max });
-  })
+    new Chartkick['ColumnChart']('graph-by-office-div', byOfficeData, {max:byOfficeMax});
+    new Chartkick['ColumnChart']('graph-by-user-div', byUserData, { max: byUserMax });
+  });
 });
