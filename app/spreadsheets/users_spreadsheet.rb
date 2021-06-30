@@ -11,7 +11,8 @@ class UsersSpreadsheet < BaseSpreadsheet
       user.specialty,
       translate_enumerize(user.occupation),
       user.contract_type,
-      user.github
+      user.github,
+      user.skills.pluck(:title).join(', ')
     ]
   end
 
@@ -26,6 +27,7 @@ class UsersSpreadsheet < BaseSpreadsheet
       occupation
       contract_type
       github
+      skills
     ].map { |attribute| User.human_attribute_name(attribute) }
   end
 end
