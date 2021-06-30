@@ -96,6 +96,33 @@ feature 'Login', type: :feature do
     end
   end
 
+  describe 'when user credentials are invalid' do
+    context 'when user is not registered' do
+      let(:invalid_user) { build(:user) }
+
+      it 'does not login to Punchclock root ' do
+        sign_in(invalid_user)
+
+        expect(page).to have_content 'E-mail ou senha inválidos.'
+        expect(page).to have_selector '#user_email.is-invalid'
+        expect(page).to have_selector '#user_password.is-invalid'
+      end
+    end
+
+    context 'when wrong password is given' do
+      let(:normal_user) { create(:user) }
+
+      it 'does not login to Punchclock root ' do
+        normal_user.password = "Bad_Pass"
+        sign_in(normal_user)
+
+        expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
+        expect(page).to have_selector '#user_email.is-invalid'
+        expect(page).to have_selector '#user_password.is-invalid'
+      end
+    end
+  end
+
   def get_backup_codes(user)
     codes = user.generate_otp_backup_codes!
     user.save
