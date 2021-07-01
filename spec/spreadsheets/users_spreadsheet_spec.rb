@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersSpreadsheet do
-  let(:user) { create(:user).decorate }
+  let(:user) { create(:user, :with_skills).decorate }
   let(:users_spreadsheet) { UsersSpreadsheet.new([user]) }
   let(:header_attributes) do
     %w[
@@ -16,6 +16,7 @@ RSpec.describe UsersSpreadsheet do
       occupation
       contract_type
       github
+      skills
     ].map { |attribute| User.human_attribute_name(attribute) }
   end
   let (:enumerize_attributes) do
@@ -32,7 +33,8 @@ RSpec.describe UsersSpreadsheet do
       user.role,
       user.specialty,
       user.contract_type,
-      user.github
+      user.github,
+      user.skills.pluck(:title).join(', ')
     ].concat(enumerize_attributes)
   end
 

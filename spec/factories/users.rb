@@ -99,6 +99,12 @@ FactoryBot.define do
     trait :with_token do
       token { 'test_token' }
     end
+
+    trait :with_skills do
+      after(:create) do |user|
+        user.skills = create_list(:skill, 2)
+      end
+    end
   end
 
   factory :invalid_user, parent: :user do
