@@ -23,12 +23,12 @@ ActiveAdmin.register Contribution do
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
 
-    redirect_to collection_path, notice: "The contributions have been refused."
+    redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.approve! if contribution.state == "received"}
 
-    redirect_to collection_path, notice: "The contributions have been approved."
+    redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
   end
   scope :all, default: true
 
@@ -76,12 +76,12 @@ ActiveAdmin.register Contribution do
   controller do
     def approve
       resource.approve!
-      redirect_to resource_path, notice: I18n.t('contribution_approved')
+      redirect_back fallback_location: resource_path, notice: I18n.t('contribution_approved')
     end
 
     def refuse
       resource.refuse!
-      redirect_to resource_path, notice: I18n.t('contribution_refused')
+      redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
     end
 
     def reload
