@@ -3,7 +3,8 @@
 module ActiveAdmin
   module StatsHelper
     def constributions_offices_data(relation)
-      Office.all.inject({}) do |result, office|
+      relation = relation.distinct('offices.city')
+      Office.all().inject({}) do |result, office|
         contribution = relation.select { |r| r.city == office.city }.first
         amount = contribution.nil? ? 0 : contribution.number_of_contributions
         result[office.city] = amount
