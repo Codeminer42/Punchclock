@@ -22,14 +22,16 @@ ActiveAdmin.register Note do
   form do |f|
     f.inputs Questionnaire.model_name.human do
       f.input :title
-      f.input :author
-      f.input :user
       if current_user.super_admin?
+        f.input :author, collection: User.active.order(:name)
+        f.input :user, collection: User.active.order(:name)
         f.input :company
       else
+        f.input :author, collection: current_user.company.users.active.order(:name)
+        f.input :user, collection: current_user.company.users.active.order(:name)
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
-      f.input :comment, input_html: {maxlength: 500}
+      f.input :comment
       f.input :rate
     end
     f.actions
