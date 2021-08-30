@@ -44,7 +44,6 @@ gem 'rollbar'
 
 gem 'chartkick'
 
-# MinerCamp
 gem 'normalize-rails', '~> 4.1.1'
 gem 'validates_timeliness', '~> 5.0.0.beta1'
 gem 'enumerize', '~> 2.3.1'

@@ -30,6 +30,7 @@ Rails.application.configure do
     password: ENV['SENDGRID_TOKEN'],
     domain: 'heroku.com'
   }
+
   # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
   config.middleware.insert_before ActionDispatch::SSL, Letsencrypt::Middleware
   config.force_ssl = true

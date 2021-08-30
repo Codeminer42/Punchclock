@@ -2,11 +2,6 @@ Punchclock
 
 A simple electronic punch clock to track hours spent on projects.
 
-[![Build Status](http://gitlab42.com/Codeminer42/Punchclock/badges/master/build.svg)](http://gitlab42.com/Codeminer42/Punchclock/pipelines)
-
-| [staging][1] | [production][2] |
-|--------------|-----------------|
-
 ## Dependencies
 
 ```
@@ -18,7 +13,7 @@ Postgres >= 9.1
 ## Installing
 
 ```console
-$ git clone git@gitlab42.com:Codeminer42/Punchclock.git
+$ git clone git@github.com:Codeminer42/Punchclock.git
 $ cd Punchclock
 $ cp .env.example .env
 $ Install Postgres
@@ -100,7 +95,9 @@ Running with [Guard](https://github.com/guard/guard-rspec):
 $ bundle exec guard
 ```
 
-## Deploy
+License
+-------
+Copyright 2013-2021, Codeminer 42.
 
-[1]: http://punchclock-staging.herokuapp.com
-[2]: http://punchclock.cm42.io/
+Punchclock is made available under the Affero GPL license version 3, see
+[LICENSE.txt](https://github.com/Codeminer42/cm42-central/blob/master/LICENCE.txt).
