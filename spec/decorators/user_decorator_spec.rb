@@ -3,21 +3,37 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
+  let(:admin) { build_stubbed(:user, :admin) }
+
   describe '#current_allocation' do
-    let(:user) { create(:user).decorate }
+    subject(:user) { build_stubbed(:user).decorate }
 
-    context 'when user is allocated' do
-      let!(:allocation) { create(:allocation, user: user) }
+    let(:allocation) { build_stubbed(:allocation, user: user) }
 
+    before do
+      allow(user.model).to receive(:current_allocation).and_return(allocation.project)
+      allow(user.h).to receive(:current_user).and_return(admin)
+    end
+    
+    context 'when the current user is an admin and user is allocated' do
       it 'returns project link' do
-        link = "<a href=\"http://localhost:3000/admin/projects/#{allocation.project_id}\">#{CGI.escape_html(allocation.project.name)}</a>"
-
+        link = "<a href=\"/admin/projects/#{allocation.project_id}\">#{CGI.escape_html(allocation.project.name)}</a>"
         expect(user.current_allocation).to eq(link)
+      end
+    end
+
+    context 'when the current user is not an admin and user is allocated' do
+      it 'returns project name' do
+        allow(user.h).to receive(:current_user).and_return(user)
+
+        expect(user.current_allocation).to eq(allocation.project.name)
       end
     end
 
     context 'when no allocation is set' do
       it 'returns not allocated' do
+        allow(user.model).to receive(:current_allocation).and_return(nil)
+
         expect(user.current_allocation).to eq('Não alocado')
       end
     end

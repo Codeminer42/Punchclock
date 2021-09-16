@@ -43,8 +43,13 @@ class ApplicationController < ActionController::Base
     @current_company ||= current_user.company
   end
 
+  def current_user
+    UserDecorator.decorate(super) unless super.nil?
+  end
+
   protected
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
-    end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
+  end
 end
