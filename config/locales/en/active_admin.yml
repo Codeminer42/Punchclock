@@ -2,3 +2,7 @@ en:
   active_admin:
     admin_reset_password: 'An email with password reset instructions was sent'
     admin_reset_password_button: 'Send password reset email'
+    resources:
+      user:
+        scopes:
+          not_allocated: 'Not allocated'

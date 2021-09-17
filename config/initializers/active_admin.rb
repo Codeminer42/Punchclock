@@ -22,7 +22,7 @@ ActiveAdmin.setup do |config|
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
       menu.add label: User.model_name.human(count: 2) do |submenu|
-        submenu.add label: 'Não alocados', 
+        submenu.add label: I18n.t('active_admin.resources.user.scopes.not_allocated'), 
                     url: '/admin/users?scope=not_allocated', 
                     priority: 2, 
                     if: proc { current_user.is_admin? }
