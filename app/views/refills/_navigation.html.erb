@@ -25,9 +25,15 @@
 
         <div class="navbar-nav ml-auto nav-link">
           <%= link_to user_path do %>
-            <span>
-              <%= current_user.name %>
-            </span>
+            <div class="text-center">
+              <span>
+                <%= current_user.name %>
+              </span>
+              <br/>
+              <span>
+                <%= current_user.current_allocation %>
+              </span>
+            </div>
             <%= gravatar_for current_user, size: 40 %>
           <% end %>
           <%= link_to t('.logout'), destroy_user_session_path %>
