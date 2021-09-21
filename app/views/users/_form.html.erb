@@ -2,23 +2,23 @@
 
   <%= render "shared/errors", messages: user.errors.full_messages %>
 
-  <div>
+  <fieldset>
     <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+    <%= f.text_field :name, class: 'form-control' %>
+  </fieldset>
 
-  <div>
+  <fieldset>
     <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
-  
-  <div>
+    <%= f.email_field :email, class: 'form-control' %>
+  </fieldset>
+
+  <fieldset>
     <%= f.label :github %>
-    <%= f.text_field :github %>
-  </div>
+    <%= f.text_field :github, class: 'form-control' %>
+  </fieldset>
 
   <div>
-  <%= f.submit %>
+    <%= f.submit %>
   </div>
 
 <% end %>
