@@ -1,0 +1,16 @@
+#form-container {
+  display: flex;
+  justify-content: center;
+
+  .content {
+    width: calc(max(25%, 400px));
+  }
+
+  fieldset + fieldset {
+    margin-top: 10px;
+  }
+
+  fieldset:last-of-type {
+    margin-bottom: 20px;
+  }
+}
