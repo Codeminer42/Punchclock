@@ -100,6 +100,5 @@ group :development, :test do
 end
 
 group :production, :staging do
-  gem 'rails_12factor'
   gem 'passenger', '~> 6.0'
 end
