@@ -1,0 +1,23 @@
+<%= form_for(user, url: url_path) do |f| %>
+
+  <fieldset>
+    <%= f.label 'Current Password' %>
+    <%= f.password_field :current_password, class: 'form-control'%>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label 'Password' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label 'Password Confirmation' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </fieldset>
+
+  <div>
+    <%= link_to 'Cancel', edit_user_path, class: 'btn btn-secondary' %>
+    <%= f.submit('Update', { class: 'btn btn-primary' }) %>
+  </div>
+
+<% end %>
