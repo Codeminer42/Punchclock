@@ -65,6 +65,12 @@ feature 'Punches Dashboard', js: true do
       click_on 'Salvar'
       expect(page).to have_content('Horas: 24')
     end
+
+    scenario 'When no project has been selected' do
+      visit '/dashboard/2018/02'
+      find('td.inner', text: '21').click
+      expect(page).to have_button('Salvar', disabled: true)
+    end
   end
 
   context 'When user do not have overtime allowed' do
