@@ -21,6 +21,12 @@
           <%= link_to repositories_path do %>
             <%= t('.open_source') %>
           <%- end %>
+
+          <% if current_user.is_admin? %>
+            <%= link_to "/admin" do %>
+              <%= t('.administrative') %>
+            <%- end %>
+          <%- end %>
         </div>
 
         <div class="navbar-nav ml-auto nav-link">
