@@ -81,7 +81,7 @@ ActiveAdmin.register Project do
   end
 
   form do |f|
-    f.inputs 'Project Details' do
+    f.inputs I18n.t('project_details') do
       f.input :name
       if current_user.super_admin?
         f.input :client
