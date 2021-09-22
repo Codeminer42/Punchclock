@@ -12,6 +12,7 @@ pt-BR:
       account: 'Conta'
       logout: 'Sair'
       dashboard: 'Dashboard'
+      administrative: 'Administrativo'
   punches:
     index:
       total: 'TOTAL'
