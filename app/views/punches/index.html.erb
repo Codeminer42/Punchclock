@@ -31,7 +31,10 @@
           <td><%= secs_to_formated_hour (splitted_punch[0].delta_in_hours + ( splitted_punch[1] ? splitted_punch[1].delta_in_hours : 0 ))*60*60  %> </td>
           <td><%= t splitted_punch[0].extra_hour || (splitted_punch[1] || splitted_punch[0]).extra_hour %></td>
           <td><%= splitted_punch[0].project.name %> </td>
-          <td><%= link_to image_tag('attachment.gif'), splitted_punch[0].attachment_url if splitted_punch[0].attachment? %> </td>
+          <td>
+            <div><%= link_to image_tag('attachment.gif'), splitted_punch[0].attachment_url if splitted_punch[0].attachment? %> </div>
+            <div><%= link_to image_tag('attachment.gif'), splitted_punch[1].attachment_url if splitted_punch[1] && splitted_punch[1].attachment? %> </div>
+          </td>
           <td><%= link_to image_tag('edit.png'), edit_punch_path(splitted_punch[0]), id: "edt-#{splitted_punch[0].id}" %> </td>
           <td><%= link_to image_tag('destroy.png'), splitted_punch[0], method: :delete, data: { confirm: t('.are_you_sure_remove_register') }, id: "dlt-#{splitted_punch[0].id}" %> </td>
         </tr>
