@@ -11,6 +11,7 @@ class PunchesController < ApplicationController
 
     @search.sorts = 'from desc' if @search.sorts.empty?
     @punches = PunchesPaginationDecorator.new(params, @search.result)
+    @grouped_punches = @punches.group_by { |punch| punch.when }.values
   end
 
   def new
