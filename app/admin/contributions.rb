@@ -16,10 +16,6 @@ ActiveAdmin.register Contribution do
 
   collection_action :reload, method: :post, only: :index
 
-  action_item :reload, only: :index do
-    link_to I18n.t('reload_contributions'), reload_admin_contributions_path(), method: :post
-  end
-
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
 
