@@ -1,6 +1,6 @@
 ActiveAdmin.register Contribution do
-  permit_params :state
-  actions :index, :show
+  permit_params :state, :link, :user_id, :company_id, :repository_id
+  actions :index, :show, :new, :create
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
