@@ -3,12 +3,14 @@ import Select from 'react-select2-wrapper';
 
 class Form extends React.Component{
   state = {
+    selectedProject: "",
     hasConfirmedOperation: false
   }
 
   render() {
     const { calendar: { selecteds } } = this.props;
     const isSelectedsEmpty = selecteds.isEmpty();
+    const isSaveButtonDisabled = isSelectedsEmpty || !!!this.state.selectedProject
 
     const projectsList = Projects.map((p) =>  {
       return {text: p[1], id: p[0]}
@@ -44,9 +46,11 @@ class Form extends React.Component{
             <div className="col select-container">
               <Select
                 ref="project"
+                value={this.state.selectedProject}
                 data={projectsList}
                 disabled={isSelectedsEmpty}
                 options={{ placeholder: 'Projeto' }}
+                onChange={(e) => this.handleProjectChange(e)}
               />
             </div>
             <div className="col">
@@ -90,7 +94,7 @@ class Form extends React.Component{
               </div>
             </div>
             <div className="col">
-              <input className="w-100" disabled={isSelectedsEmpty} type="submit" value="Salvar" />
+              <input className="w-100" disabled={isSaveButtonDisabled} type="submit" value="Salvar" />
             </div>
           </div>
         </div>
@@ -100,6 +104,12 @@ class Form extends React.Component{
 
   /* Removes the double confirmation prompt */
   componentDidUpdate() {
+    if (this.props.calendar.selecteds.size == 0) {
+      if (this.state.selectedProject) {
+        this.setState({ selectedProject: "" })
+      }
+    }
+
     if (this.state.hasConfirmedOperation) {
       this.handleSave();
       this.setState({ hasConfirmedOperation: false })
@@ -128,7 +138,7 @@ class Form extends React.Component{
       this.props.calendar.sheets,
       this.props.calendar.deleteds
     );
-    this.setState({ hasConfirmedOperation: true })
+    this.setState({ hasConfirmedOperation: true, selectedProject: "" })
   }
 
   handleErase() {
@@ -143,6 +153,10 @@ class Form extends React.Component{
 
   handleDeselect() {
     this.props.onDeselect();
+  }
+
+  handleProjectChange(e) {
+    this.setState({ selectedProject: e.currentTarget.value })
   }
 }
 
