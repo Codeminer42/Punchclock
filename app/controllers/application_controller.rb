@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   # https://github.com/plataformatec/devise/issues/3461
   rescue_from ActionController::InvalidAuthenticityToken do |_exception|
     if devise_controller?
-      redirect_to root_path, alert: 'Already logged out'
+      redirect_to root_path, alert: I18n.t('devise.failure.already_logged_out')
     else
       raise
     end
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_admin_user!
     unless !current_user.nil? && current_user.has_admin_access?
-      redirect_to root_path, alert: 'Acesso negado'
+      redirect_to root_path, alert: I18n.t('devise.failure.access_denied')
     end
   end
 

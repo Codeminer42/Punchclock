@@ -19,6 +19,8 @@ pt-BR:
       inactive_account: "Conta desativada"
       last_attempt: "Você tem mais uma tentativa antes de sua conta ser bloqueada."
       is_not_admin: 'Você não é um admin.'
+      already_logged_out: 'Já desconectado'
+      access_denied: 'Acesso negado'
     mailer:
       confirmation_instructions:
         subject: 'Instruções de confirmação'

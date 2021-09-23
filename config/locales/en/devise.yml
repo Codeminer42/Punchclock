@@ -19,6 +19,8 @@ en:
       inactive_account: "Disabled account."
       last_attempt: "You have one more attempt before your account is locked."
       is_not_admin: 'You are not an admin'
+      already_logged_out: 'Already logged out'
+      access_denied: 'Access denied'
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"
