@@ -10,7 +10,7 @@ ActiveAdmin.register User do
   menu parent: User.model_name.human(count: 2), priority: 1
 
   permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
-                :password, :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
+                :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, skill_ids: []
 
   scope :all
@@ -205,7 +205,6 @@ ActiveAdmin.register User do
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
-      f.input :password if f.object.new_record?
       f.input :has_api_token, as: :boolean, :input_html => { checked: f.object.token? }
       f.input :allow_overtime
       f.input :active
@@ -222,6 +221,12 @@ ActiveAdmin.register User do
           send_data spreadsheet.to_string_io, filename: 'users.xls'
         end
       end
+    end
+
+    def build_new_resource
+      resource = super
+      resource.assign_attributes(password: PasswordGeneratorService.call)
+      resource
     end
 
     def save_resource(object)
