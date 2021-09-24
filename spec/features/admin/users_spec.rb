@@ -132,7 +132,6 @@ describe 'Users', type: :feature do
         find('#user_contract_type').find(:option, 'Estagiário').select_option
         find('#user_role').find(:option, 'Admin').select_option
         check('Ativo')
-        fill_in 'Password', with: 'password'
         fill_in 'Observação', with: 'Observation'
 
         click_button 'Criar Usuário'
