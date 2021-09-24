@@ -61,6 +61,8 @@ gem 'aasm', '~> 5.0', '>= 5.0.8'
 gem 'platform-api', github: 'heroku/platform-api'
 gem 'letsencrypt-rails-heroku', group: 'production'
 
+gem 'passgen'
+
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'

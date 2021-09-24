@@ -317,6 +317,7 @@ GEM
     passenger (6.0.8)
       rack
       rake (>= 0.8.1)
+    passgen (1.2.0)
     pg (1.2.3)
     popper_js (1.16.0)
     pry (0.14.0)
@@ -566,6 +567,7 @@ DEPENDENCIES
   listen (~> 3.2)
   normalize-rails (~> 4.1.1)
   passenger (~> 6.0)
+  passgen
   pg (~> 1.2)
   platform-api!
   pry-rails
