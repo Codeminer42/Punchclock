@@ -70,7 +70,7 @@ ActiveAdmin.register Contribution do
 
   form do |f|
     f.semantic_errors
-    inputs 'Contribution Details' do
+    inputs I18n.t('contribution_details') do
       input :user
       input :company
       input :repository

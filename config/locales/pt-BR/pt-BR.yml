@@ -74,6 +74,7 @@ pt-BR:
   last_week_contributions: 'Contribuições da semana passada'
   amount: 'Quantidade'
   contribution_state: 'Número de contribuições por status'
+  contribution_details: "Detalhes da Contribuição"
   contribution_approved: "A contribuição foi aprovada"
   contribution_refused: "A contribuição foi recusada"
   contributions_reloaded: "As Contribuições foram recarregadas"
