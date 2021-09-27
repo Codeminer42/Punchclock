@@ -68,6 +68,17 @@ ActiveAdmin.register Contribution do
     end
   end
 
+  form do |f|
+    f.semantic_errors
+    inputs 'Contribution Details' do
+      input :user
+      input :company
+      input :repository
+      input :link
+    end
+    f.actions
+  end
+
 
   controller do
     def approve
