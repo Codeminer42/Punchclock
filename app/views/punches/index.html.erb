@@ -18,21 +18,25 @@
         <th><%= sort_link @search, :project_id, Punch.human_attribute_name(:project_id) %></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @punches.each do |punch| %>
+      <% @grouped_punches.each do |splitted_punch| %>
         <tr class="user-punch">
-          <td><%= link_to punch.object.from.strftime("%d/%m/%Y"), punch, id: "shw-#{punch.id}" %> </td>
-          <td><%= punch.from %> </td>
-          <td><%= punch.to %> </td>
-          <td><%= punch.delta %> </td>
-          <td><%= t punch.extra_hour %></td>
-          <td><%= punch.project.name %> </td>
-          <td><%= link_to image_tag('attachment.gif'), punch.attachment_url if punch.attachment? %> </td>
-          <td><%= link_to image_tag('edit.png'), edit_punch_path(punch), id: "edt-#{punch.id}" %> </td>
-          <td><%= link_to image_tag('destroy.png'), punch, method: :delete, data: { confirm: t('.are_you_sure_remove_register') }, id: "dlt-#{punch.id}" %> </td>
+          <td><%= link_to splitted_punch[0].object.from.strftime("%d/%m/%Y"), splitted_punch[0], id: "shw-#{splitted_punch[0].id}" %> </td>
+          <td><%= splitted_punch[0].from %> </td>
+          <td><%= (splitted_punch[1] || splitted_punch[0]).to %> </td>
+          <td><%= secs_to_formated_hour (splitted_punch[0].delta_in_hours + ( splitted_punch[1] ? splitted_punch[1].delta_in_hours : 0 ))*60*60  %> </td>
+          <td><%= t splitted_punch[0].extra_hour || (splitted_punch[1] || splitted_punch[0]).extra_hour %></td>
+          <td><%= splitted_punch[0].project.name %> </td>
+          <td>
+            <div><%= link_to image_tag('attachment.gif'), splitted_punch[0].attachment_url if splitted_punch[0].attachment? %> </div>
+            <div><%= link_to image_tag('attachment.gif'), splitted_punch[1].attachment_url if splitted_punch[1] && splitted_punch[1].attachment? %> </div>
+          </td>
+          <td><%= link_to image_tag('edit.png'), edit_punch_path(splitted_punch[0]), id: "edt-#{splitted_punch[0].id}" %> </td>
+          <td><%= link_to image_tag('destroy.png'), splitted_punch[0], method: :delete, data: { confirm: t('.are_you_sure_remove_register') }, id: "dlt-#{splitted_punch[0].id}" %> </td>
         </tr>
       <% end %>
     </tbody>
