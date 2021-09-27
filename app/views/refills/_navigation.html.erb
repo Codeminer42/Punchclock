@@ -23,7 +23,7 @@
           <%- end %>
 
           <% if current_user.is_admin? %>
-            <%= link_to "/admin" do %>
+            <%= link_to admin_root_path do %>
               <%= t('.administrative') %>
             <%- end %>
           <%- end %>
