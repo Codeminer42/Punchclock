@@ -53,6 +53,7 @@ pt-BR:
       logout: "Sair"
       dashboard: 'Dashboard'
       open_source: "Open Source"
+      administrative: 'Administrativo'
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
