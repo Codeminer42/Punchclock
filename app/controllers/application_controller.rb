@@ -37,14 +37,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user
+    UserDecorator.decorate(super) unless super.nil?
+  end
+
   private
 
   def current_company
     @current_company ||= current_user.company
-  end
-
-  def current_user
-    UserDecorator.decorate(super) unless super.nil?
   end
 
   protected

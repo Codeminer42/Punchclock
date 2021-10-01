@@ -2,6 +2,7 @@
 
 A simple electronic punch clock to track hours spent on projects.
 
+[![Ruby](https://github.com/Codeminer42/Punchclock/actions/workflows/ruby.yml/badge.svg)](https://github.com/Codeminer42/Punchclock/actions/workflows/ruby.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/484d98c1af980b54a2db/maintainability)](https://codeclimate.com/github/Codeminer42/Punchclock/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/484d98c1af980b54a2db/test_coverage)](https://codeclimate.com/github/Codeminer42/Punchclock/test_coverage)
 

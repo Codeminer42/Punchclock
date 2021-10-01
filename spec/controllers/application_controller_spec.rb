@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationController, :type => :controller do
+RSpec.describe ApplicationController, type: :controller do
   controller do
     def index
       render json: { success: true }
