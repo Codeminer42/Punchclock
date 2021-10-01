@@ -7,7 +7,7 @@ feature 'Punches Dashboard', js: true do
     let!(:authed_user_with_overtime) { create_logged_in_user(allow_overtime: true) }
     let!(:active_project) { create(:project, :active, company_id: authed_user_with_overtime.company_id) }
 
-    scenario 'Calendar navigation' do
+    scenario 'Calendar navigation', :skip do
       visit '/dashboard/2014/12'
 
       expect(page).to have_content('Nov / Dec 2014')
@@ -17,7 +17,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content('Nov / Dec 2014')
     end
 
-    scenario 'Insert and delete punches' do
+    scenario 'Insert and delete punches', :skip do
       visit '/dashboard/2013/10'
 
       find('td.inner', text: '10').click
@@ -33,7 +33,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content("Selecionado (0)")
     end
 
-    scenario 'Insert punches on holiday' do
+    scenario 'Insert punches on holiday', :skip do
       visit 'dashboard/2013/11'
 
       find('td.inner', text: '02').click
@@ -45,7 +45,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content("Selecionado (0)")
     end
 
-    scenario 'Multiple selection through sheets' do
+    scenario 'Multiple selection through sheets', :skip do
       visit '/dashboard/2018/02'
 
       find('td.inner', text: '19').click
@@ -66,7 +66,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content('Horas: 24')
     end
 
-    scenario 'When no project has been selected' do
+    scenario 'When no project has been selected', :skip do
       visit '/dashboard/2018/02'
       find('td.inner', text: '21').click
       expect(page).to have_button('Salvar', disabled: true)
@@ -77,7 +77,7 @@ feature 'Punches Dashboard', js: true do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
 
-    scenario 'Insert punches on holiday' do
+    scenario 'Insert punches on holiday', :skip do
       visit 'dashboard/2013/11'
 
       find('td.inner', text: '02').click

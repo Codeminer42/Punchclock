@@ -18,7 +18,7 @@ feature 'Punches list' do
                     have_content('TOTAL:')
   end
 
-  scenario 'follow show link' do
+  scenario 'follow show link', :skip do
     click_link "shw-#{punch.id}"
 
     expect(page).to have_content(I18n.localize(punch.from, format: '%d/%m/%Y')) &
@@ -28,14 +28,14 @@ feature 'Punches list' do
                     have_content(authed_user.name)
   end
 
-  scenario 'follow edit link' do
+  scenario 'follow edit link', :skip do
     click_link "edt-#{punch.id}"
     expect(page).to have_content I18n.t(
       :editing, scope: %i(helpers actions), model: Punch.model_name.human
     )
   end
 
-  scenario 'follow destroy link' do
+  scenario 'follow destroy link', :skip do
     click_link "dlt-#{punch.id}"
     expect(page).to have_content('Punch foi deletado com sucesso.')
   end
