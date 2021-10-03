@@ -51,7 +51,9 @@ pt-BR:
   refills:
     navigation:
       logout: "Sair"
-      dashboard: 'Dashboard'
+      punches: "Punches"
+      single_punch: "Cadastrar Punch"
+      multiple_punches: "Múltiplos Punches"
       open_source: "Open Source"
       administrative: 'Administrativo'
   repositories:
