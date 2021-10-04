@@ -32,3 +32,8 @@ en:
   view: 'View'
   mine: 'Mine'
   written: 'Written'
+  refills:
+    navigation:
+      punches: 'Punches'
+      single_punch: 'Single Punch'
+      multiple_punches: 'Multiple Punches'
