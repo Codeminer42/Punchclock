@@ -84,7 +84,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
         post :create, params: { contribution: contribution_params }
 
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(admin_contribution_path(Contribution.last))
+                        .and redirect_to(admin_contribution_path(Contribution.last))
       end
 
       it 'should create the contribution' do
@@ -127,7 +127,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
       get :show, params: { id: contribution_to_show.id }
       expect(response).to have_http_status(:success)
     end
-    
+
     it 'renders the form elements' do
       get :show, params: { id: contribution_to_show.id }
       expect(page).to have_content(contribution_to_show.user)
