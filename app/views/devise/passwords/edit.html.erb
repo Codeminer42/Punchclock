@@ -1,0 +1,30 @@
+<div id="form-container">
+  <div class="content">
+    <h2><%= t("form.title.change_your_password") %></h2>
+
+    <%= form_for(resource, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "shared/errors", messages: resource.errors.full_messages %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <% if @minimum_password_length %>
+        <p><em>(<%= @minimum_password_length %> <%= t("form.hint.minimum_caracters")%>)</em></p>
+      <% end %>
+      
+      <fieldset>
+        <%= f.label :password, t("form.field.new_password") %>
+        <%= f.password_field :password, required: true, minLength: 8, class: 'form-control' %>
+      </fieldset>
+
+      <fieldset>
+        <%= f.label :password_confirmation, t("form.field.confirm_new_password")%>
+        <%= f.password_field :password_confirmation, required: true, minLength: 8, class: 'form-control' %>
+      </fieldset>
+
+      <div>
+        <%= f.submit t("form.button.change_my_password") %>
+      </div>
+      <br/>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

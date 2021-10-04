@@ -37,3 +37,13 @@ en:
       punches: 'Punches'
       single_punch: 'Single Punch'
       multiple_punches: 'Multiple Punches'
+  form:
+    title:
+      change_your_password: 'Change your password'
+    hint:
+      minimum_caracters: 'caracters minimum'
+    field:
+      new_password: 'New Password'
+      confirm_new_password: 'Confirm new password'
+    button:
+      change_my_password: 'Change my password'
