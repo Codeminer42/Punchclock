@@ -4,7 +4,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
   render_views
 
   let(:admin) { build_stubbed(:user, :super_admin) }
-  let!(:contribution) { build_stubbed(:contribution) }
+  let(:contribution) { build_stubbed(:contribution) }
   let(:page) { Capybara::Node::Simple.new(response.body) } 
 
   let(:invalid_attributes) do
@@ -17,8 +17,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
     allow(controller).to receive(:current_user).and_return(admin)
   end
  
-  describe 'GET index' do
-    
+  describe 'GET index' do 
     before do
       get :index
     end
@@ -45,44 +44,43 @@ RSpec.describe Admin::ContributionsController, type: :controller do
       expect(assigns(:contribution)).to be_a_new(Contribution)
     end
 
-    it "should render the form elements" do
+    it 'renders the form elements' do
       expect(page).to have_field('contribution[user_id]')
-      expect(page).to have_field('contribution[company_id]')
-      expect(page).to have_field('contribution[repository_id]')
-      expect(page).to have_field('contribution[link]')
+                  .and have_field('contribution[company_id]')
+                  .and have_field('contribution[repository_id]')
+                  .and have_field('contribution[link]')
     end
   end
 
-  describe "POST create" do
+  describe 'POST create' do
     let(:user) { create(:user) }
     let(:company) { create(:company) }
     let(:repository) { create(:repository) }
 
-    let(:contribution_params) {
+    let(:contribution_params) do
       {
         "link"=>"https://github.com/Codeminer", 
-        "user_id"=>"#{user.id}", 
-        "company_id"=>"#{company.id}",
-        "repository_id" => "#{repository.id}"
+        "user_id"=>user.id, 
+        "company_id"=>company.id,
+        "repository_id"=>repository.id
       }
-    }
+    end
 
-
-    context "with valid params" do
-      it "creates a new Contribution" do
+    context 'with valid params' do
+      it 'creates a new Contribution' do
         
         expect {
           post :create, params: { contribution: contribution_params }
         }.to change(Contribution, :count).by(1)
       end
 
-      it "assigns a newly created contribution as @contribution" do
+      it 'assigns a newly created contribution as @contribution' do
         post :create, params: { contribution: contribution_params }
         expect(assigns(:contribution)).to be_a(Contribution)
-        expect(assigns(:contribution)).to be_persisted
+                                      .and be_persisted
       end
 
-      it "redirects to the created contribution" do
+      it 'redirects to the created contribution' do
         post :create, params: { contribution: contribution_params }
 
         expect(response).to have_http_status(:redirect)
@@ -100,13 +98,13 @@ RSpec.describe Admin::ContributionsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
+    context 'with invalid params' do
       it 'invalid_attributes return http success' do
         post :create, params: { contribution: invalid_attributes }
         expect(response).to have_http_status(:success)
       end
 
-      it "assigns a newly created but unsaved contribution as @contribution" do
+      it 'assigns a newly created but unsaved contribution as @contribution' do
         post :create, params: { contribution: invalid_attributes }
         expect(assigns(:contribution)).to be_a_new(Contribution)
       end
@@ -117,30 +115,25 @@ RSpec.describe Admin::ContributionsController, type: :controller do
         end.not_to change(Contribution, :count)
       end
     end
-
   end
 
-  describe "GET show" do
+  describe 'GET show' do
     let(:user) { create(:user) }
     let(:company) { create(:company) }
     let(:repository) { create(:repository) }
     let(:contribution_to_show) { create(:contribution, company_id: company.id, user_id: user.id, repository_id: repository.id, link: contribution[:link]) }
 
-
-    before do
-      get :show, params: { id: contribution_to_show.id }
-    end
-    
     it 'returns http success' do
+      get :show, params: { id: contribution_to_show.id }
       expect(response).to have_http_status(:success)
     end
-    it "should render the form elements" do
+    
+    it 'renders the form elements' do
+      get :show, params: { id: contribution_to_show.id }
       expect(page).to have_content(contribution_to_show.user)
-      expect(page).to have_content(contribution_to_show.company)
-      expect(page).to have_content(contribution_to_show.link)
-      expect(page).to have_content(Contribution.human_attribute_name("state/#{contribution_to_show.state}"))
-    end
-   
+                  .and have_content(contribution_to_show.company)
+                  .and have_content(contribution_to_show.link)
+                  .and have_content(Contribution.human_attribute_name("state/#{contribution_to_show.state}"))
+    end 
   end
-
 end

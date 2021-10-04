@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe Contribution do
   describe 'Contribution' do
-    let(:resource_class) { Contribution }
-    let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[resource_class] }
+    let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[described_class] }
 
-    it 'Verify resource name' do
+    it 'verifies the resource name' do
       expect(resource.resource_name).to eq 'Contribution'
     end
 
-    it 'Verifying menu display' do
+    it 'includes the resource in the menu' do
       expect(resource).to be_include_in_menu
     end
 
-    it 'Verifying defined actions for a resource' do
+    it 'verifies defined actions for a resource' do
       expect(resource.defined_actions).to include :index, :show, :new, :create
     end
   end
