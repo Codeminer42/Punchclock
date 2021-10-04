@@ -5,6 +5,6 @@ class Repository < ApplicationRecord
   validates :link, presence: true, uniqueness: { scope: :company_id, case_sensitive: false }
 
   def to_s
-    self.link
+    link
   end
 end
