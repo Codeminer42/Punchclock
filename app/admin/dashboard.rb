@@ -33,19 +33,10 @@ ActiveAdmin.register_page "Dashboard" do
             project.id
           ]
         end
-        tabs do
-          tab User.model_name.human do
-            render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
-          end
-
-          tab Office.model_name.human do
-            render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
-          end
-
-          tab Project.model_name.human do
-            render "search_field", search_model: Project, url_path: admin_projects_path, collection: projects_collection
-          end
-        end
+        
+        render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
+        render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
+        render "search_field", search_model: Project, url_path: admin_projects_path, collection: projects_collection
       end
     end
 

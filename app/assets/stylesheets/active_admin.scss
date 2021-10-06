@@ -15,6 +15,10 @@ $active-admin-a-border: #c7c7c7;
   margin-bottom: 10px;
 }
 
+.select-search {
+  padding-top: 0 !important;
+}
+
 #allocation_start_at, #allocation_end_at, #user_started_at {
   width: auto;
 }
