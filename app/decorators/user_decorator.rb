@@ -4,17 +4,7 @@ class UserDecorator < Draper::Decorator
   delegate_all
 
   def current_allocation
-    current_allocation = model.current_allocation
-
-    if current_allocation.present?
-      if h.current_user.is_admin?
-        h.link_to current_allocation.name, [:admin, current_allocation]
-      else
-        current_allocation.name
-      end
-    else
-      I18n.t('not_allocated')
-    end
+    super || I18n.t('not_allocated')
   end
 
   def level

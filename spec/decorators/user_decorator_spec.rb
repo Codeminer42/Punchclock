@@ -14,19 +14,12 @@ RSpec.describe UserDecorator do
       allow(user.model).to receive(:current_allocation).and_return(allocation.project)
       allow(user.h).to receive(:current_user).and_return(admin)
     end
-    
-    context 'when the current user is an admin and user is allocated' do
-      it 'returns project link' do
-        link = "<a href=\"/admin/projects/#{allocation.project_id}\">#{CGI.escape_html(allocation.project.name)}</a>"
-        expect(user.current_allocation).to eq(link)
-      end
-    end
 
-    context 'when the current user is not an admin and user is allocated' do
+    context 'when the current user is allocated' do
       it 'returns project name' do
         allow(user.h).to receive(:current_user).and_return(user)
 
-        expect(user.current_allocation).to eq(allocation.project.name)
+        expect(user.current_allocation).to eq(allocation.project)
       end
     end
 

@@ -50,15 +50,30 @@
 
   .navbar-nav {
     a {
-      span {
-        text-transform: uppercase;
-      }
-
       img.gravatar {
         border-radius: 20px;
         margin: 1em
       }
     }
+  }
+
+  .user-info.text-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    a {
+      margin: 0;
+    }
+
+    span {
+      color: white;
+      font-weight: 600;
+    }
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
   }
 
   .navbar-dark .navbar-nav .nav-link {
