@@ -88,3 +88,7 @@ pt-BR:
   2fa_enabled: Autenticação de dois fatores ativada
   2fa_disabled: Autenticação de dois fatores desativada
   otp_fail: Código inválido
+  resources: Recursos
+  shortcuts: "Atalhos"
+  go_to: "Ir para"
+  available_values: "Valores disponíveis"

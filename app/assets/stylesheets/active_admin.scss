@@ -15,14 +15,20 @@ $active-admin-a-border: #c7c7c7;
   margin-bottom: 10px;
 }
 
-.search-field ol {
+.shortcuts-form {
   display: flex;
+  flex-direction: column;
 
-  :first-child {
-    flex: 1;
+  select {
+    padding: 8px;
   }
+
+  * {
+    margin-bottom: 10px;
+  }
+
   :last-child {
-    align-self: flex-end;
+    margin-bottom: 0;
   }
 }
 

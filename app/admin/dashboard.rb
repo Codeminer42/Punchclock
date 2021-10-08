@@ -6,21 +6,27 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     if current_user.is_admin?
-      panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
+      panel t(:shortcuts, scope: :active_admin), class: 'search-fields' do
         current_company = current_user.company
+
+        resources_collection = [
+          [User.model_name.human, 'users'],
+          [Office.model_name.human, 'offices'],
+          [Project.model_name.human, 'projects']
+        ]
 
         users_collection = current_company.users.active.includes(:office).order(:name).map do |user|
           user_label = "#{user.name.titleize} - #{user.email} - "
           user_label += "#{user.level.humanize} - " if user.engineer?
           user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
 
-          [user_label, user.id]
+          [user_label, "users/#{user.id}"]
         end
 
         offices_collection = current_company.offices.order(:city).decorate.map do |office|
           [
             "#{office.city.titleize} - #{office.head} - #{office.score}",
-            office.id
+            "offices/#{office.id}"
           ]
         end
 
@@ -30,13 +36,16 @@ ActiveAdmin.register_page "Dashboard" do
 
           [
             description,
-            project.id
+            "projects/#{project.id}"
           ]
         end
         
-        render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
-        render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
-        render "search_field", search_model: Project, url_path: admin_projects_path, collection: projects_collection
+        data_set = users_collection + offices_collection + projects_collection
+
+        render "search_field",
+          data_collection: data_set,
+          resources_collection: resources_collection,
+          url_path: admin_offices_path
       end
     end
 

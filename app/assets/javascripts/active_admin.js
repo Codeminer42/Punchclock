@@ -1,6 +1,7 @@
 //= require active_admin/base
 //= require 'select2/dist/js/select2.js'
 //= require ./active_admin/user.js
+//= require ./active_admin/dashboard.js
 //= require stats.js
 //= require chartkick
 //= require Chart.bundle

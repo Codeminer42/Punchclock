@@ -1,15 +1,15 @@
-<%= semantic_form_for search_model.name.downcase do |f| %>
-  <%= f.inputs class: [:inputs, :"search-field"] do %>
-    <%= f.input :id,
-      collection: collection,
-      label: I18n.t(:search_by, scope: :active_admin, model_name: search_model.model_name.human),
-      input_html: {data: {select: search_model.name.pluralize.downcase}}
-    %>
-    <li>
-      <%= link_to t(:search, scope: :active_admin), url_path,
-        class: "button",
-        data: { "select-search": search_model.name.pluralize.downcase} 
-      %>
-    </li>
-  <% end %>
+<%= form_for 'shortcuts-search', html: { class: 'shortcuts-form' } do |f| %>
+  <fieldset>
+    <%= f.label t(:resources), for: 'shortcut-resource' %>
+    <%= f.select :section, resources_collection, {}, { id: 'shortcut-resource', class: 'select input' }  %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label t(:available_values), for: 'shortcut-data' %>
+    <%= f.select :search, data_collection, {}, { id: 'shortcut-data' }  %>
+  </fieldset>
+  
+  <div>
+    <%= link_to t(:go_to), url_path, id: 'shortcut-link', class: "button" %>
+  </div>
 <% end %>
