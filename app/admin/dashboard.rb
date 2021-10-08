@@ -6,7 +6,7 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
     if current_user.is_admin?
-      panel t(:shortcuts, scope: :active_admin), class: 'search-fields' do
+      panel t(:shortcuts), class: 'search-fields' do
         current_company = current_user.company
 
         resources_collection = [
