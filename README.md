@@ -99,6 +99,49 @@ Running with [Guard](https://github.com/guard/guard-rspec):
 $ bundle exec guard
 ```
 
+## Debugging
+
+To debug this app, at the point of code that you want to debug, add:
+
+```ruby
+binding.remote_pry
+```
+
+Run you application, the app should stop at the point that you added `binding.remote_pry`.
+
+In you terminal, run:
+
+```console
+$ bundle exec pry-remote
+```
+
+Now you will get the piece of code where you can debug.
+
+To exit the `pry` console, type:
+
+```console
+> !!!
+```
+
+Or:
+
+```console
+> exit
+```
+
+### Debugguing a test
+
+At the point of code that you want to debug, add:
+
+```ruby
+binding.pry
+```
+In you terminal, run:
+
+```console
+$ bundle exec rspec <PATH_TO_FILE>
+```
+
 License
 -------
 Copyright 2013-2021, Codeminer 42.
