@@ -11,40 +11,36 @@ RSpec.describe Admin::ContributionsController, type: :controller do
     { first_name: '' }
   end
 
-
   before do
     allow(controller).to receive(:authenticate_user!)
     allow(controller).to receive(:current_user).and_return(admin)
   end
  
   describe 'GET index' do 
-    before do
-      get :index
-    end
-
     it 'renders the index template' do
+      get :index
       expect(response).to render_template(:index)
     end
 
     it 'has http status 200' do
+      get :index
       expect(response).to have_http_status(:ok)
     end
   end
 
   describe 'GET new' do
-    before do
-      get :new
-    end
-
     it 'has http status 200' do
+      get :new
       expect(response).to have_http_status(:ok)
     end
 
     it 'assigns the contribution' do
+      get :new
       expect(assigns(:contribution)).to be_a_new(Contribution)
     end
 
     it 'renders the form elements' do
+      get :new
       expect(page).to have_field('contribution[user_id]')
                   .and have_field('contribution[company_id]')
                   .and have_field('contribution[repository_id]')
@@ -87,14 +83,32 @@ RSpec.describe Admin::ContributionsController, type: :controller do
                         .and redirect_to(admin_contribution_path(Contribution.last))
       end
 
-      it 'should create the contribution' do
+      it 'ensures created contibution received correct link' do
         post :create, params: { contribution: contribution_params }
         contribution = Contribution.last
 
         expect(contribution.link).to eq(contribution_params['link'])
+      end
+
+      it 'ensures created contibution received correct user' do
+        post :create, params: { contribution: contribution_params }
+        contribution = Contribution.last
+
         expect(contribution.user_id).to  eq(user.id)
-        expect(contribution.company_id).to      eq(company.id)
-        expect(contribution.repository_id).to      eq(repository.id)
+      end
+
+      it 'ensures created contibution received correct company' do
+        post :create, params: { contribution: contribution_params }
+        contribution = Contribution.last
+
+        expect(contribution.company_id).to eq(company.id)
+      end
+
+      it 'ensures created contibution received correct repository' do
+        post :create, params: { contribution: contribution_params }
+        contribution = Contribution.last
+
+        expect(contribution.repository_id).to eq(repository.id)
       end
     end
 
