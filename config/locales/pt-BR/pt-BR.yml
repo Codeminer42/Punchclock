@@ -88,3 +88,13 @@ pt-BR:
   2fa_enabled: Autenticação de dois fatores ativada
   2fa_disabled: Autenticação de dois fatores desativada
   otp_fail: Código inválido
+  form:
+    title:
+      change_your_password: 'Mude sua senha'
+    hint:
+      minimum_caracters: 'caracteres mínimos'
+    field:
+      new_password: 'Nova Senha'
+      confirm_new_password: 'Confirmar nova senha'
+    button:
+      change_my_password: 'Mudar minha senha'
