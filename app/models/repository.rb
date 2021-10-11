@@ -3,4 +3,8 @@ class Repository < ApplicationRecord
   has_many :contributions, dependent: :nullify
 
   validates :link, presence: true, uniqueness: { scope: :company_id, case_sensitive: false }
+
+  def to_s
+    link
+  end
 end

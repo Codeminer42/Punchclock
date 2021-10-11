@@ -1,6 +1,6 @@
 ActiveAdmin.register Contribution do
-  permit_params :state
-  actions :index, :show
+  permit_params :state, :link, :user_id, :company_id, :repository_id
+  actions :index, :show, :new, :create
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
@@ -66,6 +66,21 @@ ActiveAdmin.register Contribution do
       row :created_at
       row :updated_at
     end
+  end
+
+  form do |f|
+    f.semantic_errors
+    inputs I18n.t('contribution_details') do
+      input :user
+      if current_user.super_admin?
+        f.input :company
+      else
+        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
+      end
+      input :repository
+      input :link
+    end
+    f.actions
   end
 
 
