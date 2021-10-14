@@ -13,7 +13,8 @@
           holidays: current_user.office_holidays,
           allow_overtime: current_user.allow_overtime?
         },
-        value: f.object.date
+        value: f.object.date,
+        autocomplete: 'off'
       } %>
       <%= f.input :extra_hour, as: :boolean, html5: true, hint: " Marque se este Punch é referente à hora extra" %>
     </div>
