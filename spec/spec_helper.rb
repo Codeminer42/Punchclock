@@ -2,17 +2,6 @@
 
 require 'simplecov'
 
-SimpleCov.start 'rails' do
-  minimum_coverage 90
-  refuse_coverage_drop
-  add_filter %r{^/(?!app|lib)/}
-  add_filter %r{^/app/channels/}
-  add_filter %r{^/.gitlab-cache/}
-  add_filter '.gems'
-  add_group 'Admin', 'app/admin'
-  add_group 'Decorators', 'app/decorators'
-end
-
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
