@@ -1,6 +1,9 @@
 <%= "Welcome #{@user.name}," %>
-<div> Change your password soon as possible </div>
-<%= "Email: #{@user.email}" %>
-<%= "Password: #{@user.password}" %>
+<div> You're receiving this email because you're now a member of Punchclock.
+Start by changing your password using the link below: </div>
 <br>
-<div> Modify your password <%= link_to('here', users_account_password_edit_url, only_path: false) %> </div>
+<div> Change your password <%= link_to('here', edit_user_password_url(reset_password_token: @token), only_path: false) %> </div>
+<br>
+<div>Your registered email is <%= "#{@user.email}" %>
+<br>
+<div> Just in case you're not able to see the page you still have the option to use the link "Forgot your password?" on the login page.</div>

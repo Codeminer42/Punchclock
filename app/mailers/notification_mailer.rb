@@ -8,6 +8,7 @@ class NotificationMailer < ActionMailer::Base
 
   def notify_user_registration(user)
     @user = user
+    @token = user.send(:set_reset_password_token)
     mail(to: @user.email, subject: 'Welcome to Punchclock')
   end
 

@@ -65,6 +65,8 @@ class User < ApplicationRecord
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :with_level,       -> value { where(level: value) }
 
+  attr_accessor :password_required
+
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]
   end
@@ -158,5 +160,9 @@ class User < ApplicationRecord
     end
 
     errors.present? ? false : super
+  end
+
+  def password_required?
+    password_required
   end
 end
