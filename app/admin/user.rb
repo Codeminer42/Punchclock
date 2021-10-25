@@ -11,7 +11,7 @@ ActiveAdmin.register User do
 
   permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
                 :password, :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
-                :observation, :specialty, skill_ids: []
+                :observation, :specialty, :otp_required_for_login, skill_ids: []
 
   scope :all
   scope :active, default: true
@@ -209,6 +209,7 @@ ActiveAdmin.register User do
       f.input :has_api_token, as: :boolean, :input_html => { checked: f.object.token? }
       f.input :allow_overtime
       f.input :active
+      f.input :otp_required_for_login, as: :boolean, :input_html => { checked: f.object.otp_required_for_login? }
       f.input :observation
     end
     f.actions
