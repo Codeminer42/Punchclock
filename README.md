@@ -101,7 +101,10 @@ $ bundle exec guard
 
 ## Debugging
 
-To debug this app, at the point of code that you want to debug, add:
+To debug this app, follow the following steps, for more details about debugging with pry, read the official documentation here: https://pry.github.io/ .
+### Running with foreman
+
+At the point of code that you want to debug, add:
 
 ```ruby
 binding.remote_pry
@@ -117,17 +120,15 @@ $ bundle exec pry-remote
 
 Now you will get the piece of code where you can debug.
 
-To exit the `pry` console, type:
+### Running with rails server
 
-```console
-> !!!
+At the point of code that you want to debug, add:
+
+```ruby
+binding.pry
 ```
 
-Or:
-
-```console
-> exit
-```
+Run you application, the app should stop at the point that you added `binding.pry` and you will get the piece of code where you can debug.
 
 ### Debugguing a test
 
@@ -140,6 +141,22 @@ In you terminal, run:
 
 ```console
 $ bundle exec rspec <PATH_TO_FILE>
+```
+
+### Exiting the debug mode
+
+To exit the `pry` console, type:
+
+To hard exit:
+
+```console
+-> !!!
+```
+
+To soft exit:
+
+```console
+-> exit
 ```
 
 License
