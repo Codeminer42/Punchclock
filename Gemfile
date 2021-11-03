@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.6'
+ruby '2.7.4'
 
 gem 'rails', '~> 7.0.3.1'
 
@@ -70,7 +70,7 @@ gem 'rswag-ui', '~> 2.5.1'
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
+  gem 'simplecov', '~> 0.20', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'capybara-selenium'
   gem 'selenium-webdriver'
