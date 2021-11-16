@@ -31,6 +31,7 @@ module Punchclock
     config.i18n.enforce_available_locales = false
     config.i18n.locale = :'pt-BR'
     config.i18n.default_locale = :'pt-BR'
+    config.time_zone = 'America/Sao_Paulo'
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_job.queue_adapter = :sidekiq
