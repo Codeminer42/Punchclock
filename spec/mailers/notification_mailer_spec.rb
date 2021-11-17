@@ -169,7 +169,7 @@ describe NotificationMailer do
       end
 
       it 'renders the body' do
-        expect(mail.body).to match('Preencham o punch entre os dias 16 e 15') &
+        expect(mail.body).to match('Preencham o punch entre os dias 15 e 16') &
           match('https://punchclock.cm42.io')
       end
     end
