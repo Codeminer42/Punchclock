@@ -1,0 +1,21 @@
+<div class="access-form-container mt-2">
+  <h2 class="text-center mb-3">Two Factor</h2>
+
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| %>
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+       <span class="input-group-text"> <i class="fa fa-lock"></i></span>
+      </div>
+      <%= f.input_field :otp_attempt,
+                label: false,
+                placeholder: "6 digit code",
+                class: "form-control" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "Login", class: "w-100" %>
+    </div>
+
+  <% end %>
+</div>
