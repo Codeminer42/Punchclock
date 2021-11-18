@@ -31,16 +31,6 @@
                     input_html: { autocomplete: "current-password" } %>
         </div>
 
-        <div class="input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text"> <i class="fa fa-lock"></i></span>
-          </div>
-          <%= f.input_field :otp_attempt,
-                    label: false,
-                    placeholder: "6 digit code",
-                    class: "form-control" %>
-        </div>
-
         <div class="form-actions">
           <%= f.button :submit, "Login", class: "w-100" %>
         </div>
