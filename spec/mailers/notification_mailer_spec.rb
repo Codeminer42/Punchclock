@@ -66,14 +66,12 @@ describe NotificationMailer do
         expect(mail.body.encoded).to match(user.email)
       end
 
-      it 'assigns @password' do
-        expect(mail.body.encoded).to match(user.password)
+      before do
+        allow(Devise).to receive(:token_generator).and_return(double(generate: 'xyz'))
       end
 
-      it 'assigns link to edit password path' do
-        expect(mail.body.encoded).to have_link(
-          'here', href: users_account_password_edit_url
-        )
+      it 'assigns link to edit user password path' do
+        expect(mail.body.encoded).to have_link('here', href: edit_user_password_url(reset_password_token: 'xyz'))
       end
     end
 

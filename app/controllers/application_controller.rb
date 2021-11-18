@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   def access_denied(exception)
     redirect_to after_sign_in_path_for(current_user), alert: exception.message
-  end 
+  end
 
   def authenticate_admin_user!
     unless !current_user.nil? && current_user.has_admin_access?

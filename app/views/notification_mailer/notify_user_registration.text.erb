@@ -1,13 +1,13 @@
 <%= "Welcome #{@user.name}," %>
 ===============================
 
-Change your password soon as possible
+You're receiving this email because you're now a member of Punchclock.
+Start by changing your password using the link below:
 
-Dados
+Change your password
+<%= edit_user_password_url(reset_password_token: @token) %>
 
-  email: <%= "Email: #{@user.email}" %>
-  password: <%= "Password: #{@user.password}" %>
+ Your registered email is <%= "#{@user.email}" %>
 
-Modify your password
-<%= users_account_password_edit_url %>
+Just in case you're not able to see the page you still have the option to use the link "Forgot your password?" on the login page.
 -------------------------------
