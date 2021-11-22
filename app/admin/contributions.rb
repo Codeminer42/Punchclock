@@ -14,8 +14,6 @@ ActiveAdmin.register Contribution do
   member_action :approve, method: :put, only: :index
   member_action :refuse, method: :put, only: :index
 
-  collection_action :reload, method: :post, only: :index
-
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
 
@@ -78,11 +76,6 @@ ActiveAdmin.register Contribution do
     def refuse
       resource.refuse!
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
-    end
-
-    def reload
-      ReloadGithubContributionsJob.perform_later current_user.company
-      redirect_to collection_path, notice: I18n.t('contributions_reloaded')
     end
 
     def index
