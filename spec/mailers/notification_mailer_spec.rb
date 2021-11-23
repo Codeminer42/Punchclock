@@ -197,5 +197,30 @@ describe NotificationMailer do
         expect(mail.body).to match('18/06/2019')
       end
     end
+
+    context 'when notify newsletter about approved contributions' do
+      let(:user) { build(:user, :admin) }
+      let(:contributions) { 'Lista de Contribuições Aprovadas' }
+      let(:receiver) { 'news@cm42.io' }
+      let(:mail) { NotificationMailer.notify_newsletter_contributions(contributions) }
+
+      before { ENV['NEWS_EMAIL'] = receiver }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq('Punchlock - Contribuições aprovadas')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to contain_exactly(receiver)
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to contain_exactly('do-not-reply@punchclock.com')
+      end
+
+      it 'renders the body' do
+        expect(mail.body).to match(contributions)
+      end
+    end
   end
 end
