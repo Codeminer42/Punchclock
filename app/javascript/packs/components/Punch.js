@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const Punch = ({ punch }) => {
   const format = (timestamp) => {
-    return moment.utc(timestamp).format('HH:mm');
+    return moment(timestamp).format('HH:mm');
   };
 
   return(

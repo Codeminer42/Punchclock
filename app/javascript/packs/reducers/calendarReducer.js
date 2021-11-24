@@ -175,8 +175,8 @@ const redefine = (base) => {
 
 const createPunch = (dayString, sheet) => {
   return sheet.map((p)=> {
-    let from = Moment.utc(`${dayString} ${p.from}`);
-    let to = Moment.utc(`${dayString} ${p.to}`);
+    let from = Moment(`${dayString} ${p.from}`);
+    let to = Moment(`${dayString} ${p.to}`);
     return new Punch({
       from: from,
       to: to,
