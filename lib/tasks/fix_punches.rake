@@ -3,6 +3,7 @@ namespace :fix_punches do
   task fix: :environment do
     company = Company.find(8)
     users = []
+
     company.includes(users: :punches).users.active.find_in_batches.each do |users|
       users.each do |user|
         users << user
