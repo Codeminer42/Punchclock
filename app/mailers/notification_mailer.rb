@@ -41,4 +41,10 @@ class NotificationMailer < ActionMailer::Base
     admin_email = ENV['ADMIN_EMAIL']
     mail(to: @user.email, bcc: admin_email, subject: "Punchclock - #{user.name} com Punches não cadastrados no sistema")
   end
+
+  def notify_newsletter_contributions(contributions)
+    @contributions = contributions
+    newsletter_email = ENV['NEWS_EMAIL']
+    mail(to: newsletter_email, subject: 'Punchlock - Contribuições aprovadas')
+  end
 end

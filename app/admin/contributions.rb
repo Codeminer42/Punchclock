@@ -24,6 +24,13 @@ ActiveAdmin.register Contribution do
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
   end
+
+  batch_action :send_to_newsletter do |ids|
+    contributions = ContributionsTextService.call(Contribution.where(id: ids))
+    NotificationMailer.notify_newsletter_contributions(contributions).deliver
+    redirect_back fallback_location: collection_path, notice: I18n.t('contributions_sent_to_newsletter')
+  end
+
   scope :all, default: true
 
   scope I18n.t(:this_week), :this_week, group: :time
