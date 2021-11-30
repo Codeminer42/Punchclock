@@ -3,7 +3,7 @@ namespace :github do
   task sync_repository_languages: :environment do
     Rails.logger = Logger.new(STDOUT)
 
-    client = Github.new(oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
+    client = Github.new(headers: {"Authorization" => "#{ENV['GITHUB_OAUTH_TOKEN']}"})
     company = Company.find(ENV['COMPANY_ID'])
 
     ActiveRecord::Base.transaction do
@@ -18,7 +18,7 @@ namespace :github do
   task import_contributions: :environment do
     Rails.logger = Logger.new(STDOUT)
 
-    client = Github.new(oauth_token: ENV['GITHUB_OAUTH_TOKEN'])
+    client = Github.new(headers: {"Authorization" => "#{ENV['GITHUB_OAUTH_TOKEN']}"})
     company = Company.find(ENV['COMPANY_ID'])
 
     ActiveRecord::Base.transaction do
