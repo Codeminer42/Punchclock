@@ -18,6 +18,7 @@ pt-BR:
         enable: "Ativar"
         refuse: 'Recusar'
         approve: 'Aprovar'
+        send_to_newsletter: 'Enviar para Newsletter'
     scopes:
       all: Todos
       active: 'Ativo'

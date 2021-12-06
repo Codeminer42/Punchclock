@@ -78,6 +78,7 @@ pt-BR:
   contribution_approved: "A contribuição foi aprovada"
   contribution_refused: "A contribuição foi recusada"
   contributions_reloaded: "As Contribuições foram recarregadas"
+  contributions_sent_to_newsletter: "As contribuições aprovadas foram enviadas para a newsletter."
   approve: "Aprovar"
   refuse:  "Recusar"
   this_week: "Semana atual"
