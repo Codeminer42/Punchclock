@@ -13,13 +13,11 @@ let environment = {
   ]
 }
 
-// Only run PurgeCSS in production envrionment, you can also add other environment here
 if (process.env.RAILS_ENV === "production") {
   environment.plugins.push(
     require('@fullhuman/postcss-purgecss')({
       content: [
         './app/**/*.html.erb',
-        './app/**/*.html.haml',
         './app/helpers/**/*.rb',
         './app/javascript/**/*.js',
         './app/javascript/**/*.jsx',

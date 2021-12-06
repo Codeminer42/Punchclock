@@ -4,7 +4,7 @@ module.exports = {
     "./app/**/*.html.erb",
     "./app/assets/stylesheets/components/**/*.scss",
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     borderRadius: {
       none: '0',
