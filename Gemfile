@@ -57,6 +57,8 @@ gem 'active_skin'
 gem 'active_admin_flat_skin'
 gem 'aasm', '~> 5.0', '>= 5.0.8'
 
+gem 'turbolinks', '~> 5.2.0'
+
 # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
 gem 'platform-api', github: 'heroku/platform-api'
 gem 'letsencrypt-rails-heroku', group: 'production'

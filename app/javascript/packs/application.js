@@ -5,6 +5,10 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 require("chartkick").use(require("highcharts"))
+require("rails-ujs").start()
+require("turbolinks").start()
+
+require("stylesheets/application.scss")
 
 const container = document.getElementById('content')
 export const dayBase = container.attributes['data-daybase'].value;
