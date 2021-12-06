@@ -6,7 +6,6 @@ import store from './store';
 
 require("chartkick").use(require("highcharts"))
 require("rails-ujs").start()
-require("turbolinks").start()
 
 require("stylesheets/application.scss")
 

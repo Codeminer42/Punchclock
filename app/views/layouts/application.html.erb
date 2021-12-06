@@ -6,20 +6,21 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
 
-    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application' %>
 
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' %>
   </head>
 
   <body>
+    <%= render 'refills/navigation' %>
     <%= render 'shared/flash' %>
     <div class="main">
       <%= yield %>
     </div>
+    <%= render 'refills/footer' %>
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "startbootstrap-sb-admin/js/sb-admin" %>
-    </div>
   </body>
 </html>
