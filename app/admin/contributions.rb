@@ -5,9 +5,7 @@ ActiveAdmin.register Contribution do
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
   filter :company, as: :select, if: proc { current_user.super_admin? }
-  filter :user, as: :select, collection: proc {
-    current_user.super_admin? ? User.engineer.active.order(:name).group_by(&:company) : current_user.company.users.engineer.active.order(:name)
-  }
+  filter :user, as: :select, collection: proc { CompanyUsersCollectionQuery.new(current_user).call }
   filter :state, as: :select, collection: Contribution.aasm.states_for_select
   filter :created_at
 
@@ -76,7 +74,8 @@ ActiveAdmin.register Contribution do
   form do |f|
     f.semantic_errors
     inputs I18n.t('contribution_details') do
-      input :user
+      f.input :user, as: :select, collection: CompanyUsersCollectionQuery.new(current_user).call
+
       if current_user.super_admin?
         f.input :company
       else
