@@ -12,7 +12,7 @@ module IntegrationHelpers
     if user.otp_required_for_login
       fill_in 'user_otp_attempt', with: (otp || user.current_otp)
 
-      click_button 'Login'
+      click_button t('form.button.verify')
     end
   end
 
