@@ -2,44 +2,39 @@ module TwoFactorAuthentication
   extend ActiveSupport::Concern
 
   def authenticate_otp
-    @user = find_user
+    VerifyUserAuthenticity.call(**verify_user_authenticity_params) do |result|
+      @user = result.user
 
-    if @user && @user.otp_required_for_login?
-      if !user_params[:otp_attempt]
-        prompt_two_factor(@user)
-      elsif valid_otp?(@user)
-        authenticate(@user)
-      end
+      return unless result.otp_required_for_login?
+      return assign_session_and_redirect(@user) if result.authenticate?
+
+      authenticate(@user) if result.valid_otp?
     end
   end
 
   private
 
-  def prompt_two_factor(user)
-    if @user.valid_password?(user_params[:password])
-      session[:otp_user_id] = @user.id
-      render 'devise/sessions/two_factor'
-    end
+  def assign_session_and_redirect(user)
+    session[:otp_user_id] = user.id
+
+    render 'devise/sessions/two_factor'
   end
 
   def authenticate(user)
     session.delete(:otp_user_id)
+
     remember_me(user) if user_params[:remember_me]
-    user.save!
-    sign_in(@user, event: :authentication)
+
+    sign_in(user, event: :authentication)
   end
 
-  def valid_otp?(user)
-    user.validate_and_consume_otp!(user_params[:otp_attempt]) ||
-      user.invalidate_otp_backup_code!(user_params[:otp_attempt])
-  end
-
-  def find_user
-    if user_params[:email]
-      User.find_by(email: user_params[:email])
-    elsif session[:otp_user_id]
-      User.find(session[:otp_user_id])
-    end
+  def verify_user_authenticity_params
+    {
+      email: user_params[:email],
+      password: user_params[:password],
+      user_id: session[:otp_user_id],
+      otp_attempt: user_params[:otp_attempt]
+    }
   end
 
   def user_params
