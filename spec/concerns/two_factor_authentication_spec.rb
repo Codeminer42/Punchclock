@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe TwoFactorAuthentication, type: :controller do
-  let(:user) { create(:user, otp_required_for_login: is_otp_required) }
+  let(:user) { create(:user, otp_secret: 'secret', otp_required_for_login: is_otp_required) }
   let(:user_params) { { email: user.email, password: 'password' } }
   let(:otp_user_params) { user_params.merge(otp_attempt: user.current_otp) }
 
@@ -12,7 +12,6 @@ RSpec.describe TwoFactorAuthentication, type: :controller do
   end
 
   before do
-    set_2fa
     routes.draw { post :action, to: 'anonymous#action' }
   end
 
@@ -46,10 +45,5 @@ RSpec.describe TwoFactorAuthentication, type: :controller do
         expect(response.body).to eq ''
       end
     end
-  end
-
-  def set_2fa
-    user.otp_secret = user.class.generate_otp_secret
-    user.save
   end
 end
