@@ -246,13 +246,13 @@ describe 'Users', type: :feature do
       end
 
       context 'on Punches tab' do
-        let!(:monday_1_month_ago) { (DateTime.now - 4.week).monday }
-        let!(:datetime_first_monday) { user.office_holidays.include?({month: monday_1_month_ago.month, day: monday_1_month_ago.day}) ? monday_1_month_ago : monday_1_month_ago - 1.week }
-        let!(:punch) { create :punch, user: user, from: datetime_first_monday.change(hour: 8, min: 8, sec: 0), to: datetime_first_monday.change(hour: 12, min: 0, sec: 0) } 
+        let!(:monday_1_month_ago) { (DateTime.new(2021, 6, 1) - 4.week).monday }
+        let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) } 
         before { refresh }
         it 'finds all elements correctly' do
           within 'div#punches' do
-            freeze_time do
+            travel_to Time.new(2021, 6, 1) do
+              refresh
               expect(page).to have_table('') &
                               have_text('Empresa') &
                               have_text('Projeto') &
