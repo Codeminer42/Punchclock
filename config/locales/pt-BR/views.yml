@@ -36,6 +36,20 @@ pt-BR:
         E avisem hora extra para <strong>"rh@codeminer42.com"</strong>
       </p>
       Abs
+    notify_fill_punch_end_month_html: |
+      <p>
+        Pessoal,
+      </p>
+      <p>
+        Preencham o punch entre os dias 01/%{current_month} e %{last_day}.
+      </p>
+      <p>
+        <a href='https://%{host}'>%{host}</a>
+      </p>
+      <p>
+        E avisem hora extra para <strong>"rh@codeminer42.com"</strong>
+      </p>
+      Abs
     notify_admin_extra_hour:
       info: "%{user} registrou hora extra:"
       days:

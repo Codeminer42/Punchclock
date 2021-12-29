@@ -1,0 +1,5 @@
+<%= t('notification_mailer.notify_fill_punch_end_month_html',
+  host: ENV['HOST'],
+  last_day: Date.current.strftime("%d/%m"),
+  current_month: Date.current.month)
+%>

@@ -1,8 +1,14 @@
 namespace :notification do
-  desc 'Send email to fill punch'
+  desc 'Send email to fill punch on day fifteen'
   task fill_punch: :environment do
-    AlertFillPunchJob.perform_later
+    AlertFillPunchJob.perform_later("fifteen")
   end
+
+  desc 'Send email to fill punch in the end of month'
+  task fill_punch_month: :environment do
+    AlertFillPunchJob.perform_later("end_month")
+  end
+
 
   desc 'Verify and send email to admin if someone register extra hour'
   task verify_extra_hour: :environment do

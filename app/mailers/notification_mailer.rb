@@ -30,6 +30,11 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, subject: "Preencher Punch")
   end
 
+  def notify_fill_punch_end_month(user)
+    @user = user
+    mail(to: @user.email, subject: "Preencher Punch")
+  end
+
   def notify_admin_extra_hour(punches, admins_emails)
     @punches = punches
     mail(to: admins_emails, subject: "Punchclock - Horas extra registradas")
