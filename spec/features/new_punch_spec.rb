@@ -49,6 +49,7 @@ feature 'Add new Punch' do
 
     scenario 'test' do
       visit '/punches/new'
+
       expect(page).to have_content I18n.t(
         :creating, scope: %i(helpers actions), model: Punch.model_name.human
       )

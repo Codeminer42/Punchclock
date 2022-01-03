@@ -4,16 +4,16 @@ RSpec.describe QrCodeGeneratorService do
   let(:user) do
     create(
       :user,
-      otp_secret: 'fake_secret', 
+      otp_secret: 'fake_secret',
       email: 'example@exp.com'
-    ) 
+    )
   end
 
   let(:png_image) do
     double('png_image', to_data_url: 'data:fake_image_data')
   end
 
-  let(:qr_code) do  
+  let(:qr_code) do
     double('qr_code', as_png: png_image)
   end
 
@@ -25,11 +25,11 @@ RSpec.describe QrCodeGeneratorService do
 
   it 'create QR Code with the right URI' do
     image_data = QrCodeGeneratorService.call(user)
-    
+
     expect(RQRCode::QRCode)
       .to have_received(:new)
-      .with('otpauth://totp/Punchclock:example@exp.com?secret=fake_secret&issuer=Punchclock')
-      
+      .with('otpauth://totp/Punchclock:Punchclock_example%40exp.com?secret=fake_secret&issuer=Punchclock')
+
     expect(image_data).to eq('data:fake_image_data')
   end
 end

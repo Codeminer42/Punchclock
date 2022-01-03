@@ -17,7 +17,7 @@ describe Api::CompaniesController, :type => :controller do
       it { is_expected.to have_http_status(:ok) }
 
       it 'returns content type json' do
-        expect(subject.content_type).to eq 'application/json'
+        expect(subject.content_type).to eq 'application/json; charset=utf-8'
       end
 
       it 'returns company offices' do
@@ -45,7 +45,7 @@ describe Api::CompaniesController, :type => :controller do
       it { is_expected.to have_http_status(:ok) }
 
       it 'returns content type json' do
-        expect(subject.content_type).to eq 'application/json'
+        expect(subject.content_type).to eq 'application/json; charset=utf-8'
       end
 
       it 'returns company users' do

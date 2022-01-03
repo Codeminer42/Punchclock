@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe AlertFillPunchJob, type: :job do
-
   describe '#perform' do
+    subject(:perform) { described_class.perform_now(period) }
+
+    # TODO: Add SPECS for the "end of month" use case
+    let(:period) { 'fifteen' }
     let!(:company) { create(:company, name: "Codeminer42") }
     let(:admin) { create(:user, :admin, company: company) }
     let(:active_user) { create(:user, company: company, active: true) }
@@ -15,7 +18,6 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
     context 'when is NOT working day' do
       before do
-
         allow(NotificationMailer).to receive(:notify_user_to_fill_punch).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
       end
@@ -26,7 +28,8 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
       it 'does NOT send any emails' do
         expect(NotificationMailer).not_to receive(:notify_user_to_fill_punch)
-        subject.perform
+
+        perform
       end
 
       it 'reschedules to the next day' do
@@ -46,17 +49,20 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
       it 'sends an email only to active users' do
         expect(NotificationMailer).to receive(:notify_user_to_fill_punch).with(active_user)
-        subject.perform
+
+        perform
       end
 
       it 'does not send an email to inactive users' do
         expect(NotificationMailer).not_to receive(:notify_user_to_fill_punch).with(inactive_user)
-        subject.perform
+
+        perform
       end
 
       it 'sends an email to admins' do
         expect(NotificationMailer).to receive(:notify_user_to_fill_punch).with(admin)
-        subject.perform
+
+        perform
       end
     end
   end
