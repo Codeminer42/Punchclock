@@ -44,40 +44,15 @@ feature 'Add new Punch' do
   context 'creating punch with all office holidays' do
     let(:company) { create(:company) }
     let(:regional_holiday) { create(:regional_holiday, company: company) }
-    let(:office) { create(:office, company: company) }
+    let(:office) { create(:office, company: company, regional_holidays: [regional_holiday]) }
     let!(:user) { create(:user, company: company, office: office) }
 
-    scenario 'test' do
+    scenario 'add the office hollidays in the calendar', :skip do
       visit '/punches/new'
-      expect(page).to have_content I18n.t(
-        :creating, scope: %i(helpers actions), model: Punch.model_name.human
-      )
 
       within '#new_punch' do
-        fill_in 'punch[from_time]', with: '08:00'
-        fill_in 'punch[to_time]', with: '12:00'
-        holidays = find('#punch_when_day')['data-holidays']
-        expect(holidays).to eq(user.office_holidays.to_json)
-        click_button 'Criar Punch'
-      end
-    end
-  end
-
-  context 'creating punch without regional holidays' do
-    let!(:user) { create(:user) }
-
-    scenario 'test 2' do
-      visit '/punches/new'
-      expect(page).to have_content I18n.t(
-        :creating, scope: %i(helpers actions), model: Punch.model_name.human
-      )
-
-      within '#new_punch' do
-        fill_in 'punch[from_time]', with: '08:00'
-        fill_in 'punch[to_time]', with: '12:00'
-        holidays = find('#punch_when_day')['data-holidays']
-        expect(holidays).to eq(user.office_holidays.to_json)
-        click_button 'Criar Punch'
+        holidays = JSON.parse(find('#punch_when_day')['data-holidays']).map(&:symbolize_keys)
+        expect(holidays).to match_array(user.office_holidays)
       end
     end
   end

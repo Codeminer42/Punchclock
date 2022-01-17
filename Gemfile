@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.5'
 
-gem 'rails', '~> 6.0.4'
+gem 'rails', '~> 6.1.4'
 
 gem 'bootsnap', require: false
 
@@ -22,9 +22,9 @@ gem 'rqrcode'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'sass-rails'
-gem 'simple_form', '~> 5.0'
+gem 'simple_form', '~> 5.1.0'
 gem 'uglifier'
-gem 'activeadmin', '~> 2.8.1'
+gem 'activeadmin', '~> 2.9.0'
 gem 'draper'
 gem 'draper-cancancan'
 gem 'rails-i18n'
@@ -46,7 +46,7 @@ gem 'chartkick'
 
 gem 'normalize-rails', '~> 4.1.1'
 gem 'validates_timeliness', '~> 5.0.0.beta1'
-gem 'enumerize', '~> 2.3.1'
+gem 'enumerize', '~> 2.5.0'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'active_admin_theme'
 gem 'font-awesome-sass', '~> 5.13'

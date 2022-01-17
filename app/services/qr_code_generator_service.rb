@@ -13,7 +13,7 @@ class QrCodeGeneratorService
     resize_exactly_to: false,
     resize_gte_to: false,
     size: 120
-  }
+  }.freeze
 
   def self.call(user)
     label = "#{ISSUER_NAME}:#{user.email}"
