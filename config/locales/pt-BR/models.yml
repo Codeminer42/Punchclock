@@ -7,6 +7,12 @@ pt-BR:
         start_at: Início
         end_at: Término
         sucess: Usuários alocados com sucesso
+      hour_report:
+        name: Nome
+        email: Email
+        office: Escritório
+        project: Projeto
+        hours: Horas
   activerecord:
     errors:
       models:
@@ -85,6 +91,9 @@ pt-BR:
       contribution:
         one: "Contribuição"
         other: "Contribuições"
+      hour_report:
+        one: "Relatório de Horas"
+        other: "Relatórios de Horas"
     attributes:
       admin_user:
         id: "ID"

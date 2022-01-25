@@ -14,11 +14,12 @@ ActiveAdmin.register User do
                 :observation, :specialty, :otp_required_for_login, skill_ids: []
 
   scope :all
-  scope :active, default: true
-  scope :inactive
-  scope :office_heads
-  scope :admin
-  scope :not_allocated
+  scope :active, default: true, group: :active
+  scope :inactive, group: :active
+  scope :office_heads, group: :role
+  scope :admin, group: :role
+  scope :not_allocated, group: :allocation
+  scope :allocated, group: :allocation
 
   filter :name
   filter :email
@@ -49,6 +50,14 @@ ActiveAdmin.register User do
     redirect_to collection_path, notice: "The users have been enabled."
   end
 
+  action_item :hour_report_current, only: :index, priority: 0 do
+   link_to I18n.t('hour_report_curent_month'), hour_report_admin_users_path(format: :xls, month: :current)
+  end
+
+  action_item :hour_report_past, only: :index, priority: 0 do
+   link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xls, month: :past)
+  end
+
   index download_links: [:xls] do
     selectable_column
     column :name do |user|
@@ -59,7 +68,7 @@ ActiveAdmin.register User do
     column :specialty, &:specialty_text
     column :allow_overtime
     column :active
-    column :"2fa" do | user |
+    column :"2fa" do |user|
       status_tag user.otp_required_for_login
     end
     actions
@@ -244,6 +253,26 @@ ActiveAdmin.register User do
           redirect_to resource_path
         end
       end
+    end
+  end
+
+  collection_action :hour_report do
+    respond_to do |format|
+      reference_date = if params[:month] == "current"
+        Date.current
+      else
+        1.month.ago
+      end
+
+      date_range = reference_date.beginning_of_month..reference_date.end_of_month
+
+      reports = find_collection(except: :pagination).flat_map do |user|
+        HourReport.build_reports_for(user, date_range)
+      end
+
+      spreadsheet = HourReportSpreadsheet.new reports
+
+      format.xls { send_data spreadsheet.to_string_io, filename: "users-hours-#{Date.current}.xls" }
     end
   end
 end
