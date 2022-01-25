@@ -22,7 +22,8 @@ en:
         administrative: Administrative
         engineer: Engineer
       level:
-        trainee: Intern
+        trainee: Trainee
+        intern: Intern
         junior: Junior Engineer
         junior_plus: Junior Plus Engineer
         mid: Mid Engineer
@@ -35,6 +36,7 @@ en:
         devops: Devops
         fullstack:  Fullstack
         mobile: Mobile
+        qa: QA
       contract_type:
         internship: Internship
         employee: Employee

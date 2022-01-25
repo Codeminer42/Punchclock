@@ -5,12 +5,12 @@ class UsersSpreadsheet < BaseSpreadsheet
     [
       user.name,
       user.email,
-      user.level,
+      user.level_text,
       user.office&.city,
-      user.role,
-      user.specialty,
-      translate_enumerize(user.occupation),
-      user.contract_type,
+      user.role_text,
+      user.specialty_text,
+      user.occupation_text,
+      user.contract_type_text,
       user.github,
       user.skills.pluck(:title).join(', ')
     ]

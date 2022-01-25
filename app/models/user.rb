@@ -14,7 +14,7 @@ class User < ApplicationRecord
          :otp_secret_encryption_key => ENV['OTP_ENCRYPTION_KEY']
 
   enumerize :level, in: {
-    trainee: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
+    trainee: 7, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
     },  scope: :shallow,
         predicates: true
 

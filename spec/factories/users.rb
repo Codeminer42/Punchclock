@@ -68,6 +68,10 @@ FactoryBot.define do
       level { :trainee }
     end
 
+     trait :level_intern do
+      level { :intern }
+    end
+
     trait :level_junior do
       level { :junior }
     end

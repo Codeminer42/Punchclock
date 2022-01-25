@@ -28,11 +28,11 @@ RSpec.describe UsersSpreadsheet do
     [
       user.name,
       user.email,
-      user.level,
+      user.level_text,
       user.office.city,
-      user.role,
-      user.specialty,
-      user.contract_type,
+      user.role_text,
+      user.specialty_text,
+      user.contract_type_text,
       user.github,
       user.skills.pluck(:title).join(', ')
     ].concat(enumerize_attributes)

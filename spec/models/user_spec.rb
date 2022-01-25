@@ -73,13 +73,14 @@ RSpec.describe User, type: :model do
   end
 
   describe "level" do
-    it { is_expected.to enumerize(:level).in( trainee: 0,
+    it { is_expected.to enumerize(:level).in( intern: 0,
                                               junior: 1,
                                               junior_plus: 2,
                                               mid: 3,
                                               mid_plus: 4,
                                               senior: 5,
-                                              senior_plus: 6 ) }
+                                              senior_plus: 6,
+                                              trainee: 7) }
 
   end
 
@@ -119,7 +120,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'evaluations' do
-    let(:user)           { create(:user) }
+    let(:user)         { create(:user) }
     let!(:evaluations) { create_list :evaluation, 2, :performance, evaluated: user }
     let!(:english_evaluation) { create(:evaluation, :english, english_level: 'beginner', evaluated: user) }
 

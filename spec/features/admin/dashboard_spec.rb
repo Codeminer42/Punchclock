@@ -9,8 +9,8 @@ describe 'Dashboard', type: :feature do
   let!(:project)   { create(:project, company: admin_user.company, client: client) }
 
   before do
-    create(:user, :with_overall_score, :level_trainee, score: 8)
-    create(:user, :with_overall_score, :level_trainee, score: 3)
+    create(:user, :with_overall_score, :level_intern, score: 8)
+    create(:user, :with_overall_score, :level_intern, score: 3)
     create(:user, :with_overall_score, :level_junior, score: 7)
     create(:user, :with_overall_score, :level_junior, score: 9)
     create(:user, :with_overall_score, :level_junior_plus, score: 1)
@@ -59,7 +59,7 @@ describe 'Dashboard', type: :feature do
 
   describe 'Score average' do
     it 'have trainee average' do
-      row = find("tr", text: "Trainee")
+      row = find("tr", text: "Intern")
       within row do
         expect(page).to have_text(5.5)
       end

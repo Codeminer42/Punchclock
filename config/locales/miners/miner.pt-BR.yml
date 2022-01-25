@@ -5,7 +5,8 @@ pt-BR:
           administrative: Administrativo
           engineer: Engenheiro
         level:
-          trainee: Estagiário
+          trainee: Trainee
+          intern: Estagiário
           junior: Junior
           junior_plus: Junior Plus
           mid: Pleno
@@ -17,6 +18,7 @@ pt-BR:
           backend:  Backend
           devops: Devops
           mobile: Mobile
+          qa: QA
         contract_type:
           internship: Estagiário
           employee: Funcionário
