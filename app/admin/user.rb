@@ -55,12 +55,12 @@ ActiveAdmin.register User do
       link_to user.name, admin_user_path(user)
     end
     column :office
-    column :level
-    column :specialty
+    column :level, &:level_text
+    column :specialty, &:specialty_text
     column :allow_overtime
     column :active
     column :"2fa" do | user |
-      user.otp_required_for_login
+      status_tag user.otp_required_for_login
     end
     actions
   end
