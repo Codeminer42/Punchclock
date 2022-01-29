@@ -26,6 +26,7 @@ class ContributionsByOfficeQuery
 
   def per_month(month)
     date = Date.today.change(day: 1, month: month)
+
     @relation = @relation.where("contributions.created_at >= :start_date AND contributions.created_at <= :end_date",
                                  start_date: date.beginning_of_month, end_date: date.end_of_month)
 

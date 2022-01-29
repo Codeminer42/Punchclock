@@ -18,4 +18,8 @@ class HourReport
       new(project, user, project_time)
     end
   end
+
+  def ==(other)
+    project == other.project && user == other.user && hours == other.hours
+  end
 end
