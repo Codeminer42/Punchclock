@@ -3,7 +3,7 @@ require 'spec_helper'
 describe NotificationMailer do
   describe 'notification email' do
     context 'when user sign up' do
-      let(:user) { FactoryBot.build(:user, :admin) }
+      let(:user) { FactoryBot.build(:user) }
       let(:mail) { NotificationMailer.notify_user_registration(user) }
 
       it 'renders the subject' do
