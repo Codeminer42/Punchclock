@@ -83,7 +83,7 @@ ActiveAdmin.register User do
           row :name
           row :email
           row :"2fa" do 
-            user.otp_required_for_login
+            status_tag user.otp_required_for_login
           end
           row :github
           row :token
@@ -92,11 +92,11 @@ ActiveAdmin.register User do
           row :english_level
           row :overall_score
           row :performance_score
-          row :occupation
-          row :specialty
-          row :level
-          row :contract_type
-          row :role
+          row :occupation, &:occupation_text
+          row :specialty, &:specialty_text
+          row :level, &:level_text
+          row :contract_type, &:contract_type_text
+          row :role, &:role_text
           row :skills do
             user.skills.pluck(:title).to_sentence
           end

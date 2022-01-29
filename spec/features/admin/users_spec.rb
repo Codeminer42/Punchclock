@@ -142,10 +142,10 @@ describe 'Users', type: :feature do
                         have_text(I18n.l(started_at, format: '%d de %B de %Y')) &
                         have_text(office.city) &
                         have_text(skill.title) &
-                        have_text('engineer') &
+                        have_text('Engenheiro') &
                         have_text('Backend') &
                         have_text('Junior') &
-                        have_text('Internship') &
+                        have_text('Estagiário') &
                         have_text('Admin') &
                         have_css('.row-active td', text: 'Sim') &
                         have_text('Observation')
