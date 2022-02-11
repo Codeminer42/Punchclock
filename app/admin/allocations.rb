@@ -89,11 +89,7 @@ ActiveAdmin.register Allocation do
                                       .select(:id, :name)
       
         input :user, as: :select, collection: company_users_not_allocated
-        if params[:action] == 'edit'
-          input :project, collection: current_user.company.projects.order(:name)
-        else
-          input :project, collection: current_user.company.projects.active.order(:name)
-        end
+        input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?)
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
