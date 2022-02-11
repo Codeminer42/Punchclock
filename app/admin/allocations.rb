@@ -87,9 +87,13 @@ ActiveAdmin.register Allocation do
                                       .new(current_user.company)
                                       .not_allocated_including(f.object.user)
                                       .select(:id, :name)
-
+      
         input :user, as: :select, collection: company_users_not_allocated
-        input :project, collection: current_user.company.projects.active.order(:name)
+        if params[:action] == 'edit'
+          input :project, collection: current_user.company.projects.order(:name)
+        else
+          input :project, collection: current_user.company.projects.active.order(:name)
+        end
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
