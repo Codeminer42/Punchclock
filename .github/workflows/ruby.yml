@@ -36,7 +36,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v2
       with:
-        node-version: 12.16.1
+        node-version: 15.14.0
         cache: 'yarn'
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
