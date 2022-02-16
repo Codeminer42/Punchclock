@@ -96,10 +96,16 @@ pt-BR:
   form:
     title:
       change_your_password: 'Mude sua senha'
+      verify_your_identity: 'Verifique Sua Identidade'
     hint:
       minimum_caracters: 'caracteres mínimos'
+      authentication_code: 'Digite o código de 6 dígitos ou o de recuperação.'
     field:
       new_password: 'Nova Senha'
       confirm_new_password: 'Confirmar nova senha'
+      authentication_code: 'Código de Autenticação'
     button:
       change_my_password: 'Mudar minha senha'
+      verify: 'Verificar'
+    links:
+      return_to_sign_in: 'Retornar ao Sign In.'

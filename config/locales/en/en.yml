@@ -40,10 +40,16 @@ en:
   form:
     title:
       change_your_password: 'Change your password'
+      verify_your_identity: 'Verify Your Identity'
     hint:
       minimum_caracters: 'caracters minimum'
+      authentication_code: 'Enter the 6 digit code or the recovery code.'
     field:
       new_password: 'New Password'
       confirm_new_password: 'Confirm new password'
+      authentication_code: 'Authentication Code'
     button:
       change_my_password: 'Change my password'
+      verify: 'Verify'
+    links:
+      return_to_sign_in: 'Return to Sign In.'
