@@ -65,6 +65,10 @@ describe 'Admin Allocation', type: :feature do
         expect(page).not_to have_text(project_not_active.name)
       end
 
+      it 'should not render nil project' do
+        expect(page).to have_select('allocation_project_id', options: ["", project.name])
+      end
+
       it 'should render users not allocated' do
         expect(page).to have_text(user_not_allocated.name) &
                         have_text(project.name)
@@ -172,6 +176,12 @@ describe 'Admin Allocation', type: :feature do
                         have_css(".row-project td", text: allocation.project.name) &
                         have_css(".row-start_at td", text: I18n.l(allocation.start_at, format: :long)) &
                         have_css(".row-end_at td", text: I18n.l(Date.today.next_month, format: :long))
+      end
+
+      it "must show inactive project if user allocated" do
+        project.disable!
+        visit current_path
+        expect(page).to have_select('allocation_project_id', options: ["", project.name])
       end
     end
 
