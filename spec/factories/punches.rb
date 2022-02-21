@@ -9,5 +9,8 @@ FactoryBot.define do
     trait :is_extra_hour do
       extra_hour { true }
     end
+    trait :with_attachment do
+      attachment {Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/attachment.txt"))}
+    end
   end
 end

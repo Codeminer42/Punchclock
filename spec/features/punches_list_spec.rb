@@ -10,6 +10,9 @@ feature 'Punches list' do
   let!(:other_punch) {
     create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
   }
+  let!(:punch_with_attachment) {
+    create(:punch, :with_attachment , user_id: authed_user.id, company_id: authed_user.company_id)
+  }
 
   before do
     visit '/punches'
@@ -47,5 +50,14 @@ feature 'Punches list' do
     click_button 'Filtrar'
 
     expect(page).to have_css('tbody tr', count: 1)
+  end
+
+  it "Renders attachment link" do
+    expect(page).to have_link('', href: punch_with_attachment.attachment_url)  
+  end
+
+  scenario 'follow attachment link' do
+    find("a[href='#{punch_with_attachment.attachment_url}']").click
+    expect(page).to have_content('This is a punch attachment')
   end
 end
