@@ -20,7 +20,11 @@ class AllocationsAndUnalocatedUsersQuery
   def where
     {
       end_at: [last_user_allocations, nil],
-      users: { occupation: User.occupation.engineer.value, company: company },
+      users: {
+        occupation: User.occupation.engineer.value,
+        company: company,
+        active: true
+      },
       company: [company, nil]
     }
   end
