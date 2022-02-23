@@ -110,8 +110,8 @@ GEM
     ast (2.4.2)
     attr_encrypted (3.1.0)
       encryptor (~> 3.0.0)
-    autoprefixer-rails (10.2.4.0)
-      execjs
+    autoprefixer-rails (10.4.2.0)
+      execjs (~> 2)
     bcrypt (3.1.16)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
@@ -147,16 +147,12 @@ GEM
       capybara
       selenium-webdriver
     certified (1.0.0)
-    chartkick (3.4.2)
+    chartkick (4.1.3)
     childprocess (3.0.0)
     chunky_png (1.4.0)
     codeclimate-test-reporter (1.0.7)
       simplecov
     coderay (1.1.3)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crack (0.4.5)
@@ -197,7 +193,7 @@ GEM
     erubi (1.10.0)
     erubis (2.7.0)
     excon (0.79.0)
-    execjs (2.7.0)
+    execjs (2.8.1)
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.1.0)
@@ -434,8 +430,6 @@ GEM
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.0)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -527,7 +521,7 @@ DEPENDENCIES
   active_admin_theme
   active_skin
   activeadmin (~> 2.9.0)
-  autoprefixer-rails (~> 10.2.4.0)
+  autoprefixer-rails (~> 10.4.2.0)
   better_errors
   binding_of_caller
   bootsnap
@@ -541,7 +535,6 @@ DEPENDENCIES
   certified
   chartkick
   codeclimate-test-reporter
-  coffee-script (~> 2.4, >= 2.4.1)
   devise (~> 4.7.3)
   devise-two-factor
   dotenv-rails (~> 2.7)
@@ -580,7 +573,7 @@ DEPENDENCIES
   rspec-rails
   rubocop
   rubocop-faker (~> 1.1)
-  sass-rails
+  sassc-rails
   selenium-webdriver
   shoulda-matchers
   sidekiq
