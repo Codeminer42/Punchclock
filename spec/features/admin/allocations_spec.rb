@@ -30,6 +30,28 @@ describe 'Admin Allocation', type: :feature do
     end
   end
 
+  describe 'List of Allocations' do
+    let!(:john) {
+      create(:user, name: 'John Doe', company: company, active: false)
+    }
+    let!(:company) { create(:company) }
+
+    before do
+      visit '/admin/allocations'
+
+      create(:allocation,
+            start_at: Date.new(2019, 6, 17),
+            user: john,
+            project: project,
+            company: company )
+    end
+
+    it "shuold not display inactive users" do
+      expect(page).not_to have_text('John Doe')
+    end
+
+  end
+
   describe 'Filters' do
     before do
       create_list(:user, 2, company: admin_user.company)
@@ -53,7 +75,7 @@ describe 'Admin Allocation', type: :feature do
   describe 'Actions' do
     describe 'New' do
       let!(:user_not_allocated) { create(:user, company: admin_user.company) }
-      let!(:project_not_active) { create(:project, :inactive, company: admin_user.company) } 
+      let!(:project_not_active) { create(:project, :inactive, company: admin_user.company) }
 
       before { click_link 'Novo(a) Alocação' }
 

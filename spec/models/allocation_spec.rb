@@ -14,7 +14,7 @@ RSpec.describe Allocation, type: :model do
 
   describe 'validate' do
     let(:user) { create(:user) }
-    let(:user_2) { create(:user) } 
+    let(:user_2) { create(:user) }
 
     context 'end_at' do
       it 'should not be before start_at' do
@@ -24,11 +24,11 @@ RSpec.describe Allocation, type: :model do
       end
     end
 
-    context 'selected dates' do  
+    context 'selected dates' do
       before do
-        create(:allocation, user: user, end_at: 1.week.after)  
+        create(:allocation, user: user, end_at: 1.week.after)
       end
-      
+
       it 'overlaps an existing period to same user' do
         allocation = build(:allocation, user: user, start_at: 2.days.after, end_at: 2.week.after )
         allocation.validate
@@ -95,8 +95,8 @@ RSpec.describe Allocation, type: :model do
 
         context 'update' do
           let(:allocation) { create(:allocation, end_at: 2.week.after, user: user) }
-          
-          it 'should not be possible update an allocation to be endless' do  
+
+          it 'should not be possible update an allocation to be endless' do
             allocation.end_at = nil
             allocation.validate
             expect(allocation.errors[:start_at]).to eq(['Já existe uma alocação desse usuário nesse período'])
@@ -111,6 +111,58 @@ RSpec.describe Allocation, type: :model do
 
       end
 
+    end
+  end
+
+  describe 'scope' do
+    let!(:john) { create(:user, name: 'John Doe', company: company, active: false) }
+    let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
+    let(:company) { create(:company) }
+
+    context '.ongoing' do
+      subject(:ongoing) { described_class.ongoing }
+
+      let(:names) { ongoing.map { |allocation| allocation.user.name } }
+
+      before do
+        create(:allocation,
+               start_at: 3.months.after,
+               end_at: 4.months.after,
+               user: john,
+               company: company)
+        create(:allocation,
+               start_at: 3.months.after,
+               end_at: 4.months.after,
+               user: alex,
+               company: company)
+      end
+
+      it "return only allocation from active users only" do
+        expect(names).to eq ["Alex Doratov"]
+      end
+    end
+
+    context '.finished' do
+      subject(:finished) { described_class.finished }
+
+      let(:names) { finished.map { |allocation| allocation.user.name } }
+
+      before do
+        create(:allocation,
+              start_at: 10.day.ago,
+              end_at: 1.day.ago,
+              user: john,
+              company: company)
+        create(:allocation,
+              start_at: 10.day.ago,
+              end_at: 1.day.ago,
+              user: alex,
+              company: company)
+      end
+
+      it "return only allocation from active users only" do
+        expect(names).to eq ["Alex Doratov"]
+      end
     end
   end
 

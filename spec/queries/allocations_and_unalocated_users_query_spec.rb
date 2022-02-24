@@ -72,5 +72,31 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
         expect(names).to eq ['Alex Doratov', 'John Doe', 'Brian May', 'Roan Britt']
       end
     end
+
+    context 'when the user are inactive' do
+      let!(:john) { create(:user, name: 'John Doe', company: company, active: false) }
+      let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
+
+      let(:names) { call.map { |allocation| allocation.user.name } }
+
+      before do
+        create(:allocation,
+               start_at: 3.months.after,
+               end_at: 4.months.after,
+               user: john,
+               company: company)
+
+        create(:allocation,
+               start_at: 3.months.ago,
+               end_at: 2.months.ago,
+               user: alex,
+               company: company)
+      end
+
+
+      it 'returns only the active users allocated' do
+        expect(names).to eq ['Alex Doratov']
+      end
+    end
   end
 end
