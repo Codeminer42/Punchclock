@@ -45,9 +45,9 @@ feature 'Add new Punch' do
     let(:company) { create(:company) }
     let(:regional_holiday) { create(:regional_holiday, company: company) }
     let(:office) { create(:office, company: company, regional_holidays: [regional_holiday]) }
-    let!(:user) { create(:user, company: company, office: office) }
+    let!(:user) { create_logged_in_user({ office: office, company: company }) }
 
-    scenario 'add the office hollidays in the calendar', :skip do
+    scenario 'add the office hollidays in the calendar' do
       visit '/punches/new'
 
       within '#new_punch' do

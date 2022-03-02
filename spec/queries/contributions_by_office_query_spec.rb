@@ -82,11 +82,16 @@ RSpec.describe ContributionsByOfficeQuery do
       user = create(:user, company: company, office: offices.first)
 
       create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 3, { user: user, company: company, created_at: 1.month.ago })
+      create_list(:contribution, 4, { user: user, company: company, created_at: 1.month.ago })
+      create_list(:contribution, 5, { user: user, company: company, created_at: 13.month.ago })
     end
 
-    it 'return the right number of contributions', :skip do
-      expect(subject.per_month(1.month.ago.month).to_relation.first.number_of_contributions).to eq(3)
+    it 'return the right number of contributions' do
+      expect(subject.per_month(1.month.ago).to_relation.first.number_of_contributions).to eq(4)
+    end
+
+    it 'return the right number of contributions from more than 1 year ago' do
+      expect(subject.per_month(13.month.ago).to_relation.first.number_of_contributions).to eq(5)
     end
   end
 
