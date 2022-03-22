@@ -45,15 +45,13 @@ RSpec.describe ContributionsByUserQuery do
   end
 
   context '#per_month' do
-    let(:today) { Date.today }
-    let(:last_month) { today.month - 1 }
-
     before do
+      travel_to Date.new(2022, 1, 15)
       create_list(:contribution, 3, { user: user, company: company })
       create_list(:contribution, 3,
-                  { user: user, company: company, created_at: Date.new(today.year, last_month, 13) })
+                  { user: user, company: company, created_at: Date.today.last_month })
     end
-    subject(:per_month) { described_class.new.per_month(today.month) }
+    subject(:per_month) { described_class.new.per_month(1) }
 
     it 'returns the number of contributions from the respective month' do
       expect(subject.to_hash.first.last).to eq(3)
