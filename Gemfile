@@ -87,8 +87,9 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0'
 end
 
+gem 'unicorn'
+
 group :development, :test do
-  gem 'unicorn'
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.14.0'
   gem 'rspec-rails'
