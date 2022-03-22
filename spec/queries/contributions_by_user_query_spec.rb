@@ -8,22 +8,24 @@ RSpec.describe ContributionsByUserQuery do
   let(:user)    { create(:user, company: company, office: offices.first) }
 
   context '#to_hash' do
+    subject(:to_hash) { described_class.new.to_hash }
+
     before do
       create_list(:contribution, 6, { user: user, company: company })
     end
 
-    subject(:to_hash) { described_class.new.to_hash }
-
-    it 'return the user name' do
+    it 'returns the user name' do
       expect(subject.keys.first).to eq(user.id)
     end
 
-    it 'return the right number of contributions' do
+    it 'returns the right number of contributions' do
       expect(subject[user.id]).to eq(6)
     end
   end
 
   context '#by_company' do
+    subject(:by_company) { described_class.new.by_company(company) }
+
     before do
       company_two = create(:company)
       other_office = create(:office, { company: company_two })
@@ -33,9 +35,7 @@ RSpec.describe ContributionsByUserQuery do
       create_list(:contribution, 5, { user: @other_company_user, company: company_two })
     end
 
-    subject(:by_company) { described_class.new.by_company(company) }
-
-    it 'return contributions of users by company' do
+    it 'returns contributions of users by company' do
       expect(subject.to_hash.keys).to include(user.id)
     end
 
@@ -45,28 +45,29 @@ RSpec.describe ContributionsByUserQuery do
   end
 
   context '#per_month' do
+    subject(:per_month) { described_class.new.per_month(1) }
+
     before do
       travel_to Date.new(2022, 1, 15)
       create_list(:contribution, 3, { user: user, company: company })
       create_list(:contribution, 3,
                   { user: user, company: company, created_at: Date.today.last_month })
     end
-    subject(:per_month) { described_class.new.per_month(1) }
 
-    it 'returns the number of contributions from the respective month' do
+    it 'returns the right number of contributions' do
       expect(subject.to_hash.first.last).to eq(3)
     end
   end
 
   context '#approved' do
+    subject(:approved) { described_class.new.approved }
+
     before do
       create_list(:contribution, 3, { user: user, company: company })
       create_list(:contribution, 3, { user: user, company: company, state: :approved })
     end
 
-    subject(:approved) { described_class.new.approved }
-
-    it 'returns the right number of approved contributions' do
+    it 'returns the right number of contributions' do
       expect(subject.to_hash.first.last).to eq(3)
     end
   end
