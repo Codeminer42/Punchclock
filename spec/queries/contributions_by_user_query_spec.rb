@@ -47,12 +47,12 @@ RSpec.describe ContributionsByUserQuery do
   context '#per_month' do
     before do
       create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 3, { user: user, company: company, created_at: Date.new(Date.today.year, 03, 13) })
+      create_list(:contribution, 1, { user: user, company: company, created_at: 1.month.ago })
     end
 
-    subject(:per_month) { described_class.new.per_month(3) }
+    subject(:per_month) { described_class.new.per_month(Time.now.month) }
 
-    it 'return the right number of contributions' do
+    it 'returns the number of contributions from the respective month' do
       expect(subject.to_hash.first.last).to eq(3)
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe ContributionsByUserQuery do
 
     subject(:approved) { described_class.new.approved }
 
-    it 'return the right number of contributions' do
+    it 'returns the right number of approved contributions' do
       expect(subject.to_hash.first.last).to eq(3)
     end
   end
