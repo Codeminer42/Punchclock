@@ -27,14 +27,14 @@
                   <td><%= user.level %></td>
                   <td><%= user.office_city%></td>
                   <td>
-                    <% unless user.last_performance_evaluation.nil? %>
+                    <% if user.last_performance_evaluation %>
                       <%= user.last_performance_evaluation.evaluation_date || user.last_performance_evaluation.created_at.strftime('%e/%m/%Y') %> -
                       <%= link_to "View", evaluation_path(user.last_performance_evaluation.id)%>
                     <% end%>
                   </td>
                   <td><%= user.last_performance_evaluation&.score %></td>
                   <td>
-                    <% unless user.last_english_evaluation.nil? %>
+                    <% if user.last_english_evaluation %>
                       <%= user.last_english_evaluation.evaluation_date || user.last_english_evaluation.created_at.strftime('%e/%m/%Y') %> -
                       <%= link_to "View", evaluation_path(user.last_english_evaluation.id)%>
                     <% end%>
