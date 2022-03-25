@@ -107,20 +107,24 @@ class User < ApplicationRecord
     name
   end
 
-  def last_evaluation
-    evaluations.last || OpenStruct.new(score: nil)
-  end
-
-  def english_level
-    evaluations.by_kind(:english).order(:created_at).last.try(:english_level)
-  end
-
   def performance_score
     evaluations.by_kind(:performance).average(:score).try(:round, 2)
   end
 
+  def english_level
+    last_english_evaluation.try(:english_level)
+  end
+
   def english_score
-    evaluations.by_kind(:english).last.try(:score)
+    last_english_evaluation.try(:score)
+  end
+  
+  def last_english_evaluation
+    evaluations.by_kind(:english).order(:created_at).last
+  end
+
+  def last_performance_evaluation
+    evaluations.by_kind(:performance).order(:created_at).last
   end
 
   def overall_score
