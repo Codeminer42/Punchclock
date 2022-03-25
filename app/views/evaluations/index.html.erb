@@ -13,8 +13,10 @@
                 <th>Name</th>
                 <th>Level</th>
                 <th>Office</th>
-                <th>Last evaluated at</th>
-                <th>Last evaluation score</th>
+                <th>Last Performance Evaluation</th>
+                <th>Last Performance Evaluation Score</th>
+                <th>Last English Evaluation</th>
+                <th>Last English Level </th>
                 <th>Evaluate</th>
               </tr>
             </thead>
@@ -25,12 +27,19 @@
                   <td><%= user.level %></td>
                   <td><%= user.office_city%></td>
                   <td>
-                    <% unless user.evaluations.last.nil? %>
-                      <%= user.last_evaluation.evaluation_date || user.last_evaluation.created_at.strftime('%e/%m/%Y') %> -
-                      <%= link_to "View", evaluation_path(user.last_evaluation.id)%>
+                    <% unless user.last_performance_evaluation.nil? %>
+                      <%= user.last_performance_evaluation.evaluation_date || user.last_performance_evaluation.created_at.strftime('%e/%m/%Y') %> -
+                      <%= link_to "View", evaluation_path(user.last_performance_evaluation.id)%>
                     <% end%>
                   </td>
-                  <td><%= user.last_evaluation.score %></td>
+                  <td><%= user.last_performance_evaluation&.score %></td>
+                  <td>
+                    <% unless user.last_english_evaluation.nil? %>
+                      <%= user.last_english_evaluation.evaluation_date || user.last_english_evaluation.created_at.strftime('%e/%m/%Y') %> -
+                      <%= link_to "View", evaluation_path(user.last_english_evaluation.id)%>
+                    <% end%>
+                  </td>
+                  <td><%= user.last_english_evaluation&.english_level&.capitalize %></td>
                   <td>
                     <%= link_to(show_questionnaire_kinds_path(user_id: user.id),
                                 remote: true,
