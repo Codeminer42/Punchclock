@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.5'
 
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 6.1.4.7'
 
 gem 'bootsnap', require: false
 
@@ -15,7 +15,7 @@ gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'pg', '~> 1.2'
 gem 'sprockets'
 gem 'cancancan', '~> 3.1'
-gem 'carrierwave', '~> 2.2.1', github: 'carrierwaveuploader/carrierwave'
+gem 'carrierwave', '~> 2.2.2'
 gem 'devise', '~> 4.7.3'
 gem 'devise-two-factor'
 gem 'rqrcode'
