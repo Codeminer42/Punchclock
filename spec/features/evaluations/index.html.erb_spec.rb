@@ -34,7 +34,7 @@ describe "Visit Evaluations", type: :feature do
   context 'by clicking the performance evaluation view button' do
     let!(:evaluation) { create(:evaluation, :with_answers, company: user.company) }
 
-    it 'then the show last evaluation url must have the correct evaluation_id' do
+    it 'then the show last performance evaluation url must have the correct evaluation_id' do
       visit('/evaluations')
       find_link('View', href: "/evaluations/#{evaluation.id}").click
 
@@ -45,7 +45,7 @@ describe "Visit Evaluations", type: :feature do
   context 'by clicking the english evaluation view button' do
     let!(:evaluation) { create(:evaluation, :english, :with_answers, company: user.company) }
 
-    it 'then the show last evaluation url must have the correct evaluation_id' do
+    it 'then the show last english evaluation url must have the correct evaluation_id' do
       visit('/evaluations')
       find_link('View', href: "/evaluations/#{evaluation.id}").click
 
