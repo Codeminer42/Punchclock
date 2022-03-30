@@ -78,7 +78,13 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'per_month' do
+    around do |example|
+      travel_to(DateTime.new(2022,01, 01), &example)
+    end
+
     before do
+      travel_to '2022-01-01'.to_date
+
       user = create(:user, company: company, office: offices.first)
 
       create_list(:contribution, 3, { user: user, company: company })
