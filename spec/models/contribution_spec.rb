@@ -57,6 +57,7 @@ RSpec.describe Contribution, type: :model do
   describe 'scopes' do
     let!(:today_contribution) { create :contribution }
     let!(:last_week_contribution) { create :contribution, created_at: 1.week.ago }
+    let!(:inactive_user_contribution) { create :contribution, user: create(:user, :inactive) }
 
     it 'is in this week' do
       expect(described_class.this_week.first).to eq(today_contribution)
@@ -64,6 +65,11 @@ RSpec.describe Contribution, type: :model do
 
     it 'is in last week' do
       expect(described_class.last_week.first).to eq(last_week_contribution)
+    end
+
+    it 'has active engineer' do
+      expect(described_class.active_engineers).to include(today_contribution, last_week_contribution)
+      expect(described_class.active_engineers).not_to include inactive_user_contribution
     end
   end
 end
