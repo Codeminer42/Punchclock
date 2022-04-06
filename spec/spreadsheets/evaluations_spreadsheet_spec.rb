@@ -8,9 +8,14 @@ RSpec.describe EvaluationsSpreadsheet do
   let(:header_attributes) do
     [
       Evaluation.human_attribute_name('id'),
+      Evaluation.human_attribute_name('evaluator'),
+      Evaluation.human_attribute_name('evaluated'),
+      Evaluation.human_attribute_name('evaluated_email'),
       Evaluation.human_attribute_name('observation'),
       Evaluation.human_attribute_name('score'),
       Evaluation.human_attribute_name('english_level'),
+      Evaluation.human_attribute_name('questionnaire'),
+      Evaluation.human_attribute_name('questionnaire_kind'),
       Evaluation.human_attribute_name('created_at'),
       Evaluation.human_attribute_name('updated_at'),
       Evaluation.human_attribute_name('evaluation_date')
@@ -20,11 +25,16 @@ RSpec.describe EvaluationsSpreadsheet do
   let (:body_attributes) do
     [
       evaluation.id,
+      evaluation.evaluator.name,
+      evaluation.evaluated.name,
+      evaluation.evaluated.email,
       evaluation.observation,
       evaluation.score,
       evaluation.english_level.text,
+      evaluation.questionnaire.title,
+      evaluation.questionnaire.kind,
       I18n.l(evaluation.created_at, format: :long),
-      I18n.l(evaluation.created_at, format: :long),
+      I18n.l(evaluation.updated_at, format: :long),
       I18n.l(evaluation.evaluation_date, format: :long)
     ]
   end
