@@ -18,10 +18,14 @@ class Questionnaire < ApplicationRecord
                     predicates: true
 
   def being_used
-    errors.add(:base, 'cannot be changed. It\'s being used') unless evaluations.empty? || active_changed?
+    errors.add(:base, "cannot be changed. It's being used") unless evaluations.empty? || active_changed?
   end
 
   def toggle_active
     update(active: !active)
+  end
+
+  def to_s
+    title
   end
 end
