@@ -41,7 +41,7 @@ describe 'Admin Evaluation', type: :feature do
 
     it 'by evaluation date' do
       within '#filters_sidebar_section' do
-        expect(page).to have_css('label', text: 'Evaluation date')
+        expect(page).to have_css('label', text: 'Data da avaliação')
       end
     end
   end

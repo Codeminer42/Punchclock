@@ -67,4 +67,6 @@ Rails.application.routes.draw do
       post :confirm, on: :collection
     end
   end
+
+  match "*path", to: redirect("/404"), via: :all
 end
