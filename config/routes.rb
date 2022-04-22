@@ -45,10 +45,11 @@ Rails.application.routes.draw do
   )
 
   namespace :api do
-    get "users" => "companies#users"
-    get "offices" => "companies#offices"
-    get "holidays" => "holidays#holidays_dashboard"
-    post "open-source/contributions" => "contributions#create"
+    namespace :v1 do
+      get "users" => "companies#users"
+      get "offices" => "companies#offices"
+      get "holidays" => "holidays#holidays_dashboard"
+    end
   end
 
   if Rails.env.development?

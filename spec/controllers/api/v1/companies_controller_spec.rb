@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Api::CompaniesController, :type => :controller do
+describe Api::V1::CompaniesController, :type => :controller do
   let!(:company) { create(:company) }
   let!(:offices) { create_list(:office, 3, company: company) }
   let!(:user) { create(:user, :with_token, company: company, office: offices.first) }
   let(:headers) { { token: user.token } }
 
-  describe 'GET api/offices' do
+  describe 'GET api/v1/offices' do
     subject { get :offices }
 
     context 'when api token is valid' do
@@ -34,7 +34,7 @@ describe Api::CompaniesController, :type => :controller do
     end
   end
 
-  describe 'GET api/users' do
+  describe 'GET api/v1/users' do
     subject { get :users }
 
     context 'when api token is valid' do
