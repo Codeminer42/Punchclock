@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Api::HolidaysController, :type => :controller do
+describe Api::V1::HolidaysController, :type => :controller do
   let(:user) { create(:user) }
 
   before { login user }
 
-  describe 'GET /holidays_dashboard' do
+  describe 'GET api/v1/holidays_dashboard' do
     subject(:request) { get :holidays_dashboard }
 
     it { is_expected.to have_http_status(:ok) }

@@ -5,7 +5,7 @@ asPromissed(request);
 
 const urls = {
   sheets: '/dashboard/sheets',
-  holidays: '/api/holidays'
+  holidays: '/api/v1/holidays'
 };
 const csrf = {
   token: document.querySelector('[name="csrf-token"]'),
