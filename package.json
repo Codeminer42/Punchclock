@@ -7,11 +7,11 @@
     "linter:css": "stylelint 'app/assets/stylesheets/**/*' --syntax scss"
   },
   "engines": {
-    "node": "15.14.0"
+    "node": "16.13.1"
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
-    "@rails/webpacker": "^4.0.7",
+    "@rails/webpacker": "^5.4.3",
     "babel-core": "^6.18.2",
     "babel-loader": "^8.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
