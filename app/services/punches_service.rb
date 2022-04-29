@@ -1,15 +1,20 @@
 class PunchesService
   def self.create(punches, user)
-    deletes = punches.map { |punch| punch['from'] }
+    punches_date_to_delete = punches.map { |punch| punch['from'] }
 
-    @punches = user.punches
-    created_punches = @punches.transaction do
-      @punches.by_days(deletes).delete_all
-      @punches.where(
+    create_delete_punches(punches, punches_date_to_delete, user)
+  end
+
+  private
+
+  def self.create_delete_punches(punches, punches_date_to_delete, user)
+    users_punches = user.punches
+
+    users_punches.transaction do
+      users_punches.by_days(punches_date_to_delete).delete_all
+      users_punches.where(
         company: user.company
       ).create(punches)
     end
-
-    return created_punches
   end
 end
