@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       get "users" => "companies#users"
       get "offices" => "companies#offices"
       get "holidays" => "holidays#holidays_dashboard"
+      post "punches" => "punches#create"
     end
   end
 
