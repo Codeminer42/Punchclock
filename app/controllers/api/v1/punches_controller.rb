@@ -2,25 +2,12 @@ module Api
   module V1
     class PunchesController < ApiController
       def create
-        new_punches = params[:punches]
-        return render json: { message: 'There are no punches to create' }, status: :bad_request if new_punches.nil? || new_punches.values.empty?
+        new_punches = params[:_json]
+        return render json: { message: 'There are no punches to create' }, status: :unprocessable_entity if new_punches.nil? || new_punches.empty?
 
-        deletes = new_punches.keys
+        permitted_punches = params.permit(_json: [:from, :to, :project_id]).require(:_json)
 
-        @punches = current_user.punches
-        @punches.transaction do
-          @punches.by_days(deletes).delete_all
-          @punches.where(
-            company: current_user.company
-          ).create(new_punches.values)
-        end
-
-        created_punches = @punches.where(
-          company: current_user.company,
-          project_id: new_punches.values.flatten.map{|p| p[:project_id] },
-          from: new_punches.values.flatten.map{|p| p[:from] },
-          to: new_punches.values.flatten.map{|p| p[:to] }
-        )
+        created_punches = PunchesService.create(permitted_punches, current_user)
 
         render json: created_punches, status: :created
       end

@@ -6,24 +6,22 @@ describe Api::V1::PunchesController, :type => :controller do
   let(:project) { create(:project, company: user.company) }
   let(:headers) { { token: user.token } }
 
-  describe 'POST api/v1/punches', :fast => true do
+  describe 'POST api/v1/punches' do
     context 'when api token is valid and params are valid' do
       let(:params) {
         {
-          "punches": {
-            "2022-04-19": [
-              {
-                "from": "2022-04-19T12:00:00.000Z",
-                "to": "2022-04-19T15:00:00.000Z",
-                "project_id": "#{project.id}"
-              },
-              {
-                "from": "2022-04-19T16:00:00.000Z",
-                "to": "2022-04-19T21:00:00.000Z",
-                "project_id": "#{project.id}"
-              }
-            ]
-          }
+          "_json": [
+            {
+              "from": "2022-04-19T12:00:00.000Z",
+              "to": "2022-04-19T15:00:00.000Z",
+              "project_id": "#{project.id}"
+            },
+            {
+              "from": "2022-04-19T16:00:00.000Z",
+              "to": "2022-04-19T21:00:00.000Z",
+              "project_id": "#{project.id}"
+            }
+          ]
         }
       }
 
@@ -41,7 +39,7 @@ describe Api::V1::PunchesController, :type => :controller do
 
       it 'returns created punches' do
         created_punches = JSON.parse(subject.body).map { |punch| {from: punch['from'], to: punch['to'], project_id: punch['project_id'].to_s } }
-        expected_punches = params[:punches].values.flatten.map { |punch| {from: punch[:from], to: punch[:to], project_id: punch[:project_id].to_s } }
+        expected_punches = params[:_json].map { |punch| {from: punch[:from], to: punch[:to], project_id: punch[:project_id].to_s } }
         expect(created_punches).to match_array(expected_punches)
       end
     end
@@ -49,39 +47,35 @@ describe Api::V1::PunchesController, :type => :controller do
     context 'when api token is valid, params are valid and has punches on the same day' do
       let(:first_request_params) {
         {
-          "punches": {
-            "2022-04-19": [
-              {
-                "from": "2022-04-19T12:00:00.000Z",
-                "to": "2022-04-19T15:00:00.000Z",
-                "project_id": "#{project.id}"
-              },
-              {
-                "from": "2022-04-19T16:00:00.000Z",
-                "to": "2022-04-19T21:00:00.000Z",
-                "project_id": "#{project.id}"
-              }
-            ]
-          }
+           "_json": [
+            {
+              "from": "2022-04-19T12:00:00.000Z",
+              "to": "2022-04-19T15:00:00.000Z",
+              "project_id": "#{project.id}"
+            },
+            {
+              "from": "2022-04-19T16:00:00.000Z",
+              "to": "2022-04-19T21:00:00.000Z",
+              "project_id": "#{project.id}"
+            }
+          ]
         }
       }
 
       let(:second_request_params) {
         {
-          "punches": {
-            "2022-04-19": [
-              {
-                "from": "2022-04-19T10:00:00.000Z",
-                "to": "2022-04-19T12:00:00.000Z",
-                "project_id": "#{project.id}"
-              },
-              {
-                "from": "2022-04-19T15:00:00.000Z",
-                "to": "2022-04-19T20:00:00.000Z",
-                "project_id": "#{project.id}"
-              }
-            ]
-          }
+          "_json": [
+            {
+              "from": "2022-04-19T10:00:00.000Z",
+              "to": "2022-04-19T12:00:00.000Z",
+              "project_id": "#{project.id}"
+            },
+            {
+              "from": "2022-04-19T15:00:00.000Z",
+              "to": "2022-04-19T20:00:00.000Z",
+              "project_id": "#{project.id}"
+            }
+          ]
         }
       }
 
@@ -100,37 +94,31 @@ describe Api::V1::PunchesController, :type => :controller do
       it 'returns created punches and deletes the last punches' do
         first_request_punches = JSON.parse(first_request.body)
         first_created_punches = first_request_punches.map { |punch| {from: punch['from'], to: punch['to'], project_id: punch['project_id'].to_s } }
-        first_expected_punches = first_request_params[:punches].values.flatten.map { |punch| {from: punch[:from], to: punch[:to], project_id: punch[:project_id].to_s } }
+        first_expected_punches = first_request_params[:_json].map { |punch| {from: punch[:from], to: punch[:to], project_id: punch[:project_id].to_s } }
         expect(first_created_punches).to match_array(first_expected_punches)
 
         first_request_punches_ids = first_request_punches.map { |punch| punch['id'] }
-        first_created_punches = Punch.find(first_request_punches_ids)
+        first_created_punches_db = Punch.find(first_request_punches_ids)
 
         second_request_punches = JSON.parse(second_request.body)
         second_created_punches = second_request_punches.map { |punch| {from: punch['from'], to: punch['to'], project_id: punch['project_id'].to_s } }
-        second_expected_punches = second_request_params[:punches].values.flatten.map { |punch| {from: punch[:from], to: punch[:to], project_id: punch[:project_id].to_s } }
+        second_expected_punches = second_request_params[:_json].map { |punch| {from: punch[:from], to: punch[:to], project_id: punch[:project_id].to_s } }
         expect(second_created_punches).to match_array(second_expected_punches)
 
-        first_created_punches.each do |punch|
+        first_created_punches_db.each do |punch|
           expect { punch.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
 
-    context 'when api token is valid, but does not have punches' do
-      let(:params) {
-        {
-          "punches": {}
-        }
-      }
-
+    RSpec.shared_examples "when api token is valid, but does not have valid params" do |params|
       subject { post :create, params: params }
 
       before do
         request.headers.merge(headers)
       end
 
-      it { is_expected.to have_http_status(:bad_request) }
+      it { is_expected.to have_http_status(:unprocessable_entity) }
 
       it 'returns content type json' do
         expect(subject.content_type).to eq 'application/json; charset=utf-8'
@@ -141,22 +129,13 @@ describe Api::V1::PunchesController, :type => :controller do
       end
     end
 
-    context 'when api token is valid, but does not have params' do
-      subject { post :create }
+    describe 'wrong params' do
+      params = {
+        "_json": []
+      }
 
-      before do
-        request.headers.merge(headers)
-      end
-
-      it { is_expected.to have_http_status(:bad_request) }
-
-      it 'returns content type json' do
-        expect(subject.content_type).to eq 'application/json; charset=utf-8'
-      end
-
-      it 'returns a missing punches message' do
-        expect(JSON.parse(subject.body)).to eq('message' => 'There are no punches to create')
-      end
+      include_examples "when api token is valid, but does not have valid params"
+      include_examples "when api token is valid, but does not have valid params", params
     end
 
     context 'when api token is missing' do
