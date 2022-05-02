@@ -6,7 +6,7 @@ describe Api::V1::PunchesController, :type => :controller do
   let(:project) { create(:project, company: user.company) }
   let(:headers) { { token: user.token } }
 
-  describe 'POST api/v1/punches' do
+  describe 'POST api/v1/punches', fast: true do
     context 'when api token is valid and params are valid' do
       let(:params) {
         {
@@ -38,30 +38,16 @@ describe Api::V1::PunchesController, :type => :controller do
       end
 
       it 'returns created punches' do
-        created_punches = JSON.parse(subject.body).map { |punch| {from: punch['from'], to: punch['to'], project_id: punch['project_id'] } }
+        created_punches = JSON.parse(subject.body).map { |punch| punch.slice('from', 'to', 'project_id').symbolize_keys }
         expect(created_punches).to match_array(params[:punches])
       end
     end
 
     context 'when api token is valid, params are valid and has punches on the same day' do
-      let(:first_request_params) {
-        {
-           "punches": [
-            {
-              "from": "2022-04-19T12:00:00.000Z",
-              "to": "2022-04-19T15:00:00.000Z",
-              "project_id": project.id
-            },
-            {
-              "from": "2022-04-19T16:00:00.000Z",
-              "to": "2022-04-19T21:00:00.000Z",
-              "project_id": project.id
-            }
-          ]
-        }
-      }
+      let!(:punch_1) { create(:punch, from: '2022-04-19T12:00:00', to: '2022-04-19T15:00:00', project: project, user: user) }
+      let!(:punch_2) { create(:punch, from: '2022-04-19T16:00:00', to: '2022-04-19T21:00:00', project: project, user: user) }
 
-      let(:second_request_params) {
+      let(:params) {
         {
           "punches": [
             {
@@ -78,33 +64,25 @@ describe Api::V1::PunchesController, :type => :controller do
         }
       }
 
-      let(:first_request) { post :create, params: first_request_params }
-      let(:second_request) { post :create, params: second_request_params }
+      subject { post :create, params: params }
 
       before do
         request.headers.merge(headers)
       end
 
+      it { is_expected.to have_http_status(:created) }
+
       it 'returns content type json' do
-        expect(first_request.content_type).to eq 'application/json; charset=utf-8'
-        expect(second_request.content_type).to eq 'application/json; charset=utf-8'
+        expect(subject.content_type).to eq 'application/json; charset=utf-8'
       end
 
       it 'returns created punches and deletes the last punches' do
-        first_request_punches = JSON.parse(first_request.body)
-        first_created_punches = first_request_punches.map { |punch| {from: punch['from'], to: punch['to'], project_id: punch['project_id'] } }
-        expect(first_created_punches).to match_array(first_request_params[:punches])
+        expect(Punch.count).to eq(2)
 
-        first_request_punches_ids = first_request_punches.map { |punch| punch['id'] }
-        first_created_punches_db = Punch.find(first_request_punches_ids)
+        created_punches = JSON.parse(subject.body).map { |punch| punch.slice('from', 'to', 'project_id').symbolize_keys }
+        expect(created_punches).to match_array(params[:punches])
 
-        second_request_punches = JSON.parse(second_request.body)
-        second_created_punches = second_request_punches.map { |punch| {from: punch['from'], to: punch['to'], project_id: punch['project_id'] } }
-        expect(second_created_punches).to match_array(second_request_params[:punches])
-
-        first_created_punches_db.each do |punch|
-          expect { punch.reload }.to raise_error(ActiveRecord::RecordNotFound)
-        end
+        expect(Punch.count).to eq(2)
       end
     end
 
