@@ -4,14 +4,23 @@ module Api
       before_action :auth
 
       def current_user
-        @current_user ||= User.find_by(token: token)
+        @current_user ||= if doorkeeper_token
+                            User.find(doorkeeper_token.resource_owner_id)
+                          else
+                            User.find_by(token: token)
+                          end
       end
 
       private
 
       def auth
-        return render json: { message: 'Missing Token' }, status: :unauthorized if token.nil?
-        return render json: { message: 'Invalid Token' }, status: :unauthorized unless User.exists?(token: token)
+        return render json: { message: 'Missing Token' }, status: :unauthorized unless token || doorkeeper_token
+
+        unless valid_doorkeeper_token? || (token && User.exists?(token: token))
+          render json: { message: 'Invalid Token' },
+                 status: :unauthorized
+
+        end
       end
 
       def token
