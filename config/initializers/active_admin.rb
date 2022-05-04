@@ -21,10 +21,14 @@ ActiveAdmin.setup do |config|
   # == Menu System
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
+      menu.add label: 'OAuth2', priority: 101,
+               url: '/oauth/applications',
+               if: proc { current_user.super_admin? }
+
       menu.add label: User.model_name.human(count: 2) do |submenu|
-        submenu.add label: I18n.t('active_admin.resources.user.scopes.not_allocated'), 
-                    url: '/admin/users?scope=not_allocated', 
-                    priority: 2, 
+        submenu.add label: I18n.t('active_admin.resources.user.scopes.not_allocated'),
+                    url: '/admin/users?scope=not_allocated',
+                    priority: 2,
                     if: proc { current_user.is_admin? }
       end
     end

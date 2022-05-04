@@ -50,6 +50,10 @@
               <h5> Atualizar senha </h5>
               <%= link_to t('Atualizar senha'), users_account_password_edit_path, class: 'button' %>
             </div>
+            <div class="col-lg-6">
+              <h5> OAuth2: Aplicativos autorizados </h5>
+              <%= link_to t('Gerenciar'), oauth_authorized_applications_path, class: 'button' %>
+            </div>
         </div>
       </div>
     </div>

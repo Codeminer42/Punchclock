@@ -1,15 +1,16 @@
 # frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'csv'
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
-require "active_record/railtie"
-require "action_controller/railtie"
+require 'active_record/railtie'
+require 'action_controller/railtie'
 require 'action_view/railtie'
-require "action_mailer/railtie"
-require "sprockets/railtie"
+require 'action_mailer/railtie'
+require 'sprockets/railtie'
 require 'active_job/railtie'
 require 'action_cable/engine'
 
@@ -38,5 +39,8 @@ module Punchclock
 
     config.load_defaults 5.2
     config.generators.system_tests = nil
+    config.to_prepare do
+      Doorkeeper::AuthorizedApplicationsController.layout 'application'
+    end
   end
 end
