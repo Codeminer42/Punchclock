@@ -30,11 +30,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    if user.has_admin_access?
-      admin_dashboard_path
-    else
-      root_path
-    end
+    user_return_to = session.fetch(:user_return_to, '')
+    return user_return_to if user_return_to.include?(oauth_authorization_path)
+
+    return admin_dashboard_path if user.has_admin_access?
+
+    root_path
   end
 
   def current_user
@@ -50,6 +51,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
+    devise_parameter_sanitizer.permit(:sign_in, keys: %i[email password otp_attempt])
   end
 end
