@@ -103,3 +103,7 @@ end
 group :production, :staging do
   gem 'passenger', '~> 6.0'
 end
+
+gem "doorkeeper", "~> 5.5"
+
+gem "doorkeeper-i18n", "~> 5.2"

@@ -170,6 +170,10 @@ GEM
       rotp (~> 6.0)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    doorkeeper (5.5.4)
+      railties (>= 5)
+    doorkeeper-i18n (5.2.3)
+      doorkeeper (>= 5.2)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -533,6 +537,8 @@ DEPENDENCIES
   codeclimate-test-reporter
   devise (~> 4.7.3)
   devise-two-factor
+  doorkeeper (~> 5.5)
+  doorkeeper-i18n (~> 5.2)
   dotenv-rails (~> 2.7)
   draper
   draper-cancancan

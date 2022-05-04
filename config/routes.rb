@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
+  use_doorkeeper
   mount Sidekiq::Web => '/sidekiq'
 
   ActiveAdmin.routes(self)
@@ -18,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :repositories, only: :index do
     collection do
-      get "(/:languages)", action: :index
+      get '(/:languages)', action: :index
     end
   end
 
@@ -41,26 +43,24 @@ Rails.application.routes.draw do
   match(
     'users/account/password/update',
     to: 'passwords#update',
-    via: [:patch, :put]
+    via: %i[patch put]
   )
 
   namespace :api do
     namespace :v1 do
-      get "users" => "companies#users"
-      get "offices" => "companies#offices"
-      get "holidays" => "holidays#holidays_dashboard"
+      get 'users' => 'companies#users'
+      get 'offices' => 'companies#offices'
+      get 'holidays' => 'holidays#holidays_dashboard'
     end
   end
 
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   devise_scope :user do
     post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds
     resources :evaluations, only: %i[show index]
-    get "users/:user_id/notes/new" => "notes#new", as: :new_users_note
-    post "users/:user_id/notes" => "notes#create", as: :user_notes
+    get 'users/:user_id/notes/new' => 'notes#new', as: :new_users_note
+    post 'users/:user_id/notes' => 'notes#create', as: :user_notes
   end
 
   resources :questionnaires do
@@ -69,5 +69,5 @@ Rails.application.routes.draw do
     end
   end
 
-  match "*path", to: redirect("/404"), via: :all
+  match '*path', to: redirect('/404'), via: :all
 end
