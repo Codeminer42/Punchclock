@@ -107,3 +107,5 @@ end
 gem "doorkeeper", "~> 5.5"
 
 gem "doorkeeper-i18n", "~> 5.2"
+
+gem "doorkeeper-jwt", "~> 0.4.1"
