@@ -1,3 +1,5 @@
+require 'reviewers_service'
+
 ActiveAdmin.register Contribution do
   permit_params :state, :link, :user_id, :company_id, :repository_id
   actions :index, :show, :new, :create
@@ -49,6 +51,8 @@ ActiveAdmin.register Contribution do
     column :state do |contribution|
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
+    column :reviewed_by
+    column :reviewed_at
 
     actions defaults: true do |contribution|
       if contribution.received?
@@ -66,6 +70,8 @@ ActiveAdmin.register Contribution do
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
       end
+      row :reviewed_by
+      row :reviewed_at
       row :created_at
       row :updated_at
     end
@@ -92,11 +98,13 @@ ActiveAdmin.register Contribution do
   controller do
     def approve
       resource.approve!
+      ReviewersService.save_review(params[:id], current_user)
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_approved')
     end
 
     def refuse
       resource.refuse!
+      ReviewersService.save_review(params[:id], current_user)
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
     end
 
