@@ -6,9 +6,11 @@ FactoryBot.define do
     company { create(:company) }
     repository { create(:repository) }
     state { :received }
-    sequence :link do |n| 
+    sequence :link do |n|
       "https://www.github.com/company/example-#{n}/pull/#{n}"
     end
+    reviewed_at { nil }
+    reviewed_by { nil }
 
     trait :rejected do
       state { :reject }
