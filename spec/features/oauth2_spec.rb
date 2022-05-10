@@ -4,19 +4,19 @@ RSpec.describe 'Oauth2', type: :feature do
   context 'when user is super admin' do
     let(:admin_user) { create(:user, :super_admin) }
 
-    it 'back to oauth/authorize after login' do
+    it 'redirects to oauth/authorize after login' do
       visit oauth_authorization_path
       sign_in(admin_user)
       expect(current_path).to eq(oauth_authorization_path)
     end
 
-    it 'has access /oauth/applications' do
+    it 'can access /oauth/applications' do
       sign_in(admin_user)
       visit oauth_applications_path
       expect(current_path).to eq(oauth_applications_path)
     end
 
-    it 'has access to /oauth/authorized_applications' do
+    it 'can access to /oauth/authorized_applications' do
       sign_in(admin_user)
       visit oauth_authorized_applications_path
       expect(current_path).to eq(oauth_authorized_applications_path)
@@ -26,7 +26,7 @@ RSpec.describe 'Oauth2', type: :feature do
   context 'when user is admin' do
     let(:admin_user) { create(:user, :admin) }
 
-    it 'back to oauth/authorize after login' do
+    it 'redirects to oauth/authorize after login' do
       visit oauth_authorization_path
       sign_in(admin_user)
       expect(current_path).to eq(oauth_authorization_path)
@@ -38,7 +38,7 @@ RSpec.describe 'Oauth2', type: :feature do
       expect(current_path).to eq(root_path)
     end
 
-    it 'has access to /oauth/authorized_applications' do
+    it 'can access to /oauth/authorized_applications' do
       sign_in(admin_user)
       visit oauth_authorized_applications_path
       expect(current_path).to eq(oauth_authorized_applications_path)
@@ -47,7 +47,7 @@ RSpec.describe 'Oauth2', type: :feature do
 
   context 'when user is normal' do
     let(:normal_user) { create(:user) }
-    it 'back to oauth/authorize after login' do
+    it 'redirects to oauth/authorize after login' do
       visit oauth_authorization_path
       sign_in(normal_user)
       expect(current_path).to eq(oauth_authorization_path)
@@ -59,7 +59,7 @@ RSpec.describe 'Oauth2', type: :feature do
       expect(current_path).to eq(root_path)
     end
 
-    it 'has access to /oauth/authorized_applications' do
+    it 'can access to /oauth/authorized_applications' do
       sign_in(normal_user)
       visit oauth_authorized_applications_path
       expect(current_path).to eq(oauth_authorized_applications_path)

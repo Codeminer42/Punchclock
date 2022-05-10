@@ -21,7 +21,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
     end
   end
 
-  describe 'with valid token present' do
+  context 'with valid token present' do
     it 'returns success' do
       request.headers.merge!(token_header)
       get :index
@@ -29,7 +29,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
       expect(response.body).to eq(user.email)
     end
 
-    describe 'and invalid oauth2 token present' do
+    context 'and invalid oauth2 token present' do
       let(:oauth2_token) { nil }
       it 'return success' do
         request.headers.merge!(token_header)
@@ -42,7 +42,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
     end
   end
 
-  describe 'with valid oauth2 token' do
+  context 'with valid oauth2 token' do
     it 'returns success' do
       request.headers.merge!(oauth2_token_header)
       get :index
@@ -50,7 +50,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
       expect(response.body).to eq(user.email)
     end
 
-    describe 'and invalid token present' do
+    context 'and invalid token present' do
       let(:token) { 'invalid token' }
       it 'returns success' do
         request.headers.merge!(token_header)
@@ -63,7 +63,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
     end
   end
 
-  describe 'with invalid token present' do
+  context 'with invalid token present' do
     let(:token) { 'invalid token' }
 
     it 'returns invalid token error' do
@@ -75,7 +75,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
     end
   end
 
-  describe 'with invalid oauth2 token present' do
+  context 'with invalid oauth2 token present' do
     let(:oauth2_token) { nil }
     it 'returns invalid token error' do
       request.headers.merge!(oauth2_token_header)
@@ -86,7 +86,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
     end
   end
 
-  describe 'with none token present' do
+  context 'with none token present' do
     it 'returns missing token error' do
       get :index
       expect(JSON.parse(response.body)).to eq('message' => 'Missing Token')
@@ -94,7 +94,7 @@ RSpec.describe Api::V1::ApiController, type: :controller do
     end
   end
 
-  describe 'with user disabled' do
+  context 'with user disabled' do
     it 'retuns invalid token error' do
       user.disable!
       request.headers.merge!(oauth2_token_header)
