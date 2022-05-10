@@ -81,7 +81,8 @@ ActiveAdmin.register Contribution do
       else
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
-      input :repository
+
+      input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
       input :link
     end
     f.actions
