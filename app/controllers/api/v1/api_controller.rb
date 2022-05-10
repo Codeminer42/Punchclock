@@ -14,9 +14,13 @@ module Api
       private
 
       def auth
-        return render json: { message: 'Missing Token' }, status: :unauthorized unless token || doorkeeper_token
+        unless token || request.headers[:authorization]
+          return render json: { message: 'Missing Token' },
+                        status: :unauthorized
+        end
 
-        unless valid_doorkeeper_token? || (token && User.exists?(token: token))
+        unless (valid_doorkeeper_token? && User.active.exists?(doorkeeper_token.resource_owner_id)) ||
+               (token && User.exists?(token: token))
           render json: { message: 'Invalid Token' },
                  status: :unauthorized
 

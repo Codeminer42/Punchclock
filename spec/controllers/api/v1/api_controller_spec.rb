@@ -93,4 +93,15 @@ RSpec.describe Api::V1::ApiController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe 'with user disabled' do
+    it 'retuns invalid token error' do
+      user.disable!
+      request.headers.merge!(oauth2_token_header)
+      get :index
+
+      expect(JSON.parse(response.body)).to eq('message' => 'Invalid Token')
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
