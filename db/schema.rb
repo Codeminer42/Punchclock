@@ -63,11 +63,12 @@ ActiveRecord::Schema.define(version: 2022_05_03_230849) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "repository_id"
-    t.string "reviewed_by"
+    t.bigint "reviewed_by_id"
     t.datetime "reviewed_at"
     t.index ["company_id"], name: "index_contributions_on_company_id"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
+    t.index ["reviewed_by_id"], name: "index_contributions_on_reviewed_by_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
   end
 
@@ -89,9 +90,9 @@ ActiveRecord::Schema.define(version: 2022_05_03_230849) do
   create_table "notes", force: :cascade do |t|
     t.text "comment"
     t.string "rate"
-    t.bigint "user_id"
-    t.bigint "author_id"
-    t.bigint "company_id"
+    t.integer "user_id"
+    t.integer "author_id"
+    t.integer "company_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
