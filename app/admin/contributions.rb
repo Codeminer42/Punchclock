@@ -51,7 +51,9 @@ ActiveAdmin.register Contribution do
     column :state do |contribution|
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
-    column :reviewed_by
+    column :reviewed_by_id do |contribution|
+      contribution.reviewed_by
+    end
     column :reviewed_at
 
     actions defaults: true do |contribution|
@@ -70,7 +72,9 @@ ActiveAdmin.register Contribution do
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
       end
-      row :reviewed_by
+      row :reviewed_by_id do |contribution|
+        contribution.reviewed_by
+      end
       row :reviewed_at
       row :created_at
       row :updated_at
