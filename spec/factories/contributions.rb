@@ -10,7 +10,7 @@ FactoryBot.define do
       "https://www.github.com/company/example-#{n}/pull/#{n}"
     end
     reviewed_at { nil }
-    reviewed_by_id { nil }
+    reviewed_by { nil }
 
     trait :rejected do
       state { :reject }
