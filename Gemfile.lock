@@ -54,6 +54,11 @@ GEM
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
     active_admin_flat_skin (0.1.2)
     active_admin_theme (1.1.4)
+    active_model_serializers (0.10.13)
+      actionpack (>= 4.1, < 7.1)
+      activemodel (>= 4.1, < 7.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     active_skin (0.0.13)
     activeadmin (2.9.0)
       arbre (~> 1.2, >= 1.2.1)
@@ -141,6 +146,8 @@ GEM
       marcel (~> 1.0.0)
       mini_mime (>= 0.1.3)
       ssrf_filter (~> 1.0)
+    case_transform (0.2)
+      activesupport
     certified (1.0.0)
     chartkick (4.1.3)
     childprocess (4.1.0)
@@ -247,6 +254,7 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     jquery_mask_rails (0.1.0)
+    jsonapi-renderer (0.2.2)
     jwt (2.3.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -515,6 +523,7 @@ DEPENDENCIES
   aasm (~> 5.0, >= 5.0.8)
   active_admin_flat_skin
   active_admin_theme
+  active_model_serializers (~> 0.10.13)
   active_skin
   activeadmin (~> 2.9.0)
   autoprefixer-rails (~> 10.4.2.0)
