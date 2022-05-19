@@ -4,20 +4,21 @@ require 'rails_helper'
 
 RSpec.describe SaveContributionReviewer, type: :service do
   describe '.call' do
-    let!(:contribution) { create(:contribution) }
+    subject(:call) { described_class.call(contribution.id, contribution.user) }
+    let(:contribution) { create(:contribution) }
 
     context 'when the attributes are valid' do
       it 'updates reviewed_by attributes' do
-        SaveContributionReviewer.call(contribution.id, contribution.user)
+        call
         expect { contribution.reload.reviewer_id }.to change {
-                                                           contribution.reviewer_id
-                                                         }.from(nil).to(contribution.user.id)
+                                                        contribution.reviewer_id
+                                                      }.from(nil).to(contribution.user.id)
       end
 
       it 'updates reviewed_at attributes' do
         mock_time = Time.current.round
         travel_to(mock_time) do
-          SaveContributionReviewer.call(contribution.id, contribution.user)
+          call
           contribution.reload
           expect(contribution.reviewed_at).to eq(mock_time)
         end
