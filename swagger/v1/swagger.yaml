@@ -1,0 +1,45 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users":
+    get:
+      summary: users company
+      responses:
+        '200':
+          description: successful
+  "/api/v1/offices":
+    get:
+      summary: offices company
+      responses:
+        '200':
+          description: successful
+  "/api/v1/holidays":
+    get:
+      summary: holidays_dashboard holiday
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+              - month: 6
+                day: 3
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:5000
+components:
+  securitySchemes:
+    basicAuth:
+      description: Key necessary to use API calls
+      type: http
+      name: Basic Authorization
+      scheme: basic
+security:
+  basicAuth: []
