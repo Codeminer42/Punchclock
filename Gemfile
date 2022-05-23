@@ -62,6 +62,8 @@ gem 'aasm', '~> 5.0', '>= 5.0.8'
 gem 'platform-api', github: 'heroku/platform-api'
 gem 'letsencrypt-rails-heroku', group: 'production'
 
+gem 'rswag', '~> 2.5'
+
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
@@ -100,6 +102,7 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rubocop', require: false
   gem 'rubocop-faker', '~> 1.1'
+  gem 'rswag-specs', '~> 2.5'
 end
 
 group :production, :staging do
