@@ -12,7 +12,7 @@ ActiveAdmin.register Evaluation do
   filter :evaluated, collection: proc {
     current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.active.order(:name)
   }
-  filter :questionnaire_kind, as: :select, collection: Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind] }
+  filter :questionnaire_kind, as: :select, collection: Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind.value] }
   filter :created_at
   filter :evaluation_date, as: :date_range
 
@@ -30,7 +30,7 @@ ActiveAdmin.register Evaluation do
   show do
     attributes_table do
       row :score
-      row :english_level
+      row :english_level, &:english_level_text
       row :evaluator
       row :evaluated
       row :created_at
