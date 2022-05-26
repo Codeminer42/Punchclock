@@ -6,6 +6,7 @@ class Contribution < ApplicationRecord
   belongs_to :user
   belongs_to :company
   belongs_to :repository
+  belongs_to :reviewed_by, class_name: "User", foreign_key: "reviewer_id", optional: true
 
   aasm column: 'state' do
     state :received, initial: true

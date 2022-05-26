@@ -288,3 +288,5 @@ pt-BR:
         state/refused:  "Recusado"
         created_at: "Criado em"
         updated_at: "Atualizado em"
+        reviewed_by: "Revisado por"
+        reviewed_at: "Revisado em"

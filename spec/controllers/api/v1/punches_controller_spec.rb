@@ -1,12 +1,32 @@
 require 'spec_helper'
+require  "#{Rails.root}/spec/support/controller_helpers.rb"
 
 describe Api::V1::PunchesController, :type => :controller do
-  let(:company) { create(:company) }
-  let(:user) { create(:user, :with_token, company: company) }
+  let(:user) { create(:user, :with_token) }
   let(:project) { create(:project, company: user.company) }
   let(:headers) { { token: user.token } }
 
-  describe 'POST api/v1/punches', fast: true do
+  describe 'GET api/v1/punches' do
+    subject { get :index }
+
+    before { create(:punch, user_id: user.id) }
+
+    context 'when user is logged in' do
+      before { request.headers.merge(headers) }
+
+      include_examples 'an authenticated resource action'
+
+      it 'returns all punches for the current user' do
+        expect(JSON.parse(subject.body)).to all(include('created_at', 'delta_as_hour', 'extra_hour', 'from', 'project', 'to'))
+      end
+    end
+
+    context 'when user is not logged in' do
+      include_examples 'an unauthenticated resource action'
+    end
+  end
+
+  describe 'POST api/v1/punches' do
     context 'when api token is valid and params are valid' do
       let(:params) {
         {
@@ -26,19 +46,18 @@ describe Api::V1::PunchesController, :type => :controller do
       }
 
       subject { post :create, params: params }
+      before { request.headers.merge(headers) }
 
-      before do
-        request.headers.merge(headers)
-      end
-
-      it { is_expected.to have_http_status(:created) }
-
-      it 'returns content type json' do
-        expect(subject.content_type).to eq 'application/json; charset=utf-8'
-      end
+      include_examples 'an authenticated create resource action'
 
       it 'returns created punches' do
-        created_punches = JSON.parse(subject.body).map { |punch| punch.slice('from', 'to', 'project_id').symbolize_keys }
+        created_punches = JSON.parse(subject.body).map do |punch|
+          {
+            from: punch['from'],
+            to: punch['to'],
+            project_id: punch['project']['id']
+          }
+        end
         expect(created_punches).to match_array(params[:punches])
       end
     end
@@ -65,21 +84,20 @@ describe Api::V1::PunchesController, :type => :controller do
       }
 
       subject { post :create, params: params }
+      before { request.headers.merge(headers) }
 
-      before do
-        request.headers.merge(headers)
-      end
-
-      it { is_expected.to have_http_status(:created) }
-
-      it 'returns content type json' do
-        expect(subject.content_type).to eq 'application/json; charset=utf-8'
-      end
+      include_examples 'an authenticated create resource action'
 
       it 'returns created punches and deletes the last punches' do
         expect(Punch.count).to eq(2)
 
-        created_punches = JSON.parse(subject.body).map { |punch| punch.slice('from', 'to', 'project_id').symbolize_keys }
+        created_punches = JSON.parse(subject.body).map do |punch|
+          {
+            from: punch['from'],
+            to: punch['to'],
+            project_id: punch['project']['id']
+          }
+        end
         expect(created_punches).to match_array(params[:punches])
 
         expect(Punch.count).to eq(2)
@@ -89,15 +107,7 @@ describe Api::V1::PunchesController, :type => :controller do
     context 'when api token is missing' do
       subject { post :create }
 
-      it { is_expected.to have_http_status(:unauthorized) }
-
-      it 'returns content type json' do
-        expect(subject.content_type).to eq 'application/json; charset=utf-8'
-      end
-
-      it 'returns a missing token message' do
-        expect(JSON.parse(subject.body)).to eq('message' => 'Missing Token')
-      end
+      include_examples 'an unauthenticated resource action'
     end
   end
 end
