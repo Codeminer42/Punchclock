@@ -1,26 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe CreatePunchesService do
-  let(:company) { create(:company) }
-  let(:user) { create(:user, company: company) }
+  let(:user) { create(:user) }
   let(:project) { create(:project, company: user.company) }
 
-  describe "#create" do
-    context "with right arguments" do
-      let(:punches) {
+  describe '#call' do
+    context 'with right arguments' do
+      let(:punches) do
         [
           {
-            "from" => Date.parse("2022-04-19T12:00:00"),
-            "to" => Date.parse("2022-04-19T15:00:00"),
-            "project_id" => project.id
+            'from' => '2022-04-19T12:00:00.000Z'.to_datetime,
+            'to' => '2022-04-19T15:00:00.000Z'.to_datetime,
+            'project_id' => project.id
           },
           {
-            "from" => Date.parse("2022-04-19T16:00:00"),
-            "to" => Date.parse("2022-04-19T21:00:00"),
-            "project_id" => project.id
+            'from' => '2022-04-19T16:00:00.000Z'.to_datetime,
+            'to' => '2022-04-19T21:00:00.000Z'.to_datetime,
+            'project_id' => project.id
           }
         ]
-      }
+      end
 
       it "returns the created punches" do
         result = described_class.call(punches, user)
@@ -31,25 +30,27 @@ RSpec.describe CreatePunchesService do
     end
 
     context 'when does have another punch on same date' do
-      let!(:punch_1) { create(:punch, from: '2022-04-19T12:00:00', to: '2022-04-19T15:00:00', project: project, user: user) }
-      let!(:punch_2) { create(:punch, from: '2022-04-19T16:00:00', to: '2022-04-19T21:00:00', project: project, user: user) }
-
-      let(:punches) {
+      let(:punches) do
         [
           {
-            "from" => Date.parse("2022-04-19T10:00:00"),
-            "to" => Date.parse("2022-04-19T12:00:00"),
-            "project_id" => project.id
+            'from' => '2022-04-19T10:00:00.000Z'.to_datetime,
+            'to' => '2022-04-19T12:00:00.000Z'.to_datetime,
+            'project_id' => project.id
           },
           {
-            "from" => Date.parse("2022-04-19T15:00:00"),
-            "to" => Date.parse("2022-04-19T20:00:00"),
-            "project_id" => project.id
+            'from' => '2022-04-19T15:00:00.000Z'.to_datetime,
+            'to' => '2022-04-19T20:00:00.000Z'.to_datetime,
+            'project_id' => project.id
           }
         ]
-      }
+      end
 
-      it 'returns created punches and deletes the last punches' do
+      before do
+        create(:punch, from: '2022-04-19T12:00:00', to: '2022-04-19T15:00:00', project: project, user: user)
+        create(:punch, from: '2022-04-19T16:00:00', to: '2022-04-19T21:00:00', project: project, user: user)
+      end
+
+      it 'returns created punches and deletes the lasts punches' do
         expect(Punch.count).to eq(2)
 
         result = described_class.call(punches, user)
