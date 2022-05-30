@@ -1,6 +1,6 @@
 module Api
   module V1
-    class CompaniesController < ApiController
+    class CompaniesController < ActionController::API
       def users
         render json: company.users.active.engineer.as_json(only: %i[email name github office_id])
       end

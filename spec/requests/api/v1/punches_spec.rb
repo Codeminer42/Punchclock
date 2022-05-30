@@ -1,12 +1,12 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/holidays', type: :request do
-  
+RSpec.describe 'api/v1/punches', type: :request do
+
   before { create_logged_in_user }
 
-  path '/api/v1/holidays' do
+  path '/api/v1/punches' do
 
-    get('list holidays') do
+    get('list punches') do
       response(200, 'successful') do
 
         after do |example|

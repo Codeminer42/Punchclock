@@ -2,13 +2,11 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v1/companies', type: :request do
 
-  # let(:user) { create(:user) }
-
-  # before { login user }
+  before { create_logged_in_user }
 
   path '/api/v1/users' do
-
-    get('users company') do
+    
+    get('list users') do
       response(200, 'successful') do
 
         after do |example|
@@ -25,7 +23,7 @@ RSpec.describe 'api/v1/companies', type: :request do
 
   path '/api/v1/offices' do
 
-    get('offices company') do
+    get('list offices') do
       response(200, 'successful') do
 
         after do |example|

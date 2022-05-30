@@ -6,40 +6,31 @@ info:
 paths:
   "/api/v1/users":
     get:
-      summary: users company
+      summary: list users
       responses:
         '200':
           description: successful
   "/api/v1/offices":
     get:
-      summary: offices company
+      summary: list offices
       responses:
         '200':
           description: successful
   "/api/v1/holidays":
     get:
-      summary: holidays_dashboard holiday
-      security:
-      - basicAuth: []
+      summary: list holidays
       responses:
         '200':
           description: successful
-          content:
-            application/json:
-              example:
-              - month: 6
-                day: 3
+  "/api/v1/punches":
+    get:
+      summary: list punches
+      responses:
+        '200':
+          description: successful
 servers:
 - url: http://{defaultHost}
   variables:
     defaultHost:
       default: localhost:5000
-components:
-  securitySchemes:
-    basicAuth:
-      description: Key necessary to use API calls
-      type: http
-      name: Basic Authorization
-      scheme: basic
-security:
-  basicAuth: []
+components: {}
