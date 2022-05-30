@@ -26,7 +26,7 @@ describe Api::V1::PunchesController, :type => :controller do
     end
   end
 
-  describe 'POST api/v1/punches' do
+  describe 'POST api/v1/punches/bulk' do
     context 'when api token is valid and params are valid' do
       let(:params) do
         {
@@ -45,7 +45,7 @@ describe Api::V1::PunchesController, :type => :controller do
         }
       end
 
-      subject { post :create, params: params }
+      subject { post :bulk, params: params }
       before { request.headers.merge(headers) }
 
       include_examples 'an authenticated create resource action'
@@ -67,7 +67,7 @@ describe Api::V1::PunchesController, :type => :controller do
       end
     end
 
-    context 'when api token is valid, params are valid and has punches on the same day' do
+    context 'when api token is valid, params are valid and there are punches on the same day' do
       let(:params) do
         {
           punches: [
@@ -85,7 +85,7 @@ describe Api::V1::PunchesController, :type => :controller do
         }
       end
 
-      subject { post :create, params: params }
+      subject { post :bulk, params: params }
       before do
         request.headers.merge(headers)
 
@@ -93,31 +93,15 @@ describe Api::V1::PunchesController, :type => :controller do
         create(:punch, from: '2022-04-19T16:00:00', to: '2022-04-19T21:00:00', project: project, user: user)
       end
 
-      include_examples 'an authenticated create resource action'
+      include_examples 'an unprocessable entity error'
 
-      it 'returns created punches and deletes the last punches' do
-        expect(Punch.count).to eq(2)
-
-        created_punches = JSON.parse(subject.body)
-        expect(created_punches).to match_array([
-          hash_including({
-            'from' => '2022-04-19T10:00:00.000Z',
-            'to' => '2022-04-19T12:00:00.000Z',
-            'project' => hash_including({ 'id' => project.id })
-          }),
-          hash_including({
-            'from' => '2022-04-19T15:00:00.000Z',
-            'to' => '2022-04-19T20:00:00.000Z',
-            'project' => hash_including({ 'id' => project.id })
-          })
-        ])
-
-        expect(Punch.count).to eq(2)
+      it 'returns "duplicated punch" message' do
+        expect(JSON.parse(subject.body)).to eq('error' => 'There is already a punch on the same day')
       end
     end
 
     context 'when api token is missing' do
-      subject { post :create }
+      subject { post :bulk }
 
       include_examples 'an unauthenticated resource action'
     end

@@ -11,9 +11,16 @@ RSpec.shared_examples 'an authenticated resource action' do
   end
 end
 
-
 RSpec.shared_examples 'an authenticated create resource action' do
   it { is_expected.to have_http_status(:created) }
+
+  it 'returns content type json' do
+    expect(subject.content_type).to eq 'application/json; charset=utf-8'
+  end
+end
+
+RSpec.shared_examples 'an unprocessable entity error' do
+  it { is_expected.to have_http_status(:unprocessable_entity) }
 
   it 'returns content type json' do
     expect(subject.content_type).to eq 'application/json; charset=utf-8'

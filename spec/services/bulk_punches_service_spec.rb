@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CreatePunchesService do
+RSpec.describe BulkPunchesService do
   let(:user) { create(:user) }
   let(:project) { create(:project, company: user.company) }
 
@@ -21,7 +21,7 @@ RSpec.describe CreatePunchesService do
         ]
       end
 
-      it "returns the created punches" do
+      it 'returns the created punches' do
         result = described_class.call(punches, user)
 
         created_punches = result.map { |punch| punch.slice(:from, :to, :project_id) }
@@ -50,15 +50,8 @@ RSpec.describe CreatePunchesService do
         create(:punch, from: '2022-04-19T16:00:00', to: '2022-04-19T21:00:00', project: project, user: user)
       end
 
-      it 'returns created punches and deletes the lasts punches' do
-        expect(Punch.count).to eq(2)
-
-        result = described_class.call(punches, user)
-
-        created_punches = result.map { |punch| punch.slice(:from, :to, :project_id) }
-        expect(created_punches).to match_array(punches)
-
-        expect(Punch.count).to eq(2)
+      it 'raises "duplicated punch" error' do
+        expect { described_class.call(punches, user) }.to raise_error('There is already a punch on the same day')
       end
     end
   end

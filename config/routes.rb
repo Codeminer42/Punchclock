@@ -49,8 +49,12 @@ Rails.application.routes.draw do
       get "users" => "companies#users"
       get "offices" => "companies#offices"
       get "holidays" => "holidays#holidays_dashboard"
-      get "punches" => "punches#index"
-      post "punches" => "punches#create"
+
+      resources :punches, only: %i[index bulk] do
+        collection do
+          post :bulk
+        end
+      end
     end
   end
 
