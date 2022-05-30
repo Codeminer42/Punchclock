@@ -33,18 +33,18 @@ RSpec.configure do |config|
         }
       ],
       components: {
-        securitySchemes: {
-          basicAuth: {
-            description: 'Key necessary to use API calls',
-            type: :http,
-            name: 'Basic Authorization',
-            scheme: :basic
-          }
-        }
+        # securitySchemes: {
+          # token: {
+          #   description: 'Key necessary to use API calls',
+          #   type: :apiKey,
+          #   name: 'token',
+          #   in: :header
+          # }
+        # }
       }, 
-      security:{
-        basicAuth: [] 
-      }
+      # security:{
+      #   token: [] 
+      # }
     }
   }
 
