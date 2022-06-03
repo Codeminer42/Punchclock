@@ -13,15 +13,21 @@ module Github
       def all
         return [] if company.blank?
 
-        repositories.flat_map do |repository_id, repository_owner, repository_name|
-          client.pull_requests
-                .list(repository_owner, repository_name)
-                .map do |pull_request|
-                  uuid, = engineers.select { |_, username| username ==  pull_request.user.login }
-                                   .flatten
+        yesterday_date = 1.day.ago.strftime("%Y-%m-%d") # YYYY-MM-DD
 
-                  Result.new(uuid, repository_id, pull_request) if uuid.present?
-                end.compact
+        repository_query = repositories.map do |repository_id, repository_owner, repository_name|
+          "repo:#{repository_owner}/#{repository_name}"
+        end.join(' ')
+
+        author_query = engineers.map do |user_id, github_user|
+          "author:#{github_user}"
+        end.join(' ')
+
+        query = "created:#{yesterday_date} is:pr #{author_query} #{repository_query}"
+
+        client.search.issues(q: query).items.map do | pull_request |
+          # TODO: Find a way to get both user_id and repository_id
+          Result.new(user_id, repository_id, pull_request)
         end
       end
 
