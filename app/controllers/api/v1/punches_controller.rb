@@ -6,10 +6,12 @@ module Api
       end
 
       def bulk
-        created_punches = BulkPunchesService.call(bulk_punches_params, current_user)
-        render json: created_punches, status: :created, each_serializer: PunchSerializer
-      rescue StandardError => e
-        render json: { error: e.message }, status: :unprocessable_entity
+        form = PunchesCreateForm.new(bulk_punches_params)
+        if form.save
+          render json: form.punches, status: :created, each_serializer: PunchSerializer
+        else
+          render json: form.errors, status: :unprocessable_entity
+        end
       end
 
       private
@@ -19,7 +21,10 @@ module Api
       end
 
       def bulk_punches_params
-        params.permit(punches: [:from, :to, :project_id]).require(:punches)
+        {
+          user: current_user,
+          punches: params.permit(punches: %i[from to project_id])[:punches]
+        }
       end
     end
   end

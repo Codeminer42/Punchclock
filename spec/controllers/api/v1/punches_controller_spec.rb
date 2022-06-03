@@ -52,18 +52,24 @@ describe Api::V1::PunchesController, :type => :controller do
 
       it 'returns created punches' do
         created_punches = JSON.parse(subject.body)
-        expect(created_punches).to match_array([
-          hash_including({
-            'from' => '2022-04-19T12:00:00.000Z',
-            'to' => '2022-04-19T15:00:00.000Z',
-            'project' => hash_including({ 'id' => project.id })
-          }),
-          hash_including({
-            'from' => '2022-04-19T16:00:00.000Z',
-            'to' => '2022-04-19T21:00:00.000Z',
-            'project' => hash_including({ 'id' => project.id })
-          })
-        ])
+        expect(created_punches).to match_array(
+          [
+            hash_including(
+              {
+                'from' => '2022-04-19T12:00:00.000Z',
+                'to' => '2022-04-19T15:00:00.000Z',
+                'project' => hash_including({ 'id' => project.id })
+              }
+            ),
+            hash_including(
+              {
+                'from' => '2022-04-19T16:00:00.000Z',
+                'to' => '2022-04-19T21:00:00.000Z',
+                'project' => hash_including({ 'id' => project.id })
+              }
+            )
+          ]
+        )
       end
     end
 
@@ -75,11 +81,6 @@ describe Api::V1::PunchesController, :type => :controller do
               'from' => '2022-04-19T10:00:00.000Z',
               'to' => '2022-04-19T12:00:00.000Z',
               'project_id' => project.id
-            },
-            {
-              'from' => '2022-04-19T15:00:00.000Z',
-              'to' => '2022-04-19T20:00:00.000Z',
-              'project_id' => project.id
             }
           ]
         }
@@ -90,13 +91,12 @@ describe Api::V1::PunchesController, :type => :controller do
         request.headers.merge(headers)
 
         create(:punch, from: '2022-04-19T12:00:00', to: '2022-04-19T15:00:00', project: project, user: user)
-        create(:punch, from: '2022-04-19T16:00:00', to: '2022-04-19T21:00:00', project: project, user: user)
       end
 
       include_examples 'an unprocessable entity error'
 
       it 'returns "duplicated punch" message' do
-        expect(JSON.parse(subject.body)).to eq('error' => 'There is already a punch on the same day')
+        expect(JSON.parse(subject.body)).to eq('from' => ['There is already a punch on the same day'])
       end
     end
 
