@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       get "offices" => "companies#offices"
       get "holidays" => "holidays#holidays_dashboard"
       get "punches" => "punches#index"
+      get "punches/:id" => "punches#show", as: :punch
     end
   end
 
