@@ -1,6 +1,6 @@
 module Api
   module V1
-    class PunchesController < ApiController
+    class PunchesController < ActionController::API
       def index
         render json: scoped_punches, status: :ok, each_serializer: PunchSerializer
       end

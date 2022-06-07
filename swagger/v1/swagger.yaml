@@ -1,0 +1,36 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users":
+    get:
+      summary: list users
+      responses:
+        '200':
+          description: successful
+  "/api/v1/offices":
+    get:
+      summary: list offices
+      responses:
+        '200':
+          description: successful
+  "/api/v1/holidays":
+    get:
+      summary: list holidays
+      responses:
+        '200':
+          description: successful
+  "/api/v1/punches":
+    get:
+      summary: list punches
+      responses:
+        '200':
+          description: successful
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:5000
+components: {}
