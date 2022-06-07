@@ -13,12 +13,12 @@ ActiveAdmin.register Contribution do
   member_action :refuse, method: :put, only: :index
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each {|contribution| contribution.refuse! if contribution.state == "received"}
+    batch_action_collection.find(ids).each {|contribution| contribution.refuse!(current_user.id) if contribution.state == "received"}
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each {|contribution| contribution.approve! if contribution.state == "received"}
+    batch_action_collection.find(ids).each {|contribution| contribution.approve!(current_user.id) if contribution.state == "received"}
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
   end
@@ -95,14 +95,12 @@ ActiveAdmin.register Contribution do
 
   controller do
     def approve
-      resource.approve!
-      SaveContributionReviewer.call(params[:id], current_user)
+      resource.approve!(current_user.id)
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_approved')
     end
 
     def refuse
-      resource.refuse!
-      SaveContributionReviewer.call(params[:id], current_user)
+      resource.refuse!(current_user.id)
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
     end
 

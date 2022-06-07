@@ -23,6 +23,7 @@ RSpec.describe Contribution, type: :model do
 
   describe 'states' do
     subject(:contribution) { build(:contribution) }
+    let(:reviewer) { create(:user) }
 
     context 'when the contribution is created' do
       it 'has state received' do
@@ -30,27 +31,52 @@ RSpec.describe Contribution, type: :model do
       end
 
       it 'can transition to approved' do
-        expect(contribution).to transition_from(:received).to(:approved).on_event(:approve)
+        expect(contribution).to transition_from(:received).to(:approved)
+                                                          .on_event(:approve, reviewer.id)
       end
 
       it 'can transition to refused' do
-        expect(contribution).to transition_from(:received).to(:refused).on_event(:refuse)
+        expect(contribution).to transition_from(:received).to(:refused)
+                                                          .on_event(:refuse, reviewer.id)
       end
     end
 
     context 'when the contribution is approved' do
-      before { contribution.approve }
+      
+      before {
+        travel_to Time.zone.parse('2022-01-01')
+        contribution.approve(reviewer.id)
+      }
 
       it 'has state approved' do
         expect(contribution).to have_state(:approved)
       end
+
+      it 'updates reviewer_id' do
+        expect(contribution.reviewer_id).to be(reviewer.id)
+      end
+
+      it 'updates reviewed_at' do
+        expect(contribution.reviewed_at).to eq(Time.current)
+      end
     end
 
     context 'when the contribution is refused' do
-      before { contribution.refuse }
+      before {
+        travel_to Time.zone.parse('2022-01-01')
+        contribution.refuse(reviewer.id)
+      }
 
       it 'has state refused' do
         expect(contribution).to have_state(:refused)
+      end
+
+      it 'updates reviewer_id' do
+        expect(contribution.reviewer_id).to be(reviewer.id)
+      end
+
+      it 'updates reviewed_at' do
+        expect(contribution.reviewed_at).to eq(Time.current)
       end
     end
   end
