@@ -1,16 +1,27 @@
 import React from 'react';
 import Select from 'react-select2-wrapper';
+import { compareHours } from '../utils/calendar';
 
 class Form extends React.Component{
   state = {
     selectedProject: "",
-    hasConfirmedOperation: false
+    hasConfirmedOperation: false,
+    workPeriods: {
+      from1: "09:00",
+      to1: "12:00",
+      from2: "13:00",
+      to2: "18:00",
+      areValid: true
+    }
   }
 
   render() {
     const { calendar: { selecteds } } = this.props;
+    const workPeriods = this.state.workPeriods;
+
     const isSelectedsEmpty = selecteds.isEmpty();
     const isSaveButtonDisabled = isSelectedsEmpty || !!!this.state.selectedProject
+    const invalidWorkPeriods = !workPeriods.areValid;
 
     const projectsList = Projects.map((p) =>  {
       return {text: p[1], id: p[0]}
@@ -60,17 +71,21 @@ class Form extends React.Component{
                   disabled={isSelectedsEmpty}
                   placeholder="De"
                   ref="from1"
+                  name="from1"
                   type="time"
-                  defaultValue="09:00"
-                  className="form-control form-control-sm w-auto ml-1" />
+                  defaultValue={workPeriods.from1}
+                  className="form-control form-control-sm w-auto ml-1"
+                  onChange={this.handleValidWorkPeriods.bind(this)} />
                 <span className="mx-1">-</span>
                 <input
                   disabled={isSelectedsEmpty}
                   placeholder="Até"
                   ref="to1"
+                  name="to1"
                   type="time"
-                  defaultValue="12:00"
-                  className="form-control form-control-sm w-auto" />
+                  defaultValue={workPeriods.to1}
+                  className="form-control form-control-sm w-auto"
+                  onChange={this.handleValidWorkPeriods.bind(this)} />
               </div>
             </div>
             <div className="col">
@@ -80,21 +95,25 @@ class Form extends React.Component{
                   disabled={isSelectedsEmpty}
                   placeholder="De"
                   ref="from2"
+                  name="from2"
                   type="time"
-                  defaultValue="13:00"
-                  className="form-control form-control-sm w-auto ml-1" />
+                  defaultValue={workPeriods.from2}
+                  className="form-control form-control-sm w-auto ml-1"
+                  onChange={this.handleValidWorkPeriods.bind(this)} />
                 <span className="mx-1">-</span>
                 <input
                   disabled={isSelectedsEmpty}
                   placeholder="Até"
                   ref="to2"
+                  name="to2"
                   type="time"
-                  defaultValue="18:00"
-                  className="form-control form-control-sm w-auto"/>
+                  defaultValue={workPeriods.to2}
+                  className="form-control form-control-sm w-auto"
+                  onChange={this.handleValidWorkPeriods.bind(this)} />
               </div>
             </div>
             <div className="col">
-              <input className="w-100" disabled={isSaveButtonDisabled} type="submit" value="Salvar" />
+              <input className="w-100" disabled={isSaveButtonDisabled || invalidWorkPeriods} type="submit" value="Salvar" />
             </div>
           </div>
         </div>
@@ -139,6 +158,27 @@ class Form extends React.Component{
       this.props.calendar.deleteds
     );
     this.setState({ hasConfirmedOperation: true, selectedProject: "" })
+  }
+
+  areValidWorkPeriods(from1, to1, from2, to2) {
+    return (
+      (compareHours({ firstHour: from1, secondHour: to1 }) && compareHours({ firstHour: from2, secondHour: to2 })) &&
+      (compareHours({ firstHour: from1, secondHour: from2 }) && compareHours({ firstHour: to1, secondHour: to2 }))
+    )
+  }
+
+  handleValidWorkPeriods({target: { name, value }}) {
+    const updatedWorkPeriods = {
+      ...this.state.workPeriods,
+      [name]: value,
+    }
+
+    const { from1, to1, from2, to2 } = updatedWorkPeriods
+
+    this.setState({
+      workPeriods: { ...updatedWorkPeriods,
+      areValid: this.areValidWorkPeriods(from1, to1, from2, to2)
+    }})
   }
 
   handleErase() {
