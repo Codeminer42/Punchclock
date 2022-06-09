@@ -89,4 +89,35 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content("Selecionado (0)")
     end
   end
+
+  context 'When user try to save a punch with delta zero' do
+    let!(:authed_user_without_overtime) { create_logged_in_user }
+    let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
+
+    scenario 'Renders save button disabled' do
+      visit '/dashboard/2022/06'
+
+      find('td.inner', text: '06').click
+      find('span.select2').click
+      find('li.select2-results__option').click
+
+      hour_inputs = all('.form-control')
+
+      morning_start_input = hour_inputs[0]
+      morning_end_input = hour_inputs[1]
+
+      lunch_start_input = hour_inputs[2]
+      lunch_end_input = hour_inputs[3]
+
+      morning_start_input.set('09:00')
+      morning_end_input.set('12:00')   
+
+      lunch_start_input.set('09:00')
+      lunch_end_input.set('12:00')      
+
+      save_button = find('.w-100')
+      
+      expect(save_button.disabled?).to eq(true)
+    end
+  end
 end
