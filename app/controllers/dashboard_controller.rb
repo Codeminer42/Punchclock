@@ -10,26 +10,28 @@ class DashboardController < ApplicationController
   end
 
   def save
-    params_add_permit
-
     return head :bad_request if invalid_day_periods?
 
-    deletes = Array.wrap(params['delete']).concat(@params_add.keys)
+    deletes = Array.wrap(punch_params['delete']).concat(params_add.keys)
     @punches = current_user.punches
 
     @punches.transaction do
       @punches.by_days(deletes).delete_all if deletes.any?
       @punches.where(
         company: current_user.company
-      ).create(bulk_params(@params_add)) if @params_add
+      ).create(bulk_params(params_add)) if params_add
     end
     head :created
   end
 
   protected
 
-  def params_add_permit
-    @params_add ||= params['add'].permit!
+  def punch_params
+    params.permit(add: {}, delete: [])
+  end
+
+  def params_add
+    @params_add ||= punch_params['add']
   end
 
   def bulk_params(param)
@@ -37,7 +39,7 @@ class DashboardController < ApplicationController
   end
 
   def invalid_day_periods?
-    @params_add.to_h.one? { |_, periods| invalid_period?(periods) }
+    params_add.to_h.one? { |_, periods| invalid_period?(periods) }
   end
 
   def invalid_period?(periods)
