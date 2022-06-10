@@ -161,12 +161,10 @@ class Form extends React.Component{
   }
 
   areValidWorkPeriods(from1, to1, from2, to2) {
-    if (compareHours({ firstHour: from1, secondHour: to1 }) && compareHours({ firstHour: from2, secondHour: to2 }))
-      return true;
-    if (compareHours({ firstHour: from1, secondHour: from2 }) && compareHours({ firstHour: to1, secondHour: to2 }))
-      return true;
+    const firstCondition = compareHours({ firstHour: from1, secondHour: to1 }) && compareHours({ firstHour: from2, secondHour: to2 })
+    const secondCondition = compareHours({ firstHour: from1, secondHour: from2 }) && compareHours({ firstHour: to1, secondHour: to2 })
 
-    return false;
+    return firstCondition && secondCondition;
   }
 
   handleValidWorkPeriods({target: { name, value }}) {
