@@ -37,9 +37,9 @@ RSpec.describe DashboardController, type: :controller do
           { delete: ["2022-05-16"], add: { "2022-05-16": [morning_period, lunch_period] } }
         end
   
-        it 'returns bad request http status' do
+        it 'returns unprocessable entity request http status' do
           subject
-          expect(response).to have_http_status(:bad_request)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
 
@@ -53,9 +53,9 @@ RSpec.describe DashboardController, type: :controller do
           { delete: ["2022-05-16"], add: { "2022-05-16": [morning_period, lunch_period] } }
         end
   
-        it 'returns bad request http status' do
+        it 'returns unprocessable entity request http status' do
           subject
-          expect(response).to have_http_status(:bad_request)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
 
@@ -69,9 +69,9 @@ RSpec.describe DashboardController, type: :controller do
           { delete: ["2022-05-16"], add: { "2022-05-16": [morning_period, lunch_period] } }
         end
   
-        it 'returns bad request http status' do
+        it 'returns unprocessable entity request http status' do
           subject
-          expect(response).to have_http_status(:bad_request)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
     end

@@ -24,6 +24,7 @@ pt-BR:
           attributes:
             from_time:
               cant_be_greater: "não pode ser maior que horário final"
+              cant_be_equal: "não pode ser igual ao horário final"
             to_time:
                 cant_be_different: "não pode ser em data diferente"
                 cant_be_future: "não pode ser no futuro"

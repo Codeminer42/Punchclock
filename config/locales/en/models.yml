@@ -6,6 +6,7 @@ en:
           attributes:
             from_time:
               cant_be_greater: "can't be greater than to time"
+              cant_be_equal: "can't be equal to final time"
             to_time:
                 cant_be_different: "can't be in a different date"
                 cant_be_future: "can't be in the future"
