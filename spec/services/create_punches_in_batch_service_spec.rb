@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CreatePunchesInBatchService do
-  describe '#call' do    
+  describe '#call' do
+    let(:error_message) { I18n.t('activerecord.errors.models.period.attributes.base.invalid_periods') }
     let(:user) { create(:user) }
     let(:project) { create(:project, company: user.company) }
     
@@ -36,7 +37,7 @@ RSpec.describe CreatePunchesInBatchService do
         end
 
         it 'returns error message' do
-          expect(punches_transaction.errors).to include 'Horário inicial não pode ser igual ao horário final'
+          expect(punches_transaction.errors).to include error_message
         end
       end
 
@@ -54,7 +55,7 @@ RSpec.describe CreatePunchesInBatchService do
         end
 
         it 'returns error message' do
-          expect(punches_transaction.errors).to include 'Horário inicial não pode ser maior que horário final'
+          expect(punches_transaction.errors).to include error_message
         end
       end
     end

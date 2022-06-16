@@ -34,6 +34,7 @@ pt-BR:
           attributes:
             base:
               overlap: As datas escolhidas se sobrepõem com outras já cadastradas
+              invalid_periods: Os períodos informados não seguem uma ordem cronológica válida"
         allocation:
           attributes:
             start_at:
