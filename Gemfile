@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.5'
 
-gem 'rails', '~> 6.1.6'
+gem 'rails', '~> 7.0.3'
 
 gem 'bootsnap', require: false
 
@@ -14,19 +14,19 @@ gem 'nokogiri', '~> 1.13.2'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'pg', '~> 1.2'
 gem 'sprockets'
-gem 'cancancan', '~> 3.1'
+gem 'cancancan', '~> 3.3.0'
 gem 'carrierwave', '~> 2.2.2'
-gem 'devise', '~> 4.7.3'
-gem 'devise-two-factor'
+gem 'devise', '~> 4.8.1'
+gem 'devise-two-factor', '~> 4.0.2'
 gem 'rqrcode'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'sassc-rails'
 gem 'simple_form', '~> 5.1.0'
 gem 'uglifier'
-gem 'activeadmin', '~> 2.9.0'
+gem 'activeadmin', '~> 2.13.1'
 gem 'draper'
-gem 'draper-cancancan'
+gem 'draper-cancancan', '~> 1.1.1'
 gem 'rails-i18n'
 gem 'webpacker', '~> 5.1'
 gem 'holidays', '~> 8.3'
