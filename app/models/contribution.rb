@@ -13,6 +13,8 @@ class Contribution < ApplicationRecord
     state :approved
     state :refused
 
+    after_all_transitions Proc.new {|*args| update_reviewer(*args) }
+
     event :approve do
       transitions from: %i[received], to: :approved
     end
@@ -20,6 +22,10 @@ class Contribution < ApplicationRecord
     event :refuse do
       transitions from: %i[received], to: :refused
     end
+  end
+
+  def update_reviewer(reviewer_id)
+    self.update(reviewer_id: reviewer_id, reviewed_at: Time.current)
   end
 
   validates :link, uniqueness: true

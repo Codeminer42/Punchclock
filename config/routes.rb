@@ -50,7 +50,7 @@ Rails.application.routes.draw do
       get "offices" => "companies#offices"
       get "holidays" => "holidays#holidays_dashboard"
 
-      resources :punches, only: %i[index bulk] do
+      resources :punches, only: %i[index show bulk] do
         collection do
           post :bulk
         end

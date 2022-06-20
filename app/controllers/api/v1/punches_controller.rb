@@ -5,6 +5,10 @@ module Api
         render json: scoped_punches, status: :ok, each_serializer: PunchSerializer
       end
 
+      def show
+        render json: scoped_punch, status: :found, each_serializer: PunchSerializer
+      end
+
       def bulk
         form = PunchesCreateForm.new(bulk_punches_params)
         if form.save
@@ -18,6 +22,10 @@ module Api
 
       def scoped_punches
         current_user.punches
+      end
+
+      def scoped_punch
+        scoped_punches.find(params[:id])
       end
 
       def bulk_punches_params
