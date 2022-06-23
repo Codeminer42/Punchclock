@@ -41,20 +41,6 @@ describe PunchesCreateForm do
   end
 
   describe '#initialize' do
-    context 'when no params are passed' do
-      it 'should raise an error' do
-        expect { PunchesCreateForm.new }.to raise_error(ArgumentError)
-      end
-    end
-
-    context 'when pass nil passed' do
-      let(:form) { PunchesCreateForm.new(nil) }
-
-      it 'should not raise an error' do
-        expect { form }.to_not raise_error
-      end
-    end
-
     context 'when pass punches params' do
       let(:form) { PunchesCreateForm.new({ punches: punches_params }) }
 
