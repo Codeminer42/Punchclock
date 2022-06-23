@@ -6,20 +6,16 @@ class PunchesCreateForm
   validates :punches, presence: true
   validate :punches_validations, :punch_on_same_day_validation
 
-  def initialize(params)
-    params ||= {}
-    params[:punches] ||= []
-    params[:user] ||= User.new
-
-    @punches = params[:punches].map do |punch_params|
-      Punch.new(**punch_params, user: params[:user], company: params[:user].company)
+  def initialize(punches: [], user: User.new)
+    @punches = punches.map do |punch_params|
+      Punch.new(**punch_params, user: user, company: user.company)
     end
   end
 
   def save
     return false unless valid?
 
-    @punches = Punch.transaction do
+    Punch.transaction do
       @punches.each(&:save!)
     end
 
