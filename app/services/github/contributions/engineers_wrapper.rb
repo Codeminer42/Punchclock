@@ -19,15 +19,14 @@ module Github
         end.join(' ')
       end
 
-      private
-      attr_reader :company
-
       def engineers
         @engineers ||= company.users
           .engineer
           .active
           .pluck(:github, :id)
       end
+
+      attr_reader :company
     end
   end
 end
