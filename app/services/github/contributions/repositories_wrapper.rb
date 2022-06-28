@@ -15,16 +15,20 @@ module Github
         end.join(' ')
       end
 
+      def has_repositories?
+        not repositories.empty?
+      end
+
+      private
+
+      attr_reader :company
+
       def repositories
         @repositories ||= company.repositories
                                  .pluck(:id, :link)
                                  .map { |id, url| [url.split('/')[-2..-1], id].flatten }
                                  .compact
       end
-
-      private
-
-      attr_reader :company
 
       def to_h
         @repositories_map ||= repositories.map do |repository_owner, repository_name, repository_id|
