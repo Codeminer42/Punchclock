@@ -11,9 +11,10 @@ module Github
       end
 
       def all
-        return [] if company.blank? or repositories_wrapper.repositories.empty? or engineers_wrapper.engineers.empty?
+        return [] if company.blank? or not repositories_wrapper.has_repositories? or not engineers_wrapper.has_engineers?
 
         yesterday_date = 1.day.ago.strftime("%Y-%m-%d")
+
         query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
 
         fetch_pull_requests(search_query: query)
