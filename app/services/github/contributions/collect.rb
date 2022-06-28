@@ -8,7 +8,6 @@ module Github
       def initialize(company:, client:)
         @company = company
         @client = client
-        @repository_id_by_name = {}
         @engineers_wrapper = EngineersWrapper.new(company: company)
         @repositories_wrapper = RepositoriesWrapper.new(company: company)
       end
@@ -20,12 +19,10 @@ module Github
 
         query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
 
-        binding.pry
-
         client.search.issues(q: query).items.map do | pull_request |
+          repository_name = pull_request.html_url.split("/")[-4..-3].join("/")
           user_id = @engineers_wrapper.get_engineer_id_by_github_user(pull_request.user.login)
-          repository_key = pull_request.html_url.split("/")[-4..-3].join("/")
-          repository_id = @repository_id_by_name[repository_key]
+          repository_id = @repositories_wrapper.get_repository_id_by_name(repository_name)
 
           Result.new(user_id, repository_id, pull_request.html_url, pull_request.created_at)
         end
@@ -36,10 +33,6 @@ module Github
       attr_reader :company, :client
 
       def repositories_query
-        # repositories.map do |repository_id, repository_owner, repository_name|
-        #   @repository_id_by_name["#{repository_owner}/#{repository_name}"] = repository_id;
-        #   "repo:#{repository_owner}/#{repository_name}"
-        # end.join(' ')
         @repositories_wrapper.to_query
       end
 
