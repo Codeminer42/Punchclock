@@ -12,7 +12,7 @@ RSpec.describe Github::Contributions::Collect, type: :service do
   describe '#all' do
     subject(:all) { described_class.new(company: company, client: client).all }
 
-    let(:client) { instance_double('Github') }
+    let(:client) { class_double(Github) }
 
     context 'when company is not present' do
       let(:company) { nil }
@@ -26,6 +26,30 @@ RSpec.describe Github::Contributions::Collect, type: :service do
       it { is_expected.to be_empty }
     end
 
-    # TODO: Add specs to cover all use cases
+    context 'when there are no engineers in database' do
+      let(:company) { build_stubbed(:company) }
+      let(:repositories) { double(pluck: [[1, 'http://example.com']]) }
+
+      before do
+        allow(company).to receive(:repositories).and_return(repositories)
+      end
+      
+      it { is_expected.to be_empty }
+    end
+
+    context 'when Github API is not able to respond' do
+      let(:company) { build_stubbed(:company) }      
+      let(:repositories) { double(pluck: [[1, 'http://example.com']]) }
+      let(:engineers) { double(active: double(pluck: [['github_user', 1]])) }
+      let(:users) { double(engineer: engineers) }
+
+      before do
+        allow(company).to receive(:repositories).and_return(repositories)
+        allow(company).to receive(:users).and_return(users)
+        allow(client).to receive(:search) { raise 'any error' }
+      end
+
+      it { expect { subject }.to raise_error  }
+    end
   end
 end
