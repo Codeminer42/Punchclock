@@ -3,37 +3,48 @@
 module Github
   module Contributions
     class Collect
-      Result = Struct.new(:uid, :rid, :pull_request)
+      Result = Struct.new(:uid, :rid, :pull_request_url, :created_at)
 
       def initialize(company:, client:)
         @company = company
         @client = client
+        @repository_id_by_name = {}
+        @user_id_by_github_username = {}
       end
 
       def all
-        return [] if company.blank?
+        return [] if company.blank? or repositories.empty? or engineers.empty?
 
-        yesterday_date = 1.day.ago.strftime("%Y-%m-%d") # YYYY-MM-DD
+        yesterday_date = 1.day.ago.strftime("%Y-%m-%d")
 
-        repository_query = repositories.map do |repository_id, repository_owner, repository_name|
-          "repo:#{repository_owner}/#{repository_name}"
-        end.join(' ')
-
-        author_query = engineers.map do |user_id, github_user|
-          "author:#{github_user}"
-        end.join(' ')
-
-        query = "created:#{yesterday_date} is:pr #{author_query} #{repository_query}"
+        query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
 
         client.search.issues(q: query).items.map do | pull_request |
-          # TODO: Find a way to get both user_id and repository_id
-          Result.new(user_id, repository_id, pull_request)
+          user_id = @user_id_by_github_username[pull_request.user.login]
+          repository_key = pull_request.html_url.split("/")[-4..-3].join("/")
+          repository_id = @repository_id_by_name[repository_key]
+
+          Result.new(user_id, repository_id, pull_request.html_url, pull_request.created_at)
         end
       end
 
       private
 
       attr_reader :company, :client
+
+      def repositories_query
+        repositories.map do |repository_id, repository_owner, repository_name|
+          @repository_id_by_name["#{repository_owner}/#{repository_name}"] = repository_id;
+          "repo:#{repository_owner}/#{repository_name}"
+        end.join(' ')
+      end
+
+      def authors_query
+        engineers.map do |user_id, github_user|
+          @user_id_by_github_username[github_user] = user_id;
+          "author:#{github_user}"
+        end.join(' ')
+      end
 
       def engineers
         @engineers ||= company.users
