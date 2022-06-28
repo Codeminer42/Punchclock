@@ -10,7 +10,7 @@ RSpec.describe Github::Contributions::EngineersWrapper, type: :service do
     allow(company).to receive(:users).and_return(users)
   end
 
-  describe '#has_engineers' do
+  describe '#has_engineers?' do
     subject(:has_engineers) { described_class.new(company: company).has_engineers? }
 
     context 'when there are no engineers' do
