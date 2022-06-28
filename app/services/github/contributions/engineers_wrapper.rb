@@ -9,15 +9,19 @@ module Github
         engineers.to_h[github_user]
       end
 
-      def to_h
-        engineers.to_h
-      end
-
       def to_query
         engineers.map do |github_user, user_id|
           "author:#{github_user}"
         end.join(' ')
       end
+
+      def has_engineers?
+        not engineers.empty?
+      end
+
+      attr_reader :company
+
+      private 
 
       def engineers
         @engineers ||= company.users
@@ -26,7 +30,9 @@ module Github
           .pluck(:github, :id)
       end
 
-      attr_reader :company
+      def to_h
+        engineers.to_h
+      end
     end
   end
 end
