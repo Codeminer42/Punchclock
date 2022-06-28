@@ -10,6 +10,22 @@ RSpec.describe Github::Contributions::EngineersWrapper, type: :service do
     allow(company).to receive(:users).and_return(users)
   end
 
+  describe '#has_engineers' do
+    subject(:has_engineers) { described_class.new(company: company).has_engineers? }
+
+    context 'when there are no engineers' do
+      let(:active_engineers) { double(pluck: []) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there are engineers' do
+      let(:active_engineers) { double(pluck: [['user1', 1], ['user2', 2]]) }
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe '#to_query' do
     subject(:to_query) { described_class.new(company: company).to_query }
 
@@ -21,10 +37,6 @@ RSpec.describe Github::Contributions::EngineersWrapper, type: :service do
 
     context 'when there are engineers' do
       let(:active_engineers) { double(pluck: [['user1', 1], ['user2', 2]]) }
-
-      before do
-        allow(company).to receive(:users).and_return(users)
-      end
 
       it { is_expected.to eq 'author:user1 author:user2'}
     end
