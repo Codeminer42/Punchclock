@@ -25,7 +25,6 @@ module Github
           query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
           fetch_pull_requests(search_query: query)
         rescue => e
-          puts "\n\n*** An error happened HERE ***\n\n"
           Rails.logger.error e.message
           Rails.logger.error e.backtrace.join("\n")
           []
