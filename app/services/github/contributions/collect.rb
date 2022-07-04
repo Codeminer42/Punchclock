@@ -12,17 +12,25 @@ module Github
 
       def all
         return [] if company.blank? or not repositories_wrapper.has_repositories? or not engineers_wrapper.has_engineers?
-
-        yesterday_date = 1.day.ago.strftime("%Y-%m-%d")
-
-        query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
-
-        fetch_pull_requests(search_query: query)
+        fetch_all
       end
 
       private
 
       attr_reader :company, :client
+
+      def fetch_all
+        begin
+          yesterday_date = 1.day.ago.strftime("%Y-%m-%d")
+          query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
+          fetch_pull_requests(search_query: query)
+        rescue => e
+          puts "\n\n*** An error happened HERE ***\n\n"
+          Rails.logger.error e.message
+          Rails.logger.error e.backtrace.join("\n")
+          []
+        end
+      end
 
       def fetch_pull_requests(search_query:)
         client.search.issues(q: search_query).items.map do | pull_request |
