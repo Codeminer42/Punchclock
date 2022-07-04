@@ -1,4 +1,16 @@
 GIT
+  remote: https://github.com/eoinkelly/devise-two-factor
+  revision: 7de6c315b507c41e6ee288ea0bdf3a070416bd17
+  ref: 7de6c315b507c41e6ee288ea0bdf3a070416bd17
+  branch: rails-7-support
+  specs:
+    devise-two-factor (5.0.0)
+      activesupport (< 7.1)
+      devise (~> 4.0)
+      railties (< 7.1)
+      rotp (~> 6.0)
+
+GIT
   remote: https://github.com/heroku/platform-api.git
   revision: e321f881f6cb6b2c30354892a2a0c742b0f5b5f5
   specs:
@@ -106,8 +118,6 @@ GEM
       activesupport (>= 3.0.0, < 7.1)
       ruby2_keywords (>= 0.0.2, < 1.0)
     ast (2.4.2)
-    attr_encrypted (3.1.0)
-      encryptor (~> 3.0.0)
     autoprefixer-rails (10.4.2.0)
       execjs (~> 2)
     bcrypt (3.1.18)
@@ -175,12 +185,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-two-factor (4.0.2)
-      activesupport (< 7.1)
-      attr_encrypted (>= 1.3, < 4, != 2)
-      devise (~> 4.0)
-      railties (< 7.1)
-      rotp (~> 6.0)
     diff-lcs (1.5.0)
     digest (3.1.0)
     docile (1.4.0)
@@ -196,7 +200,6 @@ GEM
       request_store (>= 1.0)
       ruby2_keywords
     draper-cancancan (1.1.1)
-    encryptor (3.0.0)
     enumerize (2.5.0)
       activesupport (>= 3.2)
     erubi (1.10.0)
@@ -488,11 +491,8 @@ GEM
     slop (3.6.0)
     spreadsheet (1.3.0)
       ruby-ole
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
-    sprockets (4.1.1)
+    spring (3.1.1)
+    sprockets (4.0.3)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.4.2)
@@ -568,7 +568,7 @@ DEPENDENCIES
   chartkick
   codeclimate-test-reporter
   devise (~> 4.8.1)
-  devise-two-factor (~> 4.0.2)
+  devise-two-factor!
   dotenv-rails (~> 2.7)
   draper
   draper-cancancan (~> 1.1.1)
@@ -612,8 +612,7 @@ DEPENDENCIES
   simple_form (~> 5.1.0)
   simplecov
   spreadsheet
-  spring
-  spring-watcher-listen (~> 2.0)
+  spring (~> 3.1.1)
   sprockets
   uglifier
   unicorn
