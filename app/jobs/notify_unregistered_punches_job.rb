@@ -11,10 +11,14 @@ class NotifyUnregisteredPunchesJob < ApplicationJob
       work_days = (initial_date..final_date).select { |day| working_day?(day) }
 
       work_days_punches_count = work_days.product([0]).to_h
-      punches_by_day = user.punches.where("date(punches.from) in (?) and extra_hour = ?", work_days, false)
-                                  .group("date(punches.from)").count
+      punches_by_day = user.punches
+                           .where("date(punches.from) in (?) and extra_hour = ?", work_days, false)
+                           .group("date(punches.from)")
+                           .count
 
-      unregistered_punches = work_days_punches_count.merge(punches_by_day).select { |key, value| value < 2}
+      unregistered_punches = work_days_punches_count.merge(punches_by_day)
+                                                    .select { |_key, value| value < 2 }
+                                                    .transform_keys { |k| k.to_fs(:date) }
 
       unless unregistered_punches.empty?
         NotificationMailer.notify_unregistered_punches(user, unregistered_punches).deliver_later
