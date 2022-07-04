@@ -93,8 +93,8 @@ ActiveAdmin.register Allocation do
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
-      input :start_at, as: :date_picker, input_html: { value: f.object.start_at.try(:to_s, :date) }
-      input :end_at, as: :date_picker, input_html: { value: f.object.end_at.try(:to_s, :date) }
+      input :start_at, as: :date_picker, input_html: { value: f.object.start_at.try(:to_fs, :date) }
+      input :end_at, as: :date_picker, input_html: { value: f.object.end_at.try(:to_fs, :date) }
     end
     actions
   end
