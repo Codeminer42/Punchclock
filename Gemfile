@@ -17,7 +17,10 @@ gem 'sprockets'
 gem 'cancancan', '~> 3.3.0'
 gem 'carrierwave', '~> 2.2.2'
 gem 'devise', '~> 4.8.1'
-gem 'devise-two-factor', '~> 4.0.2'
+gem 'devise-two-factor',
+  git: 'https://github.com/eoinkelly/devise-two-factor',
+  branch: 'rails-7-support',
+  ref: '7de6c315b507c41e6ee288ea0bdf3a070416bd17'
 gem 'rqrcode'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -35,7 +38,6 @@ gem 'spreadsheet'
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
 gem 'active_model_serializers', '~> 0.10.13'
-
 
 gem 'ransack', '~> 2.3'
 
@@ -85,8 +87,7 @@ group :development do
   gem 'foreman'
   gem 'web-console', '~> 4.0'
   gem 'listen', '~> 3.2'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0'
+  gem 'spring', '~> 3.1.1'
 end
 
 gem 'unicorn'
