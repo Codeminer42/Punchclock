@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   devise :recoverable,
          :rememberable, :trackable, :validatable, :confirmable,
+         :database_authenticatable,
          :two_factor_authenticatable,
          :two_factor_backupable,
          :otp_secret_encryption_key => ENV['OTP_ENCRYPTION_KEY']
@@ -50,6 +51,7 @@ class User < ApplicationRecord
   has_many :notes
   has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_and_belongs_to_many :skills
+  has_secure_token :auth_token, length: 32
 
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
@@ -118,7 +120,7 @@ class User < ApplicationRecord
   def english_score
     last_english_evaluation.try(:score)
   end
-  
+
   def last_english_evaluation
     evaluations.by_kind(:english).order(:created_at).last
   end
@@ -169,5 +171,13 @@ class User < ApplicationRecord
 
   def password_required?
     password_required
+  end
+
+  def self.find_by_jwt_payload(payload)
+    find_by id: payload[:id]
+  end
+
+  def jwt_payload
+    { id: id }
   end
 end
