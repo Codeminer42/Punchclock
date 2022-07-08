@@ -104,6 +104,7 @@ GEM
       encryptor (~> 3.0.0)
     autoprefixer-rails (10.4.2.0)
       execjs (~> 2)
+    base64 (0.1.1)
     bcrypt (3.1.18)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
@@ -531,6 +532,7 @@ DEPENDENCIES
   active_skin
   activeadmin (~> 2.9.0)
   autoprefixer-rails (~> 10.4.2.0)
+  base64
   better_errors
   binding_of_caller
   bootsnap
@@ -561,6 +563,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   jquery_mask_rails (~> 0.1.0)
+  jwt
   kaminari
   letsencrypt-rails-heroku
   letter_opener
