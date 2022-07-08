@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_03_230849) do
+ActiveRecord::Schema.define(version: 2022_07_07_135655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,9 +90,9 @@ ActiveRecord::Schema.define(version: 2022_05_03_230849) do
   create_table "notes", force: :cascade do |t|
     t.text "comment"
     t.string "rate"
-    t.bigint "user_id"
-    t.bigint "author_id"
-    t.bigint "company_id"
+    t.integer "user_id"
+    t.integer "author_id"
+    t.integer "company_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
@@ -245,6 +245,8 @@ ActiveRecord::Schema.define(version: 2022_05_03_230849) do
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
+    t.string "auth_token"
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

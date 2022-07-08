@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       get "holidays" => "holidays#holidays_dashboard"
       get "punches" => "punches#index"
       get "punches/:id" => "punches#show", as: :punch
+      post 'auth' => 'auth#create'
+      patch 'auth' => 'auth#deny_auth_token'
     end
   end
 

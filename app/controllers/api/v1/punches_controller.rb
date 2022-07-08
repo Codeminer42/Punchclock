@@ -1,6 +1,10 @@
 module Api
   module V1
     class PunchesController < ApiController
+      include JwtAuthable
+
+      before_action :auth!
+
       def index
         render json: scoped_punches, status: :ok, each_serializer: PunchSerializer
       end
