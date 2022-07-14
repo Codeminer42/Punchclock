@@ -44,6 +44,8 @@ class Punch < ApplicationRecord
   end
 
   def delta
+    return 0 if from.nil? || to.nil?
+
     (to - from)
   end
 
