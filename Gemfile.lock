@@ -501,6 +501,8 @@ GEM
       sprockets (>= 3.0.0)
     ssrf_filter (1.0.7)
     strscan (3.0.3)
+    tailwindcss-rails (2.0.10)
+      railties (>= 6.0.0)
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -614,6 +616,7 @@ DEPENDENCIES
   spreadsheet
   spring (~> 3.1.1)
   sprockets
+  tailwindcss-rails (~> 2.0)
   uglifier
   unicorn
   validates_timeliness (~> 5.0.0.beta1)

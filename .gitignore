@@ -46,3 +46,6 @@ yarn-debug.log*
 .yarn-integrity
 public/webpack/*
 !public/webpack/.keep
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

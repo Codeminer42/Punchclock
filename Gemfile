@@ -106,3 +106,5 @@ end
 group :production, :staging do
   gem 'passenger', '~> 6.0'
 end
+
+gem "tailwindcss-rails", "~> 2.0"
