@@ -1,44 +1,13 @@
-  <div class="access-form-container mt-2">
-    <h2 class="text-center mb-3">Sign In</h2>
-
-    <%= simple_form_for(resource,
-                        as: resource_name,
-                        url: session_path(resource_name),
-                        html: { novalidate: false }) do |f| %>
-      <div class="form-inputs">
-        <div class="input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text"> <i class="fa fa-user"></i></span>
-          </div>
-          <%= f.input_field :email,
-                      label: false,
-                      required: true,
-                      autofocus: true,
-                      placeholder: "E-mail",
-                      class: "form-control",
-                      input_html: { autocomplete: "email" } %>
-        </div>
-
-        <div class="input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text"> <i class="fa fa-lock"></i></span>
-          </div>
-          <%= f.input_field :password,
-                    label: false,
-                    required: true,
-                    placeholder: "Password",
-                    class: "form-control",
-                    input_html: { autocomplete: "current-password" } %>
-        </div>
-
-        <div class="form-actions">
-          <%= f.button :submit, "Login", class: "w-100" %>
-        </div>
-
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-      </div>
-
-    <% end %>
-
-    <%= render "devise/shared/links" %>
+<div class="flex h-screen">
+  <div class="flex justify-center items-center w-full max-w-[419px] px-8 bg-cover bg-no-repeat bg-[url('sidebar-background.png')]">
+    <%= image_tag 'logo.png', alt: 'PunchClock', aria: { label: 'Logo do punch com o texto PunchClock' } %>
   </div>
+
+  <div class="flex items-center w-full">
+    <div class="w-full max-w-[580px] mx-auto px-8 py-20 flex flex-col">
+      <h2 class="text-3xl">Sign In</h2>
+
+      <input type="text" class="w-full form-input bg-slate-100 rounded border-2 border-slate-100 focus:border-slate-400 focus:ring-0" />
+    </div>
+  </div>
+</div>
