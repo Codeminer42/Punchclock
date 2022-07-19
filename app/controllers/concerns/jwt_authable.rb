@@ -2,9 +2,10 @@ module JwtAuthable
   extend ActiveSupport::Concern
 
   def auth!
-    @current_user = Jwt::Auth.(token: token)
+    @current_user_id = Jwt::Verify.call(token: token)
 
-    render json: { error: :unauthorized }, status: :unauthorized unless @current_user
+    rescue Jwt::Verify::InvalidError
+      render json: { error: :unauthorized }, status: :unauthorized
   end
 
   def deny!
@@ -18,6 +19,6 @@ module JwtAuthable
   end
 
   def current_user
-    @current_user
+    @current_user = User.find(@current_user_id)
   end
 end

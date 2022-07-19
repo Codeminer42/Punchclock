@@ -4,7 +4,7 @@ describe Api::V1::CompaniesController, :type => :controller do
   let!(:company) { create(:company) }
   let!(:offices) { create_list(:office, 3, company: company) }
   let!(:user) { create(:user, :with_token, company: company, office: offices.first) }
-  let(:headers) { { token: user.token } }
+  let(:headers) { { Authentication: api_auth(user) } }
 
   describe 'GET api/v1/offices' do
     subject { get :offices }
@@ -12,6 +12,8 @@ describe Api::V1::CompaniesController, :type => :controller do
     context 'when api token is valid' do
       before do
         request.headers.merge!(headers)
+        binding.pry
+
       end
 
       it { is_expected.to have_http_status(:ok) }

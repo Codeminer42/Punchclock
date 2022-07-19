@@ -1,7 +1,7 @@
 module Api
   module V1
     class HolidaysController < ActionController::API
-      before_action :authenticate_user!
+      before_action :auth!
 
       def holidays_dashboard
         render json: current_user.office_holidays
