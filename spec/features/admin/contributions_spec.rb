@@ -16,10 +16,9 @@ describe 'Contribution', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "User", "Company", "Link" and "State" on table' do
+    it 'must find fields "User", "Link" and "State" on table' do
       within 'table' do
           expect(page).to have_text('Usuário') &
-                        have_text('Empresa') &
                         have_text('Link') &
                         have_text('Estado')
       end
@@ -28,7 +27,6 @@ describe 'Contribution', type: :feature do
     it 'have contribution table with correct information of active user' do
       within 'table' do
         expect(page).to have_text(contribution.user) &
-                        have_text(contribution.company) &
                         have_text(contribution.link) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}"))
       end
@@ -37,7 +35,6 @@ describe 'Contribution', type: :feature do
     it 'have contribution table without information of inactive user' do
       within 'table' do
         expect(page).to not_have_text(inactive_user_contribution.user) &
-                        not_have_text(inactive_user_contribution.company) &
                         not_have_text(inactive_user_contribution.link) &
                         not_have_text(Contribution.human_attribute_name("state/#{inactive_user_contribution.state}"))
       end
