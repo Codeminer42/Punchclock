@@ -531,6 +531,7 @@ DEPENDENCIES
   active_skin
   activeadmin (~> 2.9.0)
   autoprefixer-rails (~> 10.4.2.0)
+  base64
   better_errors
   binding_of_caller
   bootsnap
