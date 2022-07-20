@@ -49,6 +49,8 @@ Rails.application.routes.draw do
       get "users" => "companies#users"
       get "offices" => "companies#offices"
       get "holidays" => "holidays#holidays_dashboard"
+      post "request" => "token#request_token"
+      post "refresh" => "token#refresh_token"
 
       resources :punches, only: %i[index show bulk] do
         collection do
