@@ -5,7 +5,7 @@ module Api
 
       private
       def require_valid_jwt!
-        fail "Authorization header missing" unless bearer_token.present?
+        raise Jwt::Verify::InvalidError unless bearer_token.present?
         @current_user_id = Jwt::Verify.call(bearer_token)
 
       rescue Jwt::Verify::InvalidError => e
