@@ -11,8 +11,10 @@ describe Api::V1::TokenController, :type => :controller do
 
       it { is_expected.to have_http_status(:created) }
 
-      it 'returns a access token' do
-        expect(JSON.parse(subject.body)).to include('access_token')
+      it 'returns a valid access token' do
+        body = JSON.parse(subject.body)
+        expect(body).to include('access_token')
+        expect(body.access_token).to include('access_token')
       end
     end
 
@@ -41,7 +43,7 @@ describe Api::V1::TokenController, :type => :controller do
       end
 
       it 'invalidates old access token' do
-        old_token = request.headers['Authentication']
+        old_token = request.headers['Authentication'].slice('Bearer ')
         subject
         expect{Jwt::Verify.call(old_token)}.to raise_error(Jwt::Verify::InvalidError)
       end
@@ -49,7 +51,7 @@ describe Api::V1::TokenController, :type => :controller do
 
     context 'when Authentication header is invalid' do
       before do
-        request.headers.merge!({ Authorization: 'Bearer invalid_token'})
+        request.headers.merge!({ Authorization: 'invalid_token'})
       end
 
       it { is_expected.to have_http_status(:unauthorized) }

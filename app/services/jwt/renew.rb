@@ -9,7 +9,7 @@ class Jwt::Renew
 
   def generate!
     revoke!
-    Jwt::Generate.new(user_id: @old_payload['sub']).token
+    Jwt::Generate.new(user_id: @old_payload['sub'])
   end
 
   def revoke!

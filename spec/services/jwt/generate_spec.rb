@@ -2,19 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Jwt::Generate do
   before do
-    @expected_token = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDE2MTA4MDAsInN1YiI6MSwiZW52IjoidGVzdCIsImp0aSI6InZhbGlkX3V1aWQifQ.yOFK_juAoBONyGYbf9f1PZ5zXcNtTiDptCEMwxcmOGA"
     allow(SecureRandom).to receive(:uuid).and_return('valid_uuid')
-    travel_to Time.local(2022)
+    @expected_token = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDE2MTA4MDAsInN1YiI6MSwiZW52IjoidGVzdCIsImp0aSI6InZhbGlkX3V1aWQifQ.yOFK_juAoBONyGYbf9f1PZ5zXcNtTiDptCEMwxcmOGA"
   end
 
   context '.initialize' do
+    #mostrar que ele sempre gera um jti diferente
     subject { described_class.new(user_id: 1) }
 
     it 'has correct payload' do
-      expect(subject.payload).to eq({ exp: 1.week.from_now.to_i,
-                                      sub: 1,
-                                      env: Rails.env,
-                                      jti: 'valid_uuid' })
+      expect(subject.payload).to include('exp', 'sub', 'env', 'jti')
     end
 
     it 'returns correct parse to string' do
@@ -26,12 +23,17 @@ RSpec.describe Jwt::Generate do
     end
 
     it 'returns correct parse to json' do
-      expect(subject.to_json(options: 'mock_option')).to eq({ access_token: @expected_token }.to_json)
+      expect(subject.to_json).to eq({ access_token: @expected_token }.to_json)
     end
   end
 
   describe '.token' do
     subject { described_class.new(user_id: 1).token }
+
+    it 'calls JWT::encode' do
+      #exprect encode to be called
+    end
+
     let(:decode_token) { JWT.decode(subject, ENV['JWT_SECRET_KEY']) }
 
     it 'returns a valid token' do

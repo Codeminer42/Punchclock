@@ -27,7 +27,7 @@ RSpec.describe Jwt::Renew do
     end
 
     it 'returns a valid token' do
-      expect(Jwt::Verify.call(subject)).to be(1)
+      expect(Jwt::Verify.call(subject.token)).to be(1)
     end
   end
 end

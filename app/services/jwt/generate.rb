@@ -17,7 +17,7 @@ class Jwt::Generate
 
   alias_method :to_s, :token
 
-  def to_json(options)
+  def to_json(options = { options: '' })
     to_h.to_json(options)
   end
 
