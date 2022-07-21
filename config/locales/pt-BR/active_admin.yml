@@ -24,7 +24,8 @@ pt-BR:
       active: 'Ativo'
       inactive: 'Inativo'
       finished: 'Finalizadas'
-      ongoing: 'Em andamento'
+      ongoing: 'Em andamento'      
+      spreadsheet: 'Planilha'
     resources:
       user:
         scopes:
