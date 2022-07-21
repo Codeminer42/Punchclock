@@ -28,6 +28,13 @@ describe 'Admin Allocation', type: :feature do
                         have_text('Dias Restantes')
       end
     end
+
+    it 'must find scopes "Em andamento", "Finalizadas", "Todos", and "Planilha"' do
+        expect(page).to have_text('Em andamento (1)') &
+                        have_text('Finalizadas (0)') &
+                        have_text('Todos (1)') &
+                        have_text('Planilha (1)')
+    end
   end
 
   describe 'Filters' do

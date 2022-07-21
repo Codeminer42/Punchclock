@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
+  config.sort_order = 'end_at_asc'
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id
 
   config.batch_actions = false
@@ -9,9 +10,9 @@ ActiveAdmin.register Allocation do
 
   scope :ongoing, default: true
   scope :finished
-  scope :all do |relation|
-    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company)
-                                      .call
+  scope :all
+  scope :spreadsheet do |relation|
+    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company).call
   end
 
   filter :user, collection: proc {
