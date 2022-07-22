@@ -10,7 +10,7 @@ module Github
       end
 
       def to_query
-        engineers.map do |github_user, user_id|
+        engineers.map do |github_user, _user_id|
           "author:#{github_user}"
         end.join(' ')
       end
