@@ -105,10 +105,10 @@ describe PunchesFilterForm do
         PunchesFilterForm.new(since: '04/11/2019', until: '04/11/2019', user_id: user.id)
       end
       let!(:valid_punch) do
-        create(:punch, from: Date.new(2019, 11, 4), to: Date.new(2019, 11, 4), user: user  )
+        create(:punch, from: DateTime.new(2019, 11, 4, 8), to: DateTime.new(2019, 11, 4, 12), user: user  )
       end
       let!(:punches) do
-        create_list(:punch, 3,  from: Date.new(2019, 11, 1), to: Date.new(2019, 11, 1), user: user  )
+        create_list(:punch, 3, from: DateTime.new(2019, 11, 1, 8), to: DateTime.new(2019, 11, 1, 12), user: user  )
       end
 
       it 'returns the valid punch' do
@@ -126,7 +126,7 @@ describe PunchesFilterForm do
       end
 
       let!(:punches) do
-        create_list(:punch, 3,  from: Date.new(2019, 11, 1), to: Date.new(2019, 11, 1), user: user  )
+        create_list(:punch, 3, from: DateTime.new(2019, 11, 1, 9), to: DateTime.new(2019, 11, 1, 12), user: user  )
       end
 
       it 'returns empty' do
