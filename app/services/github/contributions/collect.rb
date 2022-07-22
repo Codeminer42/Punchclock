@@ -25,8 +25,11 @@ module Github
 
       def fetch_all
         begin
-          yesterday_date = 1.day.ago.strftime("%Y-%m-%d")
-          query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
+          query = QueryBuilder.build_query_string(
+            authors_query,
+            repositories_query
+          )
+
           fetch_pull_requests(search_query: query)
         rescue StandardError => e
           Rails.logger.error e.message
