@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AllocationsAndUnalocatedUsersQuery
   attr_reader :allocation, :company
 
@@ -12,7 +14,7 @@ class AllocationsAndUnalocatedUsersQuery
       .select('allocations.*, users.id as user_id')
       .joins('RIGHT OUTER JOIN users ON allocations.user_id = users.id')
       .where(where)
-      .order('end_at NULLS FIRST, start_at NULLS FIRST, users.name')
+      .order('end_at NULLS LAST, start_at NULLS LAST, users.name')
   end
 
   private
@@ -20,7 +22,7 @@ class AllocationsAndUnalocatedUsersQuery
   def where
     {
       end_at: [last_user_allocations, nil],
-      users: { occupation: User.occupation.engineer.value, company: company },
+      users: { occupation: User.occupation.engineer.value, company: company, active: true },
       company: [company, nil]
     }
   end

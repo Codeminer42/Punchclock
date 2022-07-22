@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
-  config.sort_order = 'end_at_asc'
+  config.sort_order = ''
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id
 
   config.batch_actions = false
