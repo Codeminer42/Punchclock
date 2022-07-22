@@ -11,7 +11,7 @@ module Github
       end
 
       def all
-        return [] if company.blank? or repositories_wrapper.empty? or engineers_wrapper.empty?
+        return [] if company.blank? || insufficient_parameters_to_query?
         fetch_all
       end
 
@@ -19,12 +19,16 @@ module Github
 
       attr_reader :company, :client
 
+      def insufficient_parameters_to_query?
+        repositories_wrapper.empty? || engineers_wrapper.empty?
+      end
+
       def fetch_all
         begin
           yesterday_date = 1.day.ago.strftime("%Y-%m-%d")
           query = "created:#{yesterday_date} is:pr #{authors_query} #{repositories_query}"
           fetch_pull_requests(search_query: query)
-        rescue => e
+        rescue StandardError => e
           Rails.logger.error e.message
           Rails.logger.error e.backtrace.join("\n")
           []
