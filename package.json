@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "server": "webpack-dev-server",
+    "test": "jest --env=jsdom",
     "linter:css": "stylelint 'app/assets/stylesheets/**/*' --syntax scss"
   },
   "engines": {
@@ -46,6 +47,11 @@
     "webpack-dev-server": "^3.7.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
     "stylelint": "^9.10.1",
     "stylelint-config-idiomatic-css": "^1.0.6",
     "stylelint-config-recommended-scss": "^3.2.0",

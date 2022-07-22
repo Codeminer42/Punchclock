@@ -6,7 +6,11 @@ class WorkableValidator < ActiveModel::Validator
 
   private
   def check_for_errors!
-    cant_work! if (weekend? || holiday?) && !can_user_overtime?
+    if from_and_to_are_equal?
+      @model.errors.add(:from_time, :cant_be_equal)
+    else 
+      cant_work! if (weekend? || holiday?) && !can_user_overtime?
+    end
   end
 
   def cant_work!
@@ -31,5 +35,9 @@ class WorkableValidator < ActiveModel::Validator
 
   def can_user_overtime?
     @model.user.allow_overtime
+  end
+
+  def from_and_to_are_equal?
+    @model.delta == 0
   end
 end

@@ -126,6 +126,46 @@ describe Punch do
                        project: project, user: user)).not_to be_valid
     end
 
+    context 'delta validation' do
+      context 'when times are equal' do
+        let(:error_message) { I18n.t(:cant_be_equal, scope: "activerecord.errors.models.punch.attributes.from_time") }
+        let(:punch) {
+          Punch.new(from: Time.new(2022, 1, 5, 8, 0, 0, 0),
+                    to:   Time.new(2022, 1, 5, 8, 0, 0, 0),
+                    company: company,
+                    project: project, user: user)
+        }
+
+        it 'is not valid' do
+          expect(punch).not_to be_valid
+        end
+  
+        it "includes an error message" do
+          punch.validate
+          expect(punch.errors[:from_time]).to include(error_message)
+        end
+      end
+
+      context 'when from time is greater than to time' do
+        let(:error_message) { I18n.t(:cant_be_greater, scope: "activerecord.errors.models.punch.attributes.from_time") }
+        let(:punch) {
+          Punch.new(from: Time.new(2022, 1, 5, 9, 0, 0, 0),
+                    to:   Time.new(2022, 1, 5, 8, 0, 0, 0),
+                    company: company,
+                    project: project, user: user)
+        }
+
+        it 'is not valid' do
+          expect(punch).not_to be_valid
+        end
+  
+        it "includes an error message" do
+          punch.validate
+          expect(punch.errors[:from_time]).to include(error_message)
+        end
+      end
+    end
+
     context "on weekends" do
       before do
         punch.from = Time.new(2001, 1, 6, 8, 0, 0, 0) # Saturday
