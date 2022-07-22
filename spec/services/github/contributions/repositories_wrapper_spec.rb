@@ -8,19 +8,19 @@ RSpec.describe Github::Contributions::RepositoriesWrapper, type: :service do
     allow(company).to receive(:repositories).and_return(repositories)
   end
 
-  describe '#has_repositories?' do
-    subject(:has_repositories) { described_class.new(company: company).has_repositories? }
+  describe '#empty?' do
+    subject(:empty) { described_class.new(company: company).empty? }
 
     context 'when there are no repositories' do
       let(:repositories) { double(pluck: []) }
 
-      it { is_expected.to be false }
+      it { is_expected.to be true }
     end
 
     context 'when there are repositories' do
       let(:repositories) { double(pluck: [[1, 'https://github.com/owner1/name1'], [2, 'https://github.com/owner2/name2']]) }
 
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
   end
 

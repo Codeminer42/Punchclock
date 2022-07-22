@@ -10,19 +10,19 @@ RSpec.describe Github::Contributions::EngineersWrapper, type: :service do
     allow(company).to receive(:users).and_return(users)
   end
 
-  describe '#has_engineers?' do
-    subject(:has_engineers) { described_class.new(company: company).has_engineers? }
+  describe '#empty?' do
+    subject(:empty) { described_class.new(company: company).empty? }
 
     context 'when there are no engineers' do
       let(:active_engineers) { double(pluck: []) }
 
-      it { is_expected.to be false }
+      it { is_expected.to be true }
     end
 
     context 'when there are engineers' do
       let(:active_engineers) { double(pluck: [['user1', 1], ['user2', 2]]) }
 
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
   end
 

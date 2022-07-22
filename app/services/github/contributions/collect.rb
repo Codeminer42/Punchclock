@@ -11,7 +11,7 @@ module Github
       end
 
       def all
-        return [] if company.blank? or not repositories_wrapper.has_repositories? or not engineers_wrapper.has_engineers?
+        return [] if company.blank? or repositories_wrapper.empty? or engineers_wrapper.empty?
         fetch_all
       end
 
