@@ -15,8 +15,8 @@ module Github
         end.join(' ')
       end
 
-      def has_repositories?
-        not repositories.empty?
+      def empty?
+        repositories.empty?
       end
 
       private

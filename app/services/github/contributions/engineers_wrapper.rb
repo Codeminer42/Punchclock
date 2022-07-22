@@ -15,8 +15,8 @@ module Github
         end.join(' ')
       end
 
-      def has_engineers?
-        not engineers.empty?
+      def empty?
+        engineers.empty?
       end
 
       attr_reader :company
