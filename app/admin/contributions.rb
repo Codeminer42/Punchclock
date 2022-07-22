@@ -6,7 +6,7 @@ ActiveAdmin.register Contribution do
 
   filter :company, as: :select, if: proc { current_user.super_admin? }
   filter :user, as: :select, collection: proc { CompanyUsersCollectionQuery.new(current_user).call }
-  filter :state, as: :select, collection: Contribution.aasm.states_for_select
+  filter :reviewed_at
   filter :created_at
 
   member_action :approve, method: :put, only: :index
@@ -41,7 +41,9 @@ ActiveAdmin.register Contribution do
   index download_links: [:xls, :text] do
     selectable_column
     column :user
-    column :company
+    if current_user.super_admin?
+      column :company
+    end
     column :link do |contribution|
       link_to contribution.link, contribution.link, target: :blank
     end

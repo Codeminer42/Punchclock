@@ -174,7 +174,7 @@ describe NotificationMailer do
 
     context 'when notify user about unregistered punches' do
       let(:user) { build(:user) }
-      let(:unregistered_punches) { {Date.new(2019, 06, 18) => 0} }
+      let(:unregistered_punches) { { '18/06/2019' => 0 } }
       let(:mail) do
         NotificationMailer.notify_unregistered_punches(user, unregistered_punches)
       end

@@ -114,6 +114,38 @@ RSpec.describe Allocation, type: :model do
     end
   end
 
+  describe 'scopes' do
+    let!(:user1) { create(:user, active: false) }
+    let!(:user2) { create(:user) }
+    let!(:allocation1) { create(:allocation,
+                                  start_at: 2.week.ago,
+                                  end_at: 1.week.after,
+                                  user: user1)}
+    let!(:allocation2) { create(:allocation,
+                                  start_at: 2.week.ago,
+                                  end_at: 1.week.after,
+                                  user: user2)}
+    let!(:allocation3) { create(:allocation,
+                                  start_at: 2.month.ago,
+                                  end_at: 1.month.ago,
+                                  user: user1)}
+    let!(:allocation4) { create(:allocation,
+                                  start_at: 2.month.ago,
+                                  end_at: 1.month.ago,
+                                  user: user2)}
+
+    let(:ongoing_allocations) { described_class.ongoing.map { |allocation| allocation } }
+    let(:finished_allocations) { described_class.finished.map { |allocation| allocation } }
+
+    it 'is ongoing' do                                    
+      expect(ongoing_allocations).to eq([allocation2])
+    end
+
+    it 'is finished' do                                    
+      expect(finished_allocations).to eq([allocation4])
+    end
+  end
+
   describe '#days_until_finish' do
     context 'when end_at is nil' do
       subject { build_stubbed(:allocation, end_at: nil) }

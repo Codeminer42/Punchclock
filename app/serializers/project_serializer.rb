@@ -1,4 +1,4 @@
 class ProjectSerializer < ActiveModel::Serializer
   belongs_to :punch
-  attributes :name
+  attributes :id, :name
 end
