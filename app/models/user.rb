@@ -11,7 +11,7 @@ class User < ApplicationRecord
          :rememberable, :trackable, :validatable, :confirmable,
          :two_factor_authenticatable,
          :two_factor_backupable,
-         :otp_secret_encryption_key => ENV['OTP_ENCRYPTION_KEY']
+         :otp_secret_encryption_key => ENV['OTP_SECRET_ENCRYPTION_KEY']
 
   enumerize :level, in: {
     trainee: 7, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6

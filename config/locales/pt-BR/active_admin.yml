@@ -20,9 +20,12 @@ pt-BR:
         approve: 'Aprovar'
         send_to_newsletter: 'Enviar para Newsletter'
     scopes:
-      all: Todos
+      all: 'Todos'
       active: 'Ativo'
       inactive: 'Inativo'
+      finished: 'Finalizadas'
+      ongoing: 'Em andamento'      
+      spreadsheet: 'Planilha'
     resources:
       user:
         scopes:

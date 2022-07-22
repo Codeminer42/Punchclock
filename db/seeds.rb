@@ -122,7 +122,7 @@ def create_user_contribution(user:, repository:, date:)
       contrib.company_id = user.company.id
       contrib.repository = repository
       contrib.created_at = date
-      contrib.approve
+      contrib.approve(user.id)
       contrib.save!
     end
   end

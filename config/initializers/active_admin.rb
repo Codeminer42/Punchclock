@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative Rails.root / 'app/models/ability_admin'
+
 pre_defined_paths = Rails.application.config.i18n.load_path
 
 ActiveAdmin.setup do |config|

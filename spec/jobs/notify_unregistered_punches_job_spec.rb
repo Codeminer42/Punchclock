@@ -24,7 +24,9 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
     end
 
     context 'user with no punches registered' do
-      let(:unregistered_punches) { last_30_work_days.map { |day| [day, 0] }.to_h }
+      let(:unregistered_punches) do
+        last_30_work_days.map { |day| [day.to_fs(:date), 0] }.to_h
+      end
 
       it 'sends an email with the days of missing punches' do
         expect(NotificationMailer).to receive(:notify_unregistered_punches).with(active_user, unregistered_punches)
@@ -64,7 +66,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
       end
 
       it 'sends an email with the days of missing punches' do
-        expect(NotificationMailer).to receive(:notify_unregistered_punches).with(active_user, hash_including(last_30_work_days.first => 1))
+        expect(NotificationMailer).to receive(:notify_unregistered_punches).with(active_user, hash_including(last_30_work_days.first.to_fs(:date) => 1))
         subject.perform
       end
     end

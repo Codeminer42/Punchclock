@@ -8,7 +8,7 @@
     "linter:css": "stylelint 'app/assets/stylesheets/**/*' --syntax scss"
   },
   "engines": {
-    "node": "16.13.1"
+    "node": "~16.13.1"
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
