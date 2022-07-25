@@ -30,7 +30,7 @@ feature "Punches with super admin_user", type: :feature do
   
   context "on workday" do
     around do |example|
-      travel_to(DateTime.new(2019,06, 14, 8), &example)
+      travel_to(DateTime.new(2019, 06, 14, 18), &example)
     end
 
     scenario 'new punch' do
@@ -45,8 +45,8 @@ feature "Punches with super admin_user", type: :feature do
       select(user.name, from: 'punch_user_id').select_option
       select(project.name, from: 'punch_project_id').select_option
       select(company.name, from: 'punch_company_id').select_option
-      fill_in 'punch_from', with: DateTime.now.to_date
-      fill_in 'punch_to', with: DateTime.now.to_date
+      fill_in 'punch_from', with: DateTime.new(2019, 06, 14, 9)
+      fill_in 'punch_to', with: DateTime.new(2019, 06, 14, 12)
       click_button 'Criar Punch'
 
       expect(page).to have_content('Punch foi criado com sucesso.')

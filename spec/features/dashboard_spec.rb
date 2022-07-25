@@ -85,8 +85,11 @@ feature 'Punches Dashboard', js: true do
       find('span.select2').click
       find('li.select2-results__option').click
       expect(page).to have_content("Selecionado (1)")
-      click_on 'Salvar'
-      expect(page).to have_content("Selecionado (0)")
+
+      accept_alert do
+        click_on 'Salvar'
+        expect(page).to have_content("Selecionado (0)")
+      end
     end
   end
 
