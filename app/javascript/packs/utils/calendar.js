@@ -73,3 +73,9 @@ export const getHolidaysFromState = (getState) => {
   const { calendarReducer: { holidays } } = getState();
   return holidays;
 }
+
+export const compareHours = ({ date = new Date(), firstHour, secondHour }) => {
+  const onlyDate = moment(date).format('YYYY-MM-DD');
+
+  return Date.parse(`${onlyDate} ${firstHour}`) < Date.parse(`${onlyDate} ${secondHour}`)
+}

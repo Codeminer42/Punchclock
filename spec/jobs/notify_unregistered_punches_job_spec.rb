@@ -37,7 +37,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
     context 'user with all punches registered' do
       let!(:registered_punches) do
         last_30_work_days.map do |day| 
-          create_list :punch, 2, user: active_user, company: company, from: day.to_datetime, to: day.to_datetime 
+          create_list :punch, 2, user: active_user, company: company, from: day.to_datetime, to: day.to_datetime + 4.hour 
         end
       end
 
@@ -50,7 +50,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
     context 'user with all punches of only one day registered' do
       let!(:registered_punches) do
         create_list :punch, 2, user: active_user, company: company, 
-        from: last_30_work_days.last, to: last_30_work_days.last
+        from: last_30_work_days.last, to: last_30_work_days.last + 4.hour
       end
 
       it 'sends an email with the days of missing punches' do
@@ -62,7 +62,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
     context 'user with only 1 punch of a day registered' do
       let!(:half_day_registered) do
         create :punch, user: active_user, company: company, 
-        from: last_30_work_days.first, to: last_30_work_days.first
+        from: last_30_work_days.first, to: last_30_work_days.first + 4.hour
       end
 
       it 'sends an email with the days of missing punches' do
