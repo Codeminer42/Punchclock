@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Jwt::Renew do
   let!(:token) { Jwt::Generate.new(user_id: 1).token }
   let(:memory_store) { ActiveSupport::Cache.lookup_store(:memory_store) }
-
+  let(:jti) { JWT::decode(token, ENV['JWT_SECRET_TOKEN'], false).first['jti'] }
+  
   before do
     allow(Rails).to receive(:cache).and_return(memory_store)
     Rails.cache.clear
@@ -13,8 +14,9 @@ RSpec.describe Jwt::Renew do
     subject { described_class.new(token).revoke! }
 
     it 'adds token to jti blacklist' do
+      allow(Rails.cache).to receive(:write)
       subject
-      expect { Jwt::Verify.call(token) }.to raise_error(Jwt::Verify::InvalidError)
+      expect(Rails.cache).to have_received(:write).with("jwt_jti_denied/#{jti}", true)
     end
   end
 
@@ -22,12 +24,13 @@ RSpec.describe Jwt::Renew do
     subject { described_class.new(token).generate! }
 
     it 'adds token to jti blacklist' do
+      allow(Rails.cache).to receive(:write)
       subject
-      expect { Jwt::Verify.call(token) }.to raise_error(Jwt::Verify::InvalidError)
+      expect(Rails.cache).to have_received(:write).with("jwt_jti_denied/#{jti}", true)
     end
 
     it 'returns a valid token' do
-      expect(Jwt::Verify.call(subject.token)).to be(1)
+      expect{ JWT.decode(subject.token, ENV['JWT_SECRET_KEY']) }.not_to raise_error(JWT::DecodeError)
     end
   end
 end

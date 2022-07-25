@@ -36,11 +36,6 @@ RSpec.describe Jwt::Generate do
       expect(JWT).to have_received(:encode).with(payload, ENV['JWT_SECRET_KEY'])
     end
 
-    it 'returns the expected content' do
-      allow(JWT).to receive(:encode).and_return('expected_token')
-      expect(subject.token).to eq('expected_token')
-    end
-
     it 'returns a valid token' do
       expect { decode_token }.not_to raise_error(JWT::DecodeError)
     end

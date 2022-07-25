@@ -2,16 +2,15 @@ require 'spec_helper'
 require  "#{Rails.root}/spec/support/controller_helpers.rb"
 
 describe Api::V1::PunchesController, :type => :controller do
-  let(:user) { create(:user, :with_token) }
+  let(:user) { create(:user) }
   let(:project) { create(:project, company: user.company) }
-  let(:headers) { { token: user.token } }
 
   describe 'GET api/v1/punches' do
     subject { get :index }
     before { create(:punch, user_id: user.id) }
 
     context 'when user is logged in' do
-      before { request.headers.merge(headers) }
+      before { use_auth_header_for(user.id) }
 
       include_examples 'an authenticated resource action'
 
@@ -47,7 +46,7 @@ describe Api::V1::PunchesController, :type => :controller do
       end
 
       subject { post :bulk, params: params }
-      before { request.headers.merge(headers) }
+      before { use_auth_header_for(user.id) }
 
       include_examples 'an authenticated create resource action'
 
@@ -89,7 +88,7 @@ describe Api::V1::PunchesController, :type => :controller do
 
       subject { post :bulk, params: params }
       before do
-        request.headers.merge(headers)
+        use_auth_header_for(user.id)
 
         create(:punch, from: '2022-04-19T12:00:00', to: '2022-04-19T15:00:00', project: project, user: user)
       end
@@ -115,7 +114,7 @@ describe Api::V1::PunchesController, :type => :controller do
     context 'when user is logged in' do
       let(:headers) { { token: user.token } }
 
-      before { request.headers.merge(headers) }
+      before { use_auth_header_for(user.id) }
 
       include_examples 'an authenticated resource action'
 
