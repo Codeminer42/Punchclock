@@ -1,36 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Jwt::Verify do
+  
   describe '.call' do
-    subject { described_class.call(token) }
-    let(:token) { Jwt::Generate.new(user_id: 1, expire_at: exp_date).token }
-
     context 'when token is not expired' do
-      let(:exp_date) { 1.week.from_now }
+      let(:valid_token) { Jwt::Generate.new(user_id: 1, expire_at: 1.week.from_now).token }
       it 'does not raise error' do
-        expect { subject }.not_to raise_error(Jwt::Verify::InvalidError)
+        expect { described_class.call(valid_token) }.not_to raise_error
       end
-
+      
       it 'returns user_id' do
-        expect(subject).to eq(1)
+        expect(described_class.call(valid_token)).to eq(1)
       end
     end
-
+    
     context 'when token is expired' do
-      let(:exp_date) { 2.week.ago }
-
+      let(:expired_token) { Jwt::Generate.new(user_id: 1, expire_at: 2.week.ago).token }
       it 'raises an InvalidError' do
-        expect { subject }.to raise_error(Jwt::Verify::InvalidError)
+        expect { described_class.call(expired_token) }.to raise_error(Jwt::Verify::InvalidError)
       end
     end
 
     context 'when token was generated on another Rails.env' do
-      let(:exp_date) { 1.week.from_now }
+      let!(:token) { Jwt::Generate.new(user_id: 1, expire_at: 1.week.from_now).token }
 
       it 'raises an InvalidError' do
-        token # create token before mocking Rails.env
         allow(Rails).to receive(:env).and_return('development'.inquiry)
-        expect { subject }.to raise_error(Jwt::Verify::InvalidError)
+
+        expect { described_class.call(token) }.to raise_error(Jwt::Verify::InvalidError)
       end
     end
   end

@@ -1,47 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Jwt::Generate do
-  context '.initialize' do
-    subject { described_class.new(user_id: 1) }
+  let(:generated_jwt) { described_class.new(user_id: 1) }
 
-    it 'has correct payload' do
-      expect(subject.payload).to include(:exp, :sub, :env, :jti)
-    end
+  it 'has correct payload' do
+    expect(generated_jwt.payload).to include(:exp, :sub, :env, :jti)
+  end
 
-    it 'aways returns different tokens' do
-      expect(subject.token).not_to eq(described_class.new(user_id: 1).token)
-    end
+  it 'aways returns different tokens' do
+    expect(generated_jwt.token).not_to eq(described_class.new(user_id: 1).token)
+  end
 
-    it 'returns correct parse to string' do
-      expect(subject.to_s).to eq(subject.token)
-    end
+  it 'returns correct parse to string' do
+    expect(generated_jwt.to_s).to eq(generated_jwt.token)
+  end
 
-    it 'returns correct parse to hash' do
-      expect(subject.to_h).to eq({ access_token: subject.token })
-    end
+  it 'returns correct parse to hash' do
+    expect(generated_jwt.to_h).to eq({ access_token: generated_jwt.token })
+  end
 
-    it 'returns correct parse to json' do
-      expect(subject.to_json).to eq({ access_token: subject.token }.to_json)
-    end
+  it 'returns correct parse to json' do
+    expect(generated_jwt.to_json).to eq({ access_token: generated_jwt.token }.to_json)
   end
 
   describe '.token' do
-    subject { described_class.new(user_id: 1) }
-    let(:payload) { subject.payload }
-    let(:decode_token) { JWT.decode(subject.token, ENV['JWT_SECRET_KEY']) }
+    let(:payload) { generated_jwt.payload }
 
     it 'calls JWT::encode' do
       allow(JWT).to receive(:encode)
-      subject.token
+      generated_jwt.token
       expect(JWT).to have_received(:encode).with(payload, ENV['JWT_SECRET_KEY'])
     end
 
     it 'returns a valid token' do
-      expect { decode_token }.not_to raise_error(JWT::DecodeError)
+      expect { JWT.decode(generated_jwt.token, ENV['JWT_SECRET_KEY']) }.not_to raise_error
     end
 
     it 'contains correct data' do
-      expect(decode_token[0].symbolize_keys!).to eq(payload)
+      decoded_token = JWT.decode(generated_jwt.token, ENV['JWT_SECRET_KEY'])
+      token_payload = decoded_token[0].symbolize_keys!
+      expect(token_payload).to eq(payload)
     end
   end
 end

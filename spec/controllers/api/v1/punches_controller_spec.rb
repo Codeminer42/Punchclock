@@ -1,5 +1,4 @@
 require 'spec_helper'
-require  "#{Rails.root}/spec/support/controller_helpers.rb"
 
 describe Api::V1::PunchesController, :type => :controller do
   let(:user) { create(:user) }

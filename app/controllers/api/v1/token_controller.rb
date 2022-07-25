@@ -16,7 +16,7 @@ module Api
 
       # POST /api/v1/token/refresh
       def refresh_token
-        render json: Jwt::Renew.new(bearer_token).generate!.to_json, status: :created
+        render json: Jwt::Renew.new(bearer_token).generate!, status: :created
       end
     end
   end
