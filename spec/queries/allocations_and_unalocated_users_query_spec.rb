@@ -24,6 +24,7 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
       let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
       let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
       let!(:brian) { create(:user, name: 'Brian May', company: company) }
+      let!(:leeroy) { create(:user, name: 'Leeroy Jenkins', company: company) }
 
       let(:names) { call.map { |allocation| allocation.user.name } }
 
@@ -45,10 +46,16 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
                end_at: nil,
                user: alex,
                company: company)
+
+        create(:allocation,
+               start_at: 3.months.before,
+               end_at: 2.months.before,
+               user: leeroy,
+               company: company)
       end
 
       it 'returns users in order of allocations about to finish > without end > no allocation' do
-        expect(names).to eq ['Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe']
+        expect(names).to eq ['Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins']
       end
     end
 

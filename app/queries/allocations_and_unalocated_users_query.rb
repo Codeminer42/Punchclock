@@ -12,9 +12,12 @@ class AllocationsAndUnalocatedUsersQuery
     allocation
       .includes(:user)
       .select('allocations.*, users.id as user_id')
-      .joins('RIGHT OUTER JOIN users ON allocations.user_id = users.id')
+      .joins(
+        'RIGHT OUTER JOIN users ON allocations.user_id = users.id AND
+        (allocations.end_at > NOW() OR allocations.end_at IS NULL)'
+      )
       .where(where)
-      .order('end_at NULLS LAST, start_at NULLS LAST, users.name')
+      .order('start_at NULLS LAST, end_at NULLS LAST, users.name')
   end
 
   private
