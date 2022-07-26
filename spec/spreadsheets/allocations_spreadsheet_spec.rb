@@ -9,23 +9,19 @@ RSpec.describe AllocationsSpreadsheet do
     [
       User.human_attribute_name('name'),
       User.human_attribute_name('specialty'),
+      Office.human_attribute_name('head'),
       Allocation.human_attribute_name('project'),
-      Allocation.human_attribute_name('start_at'),
-      Allocation.human_attribute_name('end_at'),
-      Allocation.human_attribute_name('created_at'),
-      Allocation.human_attribute_name('updated_at'),
+      Allocation.human_attribute_name('end_at')
     ]
   end
 
-  let (:body_attributes) do
+  let(:body_attributes) do
     [
       allocation.user.name,
       allocation.user.specialty,
       allocation.project.name,
-      I18n.l(allocation.start_at, format: :long),
-      I18n.l(allocation.end_at, format: :long),
-      I18n.l(allocation.created_at, format: :long),
-      I18n.l(allocation.created_at, format: :long)
+      allocation.user.decorate.office_head_name,
+      I18n.l(allocation.end_at, format: :long)
     ]
   end
 
