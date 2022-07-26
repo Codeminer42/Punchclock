@@ -1,8 +1,8 @@
 pt-BR:
   active_admin:
-    admin_reset_password: 'Um email com instruções para reset de senha foi enviado'
-    admin_reset_password_button: 'Enviar email para reset de senha'
-    allocated_user_punches: 'Punches do Usuário Alocado'
+    admin_reset_password: "Um email com instruções para reset de senha foi enviado"
+    admin_reset_password_button: "Enviar email para reset de senha"
+    allocated_user_punches: "Punches do Usuário Alocado"
     search: "Buscar"
     search_fields: "Campos de Busca"
     levels_average: "Média dos Níveis"
@@ -16,17 +16,17 @@ pt-BR:
       labels:
         disable: "Desativar"
         enable: "Ativar"
-        refuse: 'Recusar'
-        approve: 'Aprovar'
-        send_to_newsletter: 'Enviar para Newsletter'
+        refuse: "Recusar"
+        approve: "Aprovar"
+        send_to_newsletter: "Enviar para Newsletter"
     scopes:
-      all: 'Todos'
-      active: 'Ativo'
-      inactive: 'Inativo'
-      finished: 'Finalizadas'
-      ongoing: 'Em andamento'      
-      spreadsheet: 'Planilha'
+      all: "Todos"
+      active: "Ativo"
+      inactive: "Inativo"
+      finished: "Finalizadas"
+      ongoing: "Em andamento"
+      spreadsheet: "Alocação de Recursos"
     resources:
       user:
         scopes:
-          not_allocated: 'Não alocados'
+          not_allocated: "Não alocados"
