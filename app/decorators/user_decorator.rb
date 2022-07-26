@@ -38,4 +38,8 @@ class UserDecorator < Draper::Decorator
   def overall_score
     model.overall_score || I18n.t('not_evaluated')
   end
+
+  def office_head_name
+    model.office.head&.name || 'N/A'
+  end
 end
