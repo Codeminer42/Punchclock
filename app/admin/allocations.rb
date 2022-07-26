@@ -10,7 +10,9 @@ ActiveAdmin.register Allocation do
 
   scope :ongoing, default: true
   scope :finished
-  scope :all
+  scope :all do
+    Allocation.all.joins(:user).merge(User.active)
+  end
   scope :spreadsheet do |relation|
     AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company).call
   end
