@@ -129,4 +129,26 @@ RSpec.describe UserDecorator do
       end
     end
   end
+
+  describe '#office_head_name' do
+    subject(:user) { build_stubbed(:user).decorate }
+
+    context 'when office head is set' do
+      let(:office_with_head) { build(:office, :with_head) }
+      before { allow_any_instance_of(User).to receive(:office).and_return(office_with_head) }
+
+      it 'returns office head name' do
+        expect(subject.office_head_name).to eq(office_with_head.head.name)
+      end
+    end
+
+    context 'when office head is nil' do
+      let(:office_without_head) { build(:office) }
+      before { allow_any_instance_of(User).to receive(:office).and_return(office_without_head) }
+
+      it 'returns N/A' do
+        expect(subject.office_head_name).to eq('N/A')
+      end
+    end
+  end
 end
