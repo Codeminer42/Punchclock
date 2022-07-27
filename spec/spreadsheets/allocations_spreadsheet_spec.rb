@@ -3,7 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe AllocationsSpreadsheet do
-  let(:allocation) { create(:allocation, :with_end_at) }
+  let(:office_head) { create(:user, name: 'Wender') }
+  let(:office) { create(:office, head: office_head) }
+  let(:user) { create(:user, name: 'Philipe', specialty: 'backend', office: office) }
+  let(:project) { create(:project, name: 'Punchclock') }
+  let(:allocation) { create(:allocation, user: user, project: project, end_at: Date.parse('27/07/2022')) }
+
   let(:allocation_spreadsheet) { AllocationsSpreadsheet.new([allocation]) }
   let(:header_attributes) do
     [
@@ -17,11 +22,11 @@ RSpec.describe AllocationsSpreadsheet do
 
   let(:body_attributes) do
     [
-      allocation.user.name,
-      allocation.user.specialty,
-      allocation.project.name,
-      allocation.user.decorate.office_head_name,
-      I18n.l(allocation.end_at, format: :long)
+      'Philipe',
+      'backend',
+      'Punchclock',
+      'Wender',
+      I18n.l(Date.parse('27/07/2022'), format: :long)
     ]
   end
 
