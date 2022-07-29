@@ -7,7 +7,7 @@ RSpec.describe AllocationsSpreadsheet do
   let(:office) { create(:office, head: office_head) }
   let(:user) { create(:user, name: 'Philipe', specialty: 'backend', office: office) }
   let(:project) { create(:project, name: 'Punchclock') }
-  let(:allocation) { create(:allocation, user: user, project: project, end_at: Date.today + 10.days) }
+  let(:allocation) { create(:allocation, user: user, project: project, end_at: 10.days.from_now) }
 
   let(:allocation_spreadsheet) { AllocationsSpreadsheet.new([allocation]) }
   let(:header_attributes) do
@@ -26,7 +26,7 @@ RSpec.describe AllocationsSpreadsheet do
       'backend',
       'Punchclock',
       'Wender',
-      I18n.l(Date.today + 10.days, format: :long)
+      I18n.l(10.days.from_now, format: '%d de %B de %Y')
     ]
   end
 
