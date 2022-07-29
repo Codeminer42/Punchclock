@@ -123,4 +123,40 @@ feature 'Punches Dashboard', js: true do
       expect(save_button.disabled?).to eq(true)
     end
   end
+
+  context 'When user try to save a punch in the future' do
+    let!(:authed_user_without_overtime) { create_logged_in_user }
+    let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
+    let(:time_now) { Time.rfc3339('2022-06-06T15:00:00-03:00') }
+
+    before do
+      allow(Time).to receive(:now).and_return(time_now)
+    end
+
+    scenario 'Renders alert with error messages' do
+      visit '/dashboard/2022/06'
+      
+      find('td.inner', text: '06').click
+      find('span.select2').click
+      find('li.select2-results__option').click
+
+      hour_inputs = all('.form-control')
+
+      morning_start_input = hour_inputs[0]
+      morning_end_input = hour_inputs[1]
+
+      lunch_start_input = hour_inputs[2]
+      lunch_end_input = hour_inputs[3]
+
+      morning_start_input.set('09:00')
+      morning_end_input.set('12:00')   
+
+      lunch_start_input.set('13:00')
+      lunch_end_input.set(1.hour.from_now.to_s(:time))      
+
+      alert_message = accept_alert { click_on 'Salvar' }
+      
+      expect(alert_message).to eq('["Horário final não pode ser no futuro"]')
+    end
+  end
 end

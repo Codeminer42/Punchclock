@@ -357,21 +357,23 @@ export const onFetchHolidays = (dispatch) => () => {
 };
 
 export const onSaveSheets = (dispatch) => (deleteds, sheets, sheetsSaveds) => {
-  saveSheets(deleteds, sheets).then((response) =>
-    dispatch({
-      type: SAVE_SHEET_SUCCESS,
-      sheetsPayload:{
-        sheetsSaveds: sheetsSaveds.merge(sheets),
-        sheets: emptyMap,
-        deleteds: emptySet,
-        changes: 0,
-      },
-    })
-  )
-  .catch((response) => {
-    alert('Ops...');
-    dispatch({
-      type: SHEETS_SAVE_FAIL
+  saveSheets(deleteds, sheets)
+    .then(() =>
+      dispatch({
+        type: SAVE_SHEET_SUCCESS,
+        sheetsPayload: {
+          sheetsSaveds: sheetsSaveds.merge(sheets),
+          sheets: emptyMap,
+          deleteds: emptySet,
+          changes: 0,
+        },
+      })
+    )
+    .catch((error) => {
+      alert(JSON.parse(JSON.stringify(error.response.text)));
+      dispatch({
+        type: SHEETS_SAVE_FAIL,
+      });
+      console.log();
     });
-  });
 };

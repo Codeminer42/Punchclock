@@ -20,7 +20,7 @@ class DashboardController < ApplicationController
     if @punches_transaction.success?
       head :created
     else
-      head :unprocessable_entity
+      render json: @punches_transaction.errors, status: :unprocessable_entity
     end
   end
 
