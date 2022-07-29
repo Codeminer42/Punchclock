@@ -17,7 +17,7 @@ class AllocationsAndUnalocatedUsersQuery
         (allocations.end_at > NOW() OR allocations.end_at IS NULL)'
       )
       .where(where)
-      .order('start_at NULLS LAST, end_at NULLS LAST, users.name')
+      .order('end_at NULLS LAST, start_at NULLS LAST, users.name')
   end
 
   private
