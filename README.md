@@ -12,6 +12,7 @@ A simple electronic punch clock to track hours spent on projects.
 Ruby 2.7.5
 Rails 6.0.3
 Postgres >= 9.1
+Node 16.13.1
 ```
 
 ## Installing
@@ -22,7 +23,6 @@ $ cd Punchclock
 $ cp .env.example .env
 $ Install Postgres
 $ Install Redis
-$ Install NodeJS
 $ bin/setup
 ```
 
@@ -55,6 +55,18 @@ Run it on development mode using `thin`
 ```console
 $ foreman start -f Procfile.dev
 ```
+
+To enable `guard-livereload`, you need to install the [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei) extension on your browser.
+
+In another terminal, start Guard:
+
+```
+$ bundle exec guard
+```
+
+After that, start the extension on your browser. You'll see a browser connection browser on the terminal.
+
+Freely make your changes and the page will be refreshed after you save it.
 
 ### Docker environment for development
 
