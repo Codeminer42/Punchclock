@@ -12,7 +12,7 @@ module Github
 
         def to_query
           repositories.map do |repository_owner, repository_name, repository_id|
-            "repo:#{repository_owner}/#{repository_name}"
+            "repo:#{repository_owner.strip}/#{repository_name.strip}"
           end.join(' ')
         end
 

@@ -12,7 +12,7 @@ module Github
 
         def to_query
           engineers.map do |github_user, _user_id|
-            "author:#{github_user}"
+            "author:#{github_user.strip}"
           end.join(' ')
         end
 
