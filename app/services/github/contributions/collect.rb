@@ -8,6 +8,8 @@ module Github
       def initialize(company:, client:)
         @company = company
         @client = client
+        @engineers = EngineersWrapper.new(company: company)
+        @repositories = RepositoriesWrapper.new(company: company)
       end
 
       def all
@@ -20,7 +22,7 @@ module Github
       attr_reader :company, :client
 
       def insufficient_parameters_to_query?
-        repositories_wrapper.empty? || engineers_wrapper.empty?
+        @repositories.empty? || @engineers.empty?
       end
 
       def fetch_all
@@ -41,27 +43,19 @@ module Github
       def fetch_pull_requests(search_query:)
         client.search.issues(q: search_query).items.map do | pull_request |
           repository_name = pull_request.html_url.split("/")[-4..-3].join("/")
-          user_id = engineers_wrapper.get_engineer_id_by_github_user(pull_request.user.login)
-          repository_id = repositories_wrapper.get_repository_id_by_name(repository_name)
+          user_id = @engineers.get_engineer_id_by_github_user(pull_request.user.login)
+          repository_id = @repositories.get_repository_id_by_name(repository_name)
 
           Result.new(user_id, repository_id, pull_request.html_url, pull_request.created_at)
         end
       end
 
-      def engineers_wrapper
-        @engineers_wrapper ||= EngineersWrapper.new(company: company)
-      end
-
-      def repositories_wrapper
-        @repositories_wrapper ||= RepositoriesWrapper.new(company: company)
-      end
-
       def repositories_query
-        repositories_wrapper.to_query
+        @repositories.to_query
       end
 
       def authors_query
-        engineers_wrapper.to_query
+        @engineers.to_query
       end
     end
   end
