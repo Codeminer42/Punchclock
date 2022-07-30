@@ -3,8 +3,6 @@
 module Github
   module Contributions
     class Collect
-      Result = Struct.new(:uid, :rid, :pull_request_url, :created_at)
-
       def initialize(company:, client:)
         @company = company
         @client = client
