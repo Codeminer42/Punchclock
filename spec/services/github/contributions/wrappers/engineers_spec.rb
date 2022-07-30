@@ -42,8 +42,8 @@ RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
     end
   end
 
-  describe '#get_engineer_id_by_github_user' do
-    subject(:get_engineer_id_by_github_user) { described_class.new(company: company).get_engineer_id_by_github_user(github_user_to_find) }
+  describe '#find_by_github_user' do
+    subject(:find_by_github_user) { described_class.new(company: company).find_by_github_user(github_user_to_find) }
     let(:github_user_to_find) { 'the_wanted_user' }
 
     context 'when the id is not found' do

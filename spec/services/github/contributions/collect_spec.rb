@@ -62,11 +62,11 @@ RSpec.describe Github::Contributions::Collect, type: :service do
         allow(client).to receive(:search).and_return(client_search)
       end
 
-      it { expect(subject[0].pull_request_url).to eq 'http://github.com/owner/name/pull/123' }
+      it { is_expected.not_to be_empty }
 
-      it { expect(subject[0].repository_id).to eq 293 }
-
-      it { expect(subject[0].user_id).to eq 100 }
+      it 'returns the found pull requests wrapped into the PullRequest Wrapper' do
+        expect(subject[0]).to be_instance_of(Github::Contributions::Wrappers::PullRequest)
+      end
     end
   end
 end

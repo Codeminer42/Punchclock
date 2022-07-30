@@ -40,8 +40,8 @@ RSpec.describe Github::Contributions::Wrappers::Repositories, type: :service do
     end
   end
 
-  describe '#get_repository_id_by_name' do
-    subject(:get_repository_id_by_name) { described_class.new(company: company).get_repository_id_by_name(repository_to_find) }
+  describe '#find_repository_id_by_name' do
+    subject(:find_repository_id_by_name) { described_class.new(company: company).find_repository_id_by_name(repository_to_find) }
     let(:repository_to_find) { 'owner3/name3' }
 
     context 'when the id is not found' do
