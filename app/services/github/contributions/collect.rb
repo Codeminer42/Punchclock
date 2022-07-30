@@ -8,8 +8,8 @@ module Github
       def initialize(company:, client:)
         @company = company
         @client = client
-        @engineers = EngineersWrapper.new(company: company)
-        @repositories = RepositoriesWrapper.new(company: company)
+        @engineers = Wrappers::Engineers.new(company: company)
+        @repositories = Wrappers::Repositories.new(company: company)
       end
 
       def all

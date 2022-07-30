@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Github::Contributions::RepositoriesWrapper, type: :service do
+RSpec.describe Github::Contributions::Wrappers::Repositories, type: :service do
 
   let(:company) { build_stubbed(:company) }
 

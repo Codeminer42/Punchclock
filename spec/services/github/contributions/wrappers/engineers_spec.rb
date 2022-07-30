@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Github::Contributions::EngineersWrapper, type: :service do
+RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
 
   let(:company) { build_stubbed(:company) }
   let(:engineers) { double(active: active_engineers) }
