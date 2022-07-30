@@ -50,10 +50,10 @@ RSpec.describe Github::Contributions::Collect, type: :service do
     end
 
     context 'when Pull Requests are fetched from GitHub API' do
-      let(:repositories) { double(pluck: [[1, 'http://example.com']]) }
-      let(:engineers) { double(active: double(pluck: [['github_user', 1]])) }
+      let(:repositories) { double(pluck: [[293, 'http://github.com/owner/name']]) }
+      let(:engineers) { double(active: double(pluck: [['github_user', 100]])) }
       let(:users) { double(engineer: engineers) }
-      let(:pull_requests) { double(items: [ double(created_at: '2022-01-01', html_url: 'http://example.com/owner/name/pull/123', user: double(login: 'github_user')) ]) }
+      let(:pull_requests) { double(items: [ double(created_at: '2022-01-01', html_url: 'http://github.com/owner/name/pull/123', user: double(login: 'github_user')) ]) }
       let(:client_search) { double(issues: pull_requests) }
 
       before do
@@ -62,7 +62,11 @@ RSpec.describe Github::Contributions::Collect, type: :service do
         allow(client).to receive(:search).and_return(client_search)
       end
 
-      it { is_expected.not_to be_empty }
+      it { expect(subject[0].pull_request_url).to eq 'http://github.com/owner/name/pull/123' }
+
+      it { expect(subject[0].repository_id).to eq 293 }
+
+      it { expect(subject[0].user_id).to eq 100 }
     end
   end
 end

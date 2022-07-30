@@ -6,8 +6,8 @@ module Github
           @company = company
         end
 
-        def get_engineer_id_by_github_user(github_user)
-          engineers.to_h[github_user]
+        def find_by_github_user(github_user)
+          to_h[github_user]
         end
 
         def to_query

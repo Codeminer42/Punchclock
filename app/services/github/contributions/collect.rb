@@ -32,21 +32,14 @@ module Github
             repositories_query
           )
 
-          fetch_pull_requests(search_query: query)
+          client.search
+                .issues(q: query)
+                .items
+                .map { | pull_request | Wrappers::PullRequest.new(pull_request: pull_request, engineers: @engineers, repositories: @repositories) }
         rescue StandardError => e
           Rails.logger.error e.message
           Rails.logger.error e.backtrace.join("\n")
           []
-        end
-      end
-
-      def fetch_pull_requests(search_query:)
-        client.search.issues(q: search_query).items.map do | pull_request |
-          repository_name = pull_request.html_url.split("/")[-4..-3].join("/")
-          user_id = @engineers.get_engineer_id_by_github_user(pull_request.user.login)
-          repository_id = @repositories.get_repository_id_by_name(repository_name)
-
-          Result.new(user_id, repository_id, pull_request.html_url, pull_request.created_at)
         end
       end
 

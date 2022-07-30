@@ -6,7 +6,7 @@ module Github
           @company = company
         end
 
-        def get_repository_id_by_name(repository_name)
+        def find_repository_id_by_name(repository_name)
           to_h[repository_name]
         end
 
