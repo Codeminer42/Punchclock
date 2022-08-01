@@ -128,7 +128,7 @@ feature 'Punches Dashboard', js: true do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
     let(:time_now) { Time.rfc3339('2022-06-06T15:00:00-03:00') }
-
+    
     before do
       allow(Time).to receive(:now).and_return(time_now)
     end
@@ -152,11 +152,11 @@ feature 'Punches Dashboard', js: true do
       morning_end_input.set('12:00')   
 
       lunch_start_input.set('13:00')
-      lunch_end_input.set(1.hour.from_now.to_s(:time))      
+      lunch_end_input.set(1.hour.from_now.to_fs(:time))     
 
       alert_message = accept_alert { click_on 'Salvar' }
       
-      expect(alert_message).to eq('["Horário final não pode ser no futuro"]')
+      expect(alert_message).to eq('Horário final não pode ser no futuro')
     end
   end
 end

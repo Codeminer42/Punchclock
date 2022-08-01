@@ -370,10 +370,9 @@ export const onSaveSheets = (dispatch) => (deleteds, sheets, sheetsSaveds) => {
       })
     )
     .catch((error) => {
-      alert(JSON.parse(JSON.stringify(error.response.text)));
+      alert(JSON.parse(error.response.text));
       dispatch({
         type: SHEETS_SAVE_FAIL,
       });
-      console.log();
     });
 };
