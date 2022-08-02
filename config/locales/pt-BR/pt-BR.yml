@@ -51,6 +51,7 @@ pt-BR:
   errors:
     messages:
       not_saved: "Erro"
+      wrong_credentials: 'Usuário ou Senha incorretos'
   refills:
     navigation:
       logout: "Sair"

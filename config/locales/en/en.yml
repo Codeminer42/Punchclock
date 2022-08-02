@@ -52,4 +52,6 @@ en:
       change_my_password: 'Change my password'
       verify: 'Verify'
     links:
-      return_to_sign_in: 'Return to Sign In.'
+  errors:
+    messages:
+      wrong_credentials: 'The username or password is incorrect'
