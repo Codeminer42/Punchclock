@@ -88,6 +88,8 @@ group :development do
   gem 'web-console', '~> 4.0'
   gem 'listen', '~> 3.2'
   gem 'spring', '~> 3.1.1'
+  gem 'guard'
+  gem 'guard-livereload', '~> 2.5', require: false
 end
 
 gem 'unicorn'
