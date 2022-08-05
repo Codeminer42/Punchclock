@@ -100,8 +100,8 @@ describe 'Offices', type: :feature do
       it 'have the correct office information' do
         expect(page).to   have_text(office.city) &
                           have_text(office.company) &
-                          have_text(office.head) &
-                          have_text(office.score) &
+                          have_text(office.head || 'Vazio') &
+                          have_text(office.score|| I18n.t('office.user_not_evaluated')) &
                           have_css('.row-active td', text: office.active ? "Sim" : "Não") &
                           have_css('.row-users_quantity td', text: office.users.count)
       end
@@ -127,7 +127,7 @@ describe 'Offices', type: :feature do
 
         expect(page).to have_css('.flash_notice', text: 'Escritório foi atualizado com sucesso.') &
                         have_text('Curitiba') &
-                        have_text(office.score)
+                        have_text(office.score|| I18n.t('office.user_not_evaluated'))
       end
 
       it 'deactivates office' do
@@ -137,7 +137,7 @@ describe 'Offices', type: :feature do
 
         expect(page).to have_css('.flash_notice', text: 'Escritório foi atualizado com sucesso.') &
                         have_text(office.city) &
-                        have_text(office.score) &
+                        have_text(office.score|| I18n.t('office.user_not_evaluated')) &
                         have_css('.row-active td', text: 'Não')
       end
     end
