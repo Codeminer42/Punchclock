@@ -71,7 +71,7 @@ ActiveAdmin.register Questionnaire do
           column :title
           column :kind
           column (:answer_options) do |question|
-            answers = question.answer_options.sum { |answer| "<li>#{ answer }</li>" }
+            answers = question.answer_options.sum('') { |answer| "<li>#{ answer }</li>" }
             raw "<ol>#{ answers }</ol>"
           end
         end
