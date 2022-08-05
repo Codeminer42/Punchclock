@@ -68,7 +68,7 @@ describe 'Repository', type: :feature do
       end
 
       it 'must have the form working' do
-        find('#repository_company_id').find(:option, repository.company.to_s).select_option
+        find('#repository_company_id').find(:option, repository.company.name).select_option
         fill_in 'Link', with: 'https://github.com/example'
         fill_in 'Linguagem', with: 'Ruby on Rails'
 

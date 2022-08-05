@@ -4,7 +4,8 @@ require 'rails_helper'
 
 describe 'Projects', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let!(:project)   { create(:project, company: admin_user.company) }
+  let(:client) { create(:client, company: admin_user.company) }
+  let!(:project)   { create(:project, company: admin_user.company, client: client) }
 
   before do
     sign_in(admin_user)
@@ -84,7 +85,7 @@ describe 'Projects', type: :feature do
                             have_text("Alocações") &
                             have_css('.row-name', text: project.name) &
                             have_css('.row-active', text: 'Sim') &
-                            have_text(project.client || 'Vazio')
+                            have_text(project.client)
           end
         end
       end
