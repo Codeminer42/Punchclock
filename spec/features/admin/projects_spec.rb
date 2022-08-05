@@ -84,7 +84,7 @@ describe 'Projects', type: :feature do
                             have_text("Alocações") &
                             have_css('.row-name', text: project.name) &
                             have_css('.row-active', text: 'Sim') &
-                            have_text(project.client)
+                            have_text(project.client || 'Vazio')
           end
         end
       end
