@@ -265,6 +265,8 @@ GEM
       railties (>= 3.2.16)
     jquery_mask_rails (0.1.0)
     json (2.6.2)
+    json-schema (2.8.1)
+      addressable (>= 2.4)
     jsonapi-renderer (0.2.2)
     jwt (2.4.1)
     kaminari (1.2.2)
@@ -438,6 +440,15 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
+    rswag-api (2.5.1)
+      railties (>= 3.1, < 7.1)
+    rswag-specs (2.5.1)
+      activesupport (>= 3.1, < 7.1)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 7.1)
+    rswag-ui (2.5.1)
+      actionpack (>= 3.1, < 7.1)
+      railties (>= 3.1, < 7.1)
     rubocop (1.31.2)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -603,6 +614,9 @@ DEPENDENCIES
   rollbar
   rqrcode
   rspec-rails
+  rswag-api (~> 2.5.1)
+  rswag-specs (~> 2.5.1)
+  rswag-ui (~> 2.5.1)
   rubocop
   rubocop-faker (~> 1.1)
   sassc-rails

@@ -64,6 +64,9 @@ gem 'aasm', '~> 5.0', '>= 5.0.8'
 gem 'platform-api', github: 'heroku/platform-api'
 gem 'letsencrypt-rails-heroku', group: 'production'
 
+gem 'rswag-api', '~> 2.5.1'
+gem 'rswag-ui', '~> 2.5.1'
+
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
@@ -96,6 +99,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.14.0'
   gem 'rspec-rails'
+  gem 'rswag-specs', '~> 2.5.1'
   gem 'pry-rails'
   gem 'pry-remote', '~> 0.1.8'
   gem 'dotenv-rails', '~> 2.7'
