@@ -1,0 +1,231 @@
+---
+openapi: 3.0.1
+info:
+  title: Punchclock API
+  version: v1
+  contact:
+    name: Punchclock
+    url: https://github.com/Codeminer42/Punchclock
+paths:
+  "/api/v1/users":
+    get:
+      summary: Returns company users
+      tags:
+      - Company users
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              example:
+              - email: user.teste0@codeminer42.com
+                name: Usuario_Codeminer42_0
+                office_id: 10
+                github: Codeminer42.user.teste0
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: unauthorized
+  "/api/v1/offices":
+    get:
+      summary: Returns company offices
+      tags:
+      - Company users
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+              - id: 6
+                city: Natal
+                created_at: '2022-08-02T09:54:11.471-03:00'
+                updated_at: '2022-08-02T09:54:11.471-03:00'
+                company_id: 1
+                users_count: 0
+                score: 
+                head_id: 
+                active: true
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: unauthorized
+  "/api/v1/punches/bulk":
+    post:
+      summary: bulk punch
+      tags:
+      - Punches
+      security:
+      - bearer: []
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              example:
+              - created_at: '2022-08-02T16:11:46.215-03:00'
+                from: '2022-04-20T09:00:00.000-03:00'
+                to: '2022-04-20T12:00:00.000-03:00'
+                delta_as_hour: '03:00'
+                extra_hour: false
+                project:
+                  id: 2
+                  name: Rito Gomes
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: unauthorized
+        '422':
+          description: Unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                punches:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                        example: '2022-04-20T12:00:00.000Z'
+                      to:
+                        type: string
+                        example: '2022-04-20T15:00:00.000Z'
+                      project_id:
+                        type: integer
+                        example: 1
+  "/api/v1/punches":
+    get:
+      summary: list punches
+      tags:
+      - Punches
+      security:
+      - bearer: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              example:
+              - created_at: '2022-08-02T14:37:21.846-03:00'
+                from: '2022-08-01T13:00:00.000-03:00'
+                to: '2022-08-01T18:00:00.000-03:00'
+                delta_as_hour: '05:00'
+                extra_hour: false
+                project:
+                  id: 2
+                  name: Rito Gomes
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: unauthorized
+  "/api/v1/punches/{id}":
+    get:
+      summary: show punch
+      tags:
+      - Punches
+      security:
+      - bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '302':
+          description: Found
+          content:
+            application/json:
+              example:
+                created_at: '2022-08-02T14:37:21.846-03:00'
+                from: '2022-08-01T13:00:00.000-03:00'
+                to: '2022-08-01T18:00:00.000-03:00'
+                delta_as_hour: '05:00'
+                extra_hour: false
+                project:
+                  id: 2
+                  name: Rito Gomes
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: unauthorized
+  "/api/v1/request":
+    post:
+      summary: request token
+      tags:
+      - Token
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              example:
+                access_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjAwNzM3MjQsInN1YiI6MiwiZW52IjoiZGV2ZWxvcG1lbnQiLCJqdGkiOiI5MTQ2MGUzMC01Y2U2LTQyNTEtYjNmOC0yNDk4OWZhOTM0YWEifQ.6JquPRqkTGGn4IMrLdjqHqsyjl71GxB-nDB7ZohPcv8
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              example:
+                error: Usuário ou Senha incorretos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: admin@codeminer42.com
+                password:
+                  type: string
+                  example: password
+              required:
+              - email
+              - password
+  "/api/v1/refresh":
+    post:
+      summary: refresh token
+      tags:
+      - Token
+      security:
+      - bearer: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              example:
+                access_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjAwNzM3MjQsInN1YiI6MiwiZW52IjoiZGV2ZWxvcG1lbnQiLCJqdGkiOiI5MTQ2MGUzMC01Y2U2LTQyNTEtYjNmOC0yNDk4OWZhOTM0YWEifQ.6JquPRqkTGGn4IMrLdjqHqsyjl71GxB-nDB7ZohPcv8
+        '401':
+          description: Unprocessable entity
+          content:
+            application/json:
+              example:
+                error: unauthorized
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+servers:
+- url: http://localhost:5000
