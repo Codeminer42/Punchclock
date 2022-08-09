@@ -55,8 +55,8 @@ describe 'Repository', type: :feature do
         expect(page).to have_text(repository.company) &
                         have_text(repository.link) &
                         have_text(repository.language) &
-                        have_text(repository.created_at.try(:humanize)) &
-                        have_text(repository.updated_at.try(:humanize))
+                        have_text(I18n.l(repository.created_at, format: :long)) &
+                        have_text(I18n.l(repository.updated_at, format: :long))
       end
     end
 
@@ -68,7 +68,7 @@ describe 'Repository', type: :feature do
       end
 
       it 'must have the form working' do
-        find('#repository_company_id').find(:option, repository.company).select_option
+        find('#repository_company_id').find(:option, repository.company.name).select_option
         fill_in 'Link', with: 'https://github.com/example'
         fill_in 'Linguagem', with: 'Ruby on Rails'
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Offices', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:office)     { create(:office, company: admin_user.company) }
+  let(:office)     { create(:office, company: admin_user.company, head: admin_user, score: 0) }
   let!(:user)      { create(:user,
                             :with_overall_score,
                             :admin,

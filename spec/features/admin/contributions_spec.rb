@@ -77,8 +77,8 @@ describe 'Contribution', type: :feature do
                         have_text(contribution.company) &
                         have_text(contribution.link) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
-                        have_text(contribution.created_at.try(:humanize)) &
-                        have_text(contribution.updated_at.try(:humanize))
+                        have_text(I18n.l(contribution.created_at, format: :long)) &
+                        have_text(I18n.l(contribution.updated_at, format: :long))
       end
     end
 
