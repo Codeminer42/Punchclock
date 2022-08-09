@@ -1,6 +1,5 @@
 .navbar {
   background: $red;
-  background: linear-gradient(top,  $red 0%, $redDark 20%, $redDarker 100%); /* FF3.6+,Chrome10+,Safari5.1+, Opera 11.10+ IE10+*/
   background: linear-gradient(to bottom,  $red 0%,$redDark 20%,$redDarker 100%);
   background: gradient(linear, left top, left bottom, color-stop(0%,$red), color-stop(20%,$redDark), color-stop(100%,$redDarker)); /* Chrome,Safari4+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$red', endColorstr='$redDarker',GradientType=0 ); /* IE6-9 */
