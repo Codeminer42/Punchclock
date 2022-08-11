@@ -110,3 +110,8 @@ pt-BR:
       verify: 'Verificar'
     links:
       return_to_sign_in: 'Retornar ao Sign In.'
+  allocation_chart: 'Organograma'
+  name: 'Nome'
+  skills: 'Habilidades'
+  client: 'Cliente'
+  allocated_until: 'Alocado até'

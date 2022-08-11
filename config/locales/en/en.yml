@@ -55,3 +55,8 @@ en:
   errors:
     messages:
       wrong_credentials: 'The username or password is incorrect'
+  allocation_chart: 'Allocation chart'
+  name: 'Name'
+  skills: 'Skills'
+  client: 'Client'
+  allocated_until: 'Allocated until'
