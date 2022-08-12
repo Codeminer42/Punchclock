@@ -21,6 +21,10 @@ module.exports = {
           500: "#161616",
         },
       },
+      backgroundImage: {
+        "gradient-red-to-t":
+          "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.0833333) 84.37%, rgba(197, 20, 20, 0.14) 100%);",
+      },
       fontFamily: {
         sans: ["Lato", "sans-serif", ...defaultTheme.fontFamily.sans],
       },

@@ -3,52 +3,55 @@
     <%= image_tag 'logo.png', alt: 'PunchClock', aria: { label: 'Logo do punch com o texto PunchClock' } %>
   </div>
 
-  <div class="flex flex-col items-center justify-center w-full max-w-[580px] mx-auto px-8">
-    <div class="flex-1 flex flex-col items-center justify-center w-full mx-auto py-20">
-      <h2 class="text-3xl mb-8">Sign In</h2>
+  <div class="w-full h-full bg-gradient-red-to-t">
+    <div class="flex flex-col items-center justify-center w-full max-w-[580px] h-full mx-auto px-8">
+      <div class="flex-1 flex flex-col items-center justify-center w-full mx-auto py-20">
+        <h2 class="text-3xl mb-8">Sign In</h2>
 
-      <div class="w-full space-y-6">
-        <div class="w-full">
-          <label for="email" class="block mb-2 text-base text-grey-400">
-            E-mail
-          </label>
-          <input
-            id="email"
-            type="text"
-            class="w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0"
-          />
-        </div>
+        <%= simple_form_for(resource,
+                        as: resource_name,
+                        url: session_path(resource_name),
+                        html: { novalidate: false, class: 'w-full' }) do |f| %>
+          <div class="w-full space-y-6">
+            <div class="w-full">
+              <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0" },
+                      label_html: { class: "block mb-2 text-base text-grey-400" } %>
+            </div>
 
-        <div class="w-full">
-          <label for="password" class="block mb-2 text-base text-grey-400">
-            Password
-          </label>
-          <input
-            id="password"
-            type="text"
-            class="w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0"
-          />
-        </div>
+            <div class="w-full">
+              <%= f.input :password,
+                    required: true,
+                    input_html: { autocomplete: "current-password", class: "w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0" },
+                    label_html: { class: "block mb-2 text-base text-grey-400" } %>
+            </div>
+          </div>
+
+          <div class="w-full flex justify-between items-center mt-8">
+            <%# <label class="text-base text-grey-400 font-medium">
+              <input type="checkbox" class="appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400" />
+              Remember me
+            </label> %>
+
+            <%= f.input :remember_me,
+                as: :boolean,
+                input_html: { class: "appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400" },
+                label_html: { class: "text-base text-grey-400 font-medium" } if devise_mapping.rememberable? %>
+
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-sm text-blue" %>
+            <% end %>
+          </div>
+
+          <%= f.button :submit, "Login", class: "w-full h-10 mt-8 px-4 rounded bg-red text-white transition-all hover:brightness-110" %>
+        <% end %>
       </div>
 
-      <div class="w-full flex justify-between items-center mt-8">
-        <label class="text-base text-grey-400 font-medium">
-          <input type="checkbox" class="appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400" />
-          Remember me
-        </label>
-
-        <a href="/" class="text-sm text-blue">
-          Forgot your password?
-        </a>
-      </div>
-
-      <button class="w-full h-10 mt-8 px-4 rounded bg-red text-white transition-all hover:brightness-110 ">
-        Login
-      </button>
+      <footer class="w-full px-8 py-2.5 border-t mb-32 border-grey-100">
+        <p class="text-center text-sm text-grey-300">PunchClock is Copyright © 2021 Codeminer42.</p>
+      </footer>
     </div>
-
-    <footer class="w-full px-8 py-2.5 border-t mb-28 border-grey-100">
-      <p class="text-center text-sm text-grey-300">PunchClock is Copyright © 2021 Codeminer42.</p>
-    </footer>
   </div>
 </div>
