@@ -16,11 +16,13 @@ describe 'Admin Allocation chart', type: :feature do
 
     before { visit '/admin/allocation_chart' }
 
-    it 'have table with fields "Nome", "Habilidades", "Cliente", "Alocado até"' do
+    it 'have table with fields "Nome", "Habilidades", "Especialidade", "Nível", "Cliente", "Alocado até"' do
       within 'table' do
         aggregate_failures 'testing table fields' do
           expect(page).to have_text('Nome')
           expect(page).to have_text('Habilidades')
+          expect(page).to have_text('Nível')
+          expect(page).to have_text('Especialidade')
           expect(page).to have_text('Cliente')
           expect(page).to have_text('Alocado até')
         end
