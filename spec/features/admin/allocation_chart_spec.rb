@@ -39,6 +39,22 @@ describe 'Admin Allocation chart', type: :feature do
           expect(page).to have_link(project.name, href: "/admin/projects/#{project.id}")
         end
       end
+
+      it 'has "Alocado" in "Alocado até" column' do
+        within 'tbody' do
+          expect(page).to have_text('Alocado')
+        end
+      end
+
+      context 'when not allocated' do
+        let!(:user) { create(:user, allocations: [], company: company) }
+
+        it 'has "Não alocado" in "Alocado até" column' do
+          within 'tbody' do
+            expect(page).to have_text('Não alocado')
+          end
+        end
+      end
     end
   end
 end
