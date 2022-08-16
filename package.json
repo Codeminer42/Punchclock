@@ -22,7 +22,7 @@
     "chart.js": "^2.9.4",
     "chartkick": "^3.2.1",
     "classnames": "^2.2.3",
-    "highcharts": "^8.2.2",
+    "highcharts": "^9.0.0",
     "history": "~4.6.1",
     "immutable": "~3.8.1",
     "jquery": "^3.2.1",
