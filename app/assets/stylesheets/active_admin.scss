@@ -2,6 +2,7 @@
 @import "active_admin/base";
 @import "wigu/active_admin_theme";
 @import "select2";
+@import "base/vars";
 
 $active-admin-label: #8494a8;
 $active-admin-input-border: #e6e9ee;
@@ -83,20 +84,23 @@ body.logged_in .flash {
     padding: 5px;
 
     &--exp-in-60-days {
-      background-color: #ffec3d;
-      color: black;
+      background-color: $flat-sunflower;
+      color: $black;
     }
+
     &--exp-in-30-days {
-      background-color: #ff7875;
-      color: black;
+      background-color: $red;
+      color: $white;
     }
+
     &--expired {
-      background-color: #f5222d;
-      color: white;
+      background-color: $redDarker;
+      color: $white;
     }
+
     &--not-allocated {
-      background-color: #1890ff;
-      color: white;
+      background-color: $flat-belize-hole;
+      color: $white;
     }
   }
 }

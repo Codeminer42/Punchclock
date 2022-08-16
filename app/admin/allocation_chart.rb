@@ -23,19 +23,25 @@ ActiveAdmin.register_page 'Allocation Chart' do
 end
 
 def build_allocation_status_cell(last_allocation)
-  allocation_status = ActiveAdmin::AllocationChartHelper.allocation_status_for(last_allocation: last_allocation)
+  allocation_status = allocation_status_for(last_allocation: last_allocation)
 
-  unless last_allocation.end_at.nil?
-    return column_cell_base(content: last_allocation.end_at, allocation_status: allocation_status)
-  end
+  column_cell_base(
+    content: allocation_status_content(
+      last_allocation: last_allocation,
+      allocation_status: allocation_status
+    ),
+    allocation_status: allocation_status
+  )
+end
 
-  content = if allocation_status == ActiveAdmin::AllocationChartHelper::Status::NOT_ALLOCATED
-              I18n.t('not_allocated')
-            else
-              I18n.t('allocated')
-            end
+def allocation_status_content(last_allocation:, allocation_status:)
+  return last_allocation.end_at if last_allocation.end_at
 
-  column_cell_base(content: content, allocation_status: allocation_status)
+  unallocated?(allocation_status) ? I18n.t('not_allocated') : I18n.t('allocated')
+end
+
+def unallocated?(allocation_status)
+  allocation_status == Status::NOT_ALLOCATED
 end
 
 def column_cell_base(content:, allocation_status:)
