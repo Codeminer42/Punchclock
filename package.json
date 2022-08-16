@@ -41,7 +41,7 @@
     "redux-thunk": "^2.2.0",
     "startbootstrap-sb-admin": "5.0.3",
     "stats-webpack-plugin": "^0.6.0",
-    "superagent": "~3.5.2",
+    "superagent": "~7.0.2",
     "superagent-as-promised": "~4.0.0",
     "webpack": "^4.33.0",
     "webpack-dev-server": "^3.7.0"
