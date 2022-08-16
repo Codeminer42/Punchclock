@@ -16,7 +16,7 @@ module ActiveAdmin
       end_date = last_allocation&.end_at
       return Status::ALLOCATED if end_date.nil?
 
-      day_difference = (end_date - Date.today unless end_date.nil?)
+      day_difference = end_date - Date.today
 
       case day_difference
       when (61..)
