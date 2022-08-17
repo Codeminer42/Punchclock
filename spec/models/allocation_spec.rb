@@ -14,35 +14,35 @@ RSpec.describe Allocation, type: :model do
 
   describe 'validate' do
     let(:user) { create(:user) }
-    let(:user_2) { create(:user) } 
+    let(:user_2) { create(:user) }
 
     context 'end_at' do
       it 'should not be before start_at' do
-        allocation = build(:allocation, user: user, start_at: 4.days.after, end_at: 2.days.after )
+        allocation = build(:allocation, user: user, start_at: 4.days.after, end_at: 2.days.after)
         allocation.validate
         expect(allocation.errors[:end_at]).to eq(['A data de término deve ser maior que a data de início'])
       end
     end
 
-    context 'selected dates' do  
+    context 'selected dates' do
       before do
-        create(:allocation, user: user, end_at: 1.week.after)  
+        create(:allocation, user: user, end_at: 1.week.after)
       end
-      
+
       it 'overlaps an existing period to same user' do
-        allocation = build(:allocation, user: user, start_at: 2.days.after, end_at: 2.week.after )
+        allocation = build(:allocation, user: user, start_at: 2.days.after, end_at: 2.week.after)
         allocation.validate
         expect(allocation.errors[:start_at]).to eq(['Já existe uma alocação desse usuário nesse período'])
       end
 
       it 'do not overlaps an existing period to another user' do
-        allocation = build(:allocation, user: user_2, start_at: 2.days.after, end_at: 2.week.after )
+        allocation = build(:allocation, user: user_2, start_at: 2.days.after, end_at: 2.week.after)
         allocation.validate
         expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
       end
 
       it 'do not overlaps an existing period' do
-        allocation = build(:allocation, user: user, start_at: 8.days.after, end_at: 2.week.after )
+        allocation = build(:allocation, user: user, start_at: 8.days.after, end_at: 2.week.after)
         allocation.validate
         expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
       end
@@ -95,8 +95,8 @@ RSpec.describe Allocation, type: :model do
 
         context 'update' do
           let(:allocation) { create(:allocation, end_at: 2.week.after, user: user) }
-          
-          it 'should not be possible update an allocation to be endless' do  
+
+          it 'should not be possible update an allocation to be endless' do
             allocation.end_at = nil
             allocation.validate
             expect(allocation.errors[:start_at]).to eq(['Já existe uma alocação desse usuário nesse período'])
@@ -108,40 +108,58 @@ RSpec.describe Allocation, type: :model do
             expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
           end
         end
+      end
+    end
 
+    context 'ongoing' do
+      before do
+        create(:allocation, user: user, start_at: 4.days.ago, end_at: 1.days.ago, ongoing: true)
       end
 
+      it 'validates uniqueness of ongoing' do
+        allocation = build(:allocation, user: user, ongoing: true)
+        allocation.validate
+        expect(allocation.errors[:ongoing]).to eq([I18n.t('activerecord.errors.models.allocation.attributes.ongoing.uniqueness')])
+      end
     end
   end
 
   describe 'scopes' do
     let!(:user1) { create(:user, active: false) }
     let!(:user2) { create(:user) }
-    let!(:allocation1) { create(:allocation,
-                                  start_at: 2.week.ago,
-                                  end_at: 1.week.after,
-                                  user: user1)}
-    let!(:allocation2) { create(:allocation,
-                                  start_at: 2.week.ago,
-                                  end_at: 1.week.after,
-                                  user: user2)}
-    let!(:allocation3) { create(:allocation,
-                                  start_at: 2.month.ago,
-                                  end_at: 1.month.ago,
-                                  user: user1)}
-    let!(:allocation4) { create(:allocation,
-                                  start_at: 2.month.ago,
-                                  end_at: 1.month.ago,
-                                  user: user2)}
+    let!(:allocation1) do
+      create(:allocation,
+             start_at: 2.week.ago,
+             end_at: 1.week.after,
+             user: user1)
+    end
+    let!(:allocation2) do
+      create(:allocation,
+             start_at: 2.week.ago,
+             end_at: 1.week.after,
+             user: user2)
+    end
+    let!(:allocation3) do
+      create(:allocation,
+             start_at: 2.month.ago,
+             end_at: 1.month.ago,
+             user: user1)
+    end
+    let!(:allocation4) do
+      create(:allocation,
+             start_at: 2.month.ago,
+             end_at: 1.month.ago,
+             user: user2)
+    end
 
     let(:ongoing_allocations) { described_class.ongoing.map { |allocation| allocation } }
     let(:finished_allocations) { described_class.finished.map { |allocation| allocation } }
 
-    it 'is ongoing' do                                    
+    it 'is ongoing' do
       expect(ongoing_allocations).to eq([allocation2])
     end
 
-    it 'is finished' do                                    
+    it 'is finished' do
       expect(finished_allocations).to eq([allocation4])
     end
   end

@@ -9,26 +9,29 @@ class Allocation < ApplicationRecord
   validates_date :start_at
   validate :end_date
   validate :unique_period, unless: :end_before_start?
+  validates :ongoing, uniqueness: { scope: :user, message: :uniqueness },
+                      if: :ongoing
 
   delegate :office_name, to: :user
 
-  scope :ongoing, -> { 
+  scope :ongoing, lambda {
     where("end_at > :today OR end_at is NULL", today: Date.current)
-    .where(user_id: User.active)
-    .order(start_at: :desc) 
+      .where(user_id: User.active)
+      .order(start_at: :desc)
   }
-  scope :finished, -> {
-    where("end_at < :today", today: Date.current)
-    .where(user_id: User.active)
-    .order(end_at: :desc) }
-  scope :in_period, -> (start_at, end_at) do
+  scope :finished, lambda {
+                     where("end_at < :today", today: Date.current)
+                       .where(user_id: User.active)
+                       .order(end_at: :desc)
+                   }
+  scope :in_period, lambda { |start_at, end_at|
     where(
       "daterange(start_at, end_at, '[]') && daterange(:start_at, :end_at, '[]')",
       start_at: start_at,
       end_at: end_at
     )
-  end
-  
+  }
+
   def days_until_finish
     return unless end_at
 
@@ -45,7 +48,7 @@ class Allocation < ApplicationRecord
   end
 
   private
-  
+
   def end_before_start?
     end_at.present? && end_at < start_at
   end
@@ -56,7 +59,7 @@ class Allocation < ApplicationRecord
 
   def unique_period
     return unless Allocation.in_period(start_at, end_at).where.not(id: id).exists?(user_id: user_id)
-  
+
     errors.add(:start_at, :overlapped_period)
   end
 end
