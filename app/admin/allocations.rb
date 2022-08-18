@@ -74,9 +74,10 @@ ActiveAdmin.register Allocation do
         end
       end
       div link_to I18n.t('download_as_csv'),
-                  admin_punches_path(q: { project_id_eq: allocation.project.id,
-                                          user_id_eq: allocation.user.id,
-                                          from_greater_than: 60.days.ago.to_date }, format: :csv)
+                    admin_punches_path(q: { project_id_eq: allocation.project.id,
+                                            user_id_eq: allocation.user.id,
+                                            from_greater_than: 60.days.ago.to_date
+                                          }, format: :csv)
     end
   end
 
@@ -93,10 +94,7 @@ ActiveAdmin.register Allocation do
                                       .select(:id, :name)
 
         input :user, as: :select, collection: company_users_not_allocated
-        input :project,
-              collection: (current_user.company.projects.active.to_a | [@resource.project])
-                .reject(&:blank?)
-                .sort_by(&:name)
+        input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
