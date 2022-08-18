@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Allocation do
   config.sort_order = ''
-  permit_params :user_id, :project_id, :start_at, :end_at, :company_id
+  permit_params :user_id, :project_id, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
 
@@ -46,6 +46,7 @@ ActiveAdmin.register Allocation do
     column :start_at, sortable: false
     column :end_at, sortable: false
     column :days_left, &:days_until_finish
+    column :ongoing
     actions
   end
 
@@ -56,6 +57,7 @@ ActiveAdmin.register Allocation do
       row :start_at
       row :end_at
       row :days_left, &:days_until_finish
+      row :ongoing
     end
 
     panel t('allocated_user_punches', scope: 'active_admin') do
@@ -72,10 +74,9 @@ ActiveAdmin.register Allocation do
         end
       end
       div link_to I18n.t('download_as_csv'),
-                    admin_punches_path(q: { project_id_eq: allocation.project.id,
-                                            user_id_eq: allocation.user.id,
-                                            from_greater_than: 60.days.ago.to_date
-                                          }, format: :csv)
+                  admin_punches_path(q: { project_id_eq: allocation.project.id,
+                                          user_id_eq: allocation.user.id,
+                                          from_greater_than: 60.days.ago.to_date }, format: :csv)
     end
   end
 
@@ -92,12 +93,16 @@ ActiveAdmin.register Allocation do
                                       .select(:id, :name)
 
         input :user, as: :select, collection: company_users_not_allocated
-        input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
+        input :project,
+              collection: (current_user.company.projects.active.to_a | [@resource.project])
+                .reject(&:blank?)
+                .sort_by(&:name)
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
       input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
+      input :ongoing
     end
     actions
   end

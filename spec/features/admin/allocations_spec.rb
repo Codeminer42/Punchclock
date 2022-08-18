@@ -130,7 +130,8 @@ describe 'Admin Allocation', type: :feature do
           expect(page).to have_text('Usuário')  &
                           have_text('Projeto') &
                           have_text('Início') &
-                          have_text('Término')
+                          have_text('Término') &
+                          have_text('Em progresso')
         end
       end
 
@@ -172,7 +173,8 @@ describe 'Admin Allocation', type: :feature do
           expect(page).to have_text('Usuário') &
                           have_text('Projeto') &
                           have_text('Início') &
-                          have_text('Término')
+                          have_text('Término') &
+                          have_text('Em progresso')
         end
       end
 

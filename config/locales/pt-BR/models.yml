@@ -235,6 +235,7 @@ pt-BR:
         client: "Cliente"
         project_name: "Nome do Projeto"
         access: "Acessar"
+        ongoing: "Em progresso"
         created_at: "Criado em"
         updated_at: "Atualizado em"
       evaluation:
