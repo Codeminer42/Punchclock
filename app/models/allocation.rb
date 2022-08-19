@@ -9,6 +9,8 @@ class Allocation < ApplicationRecord
   validates_date :start_at
   validate :end_date
   validate :unique_period, unless: :end_before_start?
+  validates :ongoing, uniqueness: { scope: :user, message: :uniqueness },
+                      if: :ongoing?
 
   delegate :office_name, to: :user
 

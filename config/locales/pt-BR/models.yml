@@ -44,6 +44,8 @@ pt-BR:
             end_at:
               cant_be_lesser: "A data de término deve ser maior que a data de início"
               invalid_date: "Data Inválida"
+            ongoing: 
+              uniqueness: 'O usuário já possui uma alocação em progresso' 
     models:
       admin_user:
         one: "Administrador"
@@ -233,6 +235,7 @@ pt-BR:
         client: "Cliente"
         project_name: "Nome do Projeto"
         access: "Acessar"
+        ongoing: "Em progresso"
         created_at: "Criado em"
         updated_at: "Atualizado em"
       evaluation:

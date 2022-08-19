@@ -17,3 +17,7 @@ en:
             base:
               overlap: The chosen date overlaps with ones already registered
               invalid_periods: The periods reported do not follow a valid chronological order
+        allocation:
+          attributes:
+            ongoing:
+              uniqueness: 'The user already has an ongoing allocation' 

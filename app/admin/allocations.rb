@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Allocation do
   config.sort_order = ''
-  permit_params :user_id, :project_id, :start_at, :end_at, :company_id
+  permit_params :user_id, :project_id, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
 
@@ -46,6 +46,7 @@ ActiveAdmin.register Allocation do
     column :start_at, sortable: false
     column :end_at, sortable: false
     column :days_left, &:days_until_finish
+    column :ongoing
     actions
   end
 
@@ -56,6 +57,7 @@ ActiveAdmin.register Allocation do
       row :start_at
       row :end_at
       row :days_left, &:days_until_finish
+      row :ongoing
     end
 
     panel t('allocated_user_punches', scope: 'active_admin') do
@@ -98,6 +100,7 @@ ActiveAdmin.register Allocation do
 
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
       input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
+      input :ongoing
     end
     actions
   end

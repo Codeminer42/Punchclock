@@ -112,6 +112,17 @@ RSpec.describe Allocation, type: :model do
       end
 
     end
+
+    context 'ongoing' do
+      before do
+        create(:allocation, user: user, start_at: 4.days.ago, end_at: 1.days.ago, ongoing: true)
+      end
+      it 'validates uniqueness of ongoing' do
+        allocation = build(:allocation, user: user, ongoing: true)
+        allocation.validate
+        expect(allocation.errors[:ongoing]).to eq([I18n.t('activerecord.errors.models.allocation.attributes.ongoing.uniqueness')])
+      end
+    end
   end
 
   describe 'scopes' do

@@ -127,6 +127,7 @@ ActiveAdmin.register User do
               end
               column :start_at
               column :end_at
+              column :ongoing
               column '' do |allocation|
                 link_to 'Access Allocation', admin_allocation_path(allocation)
               end
