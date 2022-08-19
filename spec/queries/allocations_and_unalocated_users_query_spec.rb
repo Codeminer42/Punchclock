@@ -25,6 +25,7 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
       let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
       let!(:brian) { create(:user, name: 'Brian May', company: company) }
       let!(:leeroy) { create(:user, name: 'Leeroy Jenkins', company: company) }
+      let!(:satoshi) { create(:user, name: 'Satoshi Nakamoto', company: company) }
 
       let(:names) { call.map { |allocation| allocation.user.name } }
 
@@ -33,29 +34,47 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
                start_at: 2.months.after,
                end_at: 3.months.after,
                user: roan,
-               company: company)
+               company: company,
+              ongoing: true)
+              
 
         create(:allocation,
-               start_at: 3.months.after,
+               start_at: 1.months.before,
                end_at: 4.months.after,
                user: brian,
-               company: company)
+               company: company,
+              ongoing: true)
 
         create(:allocation,
                start_at: 3.months.after,
                end_at: nil,
                user: alex,
-               company: company)
+               company: company,
+               ongoing: true)
 
         create(:allocation,
                start_at: 3.months.before,
                end_at: 2.months.before,
                user: leeroy,
                company: company)
+
+        create(:allocation,
+               start_at: 3.months.before,
+               end_at: 2.months.before,
+               user: satoshi,
+               company: company,
+               ongoing: true)
       end
 
       it 'returns users in order of allocations about to finish > without end > no allocation' do
-        expect(names).to eq ['Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins']
+        expect(names).to eq ['Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins', 'Satoshi Nakamoto']
+      end
+
+      context 'with ongoing' do 
+        subject(:call) { described_class.new(Allocation, company, with_ongoing: true).call }
+        it 'returns users with ongoing allocations in order of finished > allocations about to finish > without end > no allocation' do
+          expect(names).to eq ['Satoshi Nakamoto','Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins']
+        end
       end
     end
 
