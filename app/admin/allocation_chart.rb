@@ -7,7 +7,7 @@ ActiveAdmin.register_page 'Allocation Chart' do
 
   content title: I18n.t('allocation_chart') do
     panel I18n.t('allocation_chart') do
-      allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation, current_user.company, with_ongoing: true).call
+      allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation, current_user.company).call
       paginated_collection(allocations.page(params[:page]), download_links: false) do
         table_for collection do
           column(I18n.t('name'), :user)

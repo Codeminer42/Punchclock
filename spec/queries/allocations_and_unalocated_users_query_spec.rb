@@ -35,15 +35,14 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
                end_at: 3.months.after,
                user: roan,
                company: company,
-              ongoing: true)
-              
+               ongoing: true)
 
         create(:allocation,
                start_at: 1.months.before,
                end_at: 4.months.after,
                user: brian,
                company: company,
-              ongoing: true)
+               ongoing: true)
 
         create(:allocation,
                start_at: 3.months.after,
@@ -66,15 +65,8 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
                ongoing: true)
       end
 
-      it 'returns users in order of allocations about to finish > without end > no allocation' do
-        expect(names).to eq ['Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins', 'Satoshi Nakamoto']
-      end
-
-      context 'with ongoing' do 
-        subject(:call) { described_class.new(Allocation, company, with_ongoing: true).call }
-        it 'returns users with ongoing allocations in order of finished > allocations about to finish > without end > no allocation' do
-          expect(names).to eq ['Satoshi Nakamoto','Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins']
-        end
+      it 'returns users with ongoing allocations in order of finished > allocations about to finish > without end > no allocation' do
+        expect(names).to eq ['Satoshi Nakamoto', 'Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins']
       end
     end
 

@@ -89,12 +89,12 @@ body.logged_in .flash {
     }
 
     &--exp-in-30-days {
-      background-color: $red;
+      background-color: $flat-alizarin;
       color: $white;
     }
 
     &--expired {
-      background-color: $redDarker;
+      background-color: $red;
       color: $white;
     }
 

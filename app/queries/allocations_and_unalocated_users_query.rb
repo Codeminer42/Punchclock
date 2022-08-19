@@ -1,32 +1,25 @@
 # frozen_string_literal: true
 
 class AllocationsAndUnalocatedUsersQuery
-  attr_reader :allocation, :company, :with_ongoing
+  attr_reader :allocation, :company
 
-  def initialize(allocation, company, with_ongoing: false)
+  def initialize(allocation, company)
     @allocation = allocation
     @company = company
-    @with_ongoing = with_ongoing
   end
 
   def call
-   query =  allocation
+   allocation
       .includes(:user)
       .select('allocations.*, users.id as user_id')
-      
-      joins_user(query).where(where)
+      .joins(
+        "RIGHT OUTER JOIN users ON allocations.user_id = users.id AND allocations.ongoing = true"
+      )
+      .where(where)
       .order('end_at NULLS LAST, start_at NULLS LAST, users.name')
   end
 
   private
-
-  def joins_user(query)
-    query.joins(
-        "RIGHT OUTER JOIN users ON allocations.user_id = users.id AND #{
-        with_ongoing ? "allocations.ongoing = true" : "(allocations.end_at > NOW() OR allocations.end_at IS NULL)"
-        }"
-    )
-  end
 
   def where
     {
