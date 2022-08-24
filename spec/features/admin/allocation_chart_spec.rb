@@ -12,7 +12,7 @@ describe 'Admin Allocation chart', type: :feature do
 
   describe 'Index' do
     let(:project) { create(:project, company: company) }
-    let!(:user) { create(:user, allocations: [build(:allocation, project: project, company: company)], company: company) }
+    let!(:user) { create(:user, allocations: [build(:allocation, project: project, company: company, ongoing: true)], company: company) }
 
     before { visit '/admin/allocation_chart' }
 
