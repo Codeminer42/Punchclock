@@ -10,11 +10,11 @@ feature 'Punches Dashboard', js: true do
     scenario 'Calendar navigation' do
       visit '/dashboard/2014/12'
 
-      expect(page).to have_content('Nov / Dec 2014')
+      expect(page).to have_content('December 2014')
       find('a', text: '❯').click
-      expect(page).to have_content('Dec 2014 / Jan 2015')
+      expect(page).to have_content('January 2015')
       find('a', text: '❮').click
-      expect(page).to have_content('Nov / Dec 2014')
+      expect(page).to have_content('December 2014')
     end
 
     scenario 'Insert and delete punches' do
@@ -46,15 +46,13 @@ feature 'Punches Dashboard', js: true do
     end
 
     scenario 'Multiple selection through sheets' do
-      visit '/dashboard/2018/02'
+      visit '/dashboard/2018/01'
 
       find('td.inner', text: '19').click
       find('td.inner', text: '20').click
       expect(page).to have_content('Selecionado (2)')
-      expect(page).to have_content('Selecionado (2)')
 
-
-      within 'tbody > tr:nth-child(1)' do
+      within 'tbody > tr:nth-child(3)' do
         expect(page).to have_css("td.selected", text: "19") & have_css("td.selected", text: "20")
       end
 

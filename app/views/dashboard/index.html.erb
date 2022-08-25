@@ -2,4 +2,4 @@
   Projects = <%= current_user.company.projects.active.order(:name).pluck(:id, :name).to_json.html_safe %>
   OvertimeAllowed = <%= current_user.allow_overtime %>
 </script>
-<div id="content" data-daybase="15" >Carregando...</div>
+<div id="content" data-daybase="1" >Carregando...</div>
