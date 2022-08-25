@@ -103,5 +103,9 @@ body.logged_in .flash {
       color: $white;
     }
   }
+
+  &__last {
+    min-width: 50%;
+  }
 }
 
