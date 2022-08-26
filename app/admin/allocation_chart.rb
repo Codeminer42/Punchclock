@@ -8,18 +8,16 @@ ActiveAdmin.register_page 'Allocation Chart' do
   content title: I18n.t('allocation_chart') do
     panel I18n.t('allocation_chart') do
       allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation, current_user.company).call
-      paginated_collection(allocations.page(params[:page]), download_links: false) do
-        table_for collection do
-          column(I18n.t('name'), :user)
-          column(I18n.t('client'), :project)
-          column(I18n.t('allocated_until'), class: 'allocated-column') do |allocation|
-            build_allocation_status_cell(allocation)
-          end
-          column(I18n.t('level')) { |allocation| allocation.user.level.humanize }
-          column(I18n.t('specialty')) { |allocation| allocation.user.specialty.humanize }
-          column(I18n.t('skills'), class: 'allocated-column__last') do |allocation|
-            allocation.user.skills.map(&:title).join(', ')
-          end
+      table_for allocations do
+        column(I18n.t('name'), :user)
+        column(I18n.t('client'), :project)
+        column(I18n.t('allocated_until'), class: 'allocated-column') do |allocation|
+          build_allocation_status_cell(allocation)
+        end
+        column(I18n.t('level')) { |allocation| allocation.user.level.humanize }
+        column(I18n.t('specialty')) { |allocation| allocation.user.specialty.humanize }
+        column(I18n.t('skills'), class: 'allocated-column__last') do |allocation|
+          allocation.user.skills.map(&:title).join(', ')
         end
       end
     end
