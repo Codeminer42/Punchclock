@@ -17,7 +17,7 @@ describe 'Users', type: :feature do
     before do
       create(:user)
       create(:office, head: user)
-      create(:allocation, user: allocated_user)
+      create(:allocation, user: allocated_user, ongoing: true)
     end
 
     it 'have the "all" scope' do
@@ -108,7 +108,7 @@ describe 'Users', type: :feature do
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
     let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
-    let!(:allocation) { create(:allocation, :with_end_at, user: user) }
+    let!(:allocation) { create(:allocation, :with_end_at, user: user, ongoing: true) }
     let(:started_at) { 1.week.ago }
 
     describe 'New' do
@@ -214,7 +214,6 @@ describe 'Users', type: :feature do
         end
 
         it 'finds user current allocation even with end date undefined' do
-          allocation.end_at = nil
           within '#alocacoes' do
             expect(page).to have_css('.row-current_allocation td', text: allocation.project.name)
           end
@@ -247,8 +246,8 @@ describe 'Users', type: :feature do
 
       context 'on Punches tab' do
         let!(:monday_1_month_ago) { (DateTime.new(2021, 6, 1) - 4.week).monday }
-        let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) } 
-        before { refresh }
+        let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) }
+
         it 'finds all elements correctly' do
           within 'div#punches' do
             travel_to Time.new(2021, 6, 1) do

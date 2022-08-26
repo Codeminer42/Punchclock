@@ -8,6 +8,7 @@ class AbilityAdmin
 
   def initialize(user)
     @action = [
+      Allocation,
       User,
       Office,
       Project,
@@ -47,8 +48,6 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'
     can :read, ActiveAdmin::Page, name: 'Allocation Chart'
-    can :create, [Allocation]
-    can :manage, Allocation, ['1=1'], &:id?
 
     cannot :destroy, [User, Project]
   end

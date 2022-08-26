@@ -131,29 +131,24 @@ RSpec.describe Allocation, type: :model do
     let!(:allocation1) { create(:allocation,
                                   start_at: 2.week.ago,
                                   end_at: 1.week.after,
+                                  ongoing: true,
                                   user: user1)}
     let!(:allocation2) { create(:allocation,
                                   start_at: 2.week.ago,
                                   end_at: 1.week.after,
+                                  ongoing: true,
                                   user: user2)}
     let!(:allocation3) { create(:allocation,
                                   start_at: 2.month.ago,
                                   end_at: 1.month.ago,
-                                  user: user1)}
-    let!(:allocation4) { create(:allocation,
-                                  start_at: 2.month.ago,
-                                  end_at: 1.month.ago,
                                   user: user2)}
 
-    let(:ongoing_allocations) { described_class.ongoing.map { |allocation| allocation } }
-    let(:finished_allocations) { described_class.finished.map { |allocation| allocation } }
-
-    it 'is ongoing' do                                    
-      expect(ongoing_allocations).to eq([allocation2])
+    it 'return ongoing allocations' do
+      expect(described_class.ongoing).to eq([allocation2])
     end
 
-    it 'is finished' do                                    
-      expect(finished_allocations).to eq([allocation4])
+    it 'return finished allocations' do
+      expect(described_class.finished).to eq([allocation3])
     end
   end
 
@@ -167,7 +162,7 @@ RSpec.describe Allocation, type: :model do
     end
 
     context 'when end_at is not nil' do
-      subject { build_stubbed(:allocation, end_at: Date.current.next_month) }
+      subject { build_stubbed(:allocation, ongoing: true, end_at: Date.current.next_month) }
 
       it 'returns how many days left' do
         expect(subject.days_until_finish).to eq(subject.end_at - Date.current)
