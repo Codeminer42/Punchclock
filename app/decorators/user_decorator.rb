@@ -42,4 +42,8 @@ class UserDecorator < Draper::Decorator
   def office_head_name
     model.office.head&.name || 'N/A'
   end
+
+  def skills
+    model.skills.map(&:title).join(', ')
+  end
 end

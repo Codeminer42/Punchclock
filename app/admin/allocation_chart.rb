@@ -14,14 +14,21 @@ ActiveAdmin.register_page 'Allocation Chart' do
         column(I18n.t('allocated_until'), class: 'allocated-column') do |allocation|
           build_allocation_status_cell(allocation)
         end
-        column(I18n.t('level')) { |allocation| allocation.user.level.humanize }
-        column(I18n.t('specialty')) { |allocation| allocation.user.specialty.humanize }
+        column(I18n.t('level')) { |allocation| decorated_user(allocation).level }
+        column(I18n.t('specialty')) { |allocation| decorated_user(allocation).specialty }
+        column(I18n.t('english_evaluation')) do |allocation|
+          decorated_user(allocation).english_level
+        end
         column(I18n.t('skills'), class: 'allocated-column__last') do |allocation|
-          allocation.user.skills.map(&:title).join(', ')
+          decorated_user(allocation).skills
         end
       end
     end
   end
+end
+
+def decorated_user(allocation)
+  UserDecorator.decorate(allocation.user)
 end
 
 def build_allocation_status_cell(last_allocation)
