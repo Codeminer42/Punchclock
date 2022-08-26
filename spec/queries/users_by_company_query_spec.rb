@@ -12,6 +12,7 @@ RSpec.describe UsersByCompanyQuery do
            start_at: Date.new(2019, 6, 17),
            user: user_allocated,
            project: project,
+           ongoing: true,
            company: company)
   end
 
@@ -19,18 +20,15 @@ RSpec.describe UsersByCompanyQuery do
 
   describe '#not_allocated_including' do
     context 'when passes user allocated' do
-      let(:expected_array) { [user_not_allocated, user_allocated] }
-
       it 'return all users not allocated including user passed' do
-        expect(subject.not_allocated_including(user_allocated)).to match_array expected_array
+        result = subject.not_allocated_including(user_allocated)
+        expect(result).to containing_exactly(user_not_allocated, user_allocated)
       end
     end
 
     context 'when not passes user allocated' do
-      let(:expected_array) { [user_not_allocated] }
-
       it 'return all users not allocated' do
-        expect(subject.not_allocated_including).to match_array expected_array
+        expect(subject.not_allocated_including).to contain_exactly user_not_allocated
       end
     end
   end
