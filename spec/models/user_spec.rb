@@ -335,5 +335,41 @@ RSpec.describe User, type: :model do
         expect(super_admin_user.is_admin?).to be_truthy
       end
     end
+
+    describe '#first_and_last_name' do
+      subject(:user) { build_stubbed(:user, name: name) }
+
+      context 'when user name has 3 names' do
+        let(:name) { 'Name1 Name2 Name3' }
+
+        it 'returns only first and last name' do
+          expect(user.first_and_last_name).to eq 'Name1 Name3'
+        end
+      end
+
+      context 'when user name has 2 names' do
+        let(:name) { 'Name1 Name2' }
+
+        it 'returns only first and last name' do
+          expect(user.first_and_last_name).to eq 'Name1 Name2'
+        end
+      end
+
+      context 'when user name has 1 name' do
+        let(:name) { 'Name1' }
+
+        it 'returns only first name' do
+          expect(user.first_and_last_name).to eq 'Name1'
+        end
+      end
+
+      context 'when user name is empty' do
+        let(:name) { '' }
+
+        it 'returns a empty string' do
+          expect(user.first_and_last_name).to eq ''
+        end
+      end
+    end
   end
 end

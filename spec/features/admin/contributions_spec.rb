@@ -7,7 +7,7 @@ RSpec::Matchers.define_negated_matcher :not_have_text, :have_text
 
 describe 'Contribution', type: :feature do
   let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let!(:contribution) { create(:contribution) }
+  let!(:contribution) { create(:contribution).decorate }
   let!(:inactive_user_contribution) { create(:contribution, :approved, user: create(:user, :inactive_user)) }
 
   before do
@@ -26,7 +26,7 @@ describe 'Contribution', type: :feature do
 
     it 'have contribution table with correct information of active user' do
       within 'table' do
-        expect(page).to have_text(contribution.user) &
+        expect(page).to have_text(contribution.user.first_and_last_name) &
                         have_text(contribution.link) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}"))
       end
@@ -34,7 +34,7 @@ describe 'Contribution', type: :feature do
 
     it 'have contribution table without information of inactive user' do
       within 'table' do
-        expect(page).to not_have_text(inactive_user_contribution.user) &
+        expect(page).to not_have_text(inactive_user_contribution.user.first_and_last_name) &
                         not_have_text(inactive_user_contribution.link) &
                         not_have_text(Contribution.human_attribute_name("state/#{inactive_user_contribution.state}"))
       end
@@ -77,7 +77,7 @@ describe 'Contribution', type: :feature do
                         have_text(contribution.company) &
                         have_text(contribution.link) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
-                        have_text(I18n.l(contribution.created_at, format: :long)) &
+                        have_text(contribution.created_at) &
                         have_text(I18n.l(contribution.updated_at, format: :long))
       end
     end
