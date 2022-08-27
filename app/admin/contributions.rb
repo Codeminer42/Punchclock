@@ -88,7 +88,7 @@ ActiveAdmin.register Contribution do
       if current_user.super_admin?
         f.input :company
       else
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
+        f.input :company_id, as: :hidden, input_html: {value: current_user.company_id}
       end
 
       input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call

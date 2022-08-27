@@ -9,7 +9,9 @@ ActiveAdmin.register_page 'Allocation Chart' do
     panel I18n.t('allocation_chart') do
       allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation, current_user.company).call
       table_for allocations, id: 'allocations_chart' do
-        column(I18n.t('name'), :user)
+        column(I18n.t('name')) do |allocation|
+          link_to allocation.user.first_and_last_name, admin_user_path(allocation.user)
+        end
         column(I18n.t('client'), :project)
         column(I18n.t('allocated_until'), class: 'allocated-column') do |allocation|
           build_allocation_status_cell(allocation)
