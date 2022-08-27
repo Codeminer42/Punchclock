@@ -127,7 +127,7 @@ class User < ApplicationRecord
   def english_score
     last_english_evaluation.try(:score)
   end
-  
+
   def last_english_evaluation
     evaluations.by_kind(:english).order(:created_at).last
   end
@@ -178,5 +178,9 @@ class User < ApplicationRecord
 
   def password_required?
     password_required
+  end
+
+  def first_and_last_name
+    name.split.values_at(0, -1).uniq.join(' ')
   end
 end
