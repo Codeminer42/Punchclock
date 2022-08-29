@@ -15,14 +15,10 @@ class Allocation < ApplicationRecord
   delegate :office_name, to: :user
 
   scope :ongoing, -> { 
-    where("end_at > :today OR end_at is NULL", today: Date.current)
-    .where(user_id: User.active)
-    .order(start_at: :desc) 
+    where(ongoing: true, user_id: User.active).order(start_at: :desc)
   }
   scope :finished, -> {
-    where("end_at < :today", today: Date.current)
-    .where(user_id: User.active)
-    .order(end_at: :desc) }
+    where(ongoing: false, user_id: User.active).order(end_at: :desc) }
   scope :in_period, -> (start_at, end_at) do
     where(
       "daterange(start_at, end_at, '[]') && daterange(:start_at, :end_at, '[]')",
@@ -34,7 +30,11 @@ class Allocation < ApplicationRecord
   def days_until_finish
     return unless end_at
 
-    end_at > Date.current ? (end_at - Date.current).to_i : I18n.t('finished')
+    if ongoing
+      (end_at - Date.current).to_i
+    else
+      I18n.t('finished')
+    end
   end
 
   def user_punches
