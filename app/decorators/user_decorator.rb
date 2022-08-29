@@ -44,6 +44,6 @@ class UserDecorator < Draper::Decorator
   end
 
   def skills
-    model.skills.map(&:title).join(', ')
+    model.skills.pluck(:title).to_sentence
   end
 end
