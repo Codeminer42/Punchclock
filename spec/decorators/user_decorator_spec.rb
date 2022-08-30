@@ -151,4 +151,18 @@ RSpec.describe UserDecorator do
       end
     end
   end
+
+  describe '#skills' do
+    subject(:user) do
+      skills = [
+        create(:skill, title: 'skill 1'),
+        create(:skill, title: 'skill 2'),
+        create(:skill, title: 'skill 3')
+      ]
+      create(:user, skills: skills).decorate
+    end
+    it 'returns skills separated by comma' do
+      expect(subject.skills).to eq('skill 1, skill 2 e skill 3')
+    end
+  end
 end

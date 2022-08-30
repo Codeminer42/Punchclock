@@ -11,7 +11,7 @@ ActiveAdmin.register Allocation do
   scope :ongoing, default: true
   scope :finished
   scope :all do
-    Allocation.all.joins(:user).merge(User.active)
+    current_user.company.allocations.all.joins(:user).merge(User.active)
   end
   scope :spreadsheet do |relation|
     AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company).call
@@ -27,20 +27,9 @@ ActiveAdmin.register Allocation do
   filter :end_at
 
   index download_links: [:xls] do
-    # Temporary, we have a ticket to handle that column properly in
-    # a near future
-    column '#' do |allocation|
-      if allocation.id.blank?
-        'D'
-      elsif allocation.end_at && allocation.end_at < Date.current
-        'F'
-      else
-        'A'
-      end
-    end
     column :user
     column User.human_attribute_name('specialty') do |allocation|
-      allocation.user.specialty.humanize
+      allocation.user.specialty&.humanize
     end
     column :project
     column :start_at, sortable: false

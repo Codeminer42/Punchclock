@@ -97,9 +97,7 @@ ActiveAdmin.register User do
           row :level, &:level_text
           row :contract_type, &:contract_type_text
           row :role, &:role_text
-          row :skills do
-            user.skills.pluck(:title).to_sentence
-          end
+          row :skills
           row :reviewer
           row :hour_cost do |user|
             number_to_currency user.hour_cost

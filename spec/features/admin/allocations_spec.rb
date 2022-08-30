@@ -12,6 +12,7 @@ describe 'Admin Allocation', type: :feature do
            start_at: Date.new(2019, 6, 17),
            user: user,
            project: project,
+           ongoing: true,
            company: admin_user.company)
   end
 
