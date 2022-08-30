@@ -4,20 +4,21 @@ import moment from 'moment';
 const daysPerWeek = 7;
 const Day = Immutable.Record({day: undefined, inner: undefined, today: false});
 const Week = Immutable.Record({days: Immutable.List()});
+const INCLUSIVITY = '[]' 
 
 export function prev(base){
-  return base.clone().subtract(1, 'M').date(base.date());
+  return base.clone().subtract(1, 'M');
 }
 
 export function next(base){
-  return base.clone().add(1, 'M').date(base.date());
+  return base.clone().add(1, 'M');
 }
 
 export function week(date, range){
   return Immutable.Range(0, daysPerWeek).map((i)=> {
     let day = date.clone().add(i, 'd');
     let [from, to] = range;
-    let inner = day.isBetween(from, to, 'day');
+    let inner = day.isBetween(from, to, 'day', INCLUSIVITY);
     let today = day.isSame(moment(), 'day');
     return new Day({ day: day, inner: inner, today: today });
   });
@@ -31,8 +32,8 @@ export function weeks(start, range){
 }
 
 export function innerRange(base){
-  return [base.clone().subtract(1, 'M').date(base.date()),
-          moment.min(base.clone().add(1, 'd'), moment().add(1, 'd'))];
+  return [base.clone(),
+          moment.min(base.clone().add(1, 'M').subtract(1, 'd'), current())];
 }
 
 export function monthNames(range){
@@ -48,11 +49,11 @@ export function monthNames(range){
 }
 
 export function startDate(base){
-  return base.clone().subtract(1, 'M').date(base.date()).add(1, 'day').day(0);
+  return base.clone().day(0);
 }
 
 export function current() {
-  return moment().add(1, 'M');
+  return moment().utc()
 }
 
 export function constraintMonth(year, month) {

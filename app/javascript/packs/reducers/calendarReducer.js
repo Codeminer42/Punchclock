@@ -206,7 +206,7 @@ export const sumHours = (weeks, sheets, sheetsSaved, changesUnsaved) => {
 export const onInitializeCalendar = (dispatch) => (date = '') => {
   dispatch({
     type: INITIALIZE,
-    payload: redefine(Moment(date)),
+    payload: redefine(Moment(date).utc()),
   });
 };
 

@@ -58,5 +58,8 @@
     "stylelint-config-standard": "^18.2.0",
     "stylelint-scss": "^3.5.1",
     "webpack-cli": "^3.3.3"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": ["config/webpack/test.js"]
   }
 }
