@@ -30,21 +30,32 @@ describe 'Admin Allocation chart', type: :feature do
     end
 
     context 'table row' do
-      it 'links to user show page' do
-        within 'table' do
-          expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
+      context 'when allocated' do
+        it 'links to user show page' do
+          within 'table' do
+            expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
+          end
         end
-      end
-
-      it 'links to user current project' do
-        within 'table' do
-          expect(page).to have_link(project.name, href: "/admin/projects/#{project.id}")
+  
+        it 'links to user current project' do
+          within 'table' do
+            expect(page).to have_link(project.name, href: "/admin/projects/#{project.id}")
+          end
         end
-      end
+  
+        it 'has "Alocado" in "Alocado até" column' do
+          within 'tbody' do
+            expect(page).to have_text('Alocado')
+          end
+        end
 
-      it 'has "Alocado" in "Alocado até" column' do
-        within 'tbody' do
-          expect(page).to have_text('Alocado')
+        context 'with due date' do
+          let!(:user) { create(:user, allocations: [build(:allocation, project: project, end_at: Date.new(2022,9,1) + 2.months, company: company, ongoing: true)], company: company) }
+          it 'has "DD/MM/YY" format date in "Alocado até" column' do
+            within 'tbody' do
+              expect(page).to have_text('01/11/2022')
+            end
+          end
         end
       end
 

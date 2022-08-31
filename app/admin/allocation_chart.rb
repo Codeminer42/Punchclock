@@ -44,7 +44,7 @@ def build_allocation_status_cell(last_allocation)
 end
 
 def allocation_status_content(last_allocation:, allocation_status:)
-  return last_allocation.end_at if last_allocation.end_at
+  return I18n.l(last_allocation.end_at, format: :default) if last_allocation.end_at
 
   unallocated?(allocation_status) ? I18n.t('not_allocated') : I18n.t('allocated')
 end
