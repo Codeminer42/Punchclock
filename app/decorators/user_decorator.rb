@@ -46,4 +46,8 @@ class UserDecorator < Draper::Decorator
   def skills
     model.skills.pluck(:title).to_sentence
   end
+
+  def roles_text
+    model.roles.pluck(:name).to_sentence.humanize(capitalize: false)
+  end
 end

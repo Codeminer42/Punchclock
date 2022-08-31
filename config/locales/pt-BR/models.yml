@@ -175,6 +175,7 @@ pt-BR:
         specialty: "Especialidade"
         contract_type: 'Tipo de Contrato'
         role: 'Função'
+        roles: 'Funções'
         skills: "Habilidades"
         level: "Nível"
         active: "Ativo"
