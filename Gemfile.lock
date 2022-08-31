@@ -653,7 +653,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   simple_form (~> 5.1.0)
-  simplecov
+  simplecov (~> 0.20)
   spreadsheet
   spring (~> 3.1.1)
   sprockets
