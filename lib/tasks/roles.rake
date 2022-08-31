@@ -2,14 +2,7 @@ namespace :roles do
   desc 'Creates default roles'
   task create_default_roles: :environment do
     ActiveRecord::Base.transaction do
-      %w[
-        normal
-        evaluator
-        admin
-        super_admin
-        open_source_manager
-        hr
-      ].each do |role|
+      Role::DEFAULT_ROLES.each do |role|
         Role.find_or_create_by(name: role)
       end
     end
