@@ -41,10 +41,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
   end
 
   create_table "companies", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.string "avatar", limit: 255
+    t.string "avatar"
     t.integer "end_period"
   end
 
@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.integer "company_id"
@@ -132,7 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.integer "company_id"
-    t.string "attachment", limit: 255
+    t.string "attachment"
     t.text "comment"
     t.boolean "extra_hour", default: false, null: false
     t.index ["company_id"], name: "index_punches_on_company_id"
@@ -181,6 +181,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
     t.index ["company_id"], name: "index_repositories_on_company_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.bigint "role_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["role_id", "user_id"], name: "index_roles_users_on_role_id_and_user_id", unique: true
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "title"
     t.bigint "company_id"
@@ -200,25 +213,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "email", limit: 255, default: "", null: false
+    t.string "email", default: "", null: false
     t.integer "sign_in_count", default: 0
     t.datetime "current_sign_in_at", precision: nil
     t.datetime "last_sign_in_at", precision: nil
-    t.string "current_sign_in_ip", limit: 255
-    t.string "last_sign_in_ip", limit: 255
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.string "name", limit: 255
-    t.string "encrypted_password", limit: 255, default: ""
-    t.string "reset_password_token", limit: 255
+    t.string "name"
+    t.string "encrypted_password", default: ""
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
     t.integer "company_id"
     t.string "confirmation_token", limit: 255
+    t.decimal "hour_cost", default: "0.0", null: false
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
     t.boolean "active", default: true
-    t.boolean "beta_access", default: false
     t.integer "reviewer_id"
     t.integer "level"
     t.boolean "allow_overtime", default: false

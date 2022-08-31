@@ -18,6 +18,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:projects).through(:allocations) }
     it { is_expected.to have_and_belong_to_many(:skills) }
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
+    it { is_expected.to have_and_belong_to_many(:roles) }
   end
 
   describe 'delegations' do
@@ -263,6 +264,20 @@ RSpec.describe User, type: :model do
 
     it "not allows admin access for user without admin or super_admin roles" do
       expect(user).to_not have_admin_access
+    end
+  end
+
+  describe '#has_role?' do
+    let(:super_admin_role) { create(:role, name: 'super_admin') }
+
+    let(:super_admin_user) { create(:user, roles: [super_admin_role]) }
+
+    it 'accepts role name as string' do
+      expect(super_admin_user.has_role?('super_admin')).to eq(true)
+    end
+
+    it 'accepts role name as symbol' do
+      expect(super_admin_user.has_role?(:super_admin)).to eq(true)
     end
   end
 end

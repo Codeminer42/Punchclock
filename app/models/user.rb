@@ -50,6 +50,7 @@ class User < ApplicationRecord
   has_many :notes
   has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_and_belongs_to_many :skills
+  has_and_belongs_to_many :roles
 
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
@@ -169,5 +170,9 @@ class User < ApplicationRecord
 
   def password_required?
     password_required
+  end
+
+  def has_role?(role_name)
+    roles.any? { |role| role.name.to_sym == role_name.to_sym }
   end
 end
