@@ -12,7 +12,6 @@ RSpec.describe AdminsSpreadsheet do
       last_sign_in_at
       last_sign_in_ip
       name
-      hour_cost
       confirmed_at
       active
       allow_overtime
@@ -39,7 +38,6 @@ RSpec.describe AdminsSpreadsheet do
       user.email,
       user.last_sign_in_ip,
       user.name,
-      user.hour_cost,
       user.active,
       user.allow_overtime,
       user.occupation,

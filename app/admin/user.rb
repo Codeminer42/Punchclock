@@ -9,7 +9,7 @@ ActiveAdmin.register User do
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
+  permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id,
                 :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: []
 
@@ -99,9 +99,6 @@ ActiveAdmin.register User do
           row :role, &:role_text
           row :skills
           row :reviewer
-          row :hour_cost do |user|
-            number_to_currency user.hour_cost
-          end
           row :allow_overtime
           row :active
           row :started_at
@@ -194,7 +191,6 @@ ActiveAdmin.register User do
       f.input :name
       f.input :email
       f.input :github
-      f.input :hour_cost, input_html: { value: '0.0' }
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
       if current_user.super_admin?
         f.input :office

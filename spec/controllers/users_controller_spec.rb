@@ -6,7 +6,7 @@ describe UsersController do
 
   describe 'PUT update' do
     context 'with valid information' do
-      let(:user_attributes) { { name: '1234', email: '1234@1234.com', hour_cost: 15.0 } }
+      let(:user_attributes) { { name: '1234', email: '1234@1234.com' } }
 
       it 'should update user' do
         put :update, params: { id: user.id, user: user_attributes }
