@@ -17,6 +17,7 @@ pt-BR:
       - Sexta-feira
       - Sábado
     formats:
+      default: "%d/%m/%Y"
       month_name: '%B'
   english_evaluations: 'Avaliações de Inglês'
   hour_report_curent_month: 'Report de Horas do mês atual'
