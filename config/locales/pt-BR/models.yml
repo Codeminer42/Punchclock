@@ -155,7 +155,6 @@ pt-BR:
         reset_password_sent_at: "Resetar senha enviada em"
         remember_created_at: "Lembrar quando foi criado"
         company_id: "Empresa"
-        hour_cost: "Custo da hora"
         confirmation_token: "Token de confirmação"
         confirmed_at: "Confirmado em"
         confirmation_sent_at: "Confirmação enviada em"
