@@ -77,12 +77,12 @@ ActiveAdmin.register Allocation do
         input :project
         input :company
       else
-        company_users_not_allocated = UsersByCompanyQuery
+        company_users = UsersByCompanyQuery
                                       .new(current_user.company)
-                                      .not_allocated_including(f.object.user)
+                                      .active_engineers
                                       .select(:id, :name)
 
-        input :user, as: :select, collection: company_users_not_allocated
+        input :user, as: :select, collection: company_users
         input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
