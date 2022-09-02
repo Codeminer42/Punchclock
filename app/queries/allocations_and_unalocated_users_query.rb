@@ -30,6 +30,6 @@ class AllocationsAndUnalocatedUsersQuery
   end
 
   def last_user_allocations
-    Allocation.where(ongoing: true).group(:user_id).maximum(:end_at).values
+    Allocation.ongoing.group(:user_id, :start_at).maximum(:end_at).values
   end
 end
