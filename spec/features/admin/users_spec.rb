@@ -127,6 +127,7 @@ describe 'Users', type: :feature do
         find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
+        check('Normal')
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
@@ -304,6 +305,7 @@ describe 'Users', type: :feature do
                           have_text('Especialidade') &
                           have_text('Tipo de Contrato') &
                           have_text('Função') &
+                          have_text('Funções') &
                           have_text('Nível') &
                           have_text('Iniciou em') &
                           have_text('Habilidades') &
@@ -319,6 +321,14 @@ describe 'Users', type: :feature do
         expect(page).to have_css('.flash_notice', text: 'Usuário foi atualizado com sucesso.') &
                         have_text('novo_email@codeminer42.com')
       end
+
+      context 'without at least one role selected' do
+        it 'does not update' do
+          uncheck('Admin')
+          click_button 'Atualizar Usuário'
+          expect(page).to have_css('.inline-errors', text: 'não pode ficar em branco')
+        end
+      end
     end
 
     describe 'Edit yourself' do
@@ -328,13 +338,14 @@ describe 'Users', type: :feature do
       end
 
       it 'updates yourself role information' do
-        find('#user_role').find(:option, 'Open Source Manager').select_option
+        uncheck('Super Admin')
+        check('Normal')
 
         click_button 'Atualizar Usuário'
 
-        expect(current_path).to eq admin_dashboard_path
+        expect(current_path).to eq '/'
 
-        expect(page).to have_css('.flash_alert', text: 'Você não tem permissão para realizar o solicitado')
+        expect(page).to have_css('.alert-danger', text: 'Acesso negado')
       end
     end
   end

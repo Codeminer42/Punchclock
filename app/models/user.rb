@@ -4,7 +4,6 @@ class User < ApplicationRecord
   extend Enumerize
   include Tokenable
 
-  attr_accessor :has_api_token
   EXPERIENCE_PERIOD = 3.months
 
   devise :recoverable,
@@ -55,7 +54,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
-  validates :roles, presence: true
+  validates :roles, presence: true, inclusion: { in: Roles.all }
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
@@ -69,7 +68,7 @@ class User < ApplicationRecord
   scope :by_roles_in, ->(roles_names) { where("users.roles && ARRAY[?]::varchar[]", roles_names) }
   scope :admin, -> { by_roles_in([Roles::ADMIN]) }
 
-  attr_accessor :password_required
+  attr_accessor :password_required, :has_api_token
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]
@@ -143,6 +142,7 @@ class User < ApplicationRecord
   def office_head?
     managed_offices.present?
   end
+
 
   def has_admin_access?
     has_role?(Roles::ADMIN) || has_role?(Roles::SUPER_ADMIN) || has_role?(Roles::HR) || has_role?(Roles::OPEN_SOURCE_MANAGER)

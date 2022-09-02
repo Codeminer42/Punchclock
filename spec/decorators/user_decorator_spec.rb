@@ -169,9 +169,9 @@ RSpec.describe UserDecorator do
   describe '#roles_text' do
     subject(:user) do
       roles = [
-        create(:role, name: 'normal'),
-        create(:role, name: 'admin'),
-        create(:role, name: 'super_admin')
+        Roles::NORMAL,
+        Roles::ADMIN,
+        Roles::SUPER_ADMIN
       ]
       create(:user, roles: roles).decorate
     end

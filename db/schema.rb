@@ -214,8 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_211221) do
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
     t.integer "company_id"
-    t.string "confirmation_token", limit: 255
-    t.decimal "hour_cost", default: "0.0", null: false
+    t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
     t.boolean "active", default: true

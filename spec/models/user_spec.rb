@@ -25,11 +25,20 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validations' do
+    let!(:user) { create(:user, :admin) }
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     it { is_expected.to validate_presence_of(:occupation) }
     it { is_expected.to validate_presence_of(:roles) }
+
+    describe '#roles' do
+      it 'validates only allowed roles' do
+        user = User.new(roles: ['invalid'])
+        user.validate
+        expect(user.errors.messages[:roles]).to eq(["não está incluído na lista"])
+      end
+    end
 
     context 'When user is flagged as admin' do
       subject { build :user, admin: true }
@@ -309,6 +318,27 @@ RSpec.describe User, type: :model do
 
     it 'accepts role name as symbol' do
       expect(super_admin_user.has_role?(:super_admin)).to eq(true)
+    end
+  end
+
+  describe '#admin?' do
+    let(:user) { create(:user, roles: [Roles::ADMIN]) }
+    it 'is considered admin' do
+      expect(user.admin?).to eq(true)
+    end
+  end
+
+  describe '#normal?' do
+    let(:user) { create(:user, roles: [Roles::NORMAL]) }
+    it 'is considered normal' do
+      expect(user.normal?).to eq(true)
+    end
+  end
+
+  describe '#open_source_manager?' do
+    let(:user) { create(:user, roles: [Roles::OPEN_SOURCE_MANAGER]) }
+    it 'is considered open_source_manager' do
+      expect(user.open_source_manager?).to eq(true)
     end
   end
 
