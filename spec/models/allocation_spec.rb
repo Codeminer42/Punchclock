@@ -176,5 +176,13 @@ RSpec.describe Allocation, type: :model do
         expect(subject.days_until_finish).to eq('Finalizado')
       end
     end
+
+    context 'when allocation did not started' do
+      subject { build_stubbed(:allocation, end_at: Time.zone.today + 1.month) }
+
+      it 'returns finished' do
+        expect(subject.days_until_finish).to eq('Não iniciado')
+      end
+    end
   end
 end
