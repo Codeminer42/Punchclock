@@ -41,6 +41,7 @@ class User < ApplicationRecord
   belongs_to :office, optional: false
   belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
+  belongs_to :city
   has_many :punches
   has_many :contributions
   has_many :allocations, dependent: :restrict_with_error
@@ -118,7 +119,7 @@ class User < ApplicationRecord
   def english_score
     last_english_evaluation.try(:score)
   end
-  
+
   def last_english_evaluation
     evaluations.by_kind(:english).order(:created_at).last
   end

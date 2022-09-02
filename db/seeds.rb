@@ -33,6 +33,14 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
     end
     puts " done."
 
+    print "...creating state..."
+    state = State.find_or_create_by!(name: 'São Paulo', code: 'SP')
+    puts " done."
+
+    print "...creating city..."
+    city = City.find_or_create_by!(name: 'São Paulo', state_id: state.id)
+    puts " done."
+
     print "..creating company clients..."
     clients = clients_name.map do |client|
       Client.create_with(company: company).find_or_create_by!(name: client)
@@ -55,6 +63,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       admin.company = company
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
+      admin.city_id = city.id
       admin.skip_confirmation!
     end
 
@@ -68,6 +77,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
       admin.token = '9X9ti7nAeN3J2w9hn1om9ztpPMHrT7Mj' if name == 'Codeminer42'
+      admin.city_id = city.id
       admin.skip_confirmation!
     end
     puts " done."
@@ -97,6 +107,7 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
 end
 
 def create_user(company:, number:)
+  city = City.find_by(name: 'São Paulo')
   user = User.find_or_create_by!(email: "user.teste#{number}@#{company.name}.com") do |user|
     user.name = "Usuario_#{company.name}_#{number}"
     user.email = "user.teste#{number}@#{company.name}.com"
@@ -108,6 +119,7 @@ def create_user(company:, number:)
     user.specialty = User.specialty.values.sample
     user.github = "#{company.name}.user.teste#{number}"
     user.allow_overtime = true
+    user.city_id = city.id
     user.skip_confirmation!
   end
 end

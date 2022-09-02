@@ -38,6 +38,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.bigint "state_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
   create_table "clients", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "company_id"
@@ -207,6 +215,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
     t.index ["user_id"], name: "index_skills_users_on_user_id"
   end
 
+  create_table "states", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", limit: 255, default: "", null: false
     t.integer "sign_in_count", default: 0
@@ -246,6 +261,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
     t.string "otp_secret"
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -261,6 +278,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
   add_foreign_key "allocations", "users"
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
+  add_foreign_key "cities", "states"
   add_foreign_key "clients", "companies"
   add_foreign_key "contributions", "repositories"
   add_foreign_key "contributions", "users"
@@ -275,6 +293,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
   add_foreign_key "skills", "companies"
   add_foreign_key "skills_users", "skills"
   add_foreign_key "skills_users", "users"
+  add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "reviewer_id"
 end
