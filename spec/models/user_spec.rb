@@ -18,7 +18,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:projects).through(:allocations) }
     it { is_expected.to have_and_belong_to_many(:skills) }
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
-    it { is_expected.to have_and_belong_to_many(:roles) }
   end
 
   describe 'delegations' do
@@ -30,6 +29,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     it { is_expected.to validate_presence_of(:occupation) }
+    it { is_expected.to validate_presence_of(:roles) }
 
     context 'When user is flagged as admin' do
       subject { build :user, admin: true }
@@ -116,6 +116,39 @@ RSpec.describe User, type: :model do
     context '#not_in_experience' do
       it 'returns the user that are not in experience period' do
         expect(User.not_in_experience).to contain_exactly(user_not_in_experience)
+      end
+    end
+
+    describe '#by_roles_in' do
+      let!(:user1) { create(:user, roles: [Roles::ADMIN, Roles::SUPER_ADMIN]) }
+      let!(:user2) { create(:user, roles: [Roles::SUPER_ADMIN]) }
+
+      subject { User.by_roles_in(roles_names).to_a }
+
+      context 'by admin role only' do
+        let(:roles_names) { [Roles::ADMIN] }
+        it 'returns users with admin role' do
+          is_expected.to eq([user1])
+        end
+      end
+
+      context 'by admin and super admin roles' do
+        let(:roles_names) { [Roles::ADMIN, Roles::SUPER_ADMIN] }
+        it 'returns users with admin or super admin roles' do
+          is_expected.to eq([user1, user2])
+        end
+      end
+    end
+
+    describe '#admin' do
+      let!(:user1) { create(:user, roles: [Roles::ADMIN, Roles::OPEN_SOURCE_MANAGER]) }
+      let!(:user2) { create(:user, roles: [Roles::NORMAL]) }
+      let!(:user3) { create(:user, roles: [Roles::ADMIN]) }
+
+      subject { User.admin.to_a }
+
+      it 'returns users with admin role' do
+        is_expected.to eq([user1, user3])
       end
     end
   end
@@ -268,9 +301,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '#has_role?' do
-    let(:super_admin_role) { create(:role, name: 'super_admin') }
-
-    let(:super_admin_user) { create(:user, roles: [super_admin_role]) }
+    let(:super_admin_user) { create(:user, :super_admin) }
 
     it 'accepts role name as string' do
       expect(super_admin_user.has_role?('super_admin')).to eq(true)
@@ -278,6 +309,30 @@ RSpec.describe User, type: :model do
 
     it 'accepts role name as symbol' do
       expect(super_admin_user.has_role?(:super_admin)).to eq(true)
+    end
+  end
+
+  describe '#is_admin?' do
+    let(:user) { create(:user, roles: [role_name]) }
+
+    subject { user.is_admin? }
+    context 'with role hr' do
+      let(:role_name) { Roles::HR }
+      it 'is considered an admin' do
+        is_expected.to eq(true)
+      end
+    end
+    context 'with role admin' do
+      let(:role_name) { Roles::ADMIN }
+      it 'is considered an admin' do
+        is_expected.to eq(true)
+      end
+    end
+    context 'with role super admin' do
+      let(:role_name) { Roles::SUPER_ADMIN }
+      it 'is considered an admin' do
+        is_expected.to eq(true)
+      end
     end
   end
 end

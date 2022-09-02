@@ -50,12 +50,12 @@ class User < ApplicationRecord
   has_many :notes
   has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_and_belongs_to_many :skills
-  has_and_belongs_to_many :roles
 
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
+  validates :roles, presence: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
@@ -66,6 +66,8 @@ class User < ApplicationRecord
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :with_level,       -> value { where(level: value) }
+  scope :by_roles_in, ->(roles_names) { where("users.roles && ARRAY[?]::varchar[]", roles_names) }
+  scope :admin, -> { by_roles_in([Roles::ADMIN]) }
 
   attr_accessor :password_required
 
@@ -143,11 +145,27 @@ class User < ApplicationRecord
   end
 
   def has_admin_access?
-    admin? || super_admin? || open_source_manager? || hr?
+    has_role?(Roles::ADMIN) || has_role?(Roles::SUPER_ADMIN) || has_role?(Roles::HR) || has_role?(Roles::OPEN_SOURCE_MANAGER)
+  end
+
+  def normal?
+    has_role?(Roles::NORMAL)
+  end
+
+  def admin?
+    has_role?(Roles::ADMIN)
+  end
+
+  def super_admin?
+    has_role?(Roles::SUPER_ADMIN)
+  end
+
+  def open_source_manager?
+    has_role?(Roles::OPEN_SOURCE_MANAGER)
   end
 
   def is_admin?
-    admin? || super_admin? || hr?
+    has_role?(Roles::ADMIN) || has_role?(Roles::SUPER_ADMIN) || has_role?(Roles::HR)
   end
 
   def update_with_password(params, *options)
@@ -173,6 +191,6 @@ class User < ApplicationRecord
   end
 
   def has_role?(role_name)
-    roles.any? { |role| role.name.to_sym == role_name.to_sym }
+    roles.any? { |role| role.to_sym == role_name.to_sym }
   end
 end
