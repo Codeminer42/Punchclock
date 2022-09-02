@@ -39,7 +39,8 @@ def build_allocation_status_cell(last_allocation)
       last_allocation: last_allocation,
       allocation_status: allocation_status
     ),
-    allocation_status: allocation_status
+    allocation_status: allocation_status,
+    last_allocation: last_allocation
   )
 end
 
@@ -53,8 +54,12 @@ def unallocated?(allocation_status)
   allocation_status == Status::NOT_ALLOCATED
 end
 
-def column_cell_base(content:, allocation_status:)
+def column_cell_base(content:, allocation_status:, last_allocation:)
   div class: "allocated-column__status  allocated-column__status--#{allocation_status}" do
-    content
+    if allocation_status == Status::NOT_ALLOCATED
+      content
+    else
+      link_to content, admin_allocation_path(last_allocation)
+    end
   end
 end
