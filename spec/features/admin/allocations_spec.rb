@@ -67,8 +67,8 @@ describe 'Admin Allocation', type: :feature do
 
       before { click_link 'Novo(a) Alocação' }
 
-      it 'should not render users allocated' do
-        expect(page).not_to have_text(user.name)
+      it 'renders the allocated users' do
+        expect(page).to have_text(user.name)
       end
 
       it 'should not render project inactive' do
