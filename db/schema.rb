@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_02_184303) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,8 +41,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
   create_table "cities", force: :cascade do |t|
     t.string "name"
     t.bigint "state_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cities_on_name", unique: true
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
@@ -218,8 +219,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
   create_table "states", force: :cascade do |t|
     t.string "name"
     t.string "code"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_states_on_code", unique: true
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -260,8 +262,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_190314) do
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
-    t.string "otp_secret"
     t.bigint "city_id"
+    t.string "otp_secret"
     t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
