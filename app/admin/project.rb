@@ -101,7 +101,7 @@ ActiveAdmin.register Project do
     end
 
     def permited_allocation_params
-      params.require(:allocate_users_form).permit(:company_id, :project_id, :start_at, :end_at, not_allocated_users: [])
+      params.require(:allocate_users_form).permit(:company_id, :project_id, :start_at, :end_at, :not_allocated_users)
     end
 
     def index

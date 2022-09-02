@@ -96,8 +96,7 @@ describe 'Projects', type: :feature do
         
         it 'fills the form correctly' do
           within '#alocar-usuarios' do
-            find("#allocate_users_form_not_allocated_users_#{users[0].id}").set(true)
-            find("#allocate_users_form_not_allocated_users_#{users[1].id}").set(true)
+            select users.first.name, from: 'Usuários não alocados*'
             find('#allocate_users_form_start_at').fill_in with: '2019-06-25'
             find('#allocate_users_form_end_at').fill_in with: '2019-06-30'
             click_button 'Criar Alocações'
@@ -105,8 +104,7 @@ describe 'Projects', type: :feature do
 
           expect(page).to have_current_path(admin_allocations_path) &
                           have_css('.flash_notice', text: 'Alocações salvas com sucesso.') &
-                          have_text(users[0].name) &
-                          have_text(users[1].name) &
+                          have_text(users.first.name) &
                           have_text(project.name)
         end
       end
