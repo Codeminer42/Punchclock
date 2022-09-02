@@ -13,7 +13,6 @@ FactoryBot.define do
     company
     otp_required_for_login { false }
     office                { create(:office, company: company) }
-    city                  { create(:city) }
 
     trait :head_office do
       office { create(:office, head: :user) }
