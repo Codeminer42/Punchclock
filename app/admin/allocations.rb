@@ -1,36 +1,25 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
-  config.sort_order = ''
+  config.sort_order = 'ongoing_desc'
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
 
   menu parent: User.model_name.human(count: 2), priority: 4
 
-  scope :ongoing, default: true
-  scope :finished
-  scope :all do
-    current_user.company.allocations.all.joins(:user).merge(User.active)
-  end
-  scope :spreadsheet do |relation|
-    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company).call
-  end
-
+  filter :ongoing
   filter :user, collection: proc {
-    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
+    current_user.super_admin? ? User.all.order(:name) : current_user.company.users.order(:name)
   }
   filter :project, collection: proc {
-    current_user.super_admin? ? Project.all.order(:name).group_by(&:company) : current_user.company.projects.order(:name)
+    current_user.super_admin? ? Project.all.order(:name) : current_user.company.projects.order(:name)
   }
   filter :start_at
   filter :end_at
 
   index download_links: [:xls] do
-    column :user
-    column User.human_attribute_name('specialty') do |allocation|
-      allocation.user.specialty&.humanize
-    end
+    column :user, sortable: 'users.name'
     column :project
     column :start_at, sortable: false
     column :end_at, sortable: false
@@ -102,6 +91,10 @@ ActiveAdmin.register Allocation do
           send_data spreadsheet.to_string_io, filename: 'allocations.xls'
         end
       end
+    end
+
+    def scoped_collection
+      end_of_association_chain.includes(:user)
     end
   end
 end

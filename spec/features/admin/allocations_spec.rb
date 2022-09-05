@@ -22,21 +22,15 @@ describe 'Admin Allocation', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "Usuário", "Projeto", "Início", "Término" and "Dias Restantes" on table' do
+    it 'must find fields "Usuário", "Projeto", "Início", "Término", "Dias Restantes", and "Em progresso" on table' do
       within 'table' do
         expect(page).to have_text('Usuário') &
                         have_text('Projeto') &
                         have_text('Início') &
                         have_text('Término') &
-                        have_text('Dias Restantes')
+                        have_text('Dias Restantes') &
+                        have_text('Em progresso')
       end
-    end
-
-    it 'must find scopes "Em andamento", "Finalizadas", "Todos", and "Alocação de Recursos"' do
-      expect(page).to have_text('Em andamento (1)') &
-                      have_text('Finalizadas (0)') &
-                      have_text('Todos (1)') &
-                      have_text('Alocação de Recursos (1)')
     end
   end
 
