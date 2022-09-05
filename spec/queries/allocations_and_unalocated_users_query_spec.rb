@@ -95,5 +95,28 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
         expect(names).to eq ['Roan Britt']
       end
     end
+
+    context 'when there are more than one active and the other allocation is in the future' do
+      let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
+
+      before do
+        create(:allocation,
+               start_at: Time.zone.today,
+               end_at: 1.months.after,
+               user: roan,
+               ongoing: true,
+               company: company)
+
+        create(:allocation,
+               start_at: 2.months.after,
+               end_at: 3.months.after,
+               user: roan,
+               company: company)
+      end
+
+      it 'returns only active allocation for that user user' do
+        expect(call.pluck(:id)).to eq roan.allocations.ongoing.pluck(:id)
+      end
+    end
   end
 end

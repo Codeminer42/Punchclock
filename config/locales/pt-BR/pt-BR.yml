@@ -64,6 +64,7 @@ pt-BR:
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
+  not_started: 'Não iniciado'
   finished: 'Finalizado'
   admin:
     search_by: "Por %{model_name}"

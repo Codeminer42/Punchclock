@@ -32,6 +32,8 @@ class Allocation < ApplicationRecord
 
     if ongoing
       (end_at - Date.current).to_i
+    elsif end_at > Time.zone.today
+      I18n.t('not_started')
     else
       I18n.t('finished')
     end
