@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
     t.datetime "updated_at", precision: nil
     t.integer "company_id"
     t.boolean "active", default: true
+    t.string "market"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["name", "company_id"], name: "index_projects_on_name_and_company_id", unique: true
   end

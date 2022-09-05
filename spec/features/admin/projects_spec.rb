@@ -39,6 +39,7 @@ describe 'Projects', type: :feature do
 
       it 'must have the form working' do
         find('#project_name').fill_in with: 'MinerCamp'
+        find('#project_market').find(:option, 'Interno').select_option
 
         click_button 'Criar Projeto'
 
@@ -48,6 +49,7 @@ describe 'Projects', type: :feature do
 
       it 'must not work with a project with the same name' do
         find('#project_name').fill_in with: project.name
+        find('#project_market').find(:option, 'Interno').select_option
 
         click_button 'Criar Projeto'
 

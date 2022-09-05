@@ -35,7 +35,7 @@ def create_company(name:, office_cities:, project_names:)
 
     print "..creating company projects..."
     projects = project_names.map do |project|
-      Project.find_or_create_by!(name: project, company: company)
+      Project.find_or_create_by!(name: project, market: Project.market.values.sample, company: company)
     end
     puts " done."
 
