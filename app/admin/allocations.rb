@@ -8,15 +8,6 @@ ActiveAdmin.register Allocation do
 
   menu parent: User.model_name.human(count: 2), priority: 4
 
-  scope :ongoing, default: true
-  scope :finished
-  scope :all do
-    current_user.company.allocations.all.joins(:user).merge(User.active)
-  end
-  scope :spreadsheet do |relation|
-    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company).call
-  end
-
   filter :user, collection: proc {
     current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
   }
