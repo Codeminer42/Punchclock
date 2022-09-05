@@ -12,7 +12,8 @@ describe 'Admin Allocation chart', type: :feature do
 
   describe 'Index' do
     let(:project) { create(:project, company: company) }
-    let!(:user) { create(:user, allocations: [build(:allocation, project: project, company: company, ongoing: true)], company: company) }
+    let(:allocation) { build(:allocation, project: project, company: company, ongoing: true) }
+    let!(:user) { create(:user, allocations: [allocation], company: company) }
 
     before { visit '/admin/allocation_chart' }
 
@@ -36,24 +37,37 @@ describe 'Admin Allocation chart', type: :feature do
             expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
           end
         end
-  
+
         it 'links to user current project' do
           within 'table' do
             expect(page).to have_link(project.name, href: "/admin/projects/#{project.id}")
           end
         end
-  
+
         it 'has "Alocado" in "Alocado até" column' do
           within 'tbody' do
             expect(page).to have_text('Alocado')
           end
         end
 
+        it '"Alocado até" column links to allocation' do
+          within 'table' do
+            expect(page).to have_link('Alocado', href: "/admin/allocations/#{allocation.id}")
+          end
+        end
+
         context 'with due date' do
-          let!(:user) { create(:user, allocations: [build(:allocation, project: project, end_at: Date.new(2022,9,1) + 2.months, company: company, ongoing: true)], company: company) }
+          let(:allocation) { build(:allocation, project: project, end_at: Date.new(2022, 9, 1) + 2.months, company: company, ongoing: true) }
+          let!(:user) { create(:user, allocations: [allocation], company: company) }
           it 'has "DD/MM/YY" format date in "Alocado até" column' do
             within 'tbody' do
               expect(page).to have_text('01/11/2022')
+            end
+          end
+
+          it '"Alocado até" column links to allocation' do
+            within 'table' do
+              expect(page).to have_link('01/11/2022', href: "/admin/allocations/#{allocation.id}")
             end
           end
         end
@@ -65,6 +79,12 @@ describe 'Admin Allocation chart', type: :feature do
         it 'has "Não alocado" in "Alocado até" column' do
           within 'tbody' do
             expect(page).to have_text('Não alocado')
+          end
+        end
+
+        it '"Alocado até" column does not links to allocation' do
+          within 'table' do
+            expect(page).to have_no_link('Não alocado')
           end
         end
       end

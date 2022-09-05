@@ -86,16 +86,25 @@ body.logged_in .flash {
     &--exp-in-60-days {
       background-color: $flat-sunflower;
       color: $black;
+      & a {
+        color: $black;
+      }
     }
 
     &--exp-in-30-days {
       background-color: $flat-alizarin;
       color: $white;
+      & a {
+        color: $white;
+      }
     }
 
     &--expired {
       background-color: $red;
       color: $white;
+    & a {
+        color: $white;
+      }
     }
 
     &--not-allocated {
