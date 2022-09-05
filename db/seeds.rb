@@ -22,7 +22,7 @@ def create_holiday(office:)
   holiday.offices << office
 end
 
-def create_company(name:, office_cities:, project_names:, clients_name:)
+def create_company(name:, office_cities:, project_names:)
   puts "Creating company #{name}..."
   ActiveRecord::Base.transaction do
     company = Company.find_or_create_by!(name: name)
@@ -30,12 +30,6 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
     print "..creating company offices..."
     offices = office_cities.map do |city|
       Office.find_or_create_by!(city: city, company: company)
-    end
-    puts " done."
-
-    print "..creating company clients..."
-    clients = clients_name.map do |client|
-      Client.create_with(company: company).find_or_create_by!(name: client)
     end
     puts " done."
 
@@ -175,11 +169,6 @@ codeminer42 = create_company(
     'Rito Gomes',
     'Central',
     'Omnitrade'
-  ],
-  clients_name: [
-    'Client3',
-    'Client4',
-    'Zaca'
   ]
 )
 
@@ -192,10 +181,6 @@ waters_co = create_company(
   project_names: [
     'Tres Zap',
     'Latlux'
-  ],
-  clients_name: [
-    'Client1',
-    'Client2'
   ]
 )
 

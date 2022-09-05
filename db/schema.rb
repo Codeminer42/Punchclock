@@ -40,15 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
-  create_table "clients", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "company_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "active", default: true
-    t.index ["company_id"], name: "index_clients_on_company_id"
-  end
-
   create_table "companies", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "created_at", precision: nil
@@ -128,8 +119,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
     t.datetime "updated_at", precision: nil
     t.integer "company_id"
     t.boolean "active", default: true
-    t.integer "client_id"
-    t.index ["client_id"], name: "index_projects_on_client_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["name", "company_id"], name: "index_projects_on_name_and_company_id", unique: true
   end
@@ -263,7 +252,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_06_131530) do
   add_foreign_key "allocations", "users"
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
-  add_foreign_key "clients", "companies"
   add_foreign_key "contributions", "repositories"
   add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "companies"

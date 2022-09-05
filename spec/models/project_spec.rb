@@ -7,7 +7,6 @@ describe Project do
 
   describe 'relations' do
     it { is_expected.to belong_to :company }
-    it { is_expected.to belong_to(:client).optional }
     it { is_expected.to have_many :punches }
   end
 

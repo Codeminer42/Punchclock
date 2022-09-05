@@ -12,7 +12,6 @@ class AbilityAdmin
       User,
       Office,
       Project,
-      Client,
       RegionalHoliday,
       Evaluation,
       Questionnaire,

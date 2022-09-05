@@ -24,15 +24,10 @@ ActiveAdmin.register_page "Dashboard" do
           ]
         end
 
-
         projects_collection = current_company.projects.active.order(:name).map do |project|
-          description = [project.name, project.client].compact.join(' - ')
-
-          [
-            description,
-            project.id
-          ]
+          [ project.name, project.id ]
         end
+
         tabs do
           tab User.model_name.human do
             render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection

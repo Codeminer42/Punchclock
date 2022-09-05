@@ -114,9 +114,6 @@ ActiveAdmin.register User do
           row :current_allocation
           row :allocations do
             table_for user.allocations.order(start_at: :desc) do
-              column :client do |allocation|
-                allocation.project.client
-              end
               column :project_name do |allocation|
                 allocation.project.name
               end

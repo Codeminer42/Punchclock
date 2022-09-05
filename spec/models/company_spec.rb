@@ -7,7 +7,6 @@ describe Company do
     it { is_expected.to have_many :users }
     it { is_expected.to have_many :punches }
     it { is_expected.to have_many :offices }
-    it { is_expected.to have_many :clients }
     it { is_expected.to have_many :repositories }
   end
 
