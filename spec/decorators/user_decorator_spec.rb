@@ -168,11 +168,7 @@ RSpec.describe UserDecorator do
 
   describe '#roles_text' do
     subject(:user) do
-      roles = [
-        Roles::NORMAL,
-        Roles::ADMIN,
-        Roles::SUPER_ADMIN
-      ]
+      roles = %i[normal admin super_admin]
       create(:user, roles: roles).decorate
     end
     it 'returns roles separated by comma and humanized' do

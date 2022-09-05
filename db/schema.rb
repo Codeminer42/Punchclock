@@ -237,7 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_211221) do
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
     t.string "otp_secret"
-    t.string "roles", default: ["normal"], array: true
+    t.integer "roles", array: true
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

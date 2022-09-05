@@ -194,13 +194,11 @@ ActiveAdmin.register User do
         f.input :office
         f.input :company
         f.input :reviewer
-        f.input :role, as: :select, collection: User.role.values.map { |role| [role.text.titleize, role] }
-        f.input :roles, as: :check_boxes, collection: Roles.all.map { |role| [role.titleize, role] }
+        f.input :roles, as: :check_boxes, collection: User.roles.values.map { |role| [role.titleize, role] }
         f.input :skills, as: :check_boxes
       else
         f.input :office, collection: current_user.company.offices.order(:city)
-        f.input :role, as: :select, collection: User.role.values.reject { |value| value == 'super_admin' }.map { |role| [role.text.titleize, role] }
-        f.input :roles, as: :check_boxes, collection: Roles.all.reject { |role| role == Roles::SUPER_ADMIN }.map { |role| [role.titleize, role] }
+        f.input :roles, as: :check_boxes, collection: Roles.all.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
         f.input :reviewer, collection: current_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_user.company.skills.order(:title)
@@ -231,7 +229,6 @@ ActiveAdmin.register User do
     def save_resource(object)
       object.password_required = false
       object.github = nil if object.github == ''
-      object.roles = Roles.all & object.roles
 
       if object.has_api_token == '1'
         object.generate_token if object.token.nil?

@@ -8,14 +8,14 @@ describe 'roles' do
     let!(:normal_user) { build(:user, role: 'normal', roles: []).tap { |u| u.save(validate: false) } }
     let!(:super_admin_user) { build(:user, role: 'super_admin', roles: []).tap { |u| u.save(validate: false) } }
 
-    it { expect { subject }.to change { normal_user.reload.roles }.from([]).to([Roles::NORMAL]) }
-    it { expect { subject }.to change { super_admin_user.reload.roles }.from([]).to([Roles::SUPER_ADMIN]) }
+    it { expect { subject }.not_to change { normal_user.reload.roles.values } }
+    it { expect { subject }.to change { super_admin_user.reload.roles.values }.from(["normal"]).to(['super_admin']) }
 
     context 'when user already has a given role' do
-      let!(:super_admin_user) { create(:user, role: 'super_admin', roles: [Roles::ADMIN]) }
+      let!(:super_admin_user) { create(:user, role: 'super_admin', roles: ['admin']) }
       it 'updates roles' do
-        expect { subject }.to change { super_admin_user.reload.roles }
-          .from([Roles::ADMIN]).to([Roles::SUPER_ADMIN])
+        expect { subject }.to change { super_admin_user.reload.roles.values }
+          .from(['admin']).to(['super_admin'])
       end
     end
   end

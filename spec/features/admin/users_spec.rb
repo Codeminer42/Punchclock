@@ -131,7 +131,6 @@ describe 'Users', type: :feature do
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
-        find('#user_role').find(:option, 'Admin').select_option
         check('Ativo')
         fill_in 'Observação', with: 'Observation'
 
@@ -202,7 +201,7 @@ describe 'Users', type: :feature do
                             have_css('.row-specialty td', text: user.specialty.humanize) &
                             have_css('.row-level td', text: user.level.humanize) &
                             have_css('.row-contract_type td', text: user.contract_type.humanize) &
-                            have_css('.row-role td', text: user.role.humanize) &
+                            have_css('.row-roles td', text: UserDecorator.new(user).roles_text) &
                             have_css('.row-observation td', text: user.observation)
           end
         end
@@ -304,7 +303,6 @@ describe 'Users', type: :feature do
                           have_text('Ocupação') &
                           have_text('Especialidade') &
                           have_text('Tipo de Contrato') &
-                          have_text('Função') &
                           have_text('Funções') &
                           have_text('Nível') &
                           have_text('Iniciou em') &

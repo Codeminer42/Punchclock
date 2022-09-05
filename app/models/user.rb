@@ -31,11 +31,14 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
-
   enumerize :role, in: {
     normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4, hr: 5
     },  scope: :shallow,
         predicates: true
+
+  enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
+                          super_admin: 3, open_source_manager: 4, hr: 5 },
+                    default: :normal, multiple: true, predicates: true
 
   belongs_to :office, optional: false
   belongs_to :company
@@ -54,7 +57,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
-  validates :roles, presence: true, inclusion: { in: Roles.all }
+  validates :roles, presence: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
@@ -65,8 +68,11 @@ class User < ApplicationRecord
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :with_level,       -> value { where(level: value) }
-  scope :by_roles_in, ->(roles_names) { where("users.roles && ARRAY[?]::varchar[]", roles_names) }
-  scope :admin, -> { by_roles_in([Roles::ADMIN]) }
+  scope :by_roles_in, lambda { |roles|
+    roles_values = self.roles.find_values(*roles).map(&:value)
+    where("users.roles && ARRAY[?]::int[]", roles_values)
+  }
+  scope :admin, -> { by_roles_in([:admin]) }
 
   attr_accessor :password_required, :has_api_token
 
@@ -143,29 +149,12 @@ class User < ApplicationRecord
     managed_offices.present?
   end
 
-
   def has_admin_access?
-    has_role?(Roles::ADMIN) || has_role?(Roles::SUPER_ADMIN) || has_role?(Roles::HR) || has_role?(Roles::OPEN_SOURCE_MANAGER)
-  end
-
-  def normal?
-    has_role?(Roles::NORMAL)
-  end
-
-  def admin?
-    has_role?(Roles::ADMIN)
-  end
-
-  def super_admin?
-    has_role?(Roles::SUPER_ADMIN)
-  end
-
-  def open_source_manager?
-    has_role?(Roles::OPEN_SOURCE_MANAGER)
+    admin? || super_admin? || open_source_manager? || hr?
   end
 
   def is_admin?
-    has_role?(Roles::ADMIN) || has_role?(Roles::SUPER_ADMIN) || has_role?(Roles::HR)
+    admin? || super_admin? || hr?
   end
 
   def update_with_password(params, *options)
@@ -188,9 +177,5 @@ class User < ApplicationRecord
 
   def password_required?
     password_required
-  end
-
-  def has_role?(role_name)
-    roles.any? { |role| role.to_sym == role_name.to_sym }
   end
 end

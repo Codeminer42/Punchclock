@@ -5,7 +5,7 @@ require 'rails_helper'
 feature 'Add new note' do
   include ActiveSupport::Testing::TimeHelpers
 
-  let!(:authed_admin_user) { create_logged_in_user roles: [Roles::ADMIN] }
+  let!(:authed_admin_user) { create_logged_in_user roles: [:admin] }
   let(:user_1) { create(:user) }
 
   scenario 'creates a note' do

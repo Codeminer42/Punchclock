@@ -48,6 +48,6 @@ class UserDecorator < Draper::Decorator
   end
 
   def roles_text
-    model.roles.to_sentence.humanize(capitalize: false)
+    model.roles.values.to_sentence.humanize(capitalize: false)
   end
 end

@@ -30,8 +30,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
   controller do
     def scoped_collection
       if current_user.super_admin?
-        User.active.by_roles_in([Roles::ADMIN,
-                                 Roles::SUPER_ADMIN])
+        User.active.by_roles_in(%i[admin super_admin])
       else
         User.active.admin.where(company_id: current_user.company_id)
       end
