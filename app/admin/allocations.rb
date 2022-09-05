@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
-  config.sort_order = ''
+  config.sort_order = 'ongoing_desc'
   permit_params :user_id, :project_id, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
@@ -19,7 +19,7 @@ ActiveAdmin.register Allocation do
   filter :end_at
 
   index download_links: [:xls] do
-    column :user
+    column :user, sortable: 'users.name'
     column :project
     column :start_at, sortable: false
     column :end_at, sortable: false
@@ -91,6 +91,10 @@ ActiveAdmin.register Allocation do
           send_data spreadsheet.to_string_io, filename: 'allocations.xls'
         end
       end
+    end
+
+    def scoped_collection
+      end_of_association_chain.includes(:user)
     end
   end
 end
