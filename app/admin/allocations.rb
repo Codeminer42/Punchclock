@@ -8,6 +8,7 @@ ActiveAdmin.register Allocation do
 
   menu parent: User.model_name.human(count: 2), priority: 4
 
+  filter :ongoing
   filter :user, collection: proc {
     current_user.super_admin? ? User.all.order(:name) : current_user.company.users.order(:name)
   }
