@@ -5,6 +5,8 @@ class Allocation < ApplicationRecord
   belongs_to :project
   belongs_to :company
 
+  monetize :hourly_rate_cents
+
   validates :user, :project, presence: true
   validates_date :start_at
   validate :end_date
@@ -26,7 +28,7 @@ class Allocation < ApplicationRecord
       end_at: end_at
     )
   end
-  
+
   def days_until_finish
     return unless end_at
 

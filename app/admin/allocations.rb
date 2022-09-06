@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
+  decorate_with AllocationDecorator
+
   config.sort_order = 'ongoing_desc'
-  permit_params :user_id, :project_id, :start_at, :end_at, :company_id, :ongoing
+  permit_params :user_id, :project_id, :hourly_rate, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
 
@@ -21,6 +23,7 @@ ActiveAdmin.register Allocation do
   index download_links: [:xls] do
     column :user, sortable: 'users.name'
     column :project
+    column :hourly_rate
     column :start_at, sortable: false
     column :end_at, sortable: false
     column :days_left, &:days_until_finish
@@ -32,6 +35,7 @@ ActiveAdmin.register Allocation do
     attributes_table do
       row :user
       row :project
+      row :hourly_rate
       row :start_at
       row :end_at
       row :days_left, &:days_until_finish
@@ -76,6 +80,7 @@ ActiveAdmin.register Allocation do
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
+      input :hourly_rate
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
       input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
       input :ongoing

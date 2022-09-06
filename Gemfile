@@ -38,6 +38,7 @@ gem 'spreadsheet'
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
 gem 'active_model_serializers', '~> 0.10.13'
+gem 'money-rails', '~> 1.12'
 
 gem 'ransack', '~> 2.3'
 

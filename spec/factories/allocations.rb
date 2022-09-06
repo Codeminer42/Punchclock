@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :allocation do
     user
     project
+    hourly_rate_cents { rand(10000..35000) }
     start_at { Date.today }
     end_at   { nil }
     company { user.company }
