@@ -3,6 +3,7 @@
 @import "wigu/active_admin_theme";
 @import "select2";
 @import "base/vars";
+@import "datatables.net-bs4/css/dataTables.bootstrap4";
 
 $active-admin-label: #8494a8;
 $active-admin-input-border: #e6e9ee;
@@ -117,4 +118,3 @@ body.logged_in .flash {
     min-width: 50%;
   }
 }
-

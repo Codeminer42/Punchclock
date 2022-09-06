@@ -22,6 +22,7 @@
     "chart.js": "^2.9.4",
     "chartkick": "^3.2.1",
     "classnames": "^2.2.3",
+    "datatables.net-bs4": "^1.12.1",
     "highcharts": "^9.0.0",
     "history": "~4.6.1",
     "immutable": "~3.8.1",
@@ -60,6 +61,8 @@
     "webpack-cli": "^3.3.3"
   },
   "jest": {
-    "modulePathIgnorePatterns": ["config/webpack/test.js"]
+    "modulePathIgnorePatterns": [
+      "config/webpack/test.js"
+    ]
   }
 }
