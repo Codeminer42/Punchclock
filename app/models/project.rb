@@ -1,16 +1,22 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
+  extend Enumerize
+
   belongs_to :company
   has_many :punches
   has_many :allocations, dependent: :destroy
 
-  validates :name, 
-    presence: true, 
-    uniqueness: { 
-      scope: :company_id, 
-      message: 'Project name already taken' 
-    }
+  enumerize :market, in: %i[internal international]
+
+  validates :name,
+            presence: true,
+            uniqueness: {
+              scope: :company_id,
+              message: 'Project name already taken'
+            }
+
+  validates :market, presence: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }

@@ -1,4 +1,9 @@
 pt-BR:
+  enumerize:
+    project:
+      market:
+        internal: Interno
+        international: Externo
   activemodel:
     attributes:
       allocate_users_form:
@@ -124,6 +129,10 @@ pt-BR:
         access: "Acessar"
         client: "Cliente"
         company: "Empresa"
+        market: "Mercado"
+        markets:
+          internal: "Interno"
+          international: "Externo"
       comment:
         id: "ID"
         text: "Texto"

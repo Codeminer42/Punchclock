@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Project do
+  decorate_with ProjectDecorator
+
   config.sort_order = 'name_asc'
 
-  permit_params :name, :company_id, :active
+  permit_params :name, :company_id, :market, :active
 
   before_action :create_form, only: :show
 
@@ -14,6 +16,7 @@ ActiveAdmin.register Project do
 
   filter :company, if: proc { current_user.super_admin? }
   filter :name
+  filter :market, as: :select, collection: Project.market.options
   filter :created_at
   filter :updated_at
 
@@ -45,6 +48,7 @@ ActiveAdmin.register Project do
     column :name do |project|
       link_to project.name, admin_project_path(project)
     end
+    column :market
     column :active
     column :created_at
     actions
@@ -55,6 +59,7 @@ ActiveAdmin.register Project do
       tab I18n.t('main') do
         attributes_table do
           row :name
+          row :market
           row :active
           row :company if current_user.super_admin?
           row :created_at
@@ -87,6 +92,7 @@ ActiveAdmin.register Project do
       else
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
+      f.input :market
       f.input :active
     end
     f.actions
