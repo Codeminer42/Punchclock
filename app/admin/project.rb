@@ -3,7 +3,7 @@
 ActiveAdmin.register Project do
   config.sort_order = 'name_asc'
 
-  permit_params :name, :company_id, :active, :client_id
+  permit_params :name, :company_id, :active
 
   before_action :create_form, only: :show
 
@@ -56,7 +56,6 @@ ActiveAdmin.register Project do
         attributes_table do
           row :name
           row :active
-          row :client
           row :company if current_user.super_admin?
           row :created_at
           row :updated_at
@@ -84,10 +83,8 @@ ActiveAdmin.register Project do
     f.inputs I18n.t('project_details') do
       f.input :name
       if current_user.super_admin?
-        f.input :client
         f.input :company
       else
-        f.input :client, collection: current_user.company.clients.active.order(:name)
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
       f.input :active

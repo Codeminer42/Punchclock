@@ -9,7 +9,6 @@ RSpec.describe ProjectsSpreadsheet do
     %w[
       name
       active
-      client
       created_at
       updated_at
     ].map { |attribute| Project.human_attribute_name(attribute) }
@@ -19,7 +18,6 @@ RSpec.describe ProjectsSpreadsheet do
     [
       project.name,
       I18n.t(project.active.to_s),
-      project.client&.name,
       I18n.l(project.created_at, format: :long),
       I18n.l(project.updated_at, format: :long)
     ]

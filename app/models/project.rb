@@ -2,7 +2,6 @@
 
 class Project < ApplicationRecord
   belongs_to :company
-  belongs_to :client, optional: true
   has_many :punches
   has_many :allocations, dependent: :destroy
 
