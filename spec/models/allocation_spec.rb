@@ -8,6 +8,10 @@ RSpec.describe Allocation, type: :model do
     it { is_expected.to belong_to(:project) }
   end
 
+  it 'has monetized hourly rate' do
+    is_expected.to monetize(:hourly_rate)
+  end
+
   describe 'Delegate' do
     it { is_expected.to delegate_method(:office_name).to(:user) }
   end

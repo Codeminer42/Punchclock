@@ -228,6 +228,7 @@ pt-BR:
         id: "ID"
         user: "Usuário"
         project: "Projeto"
+        hourly_rate: "Taxa horária"
         start_at: "Início"
         end_at: "Término"
         days_left: "Dias Restantes"
