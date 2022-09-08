@@ -22,6 +22,9 @@ ActiveAdmin.register_page 'Allocation Chart' do
         column(I18n.t('skills'), class: 'allocated-column__last') do |allocation|
           decorated_user(allocation).skills
         end
+        column(:allocated_until_data) do |allocation|
+          allocation.end_at ? allocation.end_at.to_time.to_i : 'Not allocated'
+        end
       end
     end
   end
