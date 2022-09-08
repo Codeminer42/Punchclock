@@ -42,6 +42,16 @@ ActiveAdmin.register Allocation do
       row :ongoing
     end
 
+    panel t('revenue_projection') do
+      table_for(RevenueProjectorService.data_from_allocation(allocation)) do
+        column :month
+        column :working_days
+        column :revenue do |data|
+          humanized_money_with_symbol(data[:revenue])
+        end
+      end
+    end
+
     panel t('allocated_user_punches', scope: 'active_admin') do
       paginated_collection(allocation.user_punches.page(params[:page]).per(10), download_links: false) do
         table_for(collection.decorate, sortable: false, i18n: Punch) do
