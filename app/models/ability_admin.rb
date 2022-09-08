@@ -47,6 +47,7 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'
     can :read, ActiveAdmin::Page, name: 'Allocation Chart'
+    can :read, ActiveAdmin::Page, name: 'Revenue Forecast'
 
     cannot :destroy, [User, Project]
   end

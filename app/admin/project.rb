@@ -76,6 +76,30 @@ ActiveAdmin.register Project do
             end
           end
         end
+
+        panel t('revenue_forecast') do
+          data = RevenueProjectorService.data_from_project(project)
+
+          # TODO: Refactor
+          # * Current year tab should come active as default
+          # * Improve how data is being rendered
+          # * Implement i18n
+          tabs do
+            data.each do |year, data|
+              tab year.to_s do
+                columns do
+                  (1..12).each do |month|
+                    column do
+                      para Date::MONTHNAMES[month]
+                      span { data[month] ? humanized_money_with_symbol(data[month]) : '-' }
+                    end
+                  end
+                end
+              end
+            end # tab
+          end # tabs
+        end # panel
+
       end
 
       tab I18n.t('allocate_users') do
