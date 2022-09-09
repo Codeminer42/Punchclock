@@ -30,7 +30,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     it { is_expected.to validate_presence_of(:occupation) }
-    it { is_expected.to validate_presence_of(:roles) }
 
     context 'When user is flagged as admin' do
       subject { build :user, admin: true }
@@ -103,7 +102,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'roles' do
-    it { is_expected.to enumerize(:roles)
+    it do
+      is_expected.to enumerize(:roles)
       .in(
         normal: 0,
         evaluator: 1,
@@ -113,7 +113,7 @@ RSpec.describe User, type: :model do
         hr: 5
       )
       .with_multiple(true)
-    }
+    end
   end
 
   describe 'scopes' do
@@ -138,19 +138,17 @@ RSpec.describe User, type: :model do
       let!(:user1) { create(:user, roles: %i[admin super_admin]) }
       let!(:user2) { create(:user, roles: [:super_admin]) }
 
-      subject { User.by_roles_in(roles_names).to_a }
-
       context 'by admin role only' do
         let(:roles_names) { [:admin] }
         it 'returns users with admin role' do
-          is_expected.to eq([user1])
+          expect(User.by_roles_in(roles_names).to_a).to eq([user1])
         end
       end
 
       context 'by admin and super admin roles' do
         let(:roles_names) { %i[admin super_admin] }
         it 'returns users with admin or super admin roles' do
-          is_expected.to eq([user1, user2])
+          expect(User.by_roles_in(roles_names).to_a).to eq([user1, user2])
         end
       end
     end
@@ -316,25 +314,27 @@ RSpec.describe User, type: :model do
   end
 
   describe '#is_admin?' do
-    let(:user) { create(:user, roles: [role_name]) }
-
-    subject { user.is_admin? }
     context 'with role hr' do
-      let(:role_name) { :hr }
+      let(:hr_user) { create(:user, roles: [:hr]) }
+
       it 'is considered an admin' do
-        is_expected.to eq(true)
+        expect(hr_user.is_admin?).to be_truthy
       end
     end
+
     context 'with role admin' do
-      let(:role_name) { :admin }
+      let(:admin_user) { create(:user, roles: [:admin]) }
+
       it 'is considered an admin' do
-        is_expected.to eq(true)
+        expect(admin_user.is_admin?).to be_truthy
       end
     end
+
     context 'with role super admin' do
-      let(:role_name) { :super_admin }
+      let(:super_admin_user) { create(:user, roles: [:super_admin]) }
+      
       it 'is considered an admin' do
-        is_expected.to eq(true)
+        expect(super_admin_user.is_admin?).to be_truthy
       end
     end
   end

@@ -57,7 +57,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
-  validates :roles, presence: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
