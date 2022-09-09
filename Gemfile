@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.6'
+ruby '3.1.2'
 
 gem 'rails', '~> 7.0.3.1'
 
@@ -49,7 +49,7 @@ gem 'rollbar'
 gem 'chartkick'
 
 gem 'normalize-rails', '~> 4.1.1'
-gem 'validates_timeliness', '~> 5.0.0.beta1'
+gem 'validates_timeliness', '~> 6.0.0.beta2', github: "mitsuru/validates_timeliness", branch: "rails7"
 gem 'enumerize', '~> 2.5.0'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'active_admin_theme'

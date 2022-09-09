@@ -32,14 +32,14 @@ describe 'Users', type: :feature do
       find_link('Office Heads', href: '/admin/users?scope=office_heads').click
 
       within '#index_table_users' do
-        expect(page).to have_css('tbody tr', count: 1)
-        expect(page).to have_css('.col-name', text: user.name)
-        expect(page).to have_css('.col-office', text: user.office.city)
-        expect(page).to have_css('.col-level', text: user.level.humanize)
-        expect(page).to have_css('.col-specialty', text: user.specialty.humanize)
-        expect(page).to have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime))
-        expect(page).to have_css('.col-active', text: I18n.t(user.active))
-        expect(page).to have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
+        expect(page).to have_css('tbody tr', count: 1) &&
+        have_css('.col-name', text: user.name) &&
+        have_css('.col-office', text: user.office.city) &&
+        have_css('.col-level', text: user.level.humanize) &&
+        have_css('.col-specialty', text: user.specialty.humanize) &&
+        have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime)) &&
+        have_css('.col-active', text: I18n.t(user.active)) &&
+        have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
       end
     end
 
@@ -156,8 +156,9 @@ describe 'Users', type: :feature do
         find('#user_level').find(:option, 'Junior').select_option
 
         choose('Administrativo')
-        expect(page).to have_select('user_specialty', { disabled: true, selected: '' }) &
-                        have_select('user_level', { disabled: true, selected: '' })
+
+        expect(page).to have_select('user_specialty', disabled: true, selected: '') &
+                        have_select('user_level', disabled: true, selected: '')
       end
     end
 

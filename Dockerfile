@@ -1,4 +1,4 @@
-FROM codeminer42/ci-ruby:2.7
+FROM ruby:3.1.2
 
 LABEL MAINTAINER Codeminer42 <contact@codeminer42.com>
 
@@ -49,7 +49,7 @@ RUN mkdir -p ${HOME} && \
 USER devel:devel
 WORKDIR $APP
 
-RUN gem install bundler -v 2.1.4
+RUN gem install bundler -v $(tail -n 1 Gemfile.lock)
 
 EXPOSE 3000
 

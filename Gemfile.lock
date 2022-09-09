@@ -19,6 +19,15 @@ GIT
       moneta (~> 1.0.0)
       rate_throttle_client (~> 0.1.0)
 
+GIT
+  remote: https://github.com/mitsuru/validates_timeliness.git
+  revision: f28a62589cc069d1d1f5dfd99e1749edca04cd68
+  branch: rails7
+  specs:
+    validates_timeliness (6.0.0.beta2)
+      activemodel (>= 6.0.0, < 7.1)
+      timeliness (>= 0.3.10, < 1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -562,8 +571,6 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uniform_notifier (1.16.0)
-    validates_timeliness (5.0.0)
-      timeliness (>= 0.3.10, < 1)
     vcr (6.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -669,14 +676,14 @@ DEPENDENCIES
   sprockets
   uglifier
   unicorn
-  validates_timeliness (~> 5.0.0.beta1)
+  validates_timeliness (~> 6.0.0.beta2)!
   vcr
   web-console (~> 4.0)
   webmock
   webpacker (~> 5.1)
 
 RUBY VERSION
-   ruby 2.7.6p219
+   ruby 3.1.2p20
 
 BUNDLED WITH
-   2.1.4
+   2.3.22
