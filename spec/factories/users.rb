@@ -10,6 +10,7 @@ FactoryBot.define do
     github                { Faker::Internet.unique.username }
     contract_type         { 'employee' }
     role                  { 'normal' }
+    roles                 { [:normal] }
     company
     otp_required_for_login { false }
     office                { create(:office, company: company) }
@@ -31,15 +32,15 @@ FactoryBot.define do
     end
 
     trait :admin do
-      role { :admin }
+      roles { [:admin] }
     end
 
     trait :super_admin do
-      role { :super_admin }
+      roles { [:super_admin] }
     end
 
     trait :open_source_manager do
-      role { :open_source_manager }
+      roles { [:open_source_manager] }
     end
 
     trait :with_observation do

@@ -4,7 +4,6 @@ class User < ApplicationRecord
   extend Enumerize
   include Tokenable
 
-  attr_accessor :has_api_token
   EXPERIENCE_PERIOD = 3.months
 
   devise :recoverable,
@@ -32,11 +31,14 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
-
   enumerize :role, in: {
     normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4, hr: 5
     },  scope: :shallow,
         predicates: true
+
+  enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
+                          super_admin: 3, open_source_manager: 4, hr: 5 },
+                    default: :normal, multiple: true, predicates: true
 
   belongs_to :office, optional: false
   belongs_to :company
@@ -65,8 +67,13 @@ class User < ApplicationRecord
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :with_level,       -> value { where(level: value) }
+  scope :by_roles_in, lambda { |roles|
+    roles_values = self.roles.find_values(*roles).map(&:value)
+    where("users.roles && ARRAY[?]::int[]", roles_values)
+  }
+  scope :admin, -> { by_roles_in([:admin]) }
 
-  attr_accessor :password_required
+  attr_accessor :password_required, :has_api_token
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]

@@ -46,6 +46,7 @@ def create_company(name:, office_cities:, project_names:)
       admin.password = 'password'
       admin.password_confirmation = 'password'
       admin.role = :super_admin
+      admin.roles = [:super_admin]
       admin.company = company
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
@@ -58,6 +59,7 @@ def create_company(name:, office_cities:, project_names:)
       admin.password = 'password'
       admin.password_confirmation = 'password'
       admin.role = :admin
+      admin.roles = [:admin]
       admin.company = company
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
@@ -103,6 +105,7 @@ def create_user(company:, number:)
     user.github = "#{company.name}.user.teste#{number}"
     user.allow_overtime = true
     user.skip_confirmation!
+    user.roles = [:normal]
   end
 end
 
