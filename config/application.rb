@@ -36,7 +36,9 @@ module Punchclock
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_job.queue_adapter = :sidekiq
 
-    config.load_defaults 5.2
+    config.active_record.legacy_connection_handling = false
+
+    config.load_defaults 7.0
     config.generators.system_tests = nil
   end
 end
