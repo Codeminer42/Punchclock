@@ -194,11 +194,11 @@ ActiveAdmin.register User do
         f.input :office
         f.input :company
         f.input :reviewer
-        f.input :roles, as: :check_boxes, collection: User.roles.values.map { |role| [role.titleize, role] }
+        f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.titleize, role] }
         f.input :skills, as: :check_boxes
       else
         f.input :office, collection: current_user.company.offices.order(:city)
-        f.input :roles, as: :check_boxes, collection: Roles.all.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
+        f.input :roles, as: :select, multiple: true, collection: User.roles.values.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
         f.input :reviewer, collection: current_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_user.company.skills.order(:title)
