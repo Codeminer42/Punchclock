@@ -4,7 +4,7 @@ ActiveAdmin.register Allocation do
   decorate_with AllocationDecorator
 
   config.sort_order = 'ongoing_desc'
-  permit_params :user_id, :project_id, :hourly_rate, :start_at, :end_at, :company_id, :ongoing
+  permit_params :user_id, :project_id, :hourly_rate, :hourly_rate_currency, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
 
@@ -93,6 +93,7 @@ ActiveAdmin.register Allocation do
       end
 
       input :hourly_rate
+      input :hourly_rate_currency, as: :select, collection: Allocation::HOURLY_RATE_CURRENCIES
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
       input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
       input :ongoing
