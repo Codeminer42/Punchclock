@@ -108,7 +108,7 @@ describe 'Users', type: :feature do
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
     let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
-    let!(:allocation) { create(:allocation, :with_end_at, user: user, ongoing: true) }
+    let!(:allocation) { create(:allocation, user: user, ongoing: true) }
     let(:started_at) { 1.week.ago }
 
     describe 'New' do

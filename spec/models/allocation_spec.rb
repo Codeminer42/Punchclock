@@ -20,6 +20,9 @@ RSpec.describe Allocation, type: :model do
     let(:user) { create(:user) }
     let(:user_2) { create(:user) } 
 
+    it { should validate_presence_of(:start_at) }
+    it { should validate_presence_of(:end_at) }
+
     context 'end_at' do
       it 'should not be before start_at' do
         allocation = build(:allocation, user: user, start_at: 4.days.after, end_at: 2.days.after )
@@ -30,9 +33,9 @@ RSpec.describe Allocation, type: :model do
 
     context 'selected dates' do  
       before do
-        create(:allocation, user: user, end_at: 1.week.after)  
+        create(:allocation, user: user, end_at: 1.week.after)
       end
-      
+
       it 'overlaps an existing period to same user' do
         allocation = build(:allocation, user: user, start_at: 2.days.after, end_at: 2.week.after )
         allocation.validate
@@ -50,71 +53,6 @@ RSpec.describe Allocation, type: :model do
         allocation.validate
         expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
       end
-    end
-
-    context 'endless allocation' do
-      context 'nowdays' do
-        before do
-          create(:allocation, user: user, start_at: 4.days.ago, end_at: nil)
-        end
-
-        it 'when user has' do
-          allocation = build(:allocation, :with_end_at, user: user)
-          allocation.validate
-          expect(allocation.errors[:start_at]).to eq(['Já existe uma alocação desse usuário nesse período'])
-        end
-
-        it 'when user has not' do
-          allocation = build(:allocation, :with_end_at, user: user_2)
-          allocation.validate
-          expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
-        end
-
-        it 'on update should not validate itself' do
-          allocation = Allocation.last
-          allocation.end_at = Date.tomorrow
-          allocation.validate
-          expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
-        end
-      end
-
-      context 'in future' do
-        before do
-          create(:allocation, user: user, start_at: 1.month.after, end_at: nil)
-        end
-
-        context 'create' do
-          it 'should not be possible create other endless allocation at all' do
-            allocation = build(:allocation, user: user)
-            allocation.validate
-            expect(allocation.errors[:start_at]).to eq(['Já existe uma alocação desse usuário nesse período'])
-          end
-
-          it 'should be possible create an allocation with end_at before the endless allocation' do
-            allocation = build(:allocation, :with_end_at, user: user)
-            allocation.validate
-            expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
-          end
-        end
-
-        context 'update' do
-          let(:allocation) { create(:allocation, end_at: 2.week.after, user: user) }
-          
-          it 'should not be possible update an allocation to be endless' do  
-            allocation.end_at = nil
-            allocation.validate
-            expect(allocation.errors[:start_at]).to eq(['Já existe uma alocação desse usuário nesse período'])
-          end
-
-          it 'should be possible update an allocation with end_at before the endless allocation' do
-            allocation.end_at = 1.week.after
-            allocation.validate
-            expect(allocation.errors[:start_at]).not_to eq(['Já existe uma alocação desse usuário nesse período'])
-          end
-        end
-
-      end
-
     end
 
     context 'ongoing' do

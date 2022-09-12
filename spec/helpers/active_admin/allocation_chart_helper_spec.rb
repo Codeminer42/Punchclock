@@ -6,43 +6,45 @@ module ActiveAdmin
   describe AllocationChartHelper do
     describe '#allocation_satus_for' do
       let(:current_date) { Time.zone.local(2022, 3, 1, 12, 0, 0) }
+
       before do
         travel_to current_date
       end
+
       after do
         travel_back
       end
+
       subject { AllocationChartHelper.allocation_status_for(last_allocation: last_allocation) }
+
       context 'without allocation' do
         let(:last_allocation) { nil }
         it 'returns NOT_ALLOCATED' do
           is_expected.to eq(AllocationChartHelper::Status::NOT_ALLOCATED)
         end
       end
-      context 'when last allocation does not have an end date' do
-        let(:last_allocation) { create(:allocation, end_at: nil) }
-        it 'returns ALLOCATED' do
-          is_expected.to eq(AllocationChartHelper::Status::ALLOCATED)
-        end
-      end
+
       context 'when last allocation end date is more than 60 days' do
         let(:last_allocation) { create(:allocation, end_at: current_date + 61.days) }
         it 'returns ALLOCATED' do
           is_expected.to eq(AllocationChartHelper::Status::ALLOCATED)
         end
       end
+
       context 'when last allocation end date is between 31 and 60 days' do
         let(:last_allocation) { create(:allocation, end_at: current_date + 60.days) }
         it 'returns EXP_IN_60_DAYS' do
           is_expected.to eq(AllocationChartHelper::Status::EXP_IN_60_DAYS)
         end
       end
+
       context 'when last allocation end date is between 1 and 30 days' do
         let(:last_allocation) { create(:allocation, end_at: current_date + 30.days) }
         it 'returns EXP_IN_30_DAYS' do
           is_expected.to eq(AllocationChartHelper::Status::EXP_IN_30_DAYS)
         end
       end
+
       context 'when has passed 0 to 60 days since last allocation' do
         let(:last_allocation) { create(:allocation, end_at: current_date) }
         it 'returns EXPIRED' do

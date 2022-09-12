@@ -8,7 +8,6 @@ describe 'Admin Allocation', type: :feature do
   let!(:project)    { create(:project, company: admin_user.company) }
   let!(:allocation) do
     create(:allocation,
-           :with_end_at,
            start_at: Date.new(2019, 6, 17),
            user: user,
            project: project,
@@ -80,10 +79,12 @@ describe 'Admin Allocation', type: :feature do
 
       it 'must have the form working' do
         start_at = 1.week.after
+        end_at = 50.weeks.after
 
         find('#allocation_user_id').find(:option, user_not_allocated.name).select_option
         find('#allocation_project_id').find(:option, project.name).select_option
         find('#allocation_start_at').fill_in with: start_at.strftime('%Y-%m-%d')
+        find('#allocation_end_at').fill_in with: end_at.strftime('%Y-%m-%d')
 
         click_button 'Criar Alocação'
 
@@ -91,8 +92,8 @@ describe 'Admin Allocation', type: :feature do
                         have_css('.row-user', text: user_not_allocated.name) &
                         have_text(project.name) &
                         have_text(I18n.l(start_at, format: '%d de %B de %Y')) &
-                        have_css('.row-end_at', text: 'Vazio') &
-                        have_css('.row-days_left', text: 'Vazio')
+                        have_text(I18n.l(end_at, format: '%d de %B de %Y')) &
+                        have_css('.row-days_left', text: 'Dias Restantes 350')
       end
     end
 

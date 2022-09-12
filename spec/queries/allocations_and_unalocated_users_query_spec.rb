@@ -46,7 +46,7 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
 
         create(:allocation,
                start_at: 3.months.after,
-               end_at: nil,
+               end_at: 4.months.after + 1,
                user: alex,
                company: company,
                ongoing: true)

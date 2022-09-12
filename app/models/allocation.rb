@@ -7,9 +7,9 @@ class Allocation < ApplicationRecord
 
   monetize :hourly_rate_cents
 
-  validates :user, :project, presence: true
+  validates :user, :project, :start_at, :end_at, presence: true
   validates_date :start_at
-  validate :end_date
+  validates_date :end_at, after: ->(a) { a.start_at }
   validate :unique_period, unless: :end_before_start?
   validates :ongoing, uniqueness: { scope: :user, message: :uniqueness },
                       if: :ongoing?
@@ -51,13 +51,9 @@ class Allocation < ApplicationRecord
   end
 
   private
-  
+
   def end_before_start?
     end_at.present? && end_at < start_at
-  end
-
-  def end_date
-    errors.add(:end_at, :cant_be_lesser) if end_before_start?
   end
 
   def unique_period
