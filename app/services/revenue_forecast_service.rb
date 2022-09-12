@@ -83,7 +83,7 @@ class RevenueForecastService
       month: beginning_of_month.month,
       year: beginning_of_month.year,
       working_days: working_days,
-      forecast: calculate_forecast(working_days, allocation.hourly_rate, beginning_of_month - 1)
+      forecast: calculate_forecast(working_days, allocation.hourly_rate, beginning_of_month)
     }
   end
 
@@ -91,7 +91,13 @@ class RevenueForecastService
     (start_date..end_date).reject(&:on_weekend?).count
   end
 
-  def calculate_forecast(working_days, hourly_rate, exchange_rate_date)
+  def calculate_forecast(working_days, hourly_rate, beginning_of_month)
+    exchange_rate_date = if beginning_of_month > Date.current
+                           Date.current.beginning_of_month - 1
+                         else
+                           beginning_of_month - 1
+                         end
+
     converted_rate = hourly_rate.exchange_to_historical('BRL', exchange_rate_date)
     converted_rate * working_days * 8
   end

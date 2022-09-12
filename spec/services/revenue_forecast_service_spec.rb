@@ -22,17 +22,19 @@ RSpec.describe RevenueForecastService do
       end
 
       before do
+        travel_to(Date.new(2022, 01, 15))
+
         Money.default_bank.add_rates({
           'BRL' => {
             '2021-09-30' => 5.15,
             '2021-10-31' => 5.2,
             '2021-11-30' => 5.25,
-            '2021-12-31' => 5.3,
-            '2022-01-31' => 5.35,
-            '2022-02-28' => 5.23
+            '2021-12-31' => 5.3
           }
         })
       end
+
+      after { travel_back }
 
       it "returns the forecasts converted to BRL" do
         expect(data).to eq([
@@ -40,8 +42,8 @@ RSpec.describe RevenueForecastService do
           { month: 11, year: 2021, working_days: 22, forecast: Money.new(91520_00, 'BRL') },
           { month: 12, year: 2021, working_days: 23, forecast: Money.new(96600_00, 'BRL') },
           { month: 1, year: 2022, working_days: 21, forecast: Money.new(89040_00, 'BRL') },
-          { month: 2, year: 2022, working_days: 20, forecast: Money.new(85600_00, 'BRL') },
-          { month: 3, year: 2022, working_days: 4, forecast: Money.new(16736_00, 'BRL') }
+          { month: 2, year: 2022, working_days: 20, forecast: Money.new(84800_00, 'BRL') },
+          { month: 3, year: 2022, working_days: 4, forecast: Money.new(16960_00, 'BRL') }
         ])
       end
     end
