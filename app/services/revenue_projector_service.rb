@@ -84,7 +84,7 @@ class RevenueProjectorService
       month: beginning_of_month.month,
       year: beginning_of_month.year,
       working_days: working_days,
-      revenue: calculate_revenue(working_days, allocation.hourly_rate_cents)
+      revenue: calculate_revenue(working_days, allocation.hourly_rate, beginning_of_month - 1)
     }
   end
 
@@ -92,8 +92,9 @@ class RevenueProjectorService
     (start_date..end_date).reject(&:on_weekend?).count
   end
 
-  def calculate_revenue(working_days, hourly_rate_cents)
-    Money.new(working_days * 8 * hourly_rate_cents)
+  def calculate_revenue(working_days, hourly_rate, exchange_rate_date)
+    converted_rate = hourly_rate.exchange_to_historical('BRL', exchange_rate_date)
+    converted_rate * working_days * 8
   end
 
   def active_projects_on_period(beginning_date, end_date)
