@@ -9,7 +9,7 @@ ActiveAdmin.register User do
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id,
+  permit_params :name, :email, :github, :company_id, :level, :contract_type, :contract_company_country, :reviewer_id,
                 :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
@@ -96,6 +96,7 @@ ActiveAdmin.register User do
           row :specialty, &:specialty_text
           row :level, &:level_text
           row :contract_type, &:contract_type_text
+          row :contract_company_country, &:contract_company_country_text
           row :role, &:role_text
           row :roles, &:roles_text
           row :skills
@@ -207,6 +208,7 @@ ActiveAdmin.register User do
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
+      f.input :contract_company_country, as: :select, collection: User.contract_company_country.values.map { |company_country| [company_country.text.humanize, company_country] }
       f.input :has_api_token, as: :boolean, :input_html => { checked: f.object.token? }
       f.input :allow_overtime
       f.input :active

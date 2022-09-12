@@ -131,6 +131,7 @@ describe 'Users', type: :feature do
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
+        find('#user_contract_company_country').find(:option, 'Brasil').select_option
         check('Ativo')
         fill_in 'Observação', with: 'Observation'
 

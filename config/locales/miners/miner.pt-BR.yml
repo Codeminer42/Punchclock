@@ -24,6 +24,9 @@ pt-BR:
           employee: Funcionário
           contractor: PJ
           associate: Associado
+        contract_company_country:
+          brazil: Brasil
+          usa: Estados Unidos
         role:
           normal: Normal
           evaluator: Avaliador
