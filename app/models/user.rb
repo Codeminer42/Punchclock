@@ -31,6 +31,7 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
+  enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
   enumerize :role, in: {
     normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4, hr: 5
     },  scope: :shallow,
@@ -57,6 +58,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
+  validates :contract_company_country, presence: true
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }

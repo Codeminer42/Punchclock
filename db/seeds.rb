@@ -51,6 +51,7 @@ def create_company(name:, office_cities:, project_names:)
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
       admin.skip_confirmation!
+      admin.contract_company_country = 'brazil'
     end
 
     User.find_or_create_by!(email: "admin@#{name}.com") do |admin|
@@ -65,6 +66,7 @@ def create_company(name:, office_cities:, project_names:)
       admin.token = SecureRandom.base58(32)
       admin.token = '9X9ti7nAeN3J2w9hn1om9ztpPMHrT7Mj' if name == 'Codeminer42'
       admin.skip_confirmation!
+      admin.contract_company_country = 'brazil'
     end
     puts " done."
 
@@ -106,6 +108,7 @@ def create_user(company:, number:)
     user.allow_overtime = true
     user.skip_confirmation!
     user.roles = [:normal]
+    user.contract_company_country = 'brazil'
   end
 end
 
