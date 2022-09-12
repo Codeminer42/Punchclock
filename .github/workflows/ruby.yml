@@ -21,6 +21,7 @@ jobs:
       RAILS_ENV: test
       POSTGRES_PASSWORD: postgres
     services:
+
       postgres:
         image: postgres:13
         ports:
@@ -29,6 +30,18 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - "6379:6379"
+
     strategy:
       matrix:
         ruby-version: ["3.1.2"]
