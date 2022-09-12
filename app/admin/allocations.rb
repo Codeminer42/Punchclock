@@ -43,13 +43,13 @@ ActiveAdmin.register Allocation do
     end
 
     panel t('revenue_forecast') do
-      table_for(RevenueProjectorService.data_from_allocation(allocation.model)) do
+      table_for(RevenueForecastService.allocation_forecast(allocation.model)) do
         column :month do |data|
           "#{data[:month]}/#{data[:year]}"
         end
         column :working_days
-        column :revenue do |data|
-          humanized_money_with_symbol(data[:revenue])
+        column :forecast do |data|
+          humanized_money_with_symbol(data[:forecast])
         end
       end
     end

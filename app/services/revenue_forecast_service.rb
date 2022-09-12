@@ -1,9 +1,9 @@
-class RevenueProjectorService
-  def self.data_from_allocation(allocation)
-    new.revenue_from_allocation(allocation)
+class RevenueForecastService
+  def self.allocation_forecast(allocation)
+    new.allocation_forecast(allocation)
   end
 
-  def revenue_from_allocation(allocation)
+  def allocation_forecast(allocation)
     month = allocation.start_at.beginning_of_month
     beginning_of_end_date_month = allocation.end_at.beginning_of_month
 
@@ -16,27 +16,27 @@ class RevenueProjectorService
     result
   end
 
-  def self.data_from_project(project)
-    new.revenue_from_project(project)
+  def self.project_forecast(project)
+    new.project_forecast(project)
   end
 
-  def revenue_from_project(project, period = nil)
+  def project_forecast(project, period = nil)
     result = {}
 
     allocations = project.allocations
     allocations = allocations.in_period(period[0], period[1]) if period
 
     allocations.each do |allocation|
-      allocation_revenue = revenue_from_allocation(allocation)
+      allocation_forecast = allocation_forecast(allocation)
 
-      allocation_revenue.each do |data|
+      allocation_forecast.each do |data|
         year = data[:year]
         year_data = result[year] || {}
 
         month = data[:month]
-        month_revenue = year_data[month] || Money.new(0)
+        month_forecast = year_data[month] || Money.new(0)
 
-        year_data[month] = month_revenue + data[:revenue]
+        year_data[month] = month_forecast + data[:forecast]
         result[year] = year_data
       end
     end
@@ -44,23 +44,22 @@ class RevenueProjectorService
     result
   end
 
-  def self.revenue_from_year(year)
-    new.revenue_from_year(year)
+  def self.year_forecast(year)
+    new.year_forecast(year)
   end
 
-  def revenue_from_year(year)
+  def year_forecast(year)
     beginning_of_year = Date.ordinal(year)
     end_of_year = Date.ordinal(year, -1)
-
     result = []
     projects = active_projects_on_period(beginning_of_year, end_of_year)
 
     projects.each do |project|
-      revenue = revenue_from_project(project, [beginning_of_year, end_of_year])
+      forecast = project_forecast(project, [beginning_of_year, end_of_year])
 
       result << {
         project: project,
-        revenue: revenue[year]
+        forecast: forecast[year]
       }
     end
 
@@ -84,7 +83,7 @@ class RevenueProjectorService
       month: beginning_of_month.month,
       year: beginning_of_month.year,
       working_days: working_days,
-      revenue: calculate_revenue(working_days, allocation.hourly_rate, beginning_of_month - 1)
+      forecast: calculate_forecast(working_days, allocation.hourly_rate, beginning_of_month - 1)
     }
   end
 
@@ -92,7 +91,7 @@ class RevenueProjectorService
     (start_date..end_date).reject(&:on_weekend?).count
   end
 
-  def calculate_revenue(working_days, hourly_rate, exchange_rate_date)
+  def calculate_forecast(working_days, hourly_rate, exchange_rate_date)
     converted_rate = hourly_rate.exchange_to_historical('BRL', exchange_rate_date)
     converted_rate * working_days * 8
   end

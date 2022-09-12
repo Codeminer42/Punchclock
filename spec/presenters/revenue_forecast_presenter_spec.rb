@@ -12,7 +12,7 @@ RSpec.describe RevenueForecastPresenter do
   let(:data) do
     [{
       project: project1,
-      revenue: {
+      forecast: {
         1 => Money.new(3000_00),
         2 => Money.new(4000_00),
         3 => Money.new(1600_00),
@@ -21,7 +21,7 @@ RSpec.describe RevenueForecastPresenter do
     },
     {
       project: project2,
-      revenue: {
+      forecast: {
         11 => Money.new(6800_00),
         12 => Money.new(9200_00)
       }
@@ -29,19 +29,19 @@ RSpec.describe RevenueForecastPresenter do
   end
 
   before do
-    allow(RevenueProjectorService).to receive(:revenue_from_year)
+    allow(RevenueForecastService).to receive(:year_forecast)
       .with(year)
       .and_return(data)
   end
 
   context '#projects' do
-    it 'returns an array with the projects with revenue' do
+    it 'returns an array with the projects with projected revenue' do
       expect(subject.projects).to eq([project1, project2])
     end
   end
 
   context '#months' do
-    it 'calls the provided block providing the month name and the revenues of each month' do
+    it 'calls the provided block providing the month name and the forecast of each month' do
       args = [
         ["January", ["R$3.000,00", "-"], "R$3.000,00"],
         ["February", ["R$4.000,00", "-"], "R$4.000,00"],

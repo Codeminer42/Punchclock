@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe RevenueProjectorService do
-  describe ".data_from_allocation" do
+RSpec.describe RevenueForecastService do
+  describe ".allocation_forecast" do
     let(:allocation) { build_stubbed(:allocation, hourly_rate: 100, start_at: "2021-10-18", end_at: "2022-03-05") }
-    let(:data) { described_class.data_from_allocation(allocation) }
+    let(:data) { described_class.allocation_forecast(allocation) }
 
-    it "returns a hash containing the total working days and revenue for each month of the allocation" do
+    it "returns a hash containing the total working days and forecast for each month of the allocation" do
       expect(data).to eq([
-        { month: 10, year: 2021, working_days: 10, revenue: Money.new(8000_00) },
-        { month: 11, year: 2021, working_days: 22, revenue: Money.new(17600_00) },
-        { month: 12, year: 2021, working_days: 23, revenue: Money.new(18400_00) },
-        { month: 1, year: 2022, working_days: 21, revenue: Money.new(16800_00) },
-        { month: 2, year: 2022, working_days: 20, revenue: Money.new(16000_00) },
-        { month: 3, year: 2022, working_days: 4, revenue: Money.new(3200_00) }
+        { month: 10, year: 2021, working_days: 10, forecast: Money.new(8000_00) },
+        { month: 11, year: 2021, working_days: 22, forecast: Money.new(17600_00) },
+        { month: 12, year: 2021, working_days: 23, forecast: Money.new(18400_00) },
+        { month: 1, year: 2022, working_days: 21, forecast: Money.new(16800_00) },
+        { month: 2, year: 2022, working_days: 20, forecast: Money.new(16000_00) },
+        { month: 3, year: 2022, working_days: 4, forecast: Money.new(3200_00) }
       ])
     end
 
@@ -34,22 +34,22 @@ RSpec.describe RevenueProjectorService do
         })
       end
 
-      it "returns the revenues converted to BRL" do
+      it "returns the forecasts converted to BRL" do
         expect(data).to eq([
-          { month: 10, year: 2021, working_days: 10, revenue: Money.new(41200_00, 'BRL') },
-          { month: 11, year: 2021, working_days: 22, revenue: Money.new(91520_00, 'BRL') },
-          { month: 12, year: 2021, working_days: 23, revenue: Money.new(96600_00, 'BRL') },
-          { month: 1, year: 2022, working_days: 21, revenue: Money.new(89040_00, 'BRL') },
-          { month: 2, year: 2022, working_days: 20, revenue: Money.new(85600_00, 'BRL') },
-          { month: 3, year: 2022, working_days: 4, revenue: Money.new(16736_00, 'BRL') }
+          { month: 10, year: 2021, working_days: 10, forecast: Money.new(41200_00, 'BRL') },
+          { month: 11, year: 2021, working_days: 22, forecast: Money.new(91520_00, 'BRL') },
+          { month: 12, year: 2021, working_days: 23, forecast: Money.new(96600_00, 'BRL') },
+          { month: 1, year: 2022, working_days: 21, forecast: Money.new(89040_00, 'BRL') },
+          { month: 2, year: 2022, working_days: 20, forecast: Money.new(85600_00, 'BRL') },
+          { month: 3, year: 2022, working_days: 4, forecast: Money.new(16736_00, 'BRL') }
         ])
       end
     end
   end
 
-  describe ".data_from_project" do
+  describe ".project_forecast" do
     let(:project) { create(:project) }
-    let(:data) { described_class.data_from_project(project) }
+    let(:data) { described_class.project_forecast(project) }
 
     before do
       create(:allocation, hourly_rate: 15, start_at: "2020-01-11", end_at: "2020-03-11")
@@ -59,7 +59,7 @@ RSpec.describe RevenueProjectorService do
       create(:allocation, hourly_rate: 150, start_at: "2021-10-18", end_at: "2022-03-05")
     end
 
-    it "returns a hash containing the total revenue for all project's allocations separated by year and month" do
+    it "returns a hash containing the total forecasts for all project's allocations separated by year and month" do
       expect(data).to eq({
         2020 => {
           1 => Money.new(3000_00),
@@ -91,10 +91,10 @@ RSpec.describe RevenueProjectorService do
     end
   end
 
-  describe ".revenue_from_year" do
+  describe ".year_forecast" do
     let(:project1) { create(:project, :inactive) }
     let(:project2) { create(:project) }
-    let(:data) { described_class.revenue_from_year(2020) }
+    let(:data) { described_class.year_forecast(2020) }
 
     before do
       create(:allocation, start_at: "2019-01-01", end_at: "2019-12-31")
@@ -105,11 +105,11 @@ RSpec.describe RevenueProjectorService do
       create(:allocation, start_at: "2021-01-01", end_at: "2021-12-31")
     end
 
-    it "returns a hash containing the total revenue of the requested year considering only projects with allocations on the year" do
+    it "returns a hash containing the total forecast of the requested year considering only projects with allocations on the year" do
       expect(data).to eq([
         {
           project: project1,
-          revenue: {
+          forecast: {
             1 => Money.new(3000_00),
             2 => Money.new(4000_00),
             3 => Money.new(1600_00),
@@ -118,7 +118,7 @@ RSpec.describe RevenueProjectorService do
         },
         {
           project: project2,
-          revenue: {
+          forecast: {
             11 => Money.new(6800_00),
             12 => Money.new(9200_00)
           }

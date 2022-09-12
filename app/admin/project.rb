@@ -78,7 +78,7 @@ ActiveAdmin.register Project do
         end
 
         panel t('revenue_forecast') do
-          data = RevenueProjectorService.data_from_project(project)
+          data = RevenueForecastService.project_forecast(project)
 
           # TODO: Refactor
           # * Current year tab should come active as default

@@ -2,7 +2,7 @@
 
 class RevenueForecastPresenter
   def initialize(year)
-    @forecasts = RevenueProjectorService.revenue_from_year(year)
+    @forecasts = RevenueForecastService.year_forecast(year)
   end
 
   def projects
@@ -34,7 +34,7 @@ class RevenueForecastPresenter
 
   def month_forecasts(month_number)
     @forecasts.map do |forecast|
-      value = forecast[:revenue][month_number]
+      value = forecast[:forecast][month_number]
       value ? helpers.humanized_money_with_symbol(value) : '-'
     end
   end
@@ -43,7 +43,7 @@ class RevenueForecastPresenter
     total = Money.new(0)
 
     @forecasts.each do |forecast|
-      total += forecast[:revenue][month_number] || 0
+      total += forecast[:forecast][month_number] || 0
     end
 
     helpers.humanized_money_with_symbol(total)
