@@ -13,17 +13,17 @@ RSpec.describe RevenueForecastPresenter do
     [{
       project: project1,
       revenue: {
-        1 => Money.new(300000),
-        2 => Money.new(400000),
-        3 => Money.new(160000),
-        11 => Money.new(1260000)
+        1 => Money.new(3000_00),
+        2 => Money.new(4000_00),
+        3 => Money.new(1600_00),
+        11 => Money.new(12600_00)
       }
     },
     {
       project: project2,
       revenue: {
-        11 => Money.new(680000),
-        12 => Money.new(920000)
+        11 => Money.new(6800_00),
+        12 => Money.new(9200_00)
       }
     }]
   end
@@ -43,18 +43,18 @@ RSpec.describe RevenueForecastPresenter do
   context '#months' do
     it 'calls the provided block providing the month name and the revenues of each month' do
       args = [
-        ["January", ["R$3.000", "-"], "R$3.000"],
-        ["February", ["R$4.000", "-"], "R$4.000"],
-        ["March", ["R$1.600", "-"], "R$1.600"],
-        ["April", ["-", "-"], "R$0"],
-        ["May", ["-", "-"], "R$0"],
-        ["June", ["-", "-"], "R$0"],
-        ["July", ["-", "-"], "R$0"],
-        ["August", ["-", "-"], "R$0"],
-        ["September", ["-", "-"], "R$0"],
-        ["October", ["-", "-"], "R$0"],
-        ["November", ["R$12.600", "R$6.800"], "R$19.400"],
-        ["December", ["-", "R$9.200"], "R$9.200"]
+        ["January", ["R$3.000,00", "-"], "R$3.000,00"],
+        ["February", ["R$4.000,00", "-"], "R$4.000,00"],
+        ["March", ["R$1.600,00", "-"], "R$1.600,00"],
+        ["April", ["-", "-"], "R$0,00"],
+        ["May", ["-", "-"], "R$0,00"],
+        ["June", ["-", "-"], "R$0,00"],
+        ["July", ["-", "-"], "R$0,00"],
+        ["August", ["-", "-"], "R$0,00"],
+        ["September", ["-", "-"], "R$0,00"],
+        ["October", ["-", "-"], "R$0,00"],
+        ["November", ["R$12.600,00", "R$6.800,00"], "R$19.400,00"],
+        ["December", ["-", "R$9.200,00"], "R$9.200,00"]
       ]
 
       expect { |b| subject.months(&b) }.to yield_successive_args(*args)

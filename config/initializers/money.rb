@@ -94,13 +94,13 @@ MoneyRails.configure do |config|
 
   # Set default money format globally.
   # Default value is nil meaning "ignore this option".
-  # Example:
   #
   # config.default_format = {
-  #   no_cents_if_whole: nil,
+  #   no_cents_if_whole: false
   #   symbol: nil,
   #   sign_before_symbol: nil
   # }
+  config.no_cents_if_whole = false
 
   # If you would like to use I18n localization (formatting depends on the
   # locale):
