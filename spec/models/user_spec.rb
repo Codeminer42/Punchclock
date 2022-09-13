@@ -230,8 +230,8 @@ RSpec.describe User, type: :model do
   end
 
   context 'allocations' do
-    let(:user)           { create(:user) }
-    let!(:allocation) { create(:allocation, :with_end_at, user: user, ongoing: true) }
+    let(:user) { create(:user) }
+    let!(:allocation) { create(:allocation, user: user, ongoing: true) }
 
     it 'returns the user allocated project' do
       expect(user.current_allocation).to eq(allocation.project)

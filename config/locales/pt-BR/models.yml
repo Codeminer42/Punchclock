@@ -47,9 +47,9 @@ pt-BR:
               overlapped_period: "Já existe uma alocação desse usuário nesse período"
               invalid_date: "Data Inválida"
             end_at:
-              cant_be_lesser: "A data de término deve ser maior que a data de início"
+              after: "A data de término deve ser maior que a data de início"
               invalid_date: "Data Inválida"
-            ongoing: 
+            ongoing:
               uniqueness: 'O usuário já possui uma alocação em progresso' 
     models:
       admin_user:

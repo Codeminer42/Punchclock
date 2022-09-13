@@ -10,7 +10,6 @@ RSpec.describe UsersByCompanyQuery do
 
   before do
     create(:allocation,
-           :with_end_at,
            start_at: Date.new(2019, 6, 17),
            user: user_allocated,
            project: project,
