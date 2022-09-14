@@ -56,6 +56,10 @@ en:
     messages:
       wrong_credentials: 'The username or password is incorrect'
   allocation_chart: 'Allocation chart'
+  mentoring: 'Mentoring'
+  mentor: 'Mentor'
+  office: 'Offices'
+  mentees: 'Mentees'
   name: 'Name'
   skills: 'Skills'
   client: 'Client'

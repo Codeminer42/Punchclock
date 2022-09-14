@@ -113,6 +113,9 @@ pt-BR:
     links:
       return_to_sign_in: 'Retornar ao Sign In.'
   allocation_chart: 'Organograma'
+  mentoring: 'Mentoria'
+  mentor: 'Mentor'
+  mentees: 'Mentorados' 
   name: 'Nome'
   skills: 'Habilidades'
   client: 'Cliente'
