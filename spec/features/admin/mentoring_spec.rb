@@ -14,34 +14,68 @@ describe 'Mentoring', type: :feature do
   describe 'page' do
     before { visit 'admin/mentoring' }
 
-    context 'table fields' do
-      it 'have "Mentor", "Escritório", "Mentorados"' do
-        within 'table' do
-          aggregate_failures 'testing table fields' do
-            expect(page).to have_text('Mentor')
-            expect(page).to have_text('Escritório')
-            expect(page).to have_text('Mentorados')
+    context 'tabs' do
+      context 'mentoring tab' do
+        it 'have "Mentor", "Escritório", "Mentorados"' do
+          within '#mentoria' do
+            aggregate_failures 'testing table fields' do
+              expect(page).to have_text('Mentor')
+              expect(page).to have_text('Escritório')
+              expect(page).to have_text('Mentorados')
+            end
+          end
+        end
+
+        context 'table rows' do
+          it 'has mentors name in "Mentor" column' do
+            within '#mentoria' do
+              expect(page).to have_text(mentor.name)
+            end
+          end
+
+          it 'has mentors office in "Escritório" column' do
+            within '#mentoria' do
+              expect(page).to have_text(mentor.office)
+            end
+          end
+
+          it 'has mentees name in "Mentorados" column' do
+            within '#mentoria' do
+              expect(page).to have_text(mentee.name)
+            end
           end
         end
       end
-    end
 
-    context 'table row' do
-      it 'has mentors name in "Mentor" column' do
-        within 'tbody' do
-          expect(page).to have_text(mentor.name)
+      context 'offices tab' do
+        it 'have "Mentor", "Escritório", "Mentorados"' do
+          within '#escritorios' do
+            aggregate_failures 'testing table fields' do
+              expect(page).to have_text('Escritórios')
+              expect(page).to have_text('Mentores')
+              expect(page).to have_text('Mentorados')
+            end
+          end
         end
-      end
 
-      it 'has mentors office in "Escritório" column' do
-        within 'tbody' do
-          expect(page).to have_text(mentor.office)
-        end
-      end
+        context 'table rows' do
+          it 'has mentors office in "Escritórios" column' do
+            within '.mentoring_table' do
+              expect(page).to have_text(mentor.office)
+            end
+          end
 
-      it 'has mentees name in "Mentorados" column' do
-        within 'tbody' do
-          expect(page).to have_text(mentee.name)
+          it 'has mentors name in "Mentores" column' do
+            within '.mentoring_table' do
+              expect(page).to have_text(mentor.name)
+            end
+          end
+
+          it 'has mentees name in "Mentorados" column' do
+            within '.mentoring_table' do
+              expect(page).to have_text(mentee.name)
+            end
+          end
         end
       end
     end

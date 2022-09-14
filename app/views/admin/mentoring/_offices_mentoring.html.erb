@@ -1,0 +1,20 @@
+<table cellspacing="0" cellpadding="0" class="mentoring_table">
+  <thead>
+    <tr>
+      <th><%= I18n.t('offices') %></th>
+      <th><%= I18n.t('mentors') %></th>
+      <th><%= I18n.t('mentees') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% mentorings.each do |city, mentoring| %>
+      <tr>
+        <th class="mentoring_table__mentor_city" rowspan="<%= mentorings.count %>"><%= city %></th>
+      <% mentoring.each do |mentor| %>
+        <td class="mentoring_table__mentor_name"><%= mentor.name %></td>
+        <td class="mentoring_table__mentor_mentees"><%= mentor.mentees.join(', ') %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

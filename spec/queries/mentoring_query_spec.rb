@@ -6,15 +6,15 @@ RSpec.describe MentoringQuery do
   describe '#call' do
     subject(:call) { described_class.new.call }
 
-    context 'when there are mentees and mentors' do
+    let(:mentors) { call.map(&:name) }
+    let(:offices) { call.map(&:city) }
+    let(:mentees) { call.map(&:mentees) }
+
+    context 'when there are one mentee and mentor' do
       let(:mentor) { create(:user) }
       let!(:mentee) { create(:user, reviewer_id: mentor.id) }
 
-      let(:mentors) { call.map(&:mentors) }
-      let(:offices) { call.map(&:city) }
-      let(:mentees) { call.map(&:mentees) }
-
-      it 'returns mentors' do
+      it 'returns mentor' do
         expect(mentors).to contain_exactly(mentor.name)
       end
 
@@ -22,8 +22,48 @@ RSpec.describe MentoringQuery do
         expect(offices).to contain_exactly(mentor.office.city)
       end
 
-      it "returns mentor's mentees" do
+      it "returns mentor's mentee" do
         expect(mentees).to contain_exactly([mentee.name])
+      end
+    end
+
+    context 'when there are multiple mentees and mentors' do
+      let(:bob) { create(:user) }
+      let!(:bob_mentee) { create(:user, reviewer_id: bob.id) }
+      let!(:other_bob_mentee) { create(:user, reviewer_id: bob.id) }
+
+      let(:brown) { create(:user) }
+      let!(:brown_mentee) { create(:user, reviewer_id: brown.id) }
+      let!(:other_brown_mentee) { create(:user, reviewer_id: brown.id) }
+
+      it 'returns mentors' do
+        expect(mentors).to contain_exactly(bob.name, brown.name)
+      end
+
+      it "returns mentors's offices" do
+        expect(offices).to contain_exactly(bob.office.city, brown.office.city)
+      end
+
+      it "returns mentor's mentees" do
+        expect(mentees.flatten).to contain_exactly(bob_mentee.name, other_bob_mentee.name, brown_mentee.name, other_brown_mentee.name)
+      end
+    end
+
+    context 'when there are no mentees or mentor' do
+      before do
+        4.times { create(:user) }
+      end
+
+      it 'does not returns mentors' do
+        expect(mentors).to be_empty
+      end
+
+      it "does not returns mentors's offices" do
+        expect(offices).to be_empty
+      end
+
+      it "does not returns mentor's mentees" do
+        expect(mentees.flatten).to be_empty
       end
     end
   end

@@ -5,14 +5,17 @@ ActiveAdmin.register_page 'Mentoring' do
 
   content title: I18n.t('mentoring') do
     tabs do
-      mentoring = MentoringQuery.new
+      mentoring = MentoringQuery.new.call
       tab I18n.t('mentoring') do
-        mentors = mentoring.call
-        table_for mentors do
-          column(I18n.t('mentor')) { |mentor| mentor.mentors }
-          column(:office) { |office| office.city }
-          column(I18n.t('mentees')) { |mentee| mentee.mentees }
+        table_for mentoring do
+          column(I18n.t('mentor'), &:name)
+          column(:office, &:city)
+          column(I18n.t('mentees'), &:mentees)
         end
+      end
+
+      tab I18n.t('offices') do
+        render 'offices_mentoring', mentorings: mentoring.group_by(&:city)
       end
     end
   end

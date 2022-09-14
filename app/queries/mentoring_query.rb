@@ -12,10 +12,10 @@ class MentoringQuery
       .joins(:reviewer, reviewer: [:office])
       .select(
         'array_agg(users.name) as mentees',
-        'reviewers_users.name as mentors',
+        'reviewers_users.name as name',
         :city
       )
-      .group('mentors', :city)
+      .group('reviewers_users.name', :city)
       .order(:city)
   end
 end

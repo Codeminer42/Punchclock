@@ -118,3 +118,18 @@ body.logged_in .flash {
     min-width: 50%;
   }
 }
+
+.mentoring_table {
+  &__mentor_city {
+    vertical-align: top;
+    border-bottom: 1px solid rgba(120, 130, 140, 0.5);
+  }
+
+  &__mentor_name {
+    border-bottom: 1px solid rgba(120, 130, 140, 0.5);
+  }
+
+  &__mentor_mentees {
+    border-bottom: 1px solid rgba(120, 130, 140, 0.5);
+  }
+}
