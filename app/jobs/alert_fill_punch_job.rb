@@ -13,12 +13,11 @@ class AlertFillPunchJob < ApplicationJob
 
   def day_fifteen_notification
     if is_working_day?
-      codeminer = Company.find_by name: "Codeminer42"
-      codeminer.users.engineer.active.find_each do |user|
+      User.engineer.active.find_each do |user|
         NotificationMailer.notify_user_to_fill_punch(user).deliver_later
       end
 
-      codeminer.users.admin.find_each do |admin|
+      User.admin.find_each do |admin|
         NotificationMailer.notify_user_to_fill_punch(admin).deliver_later
       end
     else
@@ -30,9 +29,7 @@ class AlertFillPunchJob < ApplicationJob
     last_day = last_business_day()
 
     if last_day.today?
-      codeminer = Company.find_by name: "Codeminer42"
-
-      codeminer.users.engineer.active.find_each do |user|
+      User.engineer.active.find_each do |user|
         NotificationMailer.notify_fill_punch_end_month(user).deliver_later
       end
     else
