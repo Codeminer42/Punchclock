@@ -1,12 +1,11 @@
 # frozen_string_literal: true
-def create_punches(company:, project:, user:)
+def create_punches(project:, user:)
   (6.months.ago.to_date..1.day.ago.to_date).reject{ |d| d.saturday? || d.sunday? }.each do |date|
     date = date.to_time
     [[8, 12], [13, 16]].each do |hours|
       user.punches.create!(
         from: date.change(hour: hours.first),
         to: date.change(hour: hours.last),
-        company: company,
         project: project
       )
     end
@@ -16,95 +15,21 @@ end
 def create_holiday(office:)
   random_date = rand(Date.civil(2017, 1, 1)..Date.civil(2017, 12, 31))
   holiday = RegionalHoliday.find_or_create_by!(day: random_date.day, month: random_date.month) do |holiday|
-    holiday.company = office.company
     holiday.name = "#{Faker::Name.name} day"
   end
   holiday.offices << office
 end
 
-def create_company(name:, office_cities:, project_names:)
-  puts "Creating company #{name}..."
-  ActiveRecord::Base.transaction do
-    company = Company.find_or_create_by!(name: name)
-
-    print "..creating company offices..."
-    offices = office_cities.map do |city|
-      Office.find_or_create_by!(city: city, company: company)
-    end
-    puts " done."
-
-    print "..creating company projects..."
-    projects = project_names.map do |project|
-      Project.find_or_create_by!(name: project, market: Project.market.values.sample, company: company)
-    end
-    puts " done."
-
-    print "..creating Admins..."
-    User.find_or_create_by!(email: "super@#{name}.com") do |admin|
-      admin.name = 'super'
-      admin.occupation = :administrative
-      admin.password = 'password'
-      admin.password_confirmation = 'password'
-      admin.role = :super_admin
-      admin.roles = [:super_admin]
-      admin.company = company
-      admin.office = company.offices.sample
-      admin.token = SecureRandom.base58(32)
-      admin.skip_confirmation!
-      admin.contract_company_country = 'brazil'
-    end
-
-    User.find_or_create_by!(email: "admin@#{name}.com") do |admin|
-      admin.name = 'admin'
-      admin.occupation = :administrative
-      admin.password = 'password'
-      admin.password_confirmation = 'password'
-      admin.role = :admin
-      admin.roles = [:admin]
-      admin.company = company
-      admin.office = company.offices.sample
-      admin.token = SecureRandom.base58(32)
-      admin.token = '9X9ti7nAeN3J2w9hn1om9ztpPMHrT7Mj' if name == 'Codeminer42'
-      admin.skip_confirmation!
-      admin.contract_company_country = 'brazil'
-    end
-    puts " done."
-
-    print "..creating offices holidays..."
-    rand(offices.size * 10).times do |i|
-      create_holiday(office: offices.sample)
-    end
-    puts " done."
-
-    puts "..creating company devs..."
-    print "....creating dev punches..."
-    (projects.size * 10).times do |i|
-      user = create_user(company: company, number: i)
-
-      create_punches(
-        company: company,
-        project: projects.sample,
-        user: user
-      )
-    end
-    puts " done."
-    puts "..done."
-  end
-  puts "done."
-  Company.find_by(name: name)
-end
-
-def create_user(company:, number:)
-  user = User.find_or_create_by!(email: "user.teste#{number}@#{company.name}.com") do |user|
-    user.name = "Usuario_#{company.name}_#{number}"
-    user.email = "user.teste#{number}@#{company.name}.com"
+def create_user(number:)
+  user = User.find_or_create_by!(email: "user.teste#{number}@codeminer.com") do |user|
+    user.name = "Usuario_Codeminer_#{number}"
+    user.email = "user.teste#{number}@codeminer.com"
     user.occupation = :engineer
     user.password = 'password'
-    user.company = company
-    user.office = company.offices.sample
+    user.office = codeminer42[:office_cities].sample
     user.level = User.level.values.sample
     user.specialty = User.specialty.values.sample
-    user.github = "#{company.name}.user.teste#{number}"
+    user.github = "codeminer42.user.teste#{number}"
     user.allow_overtime = true
     user.skip_confirmation!
     user.roles = [:normal]
@@ -119,7 +44,6 @@ def create_user_contribution(user:, repository:, date:)
     Contribution.find_or_create_by!(link: link) do |contrib|
       contrib.link = link
       contrib.user_id = user.id
-      contrib.company_id = user.company.id
       contrib.repository = repository
       contrib.created_at = date
       contrib.approve(user.id)
@@ -128,11 +52,11 @@ def create_user_contribution(user:, repository:, date:)
   end
 end
 
-def create_contributions(company:, repositories:, dates:)
+def create_contributions(users:, repositories:, dates:)
   print "Creating users contributions..."
 
   8.times do |i|
-    aUser = company.users.sample
+    aUser = users.sample
 
     dates.each do |contribution_date|
       rand(5).times do
@@ -148,11 +72,11 @@ def create_contributions(company:, repositories:, dates:)
   puts "Done."
 end
 
-def create_repository(link:, company:)
-  Repository.create! link: link, company: company
+def create_repository(link:)
+  Repository.create! link: link
 end
 
-codeminer42 = create_company(
+codeminer42 = {
   name: 'Codeminer42',
   office_cities: [
     'Anápolis',
@@ -176,7 +100,7 @@ codeminer42 = create_company(
     'Central',
     'Omnitrade'
   ]
-)
+}
 
 repositories = [
   'http://github.com/flutter/flutter',
@@ -290,7 +214,7 @@ repositories = [
 
 print "Creating codeminer42 open source repositories..."
 repos = repositories.collect do |repository|
-  create_repository(link: repository, company: codeminer42)
+  create_repository(link: repository)
 end
 puts " done."
 
@@ -301,7 +225,7 @@ contributions_dates = []
 end
 
 contributions = create_contributions(
-  company: codeminer42,
+  users: User.all
   repositories: repos,
   dates: contributions_dates
 )
