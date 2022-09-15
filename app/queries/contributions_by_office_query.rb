@@ -12,8 +12,8 @@ class ContributionsByOfficeQuery
     @relation
   end
 
-  def by_company(company)
-    @relation = @relation.by_company(company)
+  def by_office
+    @relation = @relation.by_office
 
     self
   end

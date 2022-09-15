@@ -11,8 +11,8 @@ class ContributionsByUserQuery
     @relation.count(:user_id)
   end
 
-  def by_company(company)
-    @relation = @relation.where(company: company)
+  def by_user
+    @relation = @relation
 
     self
   end
