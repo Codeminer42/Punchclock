@@ -10,7 +10,6 @@ class NotesController < ApplicationController
   def create
     user = User.find(params[:user_id])
     @note = user.notes.new(note_params)
-    @note.company_id = current_user.company_id
     @note.author = current_user
 
     if @note.save

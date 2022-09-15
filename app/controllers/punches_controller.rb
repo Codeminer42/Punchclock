@@ -23,7 +23,6 @@ class PunchesController < ApplicationController
 
   def create
     @punch = Punch.new(punch_params)
-    @punch.company_id = current_user.company_id
     @punch.user_id = current_user.id
 
     if @punch.save
@@ -76,7 +75,7 @@ class PunchesController < ApplicationController
   end
 
   def user_projects
-    @projects = current_user.company.projects.active.order(:name)
+    @projects = current_user.projects.active.order(:name)
   end
 
   def scopped_punches

@@ -5,7 +5,7 @@ class RepositoriesController < ApplicationController
   before_action :query_params
 
   def index
-    @repositories = RepositoryQuery.new(current_company, { langs: @languages })
+    @repositories = RepositoryQuery.new(current_user, { langs: @languages })
       .fetch
       .page(@page)
       .decorate

@@ -41,12 +41,6 @@ class ApplicationController < ActionController::Base
     UserDecorator.decorate(super) unless super.nil?
   end
 
-  private
-
-  def current_company
-    @current_company ||= current_user.company
-  end
-
   protected
 
   def configure_permitted_parameters
