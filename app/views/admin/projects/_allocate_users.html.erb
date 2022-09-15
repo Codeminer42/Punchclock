@@ -1,12 +1,6 @@
 <%= semantic_form_for(@allocate_users_form, url: allocate_users_admin_projects_path) do |f|%>
     <%= f.inputs do %>
-        <% if current_user.super_admin? %>
-            <%= f.input :not_allocated_users, as: :select, collection: User.not_allocated.order(:name) %>
-            <%= f.input :company_id, as: :select, collection: Company.all %>
-        <% else %>
-            <%= f.input :not_allocated_users, as: :select, collection: current_user.company.users.not_allocated.order(:name) %>
-            <%= f.input :company_id, as: :hidden, input_html: { value: current_user.company_id } %>
-        <% end %>
+        <%= f.input :not_allocated_users, as: :select, collection: User.not_allocated.order(:name) %>
         <%= f.input :project_id, as: :hidden, input_html: { value: resource.id }%>
         <%= f.input :start_at, input_html: { class: %i(datepicker) } %>
         <%= f.input :end_at, input_html: { class: %i(datepicker) } %>
