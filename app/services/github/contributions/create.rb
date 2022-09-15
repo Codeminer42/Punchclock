@@ -3,14 +3,11 @@
 module Github
   module Contributions
     class Create
-      def initialize(company:, client:)
-        @company = company
+      def initialize(client:)
         @client = client
       end
 
       def call
-        return [] if company.blank?
-
         Rails.logger.info("[GH] -- Contributions: #{collect_all_contributions.size}")
 
         collect_all_contributions
@@ -26,11 +23,11 @@ module Github
 
       private
 
-      attr_reader :company, :client
+      attr_reader :client
 
       def collect_all_contributions
         @collect_all_contributions ||=
-          Collect.new(company: company, client: client).all
+          Collect.new(client: client).all
       end
 
       def find_or_create_contribution(uid, rid, link, created_at)
@@ -38,7 +35,6 @@ module Github
           user_id: uid,
           repository_id: rid,
           link: link,
-          company: company,
           created_at: created_at
         )
       end

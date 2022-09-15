@@ -5,13 +5,12 @@ class CreatePunchesInBatchService
     end
   end
 
-  def self.call(punches, company, additions, deletions)
-    new(punches, company, additions, deletions).call
+  def self.call(punches, additions, deletions)
+    new(punches, additions, deletions).call
   end
 
-  def initialize(punches, company, additions, deletions)
+  def initialize(punches, additions, deletions)
     @punches = punches
-    @company = company
     @additions = additions
     @deletions = deletions
   end
@@ -23,7 +22,7 @@ class CreatePunchesInBatchService
 
     @punches.transaction do
       @punches.by_days(@deletions).delete_all if @deletions.any?
-      @punches.where(company: @company).create!(@additions) if @additions
+      @punches.create!(@additions) if @additions
     end
 
     Result.new(true, [])
