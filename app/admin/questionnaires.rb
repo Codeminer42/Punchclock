@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Questionnaire do
-  permit_params :title, :kind, :active, :description, :company_id,
+  permit_params :title, :kind, :active, :description,
                 questions_attributes: %i[
                   id title kind raw_answer_options _destroy updated_at
                 ]
@@ -83,17 +83,11 @@ ActiveAdmin.register Questionnaire do
     f.inputs Questionnaire.model_name.human do
       f.input :title
       f.input :kind, as: :select, collection: Questionnaire.kind.values.map { |key| [key.text.titleize, key] }
-      if current_user.super_admin?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
       f.input :active
       f.input :description
       f.has_many :questions, allow_destroy: true, new_record: true do |q|
         q.input :title
         q.input :kind, as: :select
-        q.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
         q.input :raw_answer_options, label: 'Answer options separated by ;', input_html: {
           value: q.object.answer_options_to_string,
           autocomplete: 'off'

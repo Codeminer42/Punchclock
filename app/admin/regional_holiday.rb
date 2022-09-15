@@ -1,20 +1,14 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register RegionalHoliday do
-  permit_params :name, :day, :month, :company_id, office_ids: []
+  permit_params :name, :day, :month, office_ids: []
 
-  menu parent: Company.model_name.human
-
-  filter :company, if: proc { current_user.super_admin? }
   filter :name
-  filter :offices, multiple: true, collection: proc {
-    current_user.super_admin? ? Office.active.order(:city).group_by(&:company) : current_user.company.offices.active.order(:city)
-  }
+  filter :offices, multiple: true, collection: -> { Office.all.order(:city) }
   filter :day
   filter :month
 
   index download_links: [:xls] do
-    column :company if current_user.super_admin?
     column :name
     column :day
     column :month
@@ -26,7 +20,6 @@ ActiveAdmin.register RegionalHoliday do
 
   show do
     attributes_table do
-      row :company if current_user.super_admin?
       row :id
       row :name
       row :day
@@ -42,9 +35,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :name
       f.input :day
       f.input :month
-      f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      f.input :offices, as: :check_boxes,
-        collection: current_user.super_admin? ? Office.all.order(:city) : current_user.company.offices.order(:city)
+      f.input :offices, as: :check_boxes, collection: Office.all.order(:city)
     end
       f.actions
   end

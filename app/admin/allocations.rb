@@ -4,7 +4,7 @@ ActiveAdmin.register Allocation do
   decorate_with AllocationDecorator
 
   config.sort_order = 'ongoing_desc'
-  permit_params :user_id, :project_id, :hourly_rate, :hourly_rate_currency, :start_at, :end_at, :company_id, :ongoing
+  permit_params :user_id, :project_id, :hourly_rate, :hourly_rate_currency, :start_at, :end_at, :ongoing
 
   config.batch_actions = false
 
@@ -12,10 +12,10 @@ ActiveAdmin.register Allocation do
 
   filter :ongoing
   filter :user, collection: proc {
-    current_user.super_admin? ? User.all.order(:name) : current_user.company.users.order(:name)
+    User.active.order(:name)
   }
   filter :project, collection: proc {
-    current_user.super_admin? ? Project.all.order(:name) : current_user.company.projects.order(:name)
+    Project.active.order(:name)
   }
   filter :start_at
   filter :end_at
@@ -77,21 +77,10 @@ ActiveAdmin.register Allocation do
 
   form html: { autocomplete: 'off' } do |f|
     inputs 'Details' do
-      if current_user.super_admin?
-        input :user
-        input :project
-        input :company
-      else
-        company_users = UsersByCompanyQuery
-                                      .new(current_user.company)
-                                      .active_engineers
-                                      .select(:id, :name)
+      users = User.engineer.active.order(:name).select(:id, :name)
 
-        input :user, as: :select, collection: company_users
-        input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
-        input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
-
+      input :user, as: :select, collection: users
+      input :project, collection: (current_user.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
       input :hourly_rate
       input :hourly_rate_currency, as: :select, collection: Allocation::HOURLY_RATE_CURRENCIES
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }

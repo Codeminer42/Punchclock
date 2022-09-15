@@ -1,7 +1,6 @@
 module ActiveAdmin::UsersHelper
-  def grouped_users_by_active_status(company)
-    company
-      .users
+  def grouped_users_by_active_status
+    User
       .order(name: :asc)
       .group_by(&:active)
       .map do |active, users|

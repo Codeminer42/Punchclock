@@ -3,13 +3,13 @@
 ActiveAdmin.register User do
   decorate_with UserDecorator
 
-  includes :company, :reviewer
+  includes :reviewer
 
   config.sort_order = 'name_asc'
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :level, :contract_type, :contract_company_country, :reviewer_id,
+  permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :reviewer_id,
                 :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
@@ -25,10 +25,7 @@ ActiveAdmin.register User do
   filter :email
 
   filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
-  filter :office, collection: proc {
-    current_user.super_admin? ? Office.active.order(:city).group_by(&:company) : current_user.company.offices.active.order(:city)
-  }
-  filter :company, if: proc { current_user.super_admin? }
+  filter :office, collection: Office.active.order(:city)
   filter :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty.value] }
   filter :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }
   filter :by_skills, as: :check_boxes, collection: proc {
@@ -169,7 +166,6 @@ ActiveAdmin.register User do
         to = params.dig(:punch, :from_lteq) || Time.zone.now
 
         table_for user.punches.where(from: from..to).order(from: :desc).decorate, i18n: Punch, id: 'table_admin_punches' do
-          column :company
           column :project
           column :when
           column :from
@@ -191,18 +187,10 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
-      if current_user.super_admin?
-        f.input :office
-        f.input :company
-        f.input :reviewer
-        f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.titleize, role] }
-        f.input :skills, as: :check_boxes
-      else
-        f.input :office, collection: current_user.company.offices.order(:city)
-        f.input :roles, as: :select, multiple: true, collection: User.roles.values.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-        f.input :reviewer, collection: current_user.company.users.active.order(:name)
-        f.input :skills, as: :check_boxes, collection: current_user.company.skills.order(:title)
+      f.input :office, collection: User.offices.order(:city)
+      f.input :roles, as: :select, multiple: true, collection: User.roles.values.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
+      f.input :reviewer, collection: User.active.order(:name)
+      f.input :skills, as: :check_boxes, collection: User..skills.order(:title)
       end
       f.input :occupation, as: :radio
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }

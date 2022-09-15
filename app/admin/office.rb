@@ -4,7 +4,7 @@ ActiveAdmin.register Office do
   decorate_with OfficeDecorator
   config.sort_order = 'city_asc'
 
-  permit_params :company_id, :city, :head_id, :active
+  permit_params :city, :head_id, :active
 
   menu parent: User.model_name.human(count: 2), priority: 3
 
@@ -12,13 +12,8 @@ ActiveAdmin.register Office do
   scope :active, default: true
   scope :inactive
 
-  filter :company, if: proc { current_user.super_admin? }
-  filter :city, as: :select, collection: proc {
-    current_user.super_admin? ? Office.all.group_by(&:company) : current_user.company.offices.order(:city)
-  }
-  filter :head, collection: proc {
-    current_user.super_admin? ? User.all.order(:name) : current_user.company.users.order(:name)
-  }
+  filter :city, as: :select, collection: -> { User.offices.order(:city) }
+  filter :head, collection: -> { User.all.order(:name) }
 
   controller do
     def search_by_id
@@ -31,7 +26,6 @@ ActiveAdmin.register Office do
     column :city do |office|
       link_to office.city, admin_office_path(office)
     end
-    column :company if current_user.super_admin?
     column :head
     column :users_quantity do |office|
       office.users.active.size
@@ -43,7 +37,6 @@ ActiveAdmin.register Office do
   show title: proc{ |office| office.city } do
     attributes_table do
       row :city
-      row :company if current_user.super_admin?
       row :head
       row :score
       row :active
@@ -66,13 +59,7 @@ ActiveAdmin.register Office do
   form do |f|
     f.inputs "Office details" do
       f.input :city
-      if current_user.super_admin?
-        f.input :head
-        f.input :company
-      else
-        f.input :head, collection: current_user.company.users.active.order(:name)
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
+      f.input :head, collection: User.active.order(:name)
       f.input :active
     end
     f.actions

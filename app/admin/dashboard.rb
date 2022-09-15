@@ -7,9 +7,8 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
     if current_user.is_admin?
       panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
-        current_company = current_user.company
 
-        users_collection = current_company.users.active.includes(:office).order(:name).map do |user|
+        users_collection = User.active.includes(:office).order(:name).map do |user|
           user_label = "#{user.name.titleize} - #{user.email} - "
           user_label += "#{user.level.humanize} - " if user.engineer?
           user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
@@ -17,14 +16,14 @@ ActiveAdmin.register_page "Dashboard" do
           [user_label, user.id]
         end
 
-        offices_collection = current_company.offices.order(:city).decorate.map do |office|
+        offices_collection = current_user.offices.order(:city).decorate.map do |office|
           [
             "#{office.city.titleize} - #{office.head} - #{office.score}",
             office.id
           ]
         end
 
-        projects_collection = current_company.projects.active.order(:name).map do |project|
+        projects_collection = current_user.projects.active.order(:name).map do |project|
           [ project.name, project.id ]
         end
 
@@ -58,9 +57,7 @@ ActiveAdmin.register_page "Dashboard" do
 
       column do
         panel t(I18n.t('offices_leaderboard'), scope: 'active_admin') do
-          collection = current_user.super_admin? ? 
-                        ContributionsByOfficeQuery.new.leaderboard.this_week.approved : 
-                        ContributionsByOfficeQuery.new(Office.where(company: current_user.company)).leaderboard.this_week.approved
+          collection = ContributionsByOfficeQuery.new.leaderboard.this_week.approved
 
           unless collection.to_relation.empty?
             table_for collection.to_relation do

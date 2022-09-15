@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Skill do
-  permit_params :title, :company_id
+  permit_params :title
 
   menu parent: User.model_name.human(count: 2), priority: 5
 
@@ -18,10 +18,6 @@ ActiveAdmin.register Skill do
   form do |f|
     f.inputs "Skills details" do
       f.input :title
-      if current_user.super_admin?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
     end
     f.actions
