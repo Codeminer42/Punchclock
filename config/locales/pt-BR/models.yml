@@ -8,7 +8,6 @@ pt-BR:
     attributes:
       allocate_users_form:
         not_allocated_users: Usuários não alocados
-        company: Empresa
         start_at: Início
         end_at: Término
         sucess: Usuários alocados com sucesso
@@ -63,9 +62,6 @@ pt-BR:
       comment:
         one: "Comentário"
         other: "Comentários"
-      company:
-        one: "Empresa"
-        other: "Empresas"
       client:
         one: "Cliente"
         other: "Clientes"
@@ -121,7 +117,6 @@ pt-BR:
         created_at: "Criado em"
         updated_at: "Atualizado em"
         is_super: "É super usuário"
-        company_id: "Empresa"
       project:
         id: "ID"
         name: "Nome"
@@ -130,7 +125,6 @@ pt-BR:
         active: "Ativo"
         access: "Acessar"
         client: "Cliente"
-        company: "Empresa"
         market: "Mercado"
         markets:
           internal: "Interno"
@@ -142,14 +136,6 @@ pt-BR:
         punch_id: "Punch"
         created_at: "Criado em"
         updated_at: "Atualizado em"
-        company_id: "Empresa"
-      company:
-        id: "ID"
-        name: "Nome"
-        created_at: "Criado em"
-        updated_at: "Atualizado em"
-        avatar: "Avatar"
-        end_period: "Período final"
       user:
         id: "ID"
         email: "E-mail"
@@ -165,13 +151,11 @@ pt-BR:
         reset_password_token: "Resetar senha token"
         reset_password_sent_at: "Resetar senha enviada em"
         remember_created_at: "Lembrar quando foi criado"
-        company_id: "Empresa"
         confirmation_token: "Token de confirmação"
         confirmed_at: "Confirmado em"
         confirmation_sent_at: "Confirmação enviada em"
         allow_overtime: "Permitir hora extra"
         office: "Escritório"
-        company: "Empresa"
         managed_offices: "Escritórios gerenciados"
         occupation: "Ocupação"
         specialty: "Especialidade"
@@ -203,7 +187,6 @@ pt-BR:
         project: "Projeto"
         user_id: "Usuário"
         user: "Usuário"
-        company_id: "Empresa"
         from: "De"
         to: "Até"
         from_time: "Horário inicial"
@@ -216,10 +199,8 @@ pt-BR:
         attachment: "Anexo"
         comment: "Comentário"
         extra_hour: "Hora extra?"
-        company: "Empresa"
       office:
         id: "ID"
-        company: "Empresa"
         city: "Cidade"
         created_at: "Criado em"
         updated_at: "Atualizado em"
@@ -236,7 +217,6 @@ pt-BR:
         offices: "Escritórios"
         created_at: "Criado em"
         updated_at: "Atualizado em"
-        company: "Empresa"
       allocation:
         id: "ID"
         user: "Usuário"
@@ -280,7 +260,6 @@ pt-BR:
       client:
         id: "ID"
         name: "Nome"
-        company: "Empresa"
         active: "Ativo"
         created_at: "Criado em"
         updated_at: "Atualizado em"
@@ -292,14 +271,12 @@ pt-BR:
       repository:
         id: "ID"
         link: "Link"
-        company: "Empresa"
         language: "Linguagem"
         created_at: "Criado em"
         updated_at: "Atualizado em"
       contribution:
         id: "ID"
         user: "Usuário"
-        company: "Empresa"
         link: "Link"
         state: "Estado"
         state/received: "Recebido"
