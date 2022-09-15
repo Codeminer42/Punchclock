@@ -178,18 +178,6 @@ codeminer42 = create_company(
   ]
 )
 
-waters_co = create_company(
-  name: 'WatersCo',
-  office_cities: [
-    'North Valerie',
-    'Lilachester'
-  ],
-  project_names: [
-    'Tres Zap',
-    'Latlux'
-  ]
-)
-
 repositories = [
   'http://github.com/flutter/flutter',
   'http://github.com/facebook/create-react-app',
@@ -303,12 +291,6 @@ repositories = [
 print "Creating codeminer42 open source repositories..."
 repos = repositories.collect do |repository|
   create_repository(link: repository, company: codeminer42)
-end
-puts " done."
-
-print "Creating waters co open source repositories..."
-repos = repositories.collect do |repository|
-  create_repository(link: repository, company: waters_co)
 end
 puts " done."
 
