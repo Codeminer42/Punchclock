@@ -4,7 +4,6 @@ class Contribution < ApplicationRecord
   include AASM
 
   belongs_to :user
-  belongs_to :company
   belongs_to :repository
   belongs_to :reviewed_by, class_name: "User", foreign_key: "reviewer_id", optional: true
 

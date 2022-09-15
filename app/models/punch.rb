@@ -5,7 +5,6 @@ class Punch < ApplicationRecord
 
   belongs_to :project
   belongs_to :user
-  belongs_to :company
 
   validates_presence_of :from, :to
   validates [:from, :to], check_time: true

@@ -32,17 +32,10 @@ class AbilityAdmin
   attr_reader :action
 
   def admin_permitions(user)
-    if user.super_admin?
-      can :manage, action + [
-        Company,
-        Punch
-      ]
-    else
-      can :manage, action, company_id: user.company_id
-      can :read, Punch, company_id: user.company_id
-      can :manage, Punch, user_id: user.id
-      can :create, action
-    end
+    can :manage, action
+    can :read, Punch
+    can :manage, Punch, user_id: user.id
+    can :create, action
 
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'
@@ -56,8 +49,8 @@ class AbilityAdmin
   def open_source_manager_permitions(user)
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'
-    can :manage, Repository, company_id: user.company_id
-    can :manage, Contribution, company_id: user.company_id
+    can :manage, Repository
+    can :manage, Contribution
     can :create, Repository
   end
 end

@@ -42,7 +42,6 @@ class User < ApplicationRecord
                     default: :normal, multiple: true, predicates: true
 
   belongs_to :office, optional: false
-  belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
   has_many :punches
   has_many :contributions

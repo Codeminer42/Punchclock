@@ -3,7 +3,6 @@
 class Project < ApplicationRecord
   extend Enumerize
 
-  belongs_to :company
   has_many :punches
   has_many :allocations, dependent: :destroy
 
@@ -11,10 +10,7 @@ class Project < ApplicationRecord
 
   validates :name,
             presence: true,
-            uniqueness: {
-              scope: :company_id,
-              message: 'Project name already taken'
-            }
+            uniqueness: true
 
   validates :market, presence: true
 

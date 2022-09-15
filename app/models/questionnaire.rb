@@ -4,7 +4,6 @@ class Questionnaire < ApplicationRecord
   extend Enumerize
   has_many :questions, dependent: :destroy
   has_many :evaluations
-  belongs_to :company
 
   validates_presence_of :title, :kind
   validate :being_used, on: :update
