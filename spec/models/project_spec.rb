@@ -6,7 +6,6 @@ describe Project do
   let(:inactive_project) { create :project, :inactive }
 
   describe 'relations' do
-    it { is_expected.to belong_to :company }
     it { is_expected.to have_many :punches }
   end
 

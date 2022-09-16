@@ -5,7 +5,6 @@ require 'cancan/matchers'
 
 describe 'User' do
   let(:admin_user) { create(:user, :admin) }
-  let(:admin_user_super) { create(:user, :super_admin, occupation: :administrative) }
   let(:open_source_manager_user) { create(:user, :open_source_manager) }
 
   describe 'abilities admin' do
@@ -13,10 +12,6 @@ describe 'User' do
 
     it "can manage it's own punches" do
       expect(ability_admin).to be_able_to :manage, Punch.new(user: admin_user)
-    end
-
-    it "can't delete Company" do
-      expect(ability_admin).to_not be_able_to :destroy, Company.new
     end
 
     it "can't delete Projects" do
@@ -29,26 +24,6 @@ describe 'User' do
 
     it "can't delete punch" do
       expect(ability_admin).to_not be_able_to :destroy, Punch.new
-    end
-
-    it "can't manage Company" do
-      expect(ability_admin).to_not be_able_to :manage, Company.new
-    end
-  end
-
-  describe 'abilities super admin' do
-    let(:ability_admin_super) { AbilityAdmin.new(admin_user_super) }
-
-    it 'able to manage punch' do
-      expect(ability_admin_super).to be_able_to :manage, Punch.new
-    end
-
-    it 'able to manage Company' do
-      expect(ability_admin_super).to be_able_to :manage, Company.new
-    end
-
-    it 'able to manage Projects' do
-      expect(ability_admin_super).to be_able_to :manage, Project.new
     end
   end
 
