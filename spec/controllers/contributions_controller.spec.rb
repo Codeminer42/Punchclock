@@ -42,7 +42,6 @@ RSpec.describe Admin::ContributionsController, type: :controller do
     it 'renders the form elements' do
       get :new
       expect(page).to have_field('contribution[user_id]')
-                  .and have_field('contribution[company_id]')
                   .and have_field('contribution[repository_id]')
                   .and have_field('contribution[link]')
     end
@@ -50,14 +49,12 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
   describe 'POST create' do
     let(:user) { create(:user) }
-    let(:company) { create(:company) }
     let(:repository) { create(:repository) }
 
     let(:contribution_params) do
       {
         "link"=>"https://github.com/Codeminer", 
         "user_id"=>user.id, 
-        "company_id"=>company.id,
         "repository_id"=>repository.id
       }
     end
@@ -97,13 +94,6 @@ RSpec.describe Admin::ContributionsController, type: :controller do
         expect(contribution.user_id).to  eq(user.id)
       end
 
-      it 'ensures created contibution received correct company' do
-        post :create, params: { contribution: contribution_params }
-        contribution = Contribution.last
-
-        expect(contribution.company_id).to eq(company.id)
-      end
-
       it 'ensures created contibution received correct repository' do
         post :create, params: { contribution: contribution_params }
         contribution = Contribution.last
@@ -133,9 +123,8 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
   describe 'GET show' do
     let(:user) { create(:user) }
-    let(:company) { create(:company) }
     let(:repository) { create(:repository) }
-    let(:contribution_to_show) { create(:contribution, company_id: company.id, user_id: user.id, repository_id: repository.id, link: contribution[:link]) }
+    let(:contribution_to_show) { create(:contribution, user_id: user.id, repository_id: repository.id, link: contribution[:link]) }
 
     it 'returns http success' do
       get :show, params: { id: contribution_to_show.id }
@@ -145,7 +134,6 @@ RSpec.describe Admin::ContributionsController, type: :controller do
     it 'renders the form elements' do
       get :show, params: { id: contribution_to_show.id }
       expect(page).to have_content(contribution_to_show.user)
-                  .and have_content(contribution_to_show.company)
                   .and have_content(contribution_to_show.link)
                   .and have_content(Contribution.human_attribute_name("state/#{contribution_to_show.state}"))
     end 
