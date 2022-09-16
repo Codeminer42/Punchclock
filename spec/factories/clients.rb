@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :client do
     name    { Faker::App.author }
-    company { nil }
   end
 
   trait :active_client do

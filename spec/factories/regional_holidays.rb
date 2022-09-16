@@ -3,6 +3,5 @@ FactoryBot.define do
     name { "City Holiday" }
     day { 15 }
     month { 6 }
-    company
   end
 end

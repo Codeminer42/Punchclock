@@ -3,6 +3,5 @@ FactoryBot.define do
     name { Faker::Internet.name }
     email    { Faker::Internet.unique.email }
     password { Faker::Lorem.characters(number: 8) }
-    company
   end
 end

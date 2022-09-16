@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :contribution do
     user { create(:user) }
-    company { create(:company) }
     repository { create(:repository) }
     state { :received }
     sequence :link do |n|
