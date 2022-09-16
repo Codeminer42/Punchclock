@@ -1,35 +1,24 @@
-<div class="access-form-container mt-2">
-  <h2 class="text-center mb-3">
-    <%= t("form.title.verify_your_identity") %>
-  </h2>
+<h2 class="text-3xl mb-8"><%= t("form.title.verify_your_identity") %></h2>
 
-  <%= simple_form_for(resource,
-                      as: resource_name,
-                      url: session_path(resource_name),
-                      html: { novalidate: false },
-                      method: :post) do |f| %>
+<%= simple_form_for(resource,
+                    as: resource_name,
+                    url: session_path(resource_name),
+                    html: { novalidate: false, class: 'w-full' },
+                    method: :post) do |f| %>
 
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="fa fa-lock"></i>
-        </span>
-      </div>
-      <%= f.input_field :otp_attempt,
-                label: false,
-                required: true,
-                autofocus: true,
-                placeholder: t("form.field.authentication_code"),
-                class: "form-control" %>
-    </div>
+  <div class="w-full">
+    <%= f.input :otp_attempt,
+                    required: true,
+                    autofocus: true,
+                    label: 'Enter your 6 digit auth code',
+                    placeholder: t("form.field.authentication_code"),
+                    input_html: { class: "w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0" },
+                    label_html: { class: "block mb-2 text-base text-grey-400" } %>
+  </div>
 
-    <div class="form-actions">
-      <%= f.button :submit, t("form.button.verify"), class: "w-100" %>
-    </div>
+  <%= f.button :submit, t("form.button.verify"), class: "w-full h-10 mt-8 px-4 rounded bg-red text-white transition-all hover:brightness-110" %>
 
-    <div><%= t("form.hint.authentication_code") %></div>
-
-  <% end %>
-
-  <%= link_to t("form.links.return_to_sign_in"), :back %>
-</div>
+  <div class="w-full flex mt-8">
+    <%= link_to t("form.links.return_to_sign_in"), :back, class: 'text-sm text-blue' %>
+  </div>
+<% end %>
