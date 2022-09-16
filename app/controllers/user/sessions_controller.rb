@@ -8,8 +8,8 @@ class User::SessionsController < Devise::SessionsController
   def new
     super do |resource|
       if params[:commit].present?
-        resource.errors.add(:email, :invalid_authentication)
-        resource.errors.add(:password, :invalid_authentication)
+        resource.valid?
+        resource.errors.add(:password, "não pode ficar em branco") if params[:password].blank?
       end
     end
   end

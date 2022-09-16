@@ -118,7 +118,7 @@ class User < ApplicationRecord
   def english_score
     last_english_evaluation.try(:score)
   end
-  
+
   def last_english_evaluation
     evaluations.by_kind(:english).order(:created_at).last
   end
