@@ -4,12 +4,11 @@ require 'rails_helper'
 
 describe 'Offices', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:office)     { create(:office, company: admin_user.company, head: admin_user, score: 0) }
+  let(:office)     { create(:office, head: admin_user, score: 0) }
   let!(:user)      { create(:user,
                             :with_overall_score,
                             :admin,
-                            office: office,
-                            company: admin_user.company) }
+                            office: office) }
 
   before do
     sign_in(admin_user)
@@ -31,13 +30,13 @@ describe 'Offices', type: :feature do
   describe 'Filters' do
     it 'by city' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Cidade', options: admin_user.company.offices.pluck(:city) << 'Qualquer')
+        expect(page).to have_select('Cidade', options: Office.all.pluck(:city) << 'Qualquer')
       end
     end
 
     it 'by head' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Head', options: admin_user.company.users.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Head', options: User.all.pluck(:name) << 'Qualquer')
       end
     end
   end
@@ -99,7 +98,6 @@ describe 'Offices', type: :feature do
 
       it 'have the correct office information' do
         expect(page).to   have_text(office.city) &
-                          have_text(office.company) &
                           have_text(office.head) &
                           have_text(office.score) &
                           have_css('.row-active td', text: office.active ? "Sim" : "Não") &
@@ -143,7 +141,7 @@ describe 'Offices', type: :feature do
     end
 
     describe 'Destroy' do
-      let!(:office_without_users) { create(:office, company: admin_user.company) }
+      let!(:office_without_users) { create(:office) }
 
       it 'cancel delete office', js: true do
         visit "/admin/offices/#{office_without_users.id}"

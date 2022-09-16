@@ -4,15 +4,15 @@ require 'rails_helper'
 
 describe 'Admin Allocation', type: :feature do
   let(:admin_user)  { create(:user, :admin, occupation: :administrative) }
-  let!(:user)       { create(:user, company: admin_user.company) }
-  let!(:project)    { create(:project, company: admin_user.company) }
+  let!(:user)       { create(:user) }
+  let!(:project)    { create(:project) }
   let!(:allocation) do
     create(:allocation,
            start_at: Date.new(2019, 6, 17),
            user: user,
            project: project,
-           ongoing: true,
-           company: admin_user.company)
+           ongoing: true
+          )
   end
 
   before do
@@ -35,28 +35,28 @@ describe 'Admin Allocation', type: :feature do
 
   describe 'Filters' do
     before do
-      create_list(:user, 2, company: admin_user.company)
-      create_list(:project, 1, company: admin_user.company)
+      create_list(:user, 2)
+      create_list(:project, 1)
       visit '/admin/allocations'
     end
 
     it 'by user' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Usuário', options: admin_user.company.users.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Usuário', options: User.all.pluck(:name) << 'Qualquer')
       end
     end
 
     it 'by project' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Projeto', options: admin_user.company.projects.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Projeto', options: Project.all.pluck(:name) << 'Qualquer')
       end
     end
   end
 
   describe 'Actions' do
     describe 'New' do
-      let!(:user_not_allocated) { create(:user, company: admin_user.company) }
-      let!(:project_not_active) { create(:project, :inactive, company: admin_user.company) }
+      let!(:user_not_allocated) { create(:user) }
+      let!(:project_not_active) { create(:project, :inactive) }
 
       before { click_link 'Novo(a) Alocação' }
 

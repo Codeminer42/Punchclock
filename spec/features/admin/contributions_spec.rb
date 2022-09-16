@@ -6,8 +6,8 @@ require 'rails_helper'
 RSpec::Matchers.define_negated_matcher :not_have_text, :have_text
 
 describe 'Contribution', type: :feature do
-  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let!(:contribution) { create(:contribution).decorate }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
+  let!(:contribution) { create(:contribution) }
   let!(:inactive_user_contribution) { create(:contribution, :approved, user: create(:user, :inactive_user)) }
 
   before do
@@ -47,12 +47,6 @@ describe 'Contribution', type: :feature do
         expect(page).to have_select('Usuário')
       end
     end
-
-    it 'by company' do
-      within '#filters_sidebar_section' do
-        expect(page).to have_select('Empresa')
-      end
-    end
   end
 
   describe 'Actions' do
@@ -74,7 +68,6 @@ describe 'Contribution', type: :feature do
 
       it 'have contribution table with correct information' do
         expect(page).to have_text(contribution.user) &
-                        have_text(contribution.company) &
                         have_text(contribution.link) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
                         have_text(contribution.created_at) &

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Admin Questionaire', type: :feature do
   let(:admin_user)     { create(:user, :admin, occupation: :administrative) }
-  let!(:questionnaire) { create(:questionnaire, :with_questions, active: true, company: admin_user.company) }
+  let!(:questionnaire) { create(:questionnaire, :with_questions, active: true) }
 
   before do
     sign_in(admin_user)
@@ -188,7 +188,7 @@ describe 'Admin Questionaire', type: :feature do
       end
 
       context 'when questionnaire is not active' do
-        let!(:questionnaire) { create(:questionnaire, active: false, company: admin_user.company) }
+        let!(:questionnaire) { create(:questionnaire, active: false) }
 
         it 'show deactive button' do
           expect(page).to have_link('Ativar Questionário')

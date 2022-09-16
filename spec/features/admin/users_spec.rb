@@ -124,7 +124,6 @@ describe 'Users', type: :feature do
         fill_in 'Github', with: 'userGithub'
         find('#user_started_at').fill_in with: started_at.strftime('%Y-%m-%d')
         find('#user_office_id').find(:option, office.city).select_option
-        find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
         select('Normal')

@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 feature "Admin Users", type: :feature do
-  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let!(:company) { create(:company) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
+
   before do
     sign_in(admin_user)
     click_link 'Administradores'

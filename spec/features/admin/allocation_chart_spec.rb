@@ -4,18 +4,17 @@ require 'rails_helper'
 
 describe 'Admin Allocation chart', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:company) { admin_user.company }
 
   before do
     sign_in(admin_user)
   end
 
   describe 'Index' do
-    let(:project) { create(:project, company: company) }
-    let!(:user) { create(:user, allocations: [allocation], company: company) }
+    let(:project) { create(:project) }
+    let!(:user) { create(:user, allocations: [allocation]) }
 
     let(:allocation) do
-      build(:allocation, project: project, company: company, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: true)
+      build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: true)
     end
 
     before { visit '/admin/allocation_chart' }
@@ -56,7 +55,7 @@ describe 'Admin Allocation chart', type: :feature do
 
       context 'when not allocated' do
         let(:allocation) do
-          build(:allocation, project: project, company: company, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: false)
+          build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: false)
         end
 
         it 'has "Não alocado" in "Alocado até" column' do

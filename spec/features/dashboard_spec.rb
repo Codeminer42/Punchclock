@@ -5,7 +5,7 @@ require 'rails_helper'
 feature 'Punches Dashboard', js: true do
   context 'When user has overtime allowed' do
     let!(:authed_user_with_overtime) { create_logged_in_user(allow_overtime: true) }
-    let!(:active_project) { create(:project, :active, company_id: authed_user_with_overtime.company_id) }
+    let!(:active_project) { create(:project, :active) }
 
     scenario 'Calendar navigation' do
       visit '/dashboard/2014/12'
@@ -73,7 +73,7 @@ feature 'Punches Dashboard', js: true do
 
   context 'When user do not have overtime allowed' do
     let!(:authed_user_without_overtime) { create_logged_in_user }
-    let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
+    let!(:active_project) { create(:project, :active) }
 
     scenario 'Insert punches on holiday' do
       visit 'dashboard/2013/11'
@@ -93,7 +93,7 @@ feature 'Punches Dashboard', js: true do
 
   context 'When user try to save a punch with delta zero' do
     let!(:authed_user_without_overtime) { create_logged_in_user }
-    let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
+    let!(:active_project) { create(:project, :active) }
 
     scenario 'Renders save button disabled' do
       visit '/dashboard/2022/06'
@@ -124,7 +124,7 @@ feature 'Punches Dashboard', js: true do
 
   context 'When user try to save a punch in the future' do
     let!(:authed_user_without_overtime) { create_logged_in_user }
-    let!(:active_project) { create(:project, :active, company_id: authed_user_without_overtime.company_id) }
+    let!(:active_project) { create(:project, :active) }
     let(:time_now) { Time.rfc3339('2022-06-06T15:00:00-03:00') }
     
     before do

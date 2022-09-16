@@ -5,7 +5,7 @@ require 'rails_helper'
 describe "Visit Show", type: :feature do
   let(:user)        { create_logged_in_user }
   let!(:office)     { create(:office, head: user) }
-  let!(:evaluation) { create(:evaluation, :with_answers, company: user.company) }
+  let!(:evaluation) { create(:evaluation, :with_answers) }
 
   before do
     visit '/evaluations'
