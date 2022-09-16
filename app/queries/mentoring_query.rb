@@ -15,6 +15,7 @@ class MentoringQuery
         'reviewers_users.name as name',
         :city
       )
+      .active
       .group('reviewers_users.name', :city)
       .order(:city)
   end

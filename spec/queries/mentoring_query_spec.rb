@@ -36,16 +36,37 @@ RSpec.describe MentoringQuery do
       let!(:brown_mentee) { create(:user, reviewer_id: brown.id) }
       let!(:other_brown_mentee) { create(:user, reviewer_id: brown.id) }
 
-      it 'returns mentors' do
-        expect(mentors).to contain_exactly(bob.name, brown.name)
+      context 'and mentees are active' do
+        it 'returns mentors' do
+          expect(mentors).to contain_exactly(bob.name, brown.name)
+        end
+
+        it "returns mentors's offices" do
+          expect(offices).to contain_exactly(bob.office.city, brown.office.city)
+        end
+
+        it "returns mentor's mentees" do
+          expect(mentees.flatten).to contain_exactly(bob_mentee.name, other_bob_mentee.name, brown_mentee.name, other_brown_mentee.name)
+        end
       end
 
-      it "returns mentors's offices" do
-        expect(offices).to contain_exactly(bob.office.city, brown.office.city)
-      end
+      context 'and mentee are inactive' do
+        before do
+          bob_mentee.update(active: false)
+          brown_mentee.update(active: false)
+        end
 
-      it "returns mentor's mentees" do
-        expect(mentees.flatten).to contain_exactly(bob_mentee.name, other_bob_mentee.name, brown_mentee.name, other_brown_mentee.name)
+        it 'returns mentors' do
+          expect(mentors).to contain_exactly(bob.name, brown.name)
+        end
+
+        it "returns mentors's offices" do
+          expect(offices).to contain_exactly(bob.office.city, brown.office.city)
+        end
+
+        it "returns mentor's active mentees" do
+          expect(mentees.flatten).to contain_exactly(other_bob_mentee.name, other_brown_mentee.name)
+        end
       end
     end
 
