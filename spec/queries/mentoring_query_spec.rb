@@ -29,14 +29,14 @@ RSpec.describe MentoringQuery do
 
     context 'when there are multiple mentees and mentors' do
       let(:bob) { create(:user) }
-      let!(:bob_mentee) { create(:user, reviewer_id: bob.id) }
-      let!(:other_bob_mentee) { create(:user, reviewer_id: bob.id) }
-
       let(:brown) { create(:user) }
-      let!(:brown_mentee) { create(:user, reviewer_id: brown.id) }
-      let!(:other_brown_mentee) { create(:user, reviewer_id: brown.id) }
 
       context 'and mentees are active' do
+        let!(:bob_mentee) { create(:user, reviewer_id: bob.id) }
+        let!(:other_bob_mentee) { create(:user, reviewer_id: bob.id) }
+        let!(:brown_mentee) { create(:user, reviewer_id: brown.id) }
+        let!(:other_brown_mentee) { create(:user, reviewer_id: brown.id) }
+
         it 'returns mentors' do
           expect(mentors).to contain_exactly(bob.name, brown.name)
         end
