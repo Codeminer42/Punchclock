@@ -51,21 +51,11 @@ RSpec.describe MentoringQuery do
       end
 
       context 'and mentee are inactive' do
-        before do
-          bob_mentee.update(active: false)
-          brown_mentee.update(active: false)
-        end
+        let!(:inactive_bob_mentee) { create(:user, reviewer_id: brown.id, active: false) }
+        let!(:inactive_brown_mentee) { create(:user, reviewer_id: brown.id, active: false) }
 
-        it 'returns mentors' do
-          expect(mentors).to contain_exactly(bob.name, brown.name)
-        end
-
-        it "returns mentors's offices" do
-          expect(offices).to contain_exactly(bob.office.city, brown.office.city)
-        end
-
-        it "returns mentor's active mentees" do
-          expect(mentees.flatten).to contain_exactly(other_bob_mentee.name, other_brown_mentee.name)
+        it "does not return inactive mentees" do
+          expect(mentees.flatten).to_not contain_exactly(inactive_bob_mentee, inactive_brown_mentee)
         end
       end
     end
