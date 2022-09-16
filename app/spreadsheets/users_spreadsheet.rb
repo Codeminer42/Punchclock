@@ -12,7 +12,7 @@ class UsersSpreadsheet < BaseSpreadsheet
       user.occupation_text,
       user.contract_type_text,
       user.github,
-      user.skills.pluck(:title).join(', ')
+      user.skills
     ]
   end
 

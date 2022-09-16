@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AllocationsAndUnalocatedUsersQuery
   attr_reader :allocation, :company
 
@@ -7,12 +9,14 @@ class AllocationsAndUnalocatedUsersQuery
   end
 
   def call
-    allocation
+   allocation
       .includes(:user)
       .select('allocations.*, users.id as user_id')
-      .joins('RIGHT OUTER JOIN users ON allocations.user_id = users.id')
+      .joins(
+        "RIGHT OUTER JOIN users ON allocations.user_id = users.id AND allocations.ongoing = true"
+      )
       .where(where)
-      .order('end_at NULLS FIRST, start_at NULLS FIRST, users.name')
+      .order('end_at NULLS LAST, start_at NULLS LAST, users.name')
   end
 
   private
@@ -20,12 +24,12 @@ class AllocationsAndUnalocatedUsersQuery
   def where
     {
       end_at: [last_user_allocations, nil],
-      users: { occupation: User.occupation.engineer.value, company: company },
+      users: { occupation: User.occupation.engineer.value, company: company, active: true },
       company: [company, nil]
     }
   end
 
   def last_user_allocations
-    Allocation.group(:user_id).maximum(:end_at).values
+    Allocation.ongoing.group(:user_id, :start_at).maximum(:end_at).values
   end
 end

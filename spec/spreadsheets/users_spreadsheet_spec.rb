@@ -34,7 +34,7 @@ RSpec.describe UsersSpreadsheet do
       user.specialty_text,
       user.contract_type_text,
       user.github,
-      user.skills.pluck(:title).join(', ')
+      user.skills
     ].concat(enumerize_attributes)
   end
 

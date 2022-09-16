@@ -1,48 +1,33 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
-  permit_params :user_id, :project_id, :start_at, :end_at, :company_id
+  decorate_with AllocationDecorator
+
+  config.sort_order = 'ongoing_desc'
+  permit_params :user_id, :project_id, :hourly_rate, :start_at, :end_at, :company_id, :ongoing
 
   config.batch_actions = false
 
   menu parent: User.model_name.human(count: 2), priority: 4
 
-  scope :ongoing, default: true
-  scope :finished
-  scope :all do |relation|
-    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company)
-                                      .call
-  end
-
+  filter :ongoing
   filter :user, collection: proc {
-    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
+    current_user.super_admin? ? User.all.order(:name) : current_user.company.users.order(:name)
   }
   filter :project, collection: proc {
-    current_user.super_admin? ? Project.all.order(:name).group_by(&:company) : current_user.company.projects.order(:name)
+    current_user.super_admin? ? Project.all.order(:name) : current_user.company.projects.order(:name)
   }
   filter :start_at
   filter :end_at
 
   index download_links: [:xls] do
-    # Temporary, we have a ticket to handle that column properly in
-    # a near future
-    column '#' do |allocation|
-      if allocation.id.blank?
-        'D'
-      elsif allocation.end_at && allocation.end_at < Date.current
-        'F'
-      else
-        'A'
-      end
-    end
-    column :user
-    column User.human_attribute_name('specialty') do |allocation|
-      allocation.user.specialty.humanize
-    end
+    column :user, sortable: 'users.name'
     column :project
+    column :hourly_rate
     column :start_at, sortable: false
     column :end_at, sortable: false
     column :days_left, &:days_until_finish
+    column :ongoing
     actions
   end
 
@@ -50,9 +35,11 @@ ActiveAdmin.register Allocation do
     attributes_table do
       row :user
       row :project
+      row :hourly_rate
       row :start_at
       row :end_at
       row :days_left, &:days_until_finish
+      row :ongoing
     end
 
     panel t('allocated_user_punches', scope: 'active_admin') do
@@ -83,18 +70,20 @@ ActiveAdmin.register Allocation do
         input :project
         input :company
       else
-        company_users_not_allocated = UsersByCompanyQuery
+        company_users = UsersByCompanyQuery
                                       .new(current_user.company)
-                                      .not_allocated_including(f.object.user)
+                                      .active_engineers
                                       .select(:id, :name)
 
-        input :user, as: :select, collection: company_users_not_allocated
+        input :user, as: :select, collection: company_users
         input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
         input :company_id, as: :hidden, input_html: { value: current_user.company_id }
       end
 
-      input :start_at, as: :date_picker, input_html: { value: f.object.start_at.try(:to_fs, :date) }
-      input :end_at, as: :date_picker, input_html: { value: f.object.end_at.try(:to_fs, :date) }
+      input :hourly_rate
+      input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
+      input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
+      input :ongoing
     end
     actions
   end
@@ -107,6 +96,10 @@ ActiveAdmin.register Allocation do
           send_data spreadsheet.to_string_io, filename: 'allocations.xls'
         end
       end
+    end
+
+    def scoped_collection
+      end_of_association_chain.includes(:user)
     end
   end
 end

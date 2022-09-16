@@ -2,6 +2,8 @@
 @import "active_admin/base";
 @import "wigu/active_admin_theme";
 @import "select2";
+@import "base/vars";
+@import "datatables.net-bs4/css/dataTables.bootstrap4";
 
 $active-admin-label: #8494a8;
 $active-admin-input-border: #e6e9ee;
@@ -73,4 +75,61 @@ $active-admin-a-border: #c7c7c7;
 
 body.logged_in .flash {
   background-color: darkred;
+}
+
+.allocated-column {
+  padding: 0;
+  font-weight: bold;
+
+  &__status {
+    padding: 5px;
+
+    &--exp-in-60-days {
+      background-color: $flat-sunflower;
+      color: $black;
+      & a {
+        color: $black;
+      }
+    }
+
+    &--exp-in-30-days {
+      background-color: $flat-alizarin;
+      color: $white;
+      & a {
+        color: $white;
+      }
+    }
+
+    &--expired {
+      background-color: $red;
+      color: $white;
+    & a {
+        color: $white;
+      }
+    }
+
+    &--not-allocated {
+      background-color: $flat-belize-hole;
+      color: $white;
+    }
+  }
+
+  &__last {
+    min-width: 50%;
+  }
+}
+
+.mentoring_table {
+  &__mentor_city {
+    vertical-align: top;
+    border-bottom: 1px solid rgba(120, 130, 140, 0.5);
+  }
+
+  &__mentor_name {
+    border-bottom: 1px solid rgba(120, 130, 140, 0.5);
+  }
+
+  &__mentor_mentees {
+    border-bottom: 1px solid rgba(120, 130, 140, 0.5);
+  }
 }

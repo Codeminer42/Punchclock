@@ -1,4 +1,9 @@
 pt-BR:
+  enumerize:
+    project:
+      market:
+        internal: Interno
+        international: Externo
   activemodel:
     attributes:
       allocate_users_form:
@@ -24,6 +29,7 @@ pt-BR:
           attributes:
             from_time:
               cant_be_greater: "não pode ser maior que horário final"
+              cant_be_equal: "não pode ser igual ao horário final"
             to_time:
                 cant_be_different: "não pode ser em data diferente"
                 cant_be_future: "não pode ser no futuro"
@@ -33,6 +39,7 @@ pt-BR:
           attributes:
             base:
               overlap: As datas escolhidas se sobrepõem com outras já cadastradas
+              invalid_periods: Os períodos informados não seguem uma ordem cronológica válida"
         allocation:
           attributes:
             start_at:
@@ -40,8 +47,10 @@ pt-BR:
               overlapped_period: "Já existe uma alocação desse usuário nesse período"
               invalid_date: "Data Inválida"
             end_at:
-              cant_be_lesser: "A data de término deve ser maior que a data de início"
+              after: "A data de término deve ser maior que a data de início"
               invalid_date: "Data Inválida"
+            ongoing:
+              uniqueness: 'O usuário já possui uma alocação em progresso' 
     models:
       admin_user:
         one: "Administrador"
@@ -120,6 +129,10 @@ pt-BR:
         access: "Acessar"
         client: "Cliente"
         company: "Empresa"
+        market: "Mercado"
+        markets:
+          internal: "Interno"
+          international: "Externo"
       comment:
         id: "ID"
         text: "Texto"
@@ -151,7 +164,6 @@ pt-BR:
         reset_password_sent_at: "Resetar senha enviada em"
         remember_created_at: "Lembrar quando foi criado"
         company_id: "Empresa"
-        hour_cost: "Custo da hora"
         confirmation_token: "Token de confirmação"
         confirmed_at: "Confirmado em"
         confirmation_sent_at: "Confirmação enviada em"
@@ -162,7 +174,9 @@ pt-BR:
         occupation: "Ocupação"
         specialty: "Especialidade"
         contract_type: 'Tipo de Contrato'
+        contract_company_country: 'País da Empresa do Contrato'
         role: 'Função'
+        roles: 'Funções'
         skills: "Habilidades"
         level: "Nível"
         active: "Ativo"
@@ -225,12 +239,14 @@ pt-BR:
         id: "ID"
         user: "Usuário"
         project: "Projeto"
+        hourly_rate: "Taxa horária"
         start_at: "Início"
         end_at: "Término"
         days_left: "Dias Restantes"
         client: "Cliente"
         project_name: "Nome do Projeto"
         access: "Acessar"
+        ongoing: "Em progresso"
         created_at: "Criado em"
         updated_at: "Atualizado em"
       evaluation:

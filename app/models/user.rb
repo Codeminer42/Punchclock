@@ -4,14 +4,13 @@ class User < ApplicationRecord
   extend Enumerize
   include Tokenable
 
-  attr_accessor :has_api_token
   EXPERIENCE_PERIOD = 3.months
 
   devise :recoverable,
          :rememberable, :trackable, :validatable, :confirmable,
          :two_factor_authenticatable,
          :two_factor_backupable,
-         :otp_secret_encryption_key => ENV['OTP_SECRET_ENCRYPTION_KEY']
+         otp_secret_encryption_key: ENV['OTP_SECRET_ENCRYPTION_KEY']
 
   enumerize :level, in: {
     trainee: 7, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
@@ -32,11 +31,15 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
-
+  enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
   enumerize :role, in: {
     normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4, hr: 5
     },  scope: :shallow,
         predicates: true
+
+  enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
+                          super_admin: 3, open_source_manager: 4, hr: 5 },
+                    default: :normal, multiple: true, predicates: true
 
   belongs_to :office, optional: false
   belongs_to :company
@@ -55,6 +58,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
+
   delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
@@ -65,8 +69,13 @@ class User < ApplicationRecord
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :with_level,       -> value { where(level: value) }
+  scope :by_roles_in, lambda { |roles|
+    roles_values = self.roles.find_values(*roles).map(&:value)
+    where("users.roles && ARRAY[?]::int[]", roles_values)
+  }
+  scope :admin, -> { by_roles_in([:admin]) }
 
-  attr_accessor :password_required
+  attr_accessor :password_required, :has_api_token
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]
@@ -169,5 +178,9 @@ class User < ApplicationRecord
 
   def password_required?
     password_required
+  end
+
+  def first_and_last_name
+    name.split.values_at(0, -1).uniq.join(' ')
   end
 end

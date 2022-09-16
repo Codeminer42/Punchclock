@@ -4,6 +4,9 @@
 //= require stats.js
 //= require chartkick
 //= require Chart.bundle
+//= require moment
+//= require datatables.net
+//= require ./active_admin/allocation_chart.js
 
 $(document).ready(function() {
   var $seachFields = $('[data-select]')

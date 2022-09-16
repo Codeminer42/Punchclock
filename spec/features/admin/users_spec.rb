@@ -17,7 +17,7 @@ describe 'Users', type: :feature do
     before do
       create(:user)
       create(:office, head: user)
-      create(:allocation, user: allocated_user)
+      create(:allocation, user: allocated_user, ongoing: true)
     end
 
     it 'have the "all" scope' do
@@ -32,14 +32,14 @@ describe 'Users', type: :feature do
       find_link('Office Heads', href: '/admin/users?scope=office_heads').click
 
       within '#index_table_users' do
-        expect(page).to have_css('tbody tr', count: 1)
-        expect(page).to have_css('.col-name', text: user.name)
-        expect(page).to have_css('.col-office', text: user.office.city)
-        expect(page).to have_css('.col-level', text: user.level.humanize)
-        expect(page).to have_css('.col-specialty', text: user.specialty.humanize)
-        expect(page).to have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime))
-        expect(page).to have_css('.col-active', text: I18n.t(user.active))
-        expect(page).to have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
+        expect(page).to have_css('tbody tr', count: 1) &&
+        have_css('.col-name', text: user.name) &&
+        have_css('.col-office', text: user.office.city) &&
+        have_css('.col-level', text: user.level.humanize) &&
+        have_css('.col-specialty', text: user.specialty.humanize) &&
+        have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime)) &&
+        have_css('.col-active', text: I18n.t(user.active)) &&
+        have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
       end
     end
 
@@ -108,7 +108,7 @@ describe 'Users', type: :feature do
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
     let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
-    let!(:allocation) { create(:allocation, :with_end_at, user: user) }
+    let!(:allocation) { create(:allocation, user: user, ongoing: true) }
     let(:started_at) { 1.week.ago }
 
     describe 'New' do
@@ -127,10 +127,11 @@ describe 'Users', type: :feature do
         find('#user_company_id').find(:option, admin_user.company.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
+        select('Normal')
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
-        find('#user_role').find(:option, 'Admin').select_option
+        find('#user_contract_company_country').find(:option, 'Brasil').select_option
         check('Ativo')
         fill_in 'Observação', with: 'Observation'
 
@@ -156,8 +157,9 @@ describe 'Users', type: :feature do
         find('#user_level').find(:option, 'Junior').select_option
 
         choose('Administrativo')
-        expect(page).to have_select('user_specialty', { disabled: true, selected: '' }) &
-                        have_select('user_level', { disabled: true, selected: '' })
+
+        expect(page).to have_select('user_specialty', disabled: true, selected: '') &
+                        have_select('user_level', disabled: true, selected: '')
       end
     end
 
@@ -200,7 +202,7 @@ describe 'Users', type: :feature do
                             have_css('.row-specialty td', text: user.specialty.humanize) &
                             have_css('.row-level td', text: user.level.humanize) &
                             have_css('.row-contract_type td', text: user.contract_type.humanize) &
-                            have_css('.row-role td', text: user.role.humanize) &
+                            have_css('.row-roles td', text: UserDecorator.new(user).roles_text) &
                             have_css('.row-observation td', text: user.observation)
           end
         end
@@ -214,7 +216,6 @@ describe 'Users', type: :feature do
         end
 
         it 'finds user current allocation even with end date undefined' do
-          allocation.end_at = nil
           within '#alocacoes' do
             expect(page).to have_css('.row-current_allocation td', text: allocation.project.name)
           end
@@ -247,8 +248,8 @@ describe 'Users', type: :feature do
 
       context 'on Punches tab' do
         let!(:monday_1_month_ago) { (DateTime.new(2021, 6, 1) - 4.week).monday }
-        let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) } 
-        before { refresh }
+        let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) }
+
         it 'finds all elements correctly' do
           within 'div#punches' do
             travel_to Time.new(2021, 6, 1) do
@@ -303,7 +304,7 @@ describe 'Users', type: :feature do
                           have_text('Ocupação') &
                           have_text('Especialidade') &
                           have_text('Tipo de Contrato') &
-                          have_text('Função') &
+                          have_text('Funções') &
                           have_text('Nível') &
                           have_text('Iniciou em') &
                           have_text('Habilidades') &
@@ -321,20 +322,21 @@ describe 'Users', type: :feature do
       end
     end
 
-    describe 'Edit yourself' do
+    describe 'Edit yourself', js: true do
       before do
         visit "/admin/users/#{admin_user.id}"
         find_link('Editar Usuário', href: "/admin/users/#{admin_user.id}/edit").click
       end
 
       it 'updates yourself role information' do
-        find('#user_role').find(:option, 'Open Source Manager').select_option
-
+        first('li', text: 'Super Admin')
+        find('.selection').click
+        first('li', text: 'Normal').click
         click_button 'Atualizar Usuário'
 
-        expect(current_path).to eq admin_dashboard_path
+        expect(current_path).to eq "/admin/users/#{admin_user.id}"
 
-        expect(page).to have_css('.flash_alert', text: 'Você não tem permissão para realizar o solicitado')
+        expect(page).to have_css('.flash_notice', text: 'Usuário foi atualizado com sucesso.')
       end
     end
   end

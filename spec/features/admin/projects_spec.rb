@@ -31,9 +31,6 @@ describe 'Projects', type: :feature do
 
   describe 'Actions' do
     describe 'New' do
-      let!(:client) { create(:client, company: admin_user.company) }
-      let(:project) { create(:project, company: client.company, name: 'TRZ') }
-      
       before do
         within '.action_items' do
           click_link 'Novo(a) Projeto'
@@ -41,21 +38,18 @@ describe 'Projects', type: :feature do
       end
 
       it 'must have the form working' do
-
         find('#project_name').fill_in with: 'MinerCamp'
-        find('#project_client_id').find(:option, client.name).select_option
+        find('#project_market').find(:option, 'Interno').select_option
 
         click_button 'Criar Projeto'
 
         expect(page).to have_text('Projeto foi criado com sucesso.') &
-                        have_text('MinerCamp') &
-                        have_text(client.name)
+                        have_text('MinerCamp')
       end
 
       it 'must not work with a project with the same name' do
-
-        find('#project_name').fill_in with: 'TRZ'
-        find('#project_client_id').find(:option, client.name).select_option
+        find('#project_name').fill_in with: project.name
+        find('#project_market').find(:option, 'Interno').select_option
 
         click_button 'Criar Projeto'
 
@@ -80,11 +74,9 @@ describe 'Projects', type: :feature do
           within '#principal' do
             expect(page).to have_text("Nome")  &
                             have_text("Ativo") &
-                            have_text("Cliente") &
                             have_text("Alocações") &
                             have_css('.row-name', text: project.name) &
-                            have_css('.row-active', text: 'Sim') &
-                            have_text(project.client)
+                            have_css('.row-active', text: 'Sim')
           end
         end
       end
@@ -95,8 +87,7 @@ describe 'Projects', type: :feature do
         
         it 'fills the form correctly' do
           within '#alocar-usuarios' do
-            find("#allocate_users_form_not_allocated_users_#{users[0].id}").set(true)
-            find("#allocate_users_form_not_allocated_users_#{users[1].id}").set(true)
+            select users.first.name, from: 'Usuários não alocados*'
             find('#allocate_users_form_start_at').fill_in with: '2019-06-25'
             find('#allocate_users_form_end_at').fill_in with: '2019-06-30'
             click_button 'Criar Alocações'
@@ -104,8 +95,7 @@ describe 'Projects', type: :feature do
 
           expect(page).to have_current_path(admin_allocations_path) &
                           have_css('.flash_notice', text: 'Alocações salvas com sucesso.') &
-                          have_text(users[0].name) &
-                          have_text(users[1].name) &
+                          have_text(users.first.name) &
                           have_text(project.name)
         end
       end
@@ -120,8 +110,7 @@ describe 'Projects', type: :feature do
       it 'have labels' do
         within 'form' do
           expect(page).to have_text("Nome")  &
-                          have_text("Ativo") &
-                          have_text("Cliente")
+                          have_text("Ativo")
         end
       end
 

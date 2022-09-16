@@ -10,19 +10,29 @@ class DashboardController < ApplicationController
   end
 
   def save
-    deletes = Array.wrap(params['delete']).concat(params['add'].keys)
     @punches = current_user.punches
+    company = current_user.company
+    additions = bulk_params(params_add)
+    deletions = Array.wrap(punch_params['delete']).concat(params_add.keys)
 
-    @punches.transaction do
-      @punches.by_days(deletes).delete_all if deletes.any?
-      @punches.where(
-        company: current_user.company
-      ).create(bulk_params(params['add'])) if params['add']
+    @punches_transaction = CreatePunchesInBatchService.call(@punches, company, additions, deletions)
+
+    if @punches_transaction.success?
+      head :created
+    else
+      render json: @punches_transaction.errors, status: :unprocessable_entity
     end
-    head :created
   end
 
   protected
+
+  def punch_params
+    params.permit(add: {}, delete: [])
+  end
+
+  def params_add
+    @params_add ||= punch_params['add']
+  end
 
   def bulk_params(param)
     param.values.flatten.map{|p| p.slice :from, :to, :project_id }

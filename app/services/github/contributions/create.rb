@@ -16,10 +16,10 @@ module Github
         collect_all_contributions
           .map do |result|
             find_or_create_contribution(
-              result.uid,
-              result.rid,
-              result.pull_request._links.html.href,
-              result.pull_request.created_at
+              result.user_id,
+              result.repository_id,
+              result.pull_request_url,
+              result.created_at
             )
           end
       end

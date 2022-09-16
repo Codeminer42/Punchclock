@@ -9,13 +9,17 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      RAILS_ENV: test
+      POSTGRES_PASSWORD: postgres
     services:
       postgres:
         image: postgres:13
@@ -27,39 +31,32 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       matrix:
-        ruby-version: ['2.7.5']
-
+        ruby-version: ["3.1.2"]
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependent libraries
-      run: sudo apt-get install libpq-dev
-    - name: Setup node
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16.13.1
-        cache: 'yarn'
-    - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-      uses: ruby/setup-ruby@master
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Setup Database
-      run: |
-        cp config/database.yml.github-actions config/database.yml
-        bundle exec rake db:create
-        bundle exec rake db:schema:load
-      env:
-        RAILS_ENV: test
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-    - name: "Install js packages"
-      run: "yarn install"
-    - name: Run tests
-      run: bundle exec rake
-      env:
-        RAILS_ENV: test
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        OTP_ENCRYPTION_KEY: 1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1e
+      - uses: actions/checkout@v2
+      - name: Install dependent libraries
+        run: sudo apt-get install libpq-dev
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.1
+          cache: "yarn"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@master
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Setup Database
+        run: |
+          cp config/database.yml.example config/database.yml
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+      - name: "Install js packages"
+        run: "yarn install"
+      - name: Run tests
+        run: bundle exec rake
+        env:
+          OTP_ENCRYPTION_KEY: 1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1e
+          JWT_SECRET_KEY: 0276471e519f6dc9055de64f19d2bdfcffff8889dca596f990fbab0dc480527ce2ca130c9e3d894a99711946a9f31c5a2c9c359f875c51fac8cb1635e66acf62
+      - name: Test Coverage Report
+        uses: paambaati/codeclimate-action@v3.0.0

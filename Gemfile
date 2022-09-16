@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.5'
+ruby '3.1.2'
 
 gem 'rails', '~> 7.0.3.1'
 
@@ -38,6 +38,7 @@ gem 'spreadsheet'
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
 gem 'active_model_serializers', '~> 0.10.13'
+gem 'money-rails', '~> 1.12'
 
 gem 'ransack', '~> 2.3'
 
@@ -48,7 +49,7 @@ gem 'rollbar'
 gem 'chartkick'
 
 gem 'normalize-rails', '~> 4.1.1'
-gem 'validates_timeliness', '~> 5.0.0.beta1'
+gem 'validates_timeliness', '~> 6.0.0.beta2', github: "mitsuru/validates_timeliness", branch: "rails7"
 gem 'enumerize', '~> 2.5.0'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'active_admin_theme'
@@ -64,10 +65,13 @@ gem 'aasm', '~> 5.0', '>= 5.0.8'
 gem 'platform-api', github: 'heroku/platform-api'
 gem 'letsencrypt-rails-heroku', group: 'production'
 
+gem 'rswag-api', '~> 2.5.1'
+gem 'rswag-ui', '~> 2.5.1'
+
 group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
+  gem 'simplecov', '~> 0.20', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'capybara-selenium'
   gem 'selenium-webdriver'
@@ -88,6 +92,8 @@ group :development do
   gem 'web-console', '~> 4.0'
   gem 'listen', '~> 3.2'
   gem 'spring', '~> 3.1.1'
+  gem 'guard'
+  gem 'guard-livereload', '~> 2.5', require: false
 end
 
 gem 'unicorn'
@@ -96,15 +102,12 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.14.0'
   gem 'rspec-rails'
+  gem 'rswag-specs', '~> 2.5.1'
   gem 'pry-rails'
   gem 'pry-remote', '~> 0.1.8'
   gem 'dotenv-rails', '~> 2.7'
   gem 'rubocop', require: false
   gem 'rubocop-faker', '~> 1.1'
-end
-
-group :production, :staging do
-  gem 'passenger', '~> 6.0'
 end
 
 gem "tailwindcss-rails", "~> 2.0"

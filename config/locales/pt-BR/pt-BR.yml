@@ -17,6 +17,7 @@ pt-BR:
       - Sexta-feira
       - Sábado
     formats:
+      default: "%d/%m/%Y"
       month_name: '%B'
   english_evaluations: 'Avaliações de Inglês'
   hour_report_curent_month: 'Report de Horas do mês atual'
@@ -51,6 +52,7 @@ pt-BR:
   errors:
     messages:
       not_saved: "Erro"
+      wrong_credentials: 'Usuário ou Senha incorretos'
   refills:
     navigation:
       logout: "Sair"
@@ -62,6 +64,7 @@ pt-BR:
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
+  not_started: 'Não iniciado'
   finished: 'Finalizado'
   admin:
     search_by: "Por %{model_name}"
@@ -109,3 +112,15 @@ pt-BR:
       verify: 'Verificar'
     links:
       return_to_sign_in: 'Retornar ao Sign In.'
+  allocation_chart: 'Organograma'
+  mentoring: 'Mentoria'
+  offices: 'Escritórios'
+  mentor: 'Mentor'
+  mentors: 'Mentores'
+  mentees: 'Mentorados' 
+  name: 'Nome'
+  skills: 'Habilidades'
+  client: 'Cliente'
+  allocated_until: 'Alocado até'
+  specialty: "Especialidade"
+  english_evaluation: 'Avaliação de Inglês'

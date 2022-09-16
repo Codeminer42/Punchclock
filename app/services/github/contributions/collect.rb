@@ -3,44 +3,50 @@
 module Github
   module Contributions
     class Collect
-      Result = Struct.new(:uid, :rid, :pull_request)
-
       def initialize(company:, client:)
         @company = company
         @client = client
+        @engineers = Wrappers::Engineers.new(company: company)
+        @repositories = Wrappers::Repositories.new(company: company)
       end
 
       def all
-        return [] if company.blank?
-
-        repositories.flat_map do |repository_id, repository_owner, repository_name|
-          client.pull_requests
-                .list(repository_owner, repository_name)
-                .map do |pull_request|
-                  uuid, = engineers.select { |_, username| username ==  pull_request.user.login }
-                                   .flatten
-
-                  Result.new(uuid, repository_id, pull_request) if uuid.present?
-                end.compact
-        end
+        return [] if company.blank? || insufficient_parameters_to_query?
+        fetch_all
       end
 
       private
 
       attr_reader :company, :client
 
-      def engineers
-        @engineers ||= company.users
-                              .engineer
-                              .active
-                              .pluck(:id, :github)
+      def insufficient_parameters_to_query?
+        @repositories.empty? || @engineers.empty?
       end
 
-      def repositories
-        @repositories ||= company.repositories
-                                 .pluck(:id, :link)
-                                 .map { |id, url| [id, url.split('/')[-2..-1]].flatten }
-                                 .compact
+      def fetch_all
+        begin
+          query = QueryBuilder.build_query_string(
+            authors_query,
+            repositories_query
+          )
+
+          client.search
+                .issues(q: query)
+                .items
+                .map { | pull_request | Wrappers::PullRequest.new(pull_request: pull_request, engineers: @engineers, repositories: @repositories) }
+        rescue StandardError => e
+          Rails.logger.error e.message
+          Rails.logger.error e.backtrace.join("\n")
+          []
+        end
+      end
+
+      def repositories_query
+        @repositories.to_query
+      end
+
+      def authors_query
+        @engineers.to_query
       end
     end
   end

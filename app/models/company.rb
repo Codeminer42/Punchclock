@@ -5,7 +5,6 @@ class Company < ApplicationRecord
   has_many :users
   has_many :punches
   has_many :offices
-  has_many :clients
   has_many :regional_holidays, through: :offices
   has_many :contributions
   has_many :allocations

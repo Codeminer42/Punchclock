@@ -19,6 +19,15 @@ GIT
       moneta (~> 1.0.0)
       rate_throttle_client (~> 0.1.0)
 
+GIT
+  remote: https://github.com/mitsuru/validates_timeliness.git
+  revision: f28a62589cc069d1d1f5dfd99e1749edca04cd68
+  branch: rails7
+  specs:
+    validates_timeliness (6.0.0.beta2)
+      activemodel (>= 6.0.0, < 7.1)
+      timeliness (>= 0.3.10, < 1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -200,10 +209,14 @@ GEM
       request_store (>= 1.0)
       ruby2_keywords
     draper-cancancan (1.1.1)
+    em-websocket (0.5.3)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0)
     enumerize (2.5.0)
       activesupport (>= 3.2)
     erubi (1.10.0)
     erubis (2.7.0)
+    eventmachine (1.2.7)
     excon (0.92.3)
     execjs (2.8.1)
     factory_bot (6.2.1)
@@ -219,6 +232,7 @@ GEM
     font-awesome-sass (5.15.1)
       sassc (>= 1.11)
     foreman (0.87.2)
+    formatador (1.1.0)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
     formtastic_i18n (0.7.0)
@@ -230,6 +244,21 @@ GEM
       oauth2 (~> 1.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    guard (2.18.0)
+      formatador (>= 0.2.4)
+      listen (>= 2.7, < 4.0)
+      lumberjack (>= 1.0.12, < 2.0)
+      nenv (~> 0.1)
+      notiffany (~> 0.0)
+      pry (>= 0.13.0)
+      shellany (~> 0.0)
+      thor (>= 0.18.1)
+    guard-compat (1.2.1)
+    guard-livereload (2.5.2)
+      em-websocket (~> 0.5)
+      guard (~> 2.8)
+      guard-compat (~> 1.0)
+      multi_json (~> 1.8)
     has_scope (0.8.0)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
@@ -242,6 +271,7 @@ GEM
       multi_json (>= 1.9.2)
       webrick
     holidays (8.5.0)
+    http_parser.rb (0.8.0)
     httparty (0.20.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -265,6 +295,8 @@ GEM
       railties (>= 3.2.16)
     jquery_mask_rails (0.1.0)
     json (2.6.2)
+    json-schema (2.8.1)
+      addressable (>= 2.4)
     jsonapi-renderer (0.2.2)
     jwt (2.4.1)
     kaminari (1.2.2)
@@ -297,6 +329,7 @@ GEM
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
+    lumberjack (1.2.8)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
@@ -310,10 +343,20 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.2)
     moneta (1.0.0)
+    monetize (1.12.0)
+      money (~> 6.12)
+    money (6.16.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     msgpack (1.5.3)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    nenv (0.3.0)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -333,6 +376,9 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     normalize-rails (4.1.1)
+    notiffany (0.1.3)
+      nenv (~> 0.1)
+      shellany (~> 0.0)
     oauth2 (1.4.10)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
@@ -343,9 +389,6 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
-    passenger (6.0.14)
-      rack
-      rake (>= 0.8.1)
     pg (1.4.1)
     popper_js (1.16.0)
     pry (0.14.1)
@@ -438,6 +481,15 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
+    rswag-api (2.5.1)
+      railties (>= 3.1, < 7.1)
+    rswag-specs (2.5.1)
+      activesupport (>= 3.1, < 7.1)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 7.1)
+    rswag-ui (2.5.1)
+      actionpack (>= 3.1, < 7.1)
+      railties (>= 3.1, < 7.1)
     rubocop (1.31.2)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -473,6 +525,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    shellany (0.0.1)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
     sidekiq (6.5.1)
@@ -517,8 +570,6 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uniform_notifier (1.16.0)
-    validates_timeliness (5.0.0)
-      timeliness (>= 0.3.10, < 1)
     vcr (6.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -580,6 +631,8 @@ DEPENDENCIES
   font-awesome-sass (~> 5.13)
   foreman
   github_api (~> 0.18.2)
+  guard
+  guard-livereload (~> 2.5)
   holidays (~> 8.3)
   httparty
   jquery-easing-rails
@@ -591,9 +644,9 @@ DEPENDENCIES
   letter_opener
   letter_opener_web (~> 1.4)
   listen (~> 3.2)
+  money-rails (~> 1.12)
   nokogiri (~> 1.13.2)
   normalize-rails (~> 4.1.1)
-  passenger (~> 6.0)
   pg (~> 1.2)
   platform-api!
   pry-rails
@@ -605,6 +658,9 @@ DEPENDENCIES
   rollbar
   rqrcode
   rspec-rails
+  rswag-api (~> 2.5.1)
+  rswag-specs (~> 2.5.1)
+  rswag-ui (~> 2.5.1)
   rubocop
   rubocop-faker (~> 1.1)
   sassc-rails
@@ -612,21 +668,21 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   simple_form (~> 5.1.0)
-  simplecov
+  simplecov (~> 0.20)
   spreadsheet
   spring (~> 3.1.1)
   sprockets
   tailwindcss-rails (~> 2.0)
   uglifier
   unicorn
-  validates_timeliness (~> 5.0.0.beta1)
+  validates_timeliness (~> 6.0.0.beta2)!
   vcr
   web-console (~> 4.0)
   webmock
   webpacker (~> 5.1)
 
 RUBY VERSION
-   ruby 2.7.5p203
+   ruby 3.1.2p20
 
 BUNDLED WITH
-   2.1.4
+   2.3.22

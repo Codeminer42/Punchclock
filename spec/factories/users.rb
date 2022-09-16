@@ -8,9 +8,10 @@ FactoryBot.define do
     level                 { 'junior' }
     specialty             { 'backend' }
     github                { Faker::Internet.unique.username }
-    hour_cost             { 15.0 }
     contract_type         { 'employee' }
     role                  { 'normal' }
+    roles                 { [:normal] }
+    contract_company_country { 'brazil' }
     company
     otp_required_for_login { false }
     office                { create(:office, company: company) }
@@ -32,15 +33,15 @@ FactoryBot.define do
     end
 
     trait :admin do
-      role { :admin }
+      roles { [:admin] }
     end
 
     trait :super_admin do
-      role { :super_admin }
+      roles { [:super_admin] }
     end
 
     trait :open_source_manager do
-      role { :open_source_manager }
+      roles { [:open_source_manager] }
     end
 
     trait :with_observation do

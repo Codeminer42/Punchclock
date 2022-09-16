@@ -22,7 +22,7 @@ def create_holiday(office:)
   holiday.offices << office
 end
 
-def create_company(name:, office_cities:, project_names:, clients_name:)
+def create_company(name:, office_cities:, project_names:)
   puts "Creating company #{name}..."
   ActiveRecord::Base.transaction do
     company = Company.find_or_create_by!(name: name)
@@ -33,15 +33,9 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
     end
     puts " done."
 
-    print "..creating company clients..."
-    clients = clients_name.map do |client|
-      Client.create_with(company: company).find_or_create_by!(name: client)
-    end
-    puts " done."
-
     print "..creating company projects..."
     projects = project_names.map do |project|
-      Project.find_or_create_by!(name: project, company: company)
+      Project.find_or_create_by!(name: project, market: Project.market.values.sample, company: company)
     end
     puts " done."
 
@@ -52,10 +46,12 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       admin.password = 'password'
       admin.password_confirmation = 'password'
       admin.role = :super_admin
+      admin.roles = [:super_admin]
       admin.company = company
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
       admin.skip_confirmation!
+      admin.contract_company_country = 'brazil'
     end
 
     User.find_or_create_by!(email: "admin@#{name}.com") do |admin|
@@ -64,11 +60,13 @@ def create_company(name:, office_cities:, project_names:, clients_name:)
       admin.password = 'password'
       admin.password_confirmation = 'password'
       admin.role = :admin
+      admin.roles = [:admin]
       admin.company = company
       admin.office = company.offices.sample
       admin.token = SecureRandom.base58(32)
       admin.token = '9X9ti7nAeN3J2w9hn1om9ztpPMHrT7Mj' if name == 'Codeminer42'
       admin.skip_confirmation!
+      admin.contract_company_country = 'brazil'
     end
     puts " done."
 
@@ -109,6 +107,8 @@ def create_user(company:, number:)
     user.github = "#{company.name}.user.teste#{number}"
     user.allow_overtime = true
     user.skip_confirmation!
+    user.roles = [:normal]
+    user.contract_company_country = 'brazil'
   end
 end
 
@@ -122,7 +122,7 @@ def create_user_contribution(user:, repository:, date:)
       contrib.company_id = user.company.id
       contrib.repository = repository
       contrib.created_at = date
-      contrib.approve
+      contrib.approve(user.id)
       contrib.save!
     end
   end
@@ -175,11 +175,6 @@ codeminer42 = create_company(
     'Rito Gomes',
     'Central',
     'Omnitrade'
-  ],
-  clients_name: [
-    'Client3',
-    'Client4',
-    'Zaca'
   ]
 )
 
@@ -192,10 +187,6 @@ waters_co = create_company(
   project_names: [
     'Tres Zap',
     'Latlux'
-  ],
-  clients_name: [
-    'Client1',
-    'Client2'
   ]
 )
 
@@ -332,3 +323,12 @@ contributions = create_contributions(
   repositories: repos,
   dates: contributions_dates
 )
+
+print 'Creating mentors to some users..'
+
+30.times do
+  mentor = User.all.sample
+  User.all.sample.update(reviewer_id: mentor.id)
+end
+
+puts 'Done.'

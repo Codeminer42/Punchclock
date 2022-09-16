@@ -9,9 +9,9 @@ ActiveAdmin.register User do
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :company_id, :level, :contract_type, :reviewer_id, :hour_cost,
+  permit_params :name, :email, :github, :company_id, :level, :contract_type, :contract_company_country, :reviewer_id,
                 :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
-                :observation, :specialty, :otp_required_for_login, skill_ids: []
+                :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
   scope :all
   scope :active, default: true, group: :active
@@ -96,14 +96,11 @@ ActiveAdmin.register User do
           row :specialty, &:specialty_text
           row :level, &:level_text
           row :contract_type, &:contract_type_text
+          row :contract_company_country, &:contract_company_country_text
           row :role, &:role_text
-          row :skills do
-            user.skills.pluck(:title).to_sentence
-          end
+          row :roles, &:roles_text
+          row :skills
           row :reviewer
-          row :hour_cost do |user|
-            number_to_currency user.hour_cost
-          end
           row :allow_overtime
           row :active
           row :started_at
@@ -119,14 +116,12 @@ ActiveAdmin.register User do
           row :current_allocation
           row :allocations do
             table_for user.allocations.order(start_at: :desc) do
-              column :client do |allocation|
-                allocation.project.client
-              end
               column :project_name do |allocation|
                 allocation.project.name
               end
               column :start_at
               column :end_at
+              column :ongoing
               column '' do |allocation|
                 link_to 'Access Allocation', admin_allocation_path(allocation)
               end
@@ -195,17 +190,16 @@ ActiveAdmin.register User do
       f.input :name
       f.input :email
       f.input :github
-      f.input :hour_cost, input_html: { value: '0.0' }
-      f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at.try(:to_s, :date) }
+      f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
       if current_user.super_admin?
         f.input :office
         f.input :company
         f.input :reviewer
-        f.input :role, as: :select, collection: User.role.values.map { |role| [role.text.titleize, role] }
+        f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.titleize, role] }
         f.input :skills, as: :check_boxes
       else
         f.input :office, collection: current_user.company.offices.order(:city)
-        f.input :role, as: :select, collection: User.role.values.reject{ |value| value == 'super_admin' }.map { |role| [role.text.titleize, role] }
+        f.input :roles, as: :select, multiple: true, collection: User.roles.values.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
         f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
         f.input :reviewer, collection: current_user.company.users.active.order(:name)
         f.input :skills, as: :check_boxes, collection: current_user.company.skills.order(:title)
@@ -214,6 +208,7 @@ ActiveAdmin.register User do
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
+      f.input :contract_company_country, as: :select, collection: User.contract_company_country.values.map { |company_country| [company_country.text.humanize, company_country] }
       f.input :has_api_token, as: :boolean, :input_html => { checked: f.object.token? }
       f.input :allow_overtime
       f.input :active

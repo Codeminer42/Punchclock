@@ -3,15 +3,14 @@ require 'spec_helper'
 describe Api::V1::CompaniesController, :type => :controller do
   let!(:company) { create(:company) }
   let!(:offices) { create_list(:office, 3, company: company) }
-  let!(:user) { create(:user, :with_token, company: company, office: offices.first) }
-  let(:headers) { { token: user.token } }
+  let!(:user) { create(:user, company: company, office: offices.first) }
 
   describe 'GET api/v1/offices' do
     subject { get :offices }
 
     context 'when api token is valid' do
       before do
-        request.headers.merge!(headers)
+        use_auth_header_for(user.id)
       end
 
       it { is_expected.to have_http_status(:ok) }
@@ -29,7 +28,7 @@ describe Api::V1::CompaniesController, :type => :controller do
       it { is_expected.to have_http_status(:unauthorized) }
 
       it 'returns a missing token message' do
-        expect(JSON.parse(subject.body)).to eq('message' => 'Missing Token')
+        expect(JSON.parse(subject.body)).to eq({ 'error'=> 'unauthorized' })
       end
     end
   end
@@ -39,7 +38,7 @@ describe Api::V1::CompaniesController, :type => :controller do
 
     context 'when api token is valid' do
       before do
-        request.headers.merge!(headers)
+        use_auth_header_for(user.id)
       end
 
       it { is_expected.to have_http_status(:ok) }
@@ -59,7 +58,7 @@ describe Api::V1::CompaniesController, :type => :controller do
       it { is_expected.to have_http_status(:unauthorized) }
 
       it 'returns a missing token message' do
-        expect(JSON.parse(subject.body)).to eq('message' => 'Missing Token')
+        expect(JSON.parse(subject.body)).to eq({ 'error' => 'unauthorized' })
       end
     end
   end

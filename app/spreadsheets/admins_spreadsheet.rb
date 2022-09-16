@@ -8,7 +8,6 @@ class AdminsSpreadsheet < BaseSpreadsheet
       translate_date(user.last_sign_in_at),
       user.last_sign_in_ip,
       user.name,
-      user.hour_cost,
       translate_date(user.confirmed_at),
       user.active,
       user.allow_overtime,
@@ -31,7 +30,6 @@ class AdminsSpreadsheet < BaseSpreadsheet
       last_sign_in_at
       last_sign_in_ip
       name
-      hour_cost
       confirmed_at
       active
       allow_overtime

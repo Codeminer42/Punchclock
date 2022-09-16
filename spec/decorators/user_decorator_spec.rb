@@ -129,4 +129,50 @@ RSpec.describe UserDecorator do
       end
     end
   end
+
+  describe '#office_head_name' do
+    subject(:user) { build_stubbed(:user).decorate }
+
+    context 'when office head is set' do
+      let(:office_with_head) { build(:office, :with_head) }
+      before { allow_any_instance_of(User).to receive(:office).and_return(office_with_head) }
+
+      it 'returns office head name' do
+        expect(subject.office_head_name).to eq(office_with_head.head.name)
+      end
+    end
+
+    context 'when office head is nil' do
+      let(:office_without_head) { build(:office) }
+      before { allow_any_instance_of(User).to receive(:office).and_return(office_without_head) }
+
+      it 'returns N/A' do
+        expect(subject.office_head_name).to eq('N/A')
+      end
+    end
+  end
+
+  describe '#skills' do
+    subject(:user) do
+      skills = [
+        create(:skill, title: 'skill 1'),
+        create(:skill, title: 'skill 2'),
+        create(:skill, title: 'skill 3')
+      ]
+      create(:user, skills: skills).decorate
+    end
+    it 'returns skills separated by comma' do
+      expect(subject.skills).to eq('skill 1, skill 2 e skill 3')
+    end
+  end
+
+  describe '#roles_text' do
+    subject(:user) do
+      roles = %i[normal admin super_admin]
+      create(:user, roles: roles).decorate
+    end
+    it 'returns roles separated by comma and humanized' do
+      expect(subject.roles_text).to eq('normal, admin e super admin')
+    end
+  end
 end

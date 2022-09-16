@@ -32,7 +32,7 @@ RSpec.shared_examples 'an unauthenticated resource action' do
     expect(subject.content_type).to eq 'application/json; charset=utf-8'
   end
 
-  it 'returns a missing token message' do
-    expect(JSON.parse(subject.body)).to eq('message' => 'Missing Token')
+  it 'returns a unauthorized message' do
+    expect(JSON.parse(subject.body)).to eq('error'=>'unauthorized')
   end
 end

@@ -4,4 +4,4 @@ en:
       blank: is empty
   date:
     formats:
-      default: "%d/%m/%Y"
+      default: "%m/%d/%Y"

@@ -24,6 +24,8 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
       let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
       let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
       let!(:brian) { create(:user, name: 'Brian May', company: company) }
+      let!(:leeroy) { create(:user, name: 'Leeroy Jenkins', company: company) }
+      let!(:satoshi) { create(:user, name: 'Satoshi Nakamoto', company: company) }
 
       let(:names) { call.map { |allocation| allocation.user.name } }
 
@@ -32,29 +34,50 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
                start_at: 2.months.after,
                end_at: 3.months.after,
                user: roan,
-               company: company)
+               company: company,
+               ongoing: true)
+
+        create(:allocation,
+               start_at: 1.months.before,
+               end_at: 4.months.after,
+               user: brian,
+               company: company,
+               ongoing: true)
 
         create(:allocation,
                start_at: 3.months.after,
-               end_at: 4.months.after,
-               user: brian,
+               end_at: 4.months.after + 1,
+               user: alex,
+               company: company,
+               ongoing: true)
+
+        create(:allocation,
+               start_at: 3.months.before,
+               end_at: 2.months.before,
+               user: leeroy,
                company: company)
+
+        create(:allocation,
+               start_at: 3.months.before,
+               end_at: 2.months.before,
+               user: satoshi,
+               company: company,
+               ongoing: true)
       end
 
-      it 'returns unallocateds and actives' do
-        expect(names).to eq ['Alex Doratov', 'John Doe', 'Roan Britt', 'Brian May']
+      it 'returns users with ongoing allocations in order of finished > allocations about to finish > without end > no allocation' do
+        expect(names).to eq ['Satoshi Nakamoto', 'Roan Britt', 'Brian May', 'Alex Doratov', 'John Doe', 'Leeroy Jenkins']
       end
     end
 
-    context 'when there are closed allocations' do
-      let!(:john) { create(:user, name: 'John Doe', company: company) }
-      let!(:alex) { create(:user, name: 'Alex Doratov', company: company) }
+    context 'when there are inactive users' do
       let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
       let!(:brian) { create(:user, name: 'Brian May', company: company) }
 
       let(:names) { call.map { |allocation| allocation.user.name } }
 
       before do
+        brian.disable!
         create(:allocation,
                start_at: 3.months.after,
                end_at: 4.months.after,
@@ -68,8 +91,31 @@ RSpec.describe AllocationsAndUnalocatedUsersQuery do
                company: company)
       end
 
-      it 'returns unallocateds, closed and actives' do
-        expect(names).to eq ['Alex Doratov', 'John Doe', 'Brian May', 'Roan Britt']
+      it 'returns only active users' do
+        expect(names).to eq ['Roan Britt']
+      end
+    end
+
+    context 'when there are more than one active and the other allocation is in the future' do
+      let!(:roan) { create(:user, name: 'Roan Britt', company: company) }
+
+      before do
+        create(:allocation,
+               start_at: Time.zone.today,
+               end_at: 1.months.after,
+               user: roan,
+               ongoing: true,
+               company: company)
+
+        create(:allocation,
+               start_at: 2.months.after,
+               end_at: 3.months.after,
+               user: roan,
+               company: company)
+      end
+
+      it 'returns only active allocation for that user user' do
+        expect(call.pluck(:id)).to eq roan.allocations.ongoing.pluck(:id)
       end
     end
   end

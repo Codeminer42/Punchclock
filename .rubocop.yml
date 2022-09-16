@@ -9,3 +9,13 @@ ClassVars:
   Enabled: false
 DotPosition:
   EnforcedStyle: leading
+Layout/LineLength:
+  Exclude:
+   - spec/**/*
+
+Metrics/BlockLength:
+  Max: 99
+  Exclude:
+    - spec/**/*
+Style/StringLiterals:
+  Enabled: false

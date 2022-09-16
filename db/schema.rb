@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_12_203711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,10 +18,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
     t.date "start_at", null: false
-    t.date "end_at"
+    t.date "end_at", null: false
     t.bigint "company_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.boolean "ongoing", default: true
+    t.integer "hourly_rate_cents", default: 0, null: false
+    t.string "hourly_rate_currency", default: "BRL", null: false
     t.index ["company_id"], name: "index_allocations_on_company_id"
     t.index ["project_id"], name: "index_allocations_on_project_id"
     t.index ["user_id"], name: "index_allocations_on_user_id"
@@ -35,15 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["evaluation_id"], name: "index_answers_on_evaluation_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
-  end
-
-  create_table "clients", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "company_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "active", default: true
-    t.index ["company_id"], name: "index_clients_on_company_id"
   end
 
   create_table "companies", id: :serial, force: :cascade do |t|
@@ -125,8 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
     t.datetime "updated_at", precision: nil
     t.integer "company_id"
     t.boolean "active", default: true
-    t.integer "client_id"
-    t.index ["client_id"], name: "index_projects_on_client_id"
+    t.string "market"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["name", "company_id"], name: "index_projects_on_name_and_company_id", unique: true
   end
@@ -221,7 +214,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
     t.integer "company_id"
-    t.decimal "hour_cost", default: "0.0", null: false
     t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
@@ -245,6 +237,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
     t.string "otp_secret"
+    t.integer "roles", array: true
+    t.integer "contract_company_country"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -260,7 +254,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_142319) do
   add_foreign_key "allocations", "users"
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
-  add_foreign_key "clients", "companies"
   add_foreign_key "contributions", "repositories"
   add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "companies"

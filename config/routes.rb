@@ -1,5 +1,8 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
+  mount Rswag::Api::Engine => '/api-docs'
+  mount Rswag::Ui::Engine => '/api-docs'
   mount Sidekiq::Web => '/sidekiq'
 
   ActiveAdmin.routes(self)
@@ -49,6 +52,8 @@ Rails.application.routes.draw do
       get "users" => "companies#users"
       get "offices" => "companies#offices"
       get "holidays" => "holidays#holidays_dashboard"
+      post "request" => "token#request_token"
+      post "refresh" => "token#refresh_token"
 
       resources :punches, only: %i[index show bulk] do
         collection do

@@ -25,6 +25,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validations' do
+    let!(:user) { create(:user, :admin) }
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
@@ -100,21 +101,65 @@ RSpec.describe User, type: :model do
                                               hr: 5) }
   end
 
+  describe 'roles' do
+    it do
+      is_expected.to enumerize(:roles)
+      .in(
+        normal: 0,
+        evaluator: 1,
+        admin: 2,
+        super_admin: 3,
+        open_source_manager: 4,
+        hr: 5
+      )
+      .with_multiple(true)
+    end
+  end
+
   describe 'scopes' do
     let(:user_not_in_experience){ create(:user, created_at: 5.months.ago)}
     let(:ruby)          { create(:skill, title: 'ruby') }
     let(:vuejs)         { create(:skill, title: 'vuejs') }
     let!(:full_stack)   { create(:user, skills: [ruby, vuejs]) }
 
-    context '#by_skills' do
+    context '.by_skills' do
       it 'returns the users that have all the skills selected' do
         expect(User.by_skills_in(ruby.id, vuejs.id).first).to eq(full_stack)
       end
     end
 
-    context '#not_in_experience' do
+    context '.not_in_experience' do
       it 'returns the user that are not in experience period' do
         expect(User.not_in_experience).to contain_exactly(user_not_in_experience)
+      end
+    end
+
+    describe '.by_roles_in' do
+      let!(:user1) { create(:user, roles: %i[admin super_admin]) }
+      let!(:user2) { create(:user, roles: [:super_admin]) }
+
+      context 'by admin role only' do
+        let(:roles_names) { [:admin] }
+        it 'returns users with admin role' do
+          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1)
+        end
+      end
+
+      context 'by admin and super admin roles' do
+        let(:roles_names) { %i[admin super_admin] }
+        it 'returns users with admin or super admin roles' do
+          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1, user2)
+        end
+      end
+    end
+
+    describe '.admin' do
+      let!(:user1) { create(:user, roles: %i[admin open_source_manager]) }
+      let!(:user2) { create(:user, roles: [:normal]) }
+      let!(:user3) { create(:user, roles: [:admin]) }
+
+      it 'returns users with admin role' do
+        expect(User.admin.to_a).to contain_exactly(user1, user3)
       end
     end
   end
@@ -184,8 +229,8 @@ RSpec.describe User, type: :model do
   end
 
   context 'allocations' do
-    let(:user)           { create(:user) }
-    let!(:allocation) { create(:allocation, :with_end_at, user: user) }
+    let(:user) { create(:user) }
+    let!(:allocation) { create(:allocation, user: user, ongoing: true) }
 
     it 'returns the user allocated project' do
       expect(user.current_allocation).to eq(allocation.project)
@@ -263,6 +308,68 @@ RSpec.describe User, type: :model do
 
     it "not allows admin access for user without admin or super_admin roles" do
       expect(user).to_not have_admin_access
+    end
+  end
+
+  describe '#is_admin?' do
+    context 'with role hr' do
+      let(:hr_user) { create(:user, roles: [:hr]) }
+
+      it 'is considered an admin' do
+        expect(hr_user.is_admin?).to be_truthy
+      end
+    end
+
+    context 'with role admin' do
+      let(:admin_user) { create(:user, roles: [:admin]) }
+
+      it 'is considered an admin' do
+        expect(admin_user.is_admin?).to be_truthy
+      end
+    end
+
+    context 'with role super admin' do
+      let(:super_admin_user) { create(:user, roles: [:super_admin]) }
+      
+      it 'is considered an admin' do
+        expect(super_admin_user.is_admin?).to be_truthy
+      end
+    end
+
+    describe '#first_and_last_name' do
+      subject(:user) { build_stubbed(:user, name: name) }
+
+      context 'when user name has 3 names' do
+        let(:name) { 'Name1 Name2 Name3' }
+
+        it 'returns only first and last name' do
+          expect(user.first_and_last_name).to eq 'Name1 Name3'
+        end
+      end
+
+      context 'when user name has 2 names' do
+        let(:name) { 'Name1 Name2' }
+
+        it 'returns only first and last name' do
+          expect(user.first_and_last_name).to eq 'Name1 Name2'
+        end
+      end
+
+      context 'when user name has 1 name' do
+        let(:name) { 'Name1' }
+
+        it 'returns only first name' do
+          expect(user.first_and_last_name).to eq 'Name1'
+        end
+      end
+
+      context 'when user name is empty' do
+        let(:name) { '' }
+
+        it 'returns a empty string' do
+          expect(user.first_and_last_name).to eq ''
+        end
+      end
     end
   end
 end

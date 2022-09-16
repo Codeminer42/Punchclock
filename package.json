@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "server": "webpack-dev-server",
+    "test": "jest --env=jsdom",
     "linter:css": "stylelint 'app/assets/stylesheets/**/*' --syntax scss"
   },
   "engines": {
@@ -21,12 +22,13 @@
     "chart.js": "^2.9.4",
     "chartkick": "^3.2.1",
     "classnames": "^2.2.3",
-    "highcharts": "^8.2.2",
+    "datatables.net-bs4": "^1.12.1",
+    "highcharts": "^9.0.0",
     "history": "~4.6.1",
     "immutable": "~3.8.1",
     "jquery": "^3.2.1",
     "lodash": "~4.17.4",
-    "moment": "~2.18.1",
+    "moment": "~2.29.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -40,17 +42,27 @@
     "redux-thunk": "^2.2.0",
     "startbootstrap-sb-admin": "5.0.3",
     "stats-webpack-plugin": "^0.6.0",
-    "superagent": "~3.5.2",
+    "superagent": "~7.0.2",
     "superagent-as-promised": "~4.0.0",
     "webpack": "^4.33.0",
     "webpack-dev-server": "^3.7.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
     "stylelint": "^9.10.1",
     "stylelint-config-idiomatic-css": "^1.0.6",
     "stylelint-config-recommended-scss": "^3.2.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-scss": "^3.5.1",
     "webpack-cli": "^3.3.3"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "config/webpack/test.js"
+    ]
   }
 }
