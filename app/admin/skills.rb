@@ -18,7 +18,6 @@ ActiveAdmin.register Skill do
   form do |f|
     f.inputs "Skills details" do
       f.input :title
-      end
     end
     f.actions
   end

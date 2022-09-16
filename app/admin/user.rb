@@ -191,7 +191,6 @@ ActiveAdmin.register User do
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.reject { |role| role == :super_admin }.map { |role| [role.text.titleize, role] }
       f.input :reviewer, collection: User.active.order(:name)
       f.input :skills, as: :check_boxes, collection: User..skills.order(:title)
-      end
       f.input :occupation, as: :radio
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
