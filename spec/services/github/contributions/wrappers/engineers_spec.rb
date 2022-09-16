@@ -2,16 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
 
-  let(:company) { build_stubbed(:company) }
   let(:engineers) { double(active: active_engineers) }
   let(:users) { double(engineer: engineers) }
 
-  before do
-    allow(company).to receive(:users).and_return(users)
-  end
-
   describe '#empty?' do
-    subject(:empty) { described_class.new(company: company).empty? }
+    subject(:empty) { described_class.new.empty? }
 
     context 'when there are no engineers' do
       let(:active_engineers) { double(pluck: []) }
@@ -27,7 +22,7 @@ RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
   end
 
   describe '#to_query' do
-    subject(:to_query) { described_class.new(company: company).to_query }
+    subject(:to_query) { described_class.new.to_query }
 
     context 'when there are no engineers' do
       let(:active_engineers) { double(pluck: []) }
@@ -43,7 +38,7 @@ RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
   end
 
   describe '#find_by_github_user' do
-    subject(:find_by_github_user) { described_class.new(company: company).find_by_github_user(github_user_to_find) }
+    subject(:find_by_github_user) { described_class.new.find_by_github_user(github_user_to_find) }
     let(:github_user_to_find) { 'the_wanted_user' }
 
     context 'when the id is not found' do

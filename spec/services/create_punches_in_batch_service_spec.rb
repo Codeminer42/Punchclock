@@ -4,9 +4,8 @@ RSpec.describe CreatePunchesInBatchService do
   describe '#call' do
     let(:error_message) { I18n.t('activerecord.errors.models.period.attributes.base.invalid_periods') }
     let(:user) { create(:user) }
-    let(:project) { create(:project, company: user.company) }
     
-    subject(:punches_transaction) { described_class.call(user.punches, user.company, additions, deletions) }
+    subject(:punches_transaction) { described_class.call(user.punches, additions, deletions) }
     
     context 'with valid data' do
       let(:deletions) { ['2022-05-16'] }

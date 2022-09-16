@@ -1,15 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Github::Contributions::Wrappers::Repositories, type: :service do
-
-  let(:company) { build_stubbed(:company) }
-
-  before do
-    allow(company).to receive(:repositories).and_return(repositories)
-  end
-
   describe '#empty?' do
-    subject(:empty) { described_class.new(company: company).empty? }
+    subject(:empty) { described_class.new.empty? }
 
     context 'when there are no repositories' do
       let(:repositories) { double(pluck: []) }
@@ -25,7 +18,7 @@ RSpec.describe Github::Contributions::Wrappers::Repositories, type: :service do
   end
 
   describe '#to_query' do
-    subject(:to_query) { described_class.new(company: company).to_query }
+    subject(:to_query) { described_class.new.to_query }
 
     context 'when there are no repositories' do
       let(:repositories) { double(pluck: []) }
@@ -41,7 +34,7 @@ RSpec.describe Github::Contributions::Wrappers::Repositories, type: :service do
   end
 
   describe '#find_repository_id_by_name' do
-    subject(:find_repository_id_by_name) { described_class.new(company: company).find_repository_id_by_name(repository_to_find) }
+    subject(:find_repository_id_by_name) { described_class.new.find_repository_id_by_name(repository_to_find) }
     let(:repository_to_find) { 'owner3/name3' }
 
     context 'when the id is not found' do

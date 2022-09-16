@@ -2,21 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Github::Contributions::Wrappers::PullRequest do
 
-  let(:company) { build_stubbed(:company) }
   let(:engineers) { double(active: double(pluck: [['github_user', 999]])) }
   let(:repositories) { double(pluck: [[1, 'https://github.com/owner/repo-name']]) }
   let(:users) { double(engineer: engineers) }
   let(:pull_request) { double(created_at: '2022-01-01', html_url: 'https://github.com/owner/repo-name/pulls/123', user: double(login: 'github_user')) }
 
-  let(:engineers_wrapper) { Github::Contributions::Wrappers::Engineers.new(company: company) }
-  let(:repositories_wrapper) { Github::Contributions::Wrappers::Repositories.new(company: company) }
+  let(:engineers_wrapper) { Github::Contributions::Wrappers::Engineers.new }
+  let(:repositories_wrapper) { Github::Contributions::Wrappers::Repositories.new }
 
   subject { described_class.new(pull_request: pull_request, engineers: engineers_wrapper, repositories: repositories_wrapper) }
-
-  before do
-    allow(company).to receive(:users).and_return(users)
-    allow(company).to receive(:repositories).and_return(repositories)
-  end
 
   describe '#pull_request_url' do
     it { expect(subject.pull_request_url).to eq 'https://github.com/owner/repo-name/pulls/123' }

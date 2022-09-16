@@ -10,16 +10,9 @@ RSpec.describe Github::Contributions::Collect, type: :service do
   end
 
   describe '#all' do
-    subject(:all) { described_class.new(company: company, client: client).all }
+    subject(:all) { described_class.new(client: client).all }
 
     let(:client) { class_double(Github) }
-    let(:company) { build_stubbed(:company) }
-
-    context 'when company is not present' do
-      let(:company) { nil }
-
-      it { is_expected.to be_empty }
-    end
 
     context 'when there are no repositories in database' do
       it { is_expected.to be_empty }
@@ -28,10 +21,6 @@ RSpec.describe Github::Contributions::Collect, type: :service do
     context 'when there are no engineers in database' do
       let(:repositories) { double(pluck: [[1, 'http://example.com']]) }
 
-      before do
-        allow(company).to receive(:repositories).and_return(repositories)
-      end
-      
       it { is_expected.to be_empty }
     end
 
@@ -41,8 +30,6 @@ RSpec.describe Github::Contributions::Collect, type: :service do
       let(:users) { double(engineer: engineers) }
 
       before do
-        allow(company).to receive(:repositories).and_return(repositories)
-        allow(company).to receive(:users).and_return(users)
         allow(client).to receive(:search) { raise 'any error' }
       end
 
@@ -57,8 +44,6 @@ RSpec.describe Github::Contributions::Collect, type: :service do
       let(:client_search) { double(issues: pull_requests) }
 
       before do
-        allow(company).to receive(:repositories).and_return(repositories)
-        allow(company).to receive(:users).and_return(users)
         allow(client).to receive(:search).and_return(client_search)
       end
 

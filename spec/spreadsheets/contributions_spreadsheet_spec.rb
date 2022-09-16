@@ -8,7 +8,6 @@ RSpec.describe ContributionsSpreadsheet do
   let(:header_attributes) do
     %w[
       user
-      company
       link
       state
       created_at
@@ -19,7 +18,6 @@ RSpec.describe ContributionsSpreadsheet do
   let (:body_attributes) do
     [
       contribution.user.name,
-      contribution.company.name,
       contribution.link,
       Contribution.human_attribute_name("state/#{contribution.state}"),
       I18n.l(contribution.created_at, format: :long),
