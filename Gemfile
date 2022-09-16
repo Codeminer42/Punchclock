@@ -109,7 +109,3 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-faker', '~> 1.1'
 end
-
-group :production, :staging do
-  gem 'passenger', '~> 6.0'
-end
