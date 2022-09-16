@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
 
   describe '#perform' do
-    let(:company) { create :company, name: "Codeminer42" }
-    let(:active_user) { create :user, company: company, active: true }
+    let(:active_user) { create :user, active: true }
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
     let(:last_30_work_days) do
       ('2019-04-16'.to_date..'2019-05-15'.to_date).select { |day| day.on_weekday? && !day.holiday?(:br) }
@@ -37,7 +36,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
     context 'user with all punches registered' do
       let!(:registered_punches) do
         last_30_work_days.map do |day| 
-          create_list :punch, 2, user: active_user, company: company, from: day.to_datetime, to: day.to_datetime + 4.hour 
+          create_list :punch, 2, user: active_user, from: day.to_datetime, to: day.to_datetime + 4.hour 
         end
       end
 
@@ -49,7 +48,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
 
     context 'user with all punches of only one day registered' do
       let!(:registered_punches) do
-        create_list :punch, 2, user: active_user, company: company, 
+        create_list :punch, 2, user: active_user, 
         from: last_30_work_days.last, to: last_30_work_days.last + 4.hour
       end
 
@@ -61,7 +60,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
 
     context 'user with only 1 punch of a day registered' do
       let!(:half_day_registered) do
-        create :punch, user: active_user, company: company, 
+        create :punch, user: active_user, 
         from: last_30_work_days.first, to: last_30_work_days.first + 4.hour
       end
 

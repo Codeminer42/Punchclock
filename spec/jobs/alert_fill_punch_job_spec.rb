@@ -6,9 +6,8 @@ RSpec.describe AlertFillPunchJob, type: :job do
 
     # TODO: Add SPECS for the "end of month" use case
     let(:period) { 'fifteen' }
-    let!(:company) { create(:company, name: "Codeminer42") }
-    let(:admin) { create(:user, :admin, company: company) }
-    let(:active_user) { create(:user, company: company, active: true) }
+    let(:admin) { create(:user, :admin) }
+    let(:active_user) { create(:user, active: true) }
     let(:inactive_user) { create(:user, active: false) }
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
