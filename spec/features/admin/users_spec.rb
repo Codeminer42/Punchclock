@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Users', type: :feature do
-  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
   let(:user)       { create(:user, :admin, :with_started_at, :with_token) }
 
   before do

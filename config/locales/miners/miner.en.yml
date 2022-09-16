@@ -48,7 +48,6 @@ en:
         normal: Normal
         evaluator: Evaluator
         admin:  Admin
-        super_admin: Super Admin
     question:
       kind:
         multiple_choice: Multiple Choice

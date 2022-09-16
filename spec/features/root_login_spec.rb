@@ -11,14 +11,6 @@ feature 'Login', type: :feature do
     end
   end
 
-  context 'when user is super admim' do
-    let(:super_user) { create(:user, :super_admin) }
-    it 'login to /admin/dashboard' do
-      sign_in(super_user)
-      expect(current_path).to eq(admin_dashboard_path)
-    end
-  end
-
   context 'when user is admin' do
     let(:admin_user) { create(:user, :admin, occupation: :administrative) }
     it 'login to /admin/dashboard' do

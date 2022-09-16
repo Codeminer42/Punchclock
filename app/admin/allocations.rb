@@ -11,12 +11,8 @@ ActiveAdmin.register Allocation do
   menu parent: User.model_name.human(count: 2), priority: 4
 
   filter :ongoing
-  filter :user, collection: proc {
-    User.active.order(:name)
-  }
-  filter :project, collection: proc {
-    Project.active.order(:name)
-  }
+  filter :user, collection: User.active.order(:name)
+  filter :project, collection: Project.active.order(:name)
   filter :start_at
   filter :end_at
 

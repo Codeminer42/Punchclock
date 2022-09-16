@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Admin::ContributionsController, type: :controller do
   render_views
 
-  let(:admin) { build_stubbed(:user, :super_admin) }
+  let(:admin) { build_stubbed(:user, :admin) }
   let(:contribution) { build_stubbed(:contribution) }
   let(:page) { Capybara::Node::Simple.new(response.body) } 
 

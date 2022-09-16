@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 feature "RegionalHolidays", type: :feature do
-  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
   background do
     create(:regional_holiday)

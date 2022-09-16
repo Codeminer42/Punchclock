@@ -35,10 +35,6 @@ FactoryBot.define do
       roles { [:admin] }
     end
 
-    trait :super_admin do
-      roles { [:super_admin] }
-    end
-
     trait :open_source_manager do
       roles { [:open_source_manager] }
     end

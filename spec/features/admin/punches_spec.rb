@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 feature "Punches with super admin_user", type: :feature do
-  let(:admin_user) { create :user, :super_admin }
+  let(:admin_user) { create :user, :admin }
   let!(:punch) { create :punch }
   let!(:user) { create :user }
   let!(:project) { create :project }
