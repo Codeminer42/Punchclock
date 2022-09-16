@@ -323,3 +323,12 @@ contributions = create_contributions(
   repositories: repos,
   dates: contributions_dates
 )
+
+print 'Creating mentors to some users..'
+
+30.times do
+  mentor = User.all.sample
+  mentee = User.all.sample.update(reviewer_id: mentor.id)
+end
+
+puts 'Done.'
