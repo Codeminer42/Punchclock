@@ -9,7 +9,7 @@
   <tbody>
     <% mentorings.each do |city, mentoring| %>
       <tr>
-        <th class="mentoring_table__mentor_city" rowspan="<%= mentorings.count %>"><%= city %></th>
+        <th class="mentoring_table__mentor_city" rowspan="<%= mentoring.count %>"><%= city %></th>
       <% mentoring.each do |mentor| %>
         <td class="mentoring_table__mentor_name"><%= mentor.name %></td>
         <td class="mentoring_table__mentor_mentees"><%= mentor.mentees.join(', ') %></td>
