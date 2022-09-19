@@ -12,8 +12,8 @@ ActiveAdmin.register Office do
   scope :active, default: true
   scope :inactive
 
-  filter :city, as: :select, collection: -> { User.offices.order(:city) }
-  filter :head, collection: -> { User.all.order(:name) }
+  filter :city, as: :select, collection: -> { Office.order(:city) }
+  filter :head, collection: -> { User.order(:name) }
 
   controller do
     def search_by_id

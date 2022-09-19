@@ -19,8 +19,6 @@ RSpec.describe Github::Contributions::Collect, type: :service do
     end
 
     context 'when there are no engineers in database' do
-      let(:repositories) { double(pluck: [[1, 'http://example.com']]) }
-
       it { is_expected.to be_empty }
     end
 
@@ -37,9 +35,8 @@ RSpec.describe Github::Contributions::Collect, type: :service do
     end
 
     context 'when Pull Requests are fetched from GitHub API' do
-      let(:repositories) { double(pluck: [[293, 'http://github.com/owner/name']]) }
-      let(:engineers) { double(active: double(pluck: [['github_user', 100]])) }
-      let(:users) { double(engineer: engineers) }
+      let!(:repository) { create(:repository) }
+      let!(:user) { create(:user) }
       let(:pull_requests) { double(items: [ double(created_at: '2022-01-01', html_url: 'http://github.com/owner/name/pull/123', user: double(login: 'github_user')) ]) }
       let(:client_search) { double(issues: pull_requests) }
 

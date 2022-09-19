@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Users', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:user)       { create(:user, :admin, :with_started_at, :with_token) }
+  let(:user)       { create(:user, :with_started_at, :with_token) }
 
   before do
     sign_in(admin_user)
@@ -254,7 +254,6 @@ describe 'Users', type: :feature do
             travel_to Time.new(2021, 6, 1) do
               refresh
               expect(page).to have_table('') &
-                              have_text('Empresa') &
                               have_text('Projeto') &
                               have_css('.col.col-when', text: punch.when_day) &
                               have_css('.col.col-from', text: punch.from_time) &
@@ -298,7 +297,6 @@ describe 'Users', type: :feature do
         within 'form' do
           expect(page).to have_text('Nome') &
                           have_text('E-mail') &
-                          have_text('Empresa') &
                           have_text('Escritório') &
                           have_text('Ocupação') &
                           have_text('Especialidade') &
@@ -328,7 +326,7 @@ describe 'Users', type: :feature do
       end
 
       it 'updates yourself role information' do
-        first('li', text: 'Super Admin')
+        first('li', text: 'Admin')
         find('.selection').click
         first('li', text: 'Normal').click
         click_button 'Atualizar Usuário'

@@ -32,6 +32,9 @@ class AbilityAdmin
   attr_reader :action
 
   def admin_permitions(user)
+    can :manage, action + [
+      Punch
+    ]
     can :manage, action
     can :read, Punch
     can :manage, Punch, user_id: user.id

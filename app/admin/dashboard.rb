@@ -16,14 +16,14 @@ ActiveAdmin.register_page "Dashboard" do
           [user_label, user.id]
         end
 
-        offices_collection = current_user.offices.order(:city).decorate.map do |office|
+        offices_collection = Office.order(:city).decorate.map do |office|
           [
             "#{office.city.titleize} - #{office.head} - #{office.score}",
             office.id
           ]
         end
 
-        projects_collection = current_user.projects.active.order(:name).map do |project|
+        projects_collection = Project.active.order(:name).map do |project|
           [ project.name, project.id ]
         end
 

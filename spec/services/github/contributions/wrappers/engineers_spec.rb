@@ -2,20 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
 
-  let(:engineers) { double(active: active_engineers) }
-  let(:users) { double(engineer: engineers) }
-
   describe '#empty?' do
     subject(:empty) { described_class.new.empty? }
-
+    
     context 'when there are no engineers' do
-      let(:active_engineers) { double(pluck: []) }
-
       it { is_expected.to be true }
     end
-
+    
     context 'when there are engineers' do
-      let(:active_engineers) { double(pluck: [['user1', 1], ['user2', 2]]) }
+      let!(:user) { create(:user) }
 
       it { is_expected.to be false }
     end
@@ -25,32 +20,30 @@ RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
     subject(:to_query) { described_class.new.to_query }
 
     context 'when there are no engineers' do
-      let(:active_engineers) { double(pluck: []) }
-
       it { is_expected.to be_empty }
     end
 
     context 'when there are engineers' do
-      let(:active_engineers) { double(pluck: [['user1', 1], ['user2', 2]]) }
+      let!(:user) { create(:user) }
 
-      it { is_expected.to eq 'author:user1 author:user2'}
+      it { is_expected.to eq "author:#{user.github}" }
     end
   end
 
   describe '#find_by_github_user' do
-    subject(:find_by_github_user) { described_class.new.find_by_github_user(github_user_to_find) }
-    let(:github_user_to_find) { 'the_wanted_user' }
-
+    subject(:find_by_github_user) { described_class.new.find_by_github_user(user.github) }
+    let(:user) { create(:user) }
+    
     context 'when the id is not found' do
-      let(:active_engineers) { double(pluck: [['user1', 1], ['user2', 2]]) }
+      before do
+        allow(user).to receive(:github).and_return('')
+      end
 
       it { is_expected.to be_nil }
     end
 
     context 'when the user is found' do
-      let(:active_engineers) { double(pluck: [['the_wanted_user', 100], ['user1', 1], ['user2', 103]]) }
-
-      it { is_expected.to eq 100  }
+      it { is_expected.to eq user.id  }
     end
   end
 end

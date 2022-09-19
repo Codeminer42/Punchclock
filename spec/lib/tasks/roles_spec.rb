@@ -12,7 +12,7 @@ describe 'roles' do
     it { expect { subject }.to change { admin_user.reload.roles.values }.from(["normal"]).to(['admin']) }
 
     context 'when user already has a given role' do
-      let!(:admin_user) { create(:user, role: 'normal', roles: ['admin']) }
+      let!(:admin_user) { create(:user, role: 'admin', roles: ['normal']) }
       it 'updates roles' do
         expect { subject }.to change { admin_user.reload.roles.values }
           .from(['normal']).to(['admin'])

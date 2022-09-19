@@ -76,7 +76,7 @@ ActiveAdmin.register Allocation do
       users = User.engineer.active.order(:name).select(:id, :name)
 
       input :user, as: :select, collection: users
-      input :project, collection: (current_user.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
+      input :project, collection: (Project.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
       input :hourly_rate
       input :hourly_rate_currency, as: :select, collection: Allocation::HOURLY_RATE_CURRENCIES
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }

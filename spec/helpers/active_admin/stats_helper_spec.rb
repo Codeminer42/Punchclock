@@ -13,7 +13,7 @@ describe ActiveAdmin::StatsHelper do
 
     describe 'returned hash' do
       let!(:data) do
-        helper.constributions_offices_data(ContributionsByOfficeQuery.new.by_office.approved.to_relation)
+        helper.constributions_offices_data(ContributionsByOfficeQuery.new.approved.to_relation)
       end
 
       it 'includes correct number_of_contributions for office' do
@@ -27,7 +27,7 @@ describe ActiveAdmin::StatsHelper do
 
     describe '#constributions_users_data' do
       let!(:data) do
-        contribs = ContributionsByUserQuery.new.by_user.approved.to_hash
+        contribs = ContributionsByUserQuery.new.approved.to_hash
 
         helper.constributions_users_data(
           contributions: contribs,

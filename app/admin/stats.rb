@@ -3,14 +3,14 @@
 include ActiveAdmin::StatsHelper
 
 def contributions_by_offices(month)
-  query = ContributionsByOfficeQuery.new.by_office.approved
+  query = ContributionsByOfficeQuery.new.approved
 
   relation = month.empty? ? query.to_relation : query.per_month(month.to_i).to_relation
   ActiveAdmin::StatsHelper.constributions_offices_data(relation)
 end
 
 def contributions_by_users(month)
-  query = ContributionsByUserQuery.new.by_users.approved
+  query = ContributionsByUserQuery.new.approved
   limitQuantity = 5
 
   per_users = month.empty? ? query.to_hash : query.per_month(month.to_i).to_hash
@@ -35,11 +35,11 @@ ActiveAdmin.register_page 'Stats' do
   content title: proc { I18n.t('stats') } do
     @months = I18n.t('date.month_names').drop(1).map(&:capitalize).zip(1..12).take(Date.today.month)
 
-    relation = ContributionsByOfficeQuery.new.by_office.approved.to_relation
+    relation = ContributionsByOfficeQuery.new.approved.to_relation
     @stats = ActiveAdmin::StatsHelper.constributions_offices_data(relation)
     @max = @stats.values.max
 
-    per_users = ContributionsByUserQuery.new.by_users.approved.to_hash
+    per_users = ContributionsByUserQuery.new.approved.to_hash
     @per_user_stats = ActiveAdmin::StatsHelper.constributions_users_data(
       contributions: per_users,
       limit: 5

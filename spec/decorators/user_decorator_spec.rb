@@ -172,7 +172,7 @@ RSpec.describe UserDecorator do
       create(:user, roles: roles).decorate
     end
     it 'returns roles separated by comma and humanized' do
-      expect(subject.roles_text).to eq('normal, admin e super admin')
+      expect(subject.roles_text).to eq('normal e admin')
     end
   end
 end

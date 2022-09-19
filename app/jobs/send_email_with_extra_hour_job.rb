@@ -4,7 +4,7 @@ class SendEmailWithExtraHourJob < ApplicationJob
   def perform
     admins_emails = User.admin.active.pluck(:email)
 
-    extra_hour_punches = codeminer.punches
+    extra_hour_punches = Punch
       .is_extra_hour
       .from_last_month
       .group_by(&:user_name).to_a

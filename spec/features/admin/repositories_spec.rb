@@ -15,8 +15,7 @@ describe 'Repository', type: :feature do
     it 'must find fields "Link" on table' do
       within 'table' do
           expect(page).to have_text('Link') &
-                        have_text('Linguagem') &
-                        have_text('Empresa')
+                        have_text('Linguagem')
       end
     end
   end
@@ -38,8 +37,7 @@ describe 'Repository', type: :feature do
       end
 
       it 'must have labels' do
-        expect(page).to have_text('Empresa') &
-                        have_text('Link') &
+        expect(page).to have_text('Link') &
                         have_text('Linguagem') &
                         have_text('Criado em') &
                         have_text('Atualizado em')
@@ -80,8 +78,7 @@ describe 'Repository', type: :feature do
       it 'must have labels' do
         within 'form' do
           expect(page).to have_text('Link') &
-                          have_text('Linguagem') &
-                          have_text('Empresa')
+                          have_text('Linguagem')
         end
       end
 

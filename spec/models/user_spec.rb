@@ -138,7 +138,7 @@ RSpec.describe User, type: :model do
       context 'by admin role only' do
         let(:roles_names) { [:admin] }
         it 'returns users with admin role' do
-          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1)
+          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1, user2)
         end
       end
 

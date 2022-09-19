@@ -11,12 +11,6 @@ class ContributionsByUserQuery
     @relation.count(:user_id)
   end
 
-  def by_user
-    @relation = @relation
-
-    self
-  end
-
   def approved
     @relation = @relation.approved
 

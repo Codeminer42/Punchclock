@@ -23,7 +23,7 @@ RSpec.describe ContributionsByUserQuery do
   end
 
   context '#by_user' do
-    subject(:by_user) { described_class.new.by_user }
+    subject(:by_user) { described_class.new }
 
     before do
       create_list(:contribution, 3, { user: user })

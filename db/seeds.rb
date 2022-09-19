@@ -21,12 +21,12 @@ def create_holiday(office:)
 end
 
 def create_user(number:)
-  user = User.find_or_create_by!(email: "user.teste#{number}@codeminer.com") do |user|
-    user.name = "Usuario_Codeminer_#{number}"
-    user.email = "user.teste#{number}@codeminer.com"
+  user = User.find_or_create_by!(email: "user.teste#{number}@codeminer42.com") do |user|
+    user.name = "Usuario_Codeminer42_#{number}"
+    user.email = "user.teste#{number}@codeminer42.com"
     user.occupation = :engineer
     user.password = 'password'
-    user.office = codeminer42[:office_cities].sample
+    user.office = Office.all.sample
     user.level = User.level.values.sample
     user.specialty = User.specialty.values.sample
     user.github = "codeminer42.user.teste#{number}"
@@ -212,6 +212,53 @@ repositories = [
   'https://github.com/ruby-i18n/i18n'
 ]
 
+print "..creating offices..."
+offices = codeminer42[:office_cities]
+offices.map do |city|
+  Office.find_or_create_by!(city: city)
+end
+puts " done."
+
+print "..creating projects..."
+projects = codeminer42[:project_names]
+projects.map do |project|
+  Project.find_or_create_by!(name: project, market: Project.market.values.sample)
+end
+puts " done."
+
+print "..creating Admins..."
+User.find_or_create_by!(email: "admin@codeminer42.com") do |admin|
+  admin.name = 'admin'
+  admin.occupation = :administrative
+  admin.password = 'password'
+  admin.password_confirmation = 'password'
+  admin.role = :admin
+  admin.roles = [:admin]
+  admin.office = Office.all.sample
+  admin.token = SecureRandom.base58(32)
+  admin.token = '9X9ti7nAeN3J2w9hn1om9ztpPMHrT7Mj'
+  admin.skip_confirmation!
+  admin.contract_company_country = 'brazil'
+end
+puts " done."
+
+print "..creating offices holidays..."
+rand(offices.size * 10).times do |i|
+  create_holiday(office: Office.all.sample)
+end
+puts " done."
+
+print "....creating dev punches..."
+(projects.size * 10).times do |i|
+  user = create_user(number: i)
+
+  create_punches(
+    project: Project.all.sample,
+    user: user
+  )
+end
+puts " done."
+
 print "Creating codeminer42 open source repositories..."
 repos = repositories.collect do |repository|
   create_repository(link: repository)
@@ -225,7 +272,7 @@ contributions_dates = []
 end
 
 contributions = create_contributions(
-  users: User.all
+  users: User.all,
   repositories: repos,
   dates: contributions_dates
 )

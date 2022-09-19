@@ -31,7 +31,7 @@ RSpec.describe ContributionsByOfficeQuery do
     end
 
     it 'return contributions' do
-      expect(subject.by_office.to_relation.map(&:city)).to include(offices.first.city)
+      expect(subject.to_relation.map(&:city)).to include(offices.first.city)
     end
   end
 

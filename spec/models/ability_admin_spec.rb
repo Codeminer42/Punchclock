@@ -18,12 +18,12 @@ describe 'User' do
       expect(ability_admin).to_not be_able_to :destroy, Project.new
     end
 
-    it "can't edit punch" do
-      expect(ability_admin).to_not be_able_to :edit, Punch.new
+    it "can edit punch" do
+      expect(ability_admin).to be_able_to :edit, Punch.new
     end
 
-    it "can't delete punch" do
-      expect(ability_admin).to_not be_able_to :destroy, Punch.new
+    it "can delete punch" do
+      expect(ability_admin).to be_able_to :destroy, Punch.new
     end
   end
 

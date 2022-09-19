@@ -25,7 +25,7 @@ ActiveAdmin.register User do
   filter :email
 
   filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
-  filter :office, collection: Office.active.order(:city)
+  filter :office, collection: -> { Office.active.order(:city) }
   filter :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty.value] }
   filter :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }
   filter :by_skills, as: :check_boxes, collection: proc {
@@ -187,10 +187,10 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
-      f.input :office, collection: User.offices.order(:city)
+      f.input :office, collection: Office.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
       f.input :reviewer, collection: User.active.order(:name)
-      f.input :skills, as: :check_boxes, collection: User..skills.order(:title)
+      f.input :skills, as: :check_boxes, collection: Skill.order(:title)
       f.input :occupation, as: :radio
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }

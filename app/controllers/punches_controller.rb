@@ -75,7 +75,7 @@ class PunchesController < ApplicationController
   end
 
   def user_projects
-    @projects = current_user.projects.active.order(:name)
+    @projects = Project.active.order(:name)
   end
 
   def scopped_punches

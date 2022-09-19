@@ -59,7 +59,6 @@ describe 'Contribution', type: :feature do
 
       it 'must have labels' do
         expect(page).to have_text('Usuário') &
-                        have_text('Empresa') &
                         have_text('Link') &
                         have_text('Estado') &
                         have_text('Criado em') &

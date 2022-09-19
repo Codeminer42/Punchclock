@@ -42,7 +42,8 @@ describe 'Admin Allocation', type: :feature do
 
     it 'by user' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Usuário', options: User.all.pluck(:name) << 'Qualquer')
+        users_name = User.pluck(:name)
+        expect(page).to have_select('Usuário', options: users_name << 'Qualquer')
       end
     end
 
