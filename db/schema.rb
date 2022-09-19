@@ -40,6 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
 
   create_table "contributions", force: :cascade do |t|
     t.bigint "user_id"
+    t.bigint "company_id"
     t.string "link", null: false
     t.string "state", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -47,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.bigint "repository_id"
     t.bigint "reviewer_id"
     t.datetime "reviewed_at", precision: nil
+    t.index ["company_id"], name: "index_contributions_on_company_id"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"
@@ -82,10 +84,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.string "city"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.integer "company_id"
     t.integer "users_count", default: 0
     t.float "score"
     t.integer "head_id"
     t.boolean "active", default: true
+    t.index ["company_id"], name: "index_offices_on_company_id"
   end
 
   create_table "offices_regional_holidays", id: false, force: :cascade do |t|
@@ -99,8 +103,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.integer "company_id"
     t.boolean "active", default: true
     t.string "market"
+    t.index ["company_id"], name: "index_projects_on_company_id"
+    t.index ["name", "company_id"], name: "index_projects_on_name_and_company_id", unique: true
   end
 
   create_table "punches", id: :serial, force: :cascade do |t|
@@ -110,9 +117,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.integer "user_id"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.integer "company_id"
     t.string "attachment"
     t.text "comment"
     t.boolean "extra_hour", default: false, null: false
+    t.index ["company_id"], name: "index_punches_on_company_id"
     t.index ["project_id"], name: "index_punches_on_project_id"
     t.index ["user_id"], name: "index_punches_on_user_id"
   end
@@ -146,9 +155,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
 
   create_table "repositories", force: :cascade do |t|
     t.string "link", null: false
+    t.bigint "company_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "language"
+    t.index ["company_id", "link"], name: "index_repositories_on_company_id_and_link", unique: true
+    t.index ["company_id"], name: "index_repositories_on_company_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -180,6 +192,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
+    t.integer "company_id"
     t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
@@ -205,6 +218,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.string "otp_secret"
     t.integer "roles", array: true
     t.integer "contract_company_country"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github", unique: true
