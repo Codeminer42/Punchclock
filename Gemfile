@@ -12,6 +12,7 @@ gem 'bootsnap', require: false
 
 gem 'nokogiri', '~> 1.13.2'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
+gem 'administrate'
 gem 'pg', '~> 1.2'
 gem 'sprockets'
 gem 'cancancan', '~> 3.3.0'

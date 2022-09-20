@@ -123,6 +123,14 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    administrate (0.18.0)
+      actionpack (>= 5.0)
+      actionview (>= 5.0)
+      activerecord (>= 5.0)
+      jquery-rails (>= 4.0)
+      kaminari (>= 1.0)
+      sassc-rails (~> 2.1)
+      selectize-rails (~> 0.6)
     arbre (1.5.0)
       activesupport (>= 3.0.0, < 7.1)
       ruby2_keywords (>= 0.0.2, < 1.0)
@@ -519,6 +527,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    selectize-rails (0.12.6)
     selenium-webdriver (4.3.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -604,6 +613,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.10.13)
   active_skin
   activeadmin (~> 2.13.1)
+  administrate
   autoprefixer-rails (~> 10.4.2.0)
   better_errors
   binding_of_caller
