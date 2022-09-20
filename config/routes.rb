@@ -1,11 +1,32 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :skills_users
+      resources :skills
+      resources :regional_holidays
+      resources :questionnaires
+      resources :questions
+      resources :notes
+      resources :evaluations
+      resources :companies
+      resources :answers
+      resources :repositories
+      resources :punches
+      resources :projects
+      resources :offices
+      resources :contributions
+      resources :allocations
+      resources :users
+
+      root to: "users#index"
+    end
+
   mount Rswag::Api::Engine => '/api-docs'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Sidekiq::Web => '/sidekiq'
 
-  ActiveAdmin.routes(self)
+  #ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'user/sessions' }
 
   resources :punches
