@@ -6,7 +6,7 @@ ActiveAdmin.register Punch do
 
   menu priority: 100
 
-  filter :project, collection: -> { Project.order(:name) }
+  filter :project, collection: -> { Project.active.order(:name) }
   filter :user, collection: -> { grouped_users_by_active_status }
   filter :from, label: 'Intervalo', as: :date_range
   filter :extra_hour, label: 'Fez Hora Extra?'
@@ -38,8 +38,8 @@ ActiveAdmin.register Punch do
 
   form do |f|
     f.inputs do
-      f.input :user, as: :select, collection: User.order(:name)
-      f.input :project, as: :select, collection: Project.order(:name)
+      f.input :user, as: :select, collection: User.active.order(:name)
+      f.input :project, as: :select, collection: Project.active.order(:name)
       f.input :from, as: :datetime_picker
       f.input :to, as: :datetime_picker
       f.input :extra_hour

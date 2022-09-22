@@ -12,7 +12,7 @@ module Github
           pull_request.html_url
         end
 
-        def repository_name          
+        def repository_name
           @repository_name ||= pull_request.html_url.split("/")[-4..-3].join("/")
         end
 

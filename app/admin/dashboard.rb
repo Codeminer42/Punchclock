@@ -16,7 +16,7 @@ ActiveAdmin.register_page "Dashboard" do
           [user_label, user.id]
         end
 
-        offices_collection = Office.order(:city).decorate.map do |office|
+        offices_collection = Office.active.order(:city).decorate.map do |office|
           [
             "#{office.city.titleize} - #{office.head} - #{office.score}",
             office.id

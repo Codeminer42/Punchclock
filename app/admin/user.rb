@@ -187,7 +187,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
-      f.input :office, collection: Office.order(:city)
+      f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
       f.input :reviewer, collection: User.active.order(:name)
       f.input :skills, as: :check_boxes, collection: Skill.order(:title)

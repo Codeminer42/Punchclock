@@ -4,7 +4,7 @@ ActiveAdmin.register RegionalHoliday do
   permit_params :name, :day, :month, office_ids: []
 
   filter :name
-  filter :offices, multiple: true, collection: -> { Office.all.order(:city) }
+  filter :offices, multiple: true, collection: -> { Office.active.order(:city) }
   filter :day
   filter :month
 
@@ -35,7 +35,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :name
       f.input :day
       f.input :month
-      f.input :offices, as: :check_boxes, collection: Office.all.order(:city)
+      f.input :offices, as: :check_boxes, collection: Office.active.order(:city)
     end
       f.actions
   end
