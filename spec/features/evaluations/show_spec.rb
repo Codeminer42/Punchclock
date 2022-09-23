@@ -21,7 +21,7 @@ describe "Visit Show", type: :feature do
   end
 
   it "finds evaluated name" do
-    expect(page).to have_content("Evaluating: #{evaluation.evaluated.name}")
+    expect(page).to have_content("Evaluating: #{evaluation.evaluated}")
   end
 
   it "finds 'Observation' on the page" do

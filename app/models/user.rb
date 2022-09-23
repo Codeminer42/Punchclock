@@ -112,7 +112,7 @@ class User < ApplicationRecord
   end
 
   def to_s
-    name
+    first_and_last_name
   end
 
   def performance_score

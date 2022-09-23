@@ -4,13 +4,12 @@ require 'rails_helper'
 
 describe 'Revenue Forecast page', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:company) { admin_user.company }
-  let(:project1) { create(:project, company: company) }
-  let(:project2) { create(:project, company: company) }
+  let(:project1) { create(:project) }
+  let(:project2) { create(:project) }
 
   before do
-    create(:allocation, project: project1, company: company, hourly_rate: 100, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1))
-    create(:allocation, project: project2, company: company, hourly_rate: 50, start_at: Date.new(2021, 8, 1), end_at: Date.new(2022, 8, 31))
+    create(:allocation, project: project1, hourly_rate: 100, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1))
+    create(:allocation, project: project2, hourly_rate: 50, start_at: Date.new(2021, 8, 1), end_at: Date.new(2022, 8, 31))
 
     sign_in(admin_user)
     visit '/admin/revenue_forecast'
@@ -19,8 +18,7 @@ describe 'Revenue Forecast page', type: :feature do
   it 'has tabs for each year of allocations' do
     aggregate_failures 'testing tabs' do
       expect(page).not_to have_text('2020')
-      expect(page).to have_text('2021')
-      expect(page).to have_text('2022')
+      expect(page).to have_text('2021') && have_text('2022')
       expect(page).not_to have_text('2023')
     end
   end
@@ -54,13 +52,10 @@ describe 'Revenue Forecast page', type: :feature do
     it 'shows only revenue forecast from 2022' do
       within "div#2022" do
         # Projects names
-        expect(page).to have_text(project1.name)
-        expect(page).to have_text(project2.name)
+        expect(page).to have_text(project1.name) && have_text(project2.name)
 
         # Forecasts
-        expect(page).to have_text("R$17.600,00")
-        expect(page).to have_text("R$8.800,00")
-        expect(page).to have_text("R$26.400,00")
+        expect(page).to have_text("R$17.600,00") && have_text("R$8.800,00") & have_text("R$26.400,00")
       end
     end
   end

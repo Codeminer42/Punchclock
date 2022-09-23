@@ -277,7 +277,9 @@ RSpec.describe User, type: :model do
   end
 
   describe '#to_s' do
-    it { expect(user.to_s).to eq user.name }
+    it "return user first and last name" do
+      expect(user.to_s).to eq user.first_and_last_name
+    end
   end
 
   describe '#active_for_authentication' do

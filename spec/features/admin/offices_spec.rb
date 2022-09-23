@@ -97,11 +97,11 @@ describe 'Offices', type: :feature do
       end
 
       it 'have the correct office information' do
-        expect(page).to   have_text(office.city) &
-                          have_text(office.head) &
-                          have_text(office.score) &
-                          have_css('.row-active td', text: office.active ? "Sim" : "Não") &
-                          have_css('.row-users_quantity td', text: office.users.count)
+        expect(page).to have_text(office.city) &
+                        have_text(office.head.name) &
+                        have_text(office.score) &
+                        have_css('.row-active td', text: office.active ? "Sim" : "Não") &
+                        have_css('.row-users_quantity td', text: office.users.active.count)
       end
     end
 

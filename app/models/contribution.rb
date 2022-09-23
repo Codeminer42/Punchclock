@@ -23,6 +23,10 @@ class Contribution < ApplicationRecord
     end
   end
 
+  def to_s
+    "#{id} - #{user}"
+  end
+
   def update_reviewer(reviewer_id)
     self.update(reviewer_id: reviewer_id, reviewed_at: Time.current)
   end

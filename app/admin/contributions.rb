@@ -1,4 +1,6 @@
 ActiveAdmin.register Contribution do
+  decorate_with ContributionDecorator
+
   permit_params :state, :link, :user_id, :repository_id
   actions :index, :show, :new, :create
 
