@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class RevenueForecastService
+  WORKING_HOURS = 8
+
   def self.allocation_forecast(allocation)
     new.allocation_forecast(allocation)
   end
@@ -51,16 +55,12 @@ class RevenueForecastService
   def year_forecast(year)
     beginning_of_year = Date.ordinal(year)
     end_of_year = Date.ordinal(year, -1)
-    result = []
-    projects = active_projects_on_period(beginning_of_year, end_of_year)
 
-    projects.each do |project|
+    result = []
+    active_projects_on_period(beginning_of_year, end_of_year).each do |project|
       forecast = project_forecast(project, [beginning_of_year, end_of_year])
 
-      result << {
-        project: project,
-        forecast: forecast[year]
-      }
+      result << { project: project, forecast: forecast[year] }
     end
 
     result
@@ -69,15 +69,7 @@ class RevenueForecastService
   private
 
   def allocation_month_data(allocation, beginning_of_month)
-    end_of_month = beginning_of_month.end_of_month
-
-    working_days = if allocation.start_at.beginning_of_month == beginning_of_month
-                     calculate_weekdays(allocation.start_at, end_of_month)
-                   elsif allocation.end_at.beginning_of_month == beginning_of_month
-                     calculate_weekdays(beginning_of_month, allocation.end_at)
-                   else
-                     calculate_weekdays(beginning_of_month, end_of_month)
-                   end
+    working_days = calculate_working_days(allocation, beginning_of_month)
 
     {
       month: beginning_of_month.month,
@@ -91,6 +83,16 @@ class RevenueForecastService
     (start_date..end_date).reject(&:on_weekend?).count
   end
 
+  def calculate_working_days(allocation, beginning_of_month)
+    if allocation.start_at.beginning_of_month == beginning_of_month
+      calculate_weekdays(allocation.start_at, beginning_of_month.end_of_month)
+    elsif allocation.end_at.beginning_of_month == beginning_of_month
+      calculate_weekdays(beginning_of_month, allocation.end_at)
+    else
+      calculate_weekdays(beginning_of_month, beginning_of_month.end_of_month)
+    end
+  end
+
   def calculate_forecast(working_days, hourly_rate, beginning_of_month)
     exchange_rate_date = if beginning_of_month > Date.current
                            Date.current.beginning_of_month - 1
@@ -99,13 +101,12 @@ class RevenueForecastService
                          end
 
     converted_rate = hourly_rate.exchange_to_historical('BRL', exchange_rate_date)
-    converted_rate * working_days * 8
+    converted_rate * working_days * WORKING_HOURS
   end
 
   def active_projects_on_period(beginning_date, end_date)
-    projects_ids_rel = Allocation
-      .in_period(beginning_date, end_date)
-      .select(:project_id)
+    projects_ids_rel = Allocation.in_period(beginning_date, end_date)
+                                 .select(:project_id)
 
     Project.where(id: projects_ids_rel).distinct
   end
