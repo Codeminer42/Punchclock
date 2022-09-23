@@ -101,7 +101,6 @@ gem 'unicorn'
 
 group :development, :test do
   gem 'factory_bot_rails'
-  gem 'faker', '~> 2.14.0'
   gem 'rspec-rails'
   gem 'rswag-specs', '~> 2.5.1'
   gem 'pry-rails'
@@ -109,4 +108,8 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rubocop', require: false
   gem 'rubocop-faker', '~> 1.1'
+end
+
+group :development, :test, :staging do
+  gem 'faker', '~> 2.14.0'
 end
