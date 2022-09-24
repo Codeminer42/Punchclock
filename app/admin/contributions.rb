@@ -1,4 +1,5 @@
 ActiveAdmin.register Contribution do
+  decorate_with ContributionDecorator
   permit_params :state, :link, :user_id, :company_id, :repository_id
   actions :index, :show, :new, :create
 
@@ -13,12 +14,12 @@ ActiveAdmin.register Contribution do
   member_action :refuse, method: :put, only: :index
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each {|contribution| contribution.refuse!(current_user.id) if contribution.state == "received"}
+    batch_action_collection.find(ids).each { |contribution| contribution.refuse!(current_user.id) if contribution.state == "received" }
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each {|contribution| contribution.approve!(current_user.id) if contribution.state == "received"}
+    batch_action_collection.find(ids).each { |contribution| contribution.approve!(current_user.id) if contribution.state == "received" }
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
   end
@@ -40,7 +41,9 @@ ActiveAdmin.register Contribution do
 
   index download_links: [:xls, :text] do
     selectable_column
-    column :user
+    column :user do |contribution|
+      contribution.user.first_and_last_name
+    end
     if current_user.super_admin?
       column :company
     end
@@ -51,7 +54,7 @@ ActiveAdmin.register Contribution do
     column :state do |contribution|
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
-    column :reviewed_by
+    column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
 
     actions defaults: true do |contribution|
@@ -94,7 +97,6 @@ ActiveAdmin.register Contribution do
     f.actions
   end
 
-
   controller do
     def approve
       resource.approve!(current_user.id)
@@ -109,14 +111,13 @@ ActiveAdmin.register Contribution do
     def index
       super do |format|
         format.xls do
-          spreadsheet = ContributionsSpreadsheet.new find_collection(except: :pagination)
+          spreadsheet = ContributionsSpreadsheet.new find_collection(except: %i[pagination collection_decorator])
           send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
         end
         format.text do
-          send_data ContributionsTextService.call(find_collection(except: :pagination))
+          send_data ContributionsTextService.call(find_collection(except: %i[pagination collection_decorator]))
         end
       end
     end
   end
-
 end

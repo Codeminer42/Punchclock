@@ -1,0 +1,15 @@
+{
+  "name": "punchclock",
+  "scripts": {
+    "postdeploy": "rake db:schema:load db:seed"
+  },
+  "environments": {
+    "review": {
+      "addons": ["heroku-postgresql:hobby-dev"]
+    }
+  },
+  "buildpacks": [
+    {"url": "heroku/nodejs"},
+    {"url": "heroku/ruby"}
+  ]
+}
