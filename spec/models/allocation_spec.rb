@@ -22,6 +22,7 @@ RSpec.describe Allocation, type: :model do
 
     it { should validate_presence_of(:start_at) }
     it { should validate_presence_of(:end_at) }
+    it { should validate_presence_of(:hourly_rate_currency) }
 
     context 'end_at' do
       it 'should not be before start_at' do

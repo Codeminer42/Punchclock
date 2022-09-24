@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class Allocation < ApplicationRecord
+  HOURLY_RATE_CURRENCIES = %w[BRL USD]
+
   belongs_to :user
   belongs_to :project
   belongs_to :company
 
-  monetize :hourly_rate_cents
+  monetize :hourly_rate_cents, with_model_currency: :hourly_rate_currency
 
-  validates :user, :project, :start_at, :end_at, presence: true
+  validates :user, :project, :start_at, :end_at, :hourly_rate_currency, presence: true
   validates_date :start_at
   validates_date :end_at, after: ->(a) { a.start_at }
   validate :unique_period, unless: :end_before_start?

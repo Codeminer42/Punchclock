@@ -51,6 +51,8 @@ pt-BR:
               invalid_date: "Data Inválida"
             ongoing:
               uniqueness: 'O usuário já possui uma alocação em progresso' 
+            hourly_rate:
+              invalid_currency: Moeda inválida
     models:
       admin_user:
         one: "Administrador"
@@ -240,6 +242,7 @@ pt-BR:
         user: "Usuário"
         project: "Projeto"
         hourly_rate: "Taxa horária"
+        hourly_rate_currency: Moeda da taxa horária
         start_at: "Início"
         end_at: "Término"
         days_left: "Dias Restantes"

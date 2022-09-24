@@ -21,6 +21,7 @@ jobs:
       RAILS_ENV: test
       POSTGRES_PASSWORD: postgres
     services:
+
       postgres:
         image: postgres:13
         ports:
@@ -29,6 +30,18 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - "6379:6379"
+
     strategy:
       matrix:
         ruby-version: ["3.1.2"]
@@ -58,5 +71,6 @@ jobs:
         env:
           OTP_ENCRYPTION_KEY: 1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1ex1e
           JWT_SECRET_KEY: 0276471e519f6dc9055de64f19d2bdfcffff8889dca596f990fbab0dc480527ce2ca130c9e3d894a99711946a9f31c5a2c9c359f875c51fac8cb1635e66acf62
+          OPEN_EXCHANGE_RATES_APP_ID: 1ex1ex1ex1ex1ex1ex1ex1ex
       - name: Test Coverage Report
         uses: paambaati/codeclimate-action@v3.0.0

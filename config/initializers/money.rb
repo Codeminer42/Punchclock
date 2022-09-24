@@ -1,5 +1,24 @@
 # encoding : utf-8
+require 'money/bank/historical'
+
 Money.locale_backend = :currency # Workaround for issue #644 (https://github.com/RubyMoney/money-rails/issues/644)
+
+Money::Bank::Historical.configure do |config|
+  # (required) your OpenExchangeRates App ID
+  config.oer_app_id = ENV['OPEN_EXCHANGE_RATES_APP_ID']
+
+  # (optional) account type on openexchangerate.org (default: 'Enterprise')
+  # replace 'FREE' with 'DEVELOPER', 'ENTERPRISE', or 'UNLIMITED', according to your account type.
+  config.oer_account_type = Money::RatesProvider::OpenExchangeRates::AccountType::FREE
+
+  # (optional) currency relative to which all the rates are stored (default: EUR)
+  config.base_currency = Money::Currency.new('USD')
+
+  # (optional) the URL of the Redis server (default: 'redis://localhost:6379')
+  if provider = ENV['REDIS_PROVIDER']
+    config.redis_url = ENV[provider]
+  end
+end
 
 MoneyRails.configure do |config|
 
@@ -9,8 +28,7 @@ MoneyRails.configure do |config|
 
   # Set default bank object
   #
-  # Example:
-  # config.default_bank = EuCentralBank.new
+  config.default_bank = Money::Bank::Historical.instance
 
   # Add exchange rates to current money bank object.
   # (The conversion rate refers to one direction only)
@@ -72,17 +90,17 @@ MoneyRails.configure do |config|
   #
   # set to BigDecimal::ROUND_HALF_EVEN by default
   #
-  config.rounding_mode = BigDecimal::ROUND_HALF_UP
+  config.rounding_mode = BigDecimal::ROUND_HALF_EVEN
 
   # Set default money format globally.
   # Default value is nil meaning "ignore this option".
-  # Example:
   #
   # config.default_format = {
-  #   no_cents_if_whole: nil,
+  #   no_cents_if_whole: false
   #   symbol: nil,
   #   sign_before_symbol: nil
   # }
+  config.no_cents_if_whole = false
 
   # If you would like to use I18n localization (formatting depends on the
   # locale):
