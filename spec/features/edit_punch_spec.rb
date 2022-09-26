@@ -4,10 +4,10 @@ require 'rails_helper'
 
 feature 'Edit Punch' do
   let!(:authed_user) { create_logged_in_user }
-  let!(:active_project) { create(:project, :active, company_id: authed_user.company_id) }
-  let!(:inactive_project) { create(:project, :inactive, company_id: authed_user.company_id) }
+  let!(:active_project) { create(:project, :active) }
+  let!(:inactive_project) { create(:project, :inactive) }
   let!(:punch) do
-    create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
+    create(:punch, user_id: authed_user.id)
   end
 
   scenario 'checking filled attributes' do

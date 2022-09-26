@@ -3,21 +3,20 @@
 module Github
   module Contributions
     class Collect
-      def initialize(company:, client:)
-        @company = company
+      def initialize(client:)
         @client = client
-        @engineers = Wrappers::Engineers.new(company: company)
-        @repositories = Wrappers::Repositories.new(company: company)
+        @engineers = Wrappers::Engineers.new
+        @repositories = Wrappers::Repositories.new
       end
 
       def all
-        return [] if company.blank? || insufficient_parameters_to_query?
+        return [] if insufficient_parameters_to_query?
         fetch_all
       end
 
       private
 
-      attr_reader :company, :client
+      attr_reader :client
 
       def insufficient_parameters_to_query?
         @repositories.empty? || @engineers.empty?

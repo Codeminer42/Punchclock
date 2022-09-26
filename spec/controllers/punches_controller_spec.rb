@@ -61,8 +61,6 @@ describe PunchesController do
 
       before do
         allow(user).to receive_messages(id: punch.user.id)
-        allow(user).to receive_messages(company: punch.company)
-        allow(user).to receive_messages(company_id: punch.company.id)
         allow(punch).to receive_messages(id: 1)
         allow(controller).to receive_messages(current_user: user)
         allow(Punch).to receive(:find).with(punch.id.to_s) { punch }
@@ -74,8 +72,6 @@ describe PunchesController do
 
       before do
         allow(user).to receive_messages(id: punch.user.id)
-        allow(user).to receive_messages(company: punch.company)
-        allow(user).to receive_messages(company_id: punch.company.id)
         allow(punch).to receive_messages(id: 1)
         allow(controller).to receive_messages(current_user: user)
         allow(Punch).to receive(:find).with(punch.id.to_s) { punch }
@@ -93,7 +89,7 @@ describe PunchesController do
 
     describe 'POST #create' do
       let(:user) { create(:user) }
-      let(:project) { create(:project, company: user.company) }
+      let(:project) { create(:project) }
       
       subject { post :create, params: { punch: punch_params } }
       
@@ -118,7 +114,6 @@ describe PunchesController do
             to: Time.utc(2020, 1, 2, 18, 0, 0),
             project_id: project.id,
             user_id: user.id,
-            company_id: user.company_id,
             extra_hour: false
           )
         end
@@ -143,7 +138,6 @@ describe PunchesController do
     describe 'methods' do
 
       let(:punch) { FactoryBot.build(:punch) }
-      let(:company) { punch.company }
       let(:project) { punch.project }
       let(:user) { punch.user }
 
@@ -169,7 +163,7 @@ describe PunchesController do
               :'from_time' => '10:00',
               :'to_time' => '14:00',
               :'extra_hour' => true,
-              :'project_id' => FactoryBot.create(:project, company: user.company).id
+              :'project_id' => FactoryBot.create(:project).id
             }
           }
         end

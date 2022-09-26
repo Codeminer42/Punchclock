@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Projects', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let!(:project)   { create(:project, company: admin_user.company) }
+  let!(:project)   { create(:project) }
 
   before do
     sign_in(admin_user)
@@ -82,7 +82,7 @@ describe 'Projects', type: :feature do
       end
 
       context 'on allocate users tab' do
-        let!(:users){ create_list(:user, 2, company: admin_user.company) }
+        let!(:users){ create_list(:user, 2) }
         before { refresh }
         
         it 'fills the form correctly' do

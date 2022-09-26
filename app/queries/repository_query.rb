@@ -10,8 +10,8 @@ class RepositoryQuery
     end
   end
 
-  def initialize(scope, opts = {})
-  	@scopes = scope.repositories
+  def initialize(opts = {})
+  	@scopes = Repository.all
     @opts = opts
   end
 

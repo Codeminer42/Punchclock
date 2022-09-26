@@ -8,7 +8,6 @@ RSpec.describe RepositoriesSpreadsheet do
   let(:header_attributes) do
     %w[
       link
-      company
       created_at
       updated_at
     ].map { |attribute| Repository.human_attribute_name(attribute) }
@@ -17,7 +16,6 @@ RSpec.describe RepositoriesSpreadsheet do
   let (:body_attributes) do
     [
       repository.link,
-      repository.company.name,
       I18n.l(repository.created_at, format: :long),
       I18n.l(repository.updated_at, format: :long)
     ]

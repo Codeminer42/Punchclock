@@ -2,7 +2,6 @@
 FactoryBot.define do
   factory :office do
     city { Faker::Address.unique.city }
-    company
 
     trait :with_holiday do
       after :create do |office|

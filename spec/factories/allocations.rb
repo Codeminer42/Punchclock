@@ -7,7 +7,6 @@ FactoryBot.define do
     hourly_rate { Money.new(rand(10000..35000)) }
     start_at { Date.today - rand(0..180) }
     end_at   { Date.today + rand(30..180) }
-    company { user.company }
     ongoing { false }
   end
 end

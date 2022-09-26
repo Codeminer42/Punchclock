@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe DashboardController, type: :controller do  
   describe 'POST #save' do
     let(:user) { create(:user) }
-    let(:project) { create(:project, company: user.company) }
+    let(:project) { create(:project) }
 
     before { login(user) }
 

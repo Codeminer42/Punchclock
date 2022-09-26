@@ -12,9 +12,8 @@ FactoryBot.define do
     role                  { 'normal' }
     roles                 { [:normal] }
     contract_company_country { 'brazil' }
-    company
     otp_required_for_login { false }
-    office                { create(:office, company: company) }
+    office                { create(:office) }
 
     trait :head_office do
       office { create(:office, head: :user) }
@@ -34,10 +33,6 @@ FactoryBot.define do
 
     trait :admin do
       roles { [:admin] }
-    end
-
-    trait :super_admin do
-      roles { [:super_admin] }
     end
 
     trait :open_source_manager do

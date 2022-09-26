@@ -7,57 +7,6 @@ info:
     name: Punchclock
     url: https://github.com/Codeminer42/Punchclock
 paths:
-  "/api/v1/users":
-    get:
-      summary: Returns company users
-      tags:
-      - Company users
-      security:
-      - bearer: []
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              example:
-              - email: user.teste0@codeminer42.com
-                name: Usuario_Codeminer42_0
-                office_id: 10
-                github: Codeminer42.user.teste0
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              example:
-                error: unauthorized
-  "/api/v1/offices":
-    get:
-      summary: Returns company offices
-      tags:
-      - Company users
-      security:
-      - bearer: []
-      responses:
-        '200':
-          description: successful
-          content:
-            application/json:
-              example:
-              - id: 6
-                city: Natal
-                created_at: '2022-08-02T09:54:11.471-03:00'
-                updated_at: '2022-08-02T09:54:11.471-03:00'
-                company_id: 1
-                users_count: 0
-                score: 
-                head_id: 
-                active: true
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              example:
-                error: unauthorized
   "/api/v1/punches/bulk":
     post:
       summary: bulk punch

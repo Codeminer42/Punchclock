@@ -5,13 +5,13 @@ require 'rails_helper'
 feature 'Punches list' do
   let!(:authed_user) { create_logged_in_user }
   let!(:punch) {
-    create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
+    create(:punch, user_id: authed_user.id)
   }
   let!(:other_punch) {
-    create(:punch, user_id: authed_user.id, company_id: authed_user.company_id)
+    create(:punch, user_id: authed_user.id)
   }
   let!(:punch_with_attachment) {
-    create(:punch, :with_attachment , user_id: authed_user.id, company_id: authed_user.company_id)
+    create(:punch, :with_attachment , user_id: authed_user.id)
   }
 
   before do

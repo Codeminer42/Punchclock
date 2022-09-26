@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Evaluation do
-  permit_params :evaluator_id, :evaluated_id, :company_id
+  permit_params :evaluator_id, :evaluated_id
   actions :index, :show
 
   menu parent: Evaluation.model_name.human(count: 2), priority: 1
 
-  filter :evaluator, collection: proc {
-    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.active.order(:name)
-  }
-  filter :evaluated, collection: proc {
-    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.active.order(:name)
-  }
+  filter :evaluator, collection: -> { User.active.order(:name) }
+  filter :evaluated, collection: -> { User.active.order(:name) }
   filter :questionnaire_kind, as: :select, collection: Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind.value] }
   filter :created_at
   filter :evaluation_date, as: :date_range

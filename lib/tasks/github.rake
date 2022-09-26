@@ -4,11 +4,10 @@ namespace :github do
     Rails.logger = Logger.new(STDOUT)
 
     client = Github.new(headers: {"Authorization" => "token #{ENV['GITHUB_OAUTH_TOKEN']}"})
-    company = Company.find(ENV['COMPANY_ID'])
 
     ActiveRecord::Base.transaction do
       Github::Repositories::Sync
-        .new(company: company, client: client)
+        .new(client: client)
         .call
         .tap { |result| Rails.logger.info("[GH] -- Processed: #{result.size}") }
     end
@@ -19,11 +18,10 @@ namespace :github do
     Rails.logger = Logger.new(STDOUT)
 
     client = Github.new(headers: {"Authorization" => "token #{ENV['GITHUB_OAUTH_TOKEN']}"})
-    company = Company.find(ENV['COMPANY_ID'])
 
     ActiveRecord::Base.transaction do
       Github::Contributions::Create
-        .new(company: company, client: client)
+        .new(client: client)
         .call
         .tap { |result| Rails.logger.info("[GH] -- Processed: #{result.size}") }
     end

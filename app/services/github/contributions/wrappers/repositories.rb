@@ -2,10 +2,6 @@ module Github
   module Contributions
     module Wrappers
       class Repositories
-        def initialize(company:)
-          @company = company
-        end
-
         def find_repository_id_by_name(repository_name)
           to_h[repository_name]
         end
@@ -22,10 +18,8 @@ module Github
 
         private
 
-        attr_reader :company
-
         def repositories
-          @repositories ||= company.repositories
+          @repositories ||= Repository
             .pluck(:id, :link)
             .map { |id, url| [url.split('/')[-2..-1], id].flatten }
             .compact

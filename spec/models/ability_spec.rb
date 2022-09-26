@@ -12,16 +12,12 @@ describe 'User' do
       it { is_expected.not_to be_able_to(:manage, Punch.new) }
     end
 
-    context 'when is trying to manage Company' do
-      it { is_expected.not_to be_able_to(:manage, Company.new) }
-    end
-
     context 'when is trying to manage Projects' do
       it { is_expected.not_to be_able_to(:manage, Project.new) }
     end
 
     context 'when is trying to perform operations on Users' do
-      it { is_expected.to be_able_to(:read, User.new(company_id: user.company_id, id: user.id)) }
+      it { is_expected.to be_able_to(:read, User.new(id: user.id)) }
       it { is_expected.not_to be_able_to(:read, User.new) }
       it { is_expected.to be_able_to(:edit, User.new(id: user.id)) }
       it { is_expected.not_to be_able_to(:edit, User.new) }

@@ -11,12 +11,6 @@ class ContributionsByUserQuery
     @relation.count(:user_id)
   end
 
-  def by_company(company)
-    @relation = @relation.where(company: company)
-
-    self
-  end
-
   def approved
     @relation = @relation.approved
 

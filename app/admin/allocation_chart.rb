@@ -7,7 +7,7 @@ ActiveAdmin.register_page 'Allocation Chart' do
 
   content title: I18n.t('allocation_chart') do
     panel I18n.t('allocation_chart') do
-      allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation, current_user.company).call
+      allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation).call
       table_for allocations, id: 'allocations_chart' do
         column(I18n.t('name'), :user)
         column(I18n.t('client'), :project)

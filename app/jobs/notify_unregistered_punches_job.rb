@@ -2,9 +2,7 @@ class NotifyUnregisteredPunchesJob < ApplicationJob
   queue_as :default
 
   def perform
-    codeminer = Company.find_by(name: 'Codeminer42')
-
-    codeminer.users.employee.engineer.active.each do |user|
+    User.employee.engineer.active.each do |user|
       final_date = Date.current.change(day: 15)
       initial_date = final_date.prev_month.change(day: 16)
 

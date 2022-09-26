@@ -5,16 +5,13 @@ ActiveAdmin.register Project do
 
   config.sort_order = 'name_asc'
 
-  permit_params :name, :company_id, :market, :active
+  permit_params :name, :market, :active
 
   before_action :create_form, only: :show
-
-  menu parent: Company.model_name.human
 
   scope :active, default: true
   scope :inactive
 
-  filter :company, if: proc { current_user.super_admin? }
   filter :name
   filter :market, as: :select, collection: Project.market.options
   filter :created_at
@@ -44,7 +41,6 @@ ActiveAdmin.register Project do
 
   index download_links: [:xls] do
     selectable_column
-    column :company if current_user.super_admin?
     column :name do |project|
       link_to project.name, admin_project_path(project)
     end
@@ -61,7 +57,6 @@ ActiveAdmin.register Project do
           row :name
           row :market
           row :active
-          row :company if current_user.super_admin?
           row :created_at
           row :updated_at
         end
@@ -111,11 +106,6 @@ ActiveAdmin.register Project do
   form do |f|
     f.inputs I18n.t('project_details') do
       f.input :name
-      if current_user.super_admin?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
       f.input :market
       f.input :active
     end
@@ -128,7 +118,7 @@ ActiveAdmin.register Project do
     end
 
     def permited_allocation_params
-      params.require(:allocate_users_form).permit(:company_id, :project_id, :start_at, :end_at, :not_allocated_users)
+      params.require(:allocate_users_form).permit(:project_id, :start_at, :end_at, :not_allocated_users)
     end
 
     def index

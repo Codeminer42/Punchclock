@@ -5,7 +5,6 @@ class Allocation < ApplicationRecord
 
   belongs_to :user
   belongs_to :project
-  belongs_to :company
 
   monetize :hourly_rate_cents, with_model_currency: :hourly_rate_currency
 

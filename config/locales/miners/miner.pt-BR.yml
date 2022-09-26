@@ -31,7 +31,6 @@ pt-BR:
           normal: Normal
           evaluator: Avaliador
           admin:  Admin
-          super_admin: Super Admin
           hr: RH
       question:
         kind:

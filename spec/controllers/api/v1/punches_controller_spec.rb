@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Api::V1::PunchesController, :type => :controller do
   let(:user) { create(:user) }
-  let(:project) { create(:project, company: user.company) }
+  let(:project) { create(:project) }
 
   describe 'GET api/v1/punches' do
     subject { get :index }

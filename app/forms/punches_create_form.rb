@@ -10,7 +10,7 @@ class PunchesCreateForm
     punches ||= []
 
     @punches = punches.map do |punch_params|
-      Punch.new(**punch_params, user: user, company: user.company)
+      Punch.new(**punch_params, user: user)
     end
   end
 

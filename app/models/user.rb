@@ -33,16 +33,15 @@ class User < ApplicationRecord
         predicates: true
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
   enumerize :role, in: {
-    normal: 0, evaluator: 1, admin: 2, super_admin: 3, open_source_manager: 4, hr: 5
+    normal: 0, evaluator: 1, admin: 2, open_source_manager: 3, hr: 4
     },  scope: :shallow,
         predicates: true
 
   enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
-                          super_admin: 3, open_source_manager: 4, hr: 5 },
+                          open_source_manager: 3, hr: 4 },
                     default: :normal, multiple: true, predicates: true
 
   belongs_to :office, optional: false
-  belongs_to :company
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
   has_many :punches
   has_many :contributions
@@ -113,7 +112,7 @@ class User < ApplicationRecord
   end
 
   def to_s
-    name
+    first_and_last_name
   end
 
   def performance_score
@@ -151,11 +150,11 @@ class User < ApplicationRecord
   end
 
   def has_admin_access?
-    admin? || super_admin? || open_source_manager? || hr?
+    admin? || open_source_manager? || hr?
   end
 
   def is_admin?
-    admin? || super_admin? || hr?
+    admin? || hr?
   end
 
   def update_with_password(params, *options)

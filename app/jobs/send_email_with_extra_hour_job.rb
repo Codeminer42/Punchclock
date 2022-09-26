@@ -2,10 +2,9 @@ class SendEmailWithExtraHourJob < ApplicationJob
   queue_as :default
 
   def perform
-    codeminer = Company.find_by(name: 'Codeminer42')
-    admins_emails = codeminer.users.admin.active.pluck(:email)
+    admins_emails = User.admin.active.pluck(:email)
 
-    extra_hour_punches = codeminer.punches
+    extra_hour_punches = Punch
       .is_extra_hour
       .from_last_month
       .group_by(&:user_name).to_a

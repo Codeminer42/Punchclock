@@ -32,7 +32,7 @@ describe "Visit Evaluations", type: :feature do
   end
 
   context 'by clicking the performance evaluation view button' do
-    let!(:evaluation) { create(:evaluation, :with_answers, company: user.company) }
+    let!(:evaluation) { create(:evaluation, :with_answers) }
 
     it 'then the show last performance evaluation url must have the correct evaluation_id' do
       visit('/evaluations')
@@ -43,7 +43,7 @@ describe "Visit Evaluations", type: :feature do
   end
 
   context 'by clicking the english evaluation view button' do
-    let!(:evaluation) { create(:evaluation, :english, :with_answers, company: user.company) }
+    let!(:evaluation) { create(:evaluation, :english, :with_answers) }
 
     it 'then the show last english evaluation url must have the correct evaluation_id' do
       visit('/evaluations')

@@ -1,12 +1,12 @@
 ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
-  permit_params :state, :link, :user_id, :company_id, :repository_id
+
+  permit_params :state, :link, :user_id, :repository_id
   actions :index, :show, :new, :create
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
-  filter :company, as: :select, if: proc { current_user.super_admin? }
-  filter :user, as: :select, collection: proc { CompanyUsersCollectionQuery.new(current_user).call }
+  filter :user, as: :select, collection: -> { User.engineer.active.order(:name) }
   filter :reviewed_at
   filter :created_at
 
@@ -41,12 +41,7 @@ ActiveAdmin.register Contribution do
 
   index download_links: [:xls, :text] do
     selectable_column
-    column :user do |contribution|
-      contribution.user.first_and_last_name
-    end
-    if current_user.super_admin?
-      column :company
-    end
+    column :user
     column :link do |contribution|
       link_to contribution.link, contribution.link, target: :blank
     end
@@ -68,7 +63,6 @@ ActiveAdmin.register Contribution do
   show do
     attributes_table do
       row :user
-      row :company
       row :link
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
@@ -83,13 +77,7 @@ ActiveAdmin.register Contribution do
   form do |f|
     f.semantic_errors
     inputs I18n.t('contribution_details') do
-      f.input :user, as: :select, collection: CompanyUsersCollectionQuery.new(current_user).call
-
-      if current_user.super_admin?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
+      f.input :user, as: :select, collection: User.engineer.active.order(:name)
 
       input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
       input :link
