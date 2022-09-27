@@ -19,10 +19,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
   end
 
-  describe 'delegations' do
-    it { is_expected.to delegate_method(:city).to(:office).with_prefix(true).allow_nil }
-  end
-
   describe 'validations' do
     let!(:user) { create(:user, :admin) }
     it { is_expected.to validate_presence_of :name }

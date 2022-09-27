@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :city do
-    name { "MyString" }
+    sequence(:name) {|i| "City Name #{i}" }
     state { create(:state) }
   end
 end

@@ -104,6 +104,7 @@ describe 'Users', type: :feature do
   end
 
   describe 'Actions' do
+    let!(:city)      { create(:city) }
     let!(:skill)      { create(:skill) }
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
@@ -124,6 +125,7 @@ describe 'Users', type: :feature do
         fill_in 'Github', with: 'userGithub'
         find('#user_started_at').fill_in with: started_at.strftime('%Y-%m-%d')
         find('#user_office_id').find(:option, office.city).select_option
+        find('#user_city_id').find(:option, city.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
         select('Normal')

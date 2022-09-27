@@ -18,11 +18,7 @@ describe 'Mentoring', type: :feature do
       context 'mentoring tab' do
         it 'have "Mentor", "Escritório", "Mentorados"' do
           within '#mentoria' do
-            aggregate_failures 'testing table fields' do
-              expect(page).to have_text('Mentor')
-              expect(page).to have_text('Escritório')
-              expect(page).to have_text('Mentorados')
-            end
+            expect(page).to have_text('Mentor') && have_text('Escritório') && have_text('Mentorados')
           end
         end
 
@@ -50,11 +46,7 @@ describe 'Mentoring', type: :feature do
       context 'offices tab' do
         it 'have "Mentor", "Escritório", "Mentorados"' do
           within '#escritorios' do
-            aggregate_failures 'testing table fields' do
-              expect(page).to have_text('Escritórios')
-              expect(page).to have_text('Mentores')
-              expect(page).to have_text('Mentorados')
-            end
+            expect(page).to have_text('Escritórios') && have_text('Mentores') && have_text('Mentorados')
           end
         end
 
