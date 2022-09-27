@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'English Evaluation', type: :feature do
   let(:user)           { create_logged_in_user }
   let!(:office)        { create(:office, head: user) }
-  let!(:evaluated)     { create(:user, company: user.company) }
+  let!(:evaluated)     { create(:user) }
   let!(:questionnaire) { create(:questionnaire, :kind_english, :with_questions, question_count: 2) }
 
   scenario 'User makes an evaluation revising his answers', js: true, aggregate_failures: true do

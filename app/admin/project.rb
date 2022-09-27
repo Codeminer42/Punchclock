@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Project do
+  decorate_with ProjectDecorator
+
   config.sort_order = 'name_asc'
 
-  permit_params :name, :company_id, :active, :client_id
+  permit_params :name, :market, :active
 
   before_action :create_form, only: :show
-
-  menu parent: Company.model_name.human
 
   scope :active, default: true
   scope :inactive
 
-  filter :company, if: proc { current_user.super_admin? }
   filter :name
+  filter :market, as: :select, collection: Project.market.options
   filter :created_at
   filter :updated_at
 
@@ -41,10 +41,10 @@ ActiveAdmin.register Project do
 
   index download_links: [:xls] do
     selectable_column
-    column :company if current_user.super_admin?
     column :name do |project|
       link_to project.name, admin_project_path(project)
     end
+    column :market
     column :active
     column :created_at
     actions
@@ -55,9 +55,8 @@ ActiveAdmin.register Project do
       tab I18n.t('main') do
         attributes_table do
           row :name
+          row :market
           row :active
-          row :client
-          row :company if current_user.super_admin?
           row :created_at
           row :updated_at
         end
@@ -72,6 +71,30 @@ ActiveAdmin.register Project do
             end
           end
         end
+
+        panel t('revenue_forecast') do
+          data = RevenueForecastService.project_forecast(project)
+
+          # TODO: Refactor
+          # * Current year tab should come active as default
+          # * Improve how data is being rendered
+          # * Implement i18n
+          tabs do
+            data.each do |year, data|
+              tab year.to_s do
+                columns do
+                  (1..12).each do |month|
+                    column do
+                      para Date::MONTHNAMES[month]
+                      span { data[month] ? humanized_money_with_symbol(data[month]) : '-' }
+                    end
+                  end
+                end
+              end
+            end # tab
+          end # tabs
+        end # panel
+
       end
 
       tab I18n.t('allocate_users') do
@@ -83,13 +106,7 @@ ActiveAdmin.register Project do
   form do |f|
     f.inputs I18n.t('project_details') do
       f.input :name
-      if current_user.super_admin?
-        f.input :client
-        f.input :company
-      else
-        f.input :client, collection: current_user.company.clients.active.order(:name)
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
+      f.input :market
       f.input :active
     end
     f.actions
@@ -101,7 +118,7 @@ ActiveAdmin.register Project do
     end
 
     def permited_allocation_params
-      params.require(:allocate_users_form).permit(:company_id, :project_id, :start_at, :end_at, :not_allocated_users)
+      params.require(:allocate_users_form).permit(:project_id, :start_at, :end_at, :not_allocated_users)
     end
 
     def index

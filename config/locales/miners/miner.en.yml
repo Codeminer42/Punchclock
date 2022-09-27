@@ -41,11 +41,13 @@ en:
         internship: Internship
         employee: Employee
         contractor: Contractor
+      contract_company_country:
+        brazil: Brazil
+        usa: United States
       role: 
         normal: Normal
         evaluator: Evaluator
         admin:  Admin
-        super_admin: Super Admin
     question:
       kind:
         multiple_choice: Multiple Choice

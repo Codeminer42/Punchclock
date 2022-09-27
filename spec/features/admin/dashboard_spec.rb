@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 describe 'Dashboard', type: :feature do
-  let(:admin_user) { create(:user, :super_admin, occupation: :administrative) }
-  let!(:user)      { create(:user, company: admin_user.company) }
-  let!(:user2)     { create(:user, company: admin_user.company) }
-  let!(:office)    { create(:office, company: admin_user.company, head: user) }
-  let!(:client)    { create(:client, company: admin_user.company) }
-  let!(:project)   { create(:project, company: admin_user.company, client: client) }
+  let(:admin_user) { create(:user, :admin, occupation: :administrative) }
+  let!(:user)      { create(:user) }
+  let!(:user2)     { create(:user) }
+  let!(:office)    { create(:office, head: user) }
+  let!(:project)   { create(:project) }
 
   before do
     create(:user, :with_overall_score, :level_intern, score: 8)
@@ -52,7 +51,7 @@ describe 'Dashboard', type: :feature do
 
     it 'have project options' do
       within '#project_id_input' do
-        expect(page).to have_text("#{project.name} - #{project.client.name}")
+        expect(page).to have_text(project.name)
       end
     end
   end

@@ -8,7 +8,6 @@ RSpec.describe Office, type: :model do
     it { is_expected.to have_many(:users).dependent(:restrict_with_error) }
     it { is_expected.to belong_to(:head).class_name('User').optional }
     it { is_expected.to have_and_belong_to_many :regional_holidays }
-    it { is_expected.to belong_to :company }
 
     describe 'has_many users_without_head' do
       let(:office) { create(:office, :with_head) }
@@ -27,27 +26,7 @@ RSpec.describe Office, type: :model do
     subject { build(:office) }
 
     it { is_expected.to validate_presence_of :city }
-    it { is_expected.to validate_uniqueness_of(:city).scoped_to(:company_id) }
-  end
-
-  describe 'Scopes' do
-    context '#by_company' do
-      let(:company) { create(:company) }
-      let(:office) { create(:office, { company: company }) }
-
-      let(:other_company) { create(:company) }
-      let(:other_office) { create(:office, { company: other_company }) }
-
-      subject { Office.by_company(company) }
-
-      it 'returns company' do
-        expect(subject).to include(office)
-      end
-
-      it 'does not return other_company' do
-        expect(subject).not_to include(other_office)
-      end
-    end
+    it { is_expected.to validate_uniqueness_of(:city) }
   end
 
   describe '#to_s' do

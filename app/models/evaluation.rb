@@ -9,9 +9,7 @@ class Evaluation < ApplicationRecord
   belongs_to :evaluated, class_name: 'User'
   belongs_to :evaluator, class_name: 'User'
   belongs_to :questionnaire
-  belongs_to :company
   has_many   :answers, dependent: :destroy
-  belongs_to :company
 
   accepts_nested_attributes_for :answers
 

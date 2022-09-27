@@ -6,7 +6,6 @@ describe Punch do
   describe 'relations' do
     it { is_expected.to belong_to :project }
     it { is_expected.to belong_to :user }
-    it { is_expected.to belong_to :company }
   end
 
   describe 'validations' do
@@ -108,21 +107,18 @@ describe Punch do
   context 'times validation' do
     let(:project) { FactoryBot.create(:project) }
     let(:user) { FactoryBot.create(:user) }
-    let(:company) { FactoryBot.create(:company) }
     let(:punch) { FactoryBot.build(:punch) }
     let(:error_message) { I18n.t(:must_be_workday, scope: "activerecord.errors.models.punch.attributes.when_day") }
 
     it 'does not allow retroactive end date' do
       expect(Punch.new(from: Time.new(2001, 2, 5, 8, 0, 0, 0),
                        to: Time.new(2001, 1, 5, 17, 0, 0, 0),
-                       company: company,
                        project: project, user: user)).not_to be_valid
     end
 
     it 'does not allow times from diferent days' do
       expect(Punch.new(from: Time.new(2001, 1, 4, 8, 0, 0, 0),
                        to:   Time.new(2001, 1, 5, 17, 0, 0, 0),
-                       company: company,
                        project: project, user: user)).not_to be_valid
     end
 
@@ -132,7 +128,6 @@ describe Punch do
         let(:punch) {
           Punch.new(from: Time.new(2022, 1, 5, 8, 0, 0, 0),
                     to:   Time.new(2022, 1, 5, 8, 0, 0, 0),
-                    company: company,
                     project: project, user: user)
         }
 
@@ -151,7 +146,6 @@ describe Punch do
         let(:punch) {
           Punch.new(from: Time.new(2022, 1, 5, 9, 0, 0, 0),
                     to:   Time.new(2022, 1, 5, 8, 0, 0, 0),
-                    company: company,
                     project: project, user: user)
         }
 
@@ -199,7 +193,6 @@ describe Punch do
     it "is valid on workdays" do
       expect(Punch.new(from: Time.new(2001, 1, 4, 8, 0, 0, 0), # Thursday
                        to:   Time.new(2001, 1, 4, 17, 0, 0, 0),
-                       company: company,
                        project: project, user: user)).to be_valid
     end
 
@@ -210,7 +203,6 @@ describe Punch do
         RegionalHoliday.create(name: 'City Holiday',
                              day: 15,
                              month: 5,
-                             company: user.office.company,
                              offices: [user.office])
         punch.user = user
         punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
@@ -235,7 +227,6 @@ describe Punch do
       it "is valid on holidays" do
         expect(Punch.new(from: Time.new(2001, 12, 25, 8, 0, 0, 0), # Christimas
                        to:   Time.new(2001, 12, 25, 17, 0, 0, 0),
-                       company: company,
                        project: project, user: user)).to be_valid
       end
 
@@ -246,7 +237,6 @@ describe Punch do
                                offices: [FactoryBot.create(:office)])
         expect(Punch.new(from: Time.new(2001, 5, 15, 8, 0, 0, 0), # City Holiday
                          to:   Time.new(2001, 5, 15, 17, 0, 0, 0),
-                         company: company,
                          project: project, user: user)).to be_valid
       end
     end

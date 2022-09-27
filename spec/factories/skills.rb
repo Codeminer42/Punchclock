@@ -3,6 +3,5 @@
 FactoryBot.define do
   factory :skill do
     title { Faker::ProgrammingLanguage.unique.name}
-    company
   end
 end

@@ -19,6 +19,15 @@ GIT
       moneta (~> 1.0.0)
       rate_throttle_client (~> 0.1.0)
 
+GIT
+  remote: https://github.com/mitsuru/validates_timeliness.git
+  revision: f28a62589cc069d1d1f5dfd99e1749edca04cd68
+  branch: rails7
+  specs:
+    validates_timeliness (6.0.0.beta2)
+      activemodel (>= 6.0.0, < 7.1)
+      timeliness (>= 0.3.10, < 1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -261,6 +270,10 @@ GEM
       moneta
       multi_json (>= 1.9.2)
       webrick
+    historical-bank (0.1.5)
+      httparty (~> 0.14)
+      money (~> 6.7)
+      redis (~> 4.0, >= 3.3)
     holidays (8.5.0)
     http_parser.rb (0.8.0)
     httparty (0.20.0)
@@ -334,6 +347,15 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.2)
     moneta (1.0.0)
+    monetize (1.12.0)
+      money (~> 6.12)
+    money (6.16.0)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.15.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9)
+      money (~> 6.13)
+      railties (>= 3.0)
     msgpack (1.5.3)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -371,9 +393,6 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
-    passenger (6.0.14)
-      rack
-      rake (>= 0.8.1)
     pg (1.4.1)
     popper_js (1.16.0)
     pry (0.14.1)
@@ -553,8 +572,6 @@ GEM
       kgio (~> 2.6)
       raindrops (~> 0.7)
     uniform_notifier (1.16.0)
-    validates_timeliness (5.0.0)
-      timeliness (>= 0.3.10, < 1)
     vcr (6.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -618,6 +635,7 @@ DEPENDENCIES
   github_api (~> 0.18.2)
   guard
   guard-livereload (~> 2.5)
+  historical-bank
   holidays (~> 8.3)
   httparty
   jquery-easing-rails
@@ -629,9 +647,9 @@ DEPENDENCIES
   letter_opener
   letter_opener_web (~> 1.4)
   listen (~> 3.2)
+  money-rails (~> 1.12)
   nokogiri (~> 1.13.2)
   normalize-rails (~> 4.1.1)
-  passenger (~> 6.0)
   pg (~> 1.2)
   platform-api!
   pry-rails
@@ -659,14 +677,14 @@ DEPENDENCIES
   sprockets
   uglifier
   unicorn
-  validates_timeliness (~> 5.0.0.beta1)
+  validates_timeliness (~> 6.0.0.beta2)!
   vcr
   web-console (~> 4.0)
   webmock
   webpacker (~> 5.1)
 
 RUBY VERSION
-   ruby 2.7.6p219
+   ruby 3.1.2p20
 
 BUNDLED WITH
-   2.1.4
+   2.3.22

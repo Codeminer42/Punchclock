@@ -24,11 +24,13 @@ pt-BR:
           employee: Funcionário
           contractor: PJ
           associate: Associado
+        contract_company_country:
+          brazil: Brasil
+          usa: Estados Unidos
         role:
           normal: Normal
           evaluator: Avaliador
           admin:  Admin
-          super_admin: Super Admin
           hr: RH
       question:
         kind:

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe PunchesCreateForm do
   let(:user) { create(:user) }
-  let(:project) { create(:project, company: user.company) }
+  let(:project) { create(:project) }
   let(:punches_params) do
     [
       {

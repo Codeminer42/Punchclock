@@ -2,10 +2,6 @@ module Github
   module Contributions
     module Wrappers
       class Engineers
-        def initialize(company:)
-          @company = company
-        end
-
         def find_by_github_user(github_user)
           to_h[github_user]
         end
@@ -20,12 +16,10 @@ module Github
           engineers.empty?
         end
 
-        attr_reader :company
-
         private 
 
         def engineers
-          @engineers ||= company.users
+          @engineers ||= User
             .engineer
             .active
             .pluck(:github, :id)

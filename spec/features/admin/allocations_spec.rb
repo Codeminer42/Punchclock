@@ -4,16 +4,15 @@ require 'rails_helper'
 
 describe 'Admin Allocation', type: :feature do
   let(:admin_user)  { create(:user, :admin, occupation: :administrative) }
-  let!(:user)       { create(:user, company: admin_user.company) }
-  let!(:project)    { create(:project, company: admin_user.company) }
+  let!(:user)       { create(:user) }
+  let!(:project)    { create(:project) }
   let!(:allocation) do
     create(:allocation,
-           :with_end_at,
            start_at: Date.new(2019, 6, 17),
            user: user,
            project: project,
-           ongoing: true,
-           company: admin_user.company)
+           ongoing: true
+          )
   end
 
   before do
@@ -22,48 +21,43 @@ describe 'Admin Allocation', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "Usuário", "Projeto", "Início", "Término" and "Dias Restantes" on table' do
+    it 'must find fields "Usuário", "Projeto", "Início", "Término", "Dias Restantes", and "Em progresso" on table' do
       within 'table' do
         expect(page).to have_text('Usuário') &
                         have_text('Projeto') &
                         have_text('Início') &
                         have_text('Término') &
-                        have_text('Dias Restantes')
+                        have_text('Dias Restantes') &
+                        have_text('Em progresso')
       end
-    end
-
-    it 'must find scopes "Em andamento", "Finalizadas", "Todos", and "Alocação de Recursos"' do
-      expect(page).to have_text('Em andamento (1)') &
-                      have_text('Finalizadas (0)') &
-                      have_text('Todos (1)') &
-                      have_text('Alocação de Recursos (1)')
     end
   end
 
   describe 'Filters' do
     before do
-      create_list(:user, 2, company: admin_user.company)
-      create_list(:project, 1, company: admin_user.company)
+      create_list(:user, 2)
+      create_list(:project, 1)
       visit '/admin/allocations'
     end
 
     it 'by user' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Usuário', options: admin_user.company.users.pluck(:name) << 'Qualquer')
+        users_name = User.pluck(:name)
+        expect(page).to have_select('Usuário', options: users_name << 'Qualquer')
       end
     end
 
     it 'by project' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Projeto', options: admin_user.company.projects.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Projeto', options: Project.all.pluck(:name) << 'Qualquer')
       end
     end
   end
 
   describe 'Actions' do
     describe 'New' do
-      let!(:user_not_allocated) { create(:user, company: admin_user.company) }
-      let!(:project_not_active) { create(:project, :inactive, company: admin_user.company) }
+      let!(:user_not_allocated) { create(:user) }
+      let!(:project_not_active) { create(:project, :inactive) }
 
       before { click_link 'Novo(a) Alocação' }
 
@@ -86,10 +80,12 @@ describe 'Admin Allocation', type: :feature do
 
       it 'must have the form working' do
         start_at = 1.week.after
+        end_at = 50.weeks.after
 
         find('#allocation_user_id').find(:option, user_not_allocated.name).select_option
         find('#allocation_project_id').find(:option, project.name).select_option
         find('#allocation_start_at').fill_in with: start_at.strftime('%Y-%m-%d')
+        find('#allocation_end_at').fill_in with: end_at.strftime('%Y-%m-%d')
 
         click_button 'Criar Alocação'
 
@@ -97,8 +93,8 @@ describe 'Admin Allocation', type: :feature do
                         have_css('.row-user', text: user_not_allocated.name) &
                         have_text(project.name) &
                         have_text(I18n.l(start_at, format: '%d de %B de %Y')) &
-                        have_css('.row-end_at', text: 'Vazio') &
-                        have_css('.row-days_left', text: 'Vazio')
+                        have_text(I18n.l(end_at, format: '%d de %B de %Y')) &
+                        have_css('.row-days_left', text: 'Dias Restantes 350')
       end
     end
 

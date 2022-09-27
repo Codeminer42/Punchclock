@@ -11,11 +11,10 @@ class DashboardController < ApplicationController
 
   def save
     @punches = current_user.punches
-    company = current_user.company
     additions = bulk_params(params_add)
     deletions = Array.wrap(punch_params['delete']).concat(params_add.keys)
 
-    @punches_transaction = CreatePunchesInBatchService.call(@punches, company, additions, deletions)
+    @punches_transaction = CreatePunchesInBatchService.call(@punches, additions, deletions)
 
     if @punches_transaction.success?
       head :created

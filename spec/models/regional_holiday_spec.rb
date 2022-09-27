@@ -5,7 +5,6 @@ describe RegionalHoliday do
 
   describe 'relations' do
     it { is_expected.to have_and_belong_to_many :offices }
-    it { is_expected.to belong_to :company }
   end
 
   describe 'validations' do

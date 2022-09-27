@@ -1,37 +1,25 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Allocation do
-  config.sort_order = ''
-  permit_params :user_id, :project_id, :start_at, :end_at, :company_id, :ongoing
+  decorate_with AllocationDecorator
+
+  config.sort_order = 'ongoing_desc'
+  permit_params :user_id, :project_id, :hourly_rate, :hourly_rate_currency, :start_at, :end_at, :ongoing
 
   config.batch_actions = false
 
   menu parent: User.model_name.human(count: 2), priority: 4
 
-  scope :ongoing, default: true
-  scope :finished
-  scope :all do
-    current_user.company.allocations.all.joins(:user).merge(User.active)
-  end
-  scope :spreadsheet do |relation|
-    AllocationsAndUnalocatedUsersQuery.new(relation, current_user.company).call
-  end
-
-  filter :user, collection: proc {
-    current_user.super_admin? ? User.all.order(:name).group_by(&:company) : current_user.company.users.order(:name)
-  }
-  filter :project, collection: proc {
-    current_user.super_admin? ? Project.all.order(:name).group_by(&:company) : current_user.company.projects.order(:name)
-  }
+  filter :ongoing
+  filter :user, collection: -> { User.active.order(:name) }
+  filter :project, collection: -> { Project.active.order(:name) }
   filter :start_at
   filter :end_at
 
   index download_links: [:xls] do
-    column :user
-    column User.human_attribute_name('specialty') do |allocation|
-      allocation.user.specialty&.humanize
-    end
+    column :user, sortable: 'users.name'
     column :project
+    column :hourly_rate
     column :start_at, sortable: false
     column :end_at, sortable: false
     column :days_left, &:days_until_finish
@@ -43,10 +31,23 @@ ActiveAdmin.register Allocation do
     attributes_table do
       row :user
       row :project
+      row :hourly_rate
       row :start_at
       row :end_at
       row :days_left, &:days_until_finish
       row :ongoing
+    end
+
+    panel t('revenue_forecast') do
+      table_for(RevenueForecastService.allocation_forecast(allocation.model)) do
+        column :month do |data|
+          "#{data[:month]}/#{data[:year]}"
+        end
+        column :working_days
+        column :forecast do |data|
+          humanized_money_with_symbol(data[:forecast])
+        end
+      end
     end
 
     panel t('allocated_user_punches', scope: 'active_admin') do
@@ -72,21 +73,12 @@ ActiveAdmin.register Allocation do
 
   form html: { autocomplete: 'off' } do |f|
     inputs 'Details' do
-      if current_user.super_admin?
-        input :user
-        input :project
-        input :company
-      else
-        company_users = UsersByCompanyQuery
-                                      .new(current_user.company)
-                                      .active_engineers
-                                      .select(:id, :name)
+      users = User.engineer.active.order(:name).select(:id, :name)
 
-        input :user, as: :select, collection: company_users
-        input :project, collection: (current_user.company.projects.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
-        input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
-
+      input :user, as: :select, collection: users
+      input :project, collection: (Project.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
+      input :hourly_rate
+      input :hourly_rate_currency, as: :select, collection: Allocation::HOURLY_RATE_CURRENCIES
       input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
       input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
       input :ongoing
@@ -102,6 +94,10 @@ ActiveAdmin.register Allocation do
           send_data spreadsheet.to_string_io, filename: 'allocations.xls'
         end
       end
+    end
+
+    def scoped_collection
+      end_of_association_chain.includes(:user)
     end
   end
 end

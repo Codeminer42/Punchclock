@@ -6,7 +6,6 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     kind        { 'performance' }
     active      { true }
-    company
 
     trait :kind_english do
       kind { 'english'}

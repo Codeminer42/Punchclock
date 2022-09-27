@@ -19,15 +19,13 @@ Bundler.require(*Rails.groups)
 
 module Punchclock
   class Application < Rails::Application
-    config.autoload_paths += Dir[
-        "#{Rails.root}/lib"
-    ]
+    config.autoload_paths << "#{Rails.root}/lib"
+    config.eager_load_paths << "#{Rails.root}/lib"
+
     config.i18n.load_path += Dir[
       Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s
     ]
 
-    config.eager_load_paths << "#{Rails.root}/lib"
-    config.load_defaults 5.1
     config.i18n.enforce_available_locales = false
     config.i18n.locale = :'pt-BR'
     config.i18n.default_locale = :'pt-BR'
@@ -36,7 +34,9 @@ module Punchclock
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_job.queue_adapter = :sidekiq
 
-    config.load_defaults 5.2
+    config.active_record.legacy_connection_handling = false
+
+    config.load_defaults 7.0
     config.generators.system_tests = nil
   end
 end

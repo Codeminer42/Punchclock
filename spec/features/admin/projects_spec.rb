@@ -4,8 +4,7 @@ require 'rails_helper'
 
 describe 'Projects', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:client) { create(:client, company: admin_user.company) }
-  let!(:project)   { create(:project, company: admin_user.company, client: client) }
+  let!(:project)   { create(:project) }
 
   before do
     sign_in(admin_user)
@@ -32,9 +31,6 @@ describe 'Projects', type: :feature do
 
   describe 'Actions' do
     describe 'New' do
-      let!(:client) { create(:client, company: admin_user.company) }
-      let(:project) { create(:project, company: client.company, name: 'TRZ') }
-      
       before do
         within '.action_items' do
           click_link 'Novo(a) Projeto'
@@ -42,21 +38,18 @@ describe 'Projects', type: :feature do
       end
 
       it 'must have the form working' do
-
         find('#project_name').fill_in with: 'MinerCamp'
-        find('#project_client_id').find(:option, client.name).select_option
+        find('#project_market').find(:option, 'Interno').select_option
 
         click_button 'Criar Projeto'
 
         expect(page).to have_text('Projeto foi criado com sucesso.') &
-                        have_text('MinerCamp') &
-                        have_text(client.name)
+                        have_text('MinerCamp')
       end
 
       it 'must not work with a project with the same name' do
-
-        find('#project_name').fill_in with: 'TRZ'
-        find('#project_client_id').find(:option, client.name).select_option
+        find('#project_name').fill_in with: project.name
+        find('#project_market').find(:option, 'Interno').select_option
 
         click_button 'Criar Projeto'
 
@@ -81,17 +74,15 @@ describe 'Projects', type: :feature do
           within '#principal' do
             expect(page).to have_text("Nome")  &
                             have_text("Ativo") &
-                            have_text("Cliente") &
                             have_text("Alocações") &
                             have_css('.row-name', text: project.name) &
-                            have_css('.row-active', text: 'Sim') &
-                            have_text(project.client)
+                            have_css('.row-active', text: 'Sim')
           end
         end
       end
 
       context 'on allocate users tab' do
-        let!(:users){ create_list(:user, 2, company: admin_user.company) }
+        let!(:users){ create_list(:user, 2) }
         before { refresh }
         
         it 'fills the form correctly' do
@@ -119,8 +110,7 @@ describe 'Projects', type: :feature do
       it 'have labels' do
         within 'form' do
           expect(page).to have_text("Nome")  &
-                          have_text("Ativo") &
-                          have_text("Cliente")
+                          have_text("Ativo")
         end
       end
 

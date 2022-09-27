@@ -10,18 +10,11 @@ RSpec.describe Github::Repositories::Sync, type: :service do
   end
 
   describe '#call' do
-    subject(:call) { described_class.new(company: company, client: client).call }
+    subject(:call) { described_class.new(client: client).call }
 
     let(:client) { instance_double('Github') }
 
-    context 'when company is not present' do
-      let(:company) { nil }
-
-      it { is_expected.to be_empty }
-    end
-
     context 'when there are no repositories in database' do
-      let(:company) { build_stubbed(:company) }
 
       it { is_expected.to be_empty }
     end

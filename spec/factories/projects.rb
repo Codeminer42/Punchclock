@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :project do
     sequence(:name) { |n| "#{Faker::App.name}#{n}" }
-    company
+    market { Project.market.values.sample }
   end
 
   trait :active do

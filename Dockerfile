@@ -1,56 +1,30 @@
-FROM codeminer42/ci-ruby:2.7
+FROM ruby:3.1.2
 
 LABEL MAINTAINER Codeminer42 <contact@codeminer42.com>
 
-ENV DEBIAN_FRONTED=noninteractive
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 
-# On change this settings, check the state on "before_script" in .gitlab-ci.yml
-RUN apt-get update && apt-get install -y \
-  openssh-server \
-  sudo \
-  build-essential \
-  ruby-dev \
-  postgresql-client \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY Gemfile.lock .
 
-# SSH config
-RUN mkdir /var/run/sshd \
-  && sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
-  && echo "export VISIBLE=now" >> /etc/profile \
-  && echo 'root:root' | chpasswd
-ENV NOTVISIBLE "in users profile"
+ENV BUNDLE_PATH=/bundle \
+    BUNDLE_BIN=/bundle/bin \
+    GEM_HOME=/bundle
+ENV PATH="${BUNDLE_BIN}:${PATH}"
 
-# ADD an user
-RUN adduser --disabled-password --gecos '' devel \
-  && usermod -a -G sudo devel \
-  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-  && echo 'devel:devel' | chpasswd
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+  && apt-get update \
+  && apt-get install -y \
+    build-essential \
+    postgresql-client \
+  && groupadd --gid ${GROUP_ID} app \
+  && useradd --system --create-home --no-log-init --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo app \
+  && mkdir /var/app && chown -R app:app /var/app \
+  && echo "app ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+  && gem install bundler -v $(tail -n 1 Gemfile.lock) \
+  && chown -R app:app $BUNDLE_PATH \
+  && sh ~/.nvm/nvm.sh install 16.13.1
 
-# SETTINGS EQUALS TO CI
-RUN ln -nfs /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /usr/lib/x86_64-linux-gnu/libssl.so \
-  && npm install -g yarn
+USER app
 
-ENV HOME=/home/devel
-ENV APP=/var/www/app
-ENV BUNDLE_PATH=/bundle/vendor
-ENV GEM_HOME=${BUNDLE_PATH}
-ENV PATH=${PATH}:${BUNDLE_PATH}/bin
-
-ENV RAILS_LOG_TO_STDOUT true
-
-RUN mkdir -p ${HOME} && \
-  chown -R devel:devel ${HOME} && \
-  mkdir -p ${APP} && \
-  chown -R devel:devel ${APP} && \
-  mkdir -p ${BUNDLE_PATH} && \
-  chown -R devel:devel /bundle
-
-USER devel:devel
-WORKDIR $APP
-
-RUN gem install bundler -v 2.1.4
-
-EXPOSE 3000
-
-CMD ["/usr/bin/sudo", "/usr/sbin/sshd", "-D"]
+WORKDIR /var/app

@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { create :user }
   let(:admin_user) { create :user, :admin}
-  let(:super_admin) { create :user, :super_admin}
   let(:open_source_manager) { create :user, :open_source_manager }
   let(:active_user) { create :user, :active_user }
   let(:inactive_user) { create :user, :inactive_user }
@@ -25,6 +24,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validations' do
+    let!(:user) { create(:user, :admin) }
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
@@ -95,9 +95,22 @@ RSpec.describe User, type: :model do
     it { is_expected.to enumerize(:role).in(  normal: 0,
                                               evaluator: 1,
                                               admin: 2,
-                                              super_admin: 3,
-                                              open_source_manager: 4,
-                                              hr: 5) }
+                                              open_source_manager: 3,
+                                              hr: 4) }
+  end
+
+  describe 'roles' do
+    it do
+      is_expected.to enumerize(:roles)
+      .in(
+        normal: 0,
+        evaluator: 1,
+        admin: 2,
+        open_source_manager: 3,
+        hr: 4
+      )
+      .with_multiple(true)
+    end
   end
 
   describe 'scopes' do
@@ -106,15 +119,44 @@ RSpec.describe User, type: :model do
     let(:vuejs)         { create(:skill, title: 'vuejs') }
     let!(:full_stack)   { create(:user, skills: [ruby, vuejs]) }
 
-    context '#by_skills' do
+    context '.by_skills' do
       it 'returns the users that have all the skills selected' do
         expect(User.by_skills_in(ruby.id, vuejs.id).first).to eq(full_stack)
       end
     end
 
-    context '#not_in_experience' do
+    context '.not_in_experience' do
       it 'returns the user that are not in experience period' do
         expect(User.not_in_experience).to contain_exactly(user_not_in_experience)
+      end
+    end
+
+    describe '.by_roles_in' do
+      let!(:user1) { create(:user, roles: %i[admin]) }
+      let!(:user2) { create(:user, roles: [:admin]) }
+
+      context 'by admin role only' do
+        let(:roles_names) { [:admin] }
+        it 'returns users with admin role' do
+          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1, user2)
+        end
+      end
+
+      context 'by admin roles' do
+        let(:roles_names) { %i[admin] }
+        it 'returns users with admin roles' do
+          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1, user2)
+        end
+      end
+    end
+
+    describe '.admin' do
+      let!(:user1) { create(:user, roles: %i[admin open_source_manager]) }
+      let!(:user2) { create(:user, roles: [:normal]) }
+      let!(:user3) { create(:user, roles: [:admin]) }
+
+      it 'returns users with admin role' do
+        expect(User.admin.to_a).to contain_exactly(user1, user3)
       end
     end
   end
@@ -184,8 +226,8 @@ RSpec.describe User, type: :model do
   end
 
   context 'allocations' do
-    let(:user)           { create(:user) }
-    let!(:allocation) { create(:allocation, :with_end_at, user: user, ongoing: true) }
+    let(:user) { create(:user) }
+    let!(:allocation) { create(:allocation, user: user, ongoing: true) }
 
     it 'returns the user allocated project' do
       expect(user.current_allocation).to eq(allocation.project)
@@ -235,7 +277,9 @@ RSpec.describe User, type: :model do
   end
 
   describe '#to_s' do
-    it { expect(user.to_s).to eq user.name }
+    it "return user first and last name" do
+      expect(user.to_s).to eq user.first_and_last_name
+    end
   end
 
   describe '#active_for_authentication' do
@@ -253,16 +297,30 @@ RSpec.describe User, type: :model do
       expect(admin_user).to have_admin_access
     end
 
-    it "allow admin access for user with super_admin role" do
-      expect(super_admin).to have_admin_access
-    end
-
     it "allow admin access for user with open source manager role" do
       expect(open_source_manager).to have_admin_access
     end
 
-    it "not allows admin access for user without admin or super_admin roles" do
+    it "not allows admin access for user without admin roles" do
       expect(user).to_not have_admin_access
+    end
+  end
+
+  describe '#is_admin?' do
+    context 'with role hr' do
+      let(:hr_user) { create(:user, roles: [:hr]) }
+
+      it 'is considered an admin' do
+        expect(hr_user.is_admin?).to be_truthy
+      end
+    end
+
+    context 'with role admin' do
+      let(:admin_user) { create(:user, roles: [:admin]) }
+
+      it 'is considered an admin' do
+        expect(admin_user.is_admin?).to be_truthy
+      end
     end
   end
 end

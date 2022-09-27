@@ -5,7 +5,6 @@ require 'aasm/rspec'
 
 RSpec.describe Contribution, type: :model do
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:company) }
   it { is_expected.to belong_to(:repository) }
   it { is_expected.to belong_to(:reviewed_by).class_name('User').optional }
   it { is_expected.to validate_presence_of :link }

@@ -1,11 +1,12 @@
 ActiveAdmin.register Contribution do
-  permit_params :state, :link, :user_id, :company_id, :repository_id
+  decorate_with ContributionDecorator
+
+  permit_params :state, :link, :user_id, :repository_id
   actions :index, :show, :new, :create
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
-  filter :company, as: :select, if: proc { current_user.super_admin? }
-  filter :user, as: :select, collection: proc { CompanyUsersCollectionQuery.new(current_user).call }
+  filter :user, as: :select, collection: -> { User.engineer.active.order(:name) }
   filter :reviewed_at
   filter :created_at
 
@@ -13,12 +14,12 @@ ActiveAdmin.register Contribution do
   member_action :refuse, method: :put, only: :index
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each {|contribution| contribution.refuse!(current_user.id) if contribution.state == "received"}
+    batch_action_collection.find(ids).each { |contribution| contribution.refuse!(current_user.id) if contribution.state == "received" }
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each {|contribution| contribution.approve!(current_user.id) if contribution.state == "received"}
+    batch_action_collection.find(ids).each { |contribution| contribution.approve!(current_user.id) if contribution.state == "received" }
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
   end
@@ -41,9 +42,6 @@ ActiveAdmin.register Contribution do
   index download_links: [:xls, :text] do
     selectable_column
     column :user
-    if current_user.super_admin?
-      column :company
-    end
     column :link do |contribution|
       link_to contribution.link, contribution.link, target: :blank
     end
@@ -51,7 +49,7 @@ ActiveAdmin.register Contribution do
     column :state do |contribution|
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
-    column :reviewed_by
+    column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
 
     actions defaults: true do |contribution|
@@ -65,7 +63,6 @@ ActiveAdmin.register Contribution do
   show do
     attributes_table do
       row :user
-      row :company
       row :link
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
@@ -80,20 +77,13 @@ ActiveAdmin.register Contribution do
   form do |f|
     f.semantic_errors
     inputs I18n.t('contribution_details') do
-      f.input :user, as: :select, collection: CompanyUsersCollectionQuery.new(current_user).call
-
-      if current_user.super_admin?
-        f.input :company
-      else
-        f.input :company_id, as: :hidden, input_html: { value: current_user.company_id }
-      end
+      f.input :user, as: :select, collection: User.engineer.active.order(:name)
 
       input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
       input :link
     end
     f.actions
   end
-
 
   controller do
     def approve
@@ -109,14 +99,13 @@ ActiveAdmin.register Contribution do
     def index
       super do |format|
         format.xls do
-          spreadsheet = ContributionsSpreadsheet.new find_collection(except: :pagination)
+          spreadsheet = ContributionsSpreadsheet.new find_collection(except: %i[pagination collection_decorator])
           send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
         end
         format.text do
-          send_data ContributionsTextService.call(find_collection(except: :pagination))
+          send_data ContributionsTextService.call(find_collection(except: %i[pagination collection_decorator]))
         end
       end
     end
   end
-
 end

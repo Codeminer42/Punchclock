@@ -109,7 +109,7 @@ describe NotificationMailer do
 
     context 'when notify admin: user dont punch makes 7 days or more' do
       let(:user) { build(:user) }
-      let(:admin) { build(:user, :admin, company_id: user.company_id) }
+      let(:admin) { build(:user, :admin) }
       let(:mail) do
         NotificationMailer.notify_admin_punches_pending(admin, user)
       end
@@ -133,7 +133,7 @@ describe NotificationMailer do
 
     context 'when notify admin: extra hour' do
       let(:user) { build :user }
-      let(:admins) { build_list :user, 2, :admin, company_id: user.company_id }
+      let(:admins) { build_list :user, 2, :admin }
       let(:extra_hour_punches) do
         from = "2018-07-03 17:00".to_time
         to   = from + 2.hours

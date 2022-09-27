@@ -4,13 +4,9 @@ FactoryBot.define do
   factory :allocation do
     user
     project
-    start_at { Date.today }
-    end_at   { nil }
-    company { user.company }
+    hourly_rate { Money.new(rand(10000..35000)) }
+    start_at { Date.today - rand(0..180) }
+    end_at   { Date.today + rand(30..180) }
     ongoing { false }
-
-    trait :with_end_at do
-      end_at { Faker::Date.between(from: Date.tomorrow, to: 4.days.after) }
-    end
   end
 end

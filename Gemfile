@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.6'
+ruby '3.1.2'
 
 gem 'rails', '~> 7.0.3.1'
 
@@ -38,6 +38,8 @@ gem 'spreadsheet'
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
 gem 'active_model_serializers', '~> 0.10.13'
+gem 'money-rails', '~> 1.12'
+gem 'historical-bank'
 
 gem 'ransack', '~> 2.3'
 
@@ -48,7 +50,7 @@ gem 'rollbar'
 gem 'chartkick'
 
 gem 'normalize-rails', '~> 4.1.1'
-gem 'validates_timeliness', '~> 5.0.0.beta1'
+gem 'validates_timeliness', '~> 6.0.0.beta2', github: "mitsuru/validates_timeliness", branch: "rails7"
 gem 'enumerize', '~> 2.5.0'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'active_admin_theme'
@@ -99,7 +101,6 @@ gem 'unicorn'
 
 group :development, :test do
   gem 'factory_bot_rails'
-  gem 'faker', '~> 2.14.0'
   gem 'rspec-rails'
   gem 'rswag-specs', '~> 2.5.1'
   gem 'pry-rails'
@@ -109,6 +110,6 @@ group :development, :test do
   gem 'rubocop-faker', '~> 1.1'
 end
 
-group :production, :staging do
-  gem 'passenger', '~> 6.0'
+group :development, :test, :staging do
+  gem 'faker', '~> 2.14.0'
 end

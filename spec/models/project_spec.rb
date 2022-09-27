@@ -6,9 +6,13 @@ describe Project do
   let(:inactive_project) { create :project, :inactive }
 
   describe 'relations' do
-    it { is_expected.to belong_to :company }
-    it { is_expected.to belong_to(:client).optional }
     it { is_expected.to have_many :punches }
+  end
+
+  it { should enumerize(:market).in(%i[internal international]) }
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of :market }
   end
 
   describe '.active' do

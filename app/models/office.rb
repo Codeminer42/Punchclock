@@ -4,12 +4,10 @@ class Office < ApplicationRecord
   has_many :users, dependent: :restrict_with_error
   has_many :users_without_head, ->(office) {where.not(id: office.head_id)}, class_name: 'User'
   has_and_belongs_to_many :regional_holidays
-  belongs_to :company
   belongs_to :head, class_name: 'User', optional: true
 
-  validates :city, presence: true, uniqueness: { scope: :company_id }
+  validates :city, presence: true, uniqueness: true
 
-  scope :by_company,  -> (company) { where(company: company) }
   scope :active,      -> { where(active: true) }
   scope :inactive,    -> { where(active: false) }
 

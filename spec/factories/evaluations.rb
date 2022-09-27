@@ -2,9 +2,8 @@
 
 FactoryBot.define do
   factory :evaluation do
-    company
-    evaluator   { create(:user, company: company) }
-    evaluated   { create(:user, company: company) }
+    evaluator   { create(:user) }
+    evaluated   { create(:user) }
     questionnaire
     score       { rand 1..10 }
     observation { Faker::Lorem.paragraph }

@@ -3,8 +3,7 @@ FactoryBot.define do
     sequence(:from) { |i| DateTime.new(2001, 1, 5, 8, 0, 0, 0) }
     sequence(:to)   { |i| DateTime.new(2001, 1, 5, 17, 0, 0, 0) }
     user
-    project { create(:project, company: user.company) }
-    company { user.company }
+    project { create(:project) }
 
     trait :is_extra_hour do
       extra_hour { true }

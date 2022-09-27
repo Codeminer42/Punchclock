@@ -2,14 +2,13 @@ require 'rails_helper'
 
 RSpec.describe SendEmailWithExtraHourJob, type: :job do
   describe '#perform' do
-    let!(:company) { create :company, name: 'Codeminer42' }
     let!(:admins) do
       [
-        create(:user, :admin, email: 'active@codeminer42.com', company: company, active: true),
-        create(:user, :admin, email: 'inactive@codeminer42.com', company: company, active: false),
+        create(:user, :admin, email: 'active@codeminer42.com', active: true),
+        create(:user, :admin, email: 'inactive@codeminer42.com', active: false),
       ]
     end
-    let!(:active_user) { create :user, company: company, active: true, allow_overtime: true }
+    let!(:active_user) { create :user, active: true, allow_overtime: true }
     let!(:extra_hour_punches) do
       from = Time.new 2018, 7, 3, 17, 0
       to = from + 2.hours

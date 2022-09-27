@@ -3,21 +3,19 @@
 require 'rails_helper'
 
 feature 'Punches filter form' do
-  let!(:company) { create(:company) }
+  let!(:user) { create_logged_in_user }
 
-  let!(:user) { create_logged_in_user(company_id: company.id) }
+  let!(:project) { create(:project, ) }
+  let!(:punch) { create(:punch, user_id: user.id, ) }
 
-  let!(:project) { create(:project, company_id: company.id) }
-  let!(:punch) { create(:punch, user_id: user.id, company_id: company.id) }
-
-  let!(:user1) { create(:user, company_id: company.id) }
-  let!(:user2) { create(:user, company_id: company.id) }
-  let!(:user3) { create(:user, company_id: company.id) }
+  let!(:user1) { create(:user) }
+  let!(:user2) { create(:user) }
+  let!(:user3) { create(:user) }
 
   background do
-    create_list(:punch, 3, user: user1, company_id: company.id)
-    create_list(:punch, 2, user: user2, company_id: company.id)
-    create_list(:punch, 4, user: user3, company_id: company.id)
+    create_list(:punch, 3, user: user1, )
+    create_list(:punch, 2, user: user2, )
+    create_list(:punch, 4, user: user3, )
   end
 
   def click_on_filter
@@ -25,7 +23,7 @@ feature 'Punches filter form' do
   end
 
   context 'when the user is a regular user' do
-    let!(:user) { create_logged_in_user(company_id: company.id) }
+    let!(:user) { create_logged_in_user }
 
     scenario 'the user filter field is not present' do
       visit '/'
@@ -34,7 +32,7 @@ feature 'Punches filter form' do
   end
 
   context 'date filters' do
-    let!(:user) { create_logged_in_user(company_id: company.id) }
+    let!(:user) { create_logged_in_user }
 
     scenario "filling only the 'since' field" do
       visit '/'

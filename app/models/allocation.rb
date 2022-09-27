@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 class Allocation < ApplicationRecord
+  HOURLY_RATE_CURRENCIES = %w[BRL USD]
+
   belongs_to :user
   belongs_to :project
-  belongs_to :company
 
-  validates :user, :project, presence: true
+  monetize :hourly_rate_cents, with_model_currency: :hourly_rate_currency
+
+  validates :user, :project, :start_at, :end_at, :hourly_rate_currency, presence: true
   validates_date :start_at
-  validate :end_date
+  validates_date :end_at, after: ->(a) { a.start_at }
   validate :unique_period, unless: :end_before_start?
   validates :ongoing, uniqueness: { scope: :user, message: :uniqueness },
                       if: :ongoing?
@@ -26,12 +29,14 @@ class Allocation < ApplicationRecord
       end_at: end_at
     )
   end
-  
+
   def days_until_finish
     return unless end_at
 
     if ongoing
       (end_at - Date.current).to_i
+    elsif end_at > Time.zone.today
+      I18n.t('not_started')
     else
       I18n.t('finished')
     end
@@ -47,13 +52,9 @@ class Allocation < ApplicationRecord
   end
 
   private
-  
+
   def end_before_start?
     end_at.present? && end_at < start_at
-  end
-
-  def end_date
-    errors.add(:end_at, :cant_be_lesser) if end_before_start?
   end
 
   def unique_period

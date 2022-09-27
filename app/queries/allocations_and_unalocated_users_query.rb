@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class AllocationsAndUnalocatedUsersQuery
-  attr_reader :allocation, :company
+  attr_reader :allocation
 
-  def initialize(allocation, company)
+  def initialize(allocation)
     @allocation = allocation
-    @company = company
   end
 
   def call
@@ -24,12 +23,11 @@ class AllocationsAndUnalocatedUsersQuery
   def where
     {
       end_at: [last_user_allocations, nil],
-      users: { occupation: User.occupation.engineer.value, company: company, active: true },
-      company: [company, nil]
+      users: { occupation: User.occupation.engineer.value, active: true }
     }
   end
 
   def last_user_allocations
-    Allocation.group(:user_id).maximum(:end_at).values
+    Allocation.ongoing.group(:user_id, :start_at).maximum(:end_at).values
   end
 end

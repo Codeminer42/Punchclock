@@ -5,15 +5,15 @@ feature 'Repositories list' do
 
   context 'without filter' do
     
-    let!(:repository) { create(:repository, company_id: authed_user.company_id).decorate }
-    let!(:second_repository) { create(:repository, company_id: authed_user.company_id).decorate }
+    let!(:repository) { create(:repository).decorate }
+    let!(:second_repository) { create(:repository).decorate }
   
     before do
       visit repositories_path
     end
   
     it 'has the right count of 25 repositories' do
-      create_list(:repository, 26, company_id: authed_user.company_id)
+      create_list(:repository, 26)
   
       visit repositories_path
 
@@ -32,8 +32,8 @@ feature 'Repositories list' do
   end
 
   context 'when filtering by languages', js: true do  
-    let!(:repository) { create(:repository, language: 'javascript,ruby,python', company_id: authed_user.company_id).decorate }
-    let!(:second_repository) { create(:repository, language: 'Shell,react,python', company_id: authed_user.company_id).decorate }
+    let!(:repository) { create(:repository, language: 'javascript,ruby,python').decorate }
+    let!(:second_repository) { create(:repository, language: 'Shell,react,python').decorate }
   
     before do
       visit repositories_path

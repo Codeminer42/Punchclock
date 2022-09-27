@@ -6,8 +6,8 @@ feature 'Add new Punch' do
   include ActiveSupport::Testing::TimeHelpers
 
   let!(:authed_user) { create_logged_in_user }
-  let!(:active_project) { create(:project, :active, company_id: authed_user.company_id) }
-  let!(:inactive_project) { create(:project, :inactive, company_id: authed_user.company_id) }
+  let!(:active_project) { create(:project, :active) }
+  let!(:inactive_project) { create(:project, :inactive) }
 
   scenario 'creating punch' do
     visit '/punches/new'
@@ -42,10 +42,9 @@ feature 'Add new Punch' do
   end
 
   context 'creating punch with all office holidays' do
-    let(:company) { create(:company) }
-    let(:regional_holiday) { create(:regional_holiday, company: company) }
-    let(:office) { create(:office, company: company, regional_holidays: [regional_holiday]) }
-    let!(:user) { create_logged_in_user({ office: office, company: company }) }
+    let(:regional_holiday) { create(:regional_holiday) }
+    let(:office) { create(:office, regional_holidays: [regional_holiday]) }
+    let!(:user) { create_logged_in_user({ office: office }) }
 
     scenario 'add the office hollidays in the calendar' do
       visit '/punches/new'

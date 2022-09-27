@@ -10,7 +10,7 @@ class EvaluationsController < ApplicationController
 
   def index
     session[:evaluation_params] = nil
-    @users = current_company.users.engineer.active.order(:name).decorate
+    @users = User.active.order(:name).decorate
   end
 
   def show
@@ -23,15 +23,14 @@ class EvaluationsController < ApplicationController
       @evaluation = Evaluation.new(
         evaluator_id: current_user.id,
         evaluated_id: params[:evaluated_user_id],
-        questionnaire_id: @questionnaire.id,
-        company: current_company,
+        questionnaire_id: @questionnaire.id
       )
       @questionnaire.questions.each { |question| @evaluation.answers.build(question: question) }
     end
   end
 
   def create
-    @evaluation = current_company.evaluations.new session[:evaluation_params]
+    @evaluation = Evaluation.new session[:evaluation_params]
     session[:evaluation_params] = nil
 
     if @evaluation.save
@@ -70,7 +69,7 @@ class EvaluationsController < ApplicationController
 
   def evaluation_params
     params.require(:evaluation).permit(:evaluator_id, :evaluated_id, :english_level,
-                                       :questionnaire_id, :observation,  :score, :company_id,
+                                       :questionnaire_id, :observation,  :score,
                                        :evaluation_date,
                                        answers_attributes: %i[question_id response] )
   end

@@ -19,7 +19,7 @@ describe 'Admin Skill', type: :feature do
   end
 
   describe 'Actions' do
-    let!(:skill) { create(:skill, company: admin_user.company) }
+    let!(:skill) { create(:skill) }
 
     it 'must have the form working' do
       click_link 'Novo(a) Habilidade'
@@ -30,7 +30,7 @@ describe 'Admin Skill', type: :feature do
                       have_css('td', text: 'Ruby')
     end
 
-    it 'do not create the same skill in the same company' do
+    it 'do not create the same skill' do
       click_link 'Novo(a) Habilidade'
       fill_in 'Título', with: 'Ruby'
       click_button 'Criar Habilidade'

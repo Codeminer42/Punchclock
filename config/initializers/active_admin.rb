@@ -6,7 +6,7 @@ pre_defined_paths = Rails.application.config.i18n.load_path
 
 ActiveAdmin.setup do |config|
   config.site_title = proc {
-    !user_signed_in? || current_user.super_admin? ? 'Punchclock' : "Punchclock (#{current_user.company})"
+    !user_signed_in? || 'Punchclock'
   }
 
   config.download_links = [:csv]
@@ -19,18 +19,6 @@ ActiveAdmin.setup do |config|
   config.authorization_adapter = ActiveAdmin::CanCanAdapter
   config.cancan_ability_class = AbilityAdmin
   config.on_unauthorized_access = :access_denied
-
-  # == Menu System
-  config.namespace :admin do |admin|
-    admin.build_menu do |menu|
-      menu.add label: User.model_name.human(count: 2) do |submenu|
-        submenu.add label: I18n.t('active_admin.resources.user.scopes.not_allocated'), 
-                    url: '/admin/users?scope=not_allocated', 
-                    priority: 2, 
-                    if: proc { current_user.is_admin? }
-      end
-    end
-  end
 end
 
 # Hotfix for https://github.com/gregbell/active_admin/issues/434

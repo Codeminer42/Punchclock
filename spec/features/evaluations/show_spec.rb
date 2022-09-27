@@ -5,7 +5,7 @@ require 'rails_helper'
 describe "Visit Show", type: :feature do
   let(:user)        { create_logged_in_user }
   let!(:office)     { create(:office, head: user) }
-  let!(:evaluation) { create(:evaluation, :with_answers, company: user.company) }
+  let!(:evaluation) { create(:evaluation, :with_answers) }
 
   before do
     visit '/evaluations'
@@ -21,7 +21,7 @@ describe "Visit Show", type: :feature do
   end
 
   it "finds evaluated name" do
-    expect(page).to have_content("Evaluating: #{evaluation.evaluated.name}")
+    expect(page).to have_content("Evaluating: #{evaluation.evaluated}")
   end
 
   it "finds 'Observation' on the page" do

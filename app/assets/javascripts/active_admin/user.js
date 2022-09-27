@@ -14,4 +14,8 @@ $(document).ready(function() {
     
     $("#user_occupation_administrative").on('click', deactivateAndClearUserSpecialtyAndLevel);
     $("#user_occupation_engineer").on('click', activateUserSpecialtyAndLevel);
+
+    $('#user_roles').select2({
+        closeOnSelect: false
+    });
 })

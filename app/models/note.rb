@@ -3,7 +3,6 @@ class Note < ApplicationRecord
 
   belongs_to :user
   belongs_to :author, class_name: 'User'
-  belongs_to :company
 
   validates_presence_of :title, :comment
 

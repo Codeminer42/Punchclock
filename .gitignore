@@ -21,16 +21,6 @@ coverage/
 
 .env
 
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-dump.rdb
-
 /node_modules
 /yarn-error.log
 
@@ -46,3 +36,5 @@ yarn-debug.log*
 .yarn-integrity
 public/webpack/*
 !public/webpack/.keep
+
+.idea/

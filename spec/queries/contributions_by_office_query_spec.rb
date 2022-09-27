@@ -3,16 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe ContributionsByOfficeQuery do
-  let(:company) { create(:company) }
-  let(:offices) { create_list(:office, 3, { company: company }) }
+  let(:offices) { create_list(:office, 3) }
 
   subject { ContributionsByOfficeQuery.new }
 
   context 'to_relation' do
     before do
-      user = create(:user, company: company, office: offices.first)
+      user = create(:user, office: offices.first)
 
-      create_list(:contribution, 6, { user: user, company: company })
+      create_list(:contribution, 6, { user: user })
     end
 
     it 'return the office' do
@@ -24,33 +23,24 @@ RSpec.describe ContributionsByOfficeQuery do
     end
   end
 
-  context 'by_company' do
+  context 'by_office' do
     before do
-      user = create(:user, company: company, office: offices.first)
+      user = create(:user, office: offices.first)
 
-      other_company = create(:company)
-      @other_office = create(:office, { company: other_company })
-      other_user = create(:user, company: other_company, office: @other_office)
-
-      create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 5, { user: other_user, company: other_company })
+      create_list(:contribution, 3, { user: user })
     end
 
-    it 'return contributions of company' do
-      expect(subject.by_company(company).to_relation.map(&:city)).to include(offices.first.city)
-    end
-
-    it 'does not return contributions of other_company' do
-      expect(subject.by_company(company).to_relation.map(&:city)).not_to include(@other_office.city)
+    it 'return contributions' do
+      expect(subject.to_relation.map(&:city)).to include(offices.first.city)
     end
   end
 
   context 'leaderboard' do
     before do
       3.times do |n|
-        user = create(:user, company: company, office: offices[n])
+        user = create(:user, office: offices[n])
 
-        create_list(:contribution, 3 - n, { user: user, company: company })
+        create_list(:contribution, 3 - n, { user: user })
       end
     end
 
@@ -66,10 +56,10 @@ RSpec.describe ContributionsByOfficeQuery do
 
   context 'this_week' do
     before do
-      user = create(:user, company: company, office: offices.first)
+      user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 3, { user: user, company: company, created_at: 1.week.ago })
+      create_list(:contribution, 3, { user: user })
+      create_list(:contribution, 3, { user: user, created_at: 1.week.ago })
     end
 
     it 'return the right number of contributions' do
@@ -85,11 +75,11 @@ RSpec.describe ContributionsByOfficeQuery do
     before do
       travel_to '2022-01-01'.to_date
 
-      user = create(:user, company: company, office: offices.first)
+      user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 4, { user: user, company: company, created_at: 1.month.ago })
-      create_list(:contribution, 5, { user: user, company: company, created_at: 13.month.ago })
+      create_list(:contribution, 3, { user: user })
+      create_list(:contribution, 4, { user: user, created_at: 1.month.ago })
+      create_list(:contribution, 5, { user: user, created_at: 13.month.ago })
     end
 
     it 'return the right number of contributions' do
@@ -103,10 +93,10 @@ RSpec.describe ContributionsByOfficeQuery do
 
   context 'n_weeks_ago' do
     before do
-      user = create(:user, company: company, office: offices.first)
+      user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 3, { user: user, company: company, created_at: 2.week.ago })
+      create_list(:contribution, 3, { user: user })
+      create_list(:contribution, 3, { user: user, created_at: 2.week.ago })
     end
 
     it 'return the right number of contributions' do
@@ -116,10 +106,10 @@ RSpec.describe ContributionsByOfficeQuery do
 
   context 'approved' do
     before do
-      user = create(:user, company: company, office: offices.first)
+      user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user, company: company })
-      create_list(:contribution, 3, { user: user, company: company, state: :approved })
+      create_list(:contribution, 3, { user: user })
+      create_list(:contribution, 3, { user: user, state: :approved })
     end
 
     it 'return the right number of contributions' do

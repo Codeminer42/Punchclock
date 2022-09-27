@@ -9,7 +9,7 @@ RSpec.describe RepositoriesController, type: :controller do
   end
   
   describe 'GET index' do
-    let(:repository) { create(:repository, company_id: user.company_id) }
+    let(:repository) { create(:repository) }
     
     before do
       get :index

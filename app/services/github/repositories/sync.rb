@@ -5,14 +5,11 @@ module Github
     class Sync
       MAX_LANGUAGES_NUMBER = 6
 
-      def initialize(company:, client:)
-        @company = company
+      def initialize(client:)
         @client = client
       end
 
       def call
-        return [] if company.blank?
-
         Rails.logger.info("[GH] -- Repositories: #{repositories.count}")
 
         repositories.map do |repository|
@@ -30,10 +27,10 @@ module Github
 
       private
 
-      attr_reader :company, :client
+      attr_reader :client
 
       def repositories
-        @repositories ||= company.repositories
+        @repositories ||= Repository.all
       end
     end
   end

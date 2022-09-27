@@ -4,15 +4,18 @@ require 'rails_helper'
 
 describe 'Admin Allocation chart', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:company) { admin_user.company }
 
   before do
     sign_in(admin_user)
   end
 
   describe 'Index' do
-    let(:project) { create(:project, company: company) }
-    let!(:user) { create(:user, allocations: [build(:allocation, project: project, company: company, ongoing: true)], company: company) }
+    let(:project) { create(:project) }
+    let!(:user) { create(:user, allocations: [allocation]) }
+
+    let(:allocation) do
+      build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: true)
+    end
 
     before { visit '/admin/allocation_chart' }
 
@@ -36,35 +39,34 @@ describe 'Admin Allocation chart', type: :feature do
             expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
           end
         end
-  
+
         it 'links to user current project' do
           within 'table' do
             expect(page).to have_link(project.name, href: "/admin/projects/#{project.id}")
           end
         end
-  
-        it 'has "Alocado" in "Alocado até" column' do
-          within 'tbody' do
-            expect(page).to have_text('Alocado')
-          end
-        end
 
-        context 'with due date' do
-          let!(:user) { create(:user, allocations: [build(:allocation, project: project, end_at: Date.new(2022,9,1) + 2.months, company: company, ongoing: true)], company: company) }
-          it 'has "DD/MM/YY" format date in "Alocado até" column' do
-            within 'tbody' do
-              expect(page).to have_text('01/11/2022')
-            end
+        it '"Alocado até" column links to allocation' do
+          within 'tbody' do
+            expect(page).to have_link('01/11/2022', href: "/admin/allocations/#{allocation.id}")
           end
         end
       end
 
       context 'when not allocated' do
-        let!(:user) { create(:user, allocations: [], company: company) }
+        let(:allocation) do
+          build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: false)
+        end
 
         it 'has "Não alocado" in "Alocado até" column' do
           within 'tbody' do
             expect(page).to have_text('Não alocado')
+          end
+        end
+
+        it '"Alocado até" column does not links to allocation' do
+          within 'table' do
+            expect(page).to have_no_link('Não alocado')
           end
         end
       end

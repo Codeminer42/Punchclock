@@ -5,12 +5,11 @@ require 'rails_helper'
 feature 'Add new note' do
   include ActiveSupport::Testing::TimeHelpers
 
-  let!(:authed_admin_user) { create_logged_in_user role: 'admin' }
+  let!(:authed_admin_user) { create_logged_in_user roles: [:admin] }
   let(:user_1) { create(:user) }
 
   scenario 'creates a note' do
     visit "/users/#{user_1.id}/notes/new"
-    
     within '#new_note' do
       fill_in 'note[title]', with: 'Test note'
       fill_in 'note[comment]', with: 'Test comment'

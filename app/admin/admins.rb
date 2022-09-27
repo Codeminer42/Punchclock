@@ -9,17 +9,12 @@ ActiveAdmin.register User, as: 'AdminUser' do
   index download_links: [:xls] do
     column :name
     column :email
-    if current_user.super_admin?
-      column :role
-      column :company
-    end
     actions only: :show
   end
 
   show do
     attributes_table do
       row :email
-      row :company if current_user.super_admin?
       row :role
       row :created_at
       row :updated_at
@@ -29,7 +24,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
 
   controller do
     def scoped_collection
-      current_user.super_admin? ? User.active.where(role: [:admin, :super_admin]) : User.active.admin.where(company_id: current_user.company_id)
+      User.active.admin
     end
 
     def index

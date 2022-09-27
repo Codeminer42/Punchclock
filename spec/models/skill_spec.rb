@@ -9,6 +9,6 @@ RSpec.describe Skill, type: :model do
 
   context 'Validations' do
     it { is_expected.to validate_presence_of(:title) }
-    it { is_expected.to validate_uniqueness_of(:title).scoped_to(:company_id).case_insensitive }
+    it { is_expected.to validate_uniqueness_of(:title).case_insensitive }
   end
 end

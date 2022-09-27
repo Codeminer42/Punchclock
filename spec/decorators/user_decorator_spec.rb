@@ -165,4 +165,14 @@ RSpec.describe UserDecorator do
       expect(subject.skills).to eq('skill 1, skill 2 e skill 3')
     end
   end
+
+  describe '#roles_text' do
+    subject(:user) do
+      roles = %i[normal admin]
+      create(:user, roles: roles).decorate
+    end
+    it 'returns roles separated by comma and humanized' do
+      expect(subject.roles_text).to eq('normal e admin')
+    end
+  end
 end

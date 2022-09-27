@@ -3,10 +3,9 @@
 require 'spec_helper'
 
 feature "Punches with super admin_user", type: :feature do
-  let(:admin_user) { create :user, :super_admin }
+  let(:admin_user) { create :user, :admin }
   let!(:punch) { create :punch }
   let!(:user) { create :user }
-  let(:company) { user.company }
   let!(:project) { create :project }
 
   before do
@@ -44,7 +43,6 @@ feature "Punches with super admin_user", type: :feature do
 
       select(user.name, from: 'punch_user_id').select_option
       select(project.name, from: 'punch_project_id').select_option
-      select(company.name, from: 'punch_company_id').select_option
       fill_in 'punch_from', with: DateTime.new(2019, 06, 14, 9)
       fill_in 'punch_to', with: DateTime.new(2019, 06, 14, 12)
       click_button 'Criar Punch'
@@ -56,7 +54,7 @@ end
 
 feature "Punches with normal admin_user", type: :feature do
   let(:admin_user) { create :user, :admin, occupation: :administrative }
-  let!(:punch) { create :punch, company_id: admin_user.company_id }
+  let!(:punch) { create :punch }
 
   before do
     sign_in(admin_user)
@@ -75,13 +73,13 @@ feature "Punches with normal admin_user", type: :feature do
 
     it 'by project' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Projeto', options: admin_user.company.projects.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Projeto', options: Project.all.pluck(:name) << 'Qualquer')
       end
     end
 
     it 'by user' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Usuário', options: admin_user.company.users.pluck(:name) << 'Qualquer')
+        expect(page).to have_select('Usuário', options: User.all.pluck(:name) << 'Qualquer')
       end
     end
   end

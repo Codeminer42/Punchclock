@@ -4,7 +4,6 @@ class Contribution < ApplicationRecord
   include AASM
 
   belongs_to :user
-  belongs_to :company
   belongs_to :repository
   belongs_to :reviewed_by, class_name: "User", foreign_key: "reviewer_id", optional: true
 
@@ -22,6 +21,10 @@ class Contribution < ApplicationRecord
     event :refuse do
       transitions from: %i[received], to: :refused
     end
+  end
+
+  def to_s
+    "#{id} - #{user}"
   end
 
   def update_reviewer(reviewer_id)

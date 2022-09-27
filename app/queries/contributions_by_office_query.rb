@@ -12,12 +12,6 @@ class ContributionsByOfficeQuery
     @relation
   end
 
-  def by_company(company)
-    @relation = @relation.by_company(company)
-
-    self
-  end
-
   def leaderboard(limit = 5)
     @relation = @relation.order('number_of_contributions DESC').limit(limit)
 
