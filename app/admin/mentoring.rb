@@ -9,13 +9,13 @@ ActiveAdmin.register_page 'Mentoring' do
       tab I18n.t('mentoring') do
         table_for mentoring do
           column(I18n.t('mentor'), &:name)
-          column(:office, &:city)
+          column(:office, &:office_city)
           column(I18n.t('mentees'), &:mentees)
         end
       end
 
       tab I18n.t('offices') do
-        render 'offices_mentoring', mentorings: mentoring.group_by(&:city)
+        render 'offices_mentoring', mentorings: mentoring.group_by(&:office_city)
       end
     end
   end

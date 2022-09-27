@@ -38,6 +38,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "state_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cities_on_name", unique: true
+    t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
   create_table "contributions", force: :cascade do |t|
     t.bigint "user_id"
     t.string "link", null: false
@@ -166,6 +175,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.index ["user_id"], name: "index_skills_users_on_user_id"
   end
 
+  create_table "states", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_states_on_code", unique: true
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.integer "sign_in_count", default: 0
@@ -203,8 +220,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
     t.string "otp_secret"
+    t.bigint "city_id"
     t.integer "roles", array: true
     t.integer "contract_company_country"
+    t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github", unique: true
@@ -218,6 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
   add_foreign_key "allocations", "users"
   add_foreign_key "answers", "evaluations"
   add_foreign_key "answers", "questions"
+  add_foreign_key "cities", "states"
   add_foreign_key "contributions", "repositories"
   add_foreign_key "contributions", "users"
   add_foreign_key "evaluations", "questionnaires"
@@ -226,6 +246,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "skills_users", "skills"
   add_foreign_key "skills_users", "users"
+  add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "reviewer_id"
 end

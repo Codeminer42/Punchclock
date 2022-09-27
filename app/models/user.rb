@@ -43,6 +43,7 @@ class User < ApplicationRecord
 
   belongs_to :office, optional: false
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
+  belongs_to :city
   has_many :punches
   has_many :contributions
   has_many :allocations, dependent: :restrict_with_error
@@ -58,7 +59,7 @@ class User < ApplicationRecord
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
 
-  delegate :city, to: :office, prefix: true, allow_nil: true
+  # delegate :city, to: :office, prefix: true, allow_nil: true
 
   scope :active,         -> { where(active: true) }
   scope :inactive,       -> { where(active: false) }

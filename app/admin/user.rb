@@ -10,7 +10,7 @@ ActiveAdmin.register User do
   menu parent: User.model_name.human(count: 2), priority: 1
 
   permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :reviewer_id,
-                :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
+                :city_id, :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
   scope :all
@@ -79,12 +79,13 @@ ActiveAdmin.register User do
         attributes_table do
           row :name
           row :email
-          row :"2fa" do 
+          row :"2fa" do
             status_tag user.otp_required_for_login
           end
           row :github
           row :token
           row :office
+          row :city
           row :managed_offices
           row :english_level
           row :overall_score
@@ -187,6 +188,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
+      f.input :city
       f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
       f.input :reviewer, collection: User.active.order(:name)

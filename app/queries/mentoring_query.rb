@@ -7,15 +7,15 @@ class MentoringQuery
 
   def call
     relation
-      .joins(reviewer: [:office])
+      .joins(reviewer: :office)
       .select(
         'array_agg(users.name) as mentees',
         'reviewers_users.name as name',
-        :city
+        "offices.city as office_city"
       )
       .active
-      .group('reviewers_users.name', :city)
-      .order(:city)
+      .group('reviewers_users.name', "offices.city")
+      .order("offices.city")
   end
 
   private

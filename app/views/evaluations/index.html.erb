@@ -25,7 +25,7 @@
                 <tr>
                   <td><%= user.name %></td>
                   <td><%= user.level %></td>
-                  <td><%= user.office_city%></td>
+                  <td><%= user.office %></td>
                   <td>
                     <% if user.last_performance_evaluation %>
                       <%= user.last_performance_evaluation.evaluation_date || user.last_performance_evaluation.created_at.strftime('%e/%m/%Y') %> -
