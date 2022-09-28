@@ -3,6 +3,6 @@ FactoryBot.define do
     name { Faker::Name.name }
     email { Faker::Internet.email }
     phone { Faker::PhoneNumber.phone_number }
-    project { create(:project) }
+    project
   end
 end
