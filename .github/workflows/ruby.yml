@@ -66,6 +66,10 @@ jobs:
           bundle exec rake db:schema:load
       - name: "Install js packages"
         run: "yarn install"
+      - name: "Check the seeds load"
+        run: |
+          bundle exec rake db:seed
+          bundle exec rake db:schema:load
       - name: Run tests
         run: bundle exec rake
         env:
