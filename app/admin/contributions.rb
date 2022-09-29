@@ -41,7 +41,7 @@ ActiveAdmin.register Contribution do
 
   index download_links: [:xls, :text] do
     selectable_column
-    column(I18n.t('name')) do |contribution|
+    column :user do |contribution|
       link_to contribution.user.first_and_last_name, admin_user_path(contribution.user)
     end
     column :link do |contribution|
