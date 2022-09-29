@@ -20,8 +20,8 @@ def create_holiday(office:)
   holiday.offices << office
 end
 
-def create_user(company:, number:)
-  city = City.find_by(name: 'São Paulo')
+def create_user(number:)
+  city = City.find_by!(name: 'São Paulo')
   user = User.find_or_create_by!(email: "user.teste#{number}@codeminer42.com") do |user|
     user.name = "Usuario_Codeminer42_#{number}"
     user.email = "user.teste#{number}@codeminer42.com"
@@ -81,20 +81,20 @@ end
 codeminer42 = {
   name: 'Codeminer42',
   office_cities: [
-    'Anápolis',
-    'Batatais',
-    'Campinas',
-    'Goiânia',
-    'Guarapuava',
-    'Natal',
-    'Novo Hamburgo',
-    'Santa Maria',
-    'Sorocaba',
-    'São Paulo',
-    'Teresina',
-    'Poços de Caldas',
-    'Belo Horizonte',
-    'Santa Catarina'
+    ['State Name', 'ST', 'Anápolis'],
+    ['State Name', 'ST', 'Batatais'],
+    ['State Name', 'ST', 'Campinas'],
+    ['State Name', 'ST', 'Goiânia'],
+    ['State Name', 'ST', 'Guarapuava'],
+    ['State Name', 'ST', 'Natal'],
+    ['State Name', 'ST', 'Novo Hamburgo'],
+    ['State Name', 'ST', 'Santa Maria'],
+    ['State Name', 'ST', 'Sorocaba'],
+    ['State Name', 'ST', 'São Paulo'],
+    ['State Name', 'ST', 'Teresina'],
+    ['State Name', 'ST', 'Poços de Caldas'],
+    ['State Name', 'ST', 'Belo Horizonte'],
+    ['State Name', 'ST', 'Santa Catarina']
   ],
   project_names: [
     'Punchclock',
@@ -122,7 +122,11 @@ repositories = [
 print "..creating offices..."
 offices = codeminer42[:office_cities]
 offices.map do |city|
-  Office.find_or_create_by!(city: city)
+  Office.find_or_create_by!(city: city[2])
+  City.create!(
+    name: city[2], 
+    state: State.find_or_create_by!(name: city[0], code: city[1])
+  )
 end
 puts " done."
 
@@ -144,6 +148,7 @@ User.find_or_create_by!(email: "admin@codeminer42.com") do |admin|
   admin.token = SecureRandom.base58(32)
   admin.skip_confirmation!
   admin.contract_company_country = 'brazil'
+  admin.city = City.find_by!(name: 'São Paulo')
 end
 puts " done."
 
