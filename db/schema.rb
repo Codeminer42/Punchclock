@@ -209,9 +209,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
     t.integer "specialty"
     t.string "github"
     t.integer "contract_type", default: 1
-    t.integer "role", default: 0
     t.date "started_at"
-    t.string "token"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
@@ -219,9 +217,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
     t.string "otp_secret"
-    t.bigint "city_id"
     t.integer "roles", array: true
     t.integer "contract_company_country"
+    t.bigint "city_id"
     t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -229,7 +227,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
     t.index ["office_id"], name: "index_users_on_office_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["reviewer_id"], name: "index_users_on_reviewer_id"
-    t.index ["token"], name: "index_users_on_token", unique: true
   end
 
   add_foreign_key "allocations", "projects"

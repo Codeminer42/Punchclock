@@ -97,10 +97,6 @@ FactoryBot.define do
       started_at { Date.today }
     end
 
-    trait :with_token do
-      token { 'test_token' }
-    end
-
     trait :with_skills do
       after(:create) do |user|
         user.skills = create_list(:skill, 2)
