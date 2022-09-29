@@ -6,29 +6,35 @@ services:
         USER_ID: ${USER_ID:-1000}
         GROUP_ID: ${GROUP_ID:-1000}
     command: bundle exec foreman start -f Procfile.dev -p 3000
+    depends_on:
+      - database
+      - redis
     ports:
       - 3000:3000
     volumes:
       - .:/var/app
       - bundle_cache:/bundle
-    links:
-      - database
-      - redis
     environment:
       - REDIS_URL=redis://redis:6379/
       - DB_HOST=database
+
   database:
     image: postgres:13
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
   redis:
     image: redis:6.2.6-buster
     volumes:
       - redis:/data
     ports:
       - 6379:6379
+
 volumes:
   bundle_cache:
   postgres:

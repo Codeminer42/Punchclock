@@ -70,23 +70,29 @@ Freely make your changes and the page will be refreshed after you save it.
 
 ### Docker environment for development
 
+Install the docker and docker compose plugin versions:
+
+* Docker ~>v20.10
+* Docker compose plugin ~>v2.10
+
 ```console
 $ cp .env.example .env
-$ docker-compose build
-$ docker-compose run --rm runner bundle install
-$ docker-compose run --rm runner yarn install --frozen-lockfile
-$ docker-compose run --rm runner bundle exec rake db:reset
-$ docker-compose run --rm runner_tests bundle exec rake db:create
+$ cp config/database.yml.example config/database.yml
+$ docker compose build
+$ docker compose run --rm app bundle install
+$ docker compose run --rm app yarn install --frozen-lockfile
+$ docker compose run --rm app bundle exec rake db:reset
+$ docker compose run --rm app bundle exec rake db:create
 ```
 
 If you want to run tests:
 ```console
-$ docker-compose run --rm runner_tests bundle exec rspec
+$ docker compose run --rm app bundle exec rspec
 ```
 
 Now run the servers:
 ```console
-$ docker-compose up
+$ docker compose up
 ```
 
 ## Testing
