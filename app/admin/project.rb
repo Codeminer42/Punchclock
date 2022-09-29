@@ -40,20 +40,20 @@ ActiveAdmin.register Project do
   end
 
   member_action :project_contact_informations, method: :post do
-    @project_contact_informations = ProjectContactInformation.new(permited_project_contact_information_params)
+    @project_contact_informations = resource.project_contact_informations.new(permited_project_contact_information_params)
     if @project_contact_informations.save
-      redirect_to admin_project_path(@project_contact_informations.project_id),
+      redirect_to admin_project_path(resource.id),
         notice: I18n.t('project_contact_informations.success')
     else
-      redirect_to admin_project_path(@project_contact_informations.project_id),
+      redirect_to admin_project_path(resource.id),
         alert: I18n.t('project_contact_informations.error', errors: @project_contact_informations.errors.full_messages.join(', '))
     end
   end
 
   member_action :project_contact_information, method: :delete do
-    @project_contact_information = ProjectContactInformation.find(params[:project_contact_information_id])
+    @project_contact_information = resource.project_contact_informations.find(params[:project_contact_information_id])
     @project_contact_information.destroy!
-    redirect_to admin_project_path(@project_contact_information.project_id),
+    redirect_to admin_project_path(resource.id),
       notice: I18n.t('project_contact_informations.delete')
   end
 
@@ -85,7 +85,7 @@ ActiveAdmin.register Project do
             column :email
             column :phone
             column :actions do |project_contact_information|
-              link_to I18n.t('delete'), project_contact_information_admin_project_path(project_contact_information.project_id, project_contact_information_id: project_contact_information.id), method: :delete
+              link_to I18n.t('delete'), project_contact_information_admin_project_path(project.id, project_contact_information_id: project_contact_information.id), method: :delete
             end
           end
         end
@@ -160,7 +160,7 @@ ActiveAdmin.register Project do
 
     def permited_project_contact_information_params
       params.require(:project_contact_information).permit(
-        :name, :email, :phone, :project_id
+        :name, :email, :phone
       )
     end
 

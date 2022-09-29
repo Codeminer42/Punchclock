@@ -1,6 +1,5 @@
 <%= semantic_form_for(@project_contact_informations, url: project_contact_informations_admin_project_path) do |f| %>
   <%= f.inputs do %>
-    <%= f.input :project_id, as: :hidden, input_html: { value: resource.id } %>
     <%= f.input :name %>
     <%= f.input :email %>
     <%= f.input :phone %>
