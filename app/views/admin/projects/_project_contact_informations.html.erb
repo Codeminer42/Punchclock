@@ -1,0 +1,10 @@
+<%= semantic_form_for(@project_contact_informations, url: project_contact_informations_admin_project_path) do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :email %>
+    <%= f.input :phone %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: I18n.t('project_contact_informations.create') %>
+  <% end %>
+<% end %>

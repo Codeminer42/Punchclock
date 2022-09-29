@@ -27,6 +27,12 @@ pt-BR:
   allocated: 'Alocado'
   projects: 'Projetos'
   project_details: 'Detalhes do Projeto'
+  project_contact_informations:
+    title: 'Adicionar Informações de Contato'
+    create: 'Salvar Informações de Contato'
+    success: 'Informações de Contato foram salvas com sucesso!'
+    error: 'Verifique as informações de contato e tente novamente. Detalhes: %{errors}'
+    delete: 'As Informações de Contato foram removidas com sucesso!'
   perfomance_evaluations: 'Avaliações de Desempenho'
   allocation: 'Alocação'
   office:

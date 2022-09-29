@@ -101,6 +101,9 @@ pt-BR:
       hour_report:
         one: "Relatório de Horas"
         other: "Relatórios de Horas"
+      project_contact_information:
+        one: "Informações de Contato"
+        other: "Informações de Contatos"
     attributes:
       admin_user:
         id: "ID"
@@ -286,3 +289,7 @@ pt-BR:
         updated_at: "Atualizado em"
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
+      project_contact_information:
+        name: "Nome"
+        email: "E-Mail"
+        phone: "Telefone"
