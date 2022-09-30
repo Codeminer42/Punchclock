@@ -39,6 +39,20 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'callbacks' do
+    describe '#define_custom_city' do
+      context 'When user has a custom city' do
+        subject { build :user, city: nil, custom_city: 'New Custom City' }
+
+        it 'saves the custom city' do
+          subject.save!
+
+          expect(subject.city).to eq(City.find_by!(name: 'New Custom City'))
+        end
+      end
+    end
+  end
+
   describe "occupation" do
     it { is_expected.to enumerize(:occupation).in(administrative: 0, engineer: 1) }
 

@@ -75,7 +75,9 @@ class User < ApplicationRecord
   }
   scope :admin, -> { by_roles_in([:admin]) }
 
-  attr_accessor :password_required, :has_api_token
+  before_validation :define_custom_city, if: Proc.new { |user| user.custom_city && user.city.nil? }
+
+  attr_accessor :password_required, :has_api_token, :custom_city
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]
@@ -182,5 +184,14 @@ class User < ApplicationRecord
 
   def first_and_last_name
     name.split.values_at(0, -1).uniq.join(' ')
+  end
+
+  private
+
+  # TODO: Create a better way to handle the state
+  def define_custom_city
+    state = State.find_or_create_by!(name: 'State Name', code: 'ST')
+    city = City.find_or_create_by!(name: custom_city.titleize, state: state)
+    self.city = city
   end
 end

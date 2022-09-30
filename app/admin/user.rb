@@ -10,6 +10,7 @@ ActiveAdmin.register User do
   menu parent: User.model_name.human(count: 2), priority: 1
 
   permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :reviewer_id,
+                :custom_city,
                 :city_id, :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
@@ -188,7 +189,8 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
-      f.input :city
+      f.input :city, as: :select, include_blank: I18n.t('activerecord.attributes.user.custom_city'), collection: City.order(:name).all
+      f.input :custom_city
       f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
       f.input :reviewer, collection: User.active.order(:name)

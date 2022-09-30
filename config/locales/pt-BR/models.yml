@@ -181,6 +181,8 @@ pt-BR:
         token: "API Token"
         has_api_token: "Possui API Token"
         otp_required_for_login: "2FA"
+        city: "Cidade"
+        custom_city: "Adicionar Nova Cidade"
       punch:
         id: "ID"
         project_id: "Projeto"
