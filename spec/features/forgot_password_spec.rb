@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'Login', type: :feature do
+describe 'Login', type: :feature do
   let(:normal_user) { create(:user, name: 'Miner 42') }
   let(:mail) { NotificationMailer.notify_user_registration(normal_user).deliver }
 

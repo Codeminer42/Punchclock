@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-feature 'Punches Dashboard', js: true do
+describe 'Punches Dashboard', type: :feature do
   context 'When user has overtime allowed' do
     let!(:authed_user_with_overtime) { create_logged_in_user(allow_overtime: true) }
     let!(:active_project) { create(:project, :active) }
 
-    scenario 'Calendar navigation' do
+    it 'Calendar navigation', js: true do
       visit '/dashboard/2014/12'
 
       expect(page).to have_content('December 2014')
@@ -17,7 +17,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content('December 2014')
     end
 
-    scenario 'Insert and delete punches' do
+    it 'Insert and delete punches', js: true do
       visit '/dashboard/2013/10'
 
       find('td.inner', text: '10').click
@@ -33,7 +33,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content("Selecionado (0)")
     end
 
-    scenario 'Insert punches on holiday' do
+    it 'Insert punches on holiday', js: true do
       visit 'dashboard/2013/11'
 
       find('td.inner', text: '02').click
@@ -45,7 +45,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content("Selecionado (0)")
     end
 
-    scenario 'Multiple selection through sheets' do
+    it 'Multiple selection through sheets', js: true do
       visit '/dashboard/2018/01'
 
       find('td.inner', text: '19').click
@@ -64,7 +64,7 @@ feature 'Punches Dashboard', js: true do
       expect(page).to have_content('Horas: 24')
     end
 
-    scenario 'When no project has been selected' do
+    it 'When no project has been selected', js: true do
       visit '/dashboard/2018/02'
       find('td.inner', text: '21').click
       expect(page).to have_button('Salvar', disabled: true)
@@ -75,7 +75,7 @@ feature 'Punches Dashboard', js: true do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:active_project) { create(:project, :active) }
 
-    scenario 'Insert punches on holiday' do
+    it 'Insert punches on holiday', js: true do
       visit 'dashboard/2013/11'
 
       find('td.inner', text: '02').click
@@ -95,7 +95,7 @@ feature 'Punches Dashboard', js: true do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:active_project) { create(:project, :active) }
 
-    scenario 'Renders save button disabled' do
+    it 'Renders save button disabled', js: true do
       visit '/dashboard/2022/06'
 
       find('td.inner', text: '06').click
@@ -131,7 +131,7 @@ feature 'Punches Dashboard', js: true do
       allow(Time).to receive(:now).and_return(time_now)
     end
 
-    scenario 'Renders alert with error messages' do
+    it 'Renders alert with error messages', js: true do
       visit '/dashboard/2022/06'
       
       find('td.inner', text: '06').click

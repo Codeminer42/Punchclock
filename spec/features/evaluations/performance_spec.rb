@@ -6,7 +6,7 @@ describe 'Performance Evaluation', type: :feature do
   let!(:evaluated)     { create(:user) }
   let!(:questionnaire) { create(:questionnaire, :with_questions, question_count: 2) }
 
-  scenario 'User makes an evaluation revising his answers', js: true, aggregate_failures: true do
+  it 'User makes an evaluation revising his answers', js: true, aggregate_failures: true do
     visit evaluations_path
 
     find_link('', href: "/questionnaires_kinds?user_id=#{evaluated.id}").click

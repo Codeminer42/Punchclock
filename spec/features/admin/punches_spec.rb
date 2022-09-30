@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
-feature "Punches with super admin_user", type: :feature do
+describe "Punches with super admin_user", type: :feature do
   let(:admin_user) { create :user, :admin }
   let!(:punch) { create :punch }
   let!(:user) { create :user }
@@ -12,7 +12,7 @@ feature "Punches with super admin_user", type: :feature do
     sign_in(admin_user)
   end
 
-  scenario 'index' do
+  it 'index' do
     click_link 'Punches'
     expect(page).to have_content('Punches') &
       have_link("Visualizar", href: "/admin/punches/" + punch.id.to_s) &
@@ -20,7 +20,7 @@ feature "Punches with super admin_user", type: :feature do
       have_link("Remover", href: "/admin/punches/" + punch.id.to_s)
   end
 
-  scenario 'filter' do
+  it 'filter' do
     click_link 'Punches'
     click_button 'Filtrar'
 
@@ -32,7 +32,7 @@ feature "Punches with super admin_user", type: :feature do
       travel_to(DateTime.new(2019, 06, 14, 18), &example)
     end
 
-    scenario 'new punch' do
+    it 'new punch' do
       click_link 'Punches'
       click_link 'Novo(a) Punch'
 
@@ -52,7 +52,7 @@ feature "Punches with super admin_user", type: :feature do
   end
 end
 
-feature "Punches with normal admin_user", type: :feature do
+describe "Punches with normal admin_user", type: :feature do
   let(:admin_user) { create :user, :admin, occupation: :administrative }
   let!(:punch) { create :punch }
 
@@ -62,15 +62,12 @@ feature "Punches with normal admin_user", type: :feature do
     visit '/admin/punches'
   end
 
-  scenario 'index' do
+  it 'index' do
     expect(page).to have_content('Punches') &
                     have_link("Visualizar", href: "/admin/punches/#{punch.id}")
   end
 
   describe 'Filters' do
-    before do
-    end
-
     it 'by project' do
       within '#filters_sidebar_section' do
         expect(page).to have_select('Projeto', options: Project.all.pluck(:name) << 'Qualquer')

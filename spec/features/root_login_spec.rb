@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'Login', type: :feature do
+describe 'Login', type: :feature do
   context 'when user is not active' do
     let(:inactive_user) { create(:user, active: false) }
     it 'show a error message' do

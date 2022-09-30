@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'Punches filter form' do
+describe 'Punches filter form', type: :feature do
   let!(:user) { create_logged_in_user }
 
   let!(:project) { create(:project, ) }
@@ -12,7 +12,7 @@ feature 'Punches filter form' do
   let!(:user2) { create(:user) }
   let!(:user3) { create(:user) }
 
-  background do
+  before do
     create_list(:punch, 3, user: user1, )
     create_list(:punch, 2, user: user2, )
     create_list(:punch, 4, user: user3, )
@@ -25,7 +25,7 @@ feature 'Punches filter form' do
   context 'when the user is a regular user' do
     let!(:user) { create_logged_in_user }
 
-    scenario 'the user filter field is not present' do
+    it 'the user filter field is not present' do
       visit '/'
       expect(page).to_not have_selector 'punches_filter_form[user_id]'
     end
@@ -34,7 +34,7 @@ feature 'Punches filter form' do
   context 'date filters' do
     let!(:user) { create_logged_in_user }
 
-    scenario "filling only the 'since' field" do
+    it "filling only the 'since' field" do
       visit '/'
 
       within('#new_punches_filter_form') do
@@ -44,7 +44,7 @@ feature 'Punches filter form' do
       click_on_filter
     end
 
-    scenario "filling only the 'until' field" do
+    it "filling only the 'until' field" do
       visit '/'
 
       within('#new_punches_filter_form') do
@@ -54,7 +54,7 @@ feature 'Punches filter form' do
       click_on_filter
     end
 
-    scenario "filling both the 'until' and 'since' fields" do
+    it "filling both the 'until' and 'since' fields" do
       visit '/'
 
       within('#new_punches_filter_form') do

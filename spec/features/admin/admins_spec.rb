@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
-feature "Admin Users", type: :feature do
+describe "Admin Users", type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
   before do
@@ -10,11 +10,11 @@ feature "Admin Users", type: :feature do
     click_link 'Administradores'
   end
 
-  scenario 'index' do
+  it 'index' do
     expect(page).to have_content('Administradores')
   end
 
-  scenario 'filter' do
+  it 'filter' do
     fill_in 'q_email', with: admin_user.email
     click_button 'Filtrar'
 
@@ -27,7 +27,7 @@ feature "Admin Users", type: :feature do
     expect(page).to have_content('Nenhum(a) Administradores encontrado(a)')
   end
 
-  scenario 'view' do
+  it 'view' do
     click_link 'Visualizar'
 
     expect(page).to have_content('Detalhes do(a) Administrador')

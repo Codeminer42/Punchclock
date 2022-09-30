@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-feature 'Add new Punch' do
+describe 'Add new Punch', type: :feature do
   include ActiveSupport::Testing::TimeHelpers
 
   let!(:authed_user) { create_logged_in_user }
   let!(:active_project) { create(:project, :active) }
   let!(:inactive_project) { create(:project, :inactive) }
 
-  scenario 'creating punch' do
+  it 'creating punch' do
     visit '/punches/new'
     expect(page).to have_content I18n.t(
       :creating, scope: %i(helpers actions), model: Punch.model_name.human
@@ -25,7 +25,7 @@ feature 'Add new Punch' do
     expect(page).to have_content('Punch foi criado com sucesso.')
   end
 
-  scenario 'creating invalid punch' do
+  it 'creating invalid punch' do
     visit '/punches/new'
     expect(page).to have_content I18n.t(
       :creating, scope: %i(helpers actions), model: Punch.model_name.human
@@ -46,7 +46,7 @@ feature 'Add new Punch' do
     let(:office) { create(:office, regional_holidays: [regional_holiday]) }
     let!(:user) { create_logged_in_user({ office: office }) }
 
-    scenario 'add the office hollidays in the calendar' do
+    it 'add the office hollidays in the calendar' do
       visit '/punches/new'
 
       within '#new_punch' do
@@ -56,17 +56,17 @@ feature 'Add new Punch' do
     end
   end
 
-  scenario 'select box without inactive project' do
+  it 'select box without inactive project' do
     visit '/punches/new'
     expect(page).to_not have_select 'punch[project_id]', with_options: [inactive_project.name]
   end
 
-  context 'when user is allowed to do overtime', js: true do
+  context 'when user is allowed to do overtime' do
     before do
       authed_user.toggle!(:allow_overtime)
     end
 
-    scenario 'creating punch selecting a holiday' do
+    it 'creating punch selecting a holiday' do
       travel_to Date.new(2019, 3, 10) do
 
         visit '/punches/new'
