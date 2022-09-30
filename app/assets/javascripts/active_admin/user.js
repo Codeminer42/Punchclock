@@ -19,10 +19,7 @@ $(document).ready(function() {
         closeOnSelect: false
     });
 
-    $('#user_city_id').select2({
-        allowClear: true,
-        tags: true
-    });
+    $('#user_city_id').select2({});
 
     // hack to fix jquery focus when you have a select2 set as "multiple" in the same page
     $(document).on('select2:open', () => {
