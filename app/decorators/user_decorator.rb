@@ -50,4 +50,9 @@ class UserDecorator < Draper::Decorator
   def roles_text
     model.roles.values.to_sentence.humanize(capitalize: false)
   end
+
+  def city_text
+    return if model.city.nil?
+    "#{model.city.name} - #{model.city.state.code}"
+  end
 end

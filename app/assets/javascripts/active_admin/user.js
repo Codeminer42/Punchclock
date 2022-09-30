@@ -18,4 +18,11 @@ $(document).ready(function() {
     $('#user_roles').select2({
         closeOnSelect: false
     });
+
+    $('#user_city_id').select2({});
+
+    // hack to fix jquery focus when you have a select2 set as "multiple" in the same page
+    $(document).on('select2:open', () => {
+        document.querySelector('[aria-controls="select2-user_city_id-results"]').focus();
+    });
 })
