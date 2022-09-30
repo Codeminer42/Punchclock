@@ -62,17 +62,16 @@ RSpec.describe RevenueForecastPresenter do
   end
 
   context '.years_range' do
-    it 'returns a range where the first year is the year when the oldest allocation started
+    it 'returns a range where the first year is 2022
       and the last year is the year when the last allocation ends' do
-      create(:allocation, start_at: "2014-10-18", end_at: "2016-10-18")
-      create(:allocation, start_at: "2018-02-10", end_at: "2020-03-14")
-      expect(described_class.years_range).to eq((2014..2020))
+      create(:allocation, start_at: "2018-02-10", end_at: "2025-03-14")
+      expect(described_class.years_range).to eq((2022..2025))
 
       create(:allocation, start_at: "1894-02-01", end_at: "1895-02-01")
-      expect(described_class.years_range).to eq((1894..2020))
+      expect(described_class.years_range).to eq((2022..2025))
 
-      create(:allocation, end_at: "2025-02-01")
-      expect(described_class.years_range).to eq((1894..2025))
+      create(:allocation, end_at: "2027-02-01")
+      expect(described_class.years_range).to eq((2022..2027))
     end
   end
 end
