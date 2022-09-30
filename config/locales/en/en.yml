@@ -67,9 +67,3 @@ en:
   allocated_until: 'Allocated until'
   specialty: "Specialty"
   english_evaluation: "English evaluation"
-  project_contact_informations:
-    title: 'Add Contact Information'
-    create: 'Create Contact Information'
-    success: 'Contact Information has successfully saved!'
-    error: 'Check the Contact Information and try again. Details: %{errors}'
-    delete: 'Contact Information has successfully deleted!'

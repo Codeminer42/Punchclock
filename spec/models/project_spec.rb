@@ -7,7 +7,6 @@ describe Project do
 
   describe 'relations' do
     it { is_expected.to have_many :punches }
-    it { is_expected.to have_many :project_contact_informations }
   end
 
   it { should enumerize(:market).in(%i[internal international]) }

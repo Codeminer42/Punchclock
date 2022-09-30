@@ -79,20 +79,6 @@ describe 'Projects', type: :feature do
                             have_css('.row-active', text: 'Sim')
           end
         end
-
-        context 'contact information panel' do
-          let!(:project_contact_information) { create(:project_contact_information, project: project) }
-          before { refresh }
-
-          it 'delete a contact information' do
-            within '#principal' do
-              find_link('Remover', href: "/admin/projects/#{project_contact_information.project_id}/project_contact_information?project_contact_information_id=#{project_contact_information.id}").click
-            end
-
-            expect(page).to have_current_path(admin_project_path(project.id)) &
-              have_css('.flash_notice', text: 'As Informações de Contato foram removidas com sucesso!')
-          end
-        end
       end
 
       context 'on allocate users tab' do
@@ -111,30 +97,6 @@ describe 'Projects', type: :feature do
                           have_css('.flash_notice', text: 'Alocações salvas com sucesso.') &
                           have_text(users.first.name) &
                           have_text(project.name)
-        end
-      end
-
-      context 'on contact information tab' do
-        it 'fills the form correctly' do
-          within '#adicionar-informacoes-de-contato' do
-            find('#project_contact_information_name').fill_in with: 'Contact name'
-            find('#project_contact_information_email').fill_in with: 'contact@email.com'
-            click_button 'Salvar Informações de Contato'
-          end
-
-          expect(page).to have_current_path(admin_project_path(project.id)) &
-                          have_css('.flash_notice', text: 'Informações de Contato foram salvas com sucesso!') &
-                          have_text('Contact name') &
-                          have_text('contact@email.com')
-        end
-
-        it 'let the fields of the form blank' do
-          within '#adicionar-informacoes-de-contato' do
-            click_button 'Salvar Informações de Contato'
-          end
-
-          expect(page).to have_current_path(admin_project_path(project.id)) &
-                          have_css('.flash_alert', text: 'Verifique as informações de contato e tente novamente. Detalhes: Nome não pode ficar em branco, E-Mail não pode ficar em branco')
         end
       end
     end
