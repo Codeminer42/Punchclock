@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Repositories list' do
+describe 'Repositories list', type: :feature do
   let!(:authed_user) { create_logged_in_user }
 
   context 'without filter' do
@@ -31,7 +31,7 @@ feature 'Repositories list' do
     end
   end
 
-  context 'when filtering by languages', js: true do  
+  context 'when filtering by languages' do
     let!(:repository) { create(:repository, language: 'javascript,ruby,python').decorate }
     let!(:second_repository) { create(:repository, language: 'Shell,react,python').decorate }
   

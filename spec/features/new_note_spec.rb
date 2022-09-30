@@ -8,7 +8,7 @@ feature 'Add new note' do
   let!(:authed_admin_user) { create_logged_in_user roles: [:admin] }
   let(:user_1) { create(:user) }
 
-  scenario 'creates a note' do
+  it 'creates a note' do
     visit "/users/#{user_1.id}/notes/new"
     within '#new_note' do
       fill_in 'note[title]', with: 'Test note'
@@ -23,7 +23,7 @@ feature 'Add new note' do
   end
 
   context 'when title is empty' do
-    scenario 'does not creates a note' do
+    it 'does not creates a note' do
       visit "/users/#{user_1.id}/notes/new"
     
       within '#new_note' do
@@ -38,7 +38,7 @@ feature 'Add new note' do
   end
 
   context 'when comment is empty' do
-    scenario 'does not creates a note' do
+    it 'does not creates a note' do
       visit "/users/#{user_1.id}/notes/new"
     
       within '#new_note' do

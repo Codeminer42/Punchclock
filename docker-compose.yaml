@@ -16,6 +16,7 @@ services:
       - bundle_cache:/bundle
     environment:
       - REDIS_URL=redis://redis:6379/
+      - REDIS_PROVIDER=REDIS_URL
       - DB_HOST=database
 
   database:

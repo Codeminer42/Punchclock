@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'Edit Punch' do
+describe 'Edit Punch', type: :feature do
   let!(:authed_user) { create_logged_in_user }
   let!(:active_project) { create(:project, :active) }
   let!(:inactive_project) { create(:project, :inactive) }
@@ -10,7 +10,7 @@ feature 'Edit Punch' do
     create(:punch, user_id: authed_user.id)
   end
 
-  scenario 'checking filled attributes' do
+  it 'checking filled attributes' do
     visit "/punches/#{punch.id}/edit"
 
     expect(page).to have_field('punch[from_time]', with: time_format(punch.from)) &
@@ -18,7 +18,7 @@ feature 'Edit Punch' do
                     have_field('punch[when_day]', with: I18n.l(punch.date))
   end
 
-  scenario 'editing punch' do
+  it 'editing punch' do
     visit "/punches/#{punch.id}/edit"
 
     expect(page).to have_content I18n.t(
@@ -36,7 +36,7 @@ feature 'Edit Punch' do
     expect(page).to have_content('Punch foi atualizado com sucesso.')
   end
 
-  scenario 'editing punch with invalid data' do
+  it 'editing punch with invalid data' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to have_content I18n.t(
       :editing, scope: %i[helpers actions], model: Punch.model_name.human
@@ -52,7 +52,7 @@ feature 'Edit Punch' do
     expect(page).to have_content('Punch não pôde ser atualizado.')
   end
 
-  scenario 'select box without inactive project' do
+  it 'select box without inactive project' do
     visit "/punches/#{punch.id}/edit"
     expect(page).to_not have_select 'punch[project_id]', with_options: [inactive_project.name]
   end

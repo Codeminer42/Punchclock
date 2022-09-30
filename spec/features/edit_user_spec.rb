@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Edit User' do
+describe 'Edit User', type: :feature do
   let!(:authed_user) { create_logged_in_user }
 
   before do
