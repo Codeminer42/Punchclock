@@ -26,7 +26,7 @@ describe 'Contribution', type: :feature do
 
     it 'have contribution table with correct information of active user' do
       within 'table' do
-        expect(page).to have_text(contribution.user.name) &
+        expect(page).to have_text(contribution.user.first_and_last_name) &
                         have_text(contribution.link) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}"))
       end

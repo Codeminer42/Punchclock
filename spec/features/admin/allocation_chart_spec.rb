@@ -36,7 +36,7 @@ describe 'Admin Allocation chart', type: :feature do
       context 'when allocated' do
         it 'links to user show page' do
           within 'table' do
-            expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
+            expect(page).to have_link(user.first_and_last_name, href: "/admin/users/#{user.id}")
           end
         end
 
