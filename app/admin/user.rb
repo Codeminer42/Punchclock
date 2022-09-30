@@ -85,7 +85,7 @@ ActiveAdmin.register User do
           row :github
           row :token
           row :office
-          row :city
+          row :city, &:city_text
           row :managed_offices
           row :english_level
           row :overall_score
@@ -188,7 +188,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :github
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
-      f.input :city, as: :select, collection: City.collection.map { |city| ["#{city.name} - #{city.state.code}", city] }
+      f.input :city, as: :select, collection: City.collection.map { |city| ["#{city.name} - #{city.state.code}", city.id] }
       f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
       f.input :reviewer, collection: User.active.order(:name)

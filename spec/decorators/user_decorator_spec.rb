@@ -175,4 +175,26 @@ RSpec.describe UserDecorator do
       expect(subject.roles_text).to eq('normal e admin')
     end
   end
+
+  describe '#city_text' do
+    let(:state) { create(:state, name: 'State Name', code: 'ST') }
+    let(:city) { create(:city, name: 'City Name', state: state) }
+    subject(:user) { create(:user, city: city).decorate }
+
+    context 'when city is set' do
+      it 'returns the city plus state code' do
+        expect(subject.city_text).to eq('City Name - ST')
+      end
+    end
+
+    context 'when city is nil' do
+      before do
+        allow(subject).to receive(:city).and_return(nil)
+      end
+
+      it 'returns nil' do
+        expect(subject.city_text).to eq(nil)
+      end
+    end
+  end
 end
