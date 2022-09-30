@@ -329,7 +329,7 @@ describe 'Users', type: :feature do
 
       it 'updates yourself role information' do
         first('li', text: 'Admin')
-        find('.selection').click
+        find_by_id('user_roles_input').find('.selection').click
         first('li', text: 'Normal').click
         click_button 'Atualizar Usuário'
 
