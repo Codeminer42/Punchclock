@@ -23,6 +23,16 @@ RUN apt-get update \
   && gem install bundler -v $(tail -n 1 Gemfile.lock) \
   && chown -R app:app $BUNDLE_PATH
 
+# Install chrome and chromedriver for selenium
+ENV CHROME_VERSION 106.0.5249.61
+RUN wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
+  && dpkg -i google-chrome-stable_${CHROME_VERSION}-1_amd64.deb || true \
+  && apt-get -f install -y \
+  && rm -v google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
+  && wget https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip \
+  && unzip chromedriver_linux64.zip -d /usr/local/bin \
+  && rm chromedriver_linux64.zip
+
 USER app
 
 # Install node for app user
