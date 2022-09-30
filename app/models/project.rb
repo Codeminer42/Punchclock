@@ -5,7 +5,6 @@ class Project < ApplicationRecord
 
   has_many :punches
   has_many :allocations, dependent: :destroy
-  has_many :project_contact_informations, dependent: :destroy
 
   enumerize :market, in: %i[internal international]
 

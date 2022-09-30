@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_27_205438) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_16_124000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -102,16 +102,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_27_205438) do
     t.integer "regional_holiday_id", null: false
     t.index ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays"
     t.index ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices"
-  end
-
-  create_table "project_contact_informations", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "phone"
-    t.bigint "project_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_project_contact_informations_on_project_id"
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
@@ -253,7 +243,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_27_205438) do
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "notes", "users"
   add_foreign_key "notes", "users", column: "author_id"
-  add_foreign_key "project_contact_informations", "projects"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "skills_users", "skills"
   add_foreign_key "skills_users", "users"

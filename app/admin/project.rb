@@ -7,7 +7,7 @@ ActiveAdmin.register Project do
 
   permit_params :name, :market, :active
 
-  before_action :create_form, :create_project_contact_informations, only: :show
+  before_action :create_form, only: :show
 
   scope :active, default: true
   scope :inactive
@@ -39,24 +39,6 @@ ActiveAdmin.register Project do
     end
   end
 
-  member_action :project_contact_informations, method: :post do
-    @project_contact_informations = resource.project_contact_informations.new(permited_project_contact_information_params)
-    if @project_contact_informations.save
-      redirect_to admin_project_path(resource.id),
-        notice: I18n.t('project_contact_informations.success')
-    else
-      redirect_to admin_project_path(resource.id),
-        alert: I18n.t('project_contact_informations.error', errors: @project_contact_informations.errors.full_messages.join(', '))
-    end
-  end
-
-  member_action :project_contact_information, method: :delete do
-    @project_contact_information = resource.project_contact_informations.find(params[:project_contact_information_id])
-    @project_contact_information.destroy!
-    redirect_to admin_project_path(resource.id),
-      notice: I18n.t('project_contact_informations.delete')
-  end
-
   index download_links: [:xls] do
     selectable_column
     column :name do |project|
@@ -77,17 +59,6 @@ ActiveAdmin.register Project do
           row :active
           row :created_at
           row :updated_at
-        end
-
-        panel ProjectContactInformation.model_name.human(count: 2) do
-          table_for project.project_contact_informations do
-            column :name
-            column :email
-            column :phone
-            column :actions do |project_contact_information|
-              link_to I18n.t('delete'), project_contact_information_admin_project_path(project.id, project_contact_information_id: project_contact_information.id), method: :delete
-            end
-          end
         end
 
         panel Allocation.model_name.human(count: 2) do
@@ -129,10 +100,6 @@ ActiveAdmin.register Project do
       tab I18n.t('allocate_users') do
         render 'allocate_users'
       end
-
-      tab I18n.t('project_contact_informations.title') do
-        render 'project_contact_informations'
-      end
     end
   end
 
@@ -152,16 +119,6 @@ ActiveAdmin.register Project do
 
     def permited_allocation_params
       params.require(:allocate_users_form).permit(:project_id, :start_at, :end_at, :not_allocated_users)
-    end
-
-    def create_project_contact_informations
-      @project_contact_informations = ProjectContactInformation.new
-    end
-
-    def permited_project_contact_information_params
-      params.require(:project_contact_information).permit(
-        :name, :email, :phone
-      )
     end
 
     def index
