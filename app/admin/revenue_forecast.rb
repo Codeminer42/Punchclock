@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register_page 'Revenue Forecast' do
-  menu label: proc { I18n.t('revenue_forecast') }, priority: 11
+  menu label: proc { I18n.t('revenue_forecast') }, priority: 12
 
   content title: I18n.t('revenue_forecast') do
     panel I18n.t('revenue_forecast') do
