@@ -52,7 +52,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def city_text
-    return if city.nil?
+    return if model.city.nil?
     "#{model.city.name} - #{model.city.state.code}"
   end
 end

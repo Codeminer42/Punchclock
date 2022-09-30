@@ -179,7 +179,8 @@ RSpec.describe UserDecorator do
   describe '#city_text' do
     let(:state) { create(:state, name: 'State Name', code: 'ST') }
     let(:city) { create(:city, name: 'City Name', state: state) }
-    subject(:user) { create(:user, city: city).decorate }
+    let(:user) { create(:user, city: city) }
+    subject { user.decorate }
 
     context 'when city is set' do
       it 'returns the city plus state code' do
@@ -189,7 +190,7 @@ RSpec.describe UserDecorator do
 
     context 'when city is nil' do
       before do
-        allow(subject).to receive(:city).and_return(nil)
+        allow(user).to receive(:city).and_return(nil)
       end
 
       it 'returns nil' do
