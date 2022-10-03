@@ -275,14 +275,4 @@ RSpec.describe User, type: :model do
     it { expect(inactive_user.inactive_message).to eq :inactive_account }
     it { expect(active_user.inactive_message).to eq :unconfirmed }
   end
-
-  describe '#has_admin_access' do
-    it "allows admin access for user with admin role" do
-      expect(admin_user).to have_admin_access
-    end
-
-    it "not allows admin access for user without admin roles" do
-      expect(user).to_not have_admin_access
-    end
-  end
 end
