@@ -20,11 +20,8 @@ class AbilityAdmin
       Contribution,
       Note
     ]
-    if user.is_admin?
-      admin_permitions(user)
-    elsif user.open_source_manager?
-      open_source_manager_permitions(user)
-    end
+
+    admin_permitions(user) if user.is_admin?
   end
 
   private
@@ -47,13 +44,5 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Mentoring'
     
     cannot :destroy, [User, Project]
-  end
-
-  def open_source_manager_permitions(user)
-    can :read, ActiveAdmin::Page, name: 'Dashboard'
-    can :read, ActiveAdmin::Page, name: 'Stats'
-    can :manage, Repository
-    can :manage, Contribution
-    can :create, Repository
   end
 end

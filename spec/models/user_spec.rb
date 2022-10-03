@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { create :user }
   let(:admin_user) { create :user, :admin}
-  let(:open_source_manager) { create :user, :open_source_manager }
   let(:active_user) { create :user, :active_user }
   let(:inactive_user) { create :user, :inactive_user }
 
@@ -92,8 +91,7 @@ RSpec.describe User, type: :model do
       is_expected.to enumerize(:roles)
       .in(
         evaluator: 1,
-        admin: 2,
-        open_source_manager: 3
+        admin: 2
       )
       .with_multiple(true)
     end
@@ -137,7 +135,7 @@ RSpec.describe User, type: :model do
     end
 
     describe '.admin' do
-      let!(:user1) { create(:user, roles: %i[admin open_source_manager]) }
+      let!(:user1) { create(:user, roles: %i[admin]) }
       let!(:user2) { create(:user) }
       let!(:user3) { create(:user, roles: [:admin]) }
 
@@ -281,10 +279,6 @@ RSpec.describe User, type: :model do
   describe '#has_admin_access' do
     it "allows admin access for user with admin role" do
       expect(admin_user).to have_admin_access
-    end
-
-    it "allow admin access for user with open source manager role" do
-      expect(open_source_manager).to have_admin_access
     end
 
     it "not allows admin access for user without admin roles" do

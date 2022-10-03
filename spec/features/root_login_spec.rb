@@ -19,14 +19,6 @@ describe 'Login', type: :feature do
     end
   end
 
-  context 'when user is open source manager' do
-    let(:open_source_manager_user) { create(:user, :open_source_manager) }
-    it 'login to /admin/dashboard' do
-      sign_in(open_source_manager_user)
-      expect(current_path).to eq(admin_dashboard_path)
-    end
-  end
-
   context 'when user is admin and engineer' do
     let(:admin_user) { create(:user, :admin, occupation: :engineer) }
     it 'login to /admin/dashboard' do

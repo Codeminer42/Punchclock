@@ -34,8 +34,7 @@ class User < ApplicationRecord
 
   enumerize :roles, in: {
     evaluator: 1,
-    admin: 2,
-    open_source_manager: 3
+    admin: 2
   }, multiple: true, predicates: true
 
   belongs_to :office, optional: false
@@ -148,7 +147,7 @@ class User < ApplicationRecord
   end
 
   def has_admin_access?
-    admin? || open_source_manager?
+    admin?
   end
 
   def is_admin?
