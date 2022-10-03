@@ -93,8 +93,7 @@ RSpec.describe User, type: :model do
       .in(
         evaluator: 1,
         admin: 2,
-        open_source_manager: 3,
-        hr: 4
+        open_source_manager: 3
       )
       .with_multiple(true)
     end
@@ -294,14 +293,6 @@ RSpec.describe User, type: :model do
   end
 
   describe '#is_admin?' do
-    context 'with role hr' do
-      let(:hr_user) { create(:user, roles: [:hr]) }
-
-      it 'is considered an admin' do
-        expect(hr_user.is_admin?).to be_truthy
-      end
-    end
-
     context 'with role admin' do
       let(:admin_user) { create(:user, roles: [:admin]) }
 

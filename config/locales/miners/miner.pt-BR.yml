@@ -30,7 +30,6 @@ pt-BR:
         role:
           evaluator: Avaliador
           admin:  Admin
-          hr: RH
       question:
         kind:
           multiple_choice: Multipla Escolha
