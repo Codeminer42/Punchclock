@@ -52,7 +52,7 @@ describe "Punches with super admin_user", type: :feature do
   end
 end
 
-describe "Punches with normal admin_user", type: :feature do
+describe "Punches with a admin_user", type: :feature do
   let(:admin_user) { create :user, :admin, occupation: :administrative }
   let!(:punch) { create :punch }
 

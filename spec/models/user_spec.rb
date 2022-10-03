@@ -91,7 +91,6 @@ RSpec.describe User, type: :model do
     it do
       is_expected.to enumerize(:roles)
       .in(
-        normal: 0,
         evaluator: 1,
         admin: 2,
         open_source_manager: 3,
@@ -140,7 +139,7 @@ RSpec.describe User, type: :model do
 
     describe '.admin' do
       let!(:user1) { create(:user, roles: %i[admin open_source_manager]) }
-      let!(:user2) { create(:user, roles: [:normal]) }
+      let!(:user2) { create(:user) }
       let!(:user3) { create(:user, roles: [:admin]) }
 
       it 'returns users with admin role' do

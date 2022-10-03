@@ -128,7 +128,6 @@ describe 'Users', type: :feature do
         find('#user_city_id').find(:option, city.name).select_option
         find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
-        select('Normal')
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
@@ -329,7 +328,7 @@ describe 'Users', type: :feature do
       it 'updates yourself role information' do
         first('li', text: 'Admin')
         find_by_id('user_roles_input').find('.selection').click
-        first('li', text: 'Normal').click
+        first('li', text: 'Evaluator').click
         click_button 'Atualizar Usuário'
 
         expect(current_path).to eq "/admin/users/#{admin_user.id}"

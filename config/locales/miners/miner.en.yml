@@ -45,7 +45,6 @@ en:
         brazil: Brazil
         usa: United States
       role: 
-        normal: Normal
         evaluator: Evaluator
         admin:  Admin
     question:

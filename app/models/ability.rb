@@ -9,7 +9,7 @@ class Ability
     can :read, User, id: user.id
     can %i[edit update], User, id: user.id
 
-    if !user.normal? || user.office_head?
+    if user.office_head? || user.is_admin? || user.evaluator?
       can :manage, Evaluation
       can :manage, Note
       cannot %i[destroy edit update], Evaluation

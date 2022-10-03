@@ -34,7 +34,6 @@ def create_user(number:)
     user.allow_overtime = true
     user.city_id = city.id
     user.skip_confirmation!
-    user.roles = [:normal]
     user.contract_company_country = 'brazil'
   end
 end

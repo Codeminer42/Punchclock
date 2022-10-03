@@ -35,53 +35,53 @@ describe 'Login', type: :feature do
     end
   end
 
-  context 'when user is normal' do
-    let(:normal_user) { create(:user) }
+  context 'when user is default' do
+    let(:user) { create(:user) }
     it 'login to Punchclock root page' do
-      sign_in(normal_user)
+      sign_in(user)
       expect(current_path).to eq(root_path)
     end
   end
 
   describe 'when user has 2FA enabled' do
-    let(:normal_user) { create(:user) }
+    let(:user) { create(:user) }
 
     before do
-      normal_user.otp_secret = normal_user.class.generate_otp_secret
-      normal_user.otp_required_for_login = true
-      normal_user.save
+      user.otp_secret = user.class.generate_otp_secret
+      user.otp_required_for_login = true
+      user.save
     end
     
     context 'with valid information' do
       it 'login to Punchclock root page' do
-        sign_in(normal_user)
+        sign_in(user)
         expect(current_path).to eq(root_path)
       end
     end
 
     context 'with invalid information' do
       it 'do not login to Punchclock root ' do
-        sign_in(normal_user, otp: '000X00')
+        sign_in(user, otp: '000X00')
 
         expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
       end
     end
 
     context 'using backup codes' do
-      let(:backup_codes) { get_backup_codes(normal_user) }
+      let(:backup_codes) { get_backup_codes(user) }
 
       it 'should login with valid code' do
-        sign_in(normal_user, otp: backup_codes.first)
+        sign_in(user, otp: backup_codes.first)
 
         expect(current_path).to eq(root_path)
       end
 
       it 'should not login with invalid code' do
-        sign_in(normal_user, otp: backup_codes.first)
+        sign_in(user, otp: backup_codes.first)
         
         logout()
 
-        sign_in(normal_user, otp: backup_codes.first)
+        sign_in(user, otp: backup_codes.first)
 
         expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
       end
@@ -102,11 +102,11 @@ describe 'Login', type: :feature do
     end
 
     context 'when wrong password is given' do
-      let(:normal_user) { create(:user) }
+      let(:user) { create(:user) }
 
       it 'does not login to Punchclock root ' do
-        normal_user.password = "Bad_Pass"
-        sign_in(normal_user)
+        user.password = "Bad_Pass"
+        sign_in(user)
 
         expect(page).to have_content 'E-mail, senha ou código OTP inválidos.'
         expect(page).to have_selector '#user_email.is-invalid'

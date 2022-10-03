@@ -9,7 +9,6 @@ FactoryBot.define do
     specialty             { 'backend' }
     github                { Faker::Internet.unique.username }
     contract_type         { 'employee' }
-    roles                 { [:normal] }
     contract_company_country { 'brazil' }
     otp_required_for_login { false }
     office                { create(:office) }
