@@ -145,7 +145,6 @@ User.find_or_create_by!(email: "admin@codeminer42.com") do |admin|
   admin.password_confirmation = 'password'
   admin.roles = [:admin]
   admin.office = Office.all.sample
-  admin.token = SecureRandom.base58(32)
   admin.skip_confirmation!
   admin.contract_company_country = 'brazil'
   admin.city = City.find_by!(name: 'São Paulo')

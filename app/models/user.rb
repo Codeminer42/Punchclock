@@ -2,7 +2,6 @@
 
 class User < ApplicationRecord
   extend Enumerize
-  include Tokenable
 
   EXPERIENCE_PERIOD = 3.months
 
@@ -32,10 +31,6 @@ class User < ApplicationRecord
     },  scope: :shallow,
         predicates: true
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
-  enumerize :role, in: {
-    normal: 0, evaluator: 1, admin: 2, open_source_manager: 3, hr: 4
-    },  scope: :shallow,
-        predicates: true
 
   enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
                           open_source_manager: 3, hr: 4 },
@@ -75,7 +70,7 @@ class User < ApplicationRecord
   }
   scope :admin, -> { by_roles_in([:admin]) }
 
-  attr_accessor :password_required, :has_api_token
+  attr_accessor :password_required
 
   def self.ransackable_scopes_skip_sanitize_args
     [:by_skills_in]

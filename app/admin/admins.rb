@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register User, as: 'AdminUser' do
+  decorate_with UserDecorator
   filter :email
   actions :index, :show
 
@@ -15,7 +16,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
   show do
     attributes_table do
       row :email
-      row :role
+      row :roles, &:roles_text
       row :created_at
       row :updated_at
       row :last_sign_in_at
