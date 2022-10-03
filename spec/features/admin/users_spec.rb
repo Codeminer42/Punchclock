@@ -189,7 +189,7 @@ describe 'Users', type: :feature do
             expect(page).to have_css('.row-name td', text: user.name) &
                             have_text(user.email) &
                             have_text(user.github) &
-                            have_text(user.office.city)
+                            have_text(user.office.city) &
                             have_text(office.city) &
                             have_text(office2.city) &
                             have_css('.row-started_at td', text: I18n.l(user.started_at, format: :long)) &
@@ -198,10 +198,10 @@ describe 'Users', type: :feature do
                             have_css('.row-active td', text: I18n.t(user.active)) &
                             have_css('.row-overall_score td', text: user.overall_score) &
                             have_css('.row-performance_score td', text: user.performance_score) &
-                            have_css('.row-occupation td', text: user.occupation) &
+                            have_css('.row-occupation td', text: user.occupation_text) &
                             have_css('.row-specialty td', text: user.specialty.humanize) &
                             have_css('.row-level td', text: user.level.humanize) &
-                            have_css('.row-contract_type td', text: user.contract_type.humanize) &
+                            have_css('.row-contract_type td', text: user.contract_type_text) &
                             have_css('.row-roles td', text: UserDecorator.new(user).roles_text) &
                             have_css('.row-observation td', text: user.observation)
           end
