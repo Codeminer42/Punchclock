@@ -7,7 +7,7 @@ class UsersSpreadsheet < BaseSpreadsheet
       user.email,
       user.level_text,
       user.office&.city,
-      user.role_text,
+      user.roles_text,
       user.specialty_text,
       user.occupation_text,
       user.contract_type_text,
@@ -22,7 +22,7 @@ class UsersSpreadsheet < BaseSpreadsheet
       email
       level
       office
-      role
+      roles
       specialty
       occupation
       contract_type

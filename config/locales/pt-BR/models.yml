@@ -161,7 +161,6 @@ pt-BR:
         specialty: "Especialidade"
         contract_type: 'Tipo de Contrato'
         contract_company_country: 'País da Empresa do Contrato'
-        role: 'Função'
         roles: 'Funções'
         skills: "Habilidades"
         level: "Nível"
@@ -178,8 +177,6 @@ pt-BR:
         english_score: "Pontução de Inglês"
         by_skills: "Por Habilidades"
         all: "Todos"
-        token: "API Token"
-        has_api_token: "Possui API Token"
         otp_required_for_login: "2FA"
         city: "Cidade"
       punch:

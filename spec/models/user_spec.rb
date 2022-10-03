@@ -87,14 +87,6 @@ RSpec.describe User, type: :model do
                                                       associate: 3) }
   end
 
-  describe 'role' do
-    it { is_expected.to enumerize(:role).in(  normal: 0,
-                                              evaluator: 1,
-                                              admin: 2,
-                                              open_source_manager: 3,
-                                              hr: 4) }
-  end
-
   describe 'roles' do
     it do
       is_expected.to enumerize(:roles)

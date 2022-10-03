@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Users', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let(:user)       { create(:user, :with_started_at, :with_token) }
+  let(:user)       { create(:user, :with_started_at) }
 
   before do
     sign_in(admin_user)
@@ -189,8 +189,7 @@ describe 'Users', type: :feature do
             expect(page).to have_css('.row-name td', text: user.name) &
                             have_text(user.email) &
                             have_text(user.github) &
-                            have_text(user.office.city) &
-                            have_text(user.token)
+                            have_text(user.office.city)
                             have_text(office.city) &
                             have_text(office2.city) &
                             have_css('.row-started_at td', text: I18n.l(user.started_at, format: :long)) &

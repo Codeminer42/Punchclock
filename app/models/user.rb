@@ -31,10 +31,6 @@ class User < ApplicationRecord
     },  scope: :shallow,
         predicates: true
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
-  enumerize :role, in: {
-    normal: 0, evaluator: 1, admin: 2, open_source_manager: 3, hr: 4
-    },  scope: :shallow,
-        predicates: true
 
   enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
                           open_source_manager: 3, hr: 4 },

@@ -20,7 +20,7 @@ RSpec.describe AdminsSpreadsheet do
       specialty
       github
       contract_type
-      role
+      roles
       started_at
       created_at
       updated_at
@@ -45,7 +45,7 @@ RSpec.describe AdminsSpreadsheet do
       user.specialty,
       user.github,
       user.contract_type,
-      user.role
+      user.roles_text,
     ].concat(date_attributes)
   end
 
@@ -64,7 +64,7 @@ RSpec.describe AdminsSpreadsheet do
                              user.specialty,
                              user.github,
                              user.contract_type,
-                             user.role)
+                             user.roles_text)
     end
 
     it 'returns spreadsheet with header' do
@@ -73,7 +73,7 @@ RSpec.describe AdminsSpreadsheet do
                              User.human_attribute_name('specialty'),
                              User.human_attribute_name('github'),
                              User.human_attribute_name('contract_type'),
-                             User.human_attribute_name('role'))
+                             User.human_attribute_name('roles'))
     end
   end
 

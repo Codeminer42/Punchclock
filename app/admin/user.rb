@@ -10,14 +10,14 @@ ActiveAdmin.register User do
   menu parent: User.model_name.human(count: 2), priority: 1
 
   permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :reviewer_id,
-                :city_id, :has_api_token, :active, :allow_overtime, :office_id, :occupation, :role, :started_at,
+                :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
   scope :all
   scope :active, default: true, group: :active
   scope :inactive, group: :active
-  scope :office_heads, group: :role
-  scope :admin, group: :role
+  scope :office_heads
+  scope :admin
   scope :not_allocated, group: :allocation
   scope :allocated, group: :allocation
 
@@ -83,7 +83,6 @@ ActiveAdmin.register User do
             status_tag user.otp_required_for_login
           end
           row :github
-          row :token
           row :office
           row :city, &:city_text
           row :managed_offices
@@ -95,7 +94,6 @@ ActiveAdmin.register User do
           row :level, &:level_text
           row :contract_type, &:contract_type_text
           row :contract_company_country, &:contract_company_country_text
-          row :role, &:role_text
           row :roles, &:roles_text
           row :skills
           row :reviewer
@@ -198,7 +196,6 @@ ActiveAdmin.register User do
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
       f.input :contract_company_country, as: :select, collection: User.contract_company_country.values.map { |company_country| [company_country.text.humanize, company_country] }
-      f.input :has_api_token, as: :boolean, :input_html => { checked: f.object.token? }
       f.input :allow_overtime
       f.input :active
       f.input :otp_required_for_login, as: :boolean, :input_html => { checked: f.object.otp_required_for_login? }
@@ -220,12 +217,6 @@ ActiveAdmin.register User do
     def save_resource(object)
       object.password_required = false
       object.github = nil if object.github == ''
-
-      if object.has_api_token == '1'
-        object.generate_token if object.token.nil?
-      else
-        object.destroy_token
-      end
 
       super
     end

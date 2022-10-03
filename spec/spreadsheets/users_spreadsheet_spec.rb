@@ -11,7 +11,7 @@ RSpec.describe UsersSpreadsheet do
       email
       level
       office
-      role
+      roles
       specialty
       occupation
       contract_type
@@ -30,7 +30,7 @@ RSpec.describe UsersSpreadsheet do
       user.email,
       user.level_text,
       user.office.city,
-      user.role_text,
+      user.roles_text,
       user.specialty_text,
       user.contract_type_text,
       user.github,

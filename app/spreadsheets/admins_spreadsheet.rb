@@ -16,7 +16,7 @@ class AdminsSpreadsheet < BaseSpreadsheet
       user.specialty,
       user.github,
       user.contract_type,
-      user.role,
+      user.roles_text,
       translate_date(user.started_at),
       translate_date(user.created_at),
       translate_date(user.updated_at)
@@ -38,7 +38,7 @@ class AdminsSpreadsheet < BaseSpreadsheet
       specialty
       github
       contract_type
-      role
+      roles
       started_at
       created_at
       updated_at

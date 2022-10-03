@@ -15,7 +15,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
   show do
     attributes_table do
       row :email
-      row :role
+      row :roles
       row :created_at
       row :updated_at
       row :last_sign_in_at
