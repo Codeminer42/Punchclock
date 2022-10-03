@@ -9,14 +9,14 @@ class Ability
     can :read, User, id: user.id
     can %i[edit update], User, id: user.id
 
-    if user.office_head? || user.is_admin? || user.evaluator?
+    if user.admin? || user.evaluator? || user.office_head?
       can :manage, Evaluation
       can :manage, Note
       cannot %i[destroy edit update], Evaluation
     end
 
-    if user.is_admin? || user.office_head?
-      can :manage, Note
+    if user.admin?
+      can :read, ActiveAdmin
     end
   end
 end

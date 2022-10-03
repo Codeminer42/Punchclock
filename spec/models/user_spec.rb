@@ -285,14 +285,4 @@ RSpec.describe User, type: :model do
       expect(user).to_not have_admin_access
     end
   end
-
-  describe '#is_admin?' do
-    context 'with role admin' do
-      let(:admin_user) { create(:user, roles: [:admin]) }
-
-      it 'is considered an admin' do
-        expect(admin_user.is_admin?).to be_truthy
-      end
-    end
-  end
 end

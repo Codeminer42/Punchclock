@@ -146,14 +146,6 @@ class User < ApplicationRecord
     managed_offices.present?
   end
 
-  def has_admin_access?
-    admin?
-  end
-
-  def is_admin?
-    admin?
-  end
-
   def update_with_password(params, *options)
     current_password      = params[:current_password]
     password              = params[:password]

@@ -5,52 +5,48 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 0, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
-    if current_user.is_admin?
-      panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
+    panel t('search_fields', scope: 'active_admin'), class: 'search-fields' do
 
-        users_collection = User.active.includes(:office).order(:name).map do |user|
-          user_label = "#{user.name.titleize} - #{user.email} - "
-          user_label += "#{user.level.humanize} - " if user.engineer?
-          user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
+      users_collection = User.active.includes(:office).order(:name).map do |user|
+        user_label = "#{user.name.titleize} - #{user.email} - "
+        user_label += "#{user.level.humanize} - " if user.engineer?
+        user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
 
-          [user_label, user.id]
+        [user_label, user.id]
+      end
+
+      offices_collection = Office.active.order(:city).decorate.map do |office|
+        [
+          "#{office.city.titleize} - #{office.head} - #{office.score}",
+          office.id
+        ]
+      end
+
+      projects_collection = Project.active.order(:name).map do |project|
+        [ project.name, project.id ]
+      end
+
+      tabs do
+        tab User.model_name.human do
+          render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
         end
 
-        offices_collection = Office.active.order(:city).decorate.map do |office|
-          [
-            "#{office.city.titleize} - #{office.head} - #{office.score}",
-            office.id
-          ]
+        tab Office.model_name.human do
+          render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
         end
 
-        projects_collection = Project.active.order(:name).map do |project|
-          [ project.name, project.id ]
-        end
-
-        tabs do
-          tab User.model_name.human do
-            render "search_field", search_model: User, url_path: admin_users_path, collection: users_collection
-          end
-
-          tab Office.model_name.human do
-            render "search_field", search_model: Office, url_path: admin_offices_path, collection: offices_collection
-          end
-
-          tab Project.model_name.human do
-            render "search_field", search_model: Project, url_path: admin_projects_path, collection: projects_collection
-          end
+        tab Project.model_name.human do
+          render "search_field", search_model: Project, url_path: admin_projects_path, collection: projects_collection
         end
       end
     end
 
     columns do
-      if current_user.is_admin?
-        column do
-          panel t(I18n.t('average_score'), scope: 'active_admin'), class: 'average-score' do
-            table_for User.level.values do
-              column(User.human_attribute_name(:level)) { |level| User.human_attribute_name(level) }
-              column(I18n.t('users_average')) { |level| User.with_level(level).overall_score_average }
-            end
+      column do
+        panel t(I18n.t('average_score'), scope: 'active_admin'), class: 'average-score' do
+          table_for User.level.values do
+            column(User.human_attribute_name(:level)) { |level| User.human_attribute_name(level) }
+            column(I18n.t('users_average')) { |level| User.with_level(level).overall_score_average }
           end
         end
       end

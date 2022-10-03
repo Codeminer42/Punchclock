@@ -21,7 +21,7 @@ class AbilityAdmin
       Note
     ]
 
-    admin_permitions(user) if user.is_admin?
+    admin_permitions(user) if user.admin?
   end
 
   private
