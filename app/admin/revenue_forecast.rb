@@ -16,6 +16,8 @@ ActiveAdmin.register_page 'Revenue Forecast' do
           forecast = RevenueForecastPresenter.new(year)
 
           tab year.to_s do
+            para I18n.t('revenue_forecast_warning') if year == 2022
+
             columns do
               column do
                 para I18n.t('projects')
