@@ -8,6 +8,7 @@ class RevenueForecastPresenter
 
   def initialize(year)
     @forecasts = RevenueForecastService.year_forecast(year)
+    @forecasts.sort_by! { |h| h[:project].name }
   end
 
   def projects
