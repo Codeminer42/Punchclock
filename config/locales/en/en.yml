@@ -67,3 +67,5 @@ en:
   allocated_until: 'Allocated until'
   specialty: "Specialty"
   english_evaluation: "English evaluation"
+  revenue_forecast: 'Revenue Forecast'
+  revenue_forecast_warning: '* This feature was implemented on Sept/2022, and for this reason, data before this date are incomplete.'

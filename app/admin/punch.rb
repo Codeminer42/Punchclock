@@ -4,7 +4,7 @@ ActiveAdmin.register Punch do
   decorate_with PunchDecorator
   permit_params :from, :to, :extra_hour, :user_id, :project_id, :comment
 
-  menu priority: 100
+  menu parent: User.model_name.human(count: 2)
 
   filter :project, collection: -> { Project.active.order(:name) }
   filter :user, collection: -> { grouped_users_by_active_status }

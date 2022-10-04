@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 class RevenueForecastPresenter
+  # Since we started using Punch to control allocations on Sept/2022,
+  # forecasts for dates before Sept/2022 are incomplete. For this reason, we
+  # should only show forecasts from 2022 and beyond
+  REVENUE_FORECAST_START_YEAR = 2022
+
   def initialize(year)
     @forecasts = RevenueForecastService.year_forecast(year)
+    @forecasts.sort_by! { |h| h[:project].name }
   end
 
   def projects
@@ -20,10 +26,9 @@ class RevenueForecastPresenter
   end
 
   def self.years_range
-    allocation_with_oldest_start_date = Allocation.order(:start_at).first
     allocation_with_newest_end_date = Allocation.order(end_at: :desc).first
 
-    (allocation_with_oldest_start_date.start_at.year..allocation_with_newest_end_date.end_at.year)
+    (REVENUE_FORECAST_START_YEAR..allocation_with_newest_end_date.end_at.year)
   end
 
   private

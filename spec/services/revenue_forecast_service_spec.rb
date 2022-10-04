@@ -47,6 +47,16 @@ RSpec.describe RevenueForecastService do
         ])
       end
     end
+
+    context 'when allocation starts and ends in the same month' do
+      let(:allocation) { build_stubbed(:allocation, hourly_rate: 100, start_at: "2022-10-04", end_at: "2022-10-17") }
+
+      it "returns a hash containing the total working days and forecast for the single month of allocation" do
+        expect(data).to eq([
+          { month: 10, year: 2022, working_days: 10, forecast: Money.new(8000_00) }
+        ])
+      end
+    end
   end
 
   describe ".project_forecast" do

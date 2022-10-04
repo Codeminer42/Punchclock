@@ -125,3 +125,4 @@ pt-BR:
   specialty: "Especialidade"
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
+  revenue_forecast_warning: '* Como esta ferramenta do Punch começou a ser utilizada em Set/2022, as informações posteriores a esse mês estão incompletas'

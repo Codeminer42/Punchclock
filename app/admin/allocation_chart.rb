@@ -3,7 +3,7 @@
 include ActiveAdmin::AllocationChartHelper
 
 ActiveAdmin.register_page 'Allocation Chart' do
-  menu label: proc { I18n.t('allocation_chart') }, parent: User.model_name.human(count: 2)
+  menu label: proc { I18n.t('allocation_chart') }, priority: 11
 
   content title: I18n.t('allocation_chart') do
     panel I18n.t('allocation_chart') do

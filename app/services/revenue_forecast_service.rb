@@ -84,7 +84,9 @@ class RevenueForecastService
   end
 
   def calculate_working_days(allocation, beginning_of_month)
-    if allocation.start_at.beginning_of_month == beginning_of_month
+    if allocation.start_at.beginning_of_month == allocation.end_at.beginning_of_month
+      calculate_weekdays(allocation.start_at, allocation.end_at)
+    elsif allocation.start_at.beginning_of_month == beginning_of_month
       calculate_weekdays(allocation.start_at, beginning_of_month.end_of_month)
     elsif allocation.end_at.beginning_of_month == beginning_of_month
       calculate_weekdays(beginning_of_month, allocation.end_at)
