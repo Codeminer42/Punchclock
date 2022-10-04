@@ -32,9 +32,10 @@ class User < ApplicationRecord
         predicates: true
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
 
-  enumerize :roles, in: { normal: 0, evaluator: 1, admin: 2,
-                          open_source_manager: 3, hr: 4 },
-                    default: :normal, multiple: true, predicates: true
+  enumerize :roles, in: {
+    evaluator: 1,
+    admin: 2
+  }, multiple: true, predicates: true
 
   belongs_to :office, optional: false
   belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
@@ -143,14 +144,6 @@ class User < ApplicationRecord
 
   def office_head?
     managed_offices.present?
-  end
-
-  def has_admin_access?
-    admin? || open_source_manager? || hr?
-  end
-
-  def is_admin?
-    admin? || hr?
   end
 
   def update_with_password(params, *options)

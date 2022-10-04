@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { create :user }
   let(:admin_user) { create :user, :admin}
-  let(:open_source_manager) { create :user, :open_source_manager }
   let(:active_user) { create :user, :active_user }
   let(:inactive_user) { create :user, :inactive_user }
 
@@ -91,11 +90,8 @@ RSpec.describe User, type: :model do
     it do
       is_expected.to enumerize(:roles)
       .in(
-        normal: 0,
         evaluator: 1,
-        admin: 2,
-        open_source_manager: 3,
-        hr: 4
+        admin: 2
       )
       .with_multiple(true)
     end
@@ -139,8 +135,8 @@ RSpec.describe User, type: :model do
     end
 
     describe '.admin' do
-      let!(:user1) { create(:user, roles: %i[admin open_source_manager]) }
-      let!(:user2) { create(:user, roles: [:normal]) }
+      let!(:user1) { create(:user, roles: %i[admin]) }
+      let!(:user2) { create(:user) }
       let!(:user3) { create(:user, roles: [:admin]) }
 
       it 'returns users with admin role' do
@@ -278,37 +274,5 @@ RSpec.describe User, type: :model do
   describe '#inactive_message' do
     it { expect(inactive_user.inactive_message).to eq :inactive_account }
     it { expect(active_user.inactive_message).to eq :unconfirmed }
-  end
-
-  describe '#has_admin_access' do
-    it "allows admin access for user with admin role" do
-      expect(admin_user).to have_admin_access
-    end
-
-    it "allow admin access for user with open source manager role" do
-      expect(open_source_manager).to have_admin_access
-    end
-
-    it "not allows admin access for user without admin roles" do
-      expect(user).to_not have_admin_access
-    end
-  end
-
-  describe '#is_admin?' do
-    context 'with role hr' do
-      let(:hr_user) { create(:user, roles: [:hr]) }
-
-      it 'is considered an admin' do
-        expect(hr_user.is_admin?).to be_truthy
-      end
-    end
-
-    context 'with role admin' do
-      let(:admin_user) { create(:user, roles: [:admin]) }
-
-      it 'is considered an admin' do
-        expect(admin_user.is_admin?).to be_truthy
-      end
-    end
   end
 end

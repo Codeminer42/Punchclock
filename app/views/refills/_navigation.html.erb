@@ -37,7 +37,7 @@
             <%= t('.open_source') %>
           <%- end %>
 
-          <% if current_user.is_admin? %>
+          <% if can?(:read, ActiveAdmin) %>
             <%= link_to admin_root_path do %>
               <%= t('.administrative') %>
             <%- end %>

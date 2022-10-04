@@ -24,13 +24,13 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin_user!
-    unless !current_user.nil? && current_user.has_admin_access?
+    unless can?(:read, ActiveAdmin)
       redirect_to root_path, alert: I18n.t('devise.failure.access_denied')
     end
   end
 
   def after_sign_in_path_for(user)
-    if user.has_admin_access?
+    if can? :read, ActiveAdmin
       admin_dashboard_path
     else
       root_path

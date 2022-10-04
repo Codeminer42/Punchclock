@@ -28,10 +28,8 @@ pt-BR:
           brazil: Brasil
           usa: Estados Unidos
         role:
-          normal: Normal
           evaluator: Avaliador
           admin:  Admin
-          hr: RH
       question:
         kind:
           multiple_choice: Multipla Escolha
