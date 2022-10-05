@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin_user!
-    unless can?(:read, ActiveAdmin)
+    if cannot?(:read, ActiveAdmin)
       redirect_to root_path, alert: I18n.t('devise.failure.access_denied')
     end
   end
