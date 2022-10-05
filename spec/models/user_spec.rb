@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:office).required }
-    it { is_expected.to belong_to(:reviewer).optional }
+    it { is_expected.to belong_to(:mentor).optional }
     it { is_expected.to have_many(:punches) }
     it { is_expected.to have_many(:allocations) }
     it { is_expected.to have_many(:projects).through(:allocations) }

@@ -3,13 +3,13 @@
 ActiveAdmin.register User do
   decorate_with UserDecorator
 
-  includes :reviewer
+  includes :mentor
 
   config.sort_order = 'name_asc'
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :reviewer_id,
+  permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :mentor_id,
                 :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
@@ -96,7 +96,7 @@ ActiveAdmin.register User do
           row :contract_company_country, &:contract_company_country_text
           row :roles, &:roles_text
           row :skills
-          row :reviewer
+          row :mentor
           row :allow_overtime
           row :active
           row :started_at
@@ -189,7 +189,7 @@ ActiveAdmin.register User do
       f.input :city, as: :select, collection: City.collection.map { |city| ["#{city.name} - #{city.state.code}", city.id] }
       f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
-      f.input :reviewer, collection: User.active.order(:name)
+      f.input :mentor, collection: User.active.order(:name)
       f.input :skills, as: :check_boxes, collection: Skill.order(:title)
       f.input :occupation, as: :radio
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }

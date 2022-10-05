@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'Mentoring', type: :feature do
   let(:admin) { create(:user, :admin, occupation: :administrative) }
   let(:mentor) { create(:user) }
-  let!(:mentee) { create(:user, reviewer_id: mentor.id) }
+  let!(:mentee) { create(:user, mentor_id: mentor.id) }
 
   before do
     sign_in(admin)

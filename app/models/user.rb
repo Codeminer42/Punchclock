@@ -38,7 +38,7 @@ class User < ApplicationRecord
   }, multiple: true, predicates: true
 
   belongs_to :office, optional: false
-  belongs_to :reviewer, class_name: :User, foreign_key: :reviewer_id, optional: true
+  belongs_to :mentor, class_name: :User, foreign_key: :mentor_id, optional: true
   belongs_to :city
   has_many :punches
   has_many :contributions
