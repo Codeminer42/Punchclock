@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_05_183251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -200,7 +200,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
     t.boolean "active", default: true
-    t.integer "reviewer_id"
+    t.integer "mentor_id"
     t.integer "level"
     t.boolean "allow_overtime", default: false
     t.integer "office_id"
@@ -224,9 +224,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github", unique: true
+    t.index ["mentor_id"], name: "index_users_on_mentor_id"
     t.index ["office_id"], name: "index_users_on_office_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["reviewer_id"], name: "index_users_on_reviewer_id"
   end
 
   add_foreign_key "allocations", "projects"
@@ -244,5 +244,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_30_143237) do
   add_foreign_key "skills_users", "users"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
-  add_foreign_key "users", "users", column: "reviewer_id"
+  add_foreign_key "users", "users", column: "mentor_id"
 end
