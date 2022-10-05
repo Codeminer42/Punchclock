@@ -25,4 +25,33 @@ describe 'User' do
       expect(ability_admin).to be_able_to :destroy, Punch.new
     end
   end
+
+  describe 'abilities open source manager' do
+    let(:open_source_manager_user) { create(:user, :open_source_manager) }
+    let(:ability_open_source_manager) { AbilityAdmin.new(open_source_manager_user) }
+
+    it 'able to read dashboard' do
+      expect(ability_open_source_manager).to be_able_to :read, ActiveAdmin::Page, name: 'Dashboard'
+    end
+
+    it 'able to manage Repository' do
+      expect(ability_open_source_manager).to be_able_to :manage, Repository
+    end
+
+    it 'able to manage Contribution' do
+      expect(ability_open_source_manager).to be_able_to :manage, Contribution
+    end
+
+    it 'able to create Repository' do
+      expect(ability_open_source_manager).to be_able_to :create, Repository
+    end
+
+    it "can't manage User on active admin" do
+      expect(ability_open_source_manager).to_not be_able_to :manage, User
+    end
+
+    it "can't manage Punch on active admin" do
+      expect(ability_open_source_manager).to_not be_able_to :manage, Punch
+    end
+  end
 end

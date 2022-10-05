@@ -30,6 +30,7 @@ pt-BR:
         role:
           evaluator: Avaliador
           admin:  Admin
+          open_source_manager: Responsável OpenSource
       question:
         kind:
           multiple_choice: Multipla Escolha
