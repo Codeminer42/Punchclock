@@ -7,6 +7,8 @@ class AbilityAdmin
   # Actions used by admins and super admins
 
   def initialize(user)
+    return if user.nil?
+
     @action = [
       Allocation,
       User,

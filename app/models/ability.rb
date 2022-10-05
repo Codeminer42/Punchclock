@@ -5,6 +5,8 @@ class Ability
   prepend Draper::CanCanCan
 
   def initialize(user)
+    return if user.nil?
+
     can :manage, Punch, user_id: user.id
     can :read, User, id: user.id
     can %i[edit update], User, id: user.id
