@@ -7,6 +7,7 @@ ActiveAdmin.register Contribution do
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
   filter :user, as: :select, collection: -> { User.engineer.active.order(:name) }
+  filter :state, as: :select, collection: -> { Contribution.aasm.states }
   filter :reviewed_at
   filter :created_at
 
