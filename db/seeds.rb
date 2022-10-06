@@ -123,7 +123,7 @@ offices = codeminer42[:office_cities]
 offices.map do |city|
   Office.find_or_create_by!(city: city[2])
   City.create!(
-    name: city[2], 
+    name: city[2],
     state: State.find_or_create_by!(name: city[0], code: city[1])
   )
 end
@@ -187,7 +187,7 @@ print 'Creating mentors to some users..'
 
 30.times do
   mentor = User.all.sample
-  User.all.sample.update(reviewer_id: mentor.id)
+  User.all.sample.update(mentor_id: mentor.id)
 end
 
 puts 'Done.'

@@ -10,7 +10,7 @@ RSpec.describe MentoringQuery do
 
     context 'when there are one mentee and mentor' do
       let(:mentor) { create(:user) }
-      let!(:mentee) { create(:user, reviewer_id: mentor.id) }
+      let!(:mentee) { create(:user, mentor_id: mentor.id) }
 
       it 'returns mentor' do
         result = subject.call
@@ -33,10 +33,10 @@ RSpec.describe MentoringQuery do
       let(:mentor_2) { create(:user) }
 
       context 'and mentees are active' do
-        let!(:mentor_2_mentee) { create(:user, reviewer_id: mentor_2.id) }
-        let!(:other_mentor_2_mentee) { create(:user, reviewer_id: mentor_2.id) }
-        let!(:mentor_1_mentee) { create(:user, reviewer_id: mentor_1.id) }
-        let!(:other_mentor_1_mentee) { create(:user, reviewer_id: mentor_1.id) }
+        let!(:mentor_2_mentee) { create(:user, mentor_id: mentor_2.id) }
+        let!(:other_mentor_2_mentee) { create(:user, mentor_id: mentor_2.id) }
+        let!(:mentor_1_mentee) { create(:user, mentor_id: mentor_1.id) }
+        let!(:other_mentor_1_mentee) { create(:user, mentor_id: mentor_1.id) }
 
         it 'returns mentors' do
           result = subject.call
@@ -61,8 +61,8 @@ RSpec.describe MentoringQuery do
       end
 
       context 'and mentee are inactive' do
-        let!(:inactive_mentor_2_mentee) { create(:user, reviewer_id: mentor_1.id, active: false) }
-        let!(:inactive_mentor_1_mentee) { create(:user, reviewer_id: mentor_1.id, active: false) }
+        let!(:inactive_mentor_2_mentee) { create(:user, mentor_id: mentor_1.id, active: false) }
+        let!(:inactive_mentor_1_mentee) { create(:user, mentor_id: mentor_1.id, active: false) }
 
         it "does not return inactive mentees" do
           result = subject.call

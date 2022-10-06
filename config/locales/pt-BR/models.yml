@@ -49,7 +49,7 @@ pt-BR:
               after: "A data de término deve ser maior que a data de início"
               invalid_date: "Data Inválida"
             ongoing:
-              uniqueness: 'O usuário já possui uma alocação em progresso' 
+              uniqueness: 'O usuário já possui uma alocação em progresso'
             hourly_rate:
               invalid_currency: Moeda inválida
     models:
@@ -167,7 +167,7 @@ pt-BR:
         active: "Ativo"
         observation: "Observação"
         started_at: "Iniciou em"
-        reviewer: "Padrinho"
+        mentor: "Mentor"
         overall_score: "Pontuação Geral"
         performance_score: "Pontuação de Desempenho"
         english_level: "Nível de Inglês"
