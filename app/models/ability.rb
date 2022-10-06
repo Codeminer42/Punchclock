@@ -17,7 +17,7 @@ class Ability
       cannot %i[destroy edit update], Evaluation
     end
 
-    if user.admin?
+    if user.admin? || user.open_source_manager?
       can :read, ActiveAdmin
     end
   end
