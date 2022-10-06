@@ -47,6 +47,12 @@ describe 'Contribution', type: :feature do
         expect(page).to have_select('Usuário')
       end
     end
+
+    it 'by state' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Estado')
+      end
+    end
   end
 
   describe 'Actions' do
