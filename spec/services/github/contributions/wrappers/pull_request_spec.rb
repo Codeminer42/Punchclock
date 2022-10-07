@@ -4,7 +4,13 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
 
   let!(:repository) { create(:repository) }
   let(:user) { create(:user) }
-  let(:pull_request) { double(created_at: '2022-01-01', html_url: "#{repository.link}/pull/1", user: double(login: user.github)) }
+  let(:pr_state) { 'open' }
+  let(:merged_at) { nil }
+  let(:pull_request) { double(created_at: '2022-01-01',
+                              html_url: "#{repository.link}/pull/1",
+                              user: double(login: user.github),
+                              state: pr_state,
+                              pull_request: double(merged_at: merged_at)) }
 
   let(:engineers_wrapper) { Github::Contributions::Wrappers::Engineers.new }
   let(:repositories_wrapper) { Github::Contributions::Wrappers::Repositories.new }
@@ -29,5 +35,23 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
 
   describe '#created_at' do
     it { expect(subject.created_at).to eq '2022-01-01' }
+  end
+
+  describe '#pr_state' do
+    context 'contribution state is open' do
+      let(:pr_state) { 'open' }
+      it { expect(subject.pr_state).to eq 'open' }
+    end
+    
+    context 'contribution was closed but not merged' do
+      let(:pr_state) { 'closed' }
+      it { expect(subject.pr_state).to eq 'closed' }
+    end
+
+    context 'contribution was merged' do
+      let(:pr_state) { 'closed' }
+      let(:merged_at) { '2022-01-01' }
+      it { expect(subject.pr_state).to eq 'merged' }
+    end
   end
 end

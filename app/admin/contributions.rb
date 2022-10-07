@@ -52,6 +52,7 @@ ActiveAdmin.register Contribution do
     column :state do |contribution|
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
+    column :pr_state
     column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
 
