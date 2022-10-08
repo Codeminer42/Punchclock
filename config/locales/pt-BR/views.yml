@@ -16,6 +16,8 @@ pt-BR:
   punches:
     index:
       total: 'TOTAL'
+  my_contributions:
+    my_contributions: 'Minhas Contribuições'
   evaluations:
     written:
       add_review: 'Adicionar Revisão'
