@@ -46,8 +46,13 @@
           <% if can?(:read, ActiveAdmin) %>
             <%= link_to admin_root_path do %>
               <%= t('.administrative') %>
-            <% end %>
-          <% end %>
+            <%- end %>
+          <%- end %>
+
+          <%# <%= link_to my_contributions_path do %1> %>
+          <%= link_to 'hello' do %>
+            <%= t('.my_contributions') %>
+          <%- end %>
         </div>
 
         <div class="navbar-nav ml-auto nav-link">
