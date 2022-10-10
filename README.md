@@ -30,7 +30,7 @@ $ bin/setup
 
 After installation steps the following admin users will be created in database
 
-1. A Admin User
+1. An Admin User
 ```
 E-mail:   admin@codeminer42.com
 Password: password
