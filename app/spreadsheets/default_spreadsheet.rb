@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'axlsx'
 
 class DefaultSpreadsheet
   def initialize(objects)
