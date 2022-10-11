@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_11_125254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,7 +48,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
 
   create_table "contributions", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "company_id"
     t.string "link", null: false
     t.string "state", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -57,7 +56,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
     t.bigint "reviewer_id"
     t.datetime "reviewed_at", precision: nil
     t.string "pr_state"
-    t.index ["company_id"], name: "index_contributions_on_company_id"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"
@@ -93,12 +91,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
     t.string "city"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.integer "company_id"
     t.integer "users_count", default: 0
     t.float "score"
     t.integer "head_id"
     t.boolean "active", default: true
-    t.index ["company_id"], name: "index_offices_on_company_id"
   end
 
   create_table "offices_regional_holidays", id: false, force: :cascade do |t|
@@ -109,14 +105,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.integer "company_id"
     t.boolean "active", default: true
     t.string "market"
-    t.index ["company_id"], name: "index_projects_on_company_id"
-    t.index ["name", "company_id"], name: "index_projects_on_name_and_company_id", unique: true
   end
 
   create_table "punches", id: :serial, force: :cascade do |t|
@@ -126,11 +119,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
     t.integer "user_id"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.integer "company_id"
-    t.string "attachment", limit: 255
+    t.string "attachment"
     t.text "comment"
     t.boolean "extra_hour", default: false, null: false
-    t.index ["company_id"], name: "index_punches_on_company_id"
     t.index ["project_id"], name: "index_punches_on_project_id"
     t.index ["user_id"], name: "index_punches_on_user_id"
   end
@@ -164,12 +155,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
 
   create_table "repositories", force: :cascade do |t|
     t.string "link", null: false
-    t.bigint "company_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "language"
-    t.index ["company_id", "link"], name: "index_repositories_on_company_id_and_link", unique: true
-    t.index ["company_id"], name: "index_repositories_on_company_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -196,21 +184,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "email", limit: 255, default: "", null: false
+    t.string "email", default: "", null: false
     t.integer "sign_in_count", default: 0
     t.datetime "current_sign_in_at", precision: nil
     t.datetime "last_sign_in_at", precision: nil
-    t.string "current_sign_in_ip", limit: 255
-    t.string "last_sign_in_ip", limit: 255
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.string "name", limit: 255
-    t.string "encrypted_password", limit: 255, default: ""
-    t.string "reset_password_token", limit: 255
+    t.string "name"
+    t.string "encrypted_password", default: ""
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
-    t.integer "company_id"
-    t.string "confirmation_token", limit: 255
+    t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
     t.boolean "active", default: true
@@ -231,17 +218,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
     t.string "otp_secret"
+    t.bigint "city_id"
     t.integer "roles", array: true
     t.integer "contract_company_country"
-    t.bigint "city_id"
     t.index ["city_id"], name: "index_users_on_city_id"
-    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github"], name: "index_users_on_github", unique: true
     t.index ["mentor_id"], name: "index_users_on_mentor_id"
     t.index ["office_id"], name: "index_users_on_office_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vacations", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.integer "status", default: 0
+    t.bigint "user_id", null: false
+    t.bigint "commercial_approver_id"
+    t.bigint "administrative_approver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrative_approver_id"], name: "index_vacations_on_administrative_approver_id"
+    t.index ["commercial_approver_id"], name: "index_vacations_on_commercial_approver_id"
+    t.index ["user_id"], name: "index_vacations_on_user_id"
   end
 
   add_foreign_key "allocations", "projects"
@@ -260,4 +260,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_131621) do
   add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "mentor_id"
+  add_foreign_key "vacations", "users"
+  add_foreign_key "vacations", "users", column: "administrative_approver_id"
+  add_foreign_key "vacations", "users", column: "commercial_approver_id"
 end
