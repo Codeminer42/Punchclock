@@ -20,9 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :repositories, only: :index do
-    collection do
-      get "(/:languages)", action: :index
-    end
+    get "(/:languages)", action: :index, on: :collection
   end
 
   authenticated :user do
@@ -56,9 +54,7 @@ Rails.application.routes.draw do
       post "refresh" => "token#refresh_token"
 
       resources :punches, only: %i[index show bulk] do
-        collection do
-          post :bulk
-        end
+        post :bulk, on: :collection
       end
     end
   end
