@@ -30,35 +30,6 @@ RSpec.describe AllocationsSpreadsheet do
     ]
   end
 
-  describe '#to_string_io' do
-    subject do
-      allocation_spreadsheet
-        .to_string_io
-        .force_encoding('iso-8859-1')
-        .encode('utf-8')
-    end
-
-    it 'returns spreadsheet data' do
-      is_expected.to include(*body_attributes)
-    end
-
-    it 'returns spreadsheet with header' do
-      is_expected.to include(*header_attributes)
-    end
-  end
-
-  describe '#generate_xls' do
-    subject(:spreadsheet) { allocation_spreadsheet.generate_xls }
-
-    it 'returns spreadsheet object with header' do
-      expect(spreadsheet.row(0)).to containing_exactly(*header_attributes)
-    end
-
-    it 'returns spreadsheet object with body' do
-      expect(spreadsheet.row(1)).to containing_exactly(*body_attributes)
-    end
-  end
-
   describe '#body' do
     subject { allocation_spreadsheet.body(allocation) }
 

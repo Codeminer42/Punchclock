@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AllocationsSpreadsheet < BaseSpreadsheet
+class AllocationsSpreadsheet < DefaultSpreadsheet
   def body(allocation)
     [
       allocation.user.name,
