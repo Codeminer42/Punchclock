@@ -56,8 +56,6 @@ class User < ApplicationRecord
   validates :level, :specialty, presence: true, if: :engineer?
   validates :github, uniqueness: true, if: :engineer?
 
-  # delegate :city, to: :office, prefix: true, allow_nil: true
-
   scope :active,         -> { where(active: true) }
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
@@ -66,7 +64,7 @@ class User < ApplicationRecord
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :with_level,       -> value { where(level: value) }
-  scope :by_roles_in, lambda { |roles|
+  scope :by_roles_in, -> roles {
     roles_values = self.roles.find_values(*roles).map(&:value)
     where("users.roles && ARRAY[?]::int[]", roles_values)
   }

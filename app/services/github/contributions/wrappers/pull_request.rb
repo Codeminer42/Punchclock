@@ -28,6 +28,11 @@ module Github
           pull_request.created_at
         end
 
+        def pr_state
+          return 'merged' if pull_request.state == 'closed' && pull_request.pull_request.merged_at
+          pull_request.state
+        end
+
         private
 
         attr_reader :pull_request, :engineers, :repositories

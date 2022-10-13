@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_05_183251) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_11_125254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_183251) do
     t.bigint "repository_id"
     t.bigint "reviewer_id"
     t.datetime "reviewed_at", precision: nil
+    t.string "pr_state"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"
@@ -229,6 +230,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_183251) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vacations", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.integer "status", default: 0
+    t.bigint "user_id", null: false
+    t.bigint "commercial_approver_id"
+    t.bigint "administrative_approver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrative_approver_id"], name: "index_vacations_on_administrative_approver_id"
+    t.index ["commercial_approver_id"], name: "index_vacations_on_commercial_approver_id"
+    t.index ["user_id"], name: "index_vacations_on_user_id"
+  end
+
   add_foreign_key "allocations", "projects"
   add_foreign_key "allocations", "users"
   add_foreign_key "answers", "evaluations"
@@ -245,4 +260,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_05_183251) do
   add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "mentor_id"
+  add_foreign_key "vacations", "users"
+  add_foreign_key "vacations", "users", column: "administrative_approver_id"
+  add_foreign_key "vacations", "users", column: "commercial_approver_id"
 end

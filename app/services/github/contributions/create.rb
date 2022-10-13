@@ -16,7 +16,8 @@ module Github
               result.user_id,
               result.repository_id,
               result.pull_request_url,
-              result.created_at
+              result.created_at,
+              result.pr_state
             )
           end
       end
@@ -30,12 +31,13 @@ module Github
           Collect.new(client: client).all
       end
 
-      def find_or_create_contribution(uid, rid, link, created_at)
+      def find_or_create_contribution(uid, rid, link, created_at, pr_state)
         Contribution.find_or_create_by(
           user_id: uid,
           repository_id: rid,
           link: link,
-          created_at: created_at
+          created_at: created_at,
+          pr_state: pr_state
         )
       end
     end
