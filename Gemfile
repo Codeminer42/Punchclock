@@ -35,6 +35,10 @@ gem 'webpacker', '~> 5.1'
 gem 'holidays', '~> 8.3'
 gem 'kaminari'
 gem 'spreadsheet'
+
+gem 'caxlsx'
+gem 'caxlsx_rails'
+
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
 gem 'active_model_serializers', '~> 0.10.13'

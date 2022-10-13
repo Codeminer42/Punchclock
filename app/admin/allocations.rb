@@ -16,7 +16,7 @@ ActiveAdmin.register Allocation do
   filter :start_at
   filter :end_at
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :user, sortable: 'users.name'
     column :project
     column :hourly_rate
@@ -89,9 +89,9 @@ ActiveAdmin.register Allocation do
   controller do
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = AllocationsSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'allocations.xls'
+          send_data spreadsheet.to_string_io, filename: 'allocations.xlsx'
         end
       end
     end
