@@ -55,7 +55,7 @@ ActiveAdmin.register User do
    link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xls, month: :past)
   end
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     selectable_column
     column :name do |user|
       link_to user.name, admin_user_path(user)
@@ -207,9 +207,9 @@ ActiveAdmin.register User do
   controller do
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = UsersSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'users.xls'
+          send_data spreadsheet.to_string_io, filename: 'users.xlsx'
         end
       end
     end

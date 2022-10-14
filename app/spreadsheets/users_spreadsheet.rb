@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersSpreadsheet < BaseSpreadsheet
+class UsersSpreadsheet < DefaultSpreadsheet
   def body(user)
     [
       user.name,

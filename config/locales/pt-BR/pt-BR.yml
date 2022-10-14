@@ -46,6 +46,7 @@ pt-BR:
   written: 'Realizadas'
   download_as_csv: 'Baixar CSV'
   download_as_xls: 'Baixar XLS'
+  download_as_xlsx: 'Baixar XLSX'
   all_punches: 'Todos os Punches'
   allocate_users: Alocar Usuários
   main: Principal
