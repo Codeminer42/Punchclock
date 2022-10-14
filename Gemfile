@@ -84,6 +84,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'vcr'
   gem 'webmock'
+  gem "roo", "~> 2.9.0"
 end
 
 group :development do
