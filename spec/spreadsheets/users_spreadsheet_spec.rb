@@ -47,23 +47,21 @@ RSpec.describe UsersSpreadsheet do
     end
 
     it 'returns spreadsheet data' do
-      is_expected.to include(*body_attributes)
-    end
+      expect(users_spreadsheet).to receive(:generate_xlsx).once
 
-    it 'returns spreadsheet with header' do
-      is_expected.to include(*header_attributes)
+      subject
     end
   end
 
-  describe '#generate_xls' do
-    subject(:spreadsheet) { users_spreadsheet.generate_xls }
+  describe '#generate_xlsx' do
+    subject(:spreadsheet) { users_spreadsheet.generate_xlsx }
 
     it 'returns spreadsheet object with header' do
-      expect(spreadsheet.row(0)).to containing_exactly(*header_attributes)
+      expect(spreadsheet.rows.first.cells.map(&:value)).to include(*header_attributes)
     end
 
     it 'returns spreadsheet object with body' do
-      expect(spreadsheet.row(1)).to containing_exactly(*body_attributes)
+      expect(spreadsheet.rows.last.cells.map(&:value)).to include(*body_attributes)
     end
   end
 
