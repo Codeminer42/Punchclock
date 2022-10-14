@@ -24,10 +24,23 @@ RSpec.describe AllocationsSpreadsheet do
     [
       'Philipe',
       'backend',
-      'Punchclock',
       'Wender',
+      'Punchclock',
       I18n.l(10.days.from_now, format: '%d de %B de %Y')
     ]
+  end
+
+  describe '#to_string_io' do
+    subject(:to_string_io) do
+      allocation_spreadsheet.to_string_io
+    end
+
+    before do
+      File.open('/tmp/spreadsheet_temp.xlsx', 'wb') {|f| f.write(subject) }
+    end
+
+    it_behaves_like 'a valid spreadsheet'
+    it_behaves_like 'a spreadsheet with header and body'
   end
 
   describe '#body' do
