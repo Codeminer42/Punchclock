@@ -10,7 +10,7 @@ gem 'rails', '~> 7.0.3.1'
 
 gem 'bootsnap', require: false
 
-gem 'nokogiri', '~> 1.13.2'
+gem 'nokogiri', '~> 1.13.9'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'pg', '~> 1.2'
 gem 'sprockets'
