@@ -385,7 +385,7 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.7)
+    nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     normalize-rails (4.1.1)
@@ -662,7 +662,7 @@ DEPENDENCIES
   letter_opener_web (~> 1.4)
   listen (~> 3.2)
   money-rails (~> 1.12)
-  nokogiri (~> 1.13.2)
+  nokogiri (~> 1.13.9)
   normalize-rails (~> 4.1.1)
   pg (~> 1.2)
   platform-api!
