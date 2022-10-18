@@ -15,7 +15,7 @@ RSpec.describe ContributionsSpreadsheet do
     ].map { |attribute| Contribution.human_attribute_name(attribute) }
   end
 
-  let (:body_attributes) do
+  let(:body_attributes) do
     [
       contribution.user.name,
       contribution.link,
@@ -27,31 +27,15 @@ RSpec.describe ContributionsSpreadsheet do
 
   describe '#to_string_io' do
     subject(:to_string_io) do
-      contribution_spreadsheet
-        .to_string_io
-        .force_encoding('iso-8859-1')
-        .encode('utf-8')
+      contribution_spreadsheet.to_string_io
     end
 
-    it 'returns spreadsheet data' do
-      expect(to_string_io).to include(*body_attributes)
+    before do
+      File.open('/tmp/spreadsheet_temp.xlsx', 'wb') {|f| f.write(subject) }
     end
 
-    it 'returns spreadsheet with header' do
-      expect(to_string_io).to include(*header_attributes)
-    end
-  end
-
-  describe '#generate_xls' do
-    subject(:spreadsheet) { contribution_spreadsheet.generate_xls }
-
-    it 'returns spreadsheet object with header' do
-      expect(spreadsheet.row(0)).to containing_exactly(*header_attributes)
-    end
-
-    it 'returns spreadsheet object with body' do
-      expect(spreadsheet.row(1)).to containing_exactly(*body_attributes)
-    end
+    it_behaves_like 'a valid spreadsheet'
+    it_behaves_like 'a spreadsheet with header and body'
   end
 
   describe '#body' do

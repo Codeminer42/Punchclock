@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContributionsSpreadsheet < BaseSpreadsheet
+class ContributionsSpreadsheet < DefaultSpreadsheet
   def body(contribution)
     [
       contribution.user.name,

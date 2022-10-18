@@ -40,7 +40,7 @@ ActiveAdmin.register Contribution do
   scope Contribution.human_attribute_name('state/approved'), :approved, group: :state
   scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
 
-  index download_links: [:xls, :text] do
+  index download_links: [:xlsx, :text] do
     selectable_column
     column :user do |contribution|
       link_to contribution.user.first_and_last_name, admin_user_path(contribution.user)
@@ -102,9 +102,9 @@ ActiveAdmin.register Contribution do
 
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = ContributionsSpreadsheet.new find_collection(except: %i[pagination collection_decorator])
-          send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xls"
+          send_data spreadsheet.to_string_io, filename: "#{Contribution.model_name.human(count: 2)}.xlsx"
         end
         format.text do
           send_data ContributionsTextService.call(find_collection(except: %i[pagination collection_decorator]))
