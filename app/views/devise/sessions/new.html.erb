@@ -19,14 +19,14 @@
     </div>
   </div>
 
-  <div class="w-full flex justify-between items-center mt-8">
+  <div class="w-full flex flex-col items-start justify-between mt-8 md:flex-row md:items-center">
     <%= f.input :remember_me,
         as: :boolean,
         input_html: { class: "appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400" },
         label_html: { class: "text-base text-grey-400 font-medium" } if devise_mapping.rememberable? %>
 
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-      <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-sm text-blue" %>
+      <%= link_to t("forgot_password"), new_password_path(resource_name), class: "text-sm text-blue mt-4 md:mt-0" %>
     <% end %>
   </div>
 

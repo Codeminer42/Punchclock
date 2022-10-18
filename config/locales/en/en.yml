@@ -22,6 +22,10 @@
 en:
   "true": 'Yes'
   "false": 'No'
+  activerecord:
+    attributes:
+      user:
+        password: "Password"
   hello: "Hello world"
   user: 'User'
   reviewer: 'Reviewer'
@@ -67,3 +71,5 @@ en:
   allocated_until: 'Allocated until'
   specialty: "Specialty"
   english_evaluation: "English evaluation"
+  blank_field: "can't be blank"
+  forgot_password: "Forgot your password?"

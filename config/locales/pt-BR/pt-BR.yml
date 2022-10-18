@@ -1,6 +1,10 @@
 pt-BR:
   "true": 'Sim'
   "false": 'Não'
+  activerecord:
+    attributes:
+      user:
+        password: "Senha"
   punches:
     index:
       are_you_sure_remove_register: 'Tem certeza que deseja remover o registro?'
@@ -124,3 +128,5 @@ pt-BR:
   allocated_until: 'Alocado até'
   specialty: "Especialidade"
   english_evaluation: 'Avaliação de Inglês'
+  blank_field: "não pode ficar em branco"
+  forgot_password: "Esqueceu sua senha?"

@@ -54,7 +54,7 @@ describe PasswordsController do
               }
 
               patch :update, params: params
-              expect(flash[:alert]).to have_content('Password não pode ficar em branco')
+              expect(flash[:alert]).to have_content('Senha não pode ficar em branco')
             end
           end
 
