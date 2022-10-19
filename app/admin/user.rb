@@ -48,11 +48,11 @@ ActiveAdmin.register User do
   end
 
   action_item :hour_report_current, only: :index, priority: 0 do
-   link_to I18n.t('hour_report_curent_month'), hour_report_admin_users_path(format: :xls, month: :current)
+   link_to I18n.t('hour_report_curent_month'), hour_report_admin_users_path(format: :xlsx, month: :current)
   end
 
   action_item :hour_report_past, only: :index, priority: 0 do
-   link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xls, month: :past)
+   link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xlsx, month: :past)
   end
 
   index download_links: [:xlsx] do
@@ -247,7 +247,7 @@ ActiveAdmin.register User do
 
       spreadsheet = HourReportSpreadsheet.new reports
 
-      format.xls { send_data spreadsheet.to_string_io, filename: "users-hours-#{Date.current}.xls" }
+      format.xlsx { send_data spreadsheet.to_string_io, filename: "users-hours-#{Date.current}.xlsx" }
     end
   end
 end
