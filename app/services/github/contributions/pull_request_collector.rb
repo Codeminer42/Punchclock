@@ -12,19 +12,15 @@ module Github
       end
 
       def all
-        fetch_all
-      end
-
-      private
-
-      attr_reader :client
-
-      def fetch_all
         valid_pull_requests = Contribution.where.not(state: :refused).select(:id, :link, :pr_state)
         updated_pull_request = valid_pull_requests.map {|contribution| { id: contribution.id, pr_state: new_pr_state(contribution.link)} }
 
         updated_pull_request.select{ |new_pr| validate_update(valid_pull_requests.find_by(id: new_pr[:id]), new_pr) }
       end
+
+      private
+
+      attr_reader :client
 
       def validate_update(current_pr, new_pr)
         return false if new_pr[:pr_state] == 'Fetch Error'
@@ -32,16 +28,14 @@ module Github
       end
 
       def new_pr_state(link)
-        begin
-          pr_body = fetch_pr(link)
+        pr_body = fetch_pr(link)
 
-          return 'merged' if pr_body.pull_request&.merged_at
-          pr_body.state
-        rescue StandardError => e
-          Rails.logger.error e.message
-          Rails.logger.error e.backtrace.join("\n")
-          return 'Fetch Error'
-        end
+        return 'merged' if pr_body.pull_request&.merged_at
+        pr_body.state
+      rescue StandardError => e
+        Rails.logger.error e.message
+        Rails.logger.error e.backtrace.join("\n")
+        return 'Fetch Error'
       end
 
       def fetch_pr(link)
