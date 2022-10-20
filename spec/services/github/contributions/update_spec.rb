@@ -25,7 +25,7 @@ RSpec.describe Github::Contributions::Update, type: :service do
       let(:response_body) do
         double(
           state: 'closed',
-          pull_request: double({ merged_at: nil})
+          pull_request: double({ merged_at: nil })
         )
       end
 
@@ -45,7 +45,7 @@ RSpec.describe Github::Contributions::Update, type: :service do
       let(:response_body) do
         double(
           state: 'open',
-          pull_request: double({ merged_at: nil})
+          pull_request: double({ merged_at: nil })
         )
       end
 

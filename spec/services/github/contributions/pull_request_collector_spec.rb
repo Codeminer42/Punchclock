@@ -10,12 +10,14 @@ RSpec.describe Github::Contributions::PullRequestCollector, type: :service do
   end
 
   describe '#all' do
-    subject(:all) { described_class.new(client: client).all }
+    subject { described_class.new(client: client) }
 
     let(:client) { class_double(Github) }
 
     context 'when there are no contributions in database' do
-      it { is_expected.to be_empty }
+      it 'returns empty array' do
+        expect(subject.all).to eq([])
+      end
     end
 
     context 'when there are contributions in database' do
@@ -27,7 +29,7 @@ RSpec.describe Github::Contributions::PullRequestCollector, type: :service do
         end
 
         it 'returns empty' do
-          expect(subject).to be_empty
+          expect(subject.all).to eq([])
         end
       end
 
@@ -41,15 +43,15 @@ RSpec.describe Github::Contributions::PullRequestCollector, type: :service do
           let(:response_body) do
             double(
               state: 'closed',
-              pull_request: double({ merged_at: nil})
+              pull_request: double({ merged_at: nil })
             )
           end
-          let(:get) {double(body: response_body)}
-          let(:pull_request_status) { double(get: get)}
-          let(:expected_pr_collection) {{id: contribution.id, pr_state: 'closed'}}
+          let(:get) { double(body: response_body) }
+          let(:pull_request_status) { double(get: get) }
+          let(:expected_pr_collection) { { id: contribution.id, pr_state: 'closed' } }
 
           it 'returns contribution id and new PR State' do
-            expect(subject).to include(expected_pr_collection)
+            expect(subject.all).to include(expected_pr_collection)
           end
         end
 
@@ -62,14 +64,14 @@ RSpec.describe Github::Contributions::PullRequestCollector, type: :service do
           let(:response_body) do
             double(
               state: 'open',
-              pull_request: double({ merged_at: nil})
+              pull_request: double({ merged_at: nil })
             )
           end
-          let(:get) {double(body: response_body)}
-          let(:pull_request_status) { double(get: get)}
+          let(:get) { double(body: response_body) }
+          let(:pull_request_status) { double(get: get) }
 
           it 'returns empty' do
-            expect(subject).to be_empty
+            expect(subject.all).to be_empty
           end
         end
       end
