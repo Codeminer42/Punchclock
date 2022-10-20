@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HourReportSpreadsheet < BaseSpreadsheet
+class HourReportSpreadsheet < DefaultSpreadsheet
   def body(report)
     [
       report.user.name,
