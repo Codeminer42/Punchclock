@@ -23,9 +23,20 @@ RSpec.describe UserDecorator do
       end
     end
 
+    context 'when default project name is set' do
+      it 'returns not allocated' do
+        allow(user.model).to receive(:current_allocation).and_return(nil)
+        ENV["DEFAULT_PROJECT_NAME"] = "Giving back"
+
+        expect(user.current_allocation).to eq('Giving back')
+      end
+    end
+
     context 'when no allocation is set' do
       it 'returns not allocated' do
         allow(user.model).to receive(:current_allocation).and_return(nil)
+        ENV["DEFAULT_PROJECT_NAME"] = nil
+
 
         expect(user.current_allocation).to eq('Não alocado')
       end
