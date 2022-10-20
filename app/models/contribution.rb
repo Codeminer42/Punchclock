@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Contribution < ApplicationRecord
+  extend Enumerize
+
   include AASM
+
+  enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true#, i18n_scope: "pr_state"
 
   belongs_to :user
   belongs_to :repository
