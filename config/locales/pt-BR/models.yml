@@ -25,6 +25,9 @@ pt-BR:
           attributes:
             email:
               not_found: "Email não encontrado"
+              invalid_authentication: "ou senha inválidos"
+            password:
+              invalid_authentication: "ou e-mail inválidos"
         punch:
           attributes:
             from_time:

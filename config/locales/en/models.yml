@@ -20,4 +20,11 @@ en:
         allocation:
           attributes:
             ongoing:
-              uniqueness: 'The user already has an ongoing allocation' 
+              uniqueness: 'The user already has an ongoing allocation'
+        user:
+          attributes:
+            email:
+              not_found: "Email não encontrado"
+              invalid_authentication: "or password are invalid"
+            password:
+              invalid_authentication: "or e-mail are invalid"
