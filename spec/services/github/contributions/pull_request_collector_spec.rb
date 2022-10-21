@@ -25,7 +25,7 @@ RSpec.describe Github::Contributions::PullRequestCollector, type: :service do
         let!(:contribution) { create(:contribution, :open_pr) }
 
         before do
-          allow(client).to receive(:issues).and_raise('Connection error')
+          allow(client).to receive(:issues).and_raise(Github::Error::GithubError)
         end
 
         it 'returns empty' do

@@ -32,7 +32,7 @@ module Github
 
         return 'merged' if pr_body.pull_request&.merged_at
         pr_body.state
-      rescue StandardError => e
+      rescue Github::Error::GithubError => e
         Rails.logger.error e.message
         Rails.logger.error e.backtrace.join("\n")
         return 'Fetch Error'
