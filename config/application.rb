@@ -41,6 +41,8 @@ module Punchclock
 
     config.to_prepare do
       Devise::SessionsController.layout "redesign"
+      Devise::PasswordsController.layout "redesign"
+      Devise::ConfirmationsController.layout "redesign"
     end
   end
 end
