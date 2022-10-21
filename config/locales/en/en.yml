@@ -73,3 +73,6 @@ en:
   english_evaluation: "English evaluation"
   blank_field: "can't be blank"
   forgot_password: "Forgot your password?"
+  send_reset_instructions: "Send me reset password instructions"
+  didnt_receive_instructions: "Didn't receive confirmation instructions?"
+  resend_instructions: "Resend confirmation instructions"

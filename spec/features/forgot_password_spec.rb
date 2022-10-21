@@ -12,7 +12,7 @@ feature 'Login', type: :feature do
       expect(page).to have_link('Esqueceu sua senha?')
       click_link('Esqueceu sua senha?')
       fill_in 'user[email]',	with: normal_user.email.to_s
-      click_button('Send me reset password instructions')
+      click_button('Enviar as instruções para resetar a senha')
       expect(page).to have_text('Dentro de minutos, você receberá um e-mail com instruções para a troca da sua senha.')
     end
 

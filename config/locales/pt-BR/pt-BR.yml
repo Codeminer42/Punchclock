@@ -115,7 +115,7 @@ pt-BR:
       change_my_password: 'Mudar minha senha'
       verify: 'Verificar'
     links:
-      return_to_sign_in: 'Retornar ao Sign In.'
+      return_to_sign_in: 'Retornar ao Sign In'
   allocation_chart: 'Organograma'
   mentoring: 'Mentoria'
   offices: 'Escritórios'
@@ -130,3 +130,6 @@ pt-BR:
   english_evaluation: 'Avaliação de Inglês'
   blank_field: "não pode ficar em branco"
   forgot_password: "Esqueceu sua senha?"
+  send_reset_instructions: "Enviar as instruções para resetar a senha"
+  didnt_receive_instructions: "Não recebeu as instruções de confirmação?"
+  resend_instructions: "Reenviar instruções de confirmação"
