@@ -3,9 +3,11 @@
 module Github
   module Contributions
     class PullRequestCollector
-      ORG_INDEX = 3
-      REPO_INDEX = 4
-      PR_INDEX = 6
+      LINK_INDEX = {
+        org: 3,
+        repo: 4,
+        pr: 6
+      }
 
       def initialize(client:)
         @client = client
@@ -44,7 +46,7 @@ module Github
       end
 
       def parse_contribution_link(link)
-        link.split("/").values_at(ORG_INDEX, REPO_INDEX, PR_INDEX)
+        link.split("/").values_at(LINK_INDEX[:org], LINK_INDEX[:repo], LINK_INDEX[:pr])
       end
     end
   end
