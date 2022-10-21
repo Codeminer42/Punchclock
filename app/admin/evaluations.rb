@@ -12,7 +12,7 @@ ActiveAdmin.register Evaluation do
   filter :created_at
   filter :evaluation_date, as: :date_range
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :evaluator
     column :evaluated
     column :score
@@ -45,9 +45,9 @@ ActiveAdmin.register Evaluation do
   controller do
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = EvaluationsSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'evaluations.xls'
+          send_data spreadsheet.to_string_io, filename: 'evaluations.xlsx'
         end
       end
     end
