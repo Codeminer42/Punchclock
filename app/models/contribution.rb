@@ -5,7 +5,7 @@ class Contribution < ApplicationRecord
 
   include AASM
 
-  enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true#, i18n_scope: "pr_state"
+  enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true
 
   belongs_to :user
   belongs_to :repository
