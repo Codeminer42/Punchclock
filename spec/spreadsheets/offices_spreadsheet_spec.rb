@@ -16,7 +16,7 @@ RSpec.describe OfficesSpreadsheet do
     ].map { |attribute| Office.human_attribute_name(attribute) }
   end
 
-  let (:body_attributes) do
+  let(:body_attributes) do
     [
       office.city,
       office.head&.name,
@@ -28,37 +28,17 @@ RSpec.describe OfficesSpreadsheet do
   end
 
   describe '#to_string_io' do
-    subject(:to_string_io) do
-      office_spreadsheet
-        .to_string_io
-        .force_encoding('iso-8859-1')
-        .encode('utf-8')
+    subject do
+      office_spreadsheet.to_string_io
     end
 
-    it 'returns spreadsheet data' do
-      expect(to_string_io).to include(
-        office.city,
-        '0',
-        I18n.l(office.created_at, format: :long),
-        I18n.l(office.created_at, format: :long)
-      )
+    before do
+      File.open('/tmp/spreadsheet_temp.xlsx', 'wb') {|f| f.write(subject) }
     end
 
-    it 'returns spreadsheet with header' do
-      expect(to_string_io).to include(*header_attributes)
-    end
-  end
+    it_behaves_like 'a valid spreadsheet'
+    it_behaves_like 'a spreadsheet with header and body'
 
-  describe '#generate_xls' do
-    subject(:spreadsheet) { office_spreadsheet.generate_xls }
-
-    it 'returns spreadsheet object with header' do
-      expect(spreadsheet.row(0)).to containing_exactly(*header_attributes)
-    end
-
-    it 'returns spreadsheet object with body' do
-      expect(spreadsheet.row(1)).to containing_exactly(*body_attributes)
-    end
   end
 
   describe '#body' do
