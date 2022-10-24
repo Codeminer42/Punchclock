@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OfficesSpreadsheet < BaseSpreadsheet
+class OfficesSpreadsheet < DefaultSpreadsheet
   def body(office)
     [
       office.city,
