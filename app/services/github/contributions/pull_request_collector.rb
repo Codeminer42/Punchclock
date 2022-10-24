@@ -3,11 +3,7 @@
 module Github
   module Contributions
     class PullRequestCollector
-      LINK_INDEX = {
-        org: 3,
-        repo: 4,
-        pr: 6
-      }
+      LINK_INDEX = { org: 3, repo: 4, pr: 6 }
 
       PR_STATE = {
         merged: 'merged',
@@ -24,7 +20,7 @@ module Github
         valid_pull_requests = Contribution.valid_pull_requests.select(:id, :link, :pr_state)
         updated_pull_request = valid_pull_requests.map {|contribution| { id: contribution.id, pr_state: fetch_pr_state(contribution.link)} }
 
-        updated_pull_request.select{ |new_pr| validate_update(valid_pull_requests.find_by(id: new_pr[:id]), new_pr) }
+        updated_pull_request.select{ |new_pr| validate_update(valid_pull_requests.find(new_pr[:id]), new_pr) }
       end
 
       private
