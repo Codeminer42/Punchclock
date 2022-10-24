@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Contribution < ApplicationRecord
+  extend Enumerize
+
   include AASM
+
+  enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true
 
   belongs_to :user
   belongs_to :repository
@@ -37,4 +41,5 @@ class Contribution < ApplicationRecord
   scope :this_week, -> { where("contributions.created_at >= :start_date", { :start_date => Date.today.beginning_of_week }) }
   scope :last_week, -> { where("contributions.created_at >= :start_date AND contributions.created_at <= :end_date", { :start_date => 1.week.ago.beginning_of_week, :end_date => 1.week.ago.end_of_week }) }
   scope :active_engineers, -> { joins(:user).merge(User.engineer.active) }
+  scope :valid_pull_requests, -> { where.not(state: :refused) }
 end

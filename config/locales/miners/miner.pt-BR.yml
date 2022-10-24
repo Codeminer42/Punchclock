@@ -1,46 +1,51 @@
 pt-BR:
   enumerize:
-      user:
-        occupation:
-          administrative: Administrativo
-          engineer: Engenheiro
-        level:
-          trainee: Trainee
-          intern: Estagiário
-          junior: Junior
-          junior_plus: Junior Plus
-          mid: Pleno
-          mid_plus: Pleno Plus
-          senior: Senior
-          senior_plus: Senior Plus
-        specialty:
-          frontend: Frontend
-          backend:  Backend
-          devops: Devops
-          mobile: Mobile
-          qa: QA
-        contract_type:
-          internship: Estagiário
-          employee: Funcionário
-          contractor: PJ
-          associate: Associado
-        contract_company_country:
-          brazil: Brasil
-          usa: Estados Unidos
-        role:
-          evaluator: Avaliador
-          admin:  Admin
-          open_source_manager: Responsável OpenSource
-      question:
-        kind:
-          multiple_choice: Multipla Escolha
-      questionnaire:
-        kind:
-          english: Inglês
-          performance: Desempenho
-      evaluation:
-        english_level:
-          beginner: Iniciante
-          internmediate: Intermediário
-          advanced: Avançado
-          fluent: Fluente
+    user:
+      occupation:
+        administrative: Administrativo
+        engineer: Engenheiro
+      level:
+        trainee: Trainee
+        intern: Estagiário
+        junior: Junior
+        junior_plus: Junior Plus
+        mid: Pleno
+        mid_plus: Pleno Plus
+        senior: Senior
+        senior_plus: Senior Plus
+      specialty:
+        frontend: Frontend
+        backend: Backend
+        devops: Devops
+        mobile: Mobile
+        qa: QA
+      contract_type:
+        internship: Estagiário
+        employee: Funcionário
+        contractor: PJ
+        associate: Associado
+      contract_company_country:
+        brazil: Brasil
+        usa: Estados Unidos
+      role:
+        evaluator: Avaliador
+        admin: Admin
+        open_source_manager: Responsável OpenSource
+    question:
+      kind:
+        multiple_choice: Multipla Escolha
+    questionnaire:
+      kind:
+        english: Inglês
+        performance: Desempenho
+    evaluation:
+      english_level:
+        beginner: Iniciante
+        internmediate: Intermediário
+        advanced: Avançado
+        fluent: Fluente
+    contribution:
+      pr_state:
+        open: Aberta
+        closed: Fechada
+        merged: Merged

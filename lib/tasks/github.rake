@@ -26,4 +26,18 @@ namespace :github do
         .tap { |result| Rails.logger.info("[GH] -- Processed: #{result.size}") }
     end
   end
+
+  desc "Update Pull Requests state on Contributions"
+  task update_contributions_pr_state: :environment do
+    Rails.logger = Logger.new(STDOUT)
+
+    client = Github.new(headers: {"Authorization" => "token #{ENV['GITHUB_OAUTH_TOKEN']}"})
+
+    ActiveRecord::Base.transaction do
+      Github::Contributions::Update
+        .new(client: client)
+        .call
+        .tap { |result| Rails.logger.info("[GH] -- Processed: #{result.size}") }
+    end
+  end
 end

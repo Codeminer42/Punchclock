@@ -32,9 +32,9 @@ en:
         senior_plus: Senior Plus Engineer
       specialty:
         frontend: Frontend
-        backend:  Backend
+        backend: Backend
         devops: Devops
-        fullstack:  Fullstack
+        fullstack: Fullstack
         mobile: Mobile
         qa: QA
       contract_type:
@@ -44,9 +44,9 @@ en:
       contract_company_country:
         brazil: Brazil
         usa: United States
-      role: 
+      role:
         evaluator: Evaluator
-        admin:  Admin
+        admin: Admin
         open_source_manager: Open Source Manager
     question:
       kind:
@@ -61,3 +61,8 @@ en:
         internmediate: Internmediate
         advanced: Advanced
         fluent: Fluent
+    contribution:
+      pr_state:
+        open: Open
+        closed: Closed
+        merged: Merged
