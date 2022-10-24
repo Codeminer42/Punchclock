@@ -2,7 +2,7 @@ ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
 
   permit_params :state, :link, :user_id, :repository_id
-  actions :index, :show, :new, :create
+  actions :index, :show, :new, :create, :edit, :update
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
