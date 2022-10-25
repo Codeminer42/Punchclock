@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PunchesSpreadsheet < BaseSpreadsheet
+class PunchesSpreadsheet < DefaultSpreadsheet
   def body(punch)
     [
       punch.user.name,
