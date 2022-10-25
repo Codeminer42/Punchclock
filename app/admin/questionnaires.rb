@@ -48,7 +48,7 @@ ActiveAdmin.register Questionnaire do
   filter :kind, as: :select
   filter :created_at
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :title do |questionnaire|
       link_to questionnaire.title, admin_questionnaire_path(questionnaire)
     end
@@ -100,9 +100,9 @@ ActiveAdmin.register Questionnaire do
   controller do
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = QuestionnairesSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'questionnaires.xls'
+          send_data spreadsheet.to_string_io, filename: 'questionnaires.xlsx'
         end
       end
     end
