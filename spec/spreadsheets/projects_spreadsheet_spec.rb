@@ -24,23 +24,16 @@ RSpec.describe ProjectsSpreadsheet do
   end
 
   describe '#to_string_io' do
-    subject(:to_string_io) do
-      project_spreadsheet
-        .to_string_io
-        .force_encoding('iso-8859-1')
-        .encode('utf-8')
+    subject do
+      project_spreadsheet.to_string_io
     end
 
-    it 'returns spreadsheet data' do
-      expect(to_string_io).to include(project.name,
-                             I18n.t(project.active.to_s),
-                             I18n.l(project.created_at, format: :long),
-                             I18n.l(project.updated_at, format: :long))
+    before do
+      File.open('/tmp/spreadsheet_temp.xlsx', 'wb') {|f| f.write(subject) }
     end
 
-    it 'returns spreadsheet with header' do
-      expect(to_string_io).to include(*header_attributes)
-    end
+    it_behaves_like 'a valid spreadsheet'
+    it_behaves_like 'a spreadsheet with header and body'
   end
 
   describe '#body' do
@@ -48,18 +41,6 @@ RSpec.describe ProjectsSpreadsheet do
 
     it 'returns body data' do
       expect(body).to containing_exactly(*body_attributes)
-    end
-  end
-
-  describe '#generate_xls' do
-    subject(:spreadsheet) { project_spreadsheet.generate_xls }
-
-    it 'returns spreadsheet object with header' do
-      expect(spreadsheet.row(0)).to containing_exactly(*header_attributes)
-    end
-
-    it 'returns spreadsheet object with body' do
-      expect(spreadsheet.row(1)).to containing_exactly(*body_attributes)
     end
   end
 
