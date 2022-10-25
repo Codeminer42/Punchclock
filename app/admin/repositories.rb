@@ -6,7 +6,7 @@ ActiveAdmin.register Repository do
 
   menu parent: Contribution.model_name.human(count: 2), priority: 2
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :link
     column :language
 
@@ -33,9 +33,9 @@ ActiveAdmin.register Repository do
   controller do
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = RepositoriesSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: "#{Repository.model_name.human(count: 2)}.xls"
+          send_data spreadsheet.to_string_io, filename: "#{Repository.model_name.human(count: 2)}.xlsx"
         end
       end
     end
