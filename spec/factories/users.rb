@@ -1,17 +1,17 @@
 FactoryBot.define do
   factory :user do
-    name                  { Faker::Name.unique.name }
-    email                 { Faker::Internet.unique.email }
-    password              { 'password' }
-    password_confirmation { 'password' }
-    occupation            { 'engineer' }
-    level                 { 'junior' }
-    specialty             { 'backend' }
-    github                { Faker::Internet.unique.username }
-    contract_type         { 'employee' }
+    name                     { Faker::Name.unique.name }
+    email                    { Faker::Internet.unique.email }
+    password                 { 'password' }
+    password_confirmation    { 'password' }
+    occupation               { 'engineer' }
+    level                    { 'junior' }
+    specialty                { 'backend' }
+    github                   { Faker::Internet.unique.username }
+    contract_type            { 'employee' }
     contract_company_country { 'brazil' }
-    otp_required_for_login { false }
-    office                { create(:office) }
+    otp_required_for_login   { false }
+    office                   { create(:office) }
     city
 
     trait :head_office do
@@ -63,7 +63,7 @@ FactoryBot.define do
       level { :trainee }
     end
 
-     trait :level_intern do
+    trait :level_intern do
       level { :intern }
     end
 
@@ -100,6 +100,12 @@ FactoryBot.define do
         user.skills = create_list(:skill, 2)
       end
     end
+  end
+
+  trait :with_all_datetime_informations do
+    last_sign_in_at { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
+    confirmed_at    { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
+    started_at      { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
   end
 
   factory :invalid_user, parent: :user do
