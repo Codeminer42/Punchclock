@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class RegionalHolidaysSpreadsheet < BaseSpreadsheet
+class RegionalHolidaysSpreadsheet < DefaultSpreadsheet
   def body(regional_holiday)
     [
       regional_holiday.name,
-      regional_holiday.day.to_s,
-      regional_holiday.month.to_s,
+      regional_holiday.day,
+      regional_holiday.month,
       translate_date(regional_holiday.created_at),
       translate_date(regional_holiday.updated_at)
     ]
