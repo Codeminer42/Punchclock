@@ -7,7 +7,7 @@ ActiveAdmin.register User, as: 'AdminUser' do
 
   menu priority: 2
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :name
     column :email
     actions only: :show
@@ -30,9 +30,9 @@ ActiveAdmin.register User, as: 'AdminUser' do
 
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = AdminsSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'admins.xls'
+          send_data spreadsheet.to_string_io, filename: 'admins.xlsx'
         end
       end
     end

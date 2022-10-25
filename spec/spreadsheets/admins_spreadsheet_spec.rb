@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AdminsSpreadsheet do
-  let(:user) { create(:user).decorate }
+  let(:user) { create(:user, :admin, :with_all_datetime_informations).decorate }
   let(:admins_spreadsheet) { AdminsSpreadsheet.new([user]) }
   let(:header_attributes) do
     %w[
@@ -26,18 +26,15 @@ RSpec.describe AdminsSpreadsheet do
       updated_at
     ].map { |attribute| User.human_attribute_name(attribute) }
   end
-  let (:date_attributes) do
-    [
-      user.last_sign_in_at, user.confirmed_at, user.created_at,
-      user.updated_at, user.started_at
-    ].map { |attr| attr.nil? ? nil : I18n.l(attr, format: :long) }
-  end
+
   let (:body_attributes) do
     [
       user.id,
       user.email,
+      I18n.l(user.last_sign_in_at, format: :long),
       user.last_sign_in_ip,
       user.name,
+      I18n.l(user.confirmed_at, format: :long),
       user.active,
       user.allow_overtime,
       user.occupation,
@@ -46,47 +43,23 @@ RSpec.describe AdminsSpreadsheet do
       user.github,
       user.contract_type,
       user.roles_text,
-    ].concat(date_attributes)
+      I18n.l(user.started_at, format: :long),
+      I18n.l(user.created_at, format: :long),
+      I18n.l(user.updated_at, format: :long)
+    ]
   end
 
   describe '#to_string_io' do
     subject do
-      admins_spreadsheet
-        .to_string_io
-        .force_encoding('iso-8859-1')
-        .encode('utf-8')
+      admins_spreadsheet.to_string_io
     end
 
-    it 'returns spreadsheet data' do
-      is_expected.to include(user.email,
-                             user.name,
-                             user.occupation,
-                             user.specialty,
-                             user.github,
-                             user.contract_type,
-                             user.roles_text)
+    before do
+      File.open('/tmp/spreadsheet_temp.xlsx', 'wb') {|f| f.write(subject) }
     end
 
-    it 'returns spreadsheet with header' do
-      is_expected.to include(User.human_attribute_name('email'),
-                             User.human_attribute_name('name'),
-                             User.human_attribute_name('specialty'),
-                             User.human_attribute_name('github'),
-                             User.human_attribute_name('contract_type'),
-                             User.human_attribute_name('roles'))
-    end
-  end
-
-  describe '#generate_xls' do
-    subject(:spreadsheet) { admins_spreadsheet.generate_xls }
-
-    it 'returns spreadsheet object with header' do
-      expect(spreadsheet.row(0)).to containing_exactly(*header_attributes)
-    end
-
-    it 'returns spreadsheet object with body' do
-      expect(spreadsheet.row(1)).to containing_exactly(*body_attributes)
-    end
+    it_behaves_like 'a valid spreadsheet'
+    it_behaves_like 'a spreadsheet with header and body'
   end
 
   describe '#body' do
