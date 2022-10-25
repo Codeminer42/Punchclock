@@ -39,7 +39,7 @@ ActiveAdmin.register Project do
     end
   end
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     selectable_column
     column :name do |project|
       link_to project.name, admin_project_path(project)
@@ -123,9 +123,9 @@ ActiveAdmin.register Project do
 
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = ProjectsSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'projects.xls'
+          send_data spreadsheet.to_string_io, filename: 'projects.xlsx'
         end
       end
     end

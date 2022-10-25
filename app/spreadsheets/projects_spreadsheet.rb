@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProjectsSpreadsheet < BaseSpreadsheet
+class ProjectsSpreadsheet < DefaultSpreadsheet
   def body(project)
     [
       project.name,
