@@ -13,7 +13,7 @@ ActiveAdmin.register Punch do
 
   config.sort_order = 'from_desc'
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :user, sortable: [:user, :name]
     column :project, sortable: [:project, :name]
     column :when, sortable: :from
@@ -58,9 +58,9 @@ ActiveAdmin.register Punch do
         params['q']['from_lteq'] += ' 23:59:59.999999'
       end
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = PunchesSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'punches.xls'
+          send_data spreadsheet.to_string_io, filename: 'punches.xlsx'
         end
       end
     end
