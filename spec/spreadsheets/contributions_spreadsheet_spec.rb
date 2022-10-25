@@ -10,6 +10,7 @@ RSpec.describe ContributionsSpreadsheet do
       user
       link
       state
+      pr_state
       created_at
       updated_at
     ].map { |attribute| Contribution.human_attribute_name(attribute) }
@@ -20,6 +21,7 @@ RSpec.describe ContributionsSpreadsheet do
       contribution.user.name,
       contribution.link,
       Contribution.human_attribute_name("state/#{contribution.state}"),
+      contribution.pr_state,
       I18n.l(contribution.created_at, format: :long),
       I18n.l(contribution.updated_at, format: :long)
     ]

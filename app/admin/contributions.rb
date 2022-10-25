@@ -71,6 +71,7 @@ ActiveAdmin.register Contribution do
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
       end
+      row :pr_state
       row :reviewed_by
       row :reviewed_at
       row :created_at
@@ -81,10 +82,14 @@ ActiveAdmin.register Contribution do
   form do |f|
     f.semantic_errors
     inputs I18n.t('contribution_details') do
-      f.input :user, as: :select, collection: User.engineer.active.order(:name)
+      if f.object.persisted?
+        input :state, collection: Contribution.aasm.states
+      else
+        input :user, as: :select, collection: User.engineer.active.order(:name)
 
-      input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
-      input :link
+        input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
+        input :link
+      end
     end
     f.actions
   end
