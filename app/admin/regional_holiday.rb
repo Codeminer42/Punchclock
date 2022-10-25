@@ -8,7 +8,7 @@ ActiveAdmin.register RegionalHoliday do
   filter :day
   filter :month
 
-  index download_links: [:xls] do
+  index download_links: [:xlsx] do
     column :name
     column :day
     column :month
@@ -43,12 +43,11 @@ ActiveAdmin.register RegionalHoliday do
   controller do
     def index
       super do |format|
-        format.xls do
+        format.xlsx do
           spreadsheet = RegionalHolidaysSpreadsheet.new find_collection(except: :pagination)
-          send_data spreadsheet.to_string_io, filename: 'regional_holidays.xls'
+          send_data spreadsheet.to_string_io, filename: 'regional_holidays.xlsx'
         end
       end
     end
   end
-
 end
