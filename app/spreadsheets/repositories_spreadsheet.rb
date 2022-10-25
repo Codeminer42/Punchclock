@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RepositoriesSpreadsheet < BaseSpreadsheet
+class RepositoriesSpreadsheet < DefaultSpreadsheet
   def body(repository)
     [
       repository.link,
