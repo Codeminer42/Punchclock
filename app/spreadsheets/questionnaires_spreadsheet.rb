@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuestionnairesSpreadsheet < BaseSpreadsheet
+class QuestionnairesSpreadsheet < DefaultSpreadsheet
   def body(questionnaire)
     [
       questionnaire.id,
