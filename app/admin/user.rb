@@ -224,7 +224,7 @@ ActiveAdmin.register User do
     def create
       create! do |success, _failure|
         success.html do
-          NotificationMailer.notify_user_registration(@user).deliver
+          NotificationMailer.notify_user_registration(@user).deliver_later
           redirect_to resource_path
         end
       end
