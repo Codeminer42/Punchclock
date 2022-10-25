@@ -42,4 +42,5 @@ class Contribution < ApplicationRecord
   scope :last_week, -> { where("contributions.created_at >= :start_date AND contributions.created_at <= :end_date", { :start_date => 1.week.ago.beginning_of_week, :end_date => 1.week.ago.end_of_week }) }
   scope :active_engineers, -> { joins(:user).merge(User.engineer.active) }
   scope :valid_pull_requests, -> { where.not(state: :refused) }
+  scope :without_pr_state, ->(state) { where.not(pr_state: state) }
 end
