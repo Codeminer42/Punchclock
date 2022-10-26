@@ -3,24 +3,31 @@
 module Github
   module Contributions
     class PullRequestCollector
-      LINK_INDEX = { org: 3, repo: 4, pr: 6 }
+      LINK_INDEX = { org: 3, repo: 4, pr: 6 }.freeze
 
       PR_STATE = {
         merged: 'merged',
         open: 'open',
         closed: 'closed',
         error: 'Fetch Error'
-      }
+      }.freeze
 
       def initialize(client:)
         @client = client
       end
 
       def all
-        valid_pull_requests = Contribution.valid_pull_requests.select(:id, :link, :pr_state)
-        updated_pull_request = valid_pull_requests.map {|contribution| { id: contribution.id, pr_state: fetch_pr_state(contribution.link)} }
+        valid_pull_requests = Contribution
+          .valid_pull_requests
+          .without_pr_state(:merged)
+          .without_pr_state(:closed)
+          .select(:id, :link, :pr_state)
 
-        updated_pull_request.select{ |new_pr| validate_update(valid_pull_requests.find(new_pr[:id]), new_pr) }
+        updated_pull_request = valid_pull_requests.lazy.map do |contribution| 
+          { id: contribution.id, pr_state: fetch_pr_state(contribution.link)}
+        end
+
+        updated_pull_request.select { |new_pr| validate_update(valid_pull_requests.find(new_pr[:id]), new_pr) }.to_a
       end
 
       private
@@ -28,8 +35,7 @@ module Github
       attr_reader :client
 
       def validate_update(current_pr, new_pr)
-        return false if new_pr[:pr_state] == PR_STATE[:error]
-        current_pr.pr_state != new_pr[:pr_state]
+        new_pr[:pr_state] != PR_STATE[:error] && current_pr.pr_state != new_pr[:pr_state]
       end
 
       def fetch_pr_state(link)

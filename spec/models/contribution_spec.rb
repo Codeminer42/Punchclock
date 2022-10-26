@@ -12,7 +12,7 @@ RSpec.describe Contribution, type: :model do
 
   describe 'defaults' do
     context 'after the contribution is created' do
-      subject(:contribution) { create(:contribution) }
+      subject(:contribution) { build(:contribution) }
 
       it 'has received state' do
         expect(contribution).to have_state(:received)
@@ -41,11 +41,10 @@ RSpec.describe Contribution, type: :model do
     end
 
     context 'when the contribution is approved' do
-      
-      before {
+      before do
         travel_to Time.zone.parse('2022-01-01')
         contribution.approve(reviewer.id)
-      }
+      end
 
       it 'has state approved' do
         expect(contribution).to have_state(:approved)
@@ -61,10 +60,10 @@ RSpec.describe Contribution, type: :model do
     end
 
     context 'when the contribution is refused' do
-      before {
+      before do
         travel_to Time.zone.parse('2022-01-01')
         contribution.refuse(reviewer.id)
-      }
+      end
 
       it 'has state refused' do
         expect(contribution).to have_state(:refused)
@@ -83,19 +82,29 @@ RSpec.describe Contribution, type: :model do
   describe 'scopes' do
     let!(:today_contribution) { create :contribution }
     let!(:last_week_contribution) { create :contribution, created_at: 1.week.ago }
-    let!(:inactive_user_contribution) { create :contribution, user: create(:user, :inactive) }
 
     it 'is in this week' do
-      expect(described_class.this_week.first).to eq(today_contribution)
+      expect(described_class.this_week).to contain_exactly(today_contribution)
     end
 
     it 'is in last week' do
-      expect(described_class.last_week.first).to eq(last_week_contribution)
+      expect(described_class.last_week).to contain_exactly(last_week_contribution)
     end
 
     it 'has active engineer' do
-      expect(described_class.active_engineers).to include(today_contribution, last_week_contribution)
-      expect(described_class.active_engineers).not_to include inactive_user_contribution
+      create :contribution, user: create(:user, :inactive)
+
+      expect(described_class.active_engineers).to contain_exactly(today_contribution, last_week_contribution)
+    end
+
+  end
+
+  describe '.without_pr_state' do
+    it "returns contributions without the received pr state" do
+      open_pr = create :contribution, pr_state: :open
+      create :contribution, pr_state: :merged
+
+      expect(described_class.without_pr_state(:merged)).to contain_exactly(open_pr)
     end
   end
 end
