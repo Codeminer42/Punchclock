@@ -34,7 +34,6 @@ gem 'rails-i18n'
 gem 'webpacker', '~> 5.1'
 gem 'holidays', '~> 8.3'
 gem 'kaminari'
-gem 'spreadsheet'
 
 gem 'caxlsx'
 gem 'caxlsx_rails'
