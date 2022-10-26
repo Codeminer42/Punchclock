@@ -1,0 +1,13 @@
+<%= simple_form_for vacation do |f| %>
+  <div class="row">
+    <div class="col-lg-8">
+
+      <%= f.input :start_date, as: :date, html5: true, input_html: { value: f.object.start_date } %>
+
+      <%= f.input :end_date, as: :date, html5: true, input_html: { value: f.object.end_date } %>
+
+    </div>
+  </div>
+
+<%= f.submit t(:request_vacation) %>
+<% end %>

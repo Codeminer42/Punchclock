@@ -1,0 +1,24 @@
+<%= link_to 'Solicitar Férias', new_vacation_path %>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><%= t(Vacation.human_attribute_name(:start_date)) %></th>
+        <th><%= t(Vacation.human_attribute_name(:end_date)) %></th>
+        <th><%= t(Vacation.human_attribute_name(:status)) %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @vacations.each do |vacation| %>
+        <tr class="user-vacation">
+          <td><%= l(vacation.start_date, format: :default) %> </td>
+          <td><%= l(vacation.end_date, format: :default) %> </td>
+          <td><%= I18n.t(vacation.status) %> </td>
+          <td><%= link_to image_tag('destroy.png'), cancel_vacation_path(vacation), method: :delete, data: { confirm: t('.are_you_sure_remove_register') } %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
