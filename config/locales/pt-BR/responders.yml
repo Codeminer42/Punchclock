@@ -11,3 +11,7 @@ pt-BR:
       destroy:
         notice: '%{resource_name} foi deletado com sucesso.'
         alert: '%{resource_name} não pôde ser deletado.'
+    vacation:
+      update:
+        notice: 'Solicitação de férias canceladas com sucesso.'
+        alert: 'Somente férias pendentes podem ser canceladas.'
