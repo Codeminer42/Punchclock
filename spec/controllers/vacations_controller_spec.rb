@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe VacationsController do
-  let(:user) {create(:user)}
+  let(:user) { create(:user) }
 
   before do
     allow(controller).to receive(:authenticate_user!)
@@ -9,7 +9,7 @@ describe VacationsController do
   end
 
   describe 'GET index' do
-    let!(:vacation) {create(:vacation, user: user)}
+    let!(:vacation) { create(:vacation, user: user) }
 
     it "returns all user's vacations" do
       get :index
@@ -19,10 +19,10 @@ describe VacationsController do
   end
 
   describe 'GET show' do
-    let(:vacation) {create(:vacation, user: user)}
+    let(:vacation) { create(:vacation, user: user) }
 
     it "returns a specific user vacation" do
-      get :show, params: {id: vacation.id}
+      get :show, params: { id: vacation.id }
 
       expect(response).to have_http_status(:ok)
     end
@@ -38,43 +38,66 @@ describe VacationsController do
 
   describe 'POST create' do
     context "when params are valid" do
-      let(:vacation) {build(:vacation)}
+      let(:vacation_valid_params) do
+        {
+          starting_day: 1.months.from_now,
+          ending_day: 2.months.from_now
+        }
+      end
 
       it "saves the user vacation" do
-        post :create, params: {vacation: vacation.attributes}
+        post :create, params: { vacation: vacation_valid_params }
 
         expect(response).to have_http_status(:found)
       end
     end
 
     context "when params are invalid" do
-      context "when start date invalid" do
-
+      let(:vacation_invalid_params) do
+          {
+            starting_day: nil,
+            ending_day: nil
+          }
       end
 
-      context "when end date invalid" do
+      it 'fail and render action new' do
+        post :create, params: { vacation: vacation_invalid_params }
 
+        is_expected.to render_template(:new)
       end
-
-
-      let(:vacation) {build(:vacation, start_date: nil, end_date: nil)}
     end
-
-
-
   end
 
   describe 'DELETE cancel' do
+    context "when vacation in cancelable" do
+      let(:vacation) { create(:vacation, user: user, status: :pending) }
+      let(:params) { { id: vacation.id } }
 
+      it "cancels the user vacation" do
+        expect{ delete :cancel, params: params }.to change { vacation.reload.status }
+        .from('pending').to('cancelled')
+      end
 
+      it "flash success message" do
+        delete :cancel, params: params
 
+        expect(flash[:notice]).to eq(I18n.t(:notice, scope: "flash.vacation.cancel"))
+      end
+    end
 
+    context "when vacation is not cancelable" do
+      let(:vacation) { create(:vacation, user: user, status: :approved) }
+      let(:params) { { id: vacation.id } }
+
+      it "do not change vacation status" do
+        expect{ delete :cancel, params: params }.to_not change { vacation.reload.status }
+      end
+
+      it "flash denied message" do
+        delete :cancel, params: params
+
+        expect(flash[:alert]).to eq(I18n.t(:alert, scope: "flash.vacation.cancel"))
+      end
+    end
   end
-
-
-
-
-
-
-
 end

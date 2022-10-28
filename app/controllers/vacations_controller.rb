@@ -17,7 +17,7 @@ class VacationsController < ApplicationController
     @vacation = scopped_vacations.new(vacation_params)
 
     if @vacation.save
-      redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.actions.create", resource_name: "Vacation")
+      redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.vacation.create")
     else
       flash_errors('create')
       render :new
@@ -25,14 +25,13 @@ class VacationsController < ApplicationController
   end
 
   def cancel
-    vacation = Vacation.find(params[:id])
+    vacation_to_cancel = scopped_vacations.find(params[:id])
 
-    if vacation.pending?
-      vacation.update(status: :cancelled)
-
-      redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.vacation.update")
+    if vacation_to_cancel.pending?
+      vacation_to_cancel.update!(status: :cancelled)
+      redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.vacation.cancel")
     else
-      redirect_to vacations_path, alert: I18n.t(:alert, scope: "flash.vacation.update")
+      redirect_to vacations_path, alert: I18n.t(:alert, scope: "flash.vacation.cancel")
     end
   end
 
@@ -43,7 +42,7 @@ class VacationsController < ApplicationController
   end
 
   def vacation_params
-    params.require(:vacation).permit(:start_date, :end_date)
+    params.require(:vacation).permit(:starting_day, :ending_day)
   end
 
   def flash_errors(scope)
