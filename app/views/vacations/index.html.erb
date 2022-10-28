@@ -15,8 +15,12 @@
         <tr class="user-vacation">
           <td><%= l(vacation.start_date, format: :default) %> </td>
           <td><%= l(vacation.end_date, format: :default) %> </td>
-          <td><%= I18n.t(vacation.status) %> </td>
-          <td><%= link_to image_tag('destroy.png'), cancel_vacation_path(vacation), method: :delete, data: { confirm: t('.are_you_sure_remove_register') } %> </td>
+          <td><%= t(vacation.status_text) %> </td>
+          <td>
+            <% if vacation.pending? %>
+              <%= link_to image_tag('destroy.png'), cancel_vacation_path(vacation.id), method: :delete, data: { confirm: t('.are_you_sure_remove_request') }, id: "dlt-#{vacation.id}" %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
