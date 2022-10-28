@@ -16,3 +16,10 @@ en:
         notice: 'Evaluation was successfully created.'
       update:
         notice: 'Evaluation was successfully updated.'
+    vacation:
+      create:
+        notice: 'Vacation request was successfully created.'
+        alert: 'Vacation request could not be created.'
+      cancel:
+        notice: 'Vacation request was successfully cancelled.'
+        alert: 'Only pending vacations can be cancelled.'

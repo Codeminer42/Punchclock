@@ -130,3 +130,6 @@ pt-BR:
   revenue_forecast_warning: '* Como esta ferramenta do Punch começou a ser utilizada em Set/2022, as informações posteriores a esse mês estão incompletas'
   request_vacation: 'Solicitar Férias'
   requesting_vacation: 'Solicitando Férias'
+  vacations:
+    index:
+      are_you_sure_remove_request: 'Tem certeza que deseja remover a solicitação de férias?'

@@ -288,8 +288,8 @@ pt-BR:
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
       vacation:
-        start_date: "Data de início"
-        end_date: "Data de término"
+        starting_day: "Data de início"
+        ending_day: "Data de término"
         status: "Status"
 
 
