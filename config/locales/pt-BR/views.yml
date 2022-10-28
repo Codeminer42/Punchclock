@@ -58,6 +58,12 @@ pt-BR:
       registered:
         one: "%{count} hora"
         other: "%{count} horas"
+  vacation_mailer:
+    notify_vacation_request:
+      info: "%{user} solicitou férias"
+      start_date: "Date de início: %{date}"
+      end_date: "Data de término: %{date}"
+      count: "Número de dias de férias: %{count}"
   views:
     pagination:
       first: "&laquo; Primeira"

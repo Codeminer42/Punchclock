@@ -1,0 +1,5 @@
+<%= t '.info', user: @vacation.user.name %>
+
+<%= t '.start_date', date: (l @vacation.start_date) %>
+<%= t '.end_date', date: (l @vacation.end_date) %>
+<%= t '.count', count: (@vacation.end_date - @vacation.start_date).to_i %>
