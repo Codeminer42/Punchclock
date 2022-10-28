@@ -30,13 +30,7 @@ $ bin/setup
 
 After installation steps the following admin users will be created in database
 
-1. Super Admin User
-```
-E-mail:   super@codeminer42.com
-Password: password
-```
-
-2. A Admin User
+1. An Admin User
 ```
 E-mail:   admin@codeminer42.com
 Password: password
@@ -72,8 +66,8 @@ Freely make your changes and the page will be refreshed after you save it.
 
 Install the docker and docker compose plugin versions:
 
-* Docker ~>v20.10
-* Docker compose plugin ~>v2.10
+* Docker `~>v20.10`
+* Docker compose plugin `~>v2.10`
 
 ```console
 $ cp .env.example .env
@@ -83,6 +77,14 @@ $ docker compose run --rm app bundle install
 $ docker compose run --rm app yarn install --frozen-lockfile
 $ docker compose run --rm app bundle exec rake db:reset
 $ docker compose run --rm app bundle exec rake db:create
+```
+
+#### Useful commands
+
+Access Rails console:
+
+```console
+$ docker compose run --rm app rails c
 ```
 
 If you want to run tests:
