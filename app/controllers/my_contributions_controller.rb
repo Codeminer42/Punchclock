@@ -1,5 +1,5 @@
 class MyContributionsController < ApplicationController
   def index
-    @user_contributions = Contribution.where(user_id: current_user.id).order(created_at: :desc)
+    @user_contributions = current_user.contributions.where(state: :approved).order(created_at: :desc)
   end
 end
