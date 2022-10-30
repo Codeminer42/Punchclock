@@ -11,20 +11,18 @@
             <thead>
               <tr>
                 <th>Link</th>
+                <th>Estado da PR</th>
                 <th>Criado em</th>
                 <th>Estado</th>
-                <th>Revisado em</th>
-                <th>Revisado por</th>
               </tr>
             </thead>
             <tbody>
               <% @user_contributions.each do |contribution| %>
                 <tr>
                   <td><%= link_to contribution.link, contribution.link, target: :blank %></td>
+                  <td><%= contribution.pr_state.nil? ? '-' : Contribution.human_attribute_name("pr_state/#{contribution.pr_state}") %></td>
                   <td><%= contribution.created_at.strftime('%d/%m/%Y') %></td>
                   <td><%= Contribution.human_attribute_name("state/#{contribution.state}") %></td>
-                    <td><%= contribution.reviewed_at.strftime('%d/%m/%Y') %></td>
-                  <td><%= contribution.reviewed_by %></td>
                 </tr>
               <% end %>
             </tbody>
