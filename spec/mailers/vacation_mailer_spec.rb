@@ -8,7 +8,7 @@ describe VacationMailer do
       let(:mail) { VacationMailer.notify_vacation_request(vacation, admins.map(&:email)) }
 
       it 'renders the subject' do
-        expect(mail.subject).to eq("Punchclock - #{vacation.user.name} is requesting vacations")
+        expect(mail.subject).to eq((t 'vacation_mailer.notify_vacation_request.subject', user: vacation.user.name))
       end
 
       it 'renders the receiver email' do

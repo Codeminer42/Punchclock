@@ -60,6 +60,7 @@ pt-BR:
         other: "%{count} horas"
   vacation_mailer:
     notify_vacation_request:
+      subject: "Punchclock - %{user} solicitou férias"
       info: "%{user} solicitou férias"
       start_date: "Data de início: %{date}"
       end_date: "Data de término: %{date}"
