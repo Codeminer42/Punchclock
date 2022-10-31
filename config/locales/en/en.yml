@@ -72,3 +72,4 @@ en:
   vacations:
     index:
       are_you_sure_remove_request: 'Remove this vacation request?'
+      request_vacation: "Request Vacation"

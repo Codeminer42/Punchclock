@@ -2,11 +2,11 @@ class VacationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @vacations = scopped_vacations
+    @vacations = scoped_vacations
   end
 
   def show
-    @vacation = scopped_vacations.find(params[:id])
+    @vacation = scoped_vacations.find(params[:id])
   end
 
   def new
@@ -14,7 +14,7 @@ class VacationsController < ApplicationController
   end
 
   def create
-    @vacation = scopped_vacations.new(vacation_params)
+    @vacation = scoped_vacations.new(vacation_params)
 
     if @vacation.save
       redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.vacation.create")
@@ -25,7 +25,7 @@ class VacationsController < ApplicationController
   end
 
   def cancel
-    vacation_to_cancel = scopped_vacations.find(params[:id])
+    vacation_to_cancel = scoped_vacations.find(params[:id])
 
     if vacation_to_cancel.pending?
       vacation_to_cancel.update!(status: :cancelled)
@@ -37,7 +37,7 @@ class VacationsController < ApplicationController
 
   private
 
-  def scopped_vacations
+  def scoped_vacations
     current_user.vacations
   end
 

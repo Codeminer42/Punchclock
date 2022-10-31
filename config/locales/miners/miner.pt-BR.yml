@@ -52,6 +52,6 @@ pt-BR:
     vacation:
       status:
         pending: Pendente
-        approved: Aprovado
-        denied: Negado
-        cancelled: Cancelado
+        approved: Aprovada
+        denied: Negada
+        cancelled: Cancelada

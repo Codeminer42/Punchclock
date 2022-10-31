@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe VacationsController do
   let(:user) { create(:user) }
+  let(:user_p) { create(:user) }
 
   before do
     allow(controller).to receive(:authenticate_user!)
@@ -11,20 +12,33 @@ describe VacationsController do
   describe 'GET index' do
     let!(:vacation) { create(:vacation, user: user) }
 
-    it "returns all user's vacations" do
+    it "returns successful status" do
       get :index
 
       expect(response).to have_http_status(:ok)
     end
+
+    it "returns user's vacation" do
+      get :index
+
+      expect(subject.instance_variable_get(:@vacations)).to include(vacation)
+    end
   end
 
   describe 'GET show' do
-    let(:vacation) { create(:vacation, user: user) }
+    let(:vacation1) { create(:vacation, user: user) }
+    let(:vacation2) { create(:vacation, user: user) }
 
-    it "returns a specific user vacation" do
-      get :show, params: { id: vacation.id }
+    it "returns successful status" do
+      get :index
 
       expect(response).to have_http_status(:ok)
+    end
+
+    it "returns a specific user's vacation" do
+      get :show, params: { id: vacation1.id }
+
+      expect(subject.instance_variable_get(:@vacation)).to eq(vacation1)
     end
   end
 
@@ -40,8 +54,8 @@ describe VacationsController do
     context "when params are valid" do
       let(:vacation_valid_params) do
         {
-          starting_day: 1.months.from_now,
-          ending_day: 2.months.from_now
+          start_date: 1.months.from_now,
+          end_date: 2.months.from_now
         }
       end
 
@@ -55,8 +69,8 @@ describe VacationsController do
     context "when params are invalid" do
       let(:vacation_invalid_params) do
           {
-            starting_day: nil,
-            ending_day: nil
+            start_date: nil,
+            end_date: nil
           }
       end
 
