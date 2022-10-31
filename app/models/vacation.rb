@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Vacation < ApplicationRecord
-  attr_accessor :starting_day, :ending_day
   extend Enumerize
 
   belongs_to :user
@@ -16,28 +15,12 @@ class Vacation < ApplicationRecord
   }, predicates: true, scope: :shallow
 
   validates :start_date, :end_date, :user, presence: true
-  validates :end_date, comparison: { greater_than: :start_date }
-  validates :start_date, comparison: { greater_than: Time.zone.today }
-
-  def starting_day=(date)
-    @starting_day = date.presence
-    mount_start_date
-    date
-  end
-
-  def ending_day=(date)
-    @ending_day = date.presence
-    mount_end_date
-    date
-  end
+  validates :start_date, comparison: { greater_than: Time.zone.today }, if: :not_cancelled?
+  validates :end_date, comparison: { greater_than: :start_date }, if: :not_cancelled?
 
   private
 
-  def mount_start_date
-    self.start_date = @starting_day unless @starting_day.nil?
-  end
-
-  def mount_end_date
-    self.end_date = @ending_day unless @ending_day.nil?
+  def not_cancelled?
+    status != :cancelled
   end
 end

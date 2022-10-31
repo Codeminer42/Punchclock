@@ -2,20 +2,14 @@
   <div class="row">
     <div class="col-lg-8">
 
-      <%= f.input :starting_day, input_html: {
+      <%= f.input :start_date, as: :string, input_html: {
         class: %i(datepicker),
-        size: 10,
         data: { holidays: current_user.office_holidays },
-        value: f.object.start_date,
-        autocomplete: 'off'
       } %>
 
-      <%= f.input :ending_day, input_html: {
+      <%= f.input :end_date, as: :string, input_html: {
         class: %i(datepicker),
-        size: 10,
         data: { holidays: current_user.office_holidays },
-        value: f.object.end_date,
-        autocomplete: 'off'
       } %>
     </div>
   </div>
