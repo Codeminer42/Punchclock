@@ -1,0 +1,18 @@
+<%= simple_form_for vacation do |f| %>
+  <div class="row">
+    <div class="col-lg-8">
+
+      <%= f.input :start_date, as: :string, input_html: {
+        class: %i(datepicker),
+        data: { holidays: current_user.office_holidays },
+      } %>
+
+      <%= f.input :end_date, as: :string, input_html: {
+        class: %i(datepicker),
+        data: { holidays: current_user.office_holidays },
+      } %>
+    </div>
+  </div>
+
+<%= f.submit t(:request_vacation) %>
+<% end %>
