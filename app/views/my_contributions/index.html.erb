@@ -10,19 +10,22 @@
           <table class="table table-hover table-bordered users-evaluation" id="dataTable">
             <thead>
               <tr>
-                <th>Link</th>
-                <th>Estado da PR</th>
-                <th>Criado em</th>
-                <th>Estado</th>
+                <th><%= t 'my_contributions.pr_link' %></th>
+                <th><%= t 'my_contributions.created_at' %></th>
+                <th><%= t 'my_contributions.pr_state' %></th>
               </tr>
             </thead>
             <tbody>
+              <% if @user_contributions.empty?  %>
+                <tr>
+                  <td colspan="3"><%= t 'my_contributions.no_prs_found' %></td>
+                </tr>
+              <% end %>
               <% @user_contributions.each do |contribution| %>
                 <tr>
                   <td><%= link_to contribution.link, contribution.link, target: :blank %></td>
-                  <td><%= contribution.pr_state.nil? ? '-' : Contribution.human_attribute_name("pr_state/#{contribution.pr_state}") %></td>
                   <td><%= contribution.created_at.strftime('%d/%m/%Y') %></td>
-                  <td><%= Contribution.human_attribute_name("state/#{contribution.state}") %></td>
+                  <td><%= contribution.pr_state.nil? ? '-' : Contribution.human_attribute_name("pr_state/#{contribution.pr_state}") %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -30,13 +33,6 @@
           </div>
         </div>
       </div>
-      <div class="card-footer small text-muted"></div>
     </div>
   </div>
-
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fa fa-angle-up"></i>
-  </a>
-
-  <div data-modal="questionnaire-kinds"></div>
 </div>
