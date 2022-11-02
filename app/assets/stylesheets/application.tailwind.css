@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+label.email abbr {
+  @apply hidden;
+}
+
+label.password abbr {
+  @apply hidden;
+}
+
+div.user_otp_attempt label abbr {
+  @apply hidden;
+}
+
+.form-group-invalid input.is-invalid {
+  @apply border-red;
+}
+
+.form-group-invalid label {
+  @apply text-red;
+}
+
+.invalid-feedback {
+  @apply mt-2 text-red text-xs;
+}

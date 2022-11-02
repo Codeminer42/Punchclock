@@ -38,5 +38,9 @@ module Punchclock
 
     config.load_defaults 7.0
     config.generators.system_tests = nil
+
+    config.to_prepare do
+      Devise::SessionsController.layout "redesign"
+    end
   end
 end

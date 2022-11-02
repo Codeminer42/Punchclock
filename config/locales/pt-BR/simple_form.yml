@@ -8,6 +8,10 @@ pt-BR:
       evaluation:
         user_id: 'Usuário'
         review: 'Revisão'
+      user:
+        email: 'E-mail'
+        password: 'Senha'
+        remember_me: "Lembrar-se de mim"
     placeholders:
       punches_filter_form:
         since: 'Desde'
@@ -16,4 +20,3 @@ pt-BR:
       punches_filter_form:
         project_id: "Todos os projetos"
         user_id: "Todos os usuários"
-

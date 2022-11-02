@@ -1,0 +1,14 @@
+<% if notice.present? || alert.present? %>
+    <% if notice.present? %>
+      <p class="alert flex justify-between bg-indigo-100 border border-indigo-500 text-indigo-700 px-4 py-3">
+        <%= notice %>
+        <a class="close" data-dismiss="alert" href= "#"> &times;</a>
+      </p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert flex justify-between bg-rose-100 border border-rose-500 text-rose-700 px-4 py-3">
+        <%= alert %>
+        <a class="close" data-dismiss="alert" href= "#"> &times; </a>
+      </p>
+    <% end %>
+<% end %>

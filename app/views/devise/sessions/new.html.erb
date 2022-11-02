@@ -1,44 +1,36 @@
-  <div class="access-form-container mt-2">
-    <h2 class="text-center mb-3">Sign In</h2>
+<h2 class="text-3xl mb-8">Sign In</h2>
 
-    <%= simple_form_for(resource,
-                        as: resource_name,
-                        url: session_path(resource_name),
-                        html: { novalidate: false }) do |f| %>
-      <div class="form-inputs">
-        <div class="input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text"> <i class="fa fa-user"></i></span>
-          </div>
-          <%= f.input_field :email,
-                      label: false,
-                      required: true,
-                      autofocus: true,
-                      placeholder: "E-mail",
-                      class: "form-control",
-                      input_html: { autocomplete: "email" } %>
-        </div>
+<%= simple_form_for(resource,
+      as: resource_name,
+      url: session_path(resource_name),
+      html: { novalidate: false, class: 'w-full' }) do |f| %>
+  <div class="w-full space-y-6">
+    <div class="w-full">
+      <%= f.input :email,
+            autofocus: true,
+            required: true,
+            input_html: { autocomplete: "email", class: "w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0" },
+            label_html: { class: "block mb-2 text-base text-grey-400" } %>
+    </div>
 
-        <div class="input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text"> <i class="fa fa-lock"></i></span>
-          </div>
-          <%= f.input_field :password,
-                    label: false,
-                    required: true,
-                    placeholder: "Password",
-                    class: "form-control",
-                    input_html: { autocomplete: "current-password" } %>
-        </div>
-
-        <div class="form-actions">
-          <%= f.button :submit, "Login", class: "w-100" %>
-        </div>
-
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-      </div>
-
-    <% end %>
-
-    <%= render "devise/shared/links" %>
+    <div class="w-full">
+      <%= f.input :password,
+            required: true,
+            input_html: { autocomplete: "current-password", class: "w-full form-input bg-grey-50 rounded-md border-2 border-grey-50 focus:border-grey-200 focus:ring-0" },
+            label_html: { class: "block mb-2 text-base text-grey-400" } %>
+    </div>
   </div>
+
+  <div class="w-full flex flex-col items-start justify-between space-y-4 mt-8 md:flex-row md:items-center md:space-y-0">
+    <%= f.input :remember_me,
+          as: :boolean,
+          input_html: { class: "appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400" },
+          label_html: { class: "text-base text-grey-400 font-medium" } if devise_mapping.rememberable? %>
+
+    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+      <%= link_to t("forgot_password"), new_password_path(resource_name), class: "text-sm text-blue" %>
+    <% end %>
+  </div>
+
+  <%= f.button :submit, "Login", class: "w-full h-10 mt-8 px-4 rounded bg-red text-white transition-all hover:brightness-110" %>
+<% end %>

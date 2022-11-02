@@ -1,6 +1,10 @@
 pt-BR:
   "true": 'Sim'
   "false": 'Não'
+  activerecord:
+    attributes:
+      user:
+        password: "Senha"
   punches:
     index:
       are_you_sure_remove_register: 'Tem certeza que deseja remover o registro?'
@@ -118,7 +122,7 @@ pt-BR:
   offices: 'Escritórios'
   mentor: 'Mentor'
   mentors: 'Mentores'
-  mentees: 'Mentorados' 
+  mentees: 'Mentorados'
   name: 'Nome'
   skills: 'Habilidades'
   client: 'Cliente'
@@ -127,3 +131,5 @@ pt-BR:
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
   revenue_forecast_warning: '* Como esta ferramenta do Punch começou a ser utilizada em Set/2022, as informações posteriores a esse mês estão incompletas'
+  blank_field: "não pode ficar em branco"
+  forgot_password: "Esqueceu sua senha?"

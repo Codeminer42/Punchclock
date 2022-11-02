@@ -4,6 +4,10 @@ en:
       evaluation:
         user_id: 'User'
         review: 'Review'
+      user:
+        email: 'E-mail'
+        password: 'Password'
+        remember_me: "Remember me"
     "yes": 'Yes'
     "no": 'No'
     required:
