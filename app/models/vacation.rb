@@ -10,9 +10,17 @@ class Vacation < ApplicationRecord
   enumerize :status, in: {
     pending: 0,
     approved: 1,
-    denied: 2
+    denied: 2,
+    cancelled: 3,
   }, predicates: true, scope: :shallow
 
   validates :start_date, :end_date, :user, presence: true
-  validates :end_date, comparison: { greater_than: :start_date }
+  validates :start_date, comparison: { greater_than: Time.zone.today }, if: :not_cancelled?
+  validates :end_date, comparison: { greater_than: :start_date }, if: :not_cancelled?
+
+  private
+
+  def not_cancelled?
+    status != :cancelled
+  end
 end

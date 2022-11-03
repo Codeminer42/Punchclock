@@ -66,6 +66,7 @@ pt-BR:
       multiple_punches: "Múltiplos Punches"
       open_source: "Open Source"
       administrative: 'Administrativo'
+      vacations: 'Férias'
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
@@ -133,3 +134,9 @@ pt-BR:
   revenue_forecast_warning: '* Como esta ferramenta do Punch começou a ser utilizada em Set/2022, as informações posteriores a esse mês estão incompletas'
   blank_field: "não pode ficar em branco"
   forgot_password: "Esqueceu sua senha?"
+  request_vacation: 'Solicitar Férias'
+  requesting_vacation: 'Solicitando Férias'
+  vacations:
+    index:
+      are_you_sure_remove_request: 'Tem certeza que deseja remover a solicitação de férias?'
+      request_vacation: 'Solicitar Férias'

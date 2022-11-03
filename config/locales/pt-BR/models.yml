@@ -104,6 +104,9 @@ pt-BR:
       hour_report:
         one: "Relatório de Horas"
         other: "Relatórios de Horas"
+      vacation:
+        one: "Férias"
+        other: "Férias"
     attributes:
       admin_user:
         id: "ID"
@@ -287,3 +290,7 @@ pt-BR:
         updated_at: "Atualizado em"
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
+      vacation:
+        start_date: "Data de início"
+        end_date: "Data de término"
+        status: "Status"
