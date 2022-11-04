@@ -288,6 +288,12 @@ pt-BR:
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
       vacation:
+        user: 'Usuário'
         start_date: "Data de início"
         end_date: "Data de término"
         status: "Status"
+        status/approved: 'Aprovada'
+        status/denied: 'Negada'
+        status/pending: 'Pendente'
+        commercial_approver: 'Aprovação Comercial'
+        administrative_approver: 'Aprovação Administrativa'
