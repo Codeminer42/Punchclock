@@ -62,4 +62,25 @@ RSpec.describe Vacation, type: :model do
       end
     end
   end
+
+  describe '#set_approver' do
+    subject { vacation.set_approver(user) }
+    let(:vacation) { create(:vacation) }
+
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      it 'set administrative approver' do
+        expect { subject }.to change { vacation.administrative_approver }.from(nil).to(user)
+      end
+    end
+
+    context 'when user is admin' do
+      let(:user) { create(:user, :commercial) }
+
+      it 'set commercial approver' do
+        expect { subject }.to change { vacation.commercial_approver }.from(nil).to(user)
+      end
+    end
+  end
 end

@@ -18,6 +18,11 @@ class Vacation < ApplicationRecord
   validates :start_date, comparison: { greater_than: Time.zone.today }, if: :not_cancelled?
   validates :end_date, comparison: { greater_than: :start_date }, if: :not_cancelled?
 
+  def set_approver(user)
+    self.update(administrative_approver: user) if user.admin?
+    self.update(commercial_approver: user) if user.administrative?
+  end
+
   private
 
   def not_cancelled?
