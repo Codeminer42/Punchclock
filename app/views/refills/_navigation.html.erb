@@ -40,14 +40,14 @@
           <% if can?(:read, ActiveAdmin) %>
             <%= link_to admin_root_path do %>
               <%= t('.administrative') %>
-            <%- end %>
-          <%- end %>
-        </div>
+            <% end %>
+          <% end %>
 
-        <div class="links">
-          <%= link_to vacations_path do %>
-            <%= t('.vacations') %>
-          <%- end %>
+          <% unless Rails.env.production? %>
+            <%= link_to vacations_path do %>
+              <%= t('.vacations') %>
+            <% end %>
+          <% end %>
         </div>
 
         <div class="navbar-nav ml-auto nav-link">
