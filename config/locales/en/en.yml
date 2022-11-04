@@ -79,3 +79,6 @@ en:
     index:
       are_you_sure_remove_request: 'Remove this vacation request?'
       request_vacation: "Request Vacation"
+  send_reset_instructions: "Send me reset password instructions"
+  didnt_receive_instructions: "Didn't receive confirmation instructions?"
+  resend_instructions: "Resend confirmation instructions"
