@@ -20,7 +20,8 @@ class AbilityAdmin
       Skill,
       Repository,
       Contribution,
-      Note
+      Note,
+      Vacation
     ]
 
     admin_permitions(user) if user.admin?
@@ -33,7 +34,8 @@ class AbilityAdmin
 
   def admin_permitions(user)
     can :manage, action + [
-      Punch
+      Punch,
+      Vacation
     ]
     can :manage, action
     can :read, Punch
@@ -45,6 +47,7 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Allocation Chart'
     can :read, ActiveAdmin::Page, name: 'Revenue Forecast'
     can :read, ActiveAdmin::Page, name: 'Mentoring'
+    can :read, ActiveAdmin::Page, name: 'Vacation'
     
     cannot :destroy, [User, Project]
   end
