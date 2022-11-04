@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def check_otp(otp_attempt, on_success, on_fail, notice)
     if validate_otp(otp_attempt)
       toggle_two_factor
-      
+
       redirect_to on_success, notice: t(notice)
     else
       redirect_to on_fail, alert: t('otp_fail')

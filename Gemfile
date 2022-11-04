@@ -71,6 +71,8 @@ gem 'letsencrypt-rails-heroku', group: 'production'
 
 gem 'rswag-api', '~> 2.5.1'
 gem 'rswag-ui', '~> 2.5.1'
+gem 'unicorn'
+gem "tailwindcss-rails", "~> 2.0"
 
 group :test do
   gem 'capybara'
@@ -101,7 +103,6 @@ group :development do
   gem 'guard-livereload', '~> 2.5', require: false
 end
 
-gem 'unicorn'
 
 group :development, :test do
   gem 'factory_bot_rails'

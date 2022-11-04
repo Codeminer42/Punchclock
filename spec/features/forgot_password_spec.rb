@@ -9,10 +9,10 @@ describe 'Login', type: :feature do
   context 'user forgot password' do
     it 'send forgot password mail', :aggregate_failures do
       visit '/'
-      expect(page).to have_link('Forgot your password?')
-      click_link('Forgot your password?')
-      fill_in 'user[email]',	with: user.email.to_s
-      click_button('Send me reset password instructions')
+      expect(page).to have_link('Esqueceu sua senha?')
+      click_link('Esqueceu sua senha?')
+      fill_in 'user[email]',  with: user.email.to_s
+      click_button('Enviar as instruções para resetar a senha')
       expect(page).to have_text('Dentro de minutos, você receberá um e-mail com instruções para a troca da sua senha.')
     end
 

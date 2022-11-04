@@ -1,6 +1,10 @@
 pt-BR:
   "true": 'Sim'
   "false": 'Não'
+  activerecord:
+    attributes:
+      user:
+        password: "Senha"
   punches:
     index:
       are_you_sure_remove_register: 'Tem certeza que deseja remover o registro?'
@@ -113,7 +117,7 @@ pt-BR:
       change_my_password: 'Mudar minha senha'
       verify: 'Verificar'
     links:
-      return_to_sign_in: 'Retornar ao Sign In.'
+      return_to_sign_in: 'Retornar ao Sign In'
   allocation_chart: 'Organograma'
   mentoring: 'Mentoria'
   offices: 'Escritórios'
@@ -128,9 +132,14 @@ pt-BR:
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
   revenue_forecast_warning: '* Como esta ferramenta do Punch começou a ser utilizada em Set/2022, as informações posteriores a esse mês estão incompletas'
+  blank_field: "não pode ficar em branco"
+  forgot_password: "Esqueceu sua senha?"
   request_vacation: 'Solicitar Férias'
   requesting_vacation: 'Solicitando Férias'
   vacations:
     index:
       are_you_sure_remove_request: 'Tem certeza que deseja remover a solicitação de férias?'
       request_vacation: 'Solicitar Férias'
+  send_reset_instructions: "Enviar as instruções para resetar a senha"
+  didnt_receive_instructions: "Não recebeu as instruções de confirmação?"
+  resend_instructions: "Reenviar instruções de confirmação"
