@@ -6,11 +6,10 @@ Rails.application.configure do
 
   config.serve_static_files = false
   config.assets.js_compressor = Uglifier.new(harmony: true)
+  config.assets.css_compressor = nil
   config.assets.compile = false
   config.assets.digest = true
   config.assets.version = '1.0'
-  config.assets.css_compressor = nil
-
 
   config.log_level = :info
   config.i18n.fallbacks = true

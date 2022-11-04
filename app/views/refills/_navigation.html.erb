@@ -12,7 +12,7 @@
           <div class="dropdown">
             <%= link_to "#", data: {toggle: "dropdown"}, class: "dropdown-toggle" do %>
               <%= t('.punches') %><span class="caret"></span>
-            <%- end %>
+            <% end %>
             <ul class="dropdown-menu bg-danger" style="min-width: 11rem" role="menu" aria-labelledby="dLabel" style="color:#c61515">
               <li>
                 <%= link_to new_punch_path, class:"justify-content-start" do %>
@@ -22,7 +22,7 @@
               <li>
                 <%= link_to dashboard_index_path, class:"justify-content-start" do %>
                   <%= t('.multiple_punches') %>
-                <%- end %>
+                <% end %>
               </li>
             </ul>
           </div>
@@ -35,7 +35,7 @@
         <div class="links">
           <%= link_to repositories_path do %>
             <%= t('.open_source') %>
-          <%- end %>
+          <% end %>
 
           <% if can?(:read, ActiveAdmin) %>
             <%= link_to admin_root_path do %>
