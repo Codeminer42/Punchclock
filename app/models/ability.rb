@@ -10,6 +10,13 @@ class Ability
     can :manage, Punch, user_id: user.id
     can :read, User, id: user.id
     can %i[edit update], User, id: user.id
+    can :read, Vacation, user_id: user.id
+    can :destroy, Vacation, status: :pending
+
+    unless user.vacations.any?(&:pending?)
+      can :create, Vacation
+    end
+
 
     if user.admin? || user.evaluator? || user.office_head?
       can :manage, Evaluation

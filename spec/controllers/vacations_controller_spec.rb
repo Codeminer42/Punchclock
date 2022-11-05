@@ -88,12 +88,12 @@ describe VacationsController do
       let(:params) { { id: vacation.id } }
 
       it "cancels the user vacation" do
-        expect{ delete :cancel, params: params }.to change { vacation.reload.status }
+        expect{ delete :destroy, params: params }.to change { vacation.reload.status }
         .from('pending').to('cancelled')
       end
 
       it "flash success message" do
-        delete :cancel, params: params
+        delete :destroy, params: params
 
         expect(flash[:notice]).to eq(I18n.t(:notice, scope: "flash.vacation.cancel"))
       end
@@ -104,11 +104,11 @@ describe VacationsController do
       let(:params) { { id: vacation.id } }
 
       it "do not change vacation status" do
-        expect{ delete :cancel, params: params }.to_not change { vacation.reload.status }
+        expect{ delete :destroy, params: params }.to_not change { vacation.reload.status }
       end
 
       it "flash denied message" do
-        delete :cancel, params: params
+        delete :destroy, params: params
 
         expect(flash[:alert]).to eq(I18n.t(:alert, scope: "flash.vacation.cancel"))
       end

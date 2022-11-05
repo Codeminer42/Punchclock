@@ -1,24 +1,25 @@
-<%= link_to t('.request_vacation'), new_vacation_path %>
-
+<%= link_to t('.request_vacation'), new_vacation_path, class: "button" if can?(:create, Vacation) %>
+<br>
+<br>
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
       <tr>
-        <th><%= t(Vacation.human_attribute_name(:start_date)) %></th>
-        <th><%= t(Vacation.human_attribute_name(:end_date)) %></th>
-        <th><%= t(Vacation.human_attribute_name(:status)) %></th>
+        <th><%= Vacation.human_attribute_name(:start_date) %></th>
+        <th><%= Vacation.human_attribute_name(:end_date) %></th>
+        <th><%= Vacation.human_attribute_name(:status) %></th>
       </tr>
     </thead>
 
     <tbody>
       <% @vacations.each do |vacation| %>
         <tr class="user-vacation">
-          <td><%= l(vacation.start_date, format: :default) %> </td>
-          <td><%= l(vacation.end_date, format: :default) %> </td>
-          <td><%= t(vacation.status_text) %> </td>
+          <td><%= l vacation.start_date %></td>
+          <td><%= l vacation.end_date %></td>
+          <td><%= vacation.status_text %></td>
           <td>
-            <% if vacation.pending? %>
-              <%= link_to image_tag('destroy.png'), cancel_vacation_path(vacation.id), method: :delete, data: { confirm: t('.are_you_sure_remove_request') }, id: "dlt-#{vacation.id}" %>
+            <% if can?(:destroy, vacation) %>
+              <%= link_to image_tag('destroy.png'), vacation_path(vacation), method: :delete, data: { confirm: t('.are_you_sure_remove_request') } %>
             <% end %>
           </td>
         </tr>

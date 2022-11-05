@@ -53,5 +53,5 @@ pt-BR:
       status:
         pending: Pendente
         approved: Aprovada
-        denied: Negada
-        cancelled: Cancelada
+        denied: Negado
+        cancelled: Cancelado

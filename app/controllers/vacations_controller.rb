@@ -24,7 +24,7 @@ class VacationsController < ApplicationController
     end
   end
 
-  def cancel
+  def destroy
     vacation_to_cancel = scoped_vacations.find(params[:id])
 
     if vacation_to_cancel.pending?
@@ -50,7 +50,7 @@ class VacationsController < ApplicationController
   end
 
   def alert_message(scope)
-    I18n.t(:alert, scope: "flash.actions.#{scope}", resource_name: "Vacation")
+    I18n.t(:alert, scope: [:flash, :actions, scope], resource_name: "Vacation")
   end
 
   def errors
@@ -58,6 +58,6 @@ class VacationsController < ApplicationController
   end
 
   def error_message
-    I18n.t(:errors, scope: "flash", errors: errors)
+    I18n.t(:errors, scope: :flash, errors: errors)
   end
 end
