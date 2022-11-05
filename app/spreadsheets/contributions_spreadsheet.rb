@@ -7,8 +7,8 @@ class ContributionsSpreadsheet < DefaultSpreadsheet
       contribution.link,
       Contribution.human_attribute_name("state/#{contribution.state}"),
       contribution.pr_state,
-      translate_date(contribution.created_at),
-      translate_date(contribution.updated_at)
+      contribution.created_at,
+      contribution.updated_at
     ]
   end
 
