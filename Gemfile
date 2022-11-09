@@ -46,7 +46,7 @@ gem 'historical-bank'
 
 gem 'ransack', '~> 2.3'
 
-gem 'sidekiq'
+gem 'sidekiq', "< 7"
 
 gem 'rollbar'
 
