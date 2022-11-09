@@ -22,8 +22,8 @@ RSpec.describe ContributionsSpreadsheet do
       contribution.link,
       Contribution.human_attribute_name("state/#{contribution.state}"),
       contribution.pr_state,
-      I18n.l(contribution.created_at, format: :long),
-      I18n.l(contribution.updated_at, format: :long)
+      contribution.created_at.to_s,
+      contribution.updated_at.to_s
     ]
   end
 
