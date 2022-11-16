@@ -1,0 +1,38 @@
+<div id="page-top" class="row">
+  <div class="container-fluid home">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>
+        <%= t('my_contributions.my_contributions') %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered users-evaluation" id="dataTable">
+            <thead>
+              <tr>
+                <th><%= t('my_contributions.pr_link') %></th>
+                <th><%= t('my_contributions.created_at') %></th>
+                <th><%= t('my_contributions.pr_state') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @user_contributions.empty?  %>
+                <tr>
+                  <td colspan="3"><%= t('my_contributions.no_prs_found') %></td>
+                </tr>
+              <% end %>
+              <% @user_contributions.each do |contribution| %>
+                <tr>
+                  <td><%= link_to contribution.link, contribution.link, target: :blank %></td>
+                  <td><%= I18n.l(contribution.created_at.to_date, format: :default) %></td>
+                  <td><%= contribution.pr_state.nil? ? '-' : contribution.pr_state_text %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
