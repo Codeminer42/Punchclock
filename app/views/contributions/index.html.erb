@@ -3,22 +3,22 @@
     <div class="card mb-3">
       <div class="card-header">
         <i class="fa fa-table"></i>
-        <%= t('my_contributions.my_contributions') %>
+        <%= t('contributions.my_contributions') %>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-hover table-bordered users-evaluation" id="dataTable">
             <thead>
               <tr>
-                <th><%= t('my_contributions.pr_link') %></th>
-                <th><%= t('my_contributions.created_at') %></th>
-                <th><%= t('my_contributions.pr_state') %></th>
+                <th><%= t('contributions.pr_link') %></th>
+                <th><%= t('contributions.created_at') %></th>
+                <th><%= t('contributions.pr_state') %></th>
               </tr>
             </thead>
             <tbody>
               <% if @user_contributions.empty?  %>
                 <tr>
-                  <td colspan="3"><%= t('my_contributions.no_prs_found') %></td>
+                  <td colspan="3"><%= t('contributions.no_prs_found') %></td>
                 </tr>
               <% end %>
               <% @user_contributions.each do |contribution| %>

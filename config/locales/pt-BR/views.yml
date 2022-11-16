@@ -16,7 +16,7 @@ pt-BR:
   punches:
     index:
       total: 'TOTAL'
-  my_contributions:
+  contributions:
     my_contributions: 'Minhas Contribuições'
     pr_link: 'Link da PR'
     created_at: 'Criada em'

@@ -34,7 +34,7 @@ RSpec.describe ContributionsController, type: :controller do
       it 'renders the table with not found message' do
         get :index
 
-        expect(page.find('table')).to have_content(I18n.t('my_contributions.no_prs_found'))
+        expect(page.find('table')).to have_content(I18n.t('contributions.no_prs_found'))
       end
     end
 
