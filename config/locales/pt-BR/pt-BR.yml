@@ -67,6 +67,7 @@ pt-BR:
       open_source: "Open Source"
       administrative: 'Administrativo'
       vacations: 'Férias'
+      my_contributions: 'Minhas Contribuições'
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"

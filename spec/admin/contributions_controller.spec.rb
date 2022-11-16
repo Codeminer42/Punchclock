@@ -5,7 +5,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
   let(:admin) { build_stubbed(:user, :admin) }
   let(:contribution) { build_stubbed(:contribution) }
-  let(:page) { Capybara::Node::Simple.new(response.body) } 
+  let(:page) { Capybara::Node::Simple.new(response.body) }
 
   let(:invalid_attributes) do
     { first_name: '' }
