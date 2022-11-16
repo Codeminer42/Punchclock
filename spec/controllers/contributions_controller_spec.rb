@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MyContributionsController, type: :controller do
+RSpec.describe ContributionsController, type: :controller do
   render_views
 
   let(:user) { build_stubbed(:user) }
@@ -12,7 +12,7 @@ RSpec.describe MyContributionsController, type: :controller do
     allow(controller).to receive(:authenticate_user!)
     allow(controller).to receive(:current_user).and_return(user)
     allow(user).to receive(:contributions).and_return(contribution_model)
-    allow(contribution_model).to receive(:where).and_return(contribution_model)
+    allow(contribution_model).to receive(:approved).and_return(contribution_model)
   end
 
   describe 'GET index' do
@@ -43,10 +43,10 @@ RSpec.describe MyContributionsController, type: :controller do
         get :index
 
         expect(page.find('table')).to have_content(contribution_list[0].link)
-                                  .and have_content(Contribution.human_attribute_name("pr_state/#{contribution_list[0].pr_state}"))
+                                  .and have_content(contribution_list[0].pr_state_text)
                                   .and have_content(contribution_list[0].created_at.strftime('%d/%m/%Y'))
                                   .and have_content(contribution_list[1].link)
-                                  .and have_content(Contribution.human_attribute_name("pr_state/#{contribution_list[1].pr_state}"))
+                                  .and have_content(contribution_list[1].pr_state_text)
                                   .and have_content(contribution_list[1].created_at.strftime('%d/%m/%Y'))
       end
     end
