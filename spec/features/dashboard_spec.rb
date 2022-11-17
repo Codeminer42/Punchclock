@@ -75,19 +75,12 @@ describe 'Punches Dashboard', type: :feature do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:active_project) { create(:project, :active) }
 
-    it 'Insert punches on holiday', js: true do
+    it 'Does not allow to insert punches on holiday', js: true do
       visit 'dashboard/2013/11'
 
       find('td.inner', text: '02').click
-      find('td.inner', text: '03').click
-      find('span.select2').click
-      find('li.select2-results__option').click
-      expect(page).to have_content("Selecionado (1)")
-
-      accept_alert do
-        click_on 'Salvar'
-        expect(page).to have_content("Selecionado (0)")
-      end
+      expect(page).to have_content('Selecionado (0)')
+      expect(page).to have_button('Salvar', disabled: true)
     end
   end
 
