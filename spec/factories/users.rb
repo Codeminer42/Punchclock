@@ -108,8 +108,12 @@ FactoryBot.define do
     started_at      { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
   end
 
-  trait :commercial do
-    occupation { :administrative }
+  trait :hr do
+    roles { [:hr, :admin] }
+  end
+
+  trait :project_manager do
+    roles { [:project_manager, :admin] }
   end
 
   factory :invalid_user, parent: :user do

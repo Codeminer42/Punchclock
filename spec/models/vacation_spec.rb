@@ -5,8 +5,9 @@ require 'rails_helper'
 RSpec.describe Vacation, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:commercial_approver).class_name('User').optional }
-    it { is_expected.to belong_to(:administrative_approver).class_name('User').optional }
+    it { is_expected.to belong_to(:hr_approver).class_name('User').optional }
+    it { is_expected.to belong_to(:project_manager_approver).class_name('User').optional }
+    it { is_expected.to belong_to(:denier).class_name('User').optional }
   end
 
   describe 'validations' do
@@ -63,24 +64,50 @@ RSpec.describe Vacation, type: :model do
     end
   end
 
-  describe '#set_approver' do
-    subject { vacation.set_approver(user) }
+  describe '#approve!' do
     let(:vacation) { create(:vacation) }
+    subject { vacation }
 
-    context 'when user is admin' do
-      let(:user) { create(:user, :admin) }
+    context 'when user is hr' do
+      let(:user) { create(:user, :hr) }
 
-      it 'set administrative approver' do
-        expect { subject }.to change { vacation.administrative_approver }.from(nil).to(user)
+      it 'set hr approver' do
+        expect { subject.approve! user }.to change { vacation.hr_approver }.from(nil).to(user)
       end
     end
 
-    context 'when user is admin' do
-      let(:user) { create(:user, :commercial) }
+    context 'when user is a project manager' do
+      let(:user) { create(:user, :project_manager) }
 
-      it 'set commercial approver' do
-        expect { subject }.to change { vacation.commercial_approver }.from(nil).to(user)
+      it 'set project manager approver' do
+        expect { subject.approve! user }.to change { vacation.project_manager_approver }.from(nil).to(user)
       end
+    end
+
+    context 'when both roles approve' do
+      let(:hr_user) { create(:user, :hr) }
+      let(:project_manager_user) { create(:user, :project_manager) }
+
+      before do
+        subject.approve! hr_user
+        subject.approve! project_manager_user
+      end
+
+      it 'set project manager approver' do
+        expect(subject).to be_approved
+      end
+    end
+  end
+
+  describe '#deny!' do
+    let(:vacation) { create(:vacation) }
+    subject { vacation }
+    let(:user) { create(:user, :hr) }
+
+    it 'set project manager approver' do
+      subject.deny! user
+
+      expect(subject).to be_denied
     end
   end
 end

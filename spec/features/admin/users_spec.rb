@@ -328,7 +328,7 @@ describe 'Users', type: :feature do
       it 'updates yourself role information' do
         first('li', text: 'Admin')
         find_by_id('user_roles_input').find('.selection').click
-        first('li', text: 'Evaluator').click
+        first('li', text: 'Avaliador').click
         click_button 'Atualizar Usuário'
 
         expect(current_path).to eq "/admin/users/#{admin_user.id}"

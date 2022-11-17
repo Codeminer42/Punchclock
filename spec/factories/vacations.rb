@@ -4,7 +4,8 @@ FactoryBot.define do
     end_date { 2.months.from_now }
     status { 'pending' }
     user
-    commercial_approver { nil }
-    administrative_approver { nil }
+    hr_approver { nil }
+    project_manager_approver { nil }
+    denier { nil }
   end
 end

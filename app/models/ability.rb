@@ -14,11 +14,16 @@ class Ability
     if user.admin? || user.evaluator? || user.office_head?
       can :manage, Evaluation
       can :manage, Note
+      can :read, Vacation
       cannot %i[destroy edit update], Evaluation
     end
 
     if user.admin? || user.open_source_manager?
       can :read, ActiveAdmin
+    end
+
+    if user.hr? || user.project_manager?
+      can :manage, Vacation
     end
   end
 end

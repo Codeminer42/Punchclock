@@ -35,7 +35,9 @@ class User < ApplicationRecord
   enumerize :roles, in: {
     evaluator: 1,
     admin: 2,
-    open_source_manager: 3
+    open_source_manager: 3,
+    hr: 4,
+    project_manager: 5,
   }, multiple: true, predicates: true
 
   belongs_to :office, optional: false
