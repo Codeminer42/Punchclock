@@ -11,11 +11,15 @@ ActiveAdmin.register Vacation do
 
   member_action :approve, method: :put do
     resource.approve!(current_user)
+
+    VacationMailer.notify_vacation_approved(resource).deliver_later if resource.approved?
+
     redirect_to admin_vacations_path
   end
 
   member_action :denied, method: :put do
     resource.deny!(current_user)
+    VacationMailer.notify_vacation_denied(resource).deliver_later
     redirect_to admin_vacations_path
   end
 

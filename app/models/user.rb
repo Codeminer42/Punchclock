@@ -72,6 +72,7 @@ class User < ApplicationRecord
     where("users.roles && ARRAY[?]::int[]", roles_values)
   }
   scope :admin, -> { by_roles_in([:admin]) }
+  scope :vacation_managers, -> { by_roles_in([:hr, :project_manager]) }
 
   attr_accessor :password_required
 

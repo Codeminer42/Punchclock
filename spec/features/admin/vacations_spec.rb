@@ -56,8 +56,13 @@ describe 'Vacation', type: :feature do
   end
 
   describe 'Actions' do
+    let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
+
     describe 'Aprovar' do
       before do
+        allow(VacationMailer).to receive(:notify_vacation_approved).and_return(message_delivery)
+        allow(message_delivery).to receive(:deliver_later)
+
         within 'table' do
           find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
         end
@@ -66,47 +71,80 @@ describe 'Vacation', type: :feature do
 
         sign_in(project_manager)
         visit '/admin/vacations'
-
-        within 'table' do
-          find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
-        end
       end
 
       it 'have vacation with hr approver' do
+        within 'table' do
+          find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
+        end
+
         within 'td.col-hr_approver' do
           expect(page).to have_text(admin.name)
         end
       end
 
       it 'have vacation with project manager approver' do
+        within 'table' do
+          find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
+        end
+
         within 'td.col-project_manager_approver' do
           expect(page).to have_text(project_manager.name)
         end
       end
 
       it 'have status approved' do
+        within 'table' do
+          find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
+        end
+
         within 'td.col-status' do
           expect(page).to have_text(Vacation.status.approved.text)
+        end
+      end
+
+      it 'Sends an email to the user' do
+        expect(VacationMailer).to receive(:notify_vacation_approved)
+
+        within 'table' do
+          find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
         end
       end
     end
 
     describe 'Recusar' do
+      let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
+
       before do
-        within 'table' do
-          find_link('Recusar', href: "/admin/vacations/#{vacation.id}/denied").click
-        end
+        allow(VacationMailer).to receive(:notify_vacation_denied).and_return(message_delivery)
+        allow(message_delivery).to receive(:deliver_later)
       end
 
       it 'have vacation with administrative approver' do
+        within 'table' do
+          find_link('Recusar', href: "/admin/vacations/#{vacation.id}/denied").click
+        end
+
         within 'td.col-denier' do
           expect(page).to have_text(admin.name)
         end
       end
 
       it 'have status denied' do
+        within 'table' do
+          find_link('Recusar', href: "/admin/vacations/#{vacation.id}/denied").click
+        end
+
         within 'td.col-status' do
           expect(page).to have_text(Vacation.status.denied.text)
+        end
+      end
+
+      it 'Sends an email to the user' do
+        expect(VacationMailer).to receive(:notify_vacation_denied)
+
+        within 'table' do
+          find_link('Recusar', href: "/admin/vacations/#{vacation.id}/denied").click
         end
       end
     end

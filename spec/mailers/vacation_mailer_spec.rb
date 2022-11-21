@@ -43,5 +43,82 @@ describe VacationMailer do
         expect(mail.text_part.decoded).to match(l vacation.end_date)
       end
     end
+
+    context 'when a vacation gets approved' do
+      let(:admins) { build_list :user, 2, :admin }
+      let(:vacation) { FactoryBot.build(:vacation) }
+      let(:mail) { VacationMailer.notify_vacation_approved(vacation) }
+      let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq(t 'vacation_mailer.notify_vacation_approved.subject')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([vacation.user.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @count on html_part' do
+        expect(mail.html_part.decoded).to match(count)
+      end
+
+      it 'assigns @count on text_part' do
+        expect(mail.text_part.decoded).to match(count)
+      end
+
+      it 'assigns @start_date on html_part' do
+        expect(mail.html_part.decoded).to match(l vacation.start_date)
+      end
+
+      it 'assigns @start_date on text_part' do
+        expect(mail.text_part.decoded).to match(l vacation.start_date)
+      end
+
+      it 'assigns @end_date on html_part' do
+        expect(mail.html_part.decoded).to match(l vacation.end_date)
+      end
+
+      it 'assigns @end_date on text_part' do
+        expect(mail.text_part.decoded).to match(l vacation.end_date)
+      end
+    end
+
+    context 'when a vacation gets approved' do
+      let(:admins) { build_list :user, 2, :admin }
+      let(:vacation) { FactoryBot.build(:vacation) }
+      let(:mail) { VacationMailer.notify_vacation_denied(vacation) }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq(t 'vacation_mailer.notify_vacation_denied.subject')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([vacation.user.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @start_date on html_part' do
+        expect(mail.html_part.decoded).to match(l vacation.start_date)
+      end
+
+      it 'assigns @start_date on text_part' do
+        expect(mail.text_part.decoded).to match(l vacation.start_date)
+      end
+
+      it 'assigns @end_date on html_part' do
+        expect(mail.html_part.decoded).to match(l vacation.end_date)
+      end
+
+      it 'assigns @end_date on text_part' do
+        expect(mail.text_part.decoded).to match(l vacation.end_date)
+      end
+    end
   end
 end

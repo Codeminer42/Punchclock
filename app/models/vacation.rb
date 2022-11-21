@@ -24,9 +24,7 @@ class Vacation < ApplicationRecord
       update!(hr_approver: user) if user.hr?
       update!(project_manager_approver: user) if user.project_manager?
 
-      if hr_approver && project_manager_approver
-        update!(status: :approved)
-      end
+      validate_approvers_and_approve
     end
   end
 
@@ -40,6 +38,12 @@ class Vacation < ApplicationRecord
   end
 
   private
+
+  def validate_approvers_and_approve
+    if hr_approver && project_manager_approver
+      update!(status: :approved)
+    end
+  end
 
   def not_cancelled?
     status != :cancelled
