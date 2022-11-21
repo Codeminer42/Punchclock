@@ -52,6 +52,9 @@ describe VacationsController do
 
   describe 'POST create' do
     context "when params are valid" do
+      let(:admins) { [create(:user, :hr), create(:user, :project_manager)] }
+      let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
+
       let(:vacation_valid_params) do
         {
           start_date: 1.months.from_now,
@@ -59,10 +62,21 @@ describe VacationsController do
         }
       end
 
+      before do
+        allow(VacationMailer).to receive(:notify_vacation_request).and_return(message_delivery)
+        allow(message_delivery).to receive(:deliver_later)
+      end
+
       it "saves the user vacation" do
         post :create, params: { vacation: vacation_valid_params }
 
         expect(response).to have_http_status(:found)
+      end
+
+      it "mails admins" do
+        expect(VacationMailer).to receive(:notify_vacation_request)
+
+        post :create, params: { vacation: vacation_valid_params }
       end
     end
 

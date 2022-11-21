@@ -71,6 +71,15 @@ pt-BR:
       start_date: "Data de início: %{date}"
       end_date: "Data de término: %{date}"
       count: "Número de dias de férias: %{count}"
+    notify_vacation_approved:
+      subject: "Punchclock - Pedido de férias aprovado"
+      info: "Seu pedido de férias com duração de %{count} dias foi aprovado."
+      start_date: "Data de início: %{date}"
+      end_date: "Data de término: %{date}"
+    notify_vacation_denied:
+      subject: "Punchclock - Pedido de férias negado"
+      info: "Seu pedido de férias foi negado."
+      dates: "Referente ao pedido com início em %{start_date} e término em %{end_date}"
   views:
     pagination:
       first: "&laquo; Primeira"
