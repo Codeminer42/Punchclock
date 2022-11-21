@@ -48,6 +48,8 @@ en:
         evaluator: Evaluator
         admin: Admin
         open_source_manager: Open Source Manager
+        hr: Human Resources
+        project_manager: Project Manager
     question:
       kind:
         multiple_choice: Multiple Choice

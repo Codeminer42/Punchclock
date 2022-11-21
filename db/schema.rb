@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_11_125254) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_18_185055) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -235,12 +235,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_11_125254) do
     t.date "end_date", null: false
     t.integer "status", default: 0
     t.bigint "user_id", null: false
-    t.bigint "commercial_approver_id"
-    t.bigint "administrative_approver_id"
+    t.bigint "hr_approver_id"
+    t.bigint "project_manager_approver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["administrative_approver_id"], name: "index_vacations_on_administrative_approver_id"
-    t.index ["commercial_approver_id"], name: "index_vacations_on_commercial_approver_id"
+    t.bigint "denier_id"
+    t.index ["denier_id"], name: "index_vacations_on_denier_id"
+    t.index ["hr_approver_id"], name: "index_vacations_on_hr_approver_id"
+    t.index ["project_manager_approver_id"], name: "index_vacations_on_project_manager_approver_id"
     t.index ["user_id"], name: "index_vacations_on_user_id"
   end
 
@@ -261,6 +263,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_11_125254) do
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "mentor_id"
   add_foreign_key "vacations", "users"
-  add_foreign_key "vacations", "users", column: "administrative_approver_id"
-  add_foreign_key "vacations", "users", column: "commercial_approver_id"
+  add_foreign_key "vacations", "users", column: "denier_id"
+  add_foreign_key "vacations", "users", column: "hr_approver_id"
+  add_foreign_key "vacations", "users", column: "project_manager_approver_id"
 end

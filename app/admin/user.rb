@@ -94,7 +94,9 @@ ActiveAdmin.register User do
           row :level, &:level_text
           row :contract_type, &:contract_type_text
           row :contract_company_country, &:contract_company_country_text
-          row :roles, &:roles_text
+          row :roles do |user|
+            user.roles.map { |role| I18n.t(role, scope: 'enumerize.user.role') }
+          end
           row :skills
           row :mentor
           row :allow_overtime
@@ -188,7 +190,7 @@ ActiveAdmin.register User do
       f.input :started_at, as: :date_picker, input_html: { value: f.object.started_at }
       f.input :city, as: :select, collection: City.collection.map { |city| ["#{city.name} - #{city.state.code}", city.id] }
       f.input :office, collection: Office.active.order(:city)
-      f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [role.text.titleize, role] }
+      f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [I18n.t(role, scope: 'enumerize.user.role'), role] }
       f.input :mentor, collection: User.active.order(:name)
       f.input :skills, as: :check_boxes, collection: Skill.order(:title)
       f.input :occupation, as: :radio

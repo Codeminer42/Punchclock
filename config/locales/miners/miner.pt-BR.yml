@@ -31,6 +31,8 @@ pt-BR:
         evaluator: Avaliador
         admin: Admin
         open_source_manager: Responsável OpenSource
+        hr: Recursos Humanos
+        project_manager: Gerente de Projetos
     question:
       kind:
         multiple_choice: Multipla Escolha

@@ -18,7 +18,6 @@ module IntegrationHelpers
 
   def logout()
     visit root_path
-
     find('a', text: 'Sair').click
   end
 end
