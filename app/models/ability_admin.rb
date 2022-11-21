@@ -32,7 +32,7 @@ class AbilityAdmin
   def define_permissions(user)
     admin_permitions(user) if user.admin?
     open_source_manager_permissions(user) if user.open_source_manager?
-    vacation_manager_permissions(user) if user.hr? || user.project_manager?
+    vacation_manager_permissions(user) if user.hr? || user.commercial?
   end
 
   attr_reader :action

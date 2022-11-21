@@ -296,5 +296,5 @@ pt-BR:
         end_date: "Data de término"
         status: 'Status'
         hr_approver: 'Aprovação Recursos Humanos'
-        project_manager_approver: 'Aprovação Gerente de Projeto'
+        commercial_approver: 'Aprovação Comercial'
         denier: 'Recusado Por'

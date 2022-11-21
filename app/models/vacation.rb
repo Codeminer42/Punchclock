@@ -5,7 +5,7 @@ class Vacation < ApplicationRecord
 
   belongs_to :user
   belongs_to :hr_approver, class_name: 'User', foreign_key: :hr_approver_id, optional: true
-  belongs_to :project_manager_approver, class_name: 'User', foreign_key: :project_manager_approver_id, optional: true
+  belongs_to :commercial_approver, class_name: 'User', foreign_key: :commercial_approver_id, optional: true
   belongs_to :denier, class_name: 'User', foreign_key: :denier_id, optional: true
 
   enumerize :status, in: {
@@ -22,17 +22,16 @@ class Vacation < ApplicationRecord
   def approve!(user)
     ActiveRecord::Base.transaction do
       update!(hr_approver: user) if user.hr?
-      update!(project_manager_approver: user) if user.project_manager?
+      update!(commercial_approver: user) if user.commercial?
 
       validate_approvers_and_approve
     end
   end
 
   def deny!(user)
-    if user.project_manager? || user.hr?
+    if user.commercial? || user.hr?
       ActiveRecord::Base.transaction do
-        update!(status: :denied)
-        update!(denier: user)
+        update!(status: :denied, denier: user)
       end
     end
   end
@@ -40,9 +39,7 @@ class Vacation < ApplicationRecord
   private
 
   def validate_approvers_and_approve
-    if hr_approver && project_manager_approver
-      update!(status: :approved)
-    end
+    update!(status: :approved) if hr_approver && commercial_approver
   end
 
   def not_cancelled?

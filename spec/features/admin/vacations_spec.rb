@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Vacation', type: :feature do
   let(:admin) { create(:user, :hr) }
-  let(:project_manager) { create(:user, :project_manager) }
+  let(:commercial) { create(:user, :commercial) }
   let!(:vacation) { create(:vacation) }
 
   before do
@@ -20,7 +20,7 @@ describe 'Vacation', type: :feature do
                         have_text('Data de término') &
                         have_text('Status')
                         have_text('Aprovação Recursos Humanos') &
-                        have_text('Aprovação Gerente de Projeto') &
+                        have_text('Aprovação Comercial') &
                         have_text('Recusado Por')
       end
     end
@@ -69,7 +69,7 @@ describe 'Vacation', type: :feature do
 
         logout
 
-        sign_in(project_manager)
+        sign_in(commercial)
         visit '/admin/vacations'
       end
 
@@ -88,8 +88,8 @@ describe 'Vacation', type: :feature do
           find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
         end
 
-        within 'td.col-project_manager_approver' do
-          expect(page).to have_text(project_manager.name)
+        within 'td.col-commercial_approver' do
+          expect(page).to have_text(commercial.name)
         end
       end
 

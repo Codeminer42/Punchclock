@@ -112,8 +112,8 @@ FactoryBot.define do
     roles { [:hr, :admin] }
   end
 
-  trait :project_manager do
-    roles { [:project_manager, :admin] }
+  trait :commercial do
+    roles { [:commercial, :admin] }
   end
 
   factory :invalid_user, parent: :user do

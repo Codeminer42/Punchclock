@@ -146,11 +146,11 @@ RSpec.describe User, type: :model do
 
     describe '.vacation_managers' do
       let!(:user1) { create(:user, :hr) }
-      let!(:user2) { create(:user, :project_manager) }
-      let!(:user3) { create(:user, roles: [:admin]) }
+      let!(:user2) { create(:user, :commercial) }
+      before { create(:user, roles: [:admin]) }
 
       it 'returns users that can manage vacations' do
-        expect(User.vacation_managers.to_a).to contain_exactly(user1, user2)
+        expect(User.vacation_managers).to contain_exactly(user1, user2)
       end
     end
   end

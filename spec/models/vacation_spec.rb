@@ -6,7 +6,7 @@ RSpec.describe Vacation, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:hr_approver).class_name('User').optional }
-    it { is_expected.to belong_to(:project_manager_approver).class_name('User').optional }
+    it { is_expected.to belong_to(:commercial_approver).class_name('User').optional }
     it { is_expected.to belong_to(:denier).class_name('User').optional }
   end
 
@@ -65,8 +65,7 @@ RSpec.describe Vacation, type: :model do
   end
 
   describe '#approve!' do
-    let(:vacation) { create(:vacation) }
-    subject { vacation }
+    subject(:vacation) { create(:vacation) }
 
     context 'when user is hr' do
       let(:user) { create(:user, :hr) }
@@ -77,20 +76,20 @@ RSpec.describe Vacation, type: :model do
     end
 
     context 'when user is a project manager' do
-      let(:user) { create(:user, :project_manager) }
+      let(:user) { create(:user, :commercial) }
 
       it 'set project manager approver' do
-        expect { subject.approve! user }.to change { vacation.project_manager_approver }.from(nil).to(user)
+        expect { subject.approve! user }.to change { vacation.commercial_approver }.from(nil).to(user)
       end
     end
 
     context 'when both roles approve' do
       let(:hr_user) { create(:user, :hr) }
-      let(:project_manager_user) { create(:user, :project_manager) }
+      let(:commercial_user) { create(:user, :commercial) }
 
       before do
         subject.approve! hr_user
-        subject.approve! project_manager_user
+        subject.approve! commercial_user
       end
 
       it 'set project manager approver' do
@@ -100,8 +99,7 @@ RSpec.describe Vacation, type: :model do
   end
 
   describe '#deny!' do
-    let(:vacation) { create(:vacation) }
-    subject { vacation }
+    subject(:vacation) { create(:vacation) }
     let(:user) { create(:user, :hr) }
 
     it 'set project manager approver' do

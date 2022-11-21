@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Vacation do
-  permit_params :start_date, :end_date, :status, :user_id, :hr_approver_id, :project_manager_approver_id, :denier_id
+  permit_params :start_date, :end_date, :status, :user_id, :hr_approver_id, :commercial_approver_id, :denier_id
 
   menu parent: User.model_name.human(count: 2)
 
@@ -38,7 +38,7 @@ ActiveAdmin.register Vacation do
     end
     column :status, &:status_text
     column :hr_approver
-    column :project_manager_approver
+    column :commercial_approver
     column :denier
 
     if Ability.new(current_user).can? :manage, Vacation

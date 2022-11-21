@@ -37,7 +37,7 @@ class User < ApplicationRecord
     admin: 2,
     open_source_manager: 3,
     hr: 4,
-    project_manager: 5,
+    commercial: 5,
   }, multiple: true, predicates: true
 
   belongs_to :office, optional: false
@@ -72,7 +72,7 @@ class User < ApplicationRecord
     where("users.roles && ARRAY[?]::int[]", roles_values)
   }
   scope :admin, -> { by_roles_in([:admin]) }
-  scope :vacation_managers, -> { by_roles_in([:hr, :project_manager]) }
+  scope :vacation_managers, -> { by_roles_in([:hr, :commercial]) }
 
   attr_accessor :password_required
 

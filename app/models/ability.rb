@@ -29,7 +29,7 @@ class Ability
       can :read, ActiveAdmin
     end
 
-    if user.hr? || user.project_manager?
+    if user.hr? || user.commercial?
       can :manage, Vacation
     end
   end

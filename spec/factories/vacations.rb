@@ -5,7 +5,7 @@ FactoryBot.define do
     status { 'pending' }
     user
     hr_approver { nil }
-    project_manager_approver { nil }
+    commercial_approver { nil }
     denier { nil }
   end
 end
