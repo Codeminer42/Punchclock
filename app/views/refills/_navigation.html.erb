@@ -37,20 +37,18 @@
             <%= t('.open_source') %>
           <% end %>
 
-          <% unless Rails.env.production? %>
-            <%= link_to vacations_path do %>
-              <%= t('.vacations') %>
-            <% end %>
+          <%= link_to vacations_path do %>
+            <%= t('.vacations') %>
+          <% end %>
+
+          <%= link_to contributions_path do %>
+            <%= t('.my_contributions') %>
           <% end %>
 
           <% if can?(:read, ActiveAdmin) %>
             <%= link_to admin_root_path do %>
               <%= t('.administrative') %>
             <% end %>
-          <% end %>
-
-          <%= link_to contributions_path do %>
-            <%= t('.my_contributions') %>
           <% end %>
         </div>
 

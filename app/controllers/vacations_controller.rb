@@ -17,7 +17,7 @@ class VacationsController < ApplicationController
     @vacation = scoped_vacations.new(vacation_params)
 
     if @vacation.save
-      VacationMailer.notify_vacation_request(@vacation, User.vacation_managers.map(&:email))
+      VacationMailer.notify_vacation_request(@vacation, User.vacation_managers.map(&:email)).deliver_later
 
       redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.vacation.create")
     else

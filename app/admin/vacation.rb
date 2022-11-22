@@ -41,7 +41,7 @@ ActiveAdmin.register Vacation do
     column :commercial_approver
     column :denier
 
-    if Ability.new(current_user).can? :manage, Vacation
+    if authorized? :manage, Vacation
       actions defaults: false do |vacation|
         link_to I18n.t('approve'), approve_admin_vacation_path(vacation), method: :put if vacation.pending?
       end

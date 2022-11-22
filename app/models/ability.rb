@@ -28,9 +28,5 @@ class Ability
     if user.admin? || user.open_source_manager?
       can :read, ActiveAdmin
     end
-
-    if user.hr? || user.commercial?
-      can :manage, Vacation
-    end
   end
 end

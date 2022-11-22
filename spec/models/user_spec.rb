@@ -116,31 +116,31 @@ RSpec.describe User, type: :model do
     end
 
     describe '.by_roles_in' do
-      let!(:user1) { create(:user, roles: %i[admin]) }
+      let!(:user1) { create(:user, roles: [:admin]) }
       let!(:user2) { create(:user, roles: [:admin]) }
 
       context 'by admin role only' do
         let(:roles_names) { [:admin] }
         it 'returns users with admin role' do
-          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1, user2)
+          expect(User.by_roles_in(roles_names)).to contain_exactly(user1, user2)
         end
       end
 
       context 'by admin roles' do
         let(:roles_names) { %i[admin] }
         it 'returns users with admin roles' do
-          expect(User.by_roles_in(roles_names).to_a).to contain_exactly(user1, user2)
+          expect(User.by_roles_in(roles_names)).to contain_exactly(user1, user2)
         end
       end
     end
 
     describe '.admin' do
-      let!(:user1) { create(:user, roles: %i[admin]) }
+      let!(:user1) { create(:user, roles: [:admin]) }
       let!(:user2) { create(:user) }
       let!(:user3) { create(:user, roles: [:admin]) }
 
       it 'returns users with admin role' do
-        expect(User.admin.to_a).to contain_exactly(user1, user3)
+        expect(User.admin).to contain_exactly(user1, user3)
       end
     end
 
