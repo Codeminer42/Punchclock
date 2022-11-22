@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Vacation do
+  config.create_another = true
+
   permit_params :start_date, :end_date, :status, :user_id, :hr_approver_id, :commercial_approver_id, :denier_id
 
   menu parent: User.model_name.human(count: 2)
@@ -50,5 +52,15 @@ ActiveAdmin.register Vacation do
         link_to I18n.t('refuse'), denied_admin_vacation_path(vacation), method: :put if vacation.pending?
       end
     end
+  end
+
+  form do |f|
+    inputs 'Vacation' do
+      input :user
+      input :start_date, as: :date_picker
+      input :end_date, as: :date_picker
+      input :status, as: :select, collection: Vacation.status.values.map { |vacation| [vacation.text.titleize, vacation.value] }
+    end
+    actions
   end
 end
