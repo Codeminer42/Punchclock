@@ -19,6 +19,12 @@ class Vacation < ApplicationRecord
   validates :start_date, comparison: { greater_than: Time.zone.today }, if: :not_cancelled?
   validates :end_date, comparison: { greater_than: :start_date }, if: :not_cancelled?
 
+  scope :ongoing_and_scheduled, -> {
+    where(status: :approved)
+    .where("end_date >= :today", today: Date.current)
+    .order(start_date: :asc, end_date: :asc)
+  }
+
   def approve!(user)
     ActiveRecord::Base.transaction do
       update!(hr_approver: user) if user.hr?

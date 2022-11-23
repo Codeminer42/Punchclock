@@ -10,6 +10,22 @@ RSpec.describe Vacation, type: :model do
     it { is_expected.to belong_to(:denier).class_name('User').optional }
   end
 
+  describe ".ongoing_and_scheduled" do
+    let(:ongoing_vacation) { create(:vacation, :ongoing) }
+    let(:scheduled_vacation) { create(:vacation, :scheduled) }
+
+    before do
+      create(:vacation, :pending)
+      create(:vacation, :cancelled)
+      create(:vacation, :denied)
+      create(:vacation, :ended)
+    end
+
+    it "return only approved ongoing and scheduled vacations" do
+      expect(described_class.ongoing_and_scheduled).to eq([ongoing_vacation, scheduled_vacation])
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:end_date) }

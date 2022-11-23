@@ -8,6 +8,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'selenium/webdriver'
 require 'capybara/rails'
+require 'capybara-screenshot/rspec'
 require 'money-rails/test_helpers'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }

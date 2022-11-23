@@ -25,10 +25,11 @@ ActiveAdmin.register Vacation do
     redirect_to admin_vacations_path
   end
 
-  scope :all
+  scope :ongoing_and_scheduled, default: true
   scope :pending
   scope :approved
   scope :denied
+  scope :all
 
   index do
     column :user

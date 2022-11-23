@@ -30,3 +30,9 @@ pt-BR:
       user:
         scopes:
           not_allocated: "Não alocados"
+      vacation:
+        scopes:
+          ongoing_and_scheduled: "Em andamento e agendadas"
+          pending: "Pendentes"
+          denied: "Negadas"
+          approved: "Aprovadas"

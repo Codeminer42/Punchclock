@@ -7,12 +7,12 @@ describe 'Vacation', type: :feature do
   let(:commercial) { create(:user, :commercial) }
   let!(:vacation) { create(:vacation) }
 
-  before do
-    sign_in(admin)
-    visit '/admin/vacations'
-  end
-
   describe 'Index' do
+    before do
+      sign_in(admin)
+      visit '/admin/vacations?scope=pending'
+    end
+
     it 'must find fields "Usuário", "Data de início", "Data de término", "Status", "Aprovação Comercial", "Aprovação Administrativa" on table' do
       within 'table' do
         expect(page).to have_text('Usuário') &
@@ -36,6 +36,11 @@ describe 'Vacation', type: :feature do
   end
 
   describe 'Filters' do
+    before do
+      sign_in(admin)
+      visit '/admin/vacations?scope=pending'
+    end
+
     it 'by start date' do
       within '#filters_sidebar_section' do
         expect(page).to have_text('Data de início')
@@ -63,14 +68,10 @@ describe 'Vacation', type: :feature do
         allow(VacationMailer).to receive(:notify_vacation_approved).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
 
-        within 'table' do
-          find_link('Aprovar', href: "/admin/vacations/#{vacation.id}/approve").click
-        end
-
-        logout
+        vacation.approve!(admin)
 
         sign_in(commercial)
-        visit '/admin/vacations'
+        visit '/admin/vacations?scope=pending'
       end
 
       it 'have vacation with hr approver' do
@@ -118,12 +119,17 @@ describe 'Vacation', type: :feature do
       before do
         allow(VacationMailer).to receive(:notify_vacation_denied).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
+
+        sign_in(admin)
+        visit '/admin/vacations?scope=all'
       end
 
       it 'have vacation with administrative approver' do
         within 'table' do
           find_link('Recusar', href: "/admin/vacations/#{vacation.id}/denied").click
         end
+
+        visit '/admin/vacations?scope=denied'
 
         within 'td.col-denier' do
           expect(page).to have_text(admin.name)
@@ -134,6 +140,8 @@ describe 'Vacation', type: :feature do
         within 'table' do
           find_link('Recusar', href: "/admin/vacations/#{vacation.id}/denied").click
         end
+
+        visit '/admin/vacations?scope=denied'
 
         within 'td.col-status' do
           expect(page).to have_text(Vacation.status.denied.text)
