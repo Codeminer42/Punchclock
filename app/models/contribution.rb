@@ -6,6 +6,13 @@ class Contribution < ApplicationRecord
   include AASM
 
   enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true
+  enumerize :rejected_reason, in: {
+    allocated_in_the_project: 0,
+    wrong_understanding_of_issue: 1,
+    no_sufficient_effort: 2,
+    pr_abandoned: 3,
+    other_reason: 4
+  }
 
   belongs_to :user
   belongs_to :repository
@@ -37,6 +44,7 @@ class Contribution < ApplicationRecord
 
   validates :link, uniqueness: true
   validates :link, :state, presence: true
+  validate :rejected_reason_presence
 
   scope :this_week, -> do
     where("contributions.created_at >= :start_date", start_date: Date.current.beginning_of_week)
@@ -51,4 +59,10 @@ class Contribution < ApplicationRecord
   scope :active_engineers, -> { joins(:user).merge(User.engineer.active) }
   scope :valid_pull_requests, -> { where.not(state: :refused) }
   scope :without_pr_state, ->(state) { where.not(pr_state: state) }
+
+  private
+
+  def rejected_reason_presence
+    errors.add(:rejected_reason, :must_be_blank, state: Contribution.human_attribute_name("state/#{state}")) if (approved? || received?) && !rejected_reason.blank?
+  end
 end

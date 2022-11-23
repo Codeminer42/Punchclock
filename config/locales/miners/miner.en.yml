@@ -68,6 +68,12 @@ en:
         open: Open
         closed: Closed
         merged: Merged
+      rejected_reason:
+        allocated_in_the_project: Allocated in the project
+        project_is_not_on_the_curated_list: Project is not on the curated list
+        no_sufficient_effort: No sufficient effort
+        pr_abandoned: PR abandoned
+        other_reason: Other reason
     vacation:
       status:
         pending: Pending

@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_185846) do
     t.bigint "reviewer_id"
     t.datetime "reviewed_at", precision: nil
     t.string "pr_state"
+    t.integer "rejected_reason"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"

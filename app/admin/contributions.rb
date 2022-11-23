@@ -1,7 +1,7 @@
 ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
 
-  permit_params :state, :link, :user_id, :repository_id
+  permit_params :state, :link, :user_id, :repository_id, :rejected_reason
   actions :index, :show, :new, :create, :edit, :update
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
@@ -15,12 +15,17 @@ ActiveAdmin.register Contribution do
   member_action :refuse, method: :put, only: :index
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each { |contribution| contribution.refuse!(current_user.id) if contribution.state == "received" }
+    batch_action_collection.find(ids).each { |contribution|
+      if contribution.received?
+        contribution.refuse!(current_user.id)
+        contribution.update(rejected_reason: :other_reason)
+      end
+    }
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each { |contribution| contribution.approve!(current_user.id) if contribution.state == "received" }
+    batch_action_collection.find(ids).each { |contribution| contribution.approve!(current_user.id) if contribution.received? }
 
     redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
   end
@@ -55,6 +60,9 @@ ActiveAdmin.register Contribution do
     column :pr_state, &:pr_state_text
     column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
+    column :rejected_reason do |contribution|
+      contribution.rejected_reason_text
+    end
 
     actions defaults: true do |contribution|
       if contribution.received?
@@ -71,6 +79,9 @@ ActiveAdmin.register Contribution do
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
       end
+      row :rejected_reason do |contribution|
+        contribution.rejected_reason_text
+      end
       row :pr_state
       row :reviewed_by
       row :reviewed_at
@@ -84,6 +95,7 @@ ActiveAdmin.register Contribution do
     inputs I18n.t('contribution_details') do
       if f.object.persisted?
         input :state, collection: Contribution.aasm.states
+        input :rejected_reason, as: :select, collection: Contribution.rejected_reason.values.map { |reason| [I18n.t(reason, scope: 'enumerize.contribution.rejected_reason'), reason] }
       else
         input :user, as: :select, collection: User.engineer.active.order(:name)
 
@@ -102,6 +114,7 @@ ActiveAdmin.register Contribution do
 
     def refuse
       resource.refuse!(current_user.id)
+      resource.update(rejected_reason: :other_reason)
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
     end
 

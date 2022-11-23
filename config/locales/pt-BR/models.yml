@@ -57,6 +57,10 @@ pt-BR:
               invalid_currency: Moeda inválida
         vacation:
           must_be_higher_than_10: "As férias precisam ter no mínimo 10 dias"
+        contribution:
+          attributes:
+            rejected_reason:
+              must_be_blank: "Não pode ser preenchido se o status for %{state}"
     models:
       admin_user:
         one: "Administrador"
@@ -295,6 +299,7 @@ pt-BR:
         updated_at: "Atualizado em"
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
+        rejected_reason: "Motivo da recusa"
       vacation:
         user: 'Usuário'
         start_date: "Data de início"
