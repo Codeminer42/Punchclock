@@ -16,11 +16,16 @@ describe 'Contribution', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "User", "Link" and "State" on table' do
+    it 'must find fields "User", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason" on table' do
       within 'table' do
           expect(page).to have_text('Usuário') &
                         have_text('Link') &
-                        have_text('Estado')
+                        have_text('Criado em') &
+                        have_text('Estado') &
+                        have_text('Pr State') &
+                        have_text('Revisado por') &
+                        have_text('Revisado em') &
+                        have_text('Motivo da recusa')
       end
     end
 
@@ -28,7 +33,9 @@ describe 'Contribution', type: :feature do
       within 'table' do
         expect(page).to have_text(contribution.user.first_and_last_name) &
                         have_text(contribution.link) &
-                        have_text(Contribution.human_attribute_name("state/#{contribution.state}"))
+                        have_text(I18n.l(contribution.created_at.to_date, format: :default)) &
+                        have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
+                        have_text(contribution.pr_state_text)
       end
     end
 
@@ -67,6 +74,10 @@ describe 'Contribution', type: :feature do
         expect(page).to have_text('Usuário') &
                         have_text('Link') &
                         have_text('Estado') &
+                        have_text('Motivo da recusa') &
+                        have_text('Pr State') &
+                        have_text('Revisado por') &
+                        have_text('Revisado em') &
                         have_text('Criado em') &
                         have_text('Atualizado em')
       end
@@ -83,6 +94,14 @@ describe 'Contribution', type: :feature do
 
           within "tr.row.row-state" do
             expect(page).to have_text(Contribution.human_attribute_name("state/#{contribution.state}"))
+          end
+
+          within "tr.row.row-rejected_reason" do
+            expect(page).to have_text('Vazio')
+          end
+
+          within "tr.row.row-pr_state" do
+            expect(page).to have_text(contribution.pr_state)
           end
 
           within "tr.row.row-created_at" do
@@ -108,14 +127,34 @@ describe 'Contribution', type: :feature do
       end
     end
 
-    describe 'Refuse' do
+    describe 'Refuse', js: true do
+
       before do
-        find_link('Recusar', href: "/admin/contributions/#{contribution.id}/refuse").click
+        find(".member_link_refuse", text: 'Recusar').click
       end
 
-      it 'updates contribution state' do
+      it 'shows a modal' do
+        expect(page).to have_text('Justificativa') &
+                        have_text('Motivo')
+      end
+
+      it 'shows rejected_reason options' do
+        find_field(name: "Motivo").click
+
+        expect(page).to have_text('Alocado no projeto') &
+                        have_text('Entendimento errado da issue') &
+                        have_text('Esforço insuficiente') &
+                        have_text('PR abandonada') &
+                        have_text('Outros')
+      end
+
+      it 'rejects a contribution' do
+        find_field(name: "Motivo").click
+        find_button('OK').click
+
         expect(page).to have_css('.flash_notice', text: 'A contribuição foi recusada') &
-                        have_text('Recusado')
+                        have_text('Recusado') &
+                        have_text('Alocado no projeto')
       end
     end
   end

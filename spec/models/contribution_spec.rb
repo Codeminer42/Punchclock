@@ -107,4 +107,34 @@ RSpec.describe Contribution, type: :model do
       expect(described_class.without_pr_state(:merged)).to contain_exactly(open_pr)
     end
   end
+
+  describe 'validations' do
+    context 'validate rejected_reason_presence' do
+      context 'when the contribution is refused' do
+        let(:contribution) { create(:contribution) }
+
+        before { contribution.update(state: :refused) }
+
+        it 'has a rejected reason' do
+          expect { contribution.update(rejected_reason: :allocated_in_the_project) }.to change { contribution.rejected_reason }.from(nil).to('allocated_in_the_project')
+        end
+      end
+
+      context 'when the contribution is received' do
+        let(:contribution) { create(:contribution) }
+
+        it 'raises an error' do
+          expect { contribution.update!(state: :received, rejected_reason: :allocated_in_the_project) }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: Motivo da recusa Não pode ser preenchido se o status for Recebido')
+        end
+      end
+
+      context 'when the contribution is approved' do
+        let(:contribution) { create(:contribution) }
+
+        it 'raises an error' do
+          expect { contribution.update!(state: :approved, rejected_reason: :allocated_in_the_project) }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: Motivo da recusa Não pode ser preenchido se o status for Aprovado')
+        end
+      end
+    end
+  end
 end
