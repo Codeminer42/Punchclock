@@ -6,6 +6,7 @@ describe VacationMailer do
       let(:admins) { build_list :user, 2, :admin }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_request(vacation, admins.map(&:email)) }
+      let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
         expect(mail.subject).to eq(t 'vacation_mailer.notify_vacation_request.subject', user: vacation.user.name)
@@ -13,6 +14,12 @@ describe VacationMailer do
 
       it 'renders the receiver email' do
         expect(mail.to).to eq(admins.map(&:email))
+      end
+
+      it 'renders the CC email' do
+        stub_const 'ENV', 'HR_EMAIL' => hr_mail
+
+        expect(mail.cc).to eq([hr_mail])
       end
 
       it 'renders the sender email' do
@@ -49,6 +56,7 @@ describe VacationMailer do
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_approved(vacation) }
       let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+      let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
         expect(mail.subject).to eq(t 'vacation_mailer.notify_vacation_approved.subject')
@@ -56,6 +64,12 @@ describe VacationMailer do
 
       it 'renders the receiver email' do
         expect(mail.to).to eq([vacation.user.email])
+      end
+
+      it 'renders the CC email' do
+        stub_const 'ENV', 'HR_EMAIL' => hr_mail
+
+        expect(mail.cc).to eq([hr_mail])
       end
 
       it 'renders the sender email' do
@@ -91,6 +105,7 @@ describe VacationMailer do
       let(:admins) { build_list :user, 2, :admin }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_denied(vacation) }
+      let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
         expect(mail.subject).to eq(t 'vacation_mailer.notify_vacation_denied.subject')
@@ -98,6 +113,12 @@ describe VacationMailer do
 
       it 'renders the receiver email' do
         expect(mail.to).to eq([vacation.user.email])
+      end
+
+      it 'renders the CC email' do
+        stub_const 'ENV', 'HR_EMAIL' => hr_mail
+
+        expect(mail.cc).to eq([hr_mail])
       end
 
       it 'renders the sender email' do
