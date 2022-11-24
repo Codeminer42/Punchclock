@@ -15,9 +15,9 @@ class Vacation < ApplicationRecord
     cancelled: 3,
   }, predicates: true, scope: :shallow
 
-  validates :start_date, :end_date, :user, presence: true
-  validates :start_date, comparison: { greater_than: Time.zone.today }, if: :not_cancelled?
-  validates :end_date, comparison: { greater_than: :start_date }, if: :not_cancelled?
+  validates_presence_of :start_date, :end_date, :user
+  validates_comparison_of :start_date, greater_than: Date.current, if: :not_cancelled?
+  validates_comparison_of :end_date, greater_than: :minimum_vacation_date, if: :not_cancelled?
 
   scope :ongoing_and_scheduled, -> {
     where(status: :approved)
@@ -50,5 +50,10 @@ class Vacation < ApplicationRecord
 
   def not_cancelled?
     status != :cancelled
+  end
+
+  def minimum_vacation_date
+    return unless start_date
+    start_date + 5.days
   end
 end

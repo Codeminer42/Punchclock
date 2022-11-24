@@ -32,51 +32,45 @@ RSpec.describe Vacation, type: :model do
     it { is_expected.to validate_presence_of(:user) }
 
     context 'when end_date is greater than start_date' do
-      let(:start_date) { 1.months.from_now }
-      let(:end_date) { 2.months.from_now }
-      let(:vacation) { build(:vacation, start_date: start_date, end_date: end_date) }
-
-      it 'vacation is valid' do
-        expect(vacation).to be_valid
+      subject(:vacation) do
+        build(:vacation, start_date: 1.months.from_now, end_date: 2.months.from_now)
       end
+
+      it { is_expected.to be_valid }
     end
 
     context 'when start_date is greater than end_date' do
-      let(:start_date) { 2.months.from_now }
-      let(:end_date) { 1.months.from_now }
-      let(:vacation) { build(:vacation, start_date: start_date, end_date: end_date) }
-
-      it 'vacation is invalid' do
-        expect(vacation).to_not be_valid
+      subject(:vacation) do
+        build(:vacation, start_date: 2.months.from_now, end_date: 1.months.from_now)
       end
+
+      it { is_expected.to_not be_valid }
+    end
+
+    context 'when end_date is greater than start_date but difference is less than 5 days' do
+      subject(:vacation) do
+        build(:vacation, start_date: 2.days.from_now, end_date: 3.days.from_now)
+      end
+
+      it { is_expected.to_not be_valid }
     end
 
     context 'when end_date and start_date are the same' do
-      let(:start_date) { 1.day.ago }
-      let(:end_date) { 1.day.ago }
-      let(:vacation) { build(:vacation, start_date: start_date, end_date: end_date) }
+      subject(:vacation) { build(:vacation, start_date: 1.day.ago, end_date: 1.day.ago) }
 
-      it 'vacation is invalid' do
-        expect(vacation).to_not be_valid
-      end
+      it { is_expected.to_not be_valid }
     end
 
     context 'when start_date is today' do
-      let(:start_date) { Date.current }
-      let(:vacation) { build(:vacation, start_date: start_date) }
+      let(:vacation) { build(:vacation, start_date: Date.current) }
 
-      it 'vacation is invalid' do
-        expect(vacation).to_not be_valid
-      end
+      it { expect(vacation).to_not be_valid }
     end
 
     context 'when start_date is in the past' do
-      let(:start_date) { 1.day.ago }
-      let(:vacation) { build(:vacation, start_date: start_date) }
+      let(:vacation) { build(:vacation, start_date: 1.day.ago) }
 
-      it 'vacation is invalid' do
-        expect(vacation).to_not be_valid
-      end
+      it { expect(vacation).to_not be_valid }
     end
   end
 
