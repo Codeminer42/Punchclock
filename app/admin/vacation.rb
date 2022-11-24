@@ -14,7 +14,10 @@ ActiveAdmin.register Vacation do
   member_action :approve, method: :put do
     resource.approve!(current_user)
 
-    VacationMailer.notify_vacation_approved(resource).deliver_later if resource.approved?
+    if resource.approved?
+      VacationMailer.notify_vacation_approved(resource).deliver_later
+      VacationMailer.admin_vacation_approved(resource).deliver_later
+    end
 
     redirect_to admin_vacations_path
   end
