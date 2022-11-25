@@ -107,6 +107,9 @@ pt-BR:
       vacation:
         one: "Férias"
         other: "Férias"
+      exchange_rate:
+        one: "Taxa de Câmbio"
+        other: "Taxas de Câmbio"
     attributes:
       admin_user:
         id: "ID"
@@ -298,3 +301,10 @@ pt-BR:
         hr_approver: 'Aprovação Recursos Humanos'
         commercial_approver: 'Aprovação Comercial'
         denier: 'Recusado Por'
+      exchange_rate:
+        month: 'Mês'
+        year: 'Ano'
+        currency: 'Moeda'
+        rate: 'Taxa'
+        created_at: "Criada em"
+        updated_at: "Atualizada em"
