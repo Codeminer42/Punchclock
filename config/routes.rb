@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :new_admin do
+    resources :mentoring, only: :index
+  end
+
   resources :repositories, only: :index do
     get "(/:languages)", action: :index, on: :collection
   end

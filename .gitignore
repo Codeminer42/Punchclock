@@ -5,6 +5,7 @@
 /config/database.yml
 /log/*.log
 /tmp
+/vendor
 public/assets
 public/uploads
 public/stylesheets
