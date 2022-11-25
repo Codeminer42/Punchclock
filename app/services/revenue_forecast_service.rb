@@ -8,13 +8,13 @@ class RevenueForecastService
   end
 
   def allocation_forecast(allocation)
-    month = allocation.start_at.beginning_of_month
+    date = allocation.start_at.beginning_of_month
     beginning_of_end_date_month = allocation.end_at.beginning_of_month
 
     result = []
-    while month <= beginning_of_end_date_month
-      result << allocation_month_data(allocation, month)
-      month = month.next_month
+    while date <= beginning_of_end_date_month
+      result << allocation_month_data(allocation, date.month, date.year)
+      date = date.next_month
     end
 
     result
@@ -68,38 +68,42 @@ class RevenueForecastService
 
   private
 
-  def allocation_month_data(allocation, beginning_of_month)
-    working_days = calculate_working_days(allocation, beginning_of_month)
+  def allocation_month_data(allocation, month, year)
+    working_days = calculate_working_days(allocation, month, year)
+    forecast = calculate_forecast(working_days, allocation.hourly_rate, month, year)
 
-    {
-      month: beginning_of_month.month,
-      year: beginning_of_month.year,
-      working_days: working_days,
-      forecast: calculate_forecast(working_days, allocation.hourly_rate, beginning_of_month)
-    }
+    { month:, year:, working_days:, forecast: }
   end
 
   def calculate_weekdays(start_date, end_date)
     (start_date..end_date).reject(&:on_weekend?).count
   end
 
-  def calculate_working_days(allocation, beginning_of_month)
-    if allocation.start_at.beginning_of_month == allocation.end_at.beginning_of_month
-      calculate_weekdays(allocation.start_at, allocation.end_at)
-    elsif allocation.start_at.beginning_of_month == beginning_of_month
-      calculate_weekdays(allocation.start_at, beginning_of_month.end_of_month)
-    elsif allocation.end_at.beginning_of_month == beginning_of_month
-      calculate_weekdays(beginning_of_month, allocation.end_at)
+  def same_month_and_year?(date1, date2)
+    date1.month == date2.month && date1.year == date2.year
+  end
+
+  def calculate_working_days(allocation, month, year)
+    start_date = allocation.start_at
+    end_date = allocation.end_at
+    analyzed_month = Date.new(year, month, 1)
+
+    if same_month_and_year?(start_date, end_date)
+      calculate_weekdays(start_date, end_date)
+    elsif same_month_and_year?(start_date, analyzed_month)
+      calculate_weekdays(start_date, analyzed_month.end_of_month)
+    elsif same_month_and_year?(end_date, analyzed_month)
+      calculate_weekdays(analyzed_month, end_date)
     else
-      calculate_weekdays(beginning_of_month, beginning_of_month.end_of_month)
+      calculate_weekdays(analyzed_month, analyzed_month.end_of_month)
     end
   end
 
-  def calculate_forecast(working_days, hourly_rate, beginning_of_month)
-    exchange_rate_date = if beginning_of_month > Date.current
+  def calculate_forecast(working_days, hourly_rate, month, year)
+    exchange_rate_date = if Date.new(year, month, 1) > Date.current
                            Date.current.beginning_of_month - 1
                          else
-                           beginning_of_month - 1
+                           Date.new(year, month, 1) - 1
                          end
 
     converted_rate = hourly_rate.exchange_to_historical('BRL', exchange_rate_date)
