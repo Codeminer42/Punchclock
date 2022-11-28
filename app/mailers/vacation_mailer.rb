@@ -20,4 +20,9 @@ class VacationMailer < ApplicationMailer
     @vacation = vacation
     mail(to: vacation.user.email, cc: ENV['HR_EMAIL'] )
   end
+
+  def notify_vacation_cancelled(vacation)
+    @vacation = vacation
+    mail(to: User.vacation_managers.pluck(:email), cc: ENV['HR_EMAIL'], subject: t('.subject', user: @vacation.user.name))
+  end
 end
