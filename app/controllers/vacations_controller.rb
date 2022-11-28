@@ -31,6 +31,7 @@ class VacationsController < ApplicationController
 
     if vacation_to_cancel.pending?
       vacation_to_cancel.update!(status: :cancelled)
+      VacationMailer.notify_vacation_cancelled(vacation_to_cancel).deliver_later
       redirect_to vacations_path, notice: I18n.t(:notice, scope: "flash.vacation.cancel")
     else
       redirect_to vacations_path, alert: I18n.t(:alert, scope: "flash.vacation.cancel")
