@@ -101,7 +101,7 @@ describe VacationMailer do
       end
     end
 
-    context 'when a vacation gets approved' do
+    context 'when a vacation gets refused' do
       let(:admins) { build_list :user, 2, :admin }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_denied(vacation) }
@@ -123,6 +123,64 @@ describe VacationMailer do
 
       it 'renders the sender email' do
         expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @start_date on html_part' do
+        expect(mail.html_part.decoded).to match(l vacation.start_date)
+      end
+
+      it 'assigns @start_date on text_part' do
+        expect(mail.text_part.decoded).to match(l vacation.start_date)
+      end
+
+      it 'assigns @end_date on html_part' do
+        expect(mail.html_part.decoded).to match(l vacation.end_date)
+      end
+
+      it 'assigns @end_date on text_part' do
+        expect(mail.text_part.decoded).to match(l vacation.end_date)
+      end
+    end
+
+    context 'when a vacation is cancelled by the user' do
+      let!(:vacation_managers) { create_list :user, 2, :commercial }
+      let(:vacation) { FactoryBot.build(:vacation) }
+      let(:mail) { VacationMailer.notify_vacation_cancelled(vacation) }
+      let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+      let(:hr_mail) { 'hr@email.com' }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq(t 'vacation_mailer.notify_vacation_cancelled.subject', user: vacation.user.name)
+      end
+
+      it 'renders the receivers emails' do
+        expect(mail.to).to eq(vacation_managers.map(&:email))
+      end
+
+      it 'renders the CC email' do
+        stub_const 'ENV', 'HR_EMAIL' => hr_mail
+
+        expect(mail.cc).to eq([hr_mail])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @name on html_part' do
+        expect(mail.html_part.decoded).to match(vacation.user.name)
+      end
+
+      it 'assings @name on text_part' do
+        expect(mail.text_part.decoded).to match(vacation.user.name)
+      end
+
+      it 'assigns @count on html_part' do
+        expect(mail.html_part.decoded).to match(count)
+      end
+
+      it 'assigns @count on text_part' do
+        expect(mail.text_part.decoded).to match(count)
       end
 
       it 'assigns @start_date on html_part' do

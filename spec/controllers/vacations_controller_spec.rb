@@ -100,10 +100,21 @@ describe VacationsController do
     context "when vacation in cancelable" do
       let(:vacation) { create(:vacation, user: user, status: :pending) }
       let(:params) { { id: vacation.id } }
+      let(:message_delivery) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+
+      before do
+        allow(VacationMailer).to receive(:notify_vacation_cancelled).and_return(message_delivery)
+      end
 
       it "cancels the user vacation" do
         expect{ delete :destroy, params: params }.to change { vacation.reload.status }
         .from('pending').to('cancelled')
+      end
+
+      it "calls VacationMailer#notify_vacation_cancelled" do
+        expect(VacationMailer).to receive(:notify_vacation_cancelled)
+
+        delete :destroy, params: params
       end
 
       it "flash success message" do
