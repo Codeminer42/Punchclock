@@ -85,6 +85,10 @@ pt-BR:
       subject: "Punchclock - Pedido de férias negado"
       info: "Seu pedido de férias foi negado."
       dates: "Referente ao pedido com início em %{start_date} e término em %{end_date}"
+    notify_vacation_cancelled:
+      subject: "Punchclock - %{user} cancelou o pedido de férias"
+      info: "O %{user} cancelou o pedido de férias com duração de %{count} dias."
+      dates: "Referente ao pedido com início em %{start_date} e término em %{end_date}"
   views:
     pagination:
       first: "&laquo; Primeira"
