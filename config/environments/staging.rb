@@ -26,6 +26,6 @@ Rails.application.configure do
     user_name: ENV['MAILGUN_SMTP_LOGIN'],
     password: ENV['MAILGUN_SMTP_PASSWORD'],
     authentication: :plain,
-    domain: 'heroku.com'
+    domain: 'sandbox03f78d3280c74977aa508779b0e29426.mailgun.org'
   }
 end
