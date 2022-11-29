@@ -70,7 +70,13 @@ class RevenueForecastService
 
   def allocation_month_data(allocation, month, year)
     working_days = calculate_working_days(allocation, month, year)
-    forecast = calculate_forecast(working_days, allocation.hourly_rate, month, year)
+    hourly_rate = allocation.hourly_rate
+    forecast = hourly_rate * working_days * WORKING_HOURS
+
+    unless hourly_rate.currency.iso_code == "BRL"
+      exchange_rate = find_exchange_rate!(month, year)
+      forecast = forecast.with_currency("BRL") * exchange_rate
+    end
 
     { month:, year:, working_days:, forecast: }
   end
@@ -99,15 +105,11 @@ class RevenueForecastService
     end
   end
 
-  def calculate_forecast(working_days, hourly_rate, month, year)
-    rate = hourly_rate
+  def find_exchange_rate!(month, year)
+    exchange_rate = ExchangeRate.newest_by_month_and_year(month, year)
+    raise ArgumentError, "Exchange rate for #{month}/#{year} is missing" unless exchange_rate
 
-    if hourly_rate.currency == "USD"
-      exchange_rate = ExchangeRate.newest_by_month_and_year(month, year)
-      rate = hourly_rate.with_currency("BRL") * exchange_rate.rate
-    end
-
-    rate * working_days * WORKING_HOURS
+    exchange_rate.rate
   end
 
   def active_projects_on_period(beginning_date, end_date)

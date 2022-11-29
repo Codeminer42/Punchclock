@@ -22,15 +22,11 @@ RSpec.describe RevenueForecastService do
       end
 
       before do
-        travel_to(Date.new(2022, 01, 15))
-
         create(:exchange_rate, month: 9, year: 2021, rate: 5.15)
         create(:exchange_rate, month: 10, year: 2021, rate: 5.2)
         create(:exchange_rate, month: 11, year: 2021, rate: 5.25)
         create(:exchange_rate, month: 12, year: 2021, rate: 5.3)
       end
-
-      after { travel_back }
 
       it "returns the forecasts converted to BRL" do
         expect(data).to eq([
@@ -41,6 +37,16 @@ RSpec.describe RevenueForecastService do
           { month: 2, year: 2022, working_days: 20, forecast: Money.new(84800_00, 'BRL') },
           { month: 3, year: 2022, working_days: 4, forecast: Money.new(16960_00, 'BRL') }
         ])
+      end
+
+      context "there's no exchange rate for a month" do
+        let(:allocation) do
+          build_stubbed(:allocation, hourly_rate: Money.new(100_00, 'USD'), start_at: "2021-01-01", end_at: "2021-03-30")
+        end
+
+        it "raises an exception saying that the exchange rate is missing" do
+          expect { data }.to raise_exception(ArgumentError, "Exchange rate for 1/2021 is missing")
+        end
       end
     end
 
