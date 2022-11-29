@@ -100,14 +100,14 @@ class RevenueForecastService
   end
 
   def calculate_forecast(working_days, hourly_rate, month, year)
-    exchange_rate_date = if Date.new(year, month, 1) > Date.current
-                           Date.current.beginning_of_month - 1
-                         else
-                           Date.new(year, month, 1) - 1
-                         end
+    rate = hourly_rate
 
-    converted_rate = hourly_rate.exchange_to_historical('BRL', exchange_rate_date)
-    converted_rate * working_days * WORKING_HOURS
+    if hourly_rate.currency == "USD"
+      exchange_rate = ExchangeRate.newest_by_month_and_year(month, year)
+      rate = hourly_rate.with_currency("BRL") * exchange_rate.rate
+    end
+
+    rate * working_days * WORKING_HOURS
   end
 
   def active_projects_on_period(beginning_date, end_date)
