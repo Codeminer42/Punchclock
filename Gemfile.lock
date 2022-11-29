@@ -278,10 +278,6 @@ GEM
       moneta
       multi_json (>= 1.9.2)
       webrick
-    historical-bank (0.1.6)
-      httparty (~> 0.14)
-      money (~> 6.7)
-      redis (~> 4.0, >= 3.3)
     holidays (8.5.0)
     htmlentities (4.3.4)
     http_parser.rb (0.8.0)
@@ -658,7 +654,6 @@ DEPENDENCIES
   github_api (~> 0.18.2)
   guard
   guard-livereload (~> 2.5)
-  historical-bank
   holidays (~> 8.3)
   httparty
   jquery-easing-rails
