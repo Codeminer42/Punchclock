@@ -24,14 +24,10 @@ RSpec.describe RevenueForecastService do
       before do
         travel_to(Date.new(2022, 01, 15))
 
-        Money.default_bank.add_rates({
-          'BRL' => {
-            '2021-09-30' => 5.15,
-            '2021-10-31' => 5.2,
-            '2021-11-30' => 5.25,
-            '2021-12-31' => 5.3
-          }
-        })
+        create(:exchange_rate, month: 9, year: 2021, rate: 5.15)
+        create(:exchange_rate, month: 10, year: 2021, rate: 5.2)
+        create(:exchange_rate, month: 11, year: 2021, rate: 5.25)
+        create(:exchange_rate, month: 12, year: 2021, rate: 5.3)
       end
 
       after { travel_back }
