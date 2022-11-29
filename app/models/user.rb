@@ -42,7 +42,7 @@ class User < ApplicationRecord
 
   belongs_to :office, optional: false
   belongs_to :mentor, class_name: :User, foreign_key: :mentor_id, optional: true
-  belongs_to :city
+  belongs_to :city, optional: true
   has_many :punches
   has_many :contributions
   has_many :allocations, dependent: :restrict_with_error
