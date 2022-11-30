@@ -15,7 +15,7 @@ RSpec.describe ExchangeRate, type: :model do
     it { is_expected.to validate_numericality_of(:month).is_greater_than_or_equal_to(1) }
     it { is_expected.to validate_numericality_of(:month).is_less_than_or_equal_to(12) }
 
-    it { is_expected.to validate_numericality_of(:year).is_greater_than(2020) }
+    it { is_expected.to validate_numericality_of(:year).is_greater_than(2010) }
 
     it { is_expected.to validate_numericality_of(:rate).is_greater_than_or_equal_to(1) }
   end
