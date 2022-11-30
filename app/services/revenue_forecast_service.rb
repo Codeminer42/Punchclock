@@ -74,8 +74,8 @@ class RevenueForecastService
     forecast = hourly_rate * working_days * WORKING_HOURS
 
     unless hourly_rate.currency.iso_code == "BRL"
-      exchange_rate = find_exchange_rate!(month, year)
-      forecast = forecast.with_currency("BRL") * exchange_rate
+      exchange_rate = ExchangeRate.for_month_and_year!(month, year)
+      forecast = forecast.with_currency("BRL") * exchange_rate.rate
     end
 
     { month:, year:, working_days:, forecast: }
@@ -103,13 +103,6 @@ class RevenueForecastService
     else
       calculate_weekdays(analyzed_month, analyzed_month.end_of_month)
     end
-  end
-
-  def find_exchange_rate!(month, year)
-    exchange_rate = ExchangeRate.newest_by_month_and_year(month, year)
-    raise ArgumentError, "Exchange rate for #{month}/#{year} is missing" unless exchange_rate
-
-    exchange_rate.rate
   end
 
   def active_projects_on_period(beginning_date, end_date)
