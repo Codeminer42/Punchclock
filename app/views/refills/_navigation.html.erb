@@ -36,11 +36,11 @@
           <%= link_to repositories_path do %>
             <%= t('.open_source') %>
           <% end %>
-
-          <%= link_to vacations_path do %>
-            <%= t('.vacations') %>
+          <% if ENV["ENABLE_VACATION"].present? %>
+            <%= link_to vacations_path do %>
+              <%= t('.vacations') %>
+            <% end %>
           <% end %>
-
           <%= link_to contributions_path do %>
             <%= t('.my_contributions') %>
           <% end %>
