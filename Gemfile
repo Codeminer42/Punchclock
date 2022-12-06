@@ -23,6 +23,7 @@ gem 'devise-two-factor',
   ref: '7de6c315b507c41e6ee288ea0bdf3a070416bd17'
 gem 'rqrcode'
 gem 'jquery-rails'
+gem 'rails-ajax_redirect'
 gem 'jquery-ui-rails'
 gem 'sassc-rails'
 gem 'simple_form', '~> 5.1.0'
