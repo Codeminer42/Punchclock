@@ -54,6 +54,6 @@ class Vacation < ApplicationRecord
 
   def minimum_vacation_date
     return unless start_date
-    start_date + 5.days
+    start_date + 10.days
   end
 end
