@@ -67,7 +67,7 @@ ActiveAdmin.register Contribution do
     actions defaults: true do |contribution|
       if contribution.received?
         item I18n.t('approve'), approve_admin_contribution_path(contribution), method: :put, class: "member_link"
-        item I18n.t('refuse'), refuse_admin_contribution_path(contribution), method: :put, class: "member_link"
+        content_tag("a", I18n.t('refuse'), class: "member_link_refuse", name: "refuse_contribution", data: { id: contribution.id, reason: Contribution.rejected_reason.options })
       end
     end
   end
@@ -114,7 +114,7 @@ ActiveAdmin.register Contribution do
 
     def refuse
       resource.refuse!(current_user.id)
-      resource.update(rejected_reason: :other_reason)
+      resource.update(rejected_reason: params["rejected_reason"])
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
     end
 

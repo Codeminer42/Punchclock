@@ -133,3 +133,7 @@ body.logged_in .flash {
     border-bottom: 1px solid rgba(120, 130, 140, 0.5);
   }
 }
+
+.member_link_refuse:hover {
+  cursor: pointer;
+}

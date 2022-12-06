@@ -7,6 +7,8 @@
 //= require moment
 //= require datatables.net
 //= require ./active_admin/allocation_chart.js
+//= require rails-ajax_redirect
+//= require ./active_admin/contributions.js
 
 $(document).ready(function() {
   var $seachFields = $('[data-select]')
