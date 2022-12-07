@@ -63,6 +63,8 @@ class Contribution < ApplicationRecord
   private
 
   def rejected_reason_presence
-    errors.add(:rejected_reason, :must_be_blank, state: Contribution.human_attribute_name("state/#{state}")) if (approved? || received?) && !rejected_reason.blank?
+    if (approved? || received?) && !rejected_reason.blank?
+      errors.add(:rejected_reason, :must_be_blank, state: Contribution.human_attribute_name("state/#{state}"))
+    end
   end
 end
