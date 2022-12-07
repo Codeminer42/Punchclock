@@ -3,13 +3,11 @@
     <div class="col-lg-8">
 
       <%= f.input :start_date, as: :string, input_html: {
-        autocomplete: :off,
         class: %i(datepicker),
         data: { holidays: current_user.office_holidays },
       } %>
 
       <%= f.input :end_date, as: :string, input_html: {
-        autocomplete: :off,
         class: %i(datepicker),
         data: { holidays: current_user.office_holidays },
       } %>
