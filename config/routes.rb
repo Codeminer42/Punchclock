@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :vacations, only: %i[index show new create destroy]
 
-  delete "/vacations/cancel/:id", to: "vacations#cancel"
+  delete "/vacations/deny/:id", to: "vacations#deny"
 
   resources :dashboard, only: :index do
     collection do

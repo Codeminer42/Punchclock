@@ -1,18 +1,21 @@
 class VacationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:cancel]
+  skip_before_action :verify_authenticity_token, only: [:deny]
 
-  before_action :authenticate_user!, except: [:cancel]
+  before_action :authenticate_user!, except: [:deny]
 
   def index
     @vacations = scoped_vacations
   end
 
-  def cancel
-    vacation_to_cancel = Vacation.find(params[:id])
+  def deny
+    vacation_to_deny = Vacation.find(params[:id])
 
-    if vacation_to_cancel.pending?
-      vacation_to_cancel.update!(status: :cancelled)
-      VacationMailer.notify_vacation_cancelled(vacation_to_cancel).deliver_later
+    puts "SOME DENIED VACATIONS ***********************************************"
+    p vacation_to_deny
+
+    if vacation_to_deny.pending?
+      vacation_to_deny.update!(status: :denied)
+      VacationMailer.notify_vacation_denied(vacation_to_deny).deliver_later
     end
   end
 

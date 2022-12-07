@@ -9,10 +9,10 @@
 <ul>
   <li>
     <%=
-      button_to "Destroy",
+      button_to "Negar",
       {
         :controller => :vacations,
-        :action => 'test',
+        :action => 'deny',
         :id => @vacation.id
       },
       :method => :delete
