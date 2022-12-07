@@ -17,7 +17,7 @@ class Vacation < ApplicationRecord
 
   validates_presence_of :start_date, :end_date, :user
   validates_comparison_of :start_date, greater_than: Date.current, if: :not_cancelled?
-  validates_comparison_of :end_date, greater_than: :minimum_vacation_date, if: :not_cancelled?
+  validate :minimum_vacation_date, if: :not_cancelled?
 
   scope :ongoing_and_scheduled, -> {
     where(status: :approved)
@@ -54,6 +54,6 @@ class Vacation < ApplicationRecord
 
   def minimum_vacation_date
     return unless start_date
-    start_date + 10.days
+    errors.add(:base, :must_be_higher_than_10) if ((end_date - start_date) < 10)
   end
 end
