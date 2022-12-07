@@ -1,7 +1,7 @@
 class VacationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:deny]
+  skip_before_action :verify_authenticity_token, only: [:deny, :approve]
 
-  before_action :authenticate_user!, except: [:deny]
+  before_action :authenticate_user!, except: [:deny, :approve]
 
   def index
     @vacations = scoped_vacations
@@ -10,12 +10,20 @@ class VacationsController < ApplicationController
   def deny
     vacation_to_deny = Vacation.find(params[:id])
 
-    puts "SOME DENIED VACATIONS ***********************************************"
-    p vacation_to_deny
-
     if vacation_to_deny.pending?
       vacation_to_deny.update!(status: :denied)
       VacationMailer.notify_vacation_denied(vacation_to_deny).deliver_later
+    end
+  end
+
+  def approve
+    vacation_to_approve = Vacation.find(params[:id])
+
+    if vacation_to_approve.pending?
+      vacation_to_approve.update!(status: :approved)
+
+      VacationMailer.admin_vacation_approved(vacation_to_approve).deliver_later
+      VacationMailer.notify_vacation_approved(vacation_to_approve).deliver_later
     end
   end
 

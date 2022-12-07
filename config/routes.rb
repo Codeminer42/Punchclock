@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :vacations, only: %i[index show new create destroy]
 
   delete "/vacations/deny/:id", to: "vacations#deny"
+  put "/vacations/approve/:id", to: "vacations#approve"
 
   resources :dashboard, only: :index do
     collection do

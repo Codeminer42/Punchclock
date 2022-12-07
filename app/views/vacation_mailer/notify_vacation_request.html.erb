@@ -4,12 +4,23 @@
 <p><%= t '.end_date', date: l(@vacation.end_date) %></p>
 <p><%= t '.count', count: (@vacation.end_date - @vacation.start_date).to_i %></p>
 
-<h2>Vacation URL</h2>
-<p>URL: <%= vacation_url(@vacation) %></p>
-<ul>
-  <li>
+<h2><%= t('.call_to_action_text') %></h2>
+<div style="display: flex">
+  <div style="margin-right: 10px">
     <%=
-      button_to "Negar",
+      button_to t('.approve_button'),
+      {
+        :controller => :vacations,
+        :action => 'approve',
+        :id => @vacation.id
+      },
+      :method => :put
+    %>
+  </div>
+
+  <div>
+    <%=
+      button_to t('.deny_button'),
       {
         :controller => :vacations,
         :action => 'deny',
@@ -17,5 +28,6 @@
       },
       :method => :delete
     %>
-  </li>
+  </div>
+</div>
 </ul>
