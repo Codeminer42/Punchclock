@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :vacations, only: %i[index show new create destroy]
 
+  delete "/vacations/cancel/:id", to: "vacations#cancel"
+
   resources :dashboard, only: :index do
     collection do
       get :sheets

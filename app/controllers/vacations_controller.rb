@@ -1,8 +1,19 @@
 class VacationsController < ApplicationController
-  before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token, only: [:cancel]
+
+  before_action :authenticate_user!, except: [:cancel]
 
   def index
     @vacations = scoped_vacations
+  end
+
+  def cancel
+    vacation_to_cancel = Vacation.find(params[:id])
+
+    if vacation_to_cancel.pending?
+      vacation_to_cancel.update!(status: :cancelled)
+      VacationMailer.notify_vacation_cancelled(vacation_to_cancel).deliver_later
+    end
   end
 
   def show

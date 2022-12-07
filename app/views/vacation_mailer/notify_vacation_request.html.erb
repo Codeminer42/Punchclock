@@ -3,3 +3,19 @@
 <p><%= t '.start_date', date: l(@vacation.start_date) %></p>
 <p><%= t '.end_date', date: l(@vacation.end_date) %></p>
 <p><%= t '.count', count: (@vacation.end_date - @vacation.start_date).to_i %></p>
+
+<h2>Vacation URL</h2>
+<p>URL: <%= vacation_url(@vacation) %></p>
+<ul>
+  <li>
+    <%=
+      button_to "Destroy",
+      {
+        :controller => :vacations,
+        :action => 'test',
+        :id => @vacation.id
+      },
+      :method => :delete
+    %>
+  </li>
+</ul>
