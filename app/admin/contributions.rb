@@ -67,7 +67,7 @@ ActiveAdmin.register Contribution do
     actions defaults: true do |contribution|
       if contribution.received?
         item I18n.t('approve'), approve_admin_contribution_path(contribution), method: :put, class: "member_link"
-        content_tag("a", I18n.t('refuse'), class: "member_link_refuse", name: "refuse_contribution", data: { id: contribution.id, reason: Contribution.rejected_reason.options })
+        content_tag("a", I18n.t('refuse'), class: "member_link_refuse", name: "refuse_contribution", data: { id: contribution.id, reasons: Contribution.rejected_reason.options })
       end
     end
   end

@@ -1,6 +1,6 @@
 $(window).on("load", function () {
   $("a[name=refuse_contribution]").on("click", function () {
-    const reasons = Object.values($(this).data("reason"));
+    const reasons = Object.values($(this).data("reasons"));
     const id = $(this).data("id");
     ActiveAdmin.ModalDialog(
       "Justificativa:",
