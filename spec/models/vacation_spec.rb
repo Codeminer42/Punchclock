@@ -72,6 +72,28 @@ RSpec.describe Vacation, type: :model do
 
       it { expect(vacation).to_not be_valid }
     end
+
+    context 'when the duration of the vacation is less than 10 days' do
+      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 2.days.from_now)}
+
+      it { expect(vacation).to_not be_valid }
+
+      it 'raises an error' do
+        expect { vacation.save! }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: As férias precisam ter no mínimo 10 dias')
+      end
+    end
+
+    context 'when the duration of the vacation is equal to 10 days' do
+      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 11.days.from_now)}
+
+      it { expect(vacation).to be_valid }
+    end
+
+    context 'when the duration of the vacation is higher than 10 days' do
+      let (:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 20.days.from_now)}
+
+      it { expect(vacation).to be_valid }
+    end
   end
 
   describe '#approve!' do
