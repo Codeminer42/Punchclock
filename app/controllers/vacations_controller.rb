@@ -53,7 +53,7 @@ class VacationsController < ApplicationController
   end
 
   def alert_message(scope)
-    I18n.t(:alert, scope: [:flash, :actions, scope], resource_name: "Vacation")
+    I18n.t(:alert, scope: [:flash, :vacation, scope])
   end
 
   def errors
