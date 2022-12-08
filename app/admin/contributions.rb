@@ -15,19 +15,25 @@ ActiveAdmin.register Contribution do
   member_action :refuse, method: :put, only: :index
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each { |contribution|
+    batch_action_collection.find(ids).each do |contribution|
       if contribution.received?
-        contribution.refuse!(current_user.id)
-        contribution.update(rejected_reason: :other_reason)
+        begin
+          Contribution.transaction do
+            contribution.refuse!(current_user.id)
+            contribution.update(rejected_reason: :other_reason)
+          end
+        rescue ActiveRecord::RecordInvalid
+          redirect_back fallback_location: admin_contributions_path, alert: I18n.t('unable_to_refuse_contribution')
+        end
       end
-    }
+    end
 
-    redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
+    redirect_back fallback_location: collection_path, notice: I18n.t('contributions_refused')
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
     batch_action_collection.find(ids).each { |contribution| contribution.approve!(current_user.id) if contribution.received? }
 
-    redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
+    redirect_back fallback_location: collection_path, notice: I18n.t('contributions_approved')
   end
 
   batch_action :send_to_newsletter do |ids|
@@ -113,9 +119,15 @@ ActiveAdmin.register Contribution do
     end
 
     def refuse
-      resource.refuse!(current_user.id)
-      resource.update(rejected_reason: params["rejected_reason"])
+      Contribution.transaction do
+        resource.refuse!(current_user.id)
+        resource.update!(rejected_reason: params["rejected_reason"])
+      end
+
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
+
+    rescue ActiveRecord::RecordInvalid
+      redirect_back fallback_location: admin_contributions_path, alert: I18n.t('unable_to_refuse_contribution')
     end
 
     def index

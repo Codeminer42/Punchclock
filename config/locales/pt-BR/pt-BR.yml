@@ -89,8 +89,11 @@ pt-BR:
   contribution_state: 'Número de contribuições por status'
   contribution_details: "Detalhes da Contribuição"
   contribution_approved: "A contribuição foi aprovada"
+  contributions_approved: "As contribuições foram aprovadas"
   contribution_refused: "A contribuição foi recusada"
+  contributions_refused: "As contribuições foram recusadas"
   contributions_reloaded: "As Contribuições foram recarregadas"
+  unable_to_refuse_contribution: 'Não foi possível recusar a contribuição, tente novamente'
   contributions_sent_to_newsletter: "As contribuições aprovadas foram enviadas para a newsletter."
   approve: "Aprovar"
   refuse:  "Recusar"
