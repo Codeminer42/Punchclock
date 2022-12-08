@@ -128,33 +128,48 @@ describe 'Contribution', type: :feature do
     end
 
     describe 'Refuse', js: true do
+      context 'when there aren\'t errors ' do
+        before do
+          find(".member_link_refuse", text: 'Recusar').click
+        end
 
-      before do
-        find(".member_link_refuse", text: 'Recusar').click
+        it 'shows a modal' do
+          expect(page).to have_text('Justificativa') &
+                          have_text('Motivo')
+        end
+
+        it 'shows rejected_reason options' do
+          find_field(name: "Motivo").click
+
+          expect(page).to have_text('Alocado no projeto') &
+                          have_text('Entendimento errado da issue') &
+                          have_text('Esforço insuficiente') &
+                          have_text('PR abandonada') &
+                          have_text('Outros')
+        end
+
+        it 'rejects a contribution' do
+          find_field(name: "Motivo").click
+          find_button('OK').click
+
+          expect(page).to have_css('.flash_notice', text: 'A contribuição foi recusada') &
+                          have_text('Recusado') &
+                          have_text('Alocado no projeto')
+        end
       end
 
-      it 'shows a modal' do
-        expect(page).to have_text('Justificativa') &
-                        have_text('Motivo')
-      end
+      context 'when an error occurs' do
+        before do
+          find(".member_link_refuse", text: 'Recusar').click
+        end
 
-      it 'shows rejected_reason options' do
-        find_field(name: "Motivo").click
+        it 'doesn\'t refuse the contribution and flashes an alert' do
+          allow(Contribution).to receive(:transaction).and_raise(ActiveRecord::RecordInvalid)
+          find_field(name: "Motivo").click
+          find_button('OK').click
 
-        expect(page).to have_text('Alocado no projeto') &
-                        have_text('Entendimento errado da issue') &
-                        have_text('Esforço insuficiente') &
-                        have_text('PR abandonada') &
-                        have_text('Outros')
-      end
-
-      it 'rejects a contribution' do
-        find_field(name: "Motivo").click
-        find_button('OK').click
-
-        expect(page).to have_css('.flash_notice', text: 'A contribuição foi recusada') &
-                        have_text('Recusado') &
-                        have_text('Alocado no projeto')
+          expect(page).to have_css('.flash_alert', text: 'Não foi possível recusar a contribuição, tente novamente')
+        end
       end
     end
   end
