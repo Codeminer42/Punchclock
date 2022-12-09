@@ -49,6 +49,14 @@ describe VacationMailer do
       it 'assigns @end_date on text_part' do
         expect(mail.text_part.decoded).to match(l vacation.end_date)
       end
+
+      it 'renders the approve button' do
+        expect(mail.html_part.decoded).to match(t 'vacation_mailer.notify_vacation_request.approve_button')
+      end
+
+      it 'renders the deny button' do
+        expect(mail.html_part.decoded).to match(t 'vacation_mailer.notify_vacation_request.deny_button')
+      end
     end
 
     context 'when a vacation gets approved' do
