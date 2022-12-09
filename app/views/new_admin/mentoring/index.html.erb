@@ -1,5 +1,10 @@
 <div class="w-full mb-8 overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
   <div class="w-full overflow-x-auto">
+    <div>
+      <button>Mentoria</button>
+      <button>Escritorios</button>
+    <div>
     <%= render 'mentorings', mentorings: @mentorings %>
+    <%= render 'mentorings_by_office', mentorings_groupped: @mentorings_group %>
   </div>
 </div>
