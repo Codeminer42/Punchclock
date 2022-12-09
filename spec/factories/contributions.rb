@@ -23,8 +23,8 @@ FactoryBot.define do
       rejected_reason { :allocated_in_the_project }
     end
 
-    trait :project_is_not_on_the_curated_list do
-      rejected_reason { :project_is_not_on_the_curated_list }
+    trait :wrong_understanding_of_issue do
+      rejected_reason { :wrong_understanding_of_issue }
     end
 
     trait :no_sufficient_effort do

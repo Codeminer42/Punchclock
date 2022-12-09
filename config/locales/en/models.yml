@@ -28,7 +28,3 @@ en:
               invalid_authentication: "or password are invalid"
             password:
               invalid_authentication: "or e-mail are invalid"
-        contributions:
-          attributes:
-            rejected_reason:
-              must_be_blank: "can't be filled if the status is %{state}"

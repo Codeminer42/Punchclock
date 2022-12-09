@@ -23,14 +23,12 @@ class Contribution < ApplicationRecord
     state :approved
     state :refused
 
-    after_all_transitions Proc.new {|*args| update_reviewer(*args) }
-
     event :approve do
-      transitions from: %i[received], to: :approved
+      transitions from: %i[received], to: :approved, after: Proc.new { |*args| update_reviewer(*args) }
     end
 
     event :refuse do
-      transitions from: %i[received], to: :refused
+      transitions from: %i[received], to: :refused, after: Proc.new { |*args| update_rejected_reason(*args) }
     end
   end
 
@@ -42,9 +40,14 @@ class Contribution < ApplicationRecord
     self.update(reviewer_id: reviewer_id, reviewed_at: Time.current)
   end
 
+  def update_rejected_reason(rejected_reason = "other_reason", reviewer_id)
+    self.update(rejected_reason: rejected_reason, reviewer_id: reviewer_id, reviewed_at: Time.current )
+  end
+
   validates :link, uniqueness: true
   validates :link, :state, presence: true
-  validate :rejected_reason_presence
+  validates_presence_of :rejected_reason, if: :refused?
+  validates_absence_of :rejected_reason, unless: :refused?
 
   scope :this_week, -> do
     where("contributions.created_at >= :start_date", start_date: Date.current.beginning_of_week)
@@ -59,12 +62,4 @@ class Contribution < ApplicationRecord
   scope :active_engineers, -> { joins(:user).merge(User.engineer.active) }
   scope :valid_pull_requests, -> { where.not(state: :refused) }
   scope :without_pr_state, ->(state) { where.not(pr_state: state) }
-
-  private
-
-  def rejected_reason_presence
-    if (approved? || received?) && !rejected_reason.blank?
-      errors.add(:rejected_reason, :must_be_blank, state: Contribution.human_attribute_name("state/#{state}"))
-    end
-  end
 end
