@@ -11,10 +11,12 @@ Rails.application.routes.draw do
   resources :punches
   resource :user, only: %i[show edit update]
 
-  resources :vacations, only: %i[index show new create destroy]
-
-  delete "/vacations/deny/:id", to: "vacations#deny"
-  put "/vacations/approve/:id", to: "vacations#approve"
+  resources :vacations, only: %i[index show new create destroy] do
+    member do
+      get "deny", action: :destroy
+      get "approve"
+    end
+  end
 
   resources :dashboard, only: :index do
     collection do

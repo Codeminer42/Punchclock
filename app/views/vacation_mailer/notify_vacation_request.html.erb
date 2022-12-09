@@ -14,7 +14,7 @@
         :action => 'approve',
         :id => @vacation.id
       },
-      :method => :put
+      :method => :get
     %>
   </div>
 
@@ -23,10 +23,10 @@
       button_to t('.deny_button'),
       {
         :controller => :vacations,
-        :action => 'deny',
+        :action => 'destroy',
         :id => @vacation.id
       },
-      :method => :delete
+      :method => :get
     %>
   </div>
 </div>
