@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :vacation do
-    id { 1 }
     start_date { 2.days.from_now }
     end_date { 2.months.from_now }
     status { 'pending' }
