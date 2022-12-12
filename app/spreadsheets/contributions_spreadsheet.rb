@@ -5,9 +5,12 @@ class ContributionsSpreadsheet < DefaultSpreadsheet
     [
       contribution.user.name,
       contribution.link,
+      contribution.created_at.to_s,
       Contribution.human_attribute_name("state/#{contribution.state}"),
       contribution.pr_state,
-      contribution.created_at.to_s,
+      contribution.reviewed_by,
+      contribution.reviewed_at.to_s,
+      contribution.rejected_reason_text,
       contribution.updated_at.to_s
     ]
   end
@@ -16,9 +19,12 @@ class ContributionsSpreadsheet < DefaultSpreadsheet
     %w[
       user
       link
+      created_at
       state
       pr_state
-      created_at
+      reviewed_by
+      reviewed_at
+      rejected_reason
       updated_at
     ].map { |attribute| Contribution.human_attribute_name(attribute) }
   end

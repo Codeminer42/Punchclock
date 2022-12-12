@@ -1,7 +1,7 @@
 ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
 
-  permit_params :state, :link, :user_id, :repository_id
+  permit_params :state, :link, :user_id, :repository_id, :rejected_reason
   actions :index, :show, :new, :create, :edit, :update
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
@@ -15,14 +15,21 @@ ActiveAdmin.register Contribution do
   member_action :refuse, method: :put, only: :index
 
   batch_action :refuse, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each { |contribution| contribution.refuse!(current_user.id) if contribution.state == "received" }
+    batch_action_collection.find(ids).each do |contribution|
+      next unless contribution.received?
 
-    redirect_back fallback_location: collection_path, notice: "The contributions have been refused."
+      contribution.refuse!(current_user.id)
+    rescue ActiveRecord::RecordInvalid
+      redirect_back fallback_location: admin_contributions_path, alert: I18n.t('unable_to_refuse_contribution')
+    end
+    redirect_back fallback_location: collection_path, notice: I18n.t('contributions_refused')
   end
   batch_action :approve, if: proc { params[:scope] != "recusado" && params[:scope] != "aprovado" } do |ids|
-    batch_action_collection.find(ids).each { |contribution| contribution.approve!(current_user.id) if contribution.state == "received" }
+    batch_action_collection.find(ids).each do |contribution|
+      contribution.approve!(current_user.id) if contribution.received?
+    end
 
-    redirect_back fallback_location: collection_path, notice: "The contributions have been approved."
+    redirect_back fallback_location: collection_path, notice: I18n.t('contributions_approved')
   end
 
   batch_action :send_to_newsletter do |ids|
@@ -40,7 +47,7 @@ ActiveAdmin.register Contribution do
   scope Contribution.human_attribute_name('state/approved'), :approved, group: :state
   scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
 
-  index download_links: [:xlsx, :text] do
+  index download_links: %i[xlsx text] do
     selectable_column
     column :user do |contribution|
       link_to contribution.user.first_and_last_name, admin_user_path(contribution.user)
@@ -55,11 +62,13 @@ ActiveAdmin.register Contribution do
     column :pr_state, &:pr_state_text
     column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
+    column :rejected_reason, &:rejected_reason_text
 
     actions defaults: true do |contribution|
       if contribution.received?
         item I18n.t('approve'), approve_admin_contribution_path(contribution), method: :put, class: "member_link"
-        item I18n.t('refuse'), refuse_admin_contribution_path(contribution), method: :put, class: "member_link"
+        content_tag("a", I18n.t('refuse'), class: "member_link_refuse", name: "refuse_contribution",
+                                           data: { id: contribution.id, reasons: Contribution.rejected_reason.options })
       end
     end
   end
@@ -71,6 +80,7 @@ ActiveAdmin.register Contribution do
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
       end
+      row :rejected_reason, &:rejected_reason_text
       row :pr_state
       row :reviewed_by
       row :reviewed_at
@@ -84,6 +94,9 @@ ActiveAdmin.register Contribution do
     inputs I18n.t('contribution_details') do
       if f.object.persisted?
         input :state, collection: Contribution.aasm.states
+        input :rejected_reason, as: :select, collection: Contribution.rejected_reason.values.map { |reason|
+                                                           [I18n.t(reason, scope: 'enumerize.contribution.rejected_reason'), reason]
+                                                         }
       else
         input :user, as: :select, collection: User.engineer.active.order(:name)
 
@@ -101,8 +114,10 @@ ActiveAdmin.register Contribution do
     end
 
     def refuse
-      resource.refuse!(current_user.id)
+      resource.refuse!(params["rejected_reason"], current_user.id)
       redirect_back fallback_location: resource_path, notice: I18n.t('contribution_refused')
+    rescue ActiveRecord::RecordInvalid
+      redirect_back fallback_location: admin_contributions_path, alert: I18n.t('unable_to_refuse_contribution')
     end
 
     def index

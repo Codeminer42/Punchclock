@@ -6,6 +6,13 @@ class Contribution < ApplicationRecord
   include AASM
 
   enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true
+  enumerize :rejected_reason, in: {
+    allocated_in_the_project: 0,
+    wrong_understanding_of_issue: 1,
+    no_sufficient_effort: 2,
+    pr_abandoned: 3,
+    other_reason: 4
+  }
 
   belongs_to :user
   belongs_to :repository
@@ -16,14 +23,12 @@ class Contribution < ApplicationRecord
     state :approved
     state :refused
 
-    after_all_transitions Proc.new {|*args| update_reviewer(*args) }
-
     event :approve do
-      transitions from: %i[received], to: :approved
+      transitions from: %i[received], to: :approved, after: Proc.new { |*args| update_reviewer(*args) }
     end
 
     event :refuse do
-      transitions from: %i[received], to: :refused
+      transitions from: %i[received], to: :refused, after: Proc.new { |*args| update_rejected_reason(*args) }
     end
   end
 
@@ -35,8 +40,14 @@ class Contribution < ApplicationRecord
     self.update(reviewer_id: reviewer_id, reviewed_at: Time.current)
   end
 
+  def update_rejected_reason(rejected_reason = "other_reason", reviewer_id)
+    self.update(rejected_reason: rejected_reason, reviewer_id: reviewer_id, reviewed_at: Time.current )
+  end
+
   validates :link, uniqueness: true
   validates :link, :state, presence: true
+  validates_presence_of :rejected_reason, if: :refused?
+  validates_absence_of :rejected_reason, unless: :refused?
 
   scope :this_week, -> do
     where("contributions.created_at >= :start_date", start_date: Date.current.beginning_of_week)

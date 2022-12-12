@@ -138,4 +138,53 @@ RSpec.describe Admin::ContributionsController, type: :controller do
                   .and have_content(Contribution.human_attribute_name("state/#{contribution_to_show.state}"))
     end 
   end
+
+  describe 'GET edit' do
+    let(:contribution) { create(:contribution) }
+
+    it 'has http status 200' do
+      get :edit, params: { id: contribution.id }
+      
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'assigns the contribution' do
+      get :edit, params: { id: contribution.id }
+
+      is_expected.to render_template(:edit)
+    end
+  end
+
+  describe 'PATCH update' do
+    context 'with valid params' do
+      let(:contribution) { create(:contribution) }
+
+      it 'updates contribution\'s state' do
+        params = { id: contribution.id, state: 'approved'}
+
+        patch :update, params: params
+        expect(response).to redirect_to admin_contribution_path
+      end
+    end
+
+    context 'with invalid params' do
+      let(:contribution) { create(:contribution) }
+
+      it 'does not update contribution\'s state' do
+        params = { id: contribution.id, state: 'approved', rejected_reason: :other_reason }
+
+        patch :update, params: params
+
+        expect(contribution.reload.state).to eq('received')
+      end
+
+      it 'redirects to the same page' do
+        params = { id: contribution.id, state: 'approved', rejected_reason: :other_reason }
+
+        patch :update, params: params
+        
+        expect(response).to redirect_to admin_contribution_path
+      end
+    end
+  end
 end

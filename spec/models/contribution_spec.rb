@@ -76,6 +76,10 @@ RSpec.describe Contribution, type: :model do
       it 'updates reviewed_at' do
         expect(contribution.reviewed_at).to eq(Time.current)
       end
+
+      it 'updates rejected_reason' do
+        expect(contribution.rejected_reason).to eq(:other_reason)
+      end
     end
   end
 
@@ -105,6 +109,62 @@ RSpec.describe Contribution, type: :model do
       create :contribution, pr_state: :merged
 
       expect(described_class.without_pr_state(:merged)).to contain_exactly(open_pr)
+    end
+  end
+
+  describe 'validations' do
+    context 'when the contribution is received' do
+      context 'and rejected_reason is present' do
+        let(:contribution) { build(:contribution, state: :received, rejected_reason: :wrong_understanding_of_issue) }
+
+        it { expect(contribution).to be_invalid }
+
+        it 'raises an error' do
+          expect { contribution.save! }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: Motivo da recusa deve ficar em branco')
+        end
+      end
+
+      context 'and rejected_reason is missing' do
+        let(:contribution) { build(:contribution, state: :received, rejected_reason: nil) }
+
+        it { expect(contribution).to be_valid }
+      end
+    end
+
+    context 'when the contribution is approved' do
+      context 'and rejected_reason is present' do
+        let(:contribution) { build(:contribution, state: :approved, rejected_reason: :wrong_understanding_of_issue) }
+
+        it { expect(contribution).to be_invalid }
+
+        it 'raises an error' do
+          expect { contribution.save! }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: Motivo da recusa deve ficar em branco')
+        end
+      end
+
+      context 'and rejected_reason is missing' do
+        let(:contribution) { build(:contribution, state: :approved, rejected_reason: nil) }
+
+        it { expect(contribution).to be_valid }
+      end
+    end
+
+    context 'when the contribution is refused' do
+      context 'and rejected_reason is present' do
+        let(:contribution) { build(:contribution, state: :refused, rejected_reason: :wrong_understanding_of_issue) }
+
+        it { expect(contribution).to be_valid }
+      end
+
+      context 'and rejected_reason is missing' do
+        let(:contribution) { build(:contribution, state: :refused, rejected_reason: nil) }
+
+        it { expect(contribution).to be_invalid }
+
+        it 'raises an error' do
+          expect { contribution.save! }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: Motivo da recusa não pode ficar em branco')
+        end
+      end
     end
   end
 end

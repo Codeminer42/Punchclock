@@ -295,6 +295,7 @@ pt-BR:
         updated_at: "Atualizado em"
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
+        rejected_reason: "Motivo da recusa"
       vacation:
         user: 'Usuário'
         start_date: "Data de início"

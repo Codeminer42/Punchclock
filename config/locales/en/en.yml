@@ -59,6 +59,7 @@ en:
   errors:
     messages:
       wrong_credentials: 'The username or password is incorrect'
+      unable_to_refuse_contribution: 'Unable to refuse contribution'
   allocation_chart: 'Allocation chart'
   mentoring: 'Mentoring'
   mentor: 'Mentor'

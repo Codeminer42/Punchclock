@@ -13,7 +13,7 @@ describe Contribution do
     end
 
     it 'verifies defined actions for a resource' do
-      expect(resource.defined_actions).to include :index, :show, :new, :create
+      expect(resource.defined_actions).to include :index, :show, :new, :create, :edit, :update
     end
   end
 end

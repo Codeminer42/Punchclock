@@ -24,7 +24,7 @@ en:
         user:
           attributes:
             email:
-              not_found: "Email não encontrado"
+              not_found: "e-mail not found"
               invalid_authentication: "or password are invalid"
             password:
               invalid_authentication: "or e-mail are invalid"
