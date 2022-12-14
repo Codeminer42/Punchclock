@@ -29,7 +29,7 @@ ActiveAdmin.register Vacation do
     end
   end
 
-  member_action :approve, method: :get do
+  member_action :approve, method: :put do
     resource.approve!(current_user)
 
     if resource.approved?
@@ -40,7 +40,8 @@ ActiveAdmin.register Vacation do
     redirect_to admin_vacations_path
   end
 
-  member_action :denied, method: :get do
+  member_action :denied, method: :put do
+    puts "MARROCOS ************************************************************"
     resource.deny!(current_user)
     VacationMailer.notify_vacation_denied(resource).deliver_later
     redirect_to admin_vacations_path
