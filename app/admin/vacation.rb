@@ -11,7 +11,25 @@ ActiveAdmin.register Vacation do
   filter :end_date
   filter :user, as: :select, collection: -> { User.includes(:vacations).engineer.active.where.not(vacations: { user: nil } ) }
 
-  member_action :approve, method: :put do
+  controller do
+    skip_before_action :verify_authenticity_token, only: [:approve]
+
+    before_action :store_user_location!, if: :storable_location?
+
+    before_action :authenticate_active_admin_user
+
+    private
+
+    def storable_location?
+      request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+    end
+
+    def store_user_location!
+      store_location_for(:vacations, request.fullpath)
+    end
+  end
+
+  member_action :approve, method: :get do
     resource.approve!(current_user)
 
     if resource.approved?

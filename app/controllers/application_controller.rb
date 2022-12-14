@@ -30,11 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    if can? :read, ActiveAdmin
-      admin_dashboard_path
-    else
-      root_path
-    end
+    stored_location_for(:vacations) || is_admin?
   end
 
   def current_user
@@ -45,5 +41,15 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
+  end
+
+  private
+
+  def is_admin?
+    if can? :read, ActiveAdmin
+      admin_dashboard_path
+    else
+      root_path
+    end
   end
 end

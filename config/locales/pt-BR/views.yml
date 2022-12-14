@@ -71,7 +71,6 @@ pt-BR:
       start_date: "Data de início: %{date}"
       end_date: "Data de término: %{date}"
       count: "Número de dias de férias: %{count}"
-      call_to_action_text: "Deseja decidir agora?"
       approve_button: "Aprovar"
       deny_button: "Negar"
     admin_vacation_approved:

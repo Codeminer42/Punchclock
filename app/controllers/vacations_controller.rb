@@ -1,23 +1,8 @@
 class VacationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:deny, :approve]
-
-  before_action :authenticate_user!, except: [:deny, :approve, :destroy]
+  before_action :authenticate_user!
 
   def index
     @vacations = scoped_vacations
-  end
-
-  def approve
-    vacation_to_approve = Vacation.find(params[:id])
-
-    if vacation_to_approve.pending?
-      vacation_to_approve.update!(status: :approved)
-
-      VacationMailer.admin_vacation_approved(vacation_to_approve).deliver_later
-      VacationMailer.notify_vacation_approved(vacation_to_approve).deliver_later
-    end
-
-    head :no_content
   end
 
   def show
@@ -42,7 +27,7 @@ class VacationsController < ApplicationController
   end
 
   def destroy
-    current_user ? cancel(params) : external_deny(params)
+    cancel(params)
   end
 
   private
