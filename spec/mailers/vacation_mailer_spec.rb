@@ -4,7 +4,7 @@ describe VacationMailer do
   describe 'vacation email' do
     context 'when user requests a vacation' do
       let(:admins) { build_list :user, 2, :admin }
-      let(:vacation) { FactoryBot.build(:vacation, id: 1) }
+      let(:vacation) { FactoryBot.create(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_request(vacation, admins.map(&:email)) }
       let(:hr_mail) { 'hr@email.com' }
 
