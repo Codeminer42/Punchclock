@@ -41,7 +41,6 @@ ActiveAdmin.register Vacation do
   end
 
   member_action :denied, method: :put do
-    puts "MARROCOS ************************************************************"
     resource.deny!(current_user)
     VacationMailer.notify_vacation_denied(resource).deliver_later
     redirect_to admin_vacations_path
