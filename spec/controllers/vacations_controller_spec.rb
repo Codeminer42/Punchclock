@@ -96,50 +96,6 @@ describe VacationsController do
     end
   end
 
-  describe 'GET approve' do
-    context 'when vacation is approvable' do
-      let(:vacation) { create(:vacation, user: user, status: :pending) }
-      let(:params) { { id: vacation.id } }
-      let(:message_delivery) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
-
-      it "approves the user vacation" do
-        expect{ get :approve, params: params }.to change { vacation.reload.status }
-        .from('pending').to('approved')
-      end
-
-      it "calls VacationMailer#notify_vacation_approved" do
-        allow(VacationMailer).to receive(:notify_vacation_approved).and_return(message_delivery)
-
-        expect(VacationMailer).to receive(:notify_vacation_approved)
-
-        get :approve, params: params
-      end
-
-      it "calls VacationMailer#admin_vacation_approved" do
-        allow(VacationMailer).to receive(:admin_vacation_approved).and_return(message_delivery)
-
-        expect(VacationMailer).to receive(:admin_vacation_approved)
-
-        get :approve, params: params
-      end
-
-      it "returns 204 status code" do
-        get :approve, params: params
-
-        expect(response).to have_http_status(:no_content)
-      end
-    end
-
-    context "when vacation is not approvable" do
-      let(:vacation) { create(:vacation, user: user, status: :cancelled) }
-      let(:params) { { id: vacation.id } }
-
-      it "do not change vacation status" do
-        expect{ get :approve, params: params }.to_not change { vacation.reload.status }
-      end
-    end
-  end
-
   describe 'DELETE cancel' do
     context "when vacation in cancelable" do
       let(:vacation) { create(:vacation, user: user, status: :pending) }

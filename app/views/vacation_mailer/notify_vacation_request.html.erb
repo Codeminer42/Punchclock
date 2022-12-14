@@ -21,8 +21,8 @@
     <%=
       button_to t('.deny_button'),
       {
-        :controller => :vacations,
-        :action => 'destroy',
+        :controller => "admin/vacations",
+        :action => 'denied',
         :id => @vacation.id
       },
       :method => :get

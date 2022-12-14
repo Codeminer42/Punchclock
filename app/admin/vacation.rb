@@ -12,9 +12,9 @@ ActiveAdmin.register Vacation do
   filter :user, as: :select, collection: -> { User.includes(:vacations).engineer.active.where.not(vacations: { user: nil } ) }
 
   controller do
-    skip_before_action :verify_authenticity_token, only: [:approve]
+    skip_before_action :verify_authenticity_token, only: [:approve, :denied]
 
-    before_action :store_user_location!, if: :storable_location?
+    before_action :store_user_location!, if: :storable_location?, only: [:approve, :denied]
 
     before_action :authenticate_active_admin_user
 
@@ -40,7 +40,7 @@ ActiveAdmin.register Vacation do
     redirect_to admin_vacations_path
   end
 
-  member_action :denied, method: :put do
+  member_action :denied, method: :get do
     resource.deny!(current_user)
     VacationMailer.notify_vacation_denied(resource).deliver_later
     redirect_to admin_vacations_path

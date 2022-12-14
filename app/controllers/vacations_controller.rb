@@ -27,23 +27,6 @@ class VacationsController < ApplicationController
   end
 
   def destroy
-    cancel(params)
-  end
-
-  private
-
-  def external_deny(params)
-    vacation_to_deny = Vacation.find(params[:id])
-
-    if vacation_to_deny.pending?
-      vacation_to_deny.update!(status: :denied)
-      VacationMailer.notify_vacation_denied(vacation_to_deny).deliver_later
-    end
-
-    head :no_content
-  end
-
-  def cancel(params)
     vacation_to_cancel = scoped_vacations.find(params[:id])
 
     if vacation_to_cancel.pending?
@@ -54,6 +37,8 @@ class VacationsController < ApplicationController
       redirect_to vacations_path, alert: I18n.t(:alert, scope: "flash.vacation.cancel")
     end
   end
+
+  private
 
   def scoped_vacations
     current_user.vacations

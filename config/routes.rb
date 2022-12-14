@@ -11,12 +11,7 @@ Rails.application.routes.draw do
   resources :punches
   resource :user, only: %i[show edit update]
 
-  resources :vacations, only: %i[index show new create destroy] do
-    member do
-      get "deny", action: :destroy
-      get "approve"
-    end
-  end
+  resources :vacations, only: %i[index show new create destroy]
 
   resources :dashboard, only: :index do
     collection do
