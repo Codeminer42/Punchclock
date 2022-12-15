@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    stored_location_for(:user) || is_admin?
+    stored_location_for(:request) || is_admin?
   end
 
   def current_user
@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_user_location!
-    store_location_for(:user, request.fullpath)
+    store_location_for(:request, request.fullpath)
   end
 
   def is_admin?
