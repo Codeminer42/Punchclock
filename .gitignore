@@ -39,3 +39,5 @@ public/webpack/*
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+.env.*.local
