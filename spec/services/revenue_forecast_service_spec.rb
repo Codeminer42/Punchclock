@@ -8,9 +8,9 @@ RSpec.describe RevenueForecastService do
     it "returns a hash containing the total working days and forecast for each month of the allocation" do
       expect(data).to eq([
         { month: 10, year: 2021, working_days: 10, forecast: Money.new(8000_00) },
-        { month: 11, year: 2021, working_days: 22, forecast: Money.new(17600_00) },
-        { month: 12, year: 2021, working_days: 23, forecast: Money.new(18400_00) },
-        { month: 1, year: 2022, working_days: 21, forecast: Money.new(16800_00) },
+        { month: 11, year: 2021, working_days: 20, forecast: Money.new(16000_00) },
+        { month: 12, year: 2021, working_days: 20, forecast: Money.new(16000_00) },
+        { month: 1, year: 2022, working_days: 20, forecast: Money.new(16000_00) },
         { month: 2, year: 2022, working_days: 20, forecast: Money.new(16000_00) },
         { month: 3, year: 2022, working_days: 4, forecast: Money.new(3200_00) }
       ])
@@ -35,9 +35,9 @@ RSpec.describe RevenueForecastService do
       it "returns the forecasts converted to BRL" do
         expect(data).to eq([
           { month: 10, year: 2021, working_days: 10, forecast: Money.new(41200_00, 'BRL') },
-          { month: 11, year: 2021, working_days: 22, forecast: Money.new(91520_00, 'BRL') },
-          { month: 12, year: 2021, working_days: 23, forecast: Money.new(96600_00, 'BRL') },
-          { month: 1, year: 2022, working_days: 21, forecast: Money.new(89040_00, 'BRL') },
+          { month: 11, year: 2021, working_days: 20, forecast: Money.new(83200_00, 'BRL') },
+          { month: 12, year: 2021, working_days: 20, forecast: Money.new(84000_00, 'BRL') },
+          { month: 1, year: 2022, working_days: 20, forecast: Money.new(84800_00, 'BRL') },
           { month: 2, year: 2022, working_days: 20, forecast: Money.new(84800_00, 'BRL') },
           { month: 3, year: 2022, working_days: 4, forecast: Money.new(16960_00, 'BRL') }
         ])
@@ -84,24 +84,24 @@ RSpec.describe RevenueForecastService do
           2 => Money.new(4000_00),
           3 => Money.new(1600_00),
           11 => Money.new(6800_00),
-          12 => Money.new(9200_00)
+          12 => Money.new(8000_00)
         },
         2021 => {
-          1 => Money.new(8400_00),
+          1 => Money.new(8000_00),
           2 => Money.new(8000_00),
-          3 => Money.new(9200_00),
-          4 => Money.new(8800_00),
-          5 => Money.new(8400_00),
-          6 => Money.new(8800_00),
-          7 => Money.new(8800_00),
-          8 => Money.new(8800_00),
-          9 => Money.new(8800_00),
-          10 => Money.new(8400_00 + 8000_00),
-          11 => Money.new(7600_00 + 17600_00),
-          12 => Money.new(18400_00)
+          3 => Money.new(8000_00),
+          4 => Money.new(8000_00),
+          5 => Money.new(8000_00),
+          6 => Money.new(8000_00),
+          7 => Money.new(8000_00),
+          8 => Money.new(8000_00),
+          9 => Money.new(8000_00),
+          10 => Money.new(8000_00 + 8000_00),
+          11 => Money.new(7600_00 + 16000_00),
+          12 => Money.new(16000_00)
         },
         2022 => {
-          1 => Money.new(16800_00),
+          1 => Money.new(16000_00),
           2 => Money.new(16000_00),
           3 => Money.new(3200_00)
         }
@@ -131,14 +131,14 @@ RSpec.describe RevenueForecastService do
             1 => Money.new(3000_00),
             2 => Money.new(4000_00),
             3 => Money.new(1600_00),
-            11 => Money.new(12600_00)
+            11 => Money.new(12000_00)
           }
         },
         {
           project: project2,
           forecast: {
             11 => Money.new(6800_00),
-            12 => Money.new(9200_00)
+            12 => Money.new(8000_00)
           }
         }
       ])
