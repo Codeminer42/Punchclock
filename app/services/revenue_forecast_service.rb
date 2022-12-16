@@ -39,7 +39,7 @@ class RevenueForecastService
         year_data = result[year] || {}
 
         month = data[:month]
-        month_forecast = year_data[month] || Money.new(0)
+        month_forecast = year_data[month] || Money.new(0, allocation.hourly_rate.currency)
 
         year_data[month] = month_forecast + data[:forecast]
         result[year] = year_data
@@ -73,11 +73,6 @@ class RevenueForecastService
     working_hours = calculate_working_hours(allocation, month, year)
     hourly_rate = allocation.hourly_rate
     forecast = hourly_rate * working_hours
-
-    unless hourly_rate.currency.iso_code == "BRL"
-      exchange_rate = ExchangeRate.find_by!(year:)
-      forecast = forecast.with_currency("BRL") * exchange_rate.rate
-    end
 
     { month:, year:, working_hours:, forecast: }
   end

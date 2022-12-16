@@ -21,32 +21,15 @@ RSpec.describe RevenueForecastService do
         build_stubbed(:allocation, hourly_rate: Money.new(100_00, 'USD'), start_at: "2021-10-18", end_at: "2022-03-05")
       end
 
-      before do
-        create(:exchange_rate, year: 2020, rate: 5.0)
-        create(:exchange_rate, year: 2021, rate: 5.15)
-        create(:exchange_rate, year: 2022, rate: 5.50)
-        create(:exchange_rate, year: 2023, rate: 5.80)
-      end
-
-      it "returns the forecasts converted to BRL" do
+      it "returns the forecasts on their currency" do
         expect(data).to eq([
-          { month: 10, year: 2021, working_hours: 80, forecast: Money.new(41200_00, 'BRL') },
-          { month: 11, year: 2021, working_hours: 160, forecast: Money.new(82400_00, 'BRL') },
-          { month: 12, year: 2021, working_hours: 160, forecast: Money.new(82400_00, 'BRL') },
-          { month: 1, year: 2022, working_hours: 160, forecast: Money.new(88000_00, 'BRL') },
-          { month: 2, year: 2022, working_hours: 160, forecast: Money.new(88000_00, 'BRL') },
-          { month: 3, year: 2022, working_hours: 32, forecast: Money.new(17600_00, 'BRL') }
+          { month: 10, year: 2021, working_hours: 80, forecast: Money.new(8000_00, 'USD') },
+          { month: 11, year: 2021, working_hours: 160, forecast: Money.new(16000_00, 'USD') },
+          { month: 12, year: 2021, working_hours: 160, forecast: Money.new(16000_00, 'USD') },
+          { month: 1, year: 2022, working_hours: 160, forecast: Money.new(16000_00, 'USD') },
+          { month: 2, year: 2022, working_hours: 160, forecast: Money.new(16000_00, 'USD') },
+          { month: 3, year: 2022, working_hours: 32, forecast: Money.new(3200_00, 'USD') }
         ])
-      end
-
-      context "there's no exchange rate for a month" do
-        let(:allocation) do
-          build_stubbed(:allocation, hourly_rate: Money.new(100_00, 'USD'), start_at: "2019-01-01", end_at: "2019-03-30")
-        end
-
-        it "raises an exception saying that the exchange rate is missing" do
-          expect { data }.to raise_exception(ActiveRecord::RecordNotFound)
-        end
       end
     end
 
@@ -102,6 +85,28 @@ RSpec.describe RevenueForecastService do
           3 => Money.new(3200_00)
         }
       })
+    end
+
+    context "when the allocation currency isn't BRL" do
+      let(:data) { described_class.project_forecast(allocation.project) }
+      let(:allocation) do
+        create(:allocation, hourly_rate: 100, hourly_rate_currency: "USD", start_at: "2021-10-18", end_at: "2022-03-05")
+      end
+
+      it "returns the data normally without conversion" do
+        expect(data).to eq({
+          2021 => {
+            10 => Money.new(8000_00, 'USD'),
+            11 => Money.new(16000_00, 'USD'),
+            12 => Money.new(16000_00, 'USD')
+          },
+          2022 => {
+            1 => Money.new(16000_00, 'USD'),
+            2 => Money.new(16000_00, 'USD'),
+            3 => Money.new(3200_00, 'USD')
+          }
+        })
+      end
     end
   end
 

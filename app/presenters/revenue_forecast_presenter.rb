@@ -45,13 +45,13 @@ class RevenueForecastPresenter
   end
 
   def month_total(month_number)
-    total = Money.new(0)
+    total = 0
 
     @forecasts.each do |forecast|
       total += forecast[:forecast][month_number] || 0
     end
 
-    helpers.humanized_money_with_symbol(total)
+    total.zero? ? '-' : helpers.humanized_money_with_symbol(total)
   end
 
   def helpers
