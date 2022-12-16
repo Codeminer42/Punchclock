@@ -75,7 +75,7 @@ class RevenueForecastService
     forecast = hourly_rate * working_hours
 
     unless hourly_rate.currency.iso_code == "BRL"
-      exchange_rate = ExchangeRate.for_month_and_year!(month, year)
+      exchange_rate = ExchangeRate.find_by!(year:)
       forecast = forecast.with_currency("BRL") * exchange_rate.rate
     end
 

@@ -22,30 +22,26 @@ RSpec.describe RevenueForecastService do
       end
 
       before do
-        travel_to(Date.new(2022, 01, 15))
-
-        create(:exchange_rate, month: 9, year: 2021, rate: 5.15)
-        create(:exchange_rate, month: 10, year: 2021, rate: 5.2)
-        create(:exchange_rate, month: 11, year: 2021, rate: 5.25)
-        create(:exchange_rate, month: 12, year: 2021, rate: 5.3)
+        create(:exchange_rate, year: 2020, rate: 5.0)
+        create(:exchange_rate, year: 2021, rate: 5.15)
+        create(:exchange_rate, year: 2022, rate: 5.50)
+        create(:exchange_rate, year: 2023, rate: 5.80)
       end
-
-      after { travel_back }
 
       it "returns the forecasts converted to BRL" do
         expect(data).to eq([
           { month: 10, year: 2021, working_hours: 80, forecast: Money.new(41200_00, 'BRL') },
-          { month: 11, year: 2021, working_hours: 160, forecast: Money.new(83200_00, 'BRL') },
-          { month: 12, year: 2021, working_hours: 160, forecast: Money.new(84000_00, 'BRL') },
-          { month: 1, year: 2022, working_hours: 160, forecast: Money.new(84800_00, 'BRL') },
-          { month: 2, year: 2022, working_hours: 160, forecast: Money.new(84800_00, 'BRL') },
-          { month: 3, year: 2022, working_hours: 32, forecast: Money.new(16960_00, 'BRL') }
+          { month: 11, year: 2021, working_hours: 160, forecast: Money.new(82400_00, 'BRL') },
+          { month: 12, year: 2021, working_hours: 160, forecast: Money.new(82400_00, 'BRL') },
+          { month: 1, year: 2022, working_hours: 160, forecast: Money.new(88000_00, 'BRL') },
+          { month: 2, year: 2022, working_hours: 160, forecast: Money.new(88000_00, 'BRL') },
+          { month: 3, year: 2022, working_hours: 32, forecast: Money.new(17600_00, 'BRL') }
         ])
       end
 
       context "there's no exchange rate for a month" do
         let(:allocation) do
-          build_stubbed(:allocation, hourly_rate: Money.new(100_00, 'USD'), start_at: "2021-01-01", end_at: "2021-03-30")
+          build_stubbed(:allocation, hourly_rate: Money.new(100_00, 'USD'), start_at: "2019-01-01", end_at: "2019-03-30")
         end
 
         it "raises an exception saying that the exchange rate is missing" do

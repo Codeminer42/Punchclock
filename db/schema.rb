@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_25_185846) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_16_174823) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,13 +77,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_185846) do
   end
 
   create_table "exchange_rates", force: :cascade do |t|
-    t.integer "month", null: false
     t.integer "year", null: false
     t.string "currency", null: false
     t.decimal "rate", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["month", "year", "currency"], name: "index_exchange_rates_on_month_and_year_and_currency", unique: true
+    t.index ["year", "currency"], name: "index_exchange_rates_on_year_and_currency", unique: true
   end
 
   create_table "notes", force: :cascade do |t|

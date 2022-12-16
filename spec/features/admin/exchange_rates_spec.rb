@@ -14,8 +14,7 @@ describe 'Exchange Rates', type: :feature do
   describe 'Index' do
     it 'must find fields "Mês", "Ano", "Moeda" and "Taxa" on table' do
       within 'table' do
-        expect(page).to have_text('Mês') &
-                        have_text('Ano') &
+        expect(page).to have_text('Ano') &
                         have_text('Moeda') &
                         have_text('Taxa')
       end
@@ -23,12 +22,6 @@ describe 'Exchange Rates', type: :feature do
   end
 
   describe 'Filters' do
-    it 'by month' do
-      within '#filters_sidebar_section' do
-        expect(page).to have_css('label', text: 'Month equals')
-      end
-    end
-
     it 'by year' do
       within '#filters_sidebar_section' do
         expect(page).to have_css('label', text: 'Year equals')
