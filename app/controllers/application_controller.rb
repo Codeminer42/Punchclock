@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    stored_location_for(:request) || is_admin?
+    stored_location_for(:request) || default_redirect_path
   end
 
   def current_user
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     store_location_for(:request, request.fullpath)
   end
 
-  def is_admin?
+  def default_redirect_path
     if can? :read, ActiveAdmin
       admin_dashboard_path
     else
