@@ -4,7 +4,7 @@ describe VacationMailer do
   describe 'vacation email' do
     context 'when user requests a vacation' do
       let(:admins) { build_list :user, 2, :admin }
-      let(:vacation) { FactoryBot.build(:vacation) }
+      let(:vacation) { FactoryBot.create(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_request(vacation, admins.map(&:email)) }
       let(:hr_mail) { 'hr@email.com' }
 
@@ -48,6 +48,14 @@ describe VacationMailer do
 
       it 'assigns @end_date on text_part' do
         expect(mail.text_part.decoded).to match(l vacation.end_date)
+      end
+
+      it 'renders the approve button' do
+        expect(mail.html_part.decoded).to match(t 'vacation_mailer.notify_vacation_request.approve_button')
+      end
+
+      it 'renders the deny button' do
+        expect(mail.html_part.decoded).to match(t 'vacation_mailer.notify_vacation_request.deny_button')
       end
     end
 

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Sidekiq::Web => '/sidekiq'
 
+  get '/admin/vacations/:id/denied', to: 'admin/vacations#denied', as: :admin_vacations_denied
+  get '/admin/vacations/:id/approve', to: 'admin/vacations#approve', as: :admin_vacations_approve
+
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'user/sessions' }
 

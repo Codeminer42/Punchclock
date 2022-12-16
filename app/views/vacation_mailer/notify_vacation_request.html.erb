@@ -3,3 +3,30 @@
 <p><%= t '.start_date', date: l(@vacation.start_date) %></p>
 <p><%= t '.end_date', date: l(@vacation.end_date) %></p>
 <p><%= t '.count', count: (@vacation.end_date - @vacation.start_date).to_i %></p>
+
+<div style="display: flex">
+  <div style="margin-right: 10px">
+    <%=
+      button_to t('.approve_button'),
+      {
+        :controller => "admin/vacations",
+        :action => 'approve',
+        :id => @vacation.id
+      },
+      :method => :get
+    %>
+  </div>
+
+  <div>
+    <%=
+      button_to t('.deny_button'),
+      {
+        :controller => "admin/vacations",
+        :action => 'denied',
+        :id => @vacation.id
+      },
+      :method => :get
+    %>
+  </div>
+</div>
+</ul>

@@ -71,6 +71,8 @@ pt-BR:
       start_date: "Data de início: %{date}"
       end_date: "Data de término: %{date}"
       count: "Número de dias de férias: %{count}"
+      approve_button: "Aprovar"
+      deny_button: "Negar"
     admin_vacation_approved:
       subject: "Punchclock - Férias aprovadas para %{user}"
       info: "Pedido de férias para %{user} com duração de %{count} dias foi aprovado."
