@@ -76,6 +76,8 @@ en:
   english_evaluation: "English evaluation"
   revenue_forecast: 'Revenue Forecast'
   revenue_forecast_warning: '* This feature was implemented on Sept/2022, and for this reason, data before this date are incomplete.'
+  internal_market: "Internal Market"
+  international_market: "International Market"
   blank_field: "can't be blank"
   forgot_password: "Forgot your password?"
   vacations:

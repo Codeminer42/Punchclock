@@ -49,16 +49,16 @@ class RevenueForecastService
     result
   end
 
-  def self.year_forecast(year)
-    new.year_forecast(year)
+  def self.year_forecast(year, market = nil)
+    new.year_forecast(year, market)
   end
 
-  def year_forecast(year)
+  def year_forecast(year, market = nil)
     beginning_of_year = Date.ordinal(year)
     end_of_year = Date.ordinal(year, -1)
 
     result = []
-    active_projects_on_period(beginning_of_year, end_of_year).each do |project|
+    active_projects_on_period(beginning_of_year, end_of_year, market).each do |project|
       forecast = project_forecast(project, [beginning_of_year, end_of_year])
 
       result << { project: project, forecast: forecast[year] }
@@ -109,10 +109,12 @@ class RevenueForecastService
     days * WORKING_HOURS_PER_DAY
   end
 
-  def active_projects_on_period(beginning_date, end_date)
+  def active_projects_on_period(beginning_date, end_date, market)
     projects_ids_rel = Allocation.in_period(beginning_date, end_date)
                                  .select(:project_id)
 
-    Project.where(id: projects_ids_rel).distinct
+    projects = Project.where(id: projects_ids_rel)
+    projects = projects.where(market:) if market
+    projects.distinct
   end
 end

@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe RevenueForecastPresenter do
-  subject { described_class.new(year) }
+  subject { described_class.new(year, market) }
 
   let(:year) { rand(2011..2022) }
+  let(:market) { double(:market) }
   let(:project1) { build_stubbed(:project, name: 'Argentina') }
   let(:project2) { build_stubbed(:project, name: 'Zimbabwe') }
 
@@ -30,7 +31,7 @@ RSpec.describe RevenueForecastPresenter do
 
   before do
     allow(RevenueForecastService).to receive(:year_forecast)
-      .with(year)
+      .with(year, market)
       .and_return(data)
   end
 

@@ -6,8 +6,8 @@ class RevenueForecastPresenter
   # should only show forecasts from 2022 and beyond
   REVENUE_FORECAST_START_YEAR = 2022
 
-  def initialize(year)
-    @forecasts = RevenueForecastService.year_forecast(year)
+  def initialize(year, market)
+    @forecasts = RevenueForecastService.year_forecast(year, market)
     @forecasts.sort_by! { |h| h[:project].name }
   end
 

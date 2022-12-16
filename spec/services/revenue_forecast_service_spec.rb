@@ -106,8 +106,8 @@ RSpec.describe RevenueForecastService do
   end
 
   describe ".year_forecast" do
-    let(:project1) { create(:project, :inactive) }
-    let(:project2) { create(:project) }
+    let(:project1) { create(:project, :inactive, market: :internal) }
+    let(:project2) { create(:project, market: :international) }
     let(:data) { described_class.year_forecast(2020) }
 
     before do
@@ -138,6 +138,22 @@ RSpec.describe RevenueForecastService do
           }
         }
       ])
+    end
+
+    context 'when filter by market' do
+      let(:data) { described_class.year_forecast(2020, :international) }
+
+      it "returns a hash containing the total forecast of the requested year considering only projects of that market" do
+        expect(data).to eq([
+          {
+            project: project2,
+            forecast: {
+              11 => Money.new(6800_00),
+              12 => Money.new(8000_00)
+            }
+          }
+        ])
+      end
     end
   end
 end

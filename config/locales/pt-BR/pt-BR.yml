@@ -137,7 +137,9 @@ pt-BR:
   specialty: "Especialidade"
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
-  revenue_forecast_warning: '* Como esta ferramenta do Punch começou a ser utilizada em Set/2022, as informações posteriores a esse mês estão incompletas'
+  revenue_forecast_warning: '* Como esta ferramenta começou a ser utilizada em Set/2022, as informações anteriores a esse mês estão incompletas'
+  internal_market: "Mercado interno"
+  international_market: "Mercado externo"
   blank_field: "não pode ficar em branco"
   forgot_password: "Esqueceu sua senha?"
   request_vacation: 'Solicitar Férias'

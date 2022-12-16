@@ -13,32 +13,16 @@ ActiveAdmin.register_page 'Revenue Forecast' do
         # * Improve how data is being rendered
         # * Improve i18n
         RevenueForecastPresenter.years_range.each do |year|
-          forecast = RevenueForecastPresenter.new(year)
-
           tab year.to_s do
-            para I18n.t('revenue_forecast_warning') if year == 2022
+            para(I18n.t('revenue_forecast_warning'), style: 'color: red') if year == 2022
 
-            columns do
-              column do
-                para I18n.t('projects')
+            h2 I18n.t('international_market')
+            render 'forecasts_table', { forecast: RevenueForecastPresenter.new(year, :international) }
 
-                forecast.projects.each do |project|
-                  para project.name
-                end
-              end
+            br
 
-              forecast.months do |month_name, forecasts, total|
-                column do
-                  para month_name
-
-                  forecasts.each do |forecast|
-                    para forecast
-                  end
-
-                  span total
-                end # column
-              end
-            end # columns
+            h2 I18n.t('internal_market')
+            render 'forecasts_table', { forecast: RevenueForecastPresenter.new(year, :internal) }
           end # tab
         end
 
