@@ -6,27 +6,11 @@
 
 <div style="display: flex">
   <div style="margin-right: 10px">
-    <%=
-      button_to t('.approve_button'),
-      {
-        :controller => "admin/vacations",
-        :action => 'approve',
-        :id => @vacation.id
-      },
-      :method => :get
-    %>
+    <%= link_to t('.approve_button'), admin_vacations_approve_url(@vacation) %>
   </div>
 
   <div>
-    <%=
-      button_to t('.deny_button'),
-      {
-        :controller => "admin/vacations",
-        :action => 'denied',
-        :id => @vacation.id
-      },
-      :method => :get
-    %>
+    <%= link_to t('.deny_button'), admin_vacations_denied_url(@vacation) %>
   </div>
 </div>
 </ul>

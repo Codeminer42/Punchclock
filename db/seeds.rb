@@ -151,7 +151,7 @@ end
 puts " done."
 
 print "..creating offices holidays..."
-rand(offices.size * 10).times do |i|
+rand(offices.size * 5).times do |i|
   create_holiday(office: Office.all.sample)
 end
 puts " done."
