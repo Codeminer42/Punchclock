@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :store_user_location!, if: :storable_location?
+
   respond_to :html, :json
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -30,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    stored_location_for(:vacations) || is_admin?
+    stored_location_for(:request) || default_redirect_path
   end
 
   def current_user
@@ -45,7 +47,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def is_admin?
+  def storable_location?
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+  end
+
+  def store_user_location!
+    store_location_for(:request, request.fullpath)
+  end
+
+  def default_redirect_path
     if can? :read, ActiveAdmin
       admin_dashboard_path
     else
