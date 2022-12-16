@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class RevenueForecastService
-  WORKING_HOURS_PER_DAY = 8
   WORKING_DAYS_PER_MONTH = 20
+  WORKING_HOURS_PER_DAY = 8
 
   def self.allocation_forecast(allocation)
     new.allocation_forecast(allocation)
@@ -70,16 +70,16 @@ class RevenueForecastService
   private
 
   def allocation_month_data(allocation, month, year)
-    working_days = calculate_working_days(allocation, month, year)
+    working_hours = calculate_working_hours(allocation, month, year)
     hourly_rate = allocation.hourly_rate
-    forecast = hourly_rate * working_days * WORKING_HOURS_PER_DAY
+    forecast = hourly_rate * working_hours
 
     unless hourly_rate.currency.iso_code == "BRL"
       exchange_rate = ExchangeRate.for_month_and_year!(month, year)
       forecast = forecast.with_currency("BRL") * exchange_rate.rate
     end
 
-    { month:, year:, working_days:, forecast: }
+    { month:, year:, working_hours:, forecast: }
   end
 
   def calculate_weekdays(start_date, end_date)
@@ -91,12 +91,12 @@ class RevenueForecastService
     date1.month == date2.month && date1.year == date2.year
   end
 
-  def calculate_working_days(allocation, month, year)
+  def calculate_working_hours(allocation, month, year)
     start_date = allocation.start_at
     end_date = allocation.end_at
     analyzed_month = Date.new(year, month, 1)
 
-    if same_month_and_year?(start_date, end_date)
+    days = if same_month_and_year?(start_date, end_date)
       calculate_weekdays(start_date, end_date)
     elsif same_month_and_year?(start_date, analyzed_month)
       calculate_weekdays(start_date, analyzed_month.end_of_month)
@@ -105,6 +105,8 @@ class RevenueForecastService
     else
       WORKING_DAYS_PER_MONTH
     end
+
+    days * WORKING_HOURS_PER_DAY
   end
 
   def active_projects_on_period(beginning_date, end_date)

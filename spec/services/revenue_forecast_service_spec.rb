@@ -7,12 +7,12 @@ RSpec.describe RevenueForecastService do
 
     it "returns a hash containing the total working days and forecast for each month of the allocation" do
       expect(data).to eq([
-        { month: 10, year: 2021, working_days: 10, forecast: Money.new(8000_00) },
-        { month: 11, year: 2021, working_days: 20, forecast: Money.new(16000_00) },
-        { month: 12, year: 2021, working_days: 20, forecast: Money.new(16000_00) },
-        { month: 1, year: 2022, working_days: 20, forecast: Money.new(16000_00) },
-        { month: 2, year: 2022, working_days: 20, forecast: Money.new(16000_00) },
-        { month: 3, year: 2022, working_days: 4, forecast: Money.new(3200_00) }
+        { month: 10, year: 2021, working_hours: 80, forecast: Money.new(8000_00) },
+        { month: 11, year: 2021, working_hours: 160, forecast: Money.new(16000_00) },
+        { month: 12, year: 2021, working_hours: 160, forecast: Money.new(16000_00) },
+        { month: 1, year: 2022, working_hours: 160, forecast: Money.new(16000_00) },
+        { month: 2, year: 2022, working_hours: 160, forecast: Money.new(16000_00) },
+        { month: 3, year: 2022, working_hours: 32, forecast: Money.new(3200_00) }
       ])
     end
 
@@ -34,12 +34,12 @@ RSpec.describe RevenueForecastService do
 
       it "returns the forecasts converted to BRL" do
         expect(data).to eq([
-          { month: 10, year: 2021, working_days: 10, forecast: Money.new(41200_00, 'BRL') },
-          { month: 11, year: 2021, working_days: 20, forecast: Money.new(83200_00, 'BRL') },
-          { month: 12, year: 2021, working_days: 20, forecast: Money.new(84000_00, 'BRL') },
-          { month: 1, year: 2022, working_days: 20, forecast: Money.new(84800_00, 'BRL') },
-          { month: 2, year: 2022, working_days: 20, forecast: Money.new(84800_00, 'BRL') },
-          { month: 3, year: 2022, working_days: 4, forecast: Money.new(16960_00, 'BRL') }
+          { month: 10, year: 2021, working_hours: 80, forecast: Money.new(41200_00, 'BRL') },
+          { month: 11, year: 2021, working_hours: 160, forecast: Money.new(83200_00, 'BRL') },
+          { month: 12, year: 2021, working_hours: 160, forecast: Money.new(84000_00, 'BRL') },
+          { month: 1, year: 2022, working_hours: 160, forecast: Money.new(84800_00, 'BRL') },
+          { month: 2, year: 2022, working_hours: 160, forecast: Money.new(84800_00, 'BRL') },
+          { month: 3, year: 2022, working_hours: 32, forecast: Money.new(16960_00, 'BRL') }
         ])
       end
 
@@ -59,7 +59,7 @@ RSpec.describe RevenueForecastService do
 
       it "returns a hash containing the total working days and forecast for the single month of allocation" do
         expect(data).to eq([
-          { month: 10, year: 2022, working_days: 10, forecast: Money.new(8000_00) }
+          { month: 10, year: 2022, working_hours: 80, forecast: Money.new(8000_00) }
         ])
       end
     end
