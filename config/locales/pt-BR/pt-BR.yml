@@ -95,6 +95,8 @@ pt-BR:
   contributions_reloaded: "As Contribuições foram recarregadas"
   unable_to_refuse_contribution: 'Não foi possível recusar a contribuição, tente novamente'
   contributions_sent_to_newsletter: "As contribuições aprovadas foram enviadas para a newsletter."
+  vacation_approved: "Pedido de férias aprovado"
+  vacation_denied: "Pedido de férias recusado"
   approve: "Aprovar"
   refuse:  "Recusar"
   this_week: "Semana atual"
