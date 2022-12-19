@@ -21,8 +21,7 @@ class AbilityAdmin
       Repository,
       Contribution,
       Note,
-      Vacation,
-      ExchangeRate
+      Vacation
     ]
 
     define_permissions user
