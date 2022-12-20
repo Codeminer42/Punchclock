@@ -43,7 +43,7 @@ ActiveAdmin.register Allocation do
         column :month do |data|
           "#{data[:month]}/#{data[:year]}"
         end
-        column :working_days
+        column :working_hours
         column :forecast do |data|
           humanized_money_with_symbol(data[:forecast])
         end

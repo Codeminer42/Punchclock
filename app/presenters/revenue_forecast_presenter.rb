@@ -6,9 +6,8 @@ class RevenueForecastPresenter
   # should only show forecasts from 2022 and beyond
   REVENUE_FORECAST_START_YEAR = 2022
 
-  def initialize(year)
-    @forecasts = RevenueForecastService.year_forecast(year)
-    @forecasts.sort_by! { |h| h[:project].name }
+  def initialize(year, market)
+    @forecasts = fetch_and_sort_forecasts(year, market)
   end
 
   def projects
@@ -33,6 +32,11 @@ class RevenueForecastPresenter
 
   private
 
+  def fetch_and_sort_forecasts(year, market)
+    forecasts = RevenueForecastService.year_forecast(year, market)
+    forecasts.sort_by! { |h| h[:project].name }
+  end
+
   def month_name(number)
     Date::MONTHNAMES[number]
   end
@@ -45,13 +49,13 @@ class RevenueForecastPresenter
   end
 
   def month_total(month_number)
-    total = Money.new(0)
+    total = 0
 
     @forecasts.each do |forecast|
       total += forecast[:forecast][month_number] || 0
     end
 
-    helpers.humanized_money_with_symbol(total)
+    total.zero? ? '-' : helpers.humanized_money_with_symbol(total)
   end
 
   def helpers

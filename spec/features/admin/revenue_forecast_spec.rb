@@ -60,7 +60,7 @@ describe 'Revenue Forecast page', type: :feature do
           expect(page).to have_text(project1.name) && have_text(project2.name)
 
           # Forecasts
-          expect(page).to have_text("R$17.600,00") && have_text("R$8.800,00") & have_text("R$26.400,00")
+          expect(page).to have_text("R$17.600,00") && have_text("R$8.000,00") & have_text("R$24.000,00")
         end
       end
     end
@@ -74,7 +74,7 @@ describe 'Revenue Forecast page', type: :feature do
 
           # Forecasts
           expect(page).not_to have_text("R$44.000,00")
-          expect(page).to have_text("R$27.600,00")
+          expect(page).to have_text("R$24.000,00")
         end
       end
     end

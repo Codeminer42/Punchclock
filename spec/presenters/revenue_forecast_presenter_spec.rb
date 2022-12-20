@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe RevenueForecastPresenter do
-  subject { described_class.new(year) }
+  subject { described_class.new(year, market) }
 
   let(:year) { rand(2011..2022) }
+  let(:market) { double(:market) }
   let(:project1) { build_stubbed(:project, name: 'Argentina') }
   let(:project2) { build_stubbed(:project, name: 'Zimbabwe') }
 
@@ -30,7 +31,7 @@ RSpec.describe RevenueForecastPresenter do
 
   before do
     allow(RevenueForecastService).to receive(:year_forecast)
-      .with(year)
+      .with(year, market)
       .and_return(data)
   end
 
@@ -46,13 +47,13 @@ RSpec.describe RevenueForecastPresenter do
         ["January", ["R$3.000,00", "-"], "R$3.000,00"],
         ["February", ["R$4.000,00", "-"], "R$4.000,00"],
         ["March", ["R$1.600,00", "-"], "R$1.600,00"],
-        ["April", ["-", "-"], "R$0,00"],
-        ["May", ["-", "-"], "R$0,00"],
-        ["June", ["-", "-"], "R$0,00"],
-        ["July", ["-", "-"], "R$0,00"],
-        ["August", ["-", "-"], "R$0,00"],
-        ["September", ["-", "-"], "R$0,00"],
-        ["October", ["-", "-"], "R$0,00"],
+        ["April", ["-", "-"], "-"],
+        ["May", ["-", "-"], "-"],
+        ["June", ["-", "-"], "-"],
+        ["July", ["-", "-"], "-"],
+        ["August", ["-", "-"], "-"],
+        ["September", ["-", "-"], "-"],
+        ["October", ["-", "-"], "-"],
         ["November", ["R$12.600,00", "R$6.800,00"], "R$19.400,00"],
         ["December", ["-", "R$9.200,00"], "R$9.200,00"]
       ]
