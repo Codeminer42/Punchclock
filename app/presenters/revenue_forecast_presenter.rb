@@ -7,8 +7,7 @@ class RevenueForecastPresenter
   REVENUE_FORECAST_START_YEAR = 2022
 
   def initialize(year, market)
-    @forecasts = RevenueForecastService.year_forecast(year, market)
-    @forecasts.sort_by! { |h| h[:project].name }
+    @forecasts = fetch_and_sort_forecasts(year, market)
   end
 
   def projects
@@ -32,6 +31,11 @@ class RevenueForecastPresenter
   end
 
   private
+
+  def fetch_and_sort_forecasts(year, market)
+    forecasts = RevenueForecastService.year_forecast(year, market)
+    forecasts.sort_by! { |h| h[:project].name }
+  end
 
   def month_name(number)
     Date::MONTHNAMES[number]

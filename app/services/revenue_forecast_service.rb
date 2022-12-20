@@ -53,7 +53,7 @@ class RevenueForecastService
     new.year_forecast(year, market)
   end
 
-  def year_forecast(year, market = nil)
+  def year_forecast(year, market)
     beginning_of_year = Date.ordinal(year)
     end_of_year = Date.ordinal(year, -1)
 
@@ -61,7 +61,7 @@ class RevenueForecastService
     active_projects_on_period(beginning_of_year, end_of_year, market).each do |project|
       forecast = project_forecast(project, [beginning_of_year, end_of_year])
 
-      result << { project: project, forecast: forecast[year] }
+      result << { project:, forecast: forecast[year] }
     end
 
     result
