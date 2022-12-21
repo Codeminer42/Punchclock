@@ -20,8 +20,7 @@ class AbilityAdmin
       Skill,
       Repository,
       Contribution,
-      Note,
-      ExchangeRate
+      Note
     ]
 
     define_permissions_for user
@@ -52,7 +51,6 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Allocation Chart'
     can :read, ActiveAdmin::Page, name: 'Revenue Forecast'
     can :read, ActiveAdmin::Page, name: 'Mentoring'
-    can :read, ActiveAdmin::Page, name: 'ExchangeRate'
 
     cannot :destroy, [User, Project]
   end

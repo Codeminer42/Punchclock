@@ -12,28 +12,20 @@ ActiveAdmin.register Vacation do
   filter :user, as: :select, collection: -> { User.includes(:vacations).engineer.active.where.not(vacations: { user: nil } ) }
 
   member_action :approve, method: :put do
-    if authorized?(:approve, resource)
-      resource.approve!(current_user)
+    resource.approve!(current_user)
 
-      if resource.approved?
-        VacationMailer.notify_vacation_approved(resource).deliver_later
-        VacationMailer.admin_vacation_approved(resource).deliver_later
-      end
-
-      redirect_to admin_vacations_path, notice: I18n.t("vacation_approved")
-    else
-      redirect_to admin_vacations_path#, alert: I18n.t("devise.failure.access_denied")
+    if resource.approved?
+      VacationMailer.notify_vacation_approved(resource).deliver_later
+      VacationMailer.admin_vacation_approved(resource).deliver_later
     end
+
+    redirect_to admin_vacations_path, notice: I18n.t("vacation_approved")
   end
 
   member_action :denied, method: :put do
-    if authorized?(:denied, resource)
-      resource.deny!(current_user)
-      VacationMailer.notify_vacation_denied(resource).deliver_later
-      redirect_to admin_vacations_path(scope: :denied), notice: I18n.t("vacation_denied")
-    else
-      redirect_to admin_vacations_path#, alert: I18n.t("devise.failure.access_denied")
-    end
+    resource.deny!(current_user)
+    VacationMailer.notify_vacation_denied(resource).deliver_later
+    redirect_to admin_vacations_path(scope: :denied), notice: I18n.t("vacation_denied")
   end
 
   scope :ongoing_and_scheduled, default: true
