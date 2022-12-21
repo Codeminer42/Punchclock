@@ -20,12 +20,13 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: ENV['HOST'] }
   config.action_mailer.perform_deliveries = true
+
   config.action_mailer.smtp_settings = {
-    address: 'smtp.sendgrid.net',
-    port: '587',
+    address: ENV['SMTP_SERVER'],
+    port: ENV['SMTP_PORT'],
+    user_name: ENV['SMTP_LOGIN'],
+    password: ENV['SMTP_PASSWORD'],
     authentication: :plain,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_TOKEN'],
-    domain: 'heroku.com'
+    domain: 'cm42.io'
   }
 end
