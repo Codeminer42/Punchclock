@@ -21,15 +21,15 @@ class AbilityAdmin
       Repository,
       Contribution,
       Note,
-      Vacation
+      ExchangeRate
     ]
 
-    define_permissions user
+    define_permissions_for user
   end
 
   private
 
-  def define_permissions(user)
+  def define_permissions_for(user)
     admin_permitions(user) if user.admin?
     open_source_manager_permissions(user) if user.open_source_manager?
     vacation_manager_permissions(user) if user.hr? || user.commercial?
@@ -67,5 +67,8 @@ class AbilityAdmin
 
   def vacation_manager_permissions(user)
     can :manage, Vacation
+    cannot [:denied, :approve], Vacation,  ["status not in (?)", [:approved, :denied, :cancelled]] do |vacation|
+      !vacation.pending?
+    end
   end
 end

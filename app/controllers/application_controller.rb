@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def access_denied(exception)
-    redirect_to after_sign_in_path_for(current_user), alert: exception.message
+    redirect_to default_redirect_path, alert: exception.message
   end
 
   def authenticate_admin_user!

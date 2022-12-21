@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Vacation do
-  config.create_another = true
+  actions :all, except: [:new, :create]
 
   permit_params :start_date, :end_date, :status, :user_id, :hr_approver_id, :commercial_approver_id, :denier_id
 
@@ -12,20 +12,28 @@ ActiveAdmin.register Vacation do
   filter :user, as: :select, collection: -> { User.includes(:vacations).engineer.active.where.not(vacations: { user: nil } ) }
 
   member_action :approve, method: :put do
-    resource.approve!(current_user)
+    if authorized?(:approve, resource)
+      resource.approve!(current_user)
 
-    if resource.approved?
-      VacationMailer.notify_vacation_approved(resource).deliver_later
-      VacationMailer.admin_vacation_approved(resource).deliver_later
+      if resource.approved?
+        VacationMailer.notify_vacation_approved(resource).deliver_later
+        VacationMailer.admin_vacation_approved(resource).deliver_later
+      end
+
+      redirect_to admin_vacations_path, notice: I18n.t("vacation_approved")
+    else
+      redirect_to admin_vacations_path#, alert: I18n.t("devise.failure.access_denied")
     end
-
-    redirect_to admin_vacations_path, notice: I18n.t("vacation_approved")
   end
 
   member_action :denied, method: :put do
-    resource.deny!(current_user)
-    VacationMailer.notify_vacation_denied(resource).deliver_later
-    redirect_to admin_vacations_path(scope: :denied), notice: I18n.t("vacation_denied")
+    if authorized?(:denied, resource)
+      resource.deny!(current_user)
+      VacationMailer.notify_vacation_denied(resource).deliver_later
+      redirect_to admin_vacations_path(scope: :denied), notice: I18n.t("vacation_denied")
+    else
+      redirect_to admin_vacations_path#, alert: I18n.t("devise.failure.access_denied")
+    end
   end
 
   scope :ongoing_and_scheduled, default: true
@@ -47,24 +55,16 @@ ActiveAdmin.register Vacation do
     column :commercial_approver
     column :denier
 
-    if authorized? :manage, Vacation
+    if authorized? :approve, Vacation
       actions defaults: false do |vacation|
         link_to I18n.t('approve'), approve_admin_vacation_path(vacation), method: :put if vacation.pending?
       end
+    end
 
+    if authorized? :denied, Vacation
       actions defaults: false do |vacation|
         link_to I18n.t('refuse'), denied_admin_vacation_path(vacation), method: :put if vacation.pending?
       end
     end
-  end
-
-  form do |f|
-    inputs 'Vacation' do
-      input :user
-      input :start_date, as: :date_picker
-      input :end_date, as: :date_picker
-      input :status, as: :select, collection: Vacation.status.values.map { |vacation| [vacation.text.titleize, vacation.value] }
-    end
-    actions
   end
 end
