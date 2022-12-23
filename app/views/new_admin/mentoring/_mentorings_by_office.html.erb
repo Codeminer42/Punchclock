@@ -11,7 +11,7 @@
       <tr class="text-gray-700 dark:text-gray-400">
       <td class="px-4 py-3" rowspan="<%= mentorings_by_city.count %>">
       <div class="flex items-center text-sm">
-        <p class="text-xs text-gray-600 dark:text-gray-400">  
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">  
           <%= city %>
         </p>
         </div>
@@ -19,8 +19,7 @@
     </td>
       <% mentorings_by_city.each do |mentoring| %>
         <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-xs text-gray-600 dark:text-gray-400">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
               <%= mentoring.name %>
             </p>
             </div>
@@ -28,7 +27,7 @@
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
-            <p class="text-xs text-gray-600 dark:text-gray-400">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
               <%= mentoring.mentees.join(', ') %>
             </p>
             </div>
