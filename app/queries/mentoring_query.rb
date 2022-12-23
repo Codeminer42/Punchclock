@@ -10,11 +10,12 @@ class MentoringQuery
       .joins(mentor: :office)
       .select(
         'array_agg(users.name) as mentees',
+        'mentors_users.email as email',
         'mentors_users.name as name',
         "offices.city as office_city"
       )
       .active
-      .group('mentors_users.name', "offices.city")
+      .group('mentors_users.name', 'mentors_users.email', "offices.city")
       .order("offices.city")
   end
 
