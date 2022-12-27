@@ -37,21 +37,27 @@ describe 'User' do
       let(:vacation) do
         create(:vacation, {
             status: :approved,
-            start_date: Date.new(2022, 12, 27)
+            start_date: Date.current.next_day
           }
         )
       end
 
       it 'does not allow the user to cancel a vacation less than 7 days ahead of time' do
-        allow(Date).to receive(:today).and_return(Date.new(2022, 12, 21))
+        allow(Date).to receive(:today).and_return(Date.current - 5)
 
-         is_expected.not_to be_able_to(:destroy, vacation)
+        is_expected.not_to be_able_to(:destroy, vacation)
       end
 
-      it 'allows user the user to cancel a vacation more than 7 days ahead of time' do
-        allow(Date).to receive(:today).and_return(Date.new(2022, 12, 20))
+      it 'allows user the user to cancel a vacation more than 6 days ahead of time' do
+        allow(Date).to receive(:today).and_return(Date.current - 6)
 
         is_expected.to be_able_to(:destroy, vacation)
+      end
+
+      it 'does not allow the user to cancel a vacation after it started' do
+        allow(Date).to receive(:today).and_return(Date.current + 2)
+
+        is_expected.not_to be_able_to(:destroy, vacation)
       end
     end
   end
