@@ -36,9 +36,9 @@ describe 'User' do
     describe 'when status is approved' do
       let!(:vacation) do
         create(:vacation, {
-          status: :approved,
-          start_date: Date.tomorrow
-        }
+            status: :approved,
+            start_date: Date.tomorrow
+          }
         )
       end
 
@@ -55,7 +55,7 @@ describe 'User' do
       end
 
       it 'does not allow the user to cancel a vacation after it started' do
-        travel_to Date.current + 2.days
+        travel_to 2.days.from_now
 
         is_expected.not_to be_able_to(:destroy, vacation)
       end

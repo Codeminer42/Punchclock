@@ -12,7 +12,7 @@ class Ability
     can %i[edit update], User, id: user.id
     can :read, Vacation, user_id: user.id
     can :destroy, Vacation do |vacation|
-      vacation.pending? || within_cancel_range?(vacation)
+      vacation.cancelable? vacation
     end
 
     unless user.vacations.any?(&:pending?)
@@ -30,13 +30,5 @@ class Ability
     if user.admin? || user.open_source_manager?
       can :read, ActiveAdmin
     end
-  end
-
-  private
-
-  MINIMUM_DAYS_TO_CANCEL = 7
-
-  def within_cancel_range?(vacation)
-    vacation.approved? && (vacation.start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.today)
   end
 end
