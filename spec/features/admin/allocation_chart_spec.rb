@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Admin Allocation chart', type: :feature do
-  next_month_date = Date.today.next_month
+  let(:next_month_date) { Date.today.next_month }
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
   before do

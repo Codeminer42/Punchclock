@@ -35,11 +35,7 @@ describe 'User' do
 
     describe 'when status is approved' do
       let!(:vacation) do
-        create(:vacation, {
-            status: :approved,
-            start_date: Date.tomorrow
-          }
-        )
+        create(:vacation, status: :approved, start_date: Date.tomorrow)
       end
 
       it 'does not allow the user to cancel a vacation less than 7 days ahead of time' do
