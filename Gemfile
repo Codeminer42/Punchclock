@@ -71,7 +71,7 @@ gem 'letsencrypt-rails-heroku', group: 'production'
 
 gem 'rswag-api', '~> 2.5.1'
 gem 'rswag-ui', '~> 2.5.1'
-gem 'unicorn'
+gem 'puma'
 gem "tailwindcss-rails", "~> 2.0"
 
 group :test do
