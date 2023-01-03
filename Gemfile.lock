@@ -320,7 +320,6 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    kgio (2.11.4)
     launchy (2.5.0)
       addressable (~> 2.7)
     letsencrypt-rails-heroku (2.0.3)
@@ -413,6 +412,8 @@ GEM
       pry (~> 0.9)
       slop (~> 3.0)
     public_suffix (4.0.7)
+    puma (6.0.2)
+      nio4r (~> 2.0)
     racc (1.6.1)
     rack (2.2.4)
     rack-proxy (0.7.2)
@@ -456,7 +457,6 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
-    raindrops (0.20.0)
     rake (13.0.6)
     ransack (2.6.0)
       activerecord (>= 6.0.4)
@@ -586,9 +586,6 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.2.0)
-    unicorn (6.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     uniform_notifier (1.16.0)
     vcr (6.1.0)
     warden (1.2.9)
@@ -675,6 +672,7 @@ DEPENDENCIES
   platform-api!
   pry-rails
   pry-remote (~> 0.1.8)
+  puma
   rails (~> 7.0.3.1)
   rails-ajax_redirect
   rails-controller-testing
@@ -699,7 +697,6 @@ DEPENDENCIES
   sprockets
   tailwindcss-rails (~> 2.0)
   uglifier
-  unicorn
   validates_timeliness (~> 6.0.0.beta2)!
   vcr
   web-console (~> 4.0)
