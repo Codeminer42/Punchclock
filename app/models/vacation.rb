@@ -43,7 +43,7 @@ class Vacation < ApplicationRecord
   end
 
   def cancelable?
-    self.pending? || approved_within_cancel_range?
+    pending? || approved_within_cancel_range?
   end
 
   private
@@ -51,7 +51,7 @@ class Vacation < ApplicationRecord
   MINIMUM_DAYS_TO_CANCEL = 7
 
   def approved_within_cancel_range?
-    (self.start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.today)
+    start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.today
   end
 
   def validate_approvers_and_approve
