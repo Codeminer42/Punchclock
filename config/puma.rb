@@ -1,3 +1,5 @@
+require 'barnes'
+
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
@@ -46,3 +48,9 @@ on_worker_boot do
   # Valid on Rails 4.1+ using the `config/database.yml` method of setting `pool` size
   ActiveRecord::Base.establish_connection
 end
+
+before_fork do
+  Barnes.start
+end
+
+

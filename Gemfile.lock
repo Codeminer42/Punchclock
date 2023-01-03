@@ -129,6 +129,9 @@ GEM
     ast (2.4.2)
     autoprefixer-rails (10.4.2.0)
       execjs (~> 2)
+    barnes (0.0.9)
+      multi_json (~> 1)
+      statsd-ruby (~> 1.1)
     bcrypt (3.1.18)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
@@ -566,6 +569,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     ssrf_filter (1.0.7)
+    statsd-ruby (1.5.0)
     strscan (3.0.3)
     tailwindcss-rails (2.0.10)
       railties (>= 6.0.0)
@@ -623,6 +627,7 @@ DEPENDENCIES
   active_skin
   activeadmin (~> 2.13.1)
   autoprefixer-rails (~> 10.4.2.0)
+  barnes
   better_errors
   binding_of_caller
   bootsnap

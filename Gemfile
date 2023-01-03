@@ -67,7 +67,13 @@ gem 'aasm', '~> 5.0', '>= 5.0.8'
 
 # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
 gem 'platform-api', github: 'heroku/platform-api'
-gem 'letsencrypt-rails-heroku', group: 'production'
+
+group :production, :staging do
+  # Heroku Ruby Language Metrics
+  gem "barnes"
+
+  gem 'letsencrypt-rails-heroku'
+end
 
 gem 'rswag-api', '~> 2.5.1'
 gem 'rswag-ui', '~> 2.5.1'
