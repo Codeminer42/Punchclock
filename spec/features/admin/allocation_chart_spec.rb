@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe 'Admin Allocation chart', type: :feature do
+  let(:next_month_date) { Date.today.next_month }
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
   before do
@@ -14,7 +15,7 @@ describe 'Admin Allocation chart', type: :feature do
     let!(:user) { create(:user, allocations: [allocation]) }
 
     let(:allocation) do
-      build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: true)
+      build(:allocation, project: project, start_at: Date.today.prev_month, end_at: next_month_date, ongoing: true)
     end
 
     before { visit '/admin/allocation_chart' }
@@ -48,7 +49,8 @@ describe 'Admin Allocation chart', type: :feature do
 
         it '"Alocado até" column links to allocation' do
           within 'tbody' do
-            expect(page).to have_link('01/11/2022', href: "/admin/allocations/#{allocation.id}")
+            formatted_date = next_month_date.strftime('%d/%m/%Y')
+            expect(page).to have_link(formatted_date, href: "/admin/allocations/#{allocation.id}")
           end
         end
       end
