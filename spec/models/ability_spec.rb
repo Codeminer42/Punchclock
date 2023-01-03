@@ -25,4 +25,36 @@ describe 'User' do
       it { is_expected.not_to be_able_to(:update, User.new) }
     end
   end
+
+  describe 'vacations abilities' do
+    describe 'when status is pending' do
+      context 'allows user to cancel a vacation' do
+        it { is_expected.to be_able_to(:destroy, Vacation.new) }
+      end
+    end
+
+    describe 'when status is approved' do
+      let!(:vacation) do
+        create(:vacation, status: :approved, start_date: Date.tomorrow)
+      end
+
+      it 'does not allow the user to cancel a vacation less than 7 days ahead of time' do
+        travel_to 5.days.ago
+
+        is_expected.not_to be_able_to(:destroy, vacation)
+      end
+
+      it 'allows user the user to cancel a vacation more than 6 days ahead of time' do
+        travel_to 6.days.ago
+
+        is_expected.to be_able_to(:destroy, vacation)
+      end
+
+      it 'does not allow the user to cancel a vacation after it started' do
+        travel_to 2.days.from_now
+
+        is_expected.not_to be_able_to(:destroy, vacation)
+      end
+    end
+  end
 end
