@@ -43,17 +43,17 @@ module ActiveAdmin
         end
       end
 
-      context 'when has passed 0 to 60 days since last allocation' do
+      context 'when last allocation end date has passed' do
         let(:last_allocation) { create(:allocation, end_at: current_date) }
         it 'returns EXPIRED' do
           is_expected.to eq(AllocationChartHelper::Status::EXPIRED)
         end
       end
 
-      context 'when has passed more than 60 days since last allocation' do
+      context 'when has passed more than 60 days since last allocation end date' do
         let(:last_allocation) { create(:allocation, start_at: current_date - 62.days, end_at: current_date - 61.days) }
-        it 'returns NOT_ALLOCATED' do
-          is_expected.to eq(AllocationChartHelper::Status::NOT_ALLOCATED)
+        it 'returns EXPIRED' do
+          is_expected.to eq(AllocationChartHelper::Status::EXPIRED)
         end
       end
     end

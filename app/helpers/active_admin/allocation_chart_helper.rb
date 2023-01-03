@@ -23,10 +23,8 @@ module ActiveAdmin
         Status::EXP_IN_60_DAYS
       when 1..30
         Status::EXP_IN_30_DAYS
-      when -60..0
+      when (..0)
         Status::EXPIRED
-      when (..-61)
-        Status::NOT_ALLOCATED
       end
     end
   end
