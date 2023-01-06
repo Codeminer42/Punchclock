@@ -8,6 +8,7 @@ module.exports = {
     "./app/views/**/*.{erb,haml,html,slim}",
     "./config/initializers/simple_form_bootstrap.rb",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
