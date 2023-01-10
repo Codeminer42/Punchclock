@@ -79,6 +79,12 @@ RSpec.describe Vacation, type: :model do
       it { expect(vacation).to_not be_valid }
     end
 
+    context 'when the duration of the vacation is equal to 9 days' do
+      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 9.days.from_now)}
+
+      it { expect(vacation).to_not be_valid }
+    end
+
     context 'when the duration of the vacation is equal to 10 days' do
       let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 10.days.from_now)}
 

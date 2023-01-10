@@ -18,7 +18,7 @@ class Vacation < ApplicationRecord
   validates_presence_of :start_date, :end_date, :user
   validates_comparison_of :start_date, greater_than: Date.current, allow_nil: true, if: :not_cancelled?
   validates_comparison_of :end_date,
-    greater_than: lambda { |vacation| vacation.start_date + 8.days },
+    greater_than: lambda { |vacation| vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
     allow_nil: true,
     if: :not_cancelled?
 
@@ -52,6 +52,7 @@ class Vacation < ApplicationRecord
   private
 
   MINIMUM_DAYS_TO_CANCEL = 7
+  MINIMUM_RANGE_OF_DAYS = 8
 
   def approved_within_cancel_range?
     start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.today
