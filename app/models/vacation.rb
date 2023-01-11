@@ -49,6 +49,10 @@ class Vacation < ApplicationRecord
     pending? || approved_within_cancel_range?
   end
 
+  def duration_days
+    (start_date..end_date).count
+  end
+
   private
 
   MINIMUM_DAYS_TO_CANCEL = 7

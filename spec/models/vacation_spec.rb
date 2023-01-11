@@ -142,4 +142,12 @@ RSpec.describe Vacation, type: :model do
       expect(subject).to be_denied
     end
   end
+
+  describe '#duration_days' do
+    subject(:vacation) { create(:vacation, start_date: 10.days.from_now, end_date: 30.days.from_now) }
+
+    it 'returns the duration of the vacation in days' do
+      expect(subject.duration_days).to eq(21)
+    end
+  end
 end

@@ -63,7 +63,7 @@ describe VacationMailer do
       let(:admins) { build_list :user, 2, :admin }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_approved(vacation) }
-      let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+      let(:count) { "#{vacation.duration_days} dias" }
       let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
@@ -154,7 +154,7 @@ describe VacationMailer do
       let!(:vacation_managers) { create_list :user, 2, :commercial }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_cancelled(vacation) }
-      let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+      let(:count) { "#{vacation.duration_days} dias" }
       let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
