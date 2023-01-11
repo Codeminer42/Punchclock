@@ -55,8 +55,6 @@ pt-BR:
               uniqueness: 'O usuário já possui uma alocação em progresso'
             hourly_rate:
               invalid_currency: Moeda inválida
-        vacation:
-          must_be_higher_than_10: "As férias precisam ter no mínimo 10 dias"
     models:
       admin_user:
         one: "Administrador"
