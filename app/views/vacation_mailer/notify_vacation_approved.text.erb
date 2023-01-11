@@ -1,4 +1,4 @@
-<%= t '.info', count: (@vacation.end_date - @vacation.start_date).to_i %>
+<%= t '.info', count: @vacation.duration_days %>
 
 <%= t '.start_date', date: l(@vacation.start_date) %>
 <%= t '.end_date', date: l(@vacation.end_date) %>

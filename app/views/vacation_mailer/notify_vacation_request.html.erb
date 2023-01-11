@@ -2,7 +2,7 @@
 
 <p><%= t '.start_date', date: l(@vacation.start_date) %></p>
 <p><%= t '.end_date', date: l(@vacation.end_date) %></p>
-<p><%= t '.count', count: (@vacation.end_date - @vacation.start_date).to_i %></p>
+<p><%= t '.count', count: @vacation.duration_days %></p>
 
 <div style="display: flex">
   <div style="margin-right: 10px">
