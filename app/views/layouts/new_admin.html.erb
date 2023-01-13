@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <head>
-    <title>Mentoring</title>
+    <title><%= yield :page_title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
           <div class="h-full overflow-y-auto">
             <div class="container py-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Mentoring
+                <%= yield :page_title %>
               </h2>
               <%= yield %>
             </div>
