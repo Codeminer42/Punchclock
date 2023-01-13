@@ -15,12 +15,17 @@
     <div class="main">
       <div class="flex h-screen bg-gray-50 dark:bg-gray-900">
         <%= render 'sidebar' %>
-      <div class="flex flex-col flex-1 w-full">
-      <%= render 'header' %>
-        <div class="mx-auto py-5">
-          <%= yield %>
+        <div class="flex flex-col flex-1 w-full">
+          <%= render 'header' %>
+          <div class="h-full overflow-y-auto">
+            <div class="container py-6 mx-auto grid">
+              <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Mentoring
+              </h2>
+              <%= yield %>
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     </div>
     <%= javascript_include_tag "new_admin_application" %>

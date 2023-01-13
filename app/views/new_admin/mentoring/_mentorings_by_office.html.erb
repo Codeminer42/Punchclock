@@ -9,14 +9,14 @@
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
     <% mentorings_groupped.each do |city, mentorings_by_city| %>
       <tr class="text-gray-700 dark:text-gray-400">
-      <td class="px-4 py-3" rowspan="<%= mentorings_by_city.count %>">
-      <div class="flex items-center text-sm">
-        <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">  
-          <%= city %>
-        </p>
+      <td class="px-4 py-3 border-r" rowspan="<%= mentorings_by_city.count %>">
+        <div class="flex items-center text-sm">
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+            <%= city %>
+          </p>
+          </div>
         </div>
-      </div>
-    </td>
+      </td>
       <% mentorings_by_city.each do |mentoring| %>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm gap-1">
