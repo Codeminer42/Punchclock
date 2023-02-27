@@ -28,6 +28,12 @@ class Vacation < ApplicationRecord
     .order(start_date: :asc, end_date: :asc)
   }
 
+  scope :expired, -> {
+    pending
+    .where("start_date < :today", today: Date.current)
+    .order(start_date: :asc, end_date: :asc)
+  }
+
   def approve!(user)
     ActiveRecord::Base.transaction do
       update!(hr_approver: user) if user.hr?
