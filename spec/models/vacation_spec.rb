@@ -26,6 +26,22 @@ RSpec.describe Vacation, type: :model do
     end
   end
 
+  describe ".expired" do
+    let(:expired_vacation) { create(:vacation, :expired) }
+    let(:valid_vacation) { create(:vacation, :valid) }
+
+    before do
+      create(:vacation, :pending)
+      create(:vacation, :cancelled)
+      create(:vacation, :denied)
+      create(:vacation, :ended)
+    end
+
+    it "return only expired vacations" do
+      expect(described_class.expired).to eq([expired_vacation])
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:end_date) }
