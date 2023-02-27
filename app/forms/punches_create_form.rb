@@ -7,9 +7,7 @@ class PunchesCreateForm
   validate :punches_validations, :punch_on_same_day_validation
 
   def initialize(user, punches)
-    punches ||= []
-
-    @punches = punches.map do |punch_params|
+    @punches = Array(punches).map do |punch_params|
       Punch.new(**punch_params, user: user)
     end
   end
