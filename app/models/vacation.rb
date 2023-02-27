@@ -29,7 +29,7 @@ class Vacation < ApplicationRecord
   }
 
   scope :expired, -> {
-    where(status: :pending)
+    pending
     .where("start_date < :today", today: Date.current)
     .order(start_date: :asc, end_date: :asc)
   }
