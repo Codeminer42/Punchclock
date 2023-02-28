@@ -173,10 +173,16 @@ RSpec.describe Vacation, type: :model do
 
   # TODO: Maybe we're creating a flaky test here
   describe '#duration_days' do
-    subject(:vacation) { create(:vacation, start_date: 7.days.from_now.beginning_of_week, end_date: 30.days.from_now) }
+    subject(:vacation) do
+      create(
+        :vacation,
+        start_date: 7.days.from_now.beginning_of_week,
+        end_date: 7.days.from_now.beginning_of_week + 21.days
+      )
+    end
 
     it 'returns the duration of the vacation in days' do
-      expect(subject.duration_days).to eq(24)
+      expect(subject.duration_days).to eq(21)
     end
   end
 end
