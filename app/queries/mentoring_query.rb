@@ -9,7 +9,7 @@ class MentoringQuery
     relation
       .joins(mentor: :office)
       .select(
-        'array_agg(users.name) as mentees',
+        'array_agg(users.name) as mentee_list',
         'mentors_users.name as name',
         "offices.city as office_city"
       )
