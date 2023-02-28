@@ -99,6 +99,7 @@ ActiveAdmin.register User do
           end
           row :skills
           row :mentor
+          row :mentees
           row :allow_overtime
           row :active
           row :started_at
