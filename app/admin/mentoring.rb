@@ -10,7 +10,7 @@ ActiveAdmin.register_page 'Mentoring' do
         table_for mentoring do
           column(I18n.t('mentor'), &:name)
           column(:office, &:office_city)
-          column(I18n.t('mentees'), &:mentees)
+          column(I18n.t('mentees'), &:mentee_list)
         end
       end
 

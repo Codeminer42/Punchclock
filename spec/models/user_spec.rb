@@ -16,6 +16,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:projects).through(:allocations) }
     it { is_expected.to have_and_belong_to_many(:skills) }
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
+    it { is_expected.to have_many(:mentees).class_name(:User) }
   end
 
   describe 'validations' do
