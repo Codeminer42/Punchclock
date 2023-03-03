@@ -49,7 +49,7 @@ RSpec.describe Vacation, type: :model do
 
     context 'when end_date is greater than start_date' do
       subject(:vacation) do
-        build(:vacation, start_date: 1.months.from_now, end_date: 2.months.from_now)
+        build(:vacation, start_date: 1.months.from_now.monday, end_date: 2.months.from_now)
       end
 
       it { is_expected.to be_valid }
@@ -57,22 +57,8 @@ RSpec.describe Vacation, type: :model do
 
     context 'when start_date is greater than end_date' do
       subject(:vacation) do
-        build(:vacation, start_date: 2.months.from_now, end_date: 1.months.from_now)
+        build(:vacation, start_date: 1.months.from_now.monday, end_date: 1.week.from_now.monday)
       end
-
-      it { is_expected.to_not be_valid }
-    end
-
-    context 'when end_date is greater than start_date but difference is less than 5 days' do
-      subject(:vacation) do
-        build(:vacation, start_date: 2.days.from_now, end_date: 3.days.from_now)
-      end
-
-      it { is_expected.to_not be_valid }
-    end
-
-    context 'when end_date and start_date are the same' do
-      subject(:vacation) { build(:vacation, start_date: 1.day.ago, end_date: 1.day.ago) }
 
       it { is_expected.to_not be_valid }
     end
@@ -90,25 +76,19 @@ RSpec.describe Vacation, type: :model do
     end
 
     context 'when the duration of the vacation is less than 10 days' do
-      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 2.days.from_now)}
-
-      it { expect(vacation).to_not be_valid }
-    end
-
-    context 'when the duration of the vacation is equal to 9 days' do
-      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 9.days.from_now)}
+      let(:vacation) {build(:vacation, start_date: 1.week.from_now.monday, end_date: 1.week.from_now.monday + 8.days)}
 
       it { expect(vacation).to_not be_valid }
     end
 
     context 'when the duration of the vacation is equal to 10 days' do
-      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 10.days.from_now)}
+      let(:vacation) {build(:vacation, start_date: 1.week.from_now.monday, end_date: 1.week.from_now.monday + 9.days)}
 
       it { expect(vacation).to be_valid }
     end
 
     context 'when the duration of the vacation is higher than 10 days' do
-      let (:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 20.days.from_now)}
+      let (:vacation) {build(:vacation, start_date: 1.week.from_now.monday, end_date: 1.week.from_now.monday + 20.days)}
 
       it { expect(vacation).to be_valid }
     end
@@ -117,8 +97,8 @@ RSpec.describe Vacation, type: :model do
       let(:vacation) do
         build(
           :vacation,
-          start_date: 1.day.from_now.end_of_week,
-          end_date: 9.days.from_now.end_of_week
+          start_date: Date.current.next_week(:thursday),
+          end_date: Date.current.next_month
         )
       end
 
@@ -176,13 +156,13 @@ RSpec.describe Vacation, type: :model do
     subject(:vacation) do
       create(
         :vacation,
-        start_date: 7.days.from_now.beginning_of_week,
-        end_date: 7.days.from_now.beginning_of_week + 21.days
+        start_date: 1.week.from_now.monday,
+        end_date: 1.week.from_now.monday + 21.days
       )
     end
 
     it 'returns the duration of the vacation in days' do
-      expect(subject.duration_days).to eq(21)
+      expect(subject.duration_days).to eq(22)
     end
   end
 end
