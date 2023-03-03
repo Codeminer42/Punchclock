@@ -55,6 +55,10 @@ pt-BR:
               uniqueness: 'O usuário já possui uma alocação em progresso'
             hourly_rate:
               invalid_currency: Moeda inválida
+        vacation:
+          attributes:
+            start_date:
+              close_weekend: "O início das férias não pode ser próximo ao final de semana"
     models:
       admin_user:
         one: "Administrador"
