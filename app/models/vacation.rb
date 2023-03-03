@@ -3,6 +3,9 @@
 class Vacation < ApplicationRecord
   extend Enumerize
 
+  MINIMUM_DAYS_TO_CANCEL = 7
+  MINIMUM_RANGE_OF_DAYS = 8
+
   belongs_to :user
   belongs_to :hr_approver, class_name: 'User', foreign_key: :hr_approver_id, optional: true
   belongs_to :commercial_approver, class_name: 'User', foreign_key: :commercial_approver_id, optional: true
@@ -62,9 +65,6 @@ class Vacation < ApplicationRecord
 
   private
 
-  MINIMUM_DAYS_TO_CANCEL = 7
-  MINIMUM_RANGE_OF_DAYS = 8
-
   def approved_within_cancel_range?
     start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.today
   end
@@ -78,7 +78,7 @@ class Vacation < ApplicationRecord
   end
 
   def validate_start_date_close_to_weekend
-    if [0, 4, 5, 6].include?(self.start_date.wday)
+    if start_date.thursday? || start_date.friday? || start_date.on_weekend?
       errors.add(:start_date, "cannot be close to a weekend")
     end
   end
