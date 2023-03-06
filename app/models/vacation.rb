@@ -103,7 +103,7 @@ class Vacation < ApplicationRecord
 
   def validate_start_date_close_to_weekend
     if start_date.thursday? || start_date.friday? || start_date.on_weekend?
-      errors.add(:start_date, I18n.t("activerecord.errors.models.vacation.attributes.start_date.close_weekend"))
+      errors.add(:start_date, :close_weekend)
     end
   end
 
