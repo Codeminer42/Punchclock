@@ -35,23 +35,23 @@ describe 'User' do
 
     describe 'when status is approved' do
       let!(:vacation) do
-        create(:vacation, status: :approved, start_date: Date.tomorrow)
+        create(:vacation, status: :approved, start_date: Date.current.next_week(:monday))
       end
 
       it 'does not allow the user to cancel a vacation less than 7 days ahead of time' do
-        travel_to 5.days.ago
+        travel_to(Date.current.next_week(:monday) - 6.days)
 
         is_expected.not_to be_able_to(:destroy, vacation)
       end
 
       it 'allows user the user to cancel a vacation more than 6 days ahead of time' do
-        travel_to 6.days.ago
+        travel_to(Date.current.next_week(:monday) - 7.days)
 
         is_expected.to be_able_to(:destroy, vacation)
       end
 
       it 'does not allow the user to cancel a vacation after it started' do
-        travel_to 2.days.from_now
+        travel_to(Date.current.next_week(:monday) + 1.day)
 
         is_expected.not_to be_able_to(:destroy, vacation)
       end

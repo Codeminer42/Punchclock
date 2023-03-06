@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :vacation do
-    start_date { 2.days.from_now }
-    end_date { 2.months.from_now }
+    start_date { 1.week.from_now.monday }
+    end_date { 1.month.from_now }
     status { 'pending' }
     user
     hr_approver { nil }
@@ -26,7 +26,7 @@ FactoryBot.define do
 
     trait :ended do
       approved
-      start_date { 2.months.ago }
+      start_date { 2.months.ago.monday }
       end_date { 1.day.ago }
 
       to_create { |instance| instance.save(validate: false) }
@@ -34,7 +34,7 @@ FactoryBot.define do
 
     trait :ongoing do
       approved
-      start_date { 1.day.ago }
+      start_date { 1.day.ago.monday }
       end_date { 1.month.from_now }
 
       to_create { |instance| instance.save(validate: false) }
@@ -42,7 +42,20 @@ FactoryBot.define do
 
     trait :scheduled do
       approved
-      start_date { 1.day.from_now }
+      start_date { 1.week.from_now.monday }
+      end_date { 1.month.from_now }
+    end
+
+    trait :expired do
+      to_create { |instance| instance.save(validate: false) }
+      pending
+      start_date { 1.day.ago.monday }
+      end_date { 1.month.from_now }
+    end
+
+    trait :valid do
+      pending
+      start_date { 1.week.from_now.monday }
       end_date { 1.month.from_now }
     end
   end
