@@ -117,6 +117,71 @@ RSpec.describe Vacation, type: :model do
         it { expect(vacation).to be_valid }
       end
     end
+
+    context 'when the start_date is close or in a holiday' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.current.next_week(:monday),
+          end_date: Date.current.next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:office_holidays).and_return([{day: Date.current.next_week(:wednesday).day, month: Date.current.next_week(:wednesday).month}])
+      end
+
+      it { expect(vacation).to_not be_valid }
+    end
+
+    context 'when the start_date is close to the new year\'s eve holiday' do
+      # The next 30th of December that will be a Monday will be in 2024
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.new(2024, 12, 30),
+          end_date: Date.new(2024, 12, 30).next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:office_holidays).and_return([{day: 01, month: 01}])
+      end
+
+      it { expect(vacation).to_not be_valid }
+    end
+
+    context 'when the start_date is on the new year\'s holiday' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.new(2025, 01, 01),
+          end_date: Date.new(2025, 01, 01).next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:office_holidays).and_return([{day: 01, month: 01}])
+      end
+
+      it { expect(vacation).to_not be_valid }
+    end
+
+    context 'when the start_date is after a holiday' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.current.next_week(:wednesday),
+          end_date: Date.current.next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:office_holidays).and_return([{day: Date.current.next_week(:tuesday).day, month: Date.current.next_week(:tuesday).month}])
+      end
+
+      it { expect(vacation).to be_valid }
+    end
   end
 
   describe ".pending_approval_of" do
