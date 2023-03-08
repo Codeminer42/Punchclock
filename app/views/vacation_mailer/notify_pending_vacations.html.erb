@@ -1,0 +1,25 @@
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= t 'start_date' %></th>
+      <th><%= t 'end_date' %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacations.each do |vacation| %>
+      <tr>
+        <td><%= vacation.user.name %></td>
+        <td><%= vacation.start_date %></td>
+        <td><%= vacation.end_date %></td>
+        <td>
+          <%= link_to t('.approve_button'), admin_vacations_approve_url(vacation) %>
+          <%= link_to t('.deny_button'), admin_vacations_denied_url(@vacation) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

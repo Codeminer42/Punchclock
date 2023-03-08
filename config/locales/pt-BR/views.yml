@@ -91,6 +91,12 @@ pt-BR:
       subject: "Punchclock - %{user} cancelou o pedido de férias"
       info: "O %{user} cancelou o pedido de férias com duração de %{count} dias."
       dates: "Referente ao pedido com início em %{start_date} e término em %{end_date}"
+    notify_pending_vacations:
+      subject: "Punchclock - Existem férias pendentes de aprovação"
+      start_date: "Inicio"
+      end_date: "Término"
+      approve_button: "Aprovar"
+      deny_button: "Negar"
   views:
     pagination:
       first: "&laquo; Primeira"
