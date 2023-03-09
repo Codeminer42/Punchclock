@@ -8,7 +8,7 @@ namespace :vacations do
     end
   end
 
-  desc "Send a e-mail as remember with the pending vacations to be approve"
+  desc "Send an e-mail as a reminder with the pending vacations to be approved"
   task alert_pending_approve: :environment do
     Rails.logger.info "Checking the pending vacations"
     vacations = Vacation.pending
