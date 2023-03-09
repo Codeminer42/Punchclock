@@ -38,6 +38,14 @@ class Vacation < ApplicationRecord
     .order(start_date: :asc, end_date: :asc)
   }
 
+  def self.pending_approval_of(approver)
+    if approver == :hr
+      pending.where(hr_approver: nil)
+    elsif approver == :commercial
+      pending.where(commercial_approver: nil)
+    end
+  end
+
   def approve!(user)
     ActiveRecord::Base.transaction do
       update!(hr_approver: user) if user.hr?

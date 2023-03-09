@@ -11,19 +11,17 @@ namespace :vacations do
   desc "Send an e-mail as a reminder with the pending vacations to be approved"
   task alert_pending_approve: :environment do
     Rails.logger.info "Checking the pending vacations"
-    vacations = Vacation.pending
 
-    hr_pending_approves = vacations.where(hr_approver_id: nil)
+    hr_pending_approves = Vacation.pending_approval_of(:hr).all
     if hr_pending_approves.any?
       Rails.logger.info "Remembering the HR of pending vacations"
       VacationMailer.notify_pending_vacations(User.hr, hr_pending_approves).deliver
     end
 
-    commercial_pending_approves = vacations.where(commercial_approver_id: nil)
+    commercial_pending_approves = Vacation.pending_approval_of(:commercial).all
     if commercial_pending_approves.any?
       Rails.logger.info "Remembering the commercial of pending vacations"
       VacationMailer.notify_pending_vacations(User.commercial, commercial_pending_approves).deliver
-      end
     end
   end
 end
