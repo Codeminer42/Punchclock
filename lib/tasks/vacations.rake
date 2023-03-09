@@ -17,7 +17,7 @@ namespace :vacations do
     if hr_pending_approves.any?
       Rails.logger.info "Remembering the HR of pending vacations"
       User.by_roles_in([:hr]).each do |hr_user|
-        VacationMailer.notify_pending_vacations(hr_user, hr_pending_approves)
+        VacationMailer.notify_pending_vacations(hr_user, hr_pending_approves).deliver
       end
     end
 
@@ -25,7 +25,7 @@ namespace :vacations do
     if commercial_pending_approves.any?
       Rails.logger.info "Remembering the commercial of pending vacations"
       User.by_roles_in([:commercial]).each do |commercial_user|
-        VacationMailer.notify_pending_vacations(commercial_user, commercial_pending_approves)
+        VacationMailer.notify_pending_vacations(commercial_user, commercial_pending_approves).deliver
       end
     end
   end
