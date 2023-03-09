@@ -10,7 +10,7 @@ namespace :vacations do
 
   desc "Send a e-mail as remember with the pending vacations to be approve"
   task alert_pending_approve: :environment do
-    Rails.logger.info "anything"
+    Rails.logger.info "Checking the pending vacations"
     vacations = Vacation.pending
 
     hr_pending_approves = vacations.where(hr_approver_id: nil)
