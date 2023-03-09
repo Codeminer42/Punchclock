@@ -14,13 +14,13 @@ namespace :vacations do
 
     hr_pending_approves = Vacation.pending_approval_of(:hr).all
     if hr_pending_approves.any?
-      Rails.logger.info "Remembering the HR of pending vacations"
+      Rails.logger.info "Reminding HR of pending vacations"
       VacationMailer.notify_pending_vacations(User.hr, hr_pending_approves).deliver
     end
 
     commercial_pending_approves = Vacation.pending_approval_of(:commercial).all
     if commercial_pending_approves.any?
-      Rails.logger.info "Remembering the commercial of pending vacations"
+      Rails.logger.info "Reminding commercial of pending vacations"
       VacationMailer.notify_pending_vacations(User.commercial, commercial_pending_approves).deliver
     end
   end
