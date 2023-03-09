@@ -26,8 +26,8 @@ class VacationMailer < ApplicationMailer
     mail(to: User.vacation_managers.pluck(:email), cc: ENV['HR_EMAIL'], subject: t('.subject', user: @vacation.user.name))
   end
 
-  def notify_pending_vacations(user, vacations)
+  def notify_pending_vacations(users, vacations)
     @vacations = vacations
-    mail(to: user.email, subject: t('.subject'))
+    mail(to: users.map(&:email), subject: t('.subject'))
   end
 end

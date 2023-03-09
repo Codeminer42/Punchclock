@@ -209,16 +209,16 @@ describe VacationMailer do
     end
 
     context 'when an email was sended remembering the hr/commercial users of the pending vacations' do
-      let!(:vacation_manager) { FactoryBot.create :user, :commercial }
+      let!(:vacation_managers) { FactoryBot.create_list :user, 2, :commercial }
       let(:vacations) { FactoryBot.create_list(:vacation, 1, :pending) }
-      let(:mail) { VacationMailer.notify_pending_vacations(vacation_manager, vacations) }
+      let(:mail) { VacationMailer.notify_pending_vacations(vacation_managers, vacations) }
 
       it 'renders the subject' do
         expect(mail.subject).to eq(t 'vacation_mailer.notify_pending_vacations.subject')
       end
 
       it 'renders the receiver email' do
-        expect(mail.to).to eq([vacation_manager.email])
+        expect(mail.to).to eq(vacation_managers.map(&:email))
       end
 
       it 'renders the sender email' do
