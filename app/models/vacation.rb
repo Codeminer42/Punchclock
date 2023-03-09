@@ -38,7 +38,12 @@ class Vacation < ApplicationRecord
     .order(start_date: :asc, end_date: :asc)
   }
 
-  scope :pending_approval_of, ->(approver) { where("#{approver}_approver_id": nil) }
+  scope :pending_approval_of, ->(approver) {
+    unless [:hr, :commercial].include? approver.to_sym
+      raise ArgumentError, "The approver should be :hr or :commercial"
+    end
+    where("#{approver}_approver_id": nil)
+  }
 
   def approve!(user)
     ActiveRecord::Base.transaction do

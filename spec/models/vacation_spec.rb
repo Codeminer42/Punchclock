@@ -128,6 +128,14 @@ RSpec.describe Vacation, type: :model do
         )
       end
     end
+
+    context 'when is looking for vacations pending to be approved by a wrong parameter' do
+      it "return the vacations where the commercial_approver is nil" do
+        expect { described_class.pending_approval_of(:wrong_parameter) }.to raise_error(
+          ArgumentError, "The approver should be :hr or :commercial"
+        )
+      end
+    end
   end
 
   describe '#approve!' do
