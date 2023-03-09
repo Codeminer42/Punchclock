@@ -1,11 +1,12 @@
+<h1><%= t '.subject' %></h1>
 
-<table>
+<table style="width: 80%">
   <thead>
     <tr>
       <th></th>
-      <th><%= t 'start_date' %></th>
-      <th><%= t 'end_date' %></th>
-      <th></th>
+      <th style="width: 8em"><%= t 'start_date' %></th>
+      <th style="width: 8em"><%= t 'end_date' %></th>
+      <th style="width: 10em"></th>
     </tr>
   </thead>
 
@@ -17,7 +18,7 @@
         <td><%= vacation.end_date %></td>
         <td>
           <%= link_to t('.approve_button'), admin_vacations_approve_url(vacation) %>
-          <%= link_to t('.deny_button'), admin_vacations_denied_url(@vacation) %>
+          <%= link_to t('.deny_button'), admin_vacations_denied_url(vacation) %>
         </td>
       </tr>
     <% end %>
