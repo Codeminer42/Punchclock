@@ -106,6 +106,38 @@ RSpec.describe Vacation, type: :model do
     end
   end
 
+  describe ".pending_approval_of" do
+    let!(:hr_user) { create(:user, :hr) }
+    let!(:commercial_user) { create(:user, :commercial) }
+    let(:pending_vacation) { create(:vacation, :pending) }
+    let(:pending_hr_vacation) { create(:vacation, :pending, commercial_approver: commercial_user) }
+    let(:pending_commercial_vacation) { create(:vacation, :pending, hr_approver: hr_user) }
+
+    context 'when is looking for vacations pending to be approved by hr' do
+      it "return the vacations where the hr_approver is nil" do
+        expect(described_class.pending_approval_of(:hr)).to eq(
+          [pending_vacation, pending_hr_vacation]
+        )
+      end
+    end
+
+    context 'when is looking for vacations pending to be approved by commercial' do
+      it "return the vacations where the commercial_approver is nil" do
+        expect(described_class.pending_approval_of(:commercial)).to eq(
+          [pending_vacation, pending_commercial_vacation]
+        )
+      end
+    end
+
+    context 'when is looking for vacations pending to be approved by a wrong parameter' do
+      it "return the vacations where the commercial_approver is nil" do
+        expect { described_class.pending_approval_of(:wrong_parameter) }.to raise_error(
+          ArgumentError, "The approver should be :hr or :commercial"
+        )
+      end
+    end
+  end
+
   describe '#approve!' do
     subject(:vacation) { create(:vacation) }
 

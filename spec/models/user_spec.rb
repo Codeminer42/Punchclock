@@ -145,6 +145,26 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '.hr' do
+      let!(:hr_user) { create(:user, :hr) }
+      let!(:commercial_user) { create(:user, :commercial) }
+      let!(:admin_user) { create(:user, roles: [:admin]) }
+
+      it 'returns users with hr role' do
+        expect(User.hr).to contain_exactly(hr_user)
+      end
+    end
+
+    describe '.commercial' do
+      let!(:hr_user) { create(:user, :hr) }
+      let!(:commercial_user) { create(:user, :commercial) }
+      let!(:admin_user) { create(:user, roles: [:admin]) }
+
+      it 'returns users with hr role' do
+        expect(User.commercial).to contain_exactly(commercial_user)
+      end
+    end
+
     describe '.vacation_managers' do
       let!(:user1) { create(:user, :hr) }
       let!(:user2) { create(:user, :commercial) }
