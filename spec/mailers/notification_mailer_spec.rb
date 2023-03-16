@@ -220,5 +220,34 @@ describe NotificationMailer do
         expect(mail.body).to match(contributions)
       end
     end
+
+    context 'when a registration email is sent again through admin' do
+      let(:user) { create(:user, name: "Art Vandelay") }
+      let(:mail) { NotificationMailer.resend_user_registration(user, 'xyz') }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq('Welcome to Punchclock')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([user.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @name' do
+        expect(mail.body.encoded).to match(user.name)
+      end
+
+      it 'assigns @email' do
+        expect(mail.body.encoded).to match(user.email)
+      end
+
+      it 'assigns link to edit user password path' do
+        expect(mail.body.encoded).to have_link('here', href: edit_user_password_url(reset_password_token: 'xyz'))
+      end
+    end
   end
 end

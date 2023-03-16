@@ -12,6 +12,12 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Welcome to Punchclock')
   end
 
+  def resend_user_registration(user, token)
+    @user = user
+    @token = token
+    mail(to: @user.email, subject: 'Welcome to Punchclock', template_name: 'notify_user_registration')
+  end
+
   def notify_user_password_change(user, new_password)
     @user = user
     @new_password = new_password

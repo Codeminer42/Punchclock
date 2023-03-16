@@ -55,6 +55,10 @@ ActiveAdmin.register User do
    link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xlsx, month: :past)
   end
 
+  action_item :user_registration, only: :show, priority: 0 do
+    link_to I18n.t('resend_user_registration'), resend_user_registration_admin_user_path, method: :patch
+  end
+
   index download_links: [:xlsx] do
     selectable_column
     column :name do |user|
@@ -251,6 +255,18 @@ ActiveAdmin.register User do
       spreadsheet = HourReportSpreadsheet.new reports
 
       format.xlsx { send_data spreadsheet.to_string_io, filename: "users-hours-#{Date.current}.xlsx" }
+    end
+  end
+
+  member_action :resend_user_registration, method: :patch do
+    user = resource.user
+
+    user.transaction do
+      user.touch(:confirmed_at)
+      token = user.send(:set_reset_password_token)
+      NotificationMailer.resend_user_registration(resource, token).deliver_later
+
+      redirect_to admin_user_path, notice: I18n.t('resend_user_registration_confirmed')
     end
   end
 end

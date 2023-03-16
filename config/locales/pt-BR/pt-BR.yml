@@ -26,6 +26,8 @@ pt-BR:
   english_evaluations: 'Avaliações de Inglês'
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
+  resend_user_registration: 'Reenviar Email de Cadastro'
+  resend_user_registration_confirmed: 'Email de Cadastro Reenviado'
   not_evaluated: 'Não avaliado'
   not_allocated: 'Não alocado'
   allocated: 'Alocado'
