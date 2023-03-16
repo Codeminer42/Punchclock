@@ -14,6 +14,16 @@
           <span class="ml-4">Mentoring</span>
         <% end %>
       </li>
+      <li class="relative px-6 py-3">
+        <%= link_to new_admin_allocation_chart_index_path, class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" do %>
+          <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
+          </svg>
+          <span class="ml-4"><%= I18n.t('allocation_chart') %></span>
+        <% end %>
+      </li>
     </ul>
   </div>
 </aside>

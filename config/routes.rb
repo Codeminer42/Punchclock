@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   namespace :new_admin do
     resources :mentoring, only: :index
+    resources :allocation_chart, only: :index
   end
 
   resources :repositories, only: :index do
