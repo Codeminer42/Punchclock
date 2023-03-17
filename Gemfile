@@ -33,7 +33,6 @@ gem 'draper'
 gem 'draper-cancancan', '~> 1.1.1'
 gem 'rails-i18n'
 gem 'webpacker', '~> 5.1'
-gem 'holidays', '~> 8.3'
 gem 'kaminari'
 
 gem 'caxlsx'

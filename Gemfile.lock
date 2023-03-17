@@ -281,7 +281,6 @@ GEM
       moneta
       multi_json (>= 1.9.2)
       webrick
-    holidays (8.5.0)
     htmlentities (4.3.4)
     http_parser.rb (0.8.0)
     httparty (0.21.0)
@@ -656,7 +655,6 @@ DEPENDENCIES
   github_api (~> 0.18.2)
   guard
   guard-livereload (~> 2.5)
-  holidays (~> 8.3)
   httparty
   jquery-easing-rails
   jquery-rails
