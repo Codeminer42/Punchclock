@@ -48,4 +48,18 @@ describe RegionalHoliday do
       expect(regional_holiday.errors[:base]).to include('date must be valid')
     end
   end
+
+  describe '.to_formatted_hash' do
+    let!(:holiday_1) { create(:regional_holiday) }
+    let!(:holiday_2) { create(:regional_holiday) }
+    let!(:holiday_3) { create(:regional_holiday) }
+
+    it 'returns a collection of holidays in day and month in hash format' do
+      expect(described_class.to_formatted_hash).to eq([
+        { month: holiday_1.month, day: holiday_1.day },
+        { month: holiday_2.month, day: holiday_2.day },
+        { month: holiday_3.month, day: holiday_3.day }
+      ])
+    end
+  end
 end

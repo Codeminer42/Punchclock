@@ -9,6 +9,10 @@ class RegionalHoliday < ApplicationRecord
     offices.map(&:city)
   end
 
+  def self.to_formatted_hash
+    all.map { |h| { month: h.month, day: h.day } }
+  end
+
   private
 
   def valid_date?
