@@ -120,12 +120,10 @@ describe PunchesController do
       end
 
       context 'when fails' do
-        let(:punch_params) { 
+        let(:punch_params) {
           {
-            "from_time"=>"04:00", 
-            "to_time"=>"18:00", 
-            "when_day"=>"01/01/2020",
-            "project_id" => "#{project.id}"
+            "from_time"=>"04:00",
+            "to_time"=>"18:00"
           }
         }
 
@@ -133,7 +131,7 @@ describe PunchesController do
           is_expected.to render_template(:new) 
         end
       end
-    end    
+    end
 
     describe 'methods' do
 

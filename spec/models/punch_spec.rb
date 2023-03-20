@@ -176,8 +176,13 @@ describe Punch do
     end
 
     context "on holidays" do
-      before do
-        punch.from = Time.new(2001, 12, 25, 8, 0, 0, 0) # Christimas
+      let!(:office_holiday) { create(:regional_holiday, offices: [user.office], day: 25, month: 12) }
+      let(:punch) do
+        build(:punch,
+          user: user,
+          from: Time.new(2001, 12, 25, 8, 0, 0, 0),
+          to: Time.new(2001, 12, 25, 12, 0, 0, 0)
+        )
       end
 
       it "is not valid" do
@@ -186,6 +191,7 @@ describe Punch do
 
       it "includes an error message" do
         punch.validate
+
         expect(punch.errors[:when_day]).to include(error_message)
       end
     end
