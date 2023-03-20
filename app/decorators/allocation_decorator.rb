@@ -15,37 +15,29 @@ class AllocationDecorator < Draper::Decorator
     model.user.first_and_last_name
   end
 
-  def project_name
-    model.project ? model.project.name : nil
-  end
-
   def user_level
-    decorated_user(model).level
+    model.user.decorate.level
   end
 
   def user_specialty
-    decorated_user(model).specialty
+    model.user.decorate.specialty
   end
 
   def user_english_level
-    decorated_user(model).english_level
+    model.user.decorate.english_level
   end
 
   def user_skills
-    decorated_user(model).skills
+    model.user.decorate.skills
   end
 
-  def allocation_end_at
+  def end_at
     build_date(model.end_at)
   end
 
   private
 
-  def decorated_user(allocation)
-    UserDecorator.decorate(allocation.user)
-  end
-
   def build_date(date)
-    date ? date.to_time.strftime("%d/%m/%Y") : I18n.t('not_allocated')
+    date ? I18n.l(date) : I18n.t('not_allocated')
   end
 end

@@ -5,9 +5,7 @@ module NewAdmin
     layout "new_admin"
 
     def index
-      allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation).call
-
-      @allocations = allocations.decorate
+      @allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation).call.decorate
     end
   end
 end

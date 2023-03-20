@@ -16,8 +16,9 @@ class Allocation < ApplicationRecord
                       if: :ongoing?
 
   delegate :office_name, to: :user
+  delegate :name, to: :project, prefix: true, allow_nil: true
 
-  scope :ongoing, -> { 
+  scope :ongoing, -> {
     where(ongoing: true, user_id: User.active).order(start_at: :desc)
   }
   scope :finished, -> {
@@ -59,7 +60,7 @@ class Allocation < ApplicationRecord
 
   def unique_period
     return unless Allocation.in_period(start_at, end_at).where.not(id: id).exists?(user_id: user_id)
-  
+
     errors.add(:start_at, :overlapped_period)
   end
 end
