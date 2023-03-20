@@ -52,6 +52,10 @@ RSpec.describe Vacation, type: :model do
         build(:vacation, start_date: 1.months.from_now.monday, end_date: 2.months.from_now)
       end
 
+      before do
+        allow(vacation.user).to receive(:office_holidays).and_return([])
+      end
+
       it { is_expected.to be_valid }
     end
 
