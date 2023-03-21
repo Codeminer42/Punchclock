@@ -55,6 +55,8 @@ class User < ApplicationRecord
   has_many :mentees, class_name: :User, foreign_key: :mentor_id, inverse_of: :mentor
   has_and_belongs_to_many :skills
 
+  delegate :holidays, to: :office, prefix: true
+
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
@@ -108,10 +110,6 @@ class User < ApplicationRecord
 
   def inactive_message
     active? ? super : :inactive_account
-  end
-
-  def office_holidays
-    HolidaysService.from_office(office)
   end
 
   def to_s

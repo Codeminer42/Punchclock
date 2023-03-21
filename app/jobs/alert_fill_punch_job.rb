@@ -12,7 +12,7 @@ class AlertFillPunchJob < ApplicationJob
   private
 
   def day_fifteen_notification
-    if is_working_day?
+    if Date.current.on_weekday?
       User.engineer.active.find_each do |user|
         NotificationMailer.notify_user_to_fill_punch(user).deliver_later
       end
@@ -43,9 +43,5 @@ class AlertFillPunchJob < ApplicationJob
     else
       day
     end
-  end
-
-  def is_working_day?(day = Date.current)
-    day.on_weekday? && !day.holiday?(:br)
   end
 end

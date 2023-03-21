@@ -15,6 +15,10 @@ class Office < ApplicationRecord
     city
   end
 
+  def holidays
+    regional_holidays.to_formatted_hash
+  end
+
   def calculate_score
     users_overall_scores = users_without_head.not_in_experience.map(&:overall_score).compact
 
