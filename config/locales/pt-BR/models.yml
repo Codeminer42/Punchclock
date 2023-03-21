@@ -182,6 +182,7 @@ pt-BR:
         started_at: "Iniciou em"
         mentor: "Mentor"
         mentees: "Mentorados"
+        user_registration: 'Cadastro de Usuário'
         overall_score: "Pontuação Geral"
         performance_score: "Pontuação de Desempenho"
         english_level: "Nível de Inglês"
