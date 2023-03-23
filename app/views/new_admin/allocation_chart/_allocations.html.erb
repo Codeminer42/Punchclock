@@ -16,7 +16,7 @@
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= allocation.user_name %>
+              <%= allocation.user.first_and_last_name %>
             </p>
           </div>
         </td>
@@ -30,35 +30,35 @@
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              <%= allocation.end_at %>
+              <%= allocation.end_at ? l(allocation.end_at) : t('not_allocated') %>
             </p>
           </div>
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              <%= allocation.user_level %>
+              <%= allocation.user.level %>
             </p>
           </div>
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              <%= allocation.user_specialty %>
+              <%= allocation.user.specialty %>
             </p>
           </div>
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              <%= allocation.user_english_level  %>
+              <%= allocation.user.english_score  %>
             </p>
           </div>
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              <%= allocation.user_skills %>
+              <%= allocation.user.skills %>
             </p>
           </div>
         </td>

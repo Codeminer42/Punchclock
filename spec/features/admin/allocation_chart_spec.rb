@@ -14,7 +14,7 @@ describe 'Admin Allocation chart', type: :feature do
     let!(:user) { create(:user, allocations: [allocation]) }
 
     let(:allocation) do
-      build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2022, 11, 1), ongoing: true)
+      build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2023, 03, 1), ongoing: true)
     end
 
     before { visit '/admin/allocation_chart' }
@@ -47,8 +47,10 @@ describe 'Admin Allocation chart', type: :feature do
         end
 
         it '"Alocado até" column links to allocation' do
+          allow(Date).to receive(:today).and_return(Date.new(2023, 4, 1))
+
           within 'tbody' do
-            expect(page).to have_link('01/11/2022', href: "/admin/allocations/#{allocation.id}")
+            expect(page).to have_link('01/03/2023', href: "/admin/allocations/#{allocation.id}")
           end
         end
       end
