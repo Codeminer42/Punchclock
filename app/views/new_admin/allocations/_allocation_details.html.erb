@@ -1,0 +1,112 @@
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap">
+      <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+          <th colspan="100%" class="px-4 py-3"><%= t 'allocation_details' %></th>
+        </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('user') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= allocation.user_name %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('project') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= allocation.project_name %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('hourly_rate') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= allocation.hourly_rate %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('start_at') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= l(allocation.start_at) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('end_at') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= l(allocation.end_at) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('days_left') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= allocation.days_left %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Allocation.human_attribute_name('ongoing') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= allocation.ongoing %>
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

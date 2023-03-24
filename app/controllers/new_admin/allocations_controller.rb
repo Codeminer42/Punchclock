@@ -9,7 +9,6 @@ module NewAdmin
 
       @allocation_forecast = RevenueForecastService.allocation_forecast(allocation)
       @allocation = allocation.decorate
-      @allocation_punches = allocation.user_punches
     end
   end
 end

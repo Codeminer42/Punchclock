@@ -1,0 +1,60 @@
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap">
+      <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+          <th colspan="100%" class="px-4 py-3"><%= t 'active_admin.allocated_user_punches' %></th>
+        </tr>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.when' %></th>
+          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.from' %></th>
+          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.to' %></th>
+          <th class="px-4 py-3">Delta</th>
+          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.extra_hour' %></th>
+        </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <% allocation.user_punches.each do |punch| %>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%=  punch.date  %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.from %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.to %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.delta %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= I18n.t(punch.extra_hour.to_s)  %>
+                </p>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

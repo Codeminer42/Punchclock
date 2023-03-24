@@ -22,6 +22,7 @@ pt-BR:
       - Sábado
     formats:
       default: "%d/%m/%Y"
+      short: "%m/%Y"
       time: "%H:%M"
       month_name: '%B'
   english_evaluations: 'Avaliações de Inglês'
