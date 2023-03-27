@@ -23,6 +23,7 @@ class Punch < ApplicationRecord
   }
 
   delegate :name, to: :user, prefix: true
+  delegate :name, to: :project, prefix: true
 
   def from_time=(time_string)
     @from_time = time_string.presence
