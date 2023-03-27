@@ -5,7 +5,7 @@
         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
           <th colspan="100%" class="px-4 py-3"><%= t 'revenue_forecast' %></th>
         </tr>
-        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-white dark:text-gray-400 dark:bg-gray-800">
           <th class="px-4 py-3"><%= t 'activerecord.attributes.exchange_rate.month' %></th>
           <th class="px-4 py-3"><%= t 'working_hours' %></th>
           <th class="px-4 py-3"><%= t 'forecast' %></th>
@@ -18,7 +18,7 @@
             <td class="px-4 py-3">
               <div class="flex items-center text-sm">
                 <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                  <%= l "#{allocation[:month]}/#{allocation[:year]}".to_date, :format => :short  %>
+                  <%= l "#{allocation[:month]}/#{allocation[:year]}".to_date, format: :short  %>
                 </p>
               </div>
             </td>

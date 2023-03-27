@@ -5,12 +5,12 @@
         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
           <th colspan="100%" class="px-4 py-3"><%= t 'active_admin.allocated_user_punches' %></th>
         </tr>
-        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.when' %></th>
-          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.from' %></th>
-          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.to' %></th>
-          <th class="px-4 py-3">Delta</th>
-          <th class="px-4 py-3"><%= t 'activerecord.attributes.punch.extra_hour' %></th>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-white dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3"><%= Punch.human_attribute_name('when') %></th>
+          <th class="px-4 py-3"><%= Punch.human_attribute_name('from') %></th>
+          <th class="px-4 py-3"><%= Punch.human_attribute_name('to') %></th>
+          <th class="px-4 py-3"><%= Punch.human_attribute_name('delta') %></th>
+          <th class="px-4 py-3"><%= Punch.human_attribute_name('extra_hour') %></th>
         </tr>
       </thead>
 
