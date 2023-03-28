@@ -103,6 +103,19 @@ RSpec.describe Vacation, type: :model do
       end
 
       it { expect(vacation).to_not be_valid }
+
+      context 'when the user is a contractor' do
+        let(:vacation) do
+          build(
+            :vacation,
+            start_date: Date.current.next_week(:thursday),
+            end_date: Date.current.next_month,
+            user: create(:user, contract_type: 'contractor')
+          )
+        end
+
+        it { expect(vacation).to be_valid }
+      end
     end
   end
 
