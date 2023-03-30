@@ -3,11 +3,7 @@
 <% end %>
 
 <div data-tab-id="allocation_chart" class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
-  <div class="w-full overflow-x-auto">
-    <div data-tab-content>
-      <div id="allocation_chart">
-        <%= render 'allocations', allocations: @allocations  %>
-      </div>
-    </div>
+  <div id="allocation_chart">
+    <%= render 'allocations', allocations: @allocations  %>
   </div>
 </div>
