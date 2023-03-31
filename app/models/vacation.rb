@@ -19,12 +19,14 @@ class Vacation < ApplicationRecord
   }, predicates: true, scope: :shallow
 
   validates_presence_of :start_date, :end_date, :user
-  validates_comparison_of :start_date, greater_than: Date.current, allow_nil: true, if: :not_cancelled?
-  validates_comparison_of :end_date,
-    greater_than: lambda { |vacation| vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
-    allow_nil: true,
-    if: :not_cancelled?
+  # validates_comparison_of :start_date, greater_than: Date.current, allow_nil: true, if: :not_cancelled?
+  # validates_comparison_of :end_date,
+  #   greater_than: lambda { |vacation| vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
+  #   allow_nil: true,
+  #   if: :not_cancelled?
   validate :validate_start_date_close_to_weekend, if: :start_date, unless: proc { user.contractor? }
+  validate :validate_start_date_greater_than_current_date
+  validate :validate_end_date_greater_than_start_date
 
   scope :ongoing_and_scheduled, -> {
     where(status: :approved)
@@ -87,6 +89,20 @@ class Vacation < ApplicationRecord
   def validate_start_date_close_to_weekend
     if start_date.thursday? || start_date.friday? || start_date.on_weekend?
       errors.add(:start_date, I18n.t("activerecord.errors.models.vacation.attributes.start_date.close_weekend"))
+    end
+  end
+
+  def validate_start_date_greater_than_current_date
+    if start_date < Date.current
+      errors.add(:start_date, I18n.t("activerecord.errors.models.vacation.attributes.start_date.greater_than_current", date: I18n.l(Date.current)))
+    end
+  end
+
+  def validate_end_date_greater_than_start_date
+    current_minimum_end_date = start_date + MINIMUM_RANGE_OF_DAYS.days
+
+    if end_date < current_minimum_end_date
+      errors.add(:end_date, I18n.t("activerecord.errors.models.vacation.attributes.start_date.greater_than_current", date: I18n.l(current_minimum_end_date)))
     end
   end
 end
