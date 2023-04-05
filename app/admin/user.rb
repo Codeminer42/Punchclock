@@ -56,7 +56,7 @@ ActiveAdmin.register User do
   end
 
   action_item :user_registration, only: :show, priority: 0 do
-    link_to I18n.t('resend_user_registration'), resend_user_registration_admin_user_path, method: :patch
+    link_to I18n.t('resend_user_registration'), resend_user_registration_admin_user_path, method: :patch unless user.confirmed?
   end
 
   index download_links: [:xlsx] do
