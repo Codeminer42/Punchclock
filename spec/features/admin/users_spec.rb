@@ -185,7 +185,10 @@ describe 'Users', type: :feature do
           user.skip_confirmation!
           user.save
 
-          visit current_path
+          visit '/admin/users'
+          within 'table' do
+            find_link(user.name.to_s, href: "/admin/users/#{user.id}").click
+          end
 
           expect(page).to_not have_content('Reenviar Email de Cadastro')
         end
