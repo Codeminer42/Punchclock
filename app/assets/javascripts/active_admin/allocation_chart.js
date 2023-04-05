@@ -15,10 +15,6 @@ $(document).ready(function () {
         targets: hiddenTimeColumnPosition,
         type: 'num',
         visible: false
-      },
-      {
-        targets: nameColumnPosition,
-        orderData: hiddenTimeColumnPosition
       }
     ]
   });
