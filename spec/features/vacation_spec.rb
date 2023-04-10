@@ -16,6 +16,6 @@ RSpec.describe 'RequestVacation', type: :feature do
       end
     end
 
-    expect(page).to have_content('Solicitação de férias não pôde ser criada. Erros: Data de início deve ser maior que 01/03/2023. Data de término deve ser maior que 09/03/2023')
+    expect(page).to have_content('Solicitação de férias não pôde ser criada. Erros: Data de início deve ser maior que 31/03/2023. Data de término deve ser maior que 09/03/2023')
   end
 end

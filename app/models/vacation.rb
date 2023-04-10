@@ -23,7 +23,7 @@ class Vacation < ApplicationRecord
     message: lambda { |vacation, other|
       I18n.t(
         "activerecord.errors.models.vacation.attributes.start_date.greater_than_current",
-        date: I18n.l(vacation.start_date)
+        date: I18n.l(Date.current)
       )
     },
     greater_than: Date.current,
