@@ -55,7 +55,7 @@ ActiveAdmin.register User do
    link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xlsx, month: :past)
   end
 
-  action_item :user_registration, only: :show, priority: 0 do
+  action_item :user_registration, only: :show, priority: 0, if: -> { !user.confirmed? } do
     link_to I18n.t('resend_user_registration'), resend_user_registration_admin_user_path, method: :patch
   end
 
