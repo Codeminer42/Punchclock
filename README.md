@@ -13,6 +13,7 @@ Ruby 3.1
 Rails 7.0
 Postgres >= 13.7
 Node 16.13.1
+Yarn >= 1.22.19
 ```
 
 ## Installing
@@ -23,6 +24,7 @@ $ cd Punchclock
 $ cp .env.example .env
 $ Install Postgres
 $ Install Redis
+$ Install Yarn as a global dependency (npm i -g yarn@1.22.19)
 $ bin/setup
 ```
 
