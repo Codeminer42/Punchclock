@@ -7,9 +7,7 @@ RSpec.describe 'RequestVacation', type: :feature do
     visit new_vacation_path
 
     within '#new_vacation' do
-      travel_to Time.zone.local(2023, 03, 31) do
-        Time.current.freeze
-      
+      travel_to Time.zone.local(2023, 03, 31) do      
         fill_in 'vacation[start_date]', with: '01/03/2023'
         fill_in 'vacation[end_date]', with: '03/03/2023'
         click_button 'Solicitar Férias'
