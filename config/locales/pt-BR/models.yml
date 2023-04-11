@@ -59,6 +59,9 @@ pt-BR:
           attributes:
             start_date:
               close_weekend: "O início das férias não pode ser próximo ao final de semana"
+              greater_than_current: "deve ser maior que %{date}"
+            end_date:
+              greater_than_current: "deve ser maior que %{date}"
     models:
       admin_user:
         one: "Administrador"

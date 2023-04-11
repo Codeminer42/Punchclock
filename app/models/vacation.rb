@@ -19,8 +19,23 @@ class Vacation < ApplicationRecord
   }, predicates: true, scope: :shallow
 
   validates_presence_of :start_date, :end_date, :user
-  validates_comparison_of :start_date, greater_than: Date.current, allow_nil: true, if: :not_cancelled?
+  validates_comparison_of :start_date,
+    message: lambda { |vacation, other|
+      I18n.t(
+        "activerecord.errors.models.vacation.attributes.start_date.greater_than_current",
+        date: I18n.l(Date.current)
+      )
+    },
+    greater_than: Date.current,
+    allow_nil: true,
+    if: :not_cancelled?
   validates_comparison_of :end_date,
+    message: lambda { |vacation, other|
+      I18n.t(
+        "activerecord.errors.models.vacation.attributes.end_date.greater_than_current",
+        date: I18n.l(vacation.start_date + MINIMUM_RANGE_OF_DAYS.days)
+      )
+    },
     greater_than: lambda { |vacation| vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
     allow_nil: true,
     if: :not_cancelled?
