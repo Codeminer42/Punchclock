@@ -14,11 +14,13 @@
     <% allocations.each do |allocation| %>
       <tr class="text-gray-700 dark:text-gray-400">
         <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= allocation.user.first_and_last_name %>
-            </p>
-          </div>
+          <%= link_to new_admin_admin_user_path(allocation.user), class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150" do %>
+            <div class="flex items-center text-sm underline hover:text-white">
+              <p class="text-sm text-gray-600 dark:text-gray-400 dark:hover:text-gray-200">
+                <%= allocation.user.first_and_last_name %>
+              </p>
+            </div>
+          <% end %>
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
