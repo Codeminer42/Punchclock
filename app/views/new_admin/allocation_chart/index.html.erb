@@ -1,0 +1,9 @@
+<% content_for :page_title do %>
+  <%= t 'allocation_chart' %>
+<% end %>
+
+<div data-tab-id="allocation_chart" class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div id="allocation_chart">
+    <%= render 'allocations', allocations: @allocations  %>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<table class="w-full whitespace-no-wrap ">
+  <thead>
+    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+      <th class="px-4 py-3"><%= t 'name' %></th>
+      <th class="px-4 py-3"><%= t 'client' %></th>
+      <th class="px-4 py-3"><%= t 'allocated_until' %></th>
+      <th class="px-4 py-3"><%= t 'level' %></th>
+      <th class="px-4 py-3"><%= t 'specialty' %></th>
+      <th class="px-4 py-3"><%= t 'english_evaluation' %></th>
+      <th class="px-4 py-3"><%= t 'skills' %></th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+    <% allocations.each do |allocation| %>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= allocation.user.first_and_last_name %>
+            </p>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <%= allocation.project_name %>
+            </p>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <%= allocation.end_at ? l(allocation.end_at) : t('not_allocated') %>
+            </p>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <%= allocation.user.level %>
+            </p>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <%= allocation.user.specialty %>
+            </p>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <%= allocation.user.english_score  %>
+            </p>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              <%= allocation.user.skills %>
+            </p>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

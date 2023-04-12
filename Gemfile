@@ -73,6 +73,7 @@ gem 'rswag-api', '~> 2.5.1'
 gem 'rswag-ui', '~> 2.5.1'
 gem 'unicorn'
 gem "tailwindcss-rails", "~> 2.0"
+gem 'inline_svg', '~> 1.9'
 
 group :test do
   gem 'capybara'

@@ -2,6 +2,7 @@
 
 class AllocationDecorator < Draper::Decorator
   delegate_all
+  decorates_association :user
 
   def hourly_rate
     h.humanized_money_with_symbol(super)
