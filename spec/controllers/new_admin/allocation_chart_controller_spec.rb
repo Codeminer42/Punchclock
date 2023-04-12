@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 describe NewAdmin::AllocationChartController do
-  let(:user) { create(:user) }
+  render_views
+
+  let(:user) { create(:user, name: "Jorge") }
+  let(:page) { Capybara::Node::Simple.new(response.body) }
 
   before do
     allow(controller).to receive(:authenticate_user!)
@@ -21,7 +24,9 @@ describe NewAdmin::AllocationChartController do
       it 'returns users within an empty allocation' do
         get :index
 
-        expect(subject.instance_variable_get(:@allocations)).to include(having_attributes(user_id: user.id))
+        expect(page).to have_content(user.name)
+                    .and have_content(%r{#{user.level}}i)
+                    .and have_content(%r{#{user.specialty}}i)
       end
     end
 
@@ -42,7 +47,11 @@ describe NewAdmin::AllocationChartController do
       it 'returns allocations' do
         get :index
 
-        expect(subject.instance_variable_get(:@allocations)).to include(allocation)
+        expect(page).to have_content(allocation.project_name)
+                    .and have_content(user.name)
+                    .and have_content(%r{#{user.level}}i)
+                    .and have_content(%r{#{user.specialty}}i)
+                    .and have_content(allocation.end_at.strftime('%d/%m/%Y'))
       end
     end
   end

@@ -47,7 +47,7 @@ describe 'Admin Allocation chart', type: :feature do
         end
 
         it '"Alocado até" column links to allocation' do
-          allow(Date).to receive(:today).and_return(Date.new(2023, 4, 1))
+          travel_to Date.new(2023, 4, 1)
 
           within 'tbody' do
             expect(page).to have_link('01/03/2023', href: "/admin/allocations/#{allocation.id}")
