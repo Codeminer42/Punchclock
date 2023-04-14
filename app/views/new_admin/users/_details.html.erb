@@ -45,7 +45,7 @@
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                <%= user.otp_required_for_login ? t(user.otp_required_for_login.to_s) : t('false') %>
+                <%= user.otp_required_for_login %>
               </p>
             </div>
           </td>

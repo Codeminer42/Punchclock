@@ -85,4 +85,9 @@ class UserDecorator < Draper::Decorator
   def office_city
     model.office.city
   end
+
+  def otp_required_for_login
+    return I18n.t('false') if model.otp_required_for_login.nil?
+    I18n.t(model.otp_required_for_login)
+  end
 end
