@@ -51,7 +51,7 @@ describe NewAdmin::UsersController do
       it 'shows allocations details with no allocation for user' do 
         get :show, params: { id: user.id }
         click_button('Alocações')
-        expect(page).to have_content('Alocação atual') #I18n
+        expect(page).to have_content('Alocação atual') 
                     .and have_content('Não alocado')
       end 
     end 
