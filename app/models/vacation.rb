@@ -5,7 +5,6 @@ class Vacation < ApplicationRecord
 
   MINIMUM_DAYS_TO_CANCEL = 7
   MINIMUM_RANGE_OF_DAYS = 8
-  MINIMUM_DAYS_BEFORE_HOLIDAY = 2
 
   belongs_to :user
   belongs_to :hr_approver, class_name: 'User', foreign_key: :hr_approver_id, optional: true
@@ -41,7 +40,7 @@ class Vacation < ApplicationRecord
     allow_nil: true,
     if: :not_cancelled?
   validate :validate_start_date_close_to_weekend, if: :start_date, unless: proc { user.contractor? }
-  validate :validate_start_date_close_to_holiday, if: :start_date
+  validates_with HolidayValidator, if: :start_date, unless: lambda { !validate_vacation_before_holiday? }
 
   scope :ongoing_and_scheduled, -> {
     where(status: :approved)
@@ -107,16 +106,7 @@ class Vacation < ApplicationRecord
     end
   end
 
-  def validate_start_date_close_to_holiday
-    return unless ENV['VALIDATE_VACATION_BEFORE_HOLIDAY'] == 'true'
-    if (user.office_holidays & restrict_dates).any?
-      errors.add(:start_date, :close_holiday)
-    end
-  end
-
-  def restrict_dates
-    (start_date..(start_date + MINIMUM_DAYS_BEFORE_HOLIDAY.days)).to_a.map do |date|
-      {day: date.day, month: date.month}
-    end
+  def validate_vacation_before_holiday?
+    ENV['VALIDATE_VACATION_BEFORE_HOLIDAY'] == 'true'
   end
 end
