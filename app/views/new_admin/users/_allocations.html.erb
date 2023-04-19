@@ -1,0 +1,89 @@
+<div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+  <p colspan="100%" class="px-4 py-3"><%= t 'user_details' %></p>
+</div>
+  
+<section class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-4"> 
+
+  <div> 
+    <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+      <%= 'Alocação atual' %>
+    </div>
+  </div>
+
+  <div> 
+    <div class="flex items-center text-sm">
+      <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+        <%= @user_allocations.first.nil? ? 'Não alocado' : @user_allocations.first.project_name%>
+      </p>
+    </div>
+  </div>
+
+  <div> 
+    <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+      <%= 'Alocações' %>
+    </div>
+  </div>
+
+  <div class="grid"> 
+    <table id="allocations_table">
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Nome do Projeto' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Início' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Término' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Em progresso' %>
+          </div>
+        </th>
+      </tr>
+
+      <div class="allocations">
+        <% user_allocations.each do |allocation| %>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= allocation.project_name %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= l(allocation.start_at) %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= l(allocation.end_at) %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= allocation.ongoing %>
+                </p>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </div>
+    </table>
+  </div>
+</section>
+
