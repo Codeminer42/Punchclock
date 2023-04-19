@@ -230,6 +230,7 @@ pt-BR:
         name: "Nome"
         day: "Dia"
         month: "Mês"
+        cities: "Cidades"
         offices: "Escritórios"
         created_at: "Criado em"
         updated_at: "Atualizado em"

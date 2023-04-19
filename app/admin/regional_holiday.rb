@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register RegionalHoliday do
-  permit_params :name, :day, :month, office_ids: []
+  permit_params :name, :day, :month, office_ids: [], city_ids: []
 
   filter :name
   filter :offices, multiple: true, collection: -> { Office.active.order(:city) }
+  filter :cities, multiple: true, collection: -> { City.all.order(:name) }
   filter :day
   filter :month
 
@@ -14,6 +15,9 @@ ActiveAdmin.register RegionalHoliday do
     column :month
     column :offices do |holiday|
       offices_by_holiday(holiday)
+    end
+    column :cities do |holiday|
+      holiday.cities
     end
     actions
   end
@@ -27,6 +31,9 @@ ActiveAdmin.register RegionalHoliday do
       row :offices do |holiday|
         offices_by_holiday(holiday)
       end
+      row :cities do |holiday|
+        holiday.cities
+      end
     end
   end
 
@@ -36,6 +43,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :day
       f.input :month
       f.input :offices, as: :check_boxes, collection: Office.active.order(:city)
+      f.input :cities, as: :check_boxes, collection: City.all.order(:name)
     end
       f.actions
   end
