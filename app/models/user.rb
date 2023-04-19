@@ -176,4 +176,8 @@ class User < ApplicationRecord
   def first_and_last_name
     name.split.values_at(0, -1).uniq.join(' ')
   end
+
+  def holidays
+    city_holidays.presence || office_holidays
+  end
 end
