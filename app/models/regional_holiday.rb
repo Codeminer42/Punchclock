@@ -6,7 +6,7 @@ class RegionalHoliday < ApplicationRecord
   validates :name, :day, :month, presence: true
   validate :date_validation
 
-  def cities
+  def deprecated_cities
     offices.map(&:city)
   end
 
