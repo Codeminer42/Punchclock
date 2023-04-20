@@ -5,7 +5,7 @@ ActiveAdmin.register RegionalHoliday do
 
   filter :name
   filter :offices, multiple: true, collection: -> { Office.active.order(:city) }
-  filter :cities, multiple: true, collection: -> { City.all.order(:name) }
+  filter :cities, multiple: true, collection: -> { City.order(:name) }
   filter :day
   filter :month
 
@@ -39,7 +39,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :day
       f.input :month
       f.input :offices, as: :check_boxes, collection: Office.active.order(:city)
-      f.input :cities, as: :check_boxes, collection: City.all.order(:name)
+      f.input :cities, as: :select, collection: City.order(:name)
     end
       f.actions
   end
