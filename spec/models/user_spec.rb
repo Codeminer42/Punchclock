@@ -308,7 +308,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '#holidays' do
-    let!(:city) { create(:city, :with_holiday) }
+    let!(:city) { create(:city, :with_holidays) }
     let!(:office) { create(:office, :with_holiday) }
     let!(:user) { create(:user, office: office, city: city) }
 
