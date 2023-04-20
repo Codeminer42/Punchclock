@@ -317,7 +317,7 @@ RSpec.describe User, type: :model do
         allow(user).to receive(:city_holidays).and_return([])
         allow(user).to receive(:office_holidays).and_return([])
 
-        expect(user.holidays).to eq([])
+        expect(user.holidays).to be_empty
       end
     end
 

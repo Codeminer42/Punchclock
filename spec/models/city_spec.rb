@@ -15,7 +15,7 @@ RSpec.describe City, type: :model do
 
     context 'when there are no holidays' do
       it 'returns an empty array' do
-        expect(city.holidays).to eq([])
+        expect(city.holidays).to be_empty
       end
     end
 
