@@ -16,9 +16,7 @@ ActiveAdmin.register RegionalHoliday do
     column :offices do |holiday|
       offices_by_holiday(holiday)
     end
-    column :cities do |holiday|
-      holiday.cities
-    end
+    column :cities
     actions
   end
 
@@ -31,9 +29,7 @@ ActiveAdmin.register RegionalHoliday do
       row :offices do |holiday|
         offices_by_holiday(holiday)
       end
-      row :cities do |holiday|
-        holiday.cities
-      end
+      row :cities
     end
   end
 
