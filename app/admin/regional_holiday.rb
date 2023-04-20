@@ -39,7 +39,7 @@ ActiveAdmin.register RegionalHoliday do
       f.input :day
       f.input :month
       f.input :offices, as: :check_boxes, collection: Office.active.order(:city)
-      f.input :cities, as: :select, collection: City.order(:name)
+      f.input :cities, as: :select, multiple: true, collection: City.order(:name)
     end
       f.actions
   end
