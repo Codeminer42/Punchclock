@@ -9,7 +9,7 @@ class HolidayValidator < ActiveModel::Validator
   private
 
   def check_for_errors!
-    unless (@model.user.office_holidays & restrict_dates).empty?
+    unless (@model.user.holidays & restrict_dates).empty?
       @model.errors.add(:start_date, :close_holiday)
     end
   end
