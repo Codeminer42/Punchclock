@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_19_142222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,6 +44,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
+  create_table "cities_regional_holidays", id: false, force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "regional_holiday_id", null: false
+    t.index ["city_id", "regional_holiday_id"], name: "index_cities_on_regional_holidays", unique: true
+    t.index ["regional_holiday_id", "city_id"], name: "index_regional_holidays_on_cities", unique: true
   end
 
   create_table "contributions", force: :cascade do |t|

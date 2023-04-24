@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class RegionalHoliday < ApplicationRecord
+  has_and_belongs_to_many :cities
   has_and_belongs_to_many :offices
   validates :name, :day, :month, presence: true
   validate :date_validation
 
-  def cities
+  def deprecated_cities
     offices.map(&:city)
   end
 
