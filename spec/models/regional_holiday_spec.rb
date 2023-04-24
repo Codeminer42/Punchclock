@@ -4,6 +4,7 @@ describe RegionalHoliday do
   let(:regional_holiday) { FactoryBot.build(:regional_holiday) }
 
   describe 'relations' do
+    it { is_expected.to have_and_belong_to_many(:cities) }
     it { is_expected.to have_and_belong_to_many :offices }
   end
 
