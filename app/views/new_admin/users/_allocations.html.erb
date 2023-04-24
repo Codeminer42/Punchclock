@@ -1,89 +1,86 @@
-<div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
-  <p colspan="100%" class="px-4 py-3"><%= t 'user_details' %></p>
+<div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 dark:text-white dark:bg-slate-700">
+  <p colspan="100%" class="px-3 py-3"><%= t('user_details') %></p>
 </div>
   
-<section class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-4"> 
+<section class="grid grid-cols-[auto_1fr] gap-y-4 bg-white divide-y-2 dark:divide-gray-700 dark:bg-gray-800" > 
 
-  <div> 
-    <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
-      <%= 'Alocação atual' %>
-    </div>
+  <div class="px-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-t-2 dark:border-gray-700">
+    <%= t('allocation.current_allocation') %>
   </div>
 
-  <div> 
-    <div class="flex items-center text-sm">
-      <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-        <%= @user_allocations.first.nil? ? 'Não alocado' : @user_allocations.first.project_name%>
-      </p>
-    </div>
+  <div class="text-sm text-gray-600 dark:text-gray-400 font-semibold" >
+    <%= @user_allocations.first.nil? ? t('allocation.not_allocated') : @user_allocations.first.project_name%>
   </div>
 
-  <div> 
-    <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
-      <%= 'Alocações' %>
-    </div>
+  <div class="px-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+    <%= t('allocation.allocations') %>
   </div>
 
-  <div class="grid"> 
-    <table id="allocations_table">
+  <table id="allocations_table">
+    <tr class="text-gray-700 dark:text-gray-300">
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('allocation.project_name') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('allocation.start_at') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('allocation.end_at') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('allocation.in_progress') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+      </th>
+    </tr>
+
+    
+    <% user_allocations.each do |allocation| %>
       <tr class="text-gray-700 dark:text-gray-300">
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
-            <%= 'Nome do Projeto' %>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= allocation.project_name %>
+            </p>
           </div>
-        </th>
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
-            <%= 'Início' %>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= l(allocation.start_at) %>
+            </p>
           </div>
-        </th>
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
-            <%= 'Término' %>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= l(allocation.end_at) %>
+            </p>
           </div>
-        </th>
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
-            <%= 'Em progresso' %>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= allocation.ongoing %>
+            </p>
           </div>
-        </th>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <%= link_to t('allocation.access_allocation'), '#', class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
+          </div>
+        </td>
       </tr>
-
-      <div class="allocations">
-        <% user_allocations.each do |allocation| %>
-          <tr class="text-gray-700 dark:text-gray-300">
-            <td class="px-4 py-3">
-              <div class="flex items-center text-sm">
-                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                  <%= allocation.project_name %>
-                </p>
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center text-sm">
-                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                  <%= l(allocation.start_at) %>
-                </p>
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center text-sm">
-                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                  <%= l(allocation.end_at) %>
-                </p>
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              <div class="flex items-center text-sm">
-                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                  <%= allocation.ongoing %>
-                </p>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      </div>
-    </table>
-  </div>
+    <% end %>
+ 
+  </table>
 </section>
 
