@@ -87,3 +87,12 @@ en:
   send_reset_instructions: "Send me reset password instructions"
   didnt_receive_instructions: "Didn't receive confirmation instructions?"
   resend_instructions: "Resend confirmation instructions"
+  allocation:
+    access_allocation: Access Allocation
+    current_allocation: Current Allocation
+    not_allocated: Not Allocated
+    allocations: Allocations
+    project_name: Project Name
+    start_at: Start At
+    end_at: End At
+    in_progress: In Progress

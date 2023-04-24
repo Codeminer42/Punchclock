@@ -183,3 +183,12 @@ pt-BR:
       commercial: Comercial
   edit_allocation: "Editar Alocação"
   details: "Detalhes"
+  allocation:
+    access_allocation: Acessar Alocação
+    current_allocation: Alocação Atual 
+    not_allocated: Não Alocado
+    allocations: Alocações
+    project_name: Nome do Projeto
+    start_at: Início 
+    end_at: Término 
+    in_progress: Em Progresso
