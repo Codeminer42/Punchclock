@@ -21,6 +21,7 @@ RSpec.describe User, type: :model do
 
   describe 'validations' do
     let!(:user) { create(:user, :admin) }
+    it { is_expected.to validate_presence_of(:city) }
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
@@ -309,13 +310,11 @@ RSpec.describe User, type: :model do
 
   describe '#holidays' do
     let!(:city) { create(:city, :with_holidays) }
-    let!(:office) { create(:office, :with_holiday) }
-    let!(:user) { create(:user, office: office, city: city) }
+    let!(:user) { create(:user, city: city) }
 
     context 'when there are no holidays' do
       it 'returns an empty array' do
-        allow(user).to receive(:city_holidays).and_return([])
-        allow(user).to receive(:office_holidays).and_return([])
+        allow(user).to receive(:holidays).and_return([])
 
         expect(user.holidays).to be_empty
       end
@@ -324,14 +323,6 @@ RSpec.describe User, type: :model do
     context 'when there are city holidays' do
       it 'returns city holidays' do
         expect(user.holidays).to eq(city.holidays)
-      end
-    end
-
-    context 'when there are office holidays' do
-      it 'returns office holidays' do
-        allow(user).to receive(:city_holidays).and_return([])
-
-        expect(user.holidays).to eq(office.holidays)
       end
     end
   end

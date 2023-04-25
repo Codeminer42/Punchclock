@@ -56,8 +56,8 @@ class User < ApplicationRecord
   has_and_belongs_to_many :skills
 
   delegate :holidays, to: :city, prefix: true
-  delegate :holidays, to: :office, prefix: true
 
+  validates :city, presence: true
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
@@ -178,6 +178,6 @@ class User < ApplicationRecord
   end
 
   def holidays
-    city_holidays.presence || office_holidays
+    city_holidays
   end
 end

@@ -12,7 +12,7 @@ FactoryBot.define do
     contract_company_country { 'brazil' }
     otp_required_for_login   { false }
     office                   { create(:office) }
-    city
+    city                     { create(:city) }
 
     trait :head_office do
       office { create(:office, head: :user) }
