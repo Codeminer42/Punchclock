@@ -41,17 +41,17 @@ describe 'Add new Punch', type: :feature do
     expect(page).to have_content('Punch não pôde ser criado.')
   end
 
-  context 'creating punch with all office holidays' do
+  context 'creating punch with all city holidays' do
     let(:regional_holiday) { create(:regional_holiday) }
-    let(:office) { create(:office, regional_holidays: [regional_holiday]) }
-    let!(:user) { create_logged_in_user({ office: office }) }
+    let(:city) { create(:city, regional_holidays: [regional_holiday]) }
+    let!(:user) { create_logged_in_user({ city: city }) }
 
-    it 'add the office hollidays in the calendar' do
+    it 'add the city holidays in the calendar' do
       visit '/punches/new'
 
       within '#new_punch' do
         holidays = JSON.parse(find('#punch_when_day')['data-holidays']).map(&:symbolize_keys)
-        expect(holidays).to match_array(user.office_holidays)
+        expect(holidays).to match_array(user.holidays)
       end
     end
   end

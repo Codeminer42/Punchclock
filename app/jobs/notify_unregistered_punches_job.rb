@@ -27,6 +27,6 @@ class NotifyUnregisteredPunchesJob < ApplicationJob
   private
 
   def working_day?(day, user)
-    day.on_weekday? && user.office_holidays.exclude?({ month: day.month, day: day.day })
+    day.on_weekday? && user.holidays.exclude?({ month: day.month, day: day.day })
   end
 end
