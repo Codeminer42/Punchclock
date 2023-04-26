@@ -61,7 +61,7 @@ class Vacation < ApplicationRecord
   }
 
   scope :finished, -> {
-    where(status: :approved)
+    approved
     .where("end_date <= :today", today: Date.current)
     .order(end_date: :desc)
   }
