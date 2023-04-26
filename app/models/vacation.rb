@@ -60,6 +60,12 @@ class Vacation < ApplicationRecord
     where("#{approver}_approver_id": nil)
   }
 
+  scope :finished, -> {
+    where(status: :approved)
+    .where("end_date <= :today", today: Date.current)
+    .order(end_date: :desc)
+  }
+
   def approve!(user)
     ActiveRecord::Base.transaction do
       update!(hr_approver: user) if user.hr?
