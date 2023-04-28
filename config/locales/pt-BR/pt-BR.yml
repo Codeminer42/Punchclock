@@ -39,6 +39,8 @@ pt-BR:
   user_details: 'Detalhes do Usuário'
   punch_details: 'Detalhes do Punch'
   perfomance_evaluations: 'Avaliações de Desempenho'
+  evaluation: 'Avaliação'
+  access_evaluation: 'Acessar Avaliação'
   allocation: 'Alocação'
   office:
     user_not_evaluated: "Usuários não foram todos avaliados"

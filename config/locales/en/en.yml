@@ -74,6 +74,8 @@ en:
   vacation_approved: "Vacation request approved"
   vacation_denied: "Vacation request denied"
   english_evaluation: "English evaluation"
+  evaluation: "Evaluation"
+  access_evaluation: "Access Evaluation"
   revenue_forecast: 'Revenue Forecast'
   revenue_forecast_warning: '* This feature was implemented on Sept/2022, and for this reason, data before this date are incomplete.'
   internal_market: "Internal Market"
