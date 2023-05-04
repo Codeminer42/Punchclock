@@ -29,6 +29,7 @@ pt-BR:
     formats:
       date_time: "%d/%m/%Y %H:%M"
   english_evaluations: 'Avaliações de Inglês'
+  english_score: 'Pontuação de Inglês'
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   not_evaluated: 'Não avaliado'

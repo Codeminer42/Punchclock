@@ -255,6 +255,7 @@ pt-BR:
         questionnaire_kind: "Tipo do Questionário"
         evaluation_date: "Data da avaliação"
       questionnaire:
+        questionnaire: "Questionário"
         id: "ID"
         title: "Título"
         kind: "Tipo"
