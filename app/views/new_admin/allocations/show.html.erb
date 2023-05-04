@@ -1,0 +1,18 @@
+<% content_for :page_title do %>
+  <%= t 'allocation' %> #<%= @allocation.id %>
+<% end %>
+
+<div data-tab-id="allocation" class="space-y-6">
+  <div id="allocation_details">
+    <%= render 'allocation_details', allocation: @allocation %>
+  </div>
+
+  <div id="revenue_forecast">
+    <%= render 'revenue_forecast', allocation_forecast: @allocation_forecast %>
+  </div>
+
+  <div id="allocated_user_punches">
+    <%= render 'allocated_user_punches', allocation: @allocation %>
+  </div>
+</div>
+

@@ -1,0 +1,44 @@
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap">
+      <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+          <th colspan="100%" class="px-4 py-3"><%= t 'revenue_forecast' %></th>
+        </tr>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-white dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3"><%= t 'activerecord.attributes.exchange_rate.month' %></th>
+          <th class="px-4 py-3"><%= t 'working_hours' %></th>
+          <th class="px-4 py-3"><%= t 'forecast' %></th>
+        </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <% allocation_forecast.each do |allocation| %>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= l "#{allocation[:month]}/#{allocation[:year]}".to_date, format: :short  %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= allocation[:working_hours] %>
+                </p>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= humanized_money_with_symbol(allocation[:forecast]) %>
+                </p>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

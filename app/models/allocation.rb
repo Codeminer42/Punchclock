@@ -17,6 +17,7 @@ class Allocation < ApplicationRecord
 
   delegate :office_name, to: :user
   delegate :name, to: :project, prefix: true, allow_nil: true
+  delegate :name, to: :user, prefix: true, allow_nil: true
 
   scope :ongoing, -> {
     where(ongoing: true, user_id: User.active).order(start_at: :desc)
