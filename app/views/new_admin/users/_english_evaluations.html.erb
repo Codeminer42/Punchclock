@@ -1,0 +1,85 @@
+<div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 dark:text-white dark:bg-slate-700">
+  <p colspan="100%" class="px-3 py-3"><%= t('user_details') %></p>
+</div>
+
+<section class="grid grid-cols-[auto_1fr] gap-y-4 bg-white divide-y-2 dark:divide-gray-700 dark:bg-gray-800">
+  <div class="px-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-t-2 dark:border-gray-700">
+    <%= t('activerecord.attributes.evaluation.english_level') %>
+  </div>
+  <div class="text-sm text-gray-600 dark:text-gray-400 font-semibold" >
+    <%= english_evaluations.first.nil? ? t('not_evaluated') : english_evaluations.first.english_level.to_s.capitalize %>
+  </div>
+  <div class="px-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-t-2 dark:border-gray-700">
+    <%= t('english_score') %>
+  </div>
+  <div class="text-sm text-gray-600 dark:text-gray-400 font-semibold" >
+    <%= english_evaluations.first.nil? ? t('not_evaluated') : english_evaluations.first.score %>
+  </div> 
+  <div class="px-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-t-2 dark:border-gray-700">
+    <%= t('evaluation') %>
+  </div>
+  <table id="english_evaluations_table">
+    <tr class="text-gray-700 dark:text-gray-300">
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('created_at') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('reviewer') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('score') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+        <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+          <%= t('activerecord.attributes.questionnaire.questionnaire') %>
+        </div>
+      </th>
+      <th class="w-1/12">
+      </th>
+    </tr>
+
+    <% english_evaluations.each do |evaluation| %>
+      <tr class="text-gray-700 dark:text-gray-300">
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= l(evaluation.created_at) %>
+            </p>
+          </div>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= evaluation.evaluator.name %>
+            </p>
+          </div>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= evaluation.score %>
+            </p>
+          </div>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= evaluation.questionnaire.title %>
+            </p>
+          </div>
+        </td>
+        <td class="py-3">
+          <div class="flex items-center text-sm">
+            <%= link_to t('access_evaluation'), '#', class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</section>
