@@ -1,7 +1,7 @@
 ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
 
-  permit_params :state, :link, :user_id, :repository_id, :rejected_reason
+  permit_params :state, :link, :user_id, :repository_id, :rejected_reason, :tracking, :pending, :notes
   actions :index, :show, :new, :create, :edit, :update
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
@@ -43,6 +43,8 @@ ActiveAdmin.register Contribution do
   scope I18n.t(:this_week), :this_week, group: :time
   scope I18n.t(:last_week), :last_week, group: :time
 
+  scope :tracking, group: :time
+
   scope Contribution.human_attribute_name('state/received'), :received, group: :state
   scope Contribution.human_attribute_name('state/approved'), :approved, group: :state
   scope Contribution.human_attribute_name('state/refused'), :refused, group: :state
@@ -64,6 +66,15 @@ ActiveAdmin.register Contribution do
     column :reviewed_at
     column :rejected_reason, &:rejected_reason_text
 
+    if params[:scope] == 'tracking'
+      column :pending do |contribution|
+        contribution.pending.text
+      end
+      column :notes do |contribution|
+        truncate(contribution.notes, length: 30)
+      end
+    end
+
     actions defaults: true do |contribution|
       if contribution.received?
         item I18n.t('approve'), approve_admin_contribution_path(contribution), method: :put, class: "member_link"
@@ -75,6 +86,7 @@ ActiveAdmin.register Contribution do
 
   show do
     attributes_table do
+      row :tracking
       row :user
       row :link
       row :state do |contribution|
@@ -86,12 +98,17 @@ ActiveAdmin.register Contribution do
       row :reviewed_at
       row :created_at
       row :updated_at
+      row :pending do |contribution|
+        contribution.pending.text
+      end
+      row :notes
     end
   end
 
   form do |f|
     f.semantic_errors
     inputs I18n.t('contribution_details') do
+      input :tracking
       if f.object.persisted?
         input :state, collection: Contribution.aasm.states
         input :rejected_reason, as: :select, collection: Contribution.rejected_reason.values.map { |reason|
@@ -103,6 +120,8 @@ ActiveAdmin.register Contribution do
         input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
         input :link
       end
+      input :pending, collection: Contribution.pending.values.map { |pending| [pending.text, pending] }
+      input :notes
     end
     f.actions
   end
