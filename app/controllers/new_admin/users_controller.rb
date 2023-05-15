@@ -7,7 +7,7 @@ module NewAdmin
     def show
       @user = User.find(params[:id]).decorate
       @user_allocations = Allocation.where(user_id: params[:id]).decorate
-      @performance_evaluations = Evaluation.where(evaluated_id: params[:id])
+      @performance_evaluations = Evaluation.joins(:questionnaire).where(questionnaires: { kind: :performance }, evaluated_id: params[:id]).order(created_at: :desc)
     end
   end
 end
