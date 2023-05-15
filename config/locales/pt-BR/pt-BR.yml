@@ -39,6 +39,7 @@ pt-BR:
   user_details: 'Detalhes do Usuário'
   punch_details: 'Detalhes do Punch'
   perfomance_evaluations: 'Avaliações de Desempenho'
+  no_performance_evaluations: 'Sem avaliações de desempenho'
   evaluation: 'Avaliação'
   access_evaluation: 'Acessar Avaliação'
   allocation: 'Alocação'
