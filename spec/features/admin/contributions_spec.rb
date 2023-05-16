@@ -46,6 +46,41 @@ describe 'Contribution', type: :feature do
                         not_have_text(Contribution.human_attribute_name("state/#{inactive_user_contribution.state}"))
       end
     end
+
+    context 'Tracking' do
+      let!(:contribution) { create(:contribution, tracking: true, pending: :dev, notes: 'Note') }
+
+      before do
+        find_link('Monitorando (1)', href: "/admin/contributions?scope=tracking").click
+      end
+
+      it 'must have fields "User", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason", "Pending" and "Notes" on table' do
+        within 'table' do
+            expect(page).to have_text('Usuário') &
+                          have_text('Link') &
+                          have_text('Criado em') &
+                          have_text('Estado') &
+                          have_text('Pr State') &
+                          have_text('Revisado por') &
+                          have_text('Revisado em') &
+                          have_text('Motivo da recusa') &
+                          have_text('Pendência') &
+                          have_text('Descrição')
+        end
+      end
+
+      it 'have contribution table with correct information of active user' do
+        within 'table' do
+          expect(page).to have_text(contribution.user.first_and_last_name) &
+                          have_text(contribution.link) &
+                          have_text(I18n.l(contribution.created_at.to_date, format: :default)) &
+                          have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
+                          have_text(contribution.pr_state_text) &
+                          have_text('Desenvolvedor') &
+                          have_text(contribution.notes)
+        end
+      end
+    end
   end
 
   describe 'Filters' do
@@ -71,7 +106,8 @@ describe 'Contribution', type: :feature do
       end
 
       it 'must have labels' do
-        expect(page).to have_text('Usuário') &
+        expect(page).to have_text('Monitorar') &
+                        have_text('Usuário') &
                         have_text('Link') &
                         have_text('Estado') &
                         have_text('Motivo da recusa') &
@@ -79,7 +115,9 @@ describe 'Contribution', type: :feature do
                         have_text('Revisado por') &
                         have_text('Revisado em') &
                         have_text('Criado em') &
-                        have_text('Atualizado em')
+                        have_text('Atualizado em') &
+                        have_text('Pendência') &
+                        have_text('Descrição')
       end
 
       it 'have contribution table with correct information', :aggregate_failures do
@@ -169,6 +207,94 @@ describe 'Contribution', type: :feature do
           find_button('OK').click
 
           expect(page).to have_css('.flash_alert', text: 'Não foi possível recusar a contribuição, tente novamente')
+        end
+      end
+    end
+
+    describe 'Edit' do
+      before do
+        within 'table' do
+          find_link('Editar', href: "/admin/contributions/#{contribution.id}/edit").click
+        end
+      end
+
+      it 'have form with "Tracking", "State", "Rejected reason", "Pending" and "Notes" fields', :aggregate_failures do
+        within 'fieldset.inputs' do
+          within '#contribution_tracking_input' do
+            expect(page).to have_text('Monitorar')
+          end
+
+          within '#contribution_state_input' do
+            expect(page).to have_text('Estado')
+          end
+
+          within '#contribution_rejected_reason_input' do
+            expect(page).to have_text('Motivo da recusa')
+          end
+
+          within '#contribution_pending_input' do
+            expect(page).to have_text('Pendência')
+          end
+
+          within '#contribution_notes_input' do
+            expect(page).to have_text('Descrição')
+          end
+        end
+      end
+
+      it 'updates tracking' do
+        within '#edit_contribution' do
+          page.check('Monitorar')
+          find_button('Atualizar Contribuição').click
+        end
+
+        within 'tr.row.row-tracking' do
+          expect(page).to have_text('Sim')
+        end
+      end
+
+      it 'updates state' do
+        within '#edit_contribution' do
+          page.select('Aprovado', from: 'Estado*')
+          find_button('Atualizar Contribuição').click
+        end
+
+        within 'tr.row.row-state' do
+          expect(page).to have_text('Aprovado')
+        end
+      end
+
+      it 'updates rejected_reason' do
+        within '#edit_contribution' do
+          page.select('Recusado', from: 'Estado*')
+          page.select('Alocado no projeto', from: 'Motivo da recusa')
+          find_button('Atualizar Contribuição').click
+        end
+
+        within 'tr.row.row-rejected_reason' do
+          expect(page).to have_text('Alocado no projeto')
+        end
+      end
+
+      it 'updates pending' do
+        within '#edit_contribution' do
+          page.select('Mantenedor', from: 'Pendência')
+          find_button('Atualizar Contribuição').click
+        end
+
+        within 'tr.row.row-pending' do
+          expect(page).to have_text('Mantenedor')
+        end
+      end
+
+      it 'updates notes' do
+        within '#edit_contribution' do
+          page.fill_in('Descrição', with: 'some description')
+          find_button('Atualizar Contribuição').click
+        end
+
+        within 'tr.row.row-notes' do
+          expect(page).to have_text('some description')
         end
       end
     end
