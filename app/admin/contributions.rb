@@ -68,7 +68,7 @@ ActiveAdmin.register Contribution do
 
     if params[:scope] == 'tracking'
       column :pending do |contribution|
-        contribution.pending.text
+        contribution.pending.text if contribution.pending
       end
       column :notes do |contribution|
         truncate(contribution.notes, length: 30)
@@ -99,7 +99,7 @@ ActiveAdmin.register Contribution do
       row :created_at
       row :updated_at
       row :pending do |contribution|
-        contribution.pending.text
+        contribution.pending.text if contribution.pending
       end
       row :notes
     end
