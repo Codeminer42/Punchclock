@@ -86,6 +86,7 @@ RSpec.describe Contribution, type: :model do
   describe 'scopes' do
     let!(:today_contribution) { create :contribution }
     let!(:last_week_contribution) { create :contribution, created_at: 1.week.ago }
+    let(:tracking_contribution) { create :contribution, tracking: true }
 
     it 'is in this week' do
       expect(described_class.this_week).to contain_exactly(today_contribution)
@@ -101,6 +102,9 @@ RSpec.describe Contribution, type: :model do
       expect(described_class.active_engineers).to contain_exactly(today_contribution, last_week_contribution)
     end
 
+    it 'is tracking' do
+      expect(described_class.tracking).to contain_exactly(tracking_contribution)
+    end
   end
 
   describe '.without_pr_state' do
