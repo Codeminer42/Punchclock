@@ -52,3 +52,10 @@ tabButtons.forEach((buttonElement) => {
   });
 });
 tabButtons[0].click();
+
+window.addEventListener("load", () => {
+  const anchor = window.location.hash
+  if(String(anchor).includes('#')) {
+    tabButtons[4].click();
+  }
+})
