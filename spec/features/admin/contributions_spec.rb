@@ -65,7 +65,7 @@ describe 'Contribution', type: :feature do
                           have_text('Revisado em') &
                           have_text('Motivo da recusa') &
                           have_text('Pendência') &
-                          have_text('Descrição')
+                          have_text('Observações')
         end
       end
 
@@ -117,7 +117,8 @@ describe 'Contribution', type: :feature do
                         have_text('Criado em') &
                         have_text('Atualizado em') &
                         have_text('Pendência') &
-                        have_text('Descrição')
+                        have_text('Descrição') &
+                        have_text('Observações')
       end
 
       it 'have contribution table with correct information', :aggregate_failures do
@@ -236,8 +237,12 @@ describe 'Contribution', type: :feature do
             expect(page).to have_text('Pendência')
           end
 
-          within '#contribution_notes_input' do
+          within '#contribution_description_input' do
             expect(page).to have_text('Descrição')
+          end
+
+          within '#contribution_notes_input' do
+            expect(page).to have_text('Observações')
           end
         end
       end
@@ -287,14 +292,25 @@ describe 'Contribution', type: :feature do
         end
       end
 
-      it 'updates notes' do
+      it 'updates description' do
         within '#edit_contribution' do
           page.fill_in('Descrição', with: 'some description')
           find_button('Atualizar Contribuição').click
         end
 
-        within 'tr.row.row-notes' do
+        within 'tr.row.row-description' do
           expect(page).to have_text('some description')
+        end
+      end
+
+      it 'updates notes' do
+        within '#edit_contribution' do
+          page.fill_in('Observações', with: 'some notes')
+          find_button('Atualizar Contribuição').click
+        end
+
+        within 'tr.row.row-notes' do
+          expect(page).to have_text('some notes')
         end
       end
     end

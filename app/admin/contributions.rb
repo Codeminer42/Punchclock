@@ -1,7 +1,7 @@
 ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
 
-  permit_params :state, :link, :user_id, :repository_id, :rejected_reason, :tracking, :pending, :notes
+  permit_params :state, :link, :user_id, :repository_id, :rejected_reason, :tracking, :pending, :notes, :description
   actions :index, :show, :new, :create, :edit, :update
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
@@ -101,6 +101,7 @@ ActiveAdmin.register Contribution do
       row :pending do |contribution|
         contribution.pending.text if contribution.pending
       end
+      row :description
       row :notes
     end
   end
@@ -121,6 +122,7 @@ ActiveAdmin.register Contribution do
         input :link
       end
       input :pending, collection: Contribution.pending.values.map { |pending| [pending.text, pending] }
+      input :description
       input :notes
     end
     f.actions

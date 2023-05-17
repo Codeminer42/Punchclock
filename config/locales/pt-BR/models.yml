@@ -311,7 +311,8 @@ pt-BR:
         rejected_reason: "Motivo da recusa"
         pending: "Pendência"
         tracking: "Monitorar"
-        notes: "Descrição"
+        description: "Descrição"
+        notes: "Observações"
       vacation:
         user: 'Usuário'
         start_date: "Data de início"

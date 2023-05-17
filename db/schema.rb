@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_124753) do
     t.integer "rejected_reason"
     t.boolean "tracking", default: false, null: false
     t.text "notes"
+    t.text "description"
     t.string "pending"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
