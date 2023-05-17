@@ -1,0 +1,112 @@
+<div class="flex pt-2">
+  <div class="flex-auto w-96">
+    <table id="punches_table" >
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Projeto' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Quando' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Horário inicial' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Até' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Delta' %>
+          </div>
+        </th>
+        <th class="w-1/12">
+          <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= 'Hora extra?' %>
+          </div>
+        </th>
+      </tr>
+
+      <% punches.each do |punch| %>
+        <tr class="text-gray-700 dark:text-gray-300 ">
+          <td class="py-3 px-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= punch.project.name %>
+              </p>
+            </div>
+          </td>
+          <td class="py-3 px-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= punch.date %>
+              </p>
+            </div>
+          </td>
+          <td class="py-3 px-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= punch.from %>
+              </p>
+            </div>
+          </td>
+          <td class="py-3 px-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= punch.to %>
+              </p>
+            </div>
+          </td>
+          <td class="py-3 px-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= punch.delta_as_hour %>
+              </p>
+            </div>
+          </td>
+          <td class="py-3 px-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= punch.extra_hour %>
+              </p>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+ 
+  <div class="flex-auto w-20">
+    <div class="px-2 py-2 w-fit h-40 max-w-sm dark:bg-gray-800 rounded"> 
+      <h3 class="mb-2 text-sm text-gray-600 dark:text-gray-400 font-semibold">
+        Filtro
+      </h3> 
+      <%= form_with url: new_admin_admin_user_path(@user, anchor: "user_punches"), method: :get do |form| %>
+        <h4 class="mb-2 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase" >
+          Intervalo
+        </h4>
+        <%
+          from = params.dig(:punch, :from)
+          to = params.dig(:punch, :to)
+        %>
+        <div class="input_container mb-4">
+          <%= form.date_field :from, value: :from, class: "mr-2 bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+          <%= form.date_field :to, value: :to, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+        </div>
+        <%= form.submit "Filtrar", formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+        <%= link_to "Limpar filtro", new_admin_admin_user_path(@user, anchor: "user_punches"), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %> 
+      <% end %>
+    </div> 
+    <div>
+      <%= link_to "Baixar XLS", '#', class: "inline-flex items-center w-full text-sm font-semibold text-gray-400 duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
+      <%= link_to "Todos os Punches", '#', class: "inline-flex items-center w-full text-sm font-semibold text-gray-400 duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
+    </div>
+  </div>
+</div>
