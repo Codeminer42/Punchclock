@@ -1,5 +1,6 @@
 class ContributionDecorator < Draper::Decorator
   delegate_all
+  decorates_association :repository
 
   def created_at
     model.created_at.to_date.to_fs(:date)
