@@ -184,6 +184,20 @@ ActiveAdmin.register User do
         div link_to I18n.t('all_punches'),
                         admin_punches_path(q: { user_id_eq: user.id, commit: :Filter })
       end
+
+      tab I18n.t('experience') do
+        panel I18n.t('professional_experience') do
+        end
+
+        panel I18n.t('educational_experience') do
+        end
+
+        panel I18n.t('open_source_experience') do
+        end
+
+        panel I18n.t('talking_presenting_experience') do
+        end
+      end
     end
   end
 
