@@ -24,6 +24,11 @@ pt-BR:
       default: "%d/%m/%Y"
       month_name: '%B'
   english_evaluations: 'Avaliações de Inglês'
+  experience: 'Experiências'
+  professional_experience: 'Experiência profissional'
+  educational_experience: 'Experiência educacional'
+  open_source_experience: 'Experiência open-source'
+  talking_presenting_experience: 'Experiência apresentando palestra'
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'
