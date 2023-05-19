@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :mentoring, only: :index
     resources :allocation_chart, only: :index
     resources :allocations, only: %i[new create show], as: :user_allocations
+    resources :punches, only: :show, as: :user_punches
   end
 
   resources :repositories, only: :index do
