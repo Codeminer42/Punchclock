@@ -36,3 +36,6 @@ pt-BR:
           pending: "Pendentes"
           denied: "Negadas"
           approved: "Aprovadas"
+      contribution:
+        scopes:
+          tracking: "Monitorando"
