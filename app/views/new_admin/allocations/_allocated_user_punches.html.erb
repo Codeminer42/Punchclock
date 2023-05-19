@@ -11,6 +11,7 @@
           <th class="px-4 py-3"><%= Punch.human_attribute_name('to') %></th>
           <th class="px-4 py-3"><%= Punch.human_attribute_name('delta') %></th>
           <th class="px-4 py-3"><%= Punch.human_attribute_name('extra_hour') %></th>
+          <th class="px-4 py-3"><%= Punch.human_attribute_name('access') %></th>
         </tr>
       </thead>
 
@@ -48,9 +49,18 @@
             <td class="px-4 py-3">
               <div class="flex items-center text-sm">
                 <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                  <%= I18n.t(punch.extra_hour.to_s)  %>
+                  <%= I18n.t(punch.extra_hour.to_s) %>
                 </p>
               </div>
+            </td>
+            <td class="px-4 py-3">
+              <%= link_to new_admin_user_punch_path(punch), class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 dark:text-gray-400" do %>
+                <div class="flex items-center text-sm underline hover:text-white">
+                  <p class="text-sm text-gray-600 dark:text-gray-400 dark:hover:text-gray-200">
+                    <%= allocation.end_at ? l(allocation.end_at) : t('not_allocated') %>
+                  </p>
+                </div>
+              <% end %>
             </td>
           </tr>
         <% end %>
