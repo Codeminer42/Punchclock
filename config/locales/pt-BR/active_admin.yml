@@ -37,3 +37,6 @@ pt-BR:
           denied: "Negadas"
           approved: "Aprovadas"
           finished: "Finalizadas"
+      contribution:
+        scopes:
+          tracking: "Monitorando"

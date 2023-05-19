@@ -13,6 +13,7 @@ class Contribution < ApplicationRecord
     pr_abandoned: 3,
     other_reason: 4
   }
+  enumerize :pending, in: [:mantainer, :dev, :other]
 
   belongs_to :user
   belongs_to :repository
@@ -62,4 +63,5 @@ class Contribution < ApplicationRecord
   scope :active_engineers, -> { joins(:user).merge(User.engineer.active) }
   scope :valid_pull_requests, -> { where.not(state: :refused) }
   scope :without_pr_state, ->(state) { where.not(pr_state: state) }
+  scope :tracking, -> { where(tracking: true) }
 end
