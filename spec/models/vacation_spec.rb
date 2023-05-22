@@ -220,6 +220,27 @@ RSpec.describe Vacation, type: :model do
     end
   end
 
+  describe '.finished' do
+    let!(:ended_vacation1) { create(:vacation, :ended, end_date: 1.day.ago) }
+    let!(:ended_vacation2) { create(:vacation, :ended, end_date: 2.day.ago) }
+    let!(:ended_vacation3) { create(:vacation, :ended, end_date: 3.day.ago) }
+
+    before do
+      create(:vacation, :approved)
+      create(:vacation, :pending)
+      create(:vacation, :cancelled)
+      create(:vacation, :denied)
+      create(:vacation, :ongoing)
+      create(:vacation, :scheduled)
+      create(:vacation, :expired)
+      create(:vacation, :valid)
+    end
+
+    it 'returns finished vacations sorted by most recent' do
+      expect(described_class.finished).to eq([ended_vacation1, ended_vacation2, ended_vacation3])
+    end
+  end
+
   describe '#approve!' do
     subject(:vacation) { create(:vacation) }
 

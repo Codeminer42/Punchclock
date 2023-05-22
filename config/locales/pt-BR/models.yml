@@ -4,6 +4,11 @@ pt-BR:
       market:
         internal: Interno
         international: Externo
+    contribution:
+      pending:
+        mantainer: Mantenedor
+        dev: Desenvolvedor
+        other: Outro
   activemodel:
     attributes:
       allocate_users_form:
@@ -305,6 +310,10 @@ pt-BR:
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
         rejected_reason: "Motivo da recusa"
+        pending: "Pendência"
+        tracking: "Monitorar"
+        description: "Descrição"
+        notes: "Observações"
       vacation:
         user: 'Usuário'
         start_date: "Data de início"
