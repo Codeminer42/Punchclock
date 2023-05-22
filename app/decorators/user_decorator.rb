@@ -51,4 +51,43 @@ class UserDecorator < Draper::Decorator
     return if model.city.nil?
     "#{model.city.name} - #{model.city.state.code}"
   end
+
+  def offices_managed
+    model.managed_offices.pluck(:city).to_sentence
+  end
+
+  def roles_sentence
+    roles = model.roles.values.reduce([]) do |acc, role|
+      acc.push(I18n.t("user.role.#{role}"))
+    end
+
+    roles.to_sentence.humanize
+  end
+
+  def mentor_name
+    return if model.mentor.nil?
+    model.mentor.first_and_last_name
+  end
+
+  def allow_overtime
+    I18n.t(model.allow_overtime) || 'N/A'
+  end
+
+  def active
+    I18n.t(model.active) || 'N/A'
+  end
+
+  def started_at
+    return if model.started_at.nil?
+    I18n.l(user.started_at)
+  end
+
+  def office_city
+    model.office.city
+  end
+
+  def otp_required_for_login
+    return I18n.t('false') if model.otp_required_for_login.nil?
+    I18n.t(model.otp_required_for_login)
+  end
 end
