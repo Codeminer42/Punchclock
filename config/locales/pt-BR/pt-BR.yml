@@ -37,6 +37,7 @@ pt-BR:
   projects: 'Projetos'
   project_details: 'Detalhes do Projeto'
   user_details: 'Detalhes do Usuário'
+  punch_details: 'Detalhes do Punch'
   perfomance_evaluations: 'Avaliações de Desempenho'
   allocation: 'Alocação'
   office:
@@ -128,6 +129,7 @@ pt-BR:
     button:
       change_my_password: 'Mudar minha senha'
       verify: 'Verificar'
+      update_allocation: 'Atualizar Alocação'
     links:
       return_to_sign_in: 'Retornar ao Sign In'
   allocation_chart: 'Organograma'
@@ -179,3 +181,5 @@ pt-BR:
       open_source_manager: Responsável OpenSource
       hr: Recursos Humanos
       commercial: Comercial
+  edit_allocation: "Editar Alocação"
+  details: "Detalhes"

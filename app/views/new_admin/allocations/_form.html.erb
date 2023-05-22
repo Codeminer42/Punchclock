@@ -1,0 +1,103 @@
+<%= form_with model: allocation, url: "/new_admin/allocations/#{allocation.id}", method: :patch do |form| %>
+  <div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full whitespace-no-wrap">
+        <thead>
+          <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+            <th colspan="100%" class="px-4 py-3"><%= t 'details' %></th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= Allocation.human_attribute_name('user') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.select :user_id, User.all.collect { |user| [user.name, user.id] }, { selected: allocation.user.id }, { class: 'bg-gray-100 text-gray-600 font-semibold text-sm rounded-lg dark:bg-slate-700 dark:text-gray-400' } %>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= Allocation.human_attribute_name('project') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.select :project_id, Project.all.collect { |project| [project.name, project.id] }, { selected: allocation.project.id }, { class: 'bg-gray-100 text-gray-600 font-semibold text-sm rounded-lg dark:bg-slate-700 dark:text-gray-400' } %>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= Allocation.human_attribute_name('hourly_rate_currency') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.select :hourly_rate_currency, Allocation::HOURLY_RATE_CURRENCIES, {}, { class: 'bg-gray-100 text-gray-600 font-semibold text-sm rounded-lg dark:bg-slate-700 dark:text-gray-400', selected: allocation.hourly_rate } %>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+                <%= Allocation.human_attribute_name('hourly_rate') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.text_field :hourly_rate_cents, value: (allocation.hourly_rate_cents.to_f / 100), class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-6 dark:bg-slate-700"%>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= Allocation.human_attribute_name('start_at') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.date_field :start_at, value: allocation.start_at, class:"bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= Allocation.human_attribute_name('end_at') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center text-sm">
+                <%= form.date_field :end_at, value: allocation.end_at, class:"bg-gray-100 text-gray-600 text-sm font-semibold rounded-lg dark:bg-slate-700 dark:text-gray-400" %>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/12">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= Allocation.human_attribute_name('ongoing') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.check_box :ongoing, { checked: allocation.ongoing }, "true", "false" %>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="flex mt-4">
+    <%= form.submit t('form.button.update_allocation'), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+  </div>
+<% end %>

@@ -46,4 +46,46 @@ describe NewAdmin::AllocationsController do
                   .and have_content(allocation_forecast.first[:working_hours])
     end
   end
+
+  describe 'GET #edit' do
+    it 'returns the allocation' do
+      get :edit, params: { id: allocation.id }
+
+      expect(subject.instance_variable_get(:@allocation)).to eq(allocation)
+    end
+
+    it 'renders edit template' do
+      get :edit, params: { id: allocation.id }
+
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'PATCH #update' do
+    context 'with valid allocation attributes' do
+      let(:allocation_attributes) { { hourly_rate_cents: 2.41 } }
+
+      it 'udaptes the allocation' do
+        patch :update, params: { id: allocation.id, allocation: allocation_attributes }
+
+        expect(subject.instance_variable_get(:@allocation)).to have_attributes(hourly_rate_cents: allocation_attributes[:hourly_rate_cents] * 100)
+      end
+
+      it 'redirects to allocation details path' do
+        patch :update, params: { id: allocation.id, allocation: allocation_attributes }
+
+        expect(response).to redirect_to new_admin_user_allocation_path
+      end
+    end
+
+    context 'with invalid allocation attributes' do
+      let(:allocation_attributes) { { start_at: 4.months.after, } }
+
+      it 'renders edit template' do
+        patch :update, params: { id: allocation.id, allocation: allocation_attributes }
+
+        expect(response).to redirect_to edit_new_admin_user_allocation_path
+      end
+    end
+  end
 end
