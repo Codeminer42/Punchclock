@@ -63,6 +63,7 @@ pt-BR:
         vacation:
           attributes:
             start_date:
+              close_holiday: "O início das férias não pode ser próximo a um feriado"
               close_weekend: "O início das férias não pode ser próximo ao final de semana"
               greater_than_current: "deve ser maior que %{date}"
             end_date:
