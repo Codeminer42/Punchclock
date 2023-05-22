@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_133524) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_12_124753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_133524) do
     t.datetime "reviewed_at", precision: nil
     t.string "pr_state"
     t.integer "rejected_reason"
+    t.boolean "tracking", default: false, null: false
+    t.text "notes"
+    t.text "description"
+    t.string "pending"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"

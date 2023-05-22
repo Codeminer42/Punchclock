@@ -32,6 +32,7 @@ ActiveAdmin.register Vacation do
   scope :pending
   scope :approved
   scope :denied
+  scope :finished
   scope :all
 
   index do
