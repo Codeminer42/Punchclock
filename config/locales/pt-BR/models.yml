@@ -208,6 +208,7 @@ pt-BR:
         attachment: "Anexo"
         comment: "Comentário"
         extra_hour: "Hora extra?"
+        delta: "Delta"
       office:
         id: "ID"
         city: "Cidade"
