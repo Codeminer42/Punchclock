@@ -33,6 +33,10 @@ class PunchDecorator < ApplicationDecorator
     object.delta / 1.hour
   end
 
+  def extra_hour
+    I18n.t(model.extra_hour.to_s)
+  end
+
   private
 
   def localize_date_time(datetime)
