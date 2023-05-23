@@ -58,16 +58,5 @@ describe 'Users', type: :feature do
         have_content("#{I18n.t(another_allocation.ongoing)}") &&
         have_content('Acessar Alocação')
     end 
-
-    it 'shows table of allocations', js: true do 
-      visit "/new_admin/users/#{user.id}"
-      click_button('Alocações')
-      page.has_table?("allocations_table")
-      expect(page).to have_content(another_allocation.project_name)
-      expect(page).to have_content("#{l(another_allocation.start_at)}")
-      expect(page).to have_content("#{l(another_allocation.end_at)}")
-      expect(page).to have_content("#{I18n.t(another_allocation.ongoing)}")
-      expect(page).to have_content('Acessar Alocação')
-    end 
   end 
 end 
