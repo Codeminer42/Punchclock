@@ -42,7 +42,7 @@ describe 'User English Evaluations', type: :feature do
       visit "/new_admin/users/#{user.id}"
       click_button('Avaliações de Inglês')
       expect(page).to have_css("td")
-      expect(page).to have_content(evaluation.evaluator) 
+      expect(page).to have_content(evaluation.evaluator.name) 
       expect(page).to have_content(evaluation.score)
       expect(page).to have_content(evaluation.questionnaire.title)  
       expect(page).to have_content('Acessar Avaliação') 
