@@ -7,6 +7,7 @@ class AbilityAdmin
   # Actions used by admins and super admins
 
   def initialize(user)
+    puts "#{user.admin?} ######################################################"
     return if user.nil?
 
     @action = [
@@ -18,6 +19,7 @@ class AbilityAdmin
       Evaluation,
       Questionnaire,
       Skill,
+      Talking,
       Repository,
       Contribution,
       Note
@@ -38,7 +40,7 @@ class AbilityAdmin
 
   def admin_permitions(user)
     can :manage, action + [
-      Punch,
+      Punch
     ]
     can :manage, action
     can :read, Punch

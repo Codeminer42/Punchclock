@@ -99,6 +99,9 @@ pt-BR:
       allocation:
         one: "Alocação"
         other: "Alocações"
+      talking:
+        one: "Palestra"
+        other: "Palestras"
       questionnaire:
         one: "Questionário"
         other: "Questionários"
@@ -231,6 +234,11 @@ pt-BR:
         regional_holidays: "Feriados regionais"
         score: "Pontuação"
         active: "Ativo"
+      talking:
+        user: "Usuário"
+        event_name: "Nome do evento"
+        talk_title: "Título da palestra"
+        date: "data"
       regional_holiday:
         id: "ID"
         name: "Nome"

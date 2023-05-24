@@ -3,7 +3,7 @@ class CreateTalkings < ActiveRecord::Migration[7.0]
     create_table :talkings do |t|
       t.string :event_name
       t.string :talk_title
-      t.timestamp :date
+      t.datetime :date
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
