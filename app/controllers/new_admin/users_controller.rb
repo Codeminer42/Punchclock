@@ -6,6 +6,7 @@ module NewAdmin
 
     def show
       @user = User.find(params[:id]).decorate
+      @user_allocations = Allocation.where(user_id: params[:id]).decorate
     end
   end
 end

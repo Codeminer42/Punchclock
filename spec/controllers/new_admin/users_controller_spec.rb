@@ -35,5 +35,6 @@ describe NewAdmin::UsersController do
                   .and have_content(user.otp_required_for_login)
                   .and have_content(user.github)
                   .and have_content(user.office_city)
+    end
   end
 end
