@@ -10,4 +10,8 @@ class RepositoryDecorator < ApplicationDecorator
 
     language.split(',').first(3).to_sentence
   end
+
+  def name
+    link[/[\w_-]+$/]
+  end
 end
