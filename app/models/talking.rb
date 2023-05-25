@@ -11,8 +11,6 @@ class Talking < ApplicationRecord
   def future_date?
     return if date.blank?
 
-    if date.after? Date.today.next_day
-      errors.add(:date, "must be before the today's date")
-    end
+    errors.add(:date, "must be before the today's date") if date.future?
   end
 end
