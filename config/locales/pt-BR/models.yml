@@ -68,6 +68,10 @@ pt-BR:
               greater_than_current: "deve ser maior que %{date}"
             end_date:
               greater_than_current: "deve ser maior que %{date}"
+        talk:
+          attributes:
+            date:
+              future_date: 'Data não pode ser um perírodo futuro'
     models:
       admin_user:
         one: "Administrador"
