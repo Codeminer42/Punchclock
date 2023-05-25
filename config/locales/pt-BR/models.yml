@@ -68,6 +68,10 @@ pt-BR:
               greater_than_current: "deve ser maior que %{date}"
             end_date:
               greater_than_current: "deve ser maior que %{date}"
+        talk:
+          attributes:
+            date:
+              future_date: 'Data não pode ser um período futuro'
     models:
       admin_user:
         one: "Administrador"
@@ -99,6 +103,9 @@ pt-BR:
       allocation:
         one: "Alocação"
         other: "Alocações"
+      talk:
+        one: "Palestra"
+        other: "Palestras"
       questionnaire:
         one: "Questionário"
         other: "Questionários"
@@ -231,6 +238,11 @@ pt-BR:
         regional_holidays: "Feriados regionais"
         score: "Pontuação"
         active: "Ativo"
+      talk:
+        user: "Usuário"
+        event_name: "Nome do evento"
+        talk_title: "Título da palestra"
+        date: "data"
       regional_holiday:
         id: "ID"
         name: "Nome"

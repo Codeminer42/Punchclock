@@ -18,6 +18,7 @@ class AbilityAdmin
       Evaluation,
       Questionnaire,
       Skill,
+      Talk,
       Repository,
       Contribution,
       Note
@@ -38,7 +39,7 @@ class AbilityAdmin
 
   def admin_permitions(user)
     can :manage, action + [
-      Punch,
+      Punch
     ]
     can :manage, action
     can :read, Punch
