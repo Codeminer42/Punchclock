@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :talking do
+  factory :talk do
     event_name { 'some name' }
     talk_title { 'some trile' }
     date { Date.today }
     user
 
-    trait :invalid_talking do
+    trait :invalid_talk do
       event_name { nil }
       talk_title { nil }
       date { nil }

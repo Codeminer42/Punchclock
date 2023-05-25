@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveAdmin.register Talking do
+ActiveAdmin.register Talk do
   permit_params :event_name, :talk_title, :date, :user_id
 
   menu parent: User.model_name.human(count: 2)

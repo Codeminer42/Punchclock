@@ -54,7 +54,7 @@ class User < ApplicationRecord
   has_many :vacations
   has_many :mentees, class_name: :User, foreign_key: :mentor_id, inverse_of: :mentor
   has_and_belongs_to_many :skills
-  has_many :talkings
+  has_many :talks
 
   delegate :holidays, to: :city, prefix: true
   delegate :holidays, to: :office, prefix: true

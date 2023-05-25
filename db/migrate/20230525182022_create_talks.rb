@@ -1,6 +1,6 @@
-class CreateTalkings < ActiveRecord::Migration[7.0]
+class CreateTalks < ActiveRecord::Migration[7.0]
   def change
-    create_table :talkings do |t|
+    create_table :talks do |t|
       t.string :event_name
       t.string :talk_title
       t.datetime :date

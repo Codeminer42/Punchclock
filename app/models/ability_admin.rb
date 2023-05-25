@@ -18,7 +18,7 @@ class AbilityAdmin
       Evaluation,
       Questionnaire,
       Skill,
-      Talking,
+      Talk,
       Repository,
       Contribution,
       Note

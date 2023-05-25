@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Talking < ApplicationRecord
+class Talk < ApplicationRecord
   belongs_to :user
 
   validates :event_name, :talk_title, :date, presence: true

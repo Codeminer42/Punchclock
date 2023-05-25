@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_24_004028) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_25_182022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -195,14 +195,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_004028) do
     t.index ["code"], name: "index_states_on_code", unique: true
   end
 
-  create_table "talkings", force: :cascade do |t|
+  create_table "talks", force: :cascade do |t|
     t.string "event_name"
     t.string "talk_title"
     t.datetime "date"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_talkings_on_user_id"
+    t.index ["user_id"], name: "index_talks_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -281,7 +281,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_004028) do
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "skills_users", "skills"
   add_foreign_key "skills_users", "users"
-  add_foreign_key "talkings", "users"
+  add_foreign_key "talks", "users"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "mentor_id"

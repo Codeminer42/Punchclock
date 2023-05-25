@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-describe Talking do
-  describe 'Talking' do
+describe Talk do
+  describe 'Talk' do
     let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[described_class] }
     let(:actions) { %i[index show destroy create update edit new] }
 
     it 'verifies the resource name' do
-      expect(resource.resource_name).to eq 'Talking'
+      expect(resource.resource_name).to eq 'Talk'
     end
 
     it 'includes the resource in the menu' do
