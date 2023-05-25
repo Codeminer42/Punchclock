@@ -10,7 +10,7 @@ describe 'User English Evaluations', type: :feature do
   context 'when user has no english evaluations' do 
     it 'shows english evaluations table without results', js: true do 
       click_button('Avaliações de Inglês')
-      expect(page).to_not have_css("td")
+      expect(page).to_not have_css("td") 
       expect(page).to have_content("Não avaliado")
     end 
   end 
@@ -41,11 +41,11 @@ describe 'User English Evaluations', type: :feature do
     it 'shows table with user english evaluations', js: true do 
       visit "/new_admin/users/#{user.id}"
       click_button('Avaliações de Inglês')
-      expect(page).to have_css("td")
-      expect(page).to have_content(evaluation.evaluator.name) 
-      expect(page).to have_content(evaluation.score)
-      expect(page).to have_content(evaluation.questionnaire.title)  
-      expect(page).to have_content('Acessar Avaliação') 
+      expect(page).to have_css("td") &&
+        have_content(evaluation.evaluator.name) &&
+        have_content(evaluation.score) &&
+        have_content(evaluation.questionnaire.title) &&
+        have_content('Acessar Avaliação') 
     end
   end
 end
