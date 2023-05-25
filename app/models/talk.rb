@@ -11,6 +11,6 @@ class Talk < ApplicationRecord
   def future_date?
     return if date.blank?
 
-    errors.add(:date, I18n.t('activerecord.errors.models.talk.attributes.date.future_date')) if date.future?
+    errors.add(:date, :future_date) if date.future?
   end
 end

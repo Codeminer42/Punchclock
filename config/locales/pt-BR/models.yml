@@ -71,7 +71,7 @@ pt-BR:
         talk:
           attributes:
             date:
-              future_date: 'Data não pode ser um perírodo futuro'
+              future_date: 'Data não pode ser um período futuro'
     models:
       admin_user:
         one: "Administrador"
