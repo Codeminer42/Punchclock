@@ -7,7 +7,6 @@ class AbilityAdmin
   # Actions used by admins and super admins
 
   def initialize(user)
-    puts "#{user.admin?} ######################################################"
     return if user.nil?
 
     @action = [
