@@ -30,12 +30,12 @@ describe 'User Evaluations', type: :feature do
     it 'shows table with user evaluation', js: true do 
       visit "/new_admin/users/#{user.id}"
       click_button('Avaliações de Desempenho')
-      expect(page).to have_css("td")
-      expect(page).to have_content(evaluation.evaluator)
-      expect(page).to have_content(evaluation.evaluated)
-      expect(page).to have_content(evaluation.questionnaire)
-      expect(page).to have_content(evaluation.score)
-      expect(page).to have_link('Acessar Avaliação')
+      expect(page).to have_css("td") &&
+        have_content(evaluation.evaluator) &&
+        have_content(evaluation.evaluated) &&
+        have_content(evaluation.questionnaire) &&
+        have_content(evaluation.score) &&
+        have_link('Acessar Avaliação')
     end 
   end 
 end 
