@@ -5,6 +5,7 @@ require 'spec_helper'
 describe Talking do
   describe 'Talking' do
     let(:resource) { ActiveAdmin.application.namespaces[:admin].resources[described_class] }
+    let(:actions) { %i[index show destroy create update edit new] }
 
     it 'verifies the resource name' do
       expect(resource.resource_name).to eq 'Talking'
@@ -15,7 +16,7 @@ describe Talking do
     end
 
     it 'verifies defined actions for a resource' do
-      expect(resource.defined_actions).to include :index
+      expect(resource.defined_actions).to eq(actions)
     end
   end
 end
