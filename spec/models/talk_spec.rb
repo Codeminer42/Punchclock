@@ -33,7 +33,7 @@ RSpec.describe Talk, type: :model do
     describe '#date' do
       describe 'when date is not present' do
         it 'is expected to return an error message' do
-          expect(invalid_talk.errors[:date]).to contain_exactly("não pode ficar em branco")
+          expect(invalid_talk.errors[:date]).to contain_exactly('não pode ficar em branco')
         end
       end
 
@@ -43,7 +43,7 @@ RSpec.describe Talk, type: :model do
         it 'is expected to return an error message' do
           with_future_date.validate
 
-          expect(with_future_date.errors[:date]).to contain_exactly("must be before the today's date")
+          expect(with_future_date.errors[:date]).to contain_exactly('Data não pode ser um perírodo futuro')
         end
       end
     end
