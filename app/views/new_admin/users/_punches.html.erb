@@ -110,7 +110,7 @@
         <%= link_to "#{t('punches_filter.clean_filter')}", new_admin_admin_user_path(@user, anchor: "user_punches"), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %> 
       <% end %>
     </div> 
-    <div>
+    <div class="py-4">
       <%= link_to "#{t('punches_filter.download_xls')}", '#', class: "inline-flex items-center w-full text-sm font-semibold text-gray-400 duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
       <%= link_to "#{t('punches_filter.all_punches')}", '#', class: "inline-flex items-center w-full text-sm font-semibold text-gray-400 duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
     </div>
