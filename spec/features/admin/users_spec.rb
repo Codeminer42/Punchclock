@@ -269,6 +269,7 @@ describe 'Users', type: :feature do
 
       context 'on Experience tab' do
         let!(:contribution) { create(:contribution, user: user).decorate }
+        let!(:talk) { create(:talk, user: user).decorate }
 
         before { refresh }
         it 'finds all elements correctly' do
@@ -278,6 +279,14 @@ describe 'Users', type: :feature do
                             have_css('.col.col-name', text: contribution.repository.name) &
                             have_css('.col.col-description', text: contribution.description)
                             have_css('.col.col-created_at', text: contribution.created_at)
+
+            expect(page).to have_table('') &
+                            have_text('Experiência Apresentando Palestras') &
+                            have_css('.col.col-event_name', text: talk.event_name) &
+                            have_css('.col.col-talk_title', text: talk.talk_title) &
+                            have_css('.col.col-date', text: talk.date)
+
+            expect(page).to have_link('Novo(a) Palestra')
           end
         end
       end

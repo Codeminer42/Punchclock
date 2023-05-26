@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :talk do
-    event_name { 'some name' }
-    talk_title { 'some trile' }
-    date { Date.today }
+    event_name { Faker::Lorem.sentence }
+    talk_title { Faker::Lorem.sentence }
+    date { Faker::Date.between(from: 5.year.ago, to: 1.day.ago) }
     user
 
     trait :invalid_talk do

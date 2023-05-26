@@ -242,7 +242,9 @@ pt-BR:
         user: "Usuário"
         event_name: "Nome do evento"
         talk_title: "Título da palestra"
-        date: "data"
+        date: "Data"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       regional_holiday:
         id: "ID"
         name: "Nome"
