@@ -47,4 +47,24 @@ describe 'User Punches', type: :feature do
       expect(page).to have_link("Todos os Punches")
     end 
   end 
+
+  context 'when punches are filtered' do 
+
+    let!(:punch) do 
+      create(
+        :punch,
+        created_at: 1.month.ago,
+        user: user,
+      )
+    end 
+
+    it 'returns the punch filtered by date', js: true do 
+      visit "/new_admin/users/#{user.id}"
+      click_button('Punches')
+      fill_in "from", with: 1.month.ago
+      fill_in "to", with: 1.day.ago
+      find_button('Filtrar').click
+      expect(page).to have_content(punch.project.name)
+    end 
+  end 
 end 
