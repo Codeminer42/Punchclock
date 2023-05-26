@@ -215,6 +215,7 @@ ActiveAdmin.register User do
               class: "button"
           end
         end
+        div link_to I18n.t('download_as_xls'), export_experience_docx_admin_user_path, method: :get
       end
     end
   end
@@ -300,5 +301,65 @@ ActiveAdmin.register User do
 
       redirect_to admin_user_path, notice: I18n.t('resend_user_registration_confirmed')
     end
+  end
+
+  member_action :export_experience_docx, method: :get do
+    @user = resource.user
+
+    # Create a new document
+    doc = Docx::Document.open("file.docx")
+    doc.bookmarks['example_bookmark'].insert_text_after("Hello world.")
+
+    # Add a heading for the "experience" section
+    #doc.para do |p|
+      #p.bold('Experience')
+      #p.style = 'Heading1'
+    #end
+
+    ## Add the professional experiences
+    #doc.para do |p|
+      #p.bold(I18n.t('professional_experience'))
+      #@user.professional_experiences.each do |experience|
+        #p << "- #{experience.name}"
+        ## Add other relevant content from the experience
+        #p << "\n"
+      #end
+    #end
+
+    ## Add the educational experiences
+    #doc.para do |p|
+      #p.bold(I18n.t('educational_experience'))
+      #@user.educational_experiences.each do |experience|
+        #p << "- #{experience.name}"
+        ## Add other relevant content from the experience
+        #p << "\n"
+      #end
+    #end
+
+    ## Add the open source experiences
+    #doc.para do |p|
+      #p.bold(I18n.t('open_source_experience'))
+      #@user.contributions.valid_pull_requests.order(created_at: :desc).each do |contribution|
+        #p << "- #{contribution.repository.name}"
+        ## Add other relevant content from the contribution
+        #p << "\n"
+      #end
+    #end
+
+    ## Add the talking and presenting experiences
+    #doc.para do |p|
+      #p.bold(I18n.t('talking_presenting_experience'))
+      #@user.talks.each do |talk|
+        #p << "- #{talk.event_name}"
+        ## Add other relevant content from the talk
+        #p << "\n"
+      #end
+    #end
+
+    # Set the file name for the DOCX document
+    file_name = "user_experience_#{Time.current.strftime('%Y-%m-%d_%H-%M-%S')}.docx"
+
+    # Send the DOCX document as a download
+    send_data doc.to_blob, filename: file_name, disposition: 'attachment'
   end
 end
