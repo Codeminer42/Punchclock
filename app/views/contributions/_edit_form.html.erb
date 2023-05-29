@@ -1,0 +1,14 @@
+<%= simple_form_for contribution do |f| %>
+  <div class="my-3 d-flex flex-column">
+    <p class="mb-2">Link</p>
+    <%= link_to contribution.link, contribution.link, target: :blank %>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <%= f.input :description, required: false %>
+    </div>
+  </div>
+
+  <%= f.submit %>
+<% end %>
