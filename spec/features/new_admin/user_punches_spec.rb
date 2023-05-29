@@ -26,25 +26,25 @@ describe 'User Punches', type: :feature do
     it 'shows page with user punches', js: true do 
       visit "/new_admin/users/#{user.id}"
       click_button('Punches')
-      expect(page).to have_content("PROJETO")
-      expect(page).to have_content(punch.project.name)
-      expect(page).to have_content("HORÁRIO INICIAL")
-      expect(page).to have_content("ATÉ")
-      expect(page).to have_content("DELTA")
-      expect(page).to have_content("HORA EXTRA")
+      expect(page).to have_content("PROJETO") &&
+        have_content(punch.project.name) &&
+        have_content("HORÁRIO INICIAL") &&
+        have_content("ATÉ") &&
+        have_content("DELTA") &&
+        have_content("HORA EXTRA")
     end 
 
     it 'shows filter area for punches', js: true do 
       visit "/new_admin/users/#{user.id}"
       click_button('Punches')
-      expect(page).to have_content("Filtro")
-      expect(page).to have_content("INTERVALO")
-      expect(page).to have_field("from")
-      expect(page).to have_field("to")
-      expect(page).to have_button("Filtrar")
-      expect(page).to have_link("Limpar Filtro")
-      expect(page).to have_link("Baixar XLS")
-      expect(page).to have_link("Todos os Punches")
+      expect(page).to have_content("Filtro") &&
+        have_content("INTERVALO") &&
+        have_field("from") &&
+        have_field("to") &&
+        have_button("Filtrar") &&
+        have_link("Limpar Filtro") &&
+        have_link("Baixar XLS") &&
+        have_link("Todos os Punches")
     end 
   end 
 
