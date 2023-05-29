@@ -12,7 +12,7 @@ module NewAdmin
       if params[:from].nil? and params[:to].nil?
         @punches = Punch.where(user_id: params[:id]).decorate
       else
-        @punches = Punch.all.filter_by_date(params[:id], params[:from], params[:to]).decorate
+        @punches = Punch.filter_by_date(params[:id], params[:from], params[:to]).decorate
       end 
     end
   end
