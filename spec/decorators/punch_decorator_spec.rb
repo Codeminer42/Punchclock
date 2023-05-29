@@ -7,7 +7,7 @@ describe PunchDecorator do
     let(:punch_decorator) { PunchDecorator.new(punch) }
 
     it "translates the bool value into 'no'" do 
-      expect(punch_decorator.extra_hour).to eq("#{I18n.t(false)}")
+      expect(punch_decorator.extra_hour).to eq("Não")
     end 
   end 
 
@@ -16,7 +16,7 @@ describe PunchDecorator do
     let(:punch_decorator) { PunchDecorator.new(punch) }
 
     it "translates the bool value into 'yes'" do 
-      expect(punch_decorator.extra_hour).to eq("#{I18n.t(true)}")
+      expect(punch_decorator.extra_hour).to eq("Sim")
     end
   end 
 end
