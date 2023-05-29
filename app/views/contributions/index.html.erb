@@ -13,12 +13,13 @@
                 <th><%= t('contributions.pr_link') %></th>
                 <th><%= t('contributions.created_at') %></th>
                 <th><%= t('contributions.pr_state') %></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <% if @user_contributions.empty?  %>
                 <tr>
-                  <td colspan="3"><%= t('contributions.no_prs_found') %></td>
+                  <td colspan="4"><%= t('contributions.no_prs_found') %></td>
                 </tr>
               <% end %>
               <% @user_contributions.each do |contribution| %>
@@ -26,6 +27,13 @@
                   <td><%= link_to contribution.link, contribution.link, target: :blank %></td>
                   <td><%= I18n.l(contribution.created_at.to_date, format: :default) %></td>
                   <td><%= contribution.pr_state.nil? ? '-' : contribution.pr_state_text %></td>
+                  <td class="">
+                    <%=
+                      link_to image_tag('edit.png', class: 'mx-auto'),
+                      edit_contribution_path(contribution),
+                      id: "edt-#{contribution.id}"
+                    %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
