@@ -41,6 +41,7 @@ pt-BR:
   punch_details: 'Detalhes do Punch'
   performance_evaluations: 'Avaliações de Desempenho'
   no_performance_evaluations: 'Sem avaliações de desempenho'
+  no_punches: 'Sem Punches'
   evaluation: 'Avaliação'
   access_evaluation: 'Acessar Avaliação'
   allocation: 'Alocação'
@@ -196,3 +197,10 @@ pt-BR:
     start_at: Início 
     end_at: Término 
     in_progress: Em Progresso
+  punches_filter:
+    filter: Filtro
+    range: Intervalo
+    to_filter: Filtrar
+    clean_filter: Limpar Filtro
+    download_xls: Baixar XLS
+    all_punches: Todos os Punches
