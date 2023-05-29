@@ -21,7 +21,8 @@ class AbilityAdmin
       Talk,
       Repository,
       Contribution,
-      Note
+      Note,
+      EducationExperience
     ]
 
     define_permissions_for user

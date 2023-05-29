@@ -190,6 +190,18 @@ ActiveAdmin.register User do
         end
 
         panel I18n.t('educational_experience') do
+          table_for user.education_experiences, i18n: EducationExperience do
+            column :course
+            column :institution
+            column :start_date
+            column :end_date
+          end
+          span do
+            link_to I18n.t('active_admin.new_model', model: EducationExperience.model_name.human),
+              new_admin_education_experience_path(user_id: user),
+              class: "button" 
+          end
+
         end
 
         panel I18n.t('open_source_experience') do

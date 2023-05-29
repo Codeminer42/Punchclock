@@ -72,6 +72,12 @@ pt-BR:
           attributes:
             date:
               future_date: 'Data não pode ser um período futuro'
+        education_experience:
+          attributes:
+            start_date:
+              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
+            end_date:
+              less_than_start_date: "A data de término deve ser maior que a data de inicio"
     models:
       admin_user:
         one: "Administrador"
@@ -130,6 +136,9 @@ pt-BR:
       exchange_rate:
         one: "Taxa de Câmbio"
         other: "Taxas de Câmbio"
+      education_experience:
+        one: "Experiência Educacional"
+        other: "Experiências Educacionais"
     attributes:
       admin_user:
         id: "ID"
@@ -343,3 +352,9 @@ pt-BR:
         rate: 'Taxa'
         created_at: "Criada em"
         updated_at: "Atualizada em"
+      education_experience:
+        user: 'Usuário'
+        institution: 'Instituição'
+        course: 'Curso'
+        start_date: "Data de início"
+        end_date: "Data de término"
