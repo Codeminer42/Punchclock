@@ -60,6 +60,34 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "frontend level" do
+    it do
+      is_expected.to enumerize(:frontend_level).in(
+        intern: 0,
+        junior: 1,
+        junior_plus: 2,
+        mid: 3,
+        mid_plus: 4,
+        senior: 5,
+        trainee: 6
+      )
+    end
+  end
+
+  describe "backend level" do
+    it do
+      is_expected.to enumerize(:backend_level).in(
+        intern: 0,
+        junior: 1,
+        junior_plus: 2,
+        mid: 3,
+        mid_plus: 4,
+        senior: 5,
+        trainee: 6
+      )
+    end
+  end
+
   describe "specialty" do
     it { is_expected.to enumerize(:specialty).in( frontend: 0,
                                                   backend: 1,
