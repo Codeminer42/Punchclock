@@ -40,6 +40,7 @@ class Vacation < ApplicationRecord
     allow_nil: true,
     if: :not_cancelled?
   validate :validate_start_date_close_to_weekend, if: :start_date, unless: proc { user.contractor? }
+  validates_with HolidayValidator, if: :start_date, unless: lambda { !validate_vacation_before_holiday? }
 
   scope :ongoing_and_scheduled, -> {
     where(status: :approved)
@@ -107,7 +108,11 @@ class Vacation < ApplicationRecord
 
   def validate_start_date_close_to_weekend
     if start_date.thursday? || start_date.friday? || start_date.on_weekend?
-      errors.add(:start_date, I18n.t("activerecord.errors.models.vacation.attributes.start_date.close_weekend"))
+      errors.add(:start_date, :close_weekend)
     end
+  end
+
+  def validate_vacation_before_holiday?
+    ENV['VALIDATE_VACATION_BEFORE_HOLIDAY'] == 'true'
   end
 end

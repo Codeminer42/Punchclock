@@ -267,6 +267,30 @@ describe 'Users', type: :feature do
         end
       end
 
+      context 'on Experience tab' do
+        let!(:contribution) { create(:contribution, user: user).decorate }
+        let!(:talk) { create(:talk, user: user).decorate }
+
+        before { refresh }
+        it 'finds all elements correctly' do
+          within '#experiencias' do
+            expect(page).to have_table('') &
+                            have_text('Experiência open-source') &
+                            have_css('.col.col-name', text: contribution.repository.name) &
+                            have_css('.col.col-description', text: contribution.description)
+                            have_css('.col.col-created_at', text: contribution.created_at)
+
+            expect(page).to have_table('') &
+                            have_text('Experiência Apresentando Palestras') &
+                            have_css('.col.col-event_name', text: talk.event_name) &
+                            have_css('.col.col-talk_title', text: talk.talk_title) &
+                            have_css('.col.col-date', text: talk.date)
+
+            expect(page).to have_link('Novo(a) Palestra')
+          end
+        end
+      end
+
       context 'on Punches tab' do
         let!(:monday_1_month_ago) { (DateTime.new(2021, 6, 1) - 4.week).monday }
         let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) }

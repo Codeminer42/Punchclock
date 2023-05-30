@@ -50,5 +50,9 @@ FactoryBot.define do
     trait :closed_pr do
       pr_state { :closed }
     end
+
+    trait :with_description do
+      description { Faker::Lorem.paragraph }
+    end
   end
 end

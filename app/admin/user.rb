@@ -190,12 +190,42 @@ ActiveAdmin.register User do
         end
 
         panel I18n.t('educational_experience') do
+          table_for user.education_experiences, i18n: EducationExperience do
+            column :course
+            column :institution
+            column :start_date
+            column :end_date
+          end
+          span do
+            link_to I18n.t('active_admin.new_model', model: EducationExperience.model_name.human),
+              new_admin_education_experience_path(user_id: user),
+              class: "button" 
+          end
+
         end
 
         panel I18n.t('open_source_experience') do
+          table_for user.contributions.valid_pull_requests.order(created_at: :desc).decorate, i18n: Contribution do
+            column :name, i18n: Repository do |contribution|
+              contribution.repository.name
+            end
+            column :description
+            column :created_at
+          end
         end
 
         panel I18n.t('talking_presenting_experience') do
+          table_for user.talks.decorate, i18n: Talk do
+            column :event_name
+            column :talk_title
+            column :date
+          end
+
+          span do
+            link_to I18n.t('active_admin.new_model', model: Talk.model_name.human),
+              new_admin_talk_path(user_id: user),
+              class: "button"
+          end
         end
       end
     end

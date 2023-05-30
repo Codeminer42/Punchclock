@@ -53,7 +53,9 @@ class User < ApplicationRecord
   has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_many :vacations
   has_many :mentees, class_name: :User, foreign_key: :mentor_id, inverse_of: :mentor
+  has_many :education_experiences
   has_and_belongs_to_many :skills
+  has_many :talks
 
   delegate :holidays, to: :city, prefix: true
 

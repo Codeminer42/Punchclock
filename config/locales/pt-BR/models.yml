@@ -63,10 +63,21 @@ pt-BR:
         vacation:
           attributes:
             start_date:
+              close_holiday: "O início das férias não pode ser próximo a um feriado"
               close_weekend: "O início das férias não pode ser próximo ao final de semana"
               greater_than_current: "deve ser maior que %{date}"
             end_date:
               greater_than_current: "deve ser maior que %{date}"
+        talk:
+          attributes:
+            date:
+              future_date: 'Data não pode ser um período futuro'
+        education_experience:
+          attributes:
+            start_date:
+              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
+            end_date:
+              less_than_start_date: "A data de término deve ser maior que a data de inicio"
     models:
       admin_user:
         one: "Administrador"
@@ -98,6 +109,9 @@ pt-BR:
       allocation:
         one: "Alocação"
         other: "Alocações"
+      talk:
+        one: "Palestra"
+        other: "Palestras"
       questionnaire:
         one: "Questionário"
         other: "Questionários"
@@ -122,6 +136,9 @@ pt-BR:
       exchange_rate:
         one: "Taxa de Câmbio"
         other: "Taxas de Câmbio"
+      education_experience:
+        one: "Experiência Educacional"
+        other: "Experiências Educacionais"
     attributes:
       admin_user:
         id: "ID"
@@ -230,6 +247,13 @@ pt-BR:
         regional_holidays: "Feriados regionais"
         score: "Pontuação"
         active: "Ativo"
+      talk:
+        user: "Usuário"
+        event_name: "Nome do evento"
+        talk_title: "Título da palestra"
+        date: "Data"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       regional_holiday:
         id: "ID"
         name: "Nome"
@@ -293,6 +317,7 @@ pt-BR:
       repository:
         id: "ID"
         link: "Link"
+        name: "Nome"
         language: "Linguagem"
         created_at: "Criado em"
         updated_at: "Atualizado em"
@@ -301,6 +326,7 @@ pt-BR:
         user: "Usuário"
         link: "Link"
         state: "Estado"
+        description: "Descrição"
         state/received: "Recebido"
         state/approved: "Aprovado"
         state/refused:  "Recusado"
@@ -328,3 +354,9 @@ pt-BR:
         rate: 'Taxa'
         created_at: "Criada em"
         updated_at: "Atualizada em"
+      education_experience:
+        user: 'Usuário'
+        institution: 'Instituição'
+        course: 'Curso'
+        start_date: "Data de início"
+        end_date: "Data de término"
