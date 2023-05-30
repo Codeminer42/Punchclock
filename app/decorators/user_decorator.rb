@@ -7,6 +7,18 @@ class UserDecorator < Draper::Decorator
     super || ENV["DEFAULT_PROJECT_NAME"] || I18n.t('not_allocated')
   end
 
+  def frontend_level
+    return 'N/A' unless model.frontend_level
+
+    "Frontend #{model.frontend_level.humanize}"
+  end
+
+  def backend_level
+    return 'N/A' unless model.backend_level
+
+    "Backend #{model.backend_level.humanize}"
+  end
+
   def level
     model.level.try(:humanize) || 'N/A'
   end

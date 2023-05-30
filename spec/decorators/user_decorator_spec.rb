@@ -43,6 +43,42 @@ RSpec.describe UserDecorator do
     end
   end
 
+  describe '#backend_level' do
+    context 'when backend level is set' do
+      subject(:user) { build_stubbed(:user, backend_level: 'trainee').decorate }
+
+      it 'returns user backend level' do
+        expect(subject.backend_level).to eq('Backend Trainee')
+      end
+    end
+
+    context 'when backend level is nil' do
+      subject(:user) { build_stubbed(:user, backend_level: nil).decorate }
+
+      it 'returns N/A' do
+        expect(subject.backend_level).to eq('N/A')
+      end
+    end
+  end
+
+  describe '#frontend_level' do
+    context 'when frontend level is set' do
+      subject(:user) { build_stubbed(:user, frontend_level: 'trainee').decorate }
+
+      it 'returns user frontend level' do
+        expect(subject.frontend_level).to eq('Frontend Trainee')
+      end
+    end
+
+    context 'when frontend level is nil' do
+      subject(:user) { build_stubbed(:user, frontend_level: nil).decorate }
+
+      it 'returns N/A' do
+        expect(subject.frontend_level).to eq('N/A')
+      end
+    end
+  end
+
   describe '#level' do
     context 'when level is set' do
       subject(:user) { build_stubbed(:user, level: 'trainee').decorate }
