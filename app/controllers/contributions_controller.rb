@@ -12,7 +12,7 @@ class ContributionsController < ApplicationController
   def update
     @contribution = scopped_contributions.find(params[:id])
 
-    if @contribution.update(contribution_params)
+    if @contribution.update(normalize_blank_values)
       redirect_to contributions_path, notice: I18n.t(
         :notice, scope: "flash.actions.update", resource_name: Contribution.model_name.human
       )
@@ -30,5 +30,13 @@ class ContributionsController < ApplicationController
 
   def contribution_params
     params.require(:contribution).permit(:description)
+  end
+
+  def normalize_blank_values
+    contribution_params.to_hash.each_with_object({}) do |(key, value), accumulator|
+      accumulator[key] = value.blank? ? nil : value
+
+      accumulator
+    end
   end
 end
