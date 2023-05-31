@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds
     resources :evaluations, only: %i[show index]
-    resources :contributions, only: %i[index]
+    resources :contributions, only: %i[index edit update]
     get "users/:user_id/notes/new" => "notes#new", as: :new_users_note
     post "users/:user_id/notes" => "notes#create", as: :user_notes
   end
