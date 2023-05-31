@@ -28,7 +28,7 @@ pt-BR:
   professional_experience: 'Experiência profissional'
   educational_experience: 'Experiência educacional'
   open_source_experience: 'Experiência open-source'
-  talking_presenting_experience: 'Experiência apresentando palestra'
+  talking_presenting_experience: 'Experiência Apresentando Palestras'
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'
@@ -87,6 +87,8 @@ pt-BR:
     error: Cheque os dados e tente novamente.
     create: Criar Alocações
   average_score: 'Média de engenheiros por nível'
+  backend_level: 'Nível de Backend'
+  frontend_level: 'Nível de Frontend'
   level: 'Nível'
   users_average: 'Média'
   offices_leaderboard: 'Escritórios que mais contribuiram esta semana'

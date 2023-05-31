@@ -72,6 +72,12 @@ pt-BR:
           attributes:
             date:
               future_date: 'Data não pode ser um período futuro'
+        education_experience:
+          attributes:
+            start_date:
+              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
+            end_date:
+              less_than_start_date: "A data de término deve ser maior que a data de inicio"
     models:
       admin_user:
         one: "Administrador"
@@ -130,6 +136,9 @@ pt-BR:
       exchange_rate:
         one: "Taxa de Câmbio"
         other: "Taxas de Câmbio"
+      education_experience:
+        one: "Experiência Educacional"
+        other: "Experiências Educacionais"
     attributes:
       admin_user:
         id: "ID"
@@ -193,6 +202,8 @@ pt-BR:
         roles: 'Funções'
         skills: "Habilidades"
         level: "Nível"
+        backend_level: "Nível de Backend"
+        frontend_level: "Nível de Frontend"
         active: "Ativo"
         observation: "Observação"
         started_at: "Iniciou em"
@@ -242,7 +253,9 @@ pt-BR:
         user: "Usuário"
         event_name: "Nome do evento"
         talk_title: "Título da palestra"
-        date: "data"
+        date: "Data"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       regional_holiday:
         id: "ID"
         name: "Nome"
@@ -343,3 +356,9 @@ pt-BR:
         rate: 'Taxa'
         created_at: "Criada em"
         updated_at: "Atualizada em"
+      education_experience:
+        user: 'Usuário'
+        institution: 'Instituição'
+        course: 'Curso'
+        start_date: "Data de início"
+        end_date: "Data de término"

@@ -35,8 +35,8 @@ describe 'Users', type: :feature do
         expect(page).to have_css('tbody tr', count: 1) &&
         have_css('.col-name', text: user.name) &&
         have_css('.col-office', text: user.office.city) &&
-        have_css('.col-level', text: user.level.humanize) &&
-        have_css('.col-specialty', text: user.specialty.humanize) &&
+        have_css('.col-backend_level', text: user.backend_level.humanize) &&
+        have_css('.col-frontend_level', text: user.frontend_level.humanize) &&
         have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime)) &&
         have_css('.col-active', text: I18n.t(user.active)) &&
         have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
@@ -67,15 +67,15 @@ describe 'Users', type: :feature do
       end
     end
 
-    it 'by level' do
+    it 'by backend level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.level.values.map { |key| key.text.titleize } << 'Qualquer')
+        expect(page).to have_select('Nível de Backend', options: User.backend_level.values.map { |key| key.text.titleize } << 'Qualquer')
       end
     end
 
-    it 'by specialty' do
+    it 'by frontend level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Especialidade', options: User.specialty.values.map { |key| key.text.humanize } << 'Qualquer')
+        expect(page).to have_select('Nível de Frontend', options: User.backend_level.values.map { |key| key.text.titleize } << 'Qualquer')
       end
     end
 
@@ -269,6 +269,7 @@ describe 'Users', type: :feature do
 
       context 'on Experience tab' do
         let!(:contribution) { create(:contribution, user: user).decorate }
+        let!(:talk) { create(:talk, user: user).decorate }
 
         before { refresh }
         it 'finds all elements correctly' do
@@ -278,6 +279,14 @@ describe 'Users', type: :feature do
                             have_css('.col.col-name', text: contribution.repository.name) &
                             have_css('.col.col-description', text: contribution.description)
                             have_css('.col.col-created_at', text: contribution.created_at)
+
+            expect(page).to have_table('') &
+                            have_text('Experiência Apresentando Palestras') &
+                            have_css('.col.col-event_name', text: talk.event_name) &
+                            have_css('.col.col-talk_title', text: talk.talk_title) &
+                            have_css('.col.col-date', text: talk.date)
+
+            expect(page).to have_link('Novo(a) Palestra')
           end
         end
       end

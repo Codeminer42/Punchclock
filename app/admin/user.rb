@@ -9,7 +9,7 @@ ActiveAdmin.register User do
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :mentor_id,
+  permit_params :name, :email, :github, :backend_level, :frontend_level, :level, :contract_type, :contract_company_country, :mentor_id,
                 :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at,
                 :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
 
@@ -24,10 +24,12 @@ ActiveAdmin.register User do
   filter :name
   filter :email
 
-  filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
+  filter :backend_level, as: :select, collection: User.backend_level.values.map { |level| [level.text, level.value] }
+  filter :frontend_level, as: :select, collection: User.frontend_level.values.map { |level| [level.text, level.value] }
+
   filter :office, collection: -> { Office.active.order(:city) }
-  filter :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty.value] }
   filter :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }
+
   filter :by_skills, as: :check_boxes, collection: proc {
     Skill.order(:title).map do |skill|
       [skill.title, skill.id, checked: params.dig(:q, :by_skills_in)&.include?(skill.id.to_s)]
@@ -65,8 +67,8 @@ ActiveAdmin.register User do
       link_to user.name, admin_user_path(user)
     end
     column :office
-    column :level, &:level_text
-    column :specialty, &:specialty_text
+    column :backend_level, &:backend_level_text
+    column :frontend_level, &:frontend_level_text
     column :allow_overtime
     column :active
     column :"2fa" do |user|
@@ -94,6 +96,8 @@ ActiveAdmin.register User do
           row :overall_score
           row :performance_score
           row :occupation, &:occupation_text
+          row :backend_level, &:backend_level_text
+          row :frontend_level, &:frontend_level_text
           row :specialty, &:specialty_text
           row :level, &:level_text
           row :contract_type, &:contract_type_text
@@ -190,6 +194,18 @@ ActiveAdmin.register User do
         end
 
         panel I18n.t('educational_experience') do
+          table_for user.education_experiences, i18n: EducationExperience do
+            column :course
+            column :institution
+            column :start_date
+            column :end_date
+          end
+          span do
+            link_to I18n.t('active_admin.new_model', model: EducationExperience.model_name.human),
+              new_admin_education_experience_path(user_id: user),
+              class: "button" 
+          end
+
         end
 
         panel I18n.t('open_source_experience') do
@@ -203,6 +219,17 @@ ActiveAdmin.register User do
         end
 
         panel I18n.t('talking_presenting_experience') do
+          table_for user.talks.decorate, i18n: Talk do
+            column :event_name
+            column :talk_title
+            column :date
+          end
+
+          span do
+            link_to I18n.t('active_admin.new_model', model: Talk.model_name.human),
+              new_admin_talk_path(user_id: user),
+              class: "button"
+          end
         end
       end
     end
@@ -220,6 +247,8 @@ ActiveAdmin.register User do
       f.input :mentor, collection: User.active.order(:name)
       f.input :skills, as: :check_boxes, collection: Skill.order(:title)
       f.input :occupation, as: :radio
+      f.input :backend_level, as: :select, collection: User.backend_level.options
+      f.input :frontend_level, as: :select, collection: User.frontend_level.options
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }

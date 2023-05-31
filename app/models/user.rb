@@ -11,6 +11,15 @@ class User < ApplicationRecord
          :two_factor_backupable,
          otp_secret_encryption_key: ENV['OTP_SECRET_ENCRYPTION_KEY']
 
+  %i[backend_level frontend_level].each do |specialty|
+    enumerize specialty,
+      in: { trainee: 6, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5 },
+      scope: :shallow,
+      predicates: true,
+      i18n_scope: 'enumerize.user.level'
+
+  end
+
   enumerize :level, in: {
     trainee: 7, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
     },  scope: :shallow,
@@ -53,6 +62,7 @@ class User < ApplicationRecord
   has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_many :vacations
   has_many :mentees, class_name: :User, foreign_key: :mentor_id, inverse_of: :mentor
+  has_many :education_experiences
   has_and_belongs_to_many :skills
   has_many :talks
 
