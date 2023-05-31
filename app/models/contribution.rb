@@ -5,7 +5,7 @@ class Contribution < ApplicationRecord
 
   include AASM
 
-  before_update :normalize_description_blank_values
+  before_update :normalize_description_blank_value
 
   enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true
   enumerize :rejected_reason, in: {
@@ -69,7 +69,7 @@ class Contribution < ApplicationRecord
 
   private
 
-  def normalize_description_blank_values
-    self[:description] = description.blank? ? nil : description
+  def normalize_description_blank_value
+    self[:description] = description.presence
   end
 end
