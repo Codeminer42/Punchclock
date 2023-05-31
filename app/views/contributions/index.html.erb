@@ -27,11 +27,10 @@
                   <td><%= link_to contribution.link, contribution.link, target: :blank %></td>
                   <td><%= I18n.l(contribution.created_at.to_date, format: :default) %></td>
                   <td><%= contribution.pr_state.nil? ? '-' : contribution.pr_state_text %></td>
-                  <td class="">
+                  <td>
                     <%=
                       link_to image_tag('edit.png', class: 'mx-auto'),
-                      edit_contribution_path(contribution),
-                      id: "edt-#{contribution.id}"
+                      edit_contribution_path(contribution)
                     %>
                   </td>
                 </tr>
