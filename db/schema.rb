@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_142246) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_31_162154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -182,15 +182,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_142246) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "skills_users", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "skill_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["skill_id"], name: "index_skills_users_on_skill_id"
-    t.index ["user_id"], name: "index_skills_users_on_user_id"
-  end
-
   create_table "states", force: :cascade do |t|
     t.string "name", null: false
     t.string "code", null: false
@@ -207,6 +198,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_142246) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_talks_on_user_id"
+  end
+
+  create_table "user_skills", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "skill_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
+    t.index ["user_id"], name: "index_user_skills_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -286,9 +286,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_142246) do
   add_foreign_key "notes", "users"
   add_foreign_key "notes", "users", column: "author_id"
   add_foreign_key "questions", "questionnaires"
-  add_foreign_key "skills_users", "skills"
-  add_foreign_key "skills_users", "users"
   add_foreign_key "talks", "users"
+  add_foreign_key "user_skills", "skills"
+  add_foreign_key "user_skills", "users"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "mentor_id"

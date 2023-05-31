@@ -17,7 +17,6 @@ class User < ApplicationRecord
       scope: :shallow,
       predicates: true,
       i18n_scope: 'enumerize.user.level'
-
   end
 
   enumerize :level, in: {
@@ -63,7 +62,8 @@ class User < ApplicationRecord
   has_many :vacations
   has_many :mentees, class_name: :User, foreign_key: :mentor_id, inverse_of: :mentor
   has_many :education_experiences
-  has_and_belongs_to_many :skills
+  has_many :user_skills
+  has_many :skills, through: :user_skills
   has_many :talks
 
   delegate :holidays, to: :city, prefix: true
