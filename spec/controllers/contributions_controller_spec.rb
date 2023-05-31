@@ -89,7 +89,7 @@ RSpec.describe ContributionsController, type: :controller do
       {
         id: contribution.id,
         contribution: {
-          description:
+          description: description
         }
       }
     end
@@ -116,7 +116,7 @@ RSpec.describe ContributionsController, type: :controller do
         let(:description) { '' }
 
         it 'is expected to update the contribution description with the nil value' do
-          expect { put :update, params: }
+          expect { put :update, params: params }
             .to change { contribution.reload.description }
             .from('description')
             .to(nil)
