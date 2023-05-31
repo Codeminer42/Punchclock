@@ -25,8 +25,8 @@ describe 'Admin Allocation chart', type: :feature do
         aggregate_failures 'testing table fields' do
           expect(page).to have_text('Nome')
           expect(page).to have_text('Habilidades')
-          expect(page).to have_text('Nível')
-          expect(page).to have_text('Especialidade')
+          expect(page).to have_text('Nível de Backend')
+          expect(page).to have_text('Nível de Frontend')
           expect(page).to have_text('Cliente')
           expect(page).to have_text('Alocado até')
         end

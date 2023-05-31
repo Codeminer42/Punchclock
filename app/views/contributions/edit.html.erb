@@ -1,0 +1,9 @@
+<ul class="breadcrumb">
+  <li class="breadcrumb-item"><%= link_to t(:back, scope: :helpers), contributions_path %></li>
+</ul>
+
+<h1>
+  <%= t(:editing, scope: %i(helpers actions), model: Contribution.model_name.human) %>
+</h1>
+
+<%= render 'edit_form', contribution: @contribution %>

@@ -5,6 +5,8 @@ class Contribution < ApplicationRecord
 
   include AASM
 
+  before_update :normalize_description_blank_value
+
   enumerize :pr_state, :in => [:open, :closed, :merged], scope: :shallow, predicates: true
   enumerize :rejected_reason, in: {
     allocated_in_the_project: 0,
@@ -64,4 +66,10 @@ class Contribution < ApplicationRecord
   scope :valid_pull_requests, -> { where.not(state: :refused) }
   scope :without_pr_state, ->(state) { where.not(pr_state: state) }
   scope :tracking, -> { where(tracking: true) }
+
+  private
+
+  def normalize_description_blank_value
+    self[:description] = description.presence
+  end
 end

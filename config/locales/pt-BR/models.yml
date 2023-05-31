@@ -202,6 +202,8 @@ pt-BR:
         roles: 'Funções'
         skills: "Habilidades"
         level: "Nível"
+        backend_level: "Nível de Backend"
+        frontend_level: "Nível de Frontend"
         active: "Ativo"
         observation: "Observação"
         started_at: "Iniciou em"

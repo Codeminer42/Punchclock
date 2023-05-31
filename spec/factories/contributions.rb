@@ -3,14 +3,14 @@
 FactoryBot.define do
   factory :contribution do
     user
-    repository 
+    repository
     state { :received }
     rejected_reason { nil }
     pr_state { :open }
     sequence :link do |n|
       "https://www.github.com/company/example-#{n}/pull/#{n}"
     end
-    
+
     trait :rejected do
       state { :reject }
     end

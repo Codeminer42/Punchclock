@@ -8,8 +8,8 @@ class AllocationsAndUnalocatedUsersQuery
   end
 
   def call
-   allocation
-      .includes(:user)
+    allocation
+      .includes(:user, :project, user: [:skills]) # TODO: We still have a N+1 issue with the last english evaluation column
       .select('allocations.*, users.id as user_id')
       .joins(
         "RIGHT OUTER JOIN users ON allocations.user_id = users.id AND allocations.ongoing = true"
