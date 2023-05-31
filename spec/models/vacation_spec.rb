@@ -53,7 +53,7 @@ RSpec.describe Vacation, type: :model do
       end
 
       before do
-        allow(vacation.user).to receive(:office_holidays).and_return([])
+        allow(vacation.user).to receive(:holidays).and_return([])
       end
 
       it { is_expected.to be_valid }
@@ -132,7 +132,7 @@ RSpec.describe Vacation, type: :model do
       end
 
       before do
-        allow(vacation.user).to receive(:office_holidays).and_return([{day: Date.current.next_week(:wednesday).day, month: Date.current.next_week(:wednesday).month}])
+        allow(vacation.user).to receive(:holidays).and_return([{day: Date.current.next_week(:wednesday).day, month: Date.current.next_week(:wednesday).month}])
       end
 
       it { expect(vacation).to_not be_valid }
@@ -149,7 +149,7 @@ RSpec.describe Vacation, type: :model do
       end
 
       before do
-        allow(vacation.user).to receive(:office_holidays).and_return([{day: 01, month: 01}])
+        allow(vacation.user).to receive(:holidays).and_return([{day: 01, month: 01}])
       end
 
       it { expect(vacation).to_not be_valid }
@@ -165,7 +165,7 @@ RSpec.describe Vacation, type: :model do
       end
 
       before do
-        allow(vacation.user).to receive(:office_holidays).and_return([{day: 01, month: 01}])
+        allow(vacation.user).to receive(:holidays).and_return([{day: 01, month: 01}])
       end
 
       it { expect(vacation).to_not be_valid }
@@ -181,7 +181,7 @@ RSpec.describe Vacation, type: :model do
       end
 
       before do
-        allow(vacation.user).to receive(:office_holidays).and_return([{day: Date.current.next_week(:tuesday).day, month: Date.current.next_week(:tuesday).month}])
+        allow(vacation.user).to receive(:holidays).and_return([{day: Date.current.next_week(:tuesday).day, month: Date.current.next_week(:tuesday).month}])
       end
 
       it { expect(vacation).to be_valid }
