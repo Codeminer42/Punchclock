@@ -84,6 +84,14 @@ class Vacation < ApplicationRecord
     end
   end
 
+  def cancel!(user)
+    if user.hr?
+      ActiveRecord::Base.transaction do 
+        update!(status: :cancelled, denier: user)
+      end 
+    end 
+  end 
+
   def cancelable?
     pending? || approved_within_cancel_range?
   end
