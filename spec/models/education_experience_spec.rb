@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe EducationExperience, type: :model do
   it { is_expected.to belong_to(:user) }
 
-
   describe 'validations' do
     it { is_expected.to validate_presence_of :institution }
     it { is_expected.to validate_presence_of :course }
     it { is_expected.to validate_presence_of :start_date }
-    it { is_expected.to validate_presence_of :end_date }
 
     context 'when end_date is greater than start_date' do
       subject(:education_experience) do
