@@ -203,7 +203,7 @@ ActiveAdmin.register User do
           span do
             link_to I18n.t('active_admin.new_model', model: EducationExperience.model_name.human),
               new_admin_education_experience_path(user_id: user),
-              class: "button" 
+              class: "button"
           end
 
         end
