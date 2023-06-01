@@ -30,11 +30,18 @@ ActiveAdmin.register Vacation do
     redirect_to admin_vacations_path(scope: :denied), notice: I18n.t("vacation_denied")
   end
 
+  member_action :cancel, method: :put do
+    resource.cancel!(current_user)
+    VacationMailer.notify_vacation_cancelled(resource).deliver_later
+    redirect_to admin_vacations_path(scope: :cancelled), notice: I18n.t("vacation_cancelled")
+  end 
+
   scope :ongoing_and_scheduled, default: true
   scope :pending
   scope :approved
   scope :denied
   scope :finished
+  scope :cancelled 
   scope :all
 
   index do
@@ -61,5 +68,11 @@ ActiveAdmin.register Vacation do
         link_to I18n.t('refuse'), denied_admin_vacation_path(vacation), method: :put if vacation.pending?
       end
     end
+
+    if authorized? :cancel, Vacation
+      actions defaults: false do |vacation|
+        link_to I18n.t('cancel'), cancel_admin_vacation_path(vacation), method: :put if vacation.approved?
+      end 
+    end 
   end
 end
