@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get '/admin/vacations/:id/denied', to: 'admin/vacations#denied', as: :admin_vacations_denied
   get '/admin/vacations/:id/approve', to: 'admin/vacations#approve', as: :admin_vacations_approve
+  get '/admin/vacations/:id/cancel', to: 'admin/vacations#cancel', as: :admin_vacations_cancel
 
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'user/sessions' }
