@@ -349,13 +349,6 @@ pt-BR:
         hr_approver: 'Aprovação Recursos Humanos'
         commercial_approver: 'Aprovação Comercial'
         denier: 'Recusado Por'
-      exchange_rate:
-        month: 'Mês'
-        year: 'Ano'
-        currency: 'Moeda'
-        rate: 'Taxa'
-        created_at: "Criada em"
-        updated_at: "Atualizada em"
       education_experience:
         user: 'Usuário'
         institution: 'Instituição'

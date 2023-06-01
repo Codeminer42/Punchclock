@@ -38,6 +38,7 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
+
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
 
   enumerize :roles, in: {
