@@ -66,6 +66,7 @@ class User < ApplicationRecord
   has_many :user_skills
   has_many :skills, through: :user_skills
   has_many :talks
+  has_many :professional_experiences
 
   delegate :holidays, to: :city, prefix: true
 
