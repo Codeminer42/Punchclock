@@ -176,7 +176,7 @@ describe Punch do
     end
 
     context "on holidays" do
-      let!(:office_holiday) { create(:regional_holiday, offices: [user.office], day: 25, month: 12) }
+      let!(:city_holiday) { create(:regional_holiday, cities: [user.city], day: 25, month: 12) }
       let(:punch) do
         build(:punch,
           user: user,
@@ -209,7 +209,7 @@ describe Punch do
         RegionalHoliday.create(name: 'City Holiday',
                              day: 15,
                              month: 5,
-                             offices: [user.office])
+                             cities: [user.city])
         punch.user = user
         punch.from = Time.new(2001, 5, 15, 8, 0, 0, 0)
         punch.to = Time.new(2001, 5, 15, 13, 0, 0, 0)
@@ -240,7 +240,7 @@ describe Punch do
         RegionalHoliday.create(name: 'City Holiday',
                                day: 15,
                                month: 5,
-                               offices: [FactoryBot.create(:office)])
+                               cities: [FactoryBot.create(:city)])
         expect(Punch.new(from: Time.new(2001, 5, 15, 8, 0, 0, 0), # City Holiday
                          to:   Time.new(2001, 5, 15, 17, 0, 0, 0),
                          project: project, user: user)).to be_valid

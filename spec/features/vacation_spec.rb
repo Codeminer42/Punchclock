@@ -21,7 +21,7 @@ RSpec.describe 'RequestVacation', type: :feature do
 
   context 'when start date is close or in a holiday' do
     before do
-      allow_any_instance_of(User).to receive(:office_holidays)
+      allow_any_instance_of(User).to receive(:holidays)
         .and_return([
                       {
                         day: Date.current.next_week(:wednesday).day,

@@ -74,7 +74,7 @@ describe 'Punches Dashboard', type: :feature do
   context 'When user do not have overtime allowed' do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:regional_holiday) do 
-      create(:regional_holiday, offices: [authed_user_without_overtime.office], month: 11, day: 2)
+      create(:regional_holiday, cities: [authed_user_without_overtime.city], month: 11, day: 2)
     end
     let!(:active_project) { create(:project, :active) }
 

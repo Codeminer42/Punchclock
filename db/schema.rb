@@ -120,13 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_142246) do
     t.boolean "active", default: true
   end
 
-  create_table "offices_regional_holidays", id: false, force: :cascade do |t|
-    t.integer "office_id", null: false
-    t.integer "regional_holiday_id", null: false
-    t.index ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays"
-    t.index ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices"
-  end
-
   create_table "projects", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil

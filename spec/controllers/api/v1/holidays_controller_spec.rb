@@ -16,7 +16,7 @@ describe Api::V1::HolidaysController, :type => :controller do
 
     it 'returns holidays' do
       holidays = [{ day: 7, month: 9 }]
-      allow_any_instance_of(User).to receive(:office_holidays).and_return holidays
+      allow_any_instance_of(User).to receive(:holidays).and_return holidays
       expect(subject.body).to eq(holidays.to_json)
     end
   end
