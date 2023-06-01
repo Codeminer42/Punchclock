@@ -106,8 +106,10 @@ pt-BR:
   contributions_sent_to_newsletter: "As contribuições aprovadas foram enviadas para a newsletter."
   vacation_approved: "Pedido de férias aprovado"
   vacation_denied: "Pedido de férias recusado"
+  vacation_cancelled: "Pedido de férias cancelado"
   approve: "Aprovar"
   refuse:  "Recusar"
+  cancel: "Cancelar"
   this_week: "Semana atual"
   last_week: "Última semana"
   stats: Estatísticas
