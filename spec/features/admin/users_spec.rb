@@ -105,7 +105,6 @@ describe 'Users', type: :feature do
 
   describe 'Actions' do
     let!(:city)      { create(:city) }
-    let!(:skill)      { create(:skill) }
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
     let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
@@ -126,7 +125,6 @@ describe 'Users', type: :feature do
         find('#user_started_at').fill_in with: started_at.strftime('%Y-%m-%d')
         find('#user_office_id').find(:option, office.city).select_option
         find('#user_city_id').find(:option, city.name).select_option
-        find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
@@ -142,7 +140,6 @@ describe 'Users', type: :feature do
                         have_text('userGithub') &
                         have_text(I18n.l(started_at, format: '%d de %B de %Y')) &
                         have_text(office.city) &
-                        have_text(skill.title) &
                         have_text('Engenheiro') &
                         have_text('Backend') &
                         have_text('Junior') &
@@ -350,7 +347,6 @@ describe 'Users', type: :feature do
                           have_text('Funções') &
                           have_text('Nível') &
                           have_text('Iniciou em') &
-                          have_text('Habilidades') &
                           have_text('Observação')
         end
       end

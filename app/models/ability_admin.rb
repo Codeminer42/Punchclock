@@ -22,7 +22,8 @@ class AbilityAdmin
       Repository,
       Contribution,
       Note,
-      EducationExperience
+      EducationExperience,
+      UserSkill
     ]
 
     define_permissions_for user
