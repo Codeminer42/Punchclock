@@ -22,7 +22,7 @@ ActiveAdmin.register_page 'Allocation Chart' do
           decorated_user(allocation).english_level
         end
         column(I18n.t('skills'), class: 'allocated-column__last') do |allocation|
-          decorated_user(allocation).skills
+          raw(skills_tags(allocation.user))
         end
         column(:allocated_until_data) do |allocation|
           allocation.end_at ? allocation.end_at.to_time.to_i : 'Not allocated'

@@ -102,10 +102,15 @@ ActiveAdmin.register User do
           row :level, &:level_text
           row :contract_type, &:contract_type_text
           row :contract_company_country, &:contract_company_country_text
+
           row :roles do |user|
             user.roles.map { |role| I18n.t(role, scope: 'enumerize.user.role') }
           end
-          row :skills
+
+          row :skills do |user|
+            raw(skills_tags(user))
+          end
+
           row :mentor
           row :mentees
           row :allow_overtime
