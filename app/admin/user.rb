@@ -11,7 +11,7 @@ ActiveAdmin.register User do
 
   permit_params :name, :email, :github, :backend_level, :frontend_level, :level, :contract_type, :contract_company_country, :mentor_id,
                 :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at,
-                :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
+                :observation, :specialty, :otp_required_for_login, roles: []
 
   scope :all
   scope :active, default: true, group: :active
@@ -250,7 +250,6 @@ ActiveAdmin.register User do
       f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [I18n.t(role, scope: 'enumerize.user.role'), role] }
       f.input :mentor, collection: User.active.order(:name)
-      f.input :skills, as: :check_boxes, collection: Skill.order(:title)
       f.input :occupation, as: :radio
       f.input :backend_level, as: :select, collection: User.backend_level.options
       f.input :frontend_level, as: :select, collection: User.frontend_level.options

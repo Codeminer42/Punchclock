@@ -7,4 +7,6 @@ class UserSkill < ApplicationRecord
   belongs_to :skill
 
   enumerize :experience_level, in: %i[capable expert], default: :capable
+
+  validates :experience_level, presence: true
 end

@@ -130,6 +130,9 @@ pt-BR:
       hour_report:
         one: "Relatório de Horas"
         other: "Relatórios de Horas"
+      user_skill:
+        one: Habilidade do Usuário
+        other: Habilidades dos Usuários
       vacation:
         one: "Férias"
         other: "Férias"
@@ -355,3 +358,7 @@ pt-BR:
         course: 'Curso'
         start_date: "Data de início"
         end_date: "Data de término"
+      user_skill:
+        user: 'Usuário'
+        skill: 'Habilidade'
+        experience_level: 'Nível de Experiência'

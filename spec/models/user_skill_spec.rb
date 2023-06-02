@@ -11,4 +11,8 @@ RSpec.describe UserSkill, type: :model do
   describe 'experience level' do
     it { is_expected.to enumerize(:experience_level).in(:capable, :expert).with_default(:capable) }
   end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:experience_level) }
+  end
 end
