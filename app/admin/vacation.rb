@@ -7,6 +7,8 @@ ActiveAdmin.register Vacation do
 
   menu parent: User.model_name.human(count: 2)
 
+  config.sort_order = 'start_date_asc'
+
   filter :start_date
   filter :end_date
   filter :user, as: :select, collection: -> { User.includes(:vacations).engineer.active.where.not(vacations: { user: nil } ) }
