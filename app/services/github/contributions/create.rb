@@ -20,6 +20,11 @@ module Github
               result.pr_state
             )
           end
+
+        collect_all_contributions.map(&:user_id).uniq
+          .map do |user_id|
+            AlertFillContributionDescriptionJob.perform_later(user_id)
+          end
       end
 
       private
