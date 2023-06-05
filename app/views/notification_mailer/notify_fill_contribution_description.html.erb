@@ -1,0 +1,7 @@
+<%= 
+  t('notification_mailer.notify_fill_contribution_description_html',
+    host: ENV['HOST'],
+    contributions_total: @contributions_total,
+    contributions_link: link_to("Acessar PRs", contributions_url)
+   ) 
+ %>
