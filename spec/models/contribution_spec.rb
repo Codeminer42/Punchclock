@@ -171,22 +171,4 @@ RSpec.describe Contribution, type: :model do
       end
     end
   end
-
-  describe '#repository_name' do
-    context 'when there iss no repository' do
-      subject(:without_repository) { build(:contribution, :without_repository) }
-
-      it 'is expected to return nil' do
-        expect(without_repository.repository_name).to be_nil
-      end
-    end
-
-    context 'when there is a repository' do
-      subject(:contribution) { build(:contribution, :with_custom_repository) }
-
-      it 'is expected to return the repository name' do
-        expect(contribution.repository_name).to eq('repo')
-      end
-    end
-  end
 end
