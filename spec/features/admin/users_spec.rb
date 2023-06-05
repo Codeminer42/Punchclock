@@ -265,7 +265,12 @@ describe 'Users', type: :feature do
       end
 
       context 'on Experience tab' do
-        let!(:contribution) { create(:contribution, user: user).decorate }
+        let!(:contribution) { 
+          create(:contribution, :approved, :with_description, user: user).decorate 
+        }
+        let!(:rejected_contribution) { 
+          create(:contribution, :refused, :no_sufficient_effort,:with_description, user: user).decorate 
+        }
         let!(:talk) { create(:talk, user: user).decorate }
 
         before { refresh }
@@ -276,6 +281,8 @@ describe 'Users', type: :feature do
                             have_css('.col.col-name', text: contribution.repository.name) &
                             have_css('.col.col-description', text: contribution.description)
                             have_css('.col.col-created_at', text: contribution.created_at)
+
+            expect(page).to_not have_css('.col.col-description', text: rejected_contribution.description)
 
             expect(page).to have_table('') &
                             have_text('Experiência Apresentando Palestras') &
