@@ -4,7 +4,7 @@ class RepositoryDecorator < ApplicationDecorator
   def self.collection_decorator_class
     PaginatingDecorator
   end
-  
+
   def languages
     return '' unless language
 

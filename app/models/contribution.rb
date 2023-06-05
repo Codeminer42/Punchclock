@@ -21,6 +21,8 @@ class Contribution < ApplicationRecord
   belongs_to :repository
   belongs_to :reviewed_by, class_name: "User", foreign_key: "reviewer_id", optional: true
 
+  delegate :name, to: :repository, prefix: true, allow_nil: true
+
   aasm column: 'state' do
     state :received, initial: true
     state :approved

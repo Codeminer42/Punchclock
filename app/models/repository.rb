@@ -6,4 +6,8 @@ class Repository < ApplicationRecord
   def to_s
     link
   end
+
+  def name
+    self.decorate.name
+  end
 end
