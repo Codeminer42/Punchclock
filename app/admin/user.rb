@@ -210,13 +210,12 @@ ActiveAdmin.register User do
               new_admin_education_experience_path(user_id: user),
               class: "button"
           end
-
         end
 
         panel I18n.t('open_source_experience') do
           table_for user.contributions.valid_pull_requests.order(created_at: :desc).decorate, i18n: Contribution do
             column :name, i18n: Repository do |contribution|
-              contribution.repository.name
+              contribution.repository_name
             end
             column :description
             column :created_at
