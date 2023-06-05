@@ -11,8 +11,8 @@ FactoryBot.define do
       "https://www.github.com/company/example-#{n}/pull/#{n}"
     end
 
-    trait :rejected do
-      state { :reject }
+    trait :refused do
+      state { :refused }
     end
 
     trait :approved do
