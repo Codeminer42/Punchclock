@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_31_170101) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_185451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -118,6 +118,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_170101) do
     t.float "score"
     t.integer "head_id"
     t.boolean "active", default: true
+  end
+
+  create_table "professional_experiences", force: :cascade do |t|
+    t.string "company"
+    t.string "position"
+    t.text "description"
+    t.string "responsibilities"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_professional_experiences_on_user_id"
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
@@ -286,6 +299,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_170101) do
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "notes", "users"
   add_foreign_key "notes", "users", column: "author_id"
+  add_foreign_key "professional_experiences", "users"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "talks", "users"
   add_foreign_key "user_skills", "skills"

@@ -78,6 +78,10 @@ pt-BR:
               greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
             end_date:
               less_than_start_date: "A data de término deve ser maior que a data de inicio"
+        professional_experience:
+          attributes:
+            start_date:
+              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
     models:
       admin_user:
         one: "Administrador"
@@ -142,6 +146,9 @@ pt-BR:
       education_experience:
         one: "Experiência Educacional"
         other: "Experiências Educacionais"
+      professional_experience:
+        one: "Experiência Profissional"
+        other: "Experiências Profissionais"
     attributes:
       admin_user:
         id: "ID"
@@ -362,3 +369,11 @@ pt-BR:
         user: 'Usuário'
         skill: 'Habilidade'
         experience_level: 'Nível de Experiência'
+      professional_experience:
+        user: 'Usuário'
+        company: 'Empresa'
+        position: 'Cargo'
+        description: "Descrição"
+        responsibilities: "Competências"
+        start_date: "Data de início"
+        end_date: "Data de término"

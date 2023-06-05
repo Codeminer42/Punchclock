@@ -23,7 +23,8 @@ class AbilityAdmin
       Contribution,
       Note,
       EducationExperience,
-      UserSkill
+      UserSkill,
+      ProfessionalExperience
     ]
 
     define_permissions_for user
