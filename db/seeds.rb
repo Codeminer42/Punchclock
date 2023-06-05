@@ -17,7 +17,7 @@ def create_holiday(city:)
   holiday = RegionalHoliday.find_or_create_by!(day: random_date.day, month: random_date.month) do |holiday|
     holiday.name = "#{Faker::Name.name} day"
   end
-  holiday.cities << city
+  holiday.cities << city unless holiday.cities.exists?(city.id)
 end
 
 def create_user(number:)

@@ -54,5 +54,13 @@ FactoryBot.define do
     trait :with_description do
       description { Faker::Lorem.paragraph }
     end
+
+    trait :without_repository do
+      repository { nil }
+    end
+
+    trait :with_custom_repository do
+      repository { build(:repository, link: "https://github.com/org/repo") }
+    end
   end
 end
