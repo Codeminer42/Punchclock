@@ -196,6 +196,19 @@ ActiveAdmin.register User do
 
       tab I18n.t('experience') do
         panel I18n.t('professional_experience') do
+          table_for user.professional_experiences.order(end_date: :desc).decorate, i18n: ProfessionalExperience do
+            column :company
+            column :position
+            column :description
+            column :responsibilities
+            column :start_date
+            column :end_date
+          end
+          span do
+            link_to I18n.t('active_admin.new_model', model: ProfessionalExperience.model_name.human),
+                    new_admin_professional_experience_path(user_id: user),
+                    class: "button"
+          end
         end
 
         panel I18n.t('educational_experience') do
