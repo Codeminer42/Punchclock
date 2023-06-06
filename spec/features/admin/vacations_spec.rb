@@ -157,37 +157,34 @@ describe 'Vacation', type: :feature do
       end
     end
 
-    #it's not passing yet
-    describe 'Cancelar' do 
-
+    describe 'Cancelar' do
       let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
       before do
         allow(VacationMailer).to receive(:notify_vacation_approved).and_return(message_delivery)
         allow(message_delivery).to receive(:deliver_later)
 
-        vacation.approve!(admin)
+        vacation.update(status: :approved)
 
         sign_in(admin)
       end
 
-      it 'shows vacation with approved status' do 
+      it 'shows vacation with approved status and cancel action' do
         visit '/admin/vacations?scope=ongoing_and_scheduled'
-        expect(page).to have_text('Aprovada')
-      end 
 
-      it 'shows Cancel action to the Admin' do 
-        visit '/admin/vacations?scope=ongoing_and_scheduled'
-        expect(page).to have_text('Cancelar')
+        within "#vacation_#{vacation.id}" do
+          expect(page).to have_text('Aprovada') & have_text('Cancelar')
+        end
       end 
 
       it 'permits to perform Cancel action' do 
-        puts vacation.approve!(admin)
-        visit '/admin/vacations?scope=approved'
-        expect(page).to have_text('Cancelar')
-        visit '/admin/vacations?scope=cancelled'
-        expect(page).to have_content('Período de férias cancelado')
-        expect(page).to have_text('Cancelado')
+        visit '/admin/vacations?scope=ongoing_and_scheduled'
+
+        within "#vacation_#{vacation.id}" do
+          click_link('Cancelar')
+        end
+
+        expect(page).to have_content('Pedido de férias cancelado') & have_text('Cancelado')
       end 
     end 
   end

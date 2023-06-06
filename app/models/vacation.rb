@@ -20,27 +20,27 @@ class Vacation < ApplicationRecord
 
   validates_presence_of :start_date, :end_date, :user
   validates_comparison_of :start_date,
-    message: lambda { |vacation, other|
+    message: -> (_vacation, _other) {
       I18n.t(
         "activerecord.errors.models.vacation.attributes.start_date.greater_than_current",
         date: I18n.l(Date.current)
       )
     },
-    greater_than: Date.current,
+    greater_than: -> (_) { Date.current },
     allow_nil: true,
     if: :not_cancelled?
   validates_comparison_of :end_date,
-    message: lambda { |vacation, other|
+    message: -> (vacation, _other) {
       I18n.t(
         "activerecord.errors.models.vacation.attributes.end_date.greater_than_current",
         date: I18n.l(vacation.start_date + MINIMUM_RANGE_OF_DAYS.days)
       )
     },
-    greater_than: lambda { |vacation| vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
+    greater_than: -> (vacation) { vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
     allow_nil: true,
     if: :not_cancelled?
-  validate :validate_start_date_close_to_weekend, if: :start_date, unless: proc { user.contractor? }
-  validates_with HolidayValidator, if: :start_date, unless: lambda { !validate_vacation_before_holiday? }
+  validate :validate_start_date_close_to_weekend, if: :start_date, unless: -> { user.contractor? }
+  validates_with HolidayValidator, if: :start_date, unless: -> { !validate_vacation_before_holiday? }
 
   scope :ongoing_and_scheduled, -> {
     where(status: :approved)
@@ -77,19 +77,11 @@ class Vacation < ApplicationRecord
   end
 
   def deny!(user)
-    if user.commercial? || user.hr?
-      ActiveRecord::Base.transaction do
-        update!(status: :denied, denier: user)
-      end
-    end
+    update!(status: :denied, denier: user)
   end
 
   def cancel!(user)
-    if user.hr?
-      ActiveRecord::Base.transaction do 
-        update!(status: :cancelled, denier: user)
-      end 
-    end 
+    update!(status: :cancelled, denier: user)
   end 
 
   def cancelable?

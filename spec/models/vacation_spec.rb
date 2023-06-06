@@ -287,23 +287,12 @@ RSpec.describe Vacation, type: :model do
   end
 
   describe '#cancel!' do 
-    context 'when by a HR Admin user' do 
-      let(:user) { create(:user, :admin, :hr) }
-      let(:vacation) { create(:vacation, :approved) }
+    let(:user) { create(:user) }
+    let(:vacation) { create(:vacation, :approved) }
 
-      it 'can be cancelled' do 
-        expect(vacation.cancel!(user)).to eq(true)
-      end 
-    end 
-
-    context 'when by an Admin without HR role' do 
-      let(:user) { create(:user, :admin) }
-      let(:vacation) { create(:vacation, :approved) }
-
-      it 'cannot be cancelled' do 
-        expect(vacation.cancel!(user)).to eq(nil)
-      end 
-    end 
+    it 'cancel vacation' do
+      expect { vacation.cancel!(user) }.to change(vacation, :status).to("cancelled") & change(vacation, :denier).to(user)
+    end
   end 
 
   # TODO: Maybe we're creating a flaky test here
