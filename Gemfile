@@ -45,7 +45,7 @@ gem 'money-rails', '~> 1.12'
 
 gem 'ransack', '~> 2.3'
 
-gem 'sidekiq', "< 8"
+gem 'sidekiq', "< 7"
 
 gem 'rollbar'
 

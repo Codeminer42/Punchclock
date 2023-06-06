@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register ProfessionalExperience do
   permit_params :user_id, :company, :position, :description, :responsibilities, :start_date, :end_date
 
@@ -5,7 +7,7 @@ ActiveAdmin.register ProfessionalExperience do
   filter :company
   filter :position
 
-  menu parent: User.model_name.human(count: 2), priority: 2
+  menu parent: [User.model_name.human(count: 2), I18n.t("active_admin.experience")]
 
   index do
     column :user
@@ -26,8 +28,8 @@ ActiveAdmin.register ProfessionalExperience do
       f.input :position
       f.input :description, as: :text
       f.input :responsibilities
-      f.input :start_date, as: :string, input_html: { class: %i(datepicker) }
-      f.input :end_date, as: :string, input_html: { class: %i(datepicker) }
+      f.input :start_date, as: :string, input_html: { class: :datepicker }
+      f.input :end_date, as: :string, input_html: { class: :datepicker }
     end
     f.actions
   end
