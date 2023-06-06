@@ -18,8 +18,10 @@ ActiveAdmin.register ProfessionalExperience do
   end
 
   form do |f|
-    f.inputs do 
-      f.input :user, as: :select, collection: User.engineer.active.order(:name)
+    user_id = params[:user_id] || f.object.user_id
+
+    f.inputs do
+      f.input :user, as: :select, collection: User.engineer.active.order(:name), selected: user_id
       f.input :company
       f.input :position
       f.input :description, as: :text
