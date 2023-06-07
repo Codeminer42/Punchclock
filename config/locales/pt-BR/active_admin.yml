@@ -7,6 +7,7 @@ pt-BR:
     search_fields: "Campos de Busca"
     levels_average: "Média dos Níveis"
     search_by: "Por %{model_name}"
+    experience: "Experiencia"
     filters:
       predicates:
         eq: "Igual à"

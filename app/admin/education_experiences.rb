@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register EducationExperience do
   permit_params :user_id, :institution, :course, :start_date, :end_date
 
@@ -5,7 +7,8 @@ ActiveAdmin.register EducationExperience do
   filter :course
   filter :institution
 
-  menu parent: User.model_name.human(count: 2), priority: 2
+  menu parent: [User.model_name.human(count: 2), I18n.t("active_admin.experience")], priority: 2
+
 
   index download_links: [:xlsx] do
     column :user
