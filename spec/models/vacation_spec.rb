@@ -286,6 +286,15 @@ RSpec.describe Vacation, type: :model do
     end
   end
 
+  describe '#cancel!' do 
+    let(:user) { create(:user) }
+    let(:vacation) { create(:vacation, :approved) }
+
+    it 'cancel vacation' do
+      expect { vacation.cancel!(user) }.to change(vacation, :status).to("cancelled") & change(vacation, :denier).to(user)
+    end
+  end 
+
   # TODO: Maybe we're creating a flaky test here
   describe '#duration_days' do
     subject(:vacation) do
