@@ -26,6 +26,10 @@ en:
     attributes:
       user:
         password: "Password"
+  date:
+    formats:
+      month_name: '%B'
+      month_and_year: '%b/%Y'
   hello: "Hello world"
   user: 'User'
   reviewer: 'Reviewer'
@@ -87,3 +91,4 @@ en:
   send_reset_instructions: "Send me reset password instructions"
   didnt_receive_instructions: "Didn't receive confirmation instructions?"
   resend_instructions: "Resend confirmation instructions"
+  present: 'Present'

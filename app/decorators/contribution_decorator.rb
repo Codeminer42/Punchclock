@@ -18,4 +18,9 @@ class ContributionDecorator < Draper::Decorator
   def reviewed_at
     model.reviewed_at&.to_date&.to_fs(:date)
   end
+
+  def description
+    return 'pending description' if model.description.nil?
+    model.description
+  end
 end

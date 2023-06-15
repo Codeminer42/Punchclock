@@ -208,6 +208,9 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.0)
     docile (1.4.0)
+    docx (0.8.0)
+      nokogiri (~> 1.13, >= 1.13.0)
+      rubyzip (~> 2.0)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -649,6 +652,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   devise (~> 4.8.1)
   devise-two-factor!
+  docx
   dotenv-rails (~> 2.7)
   draper
   draper-cancancan (~> 1.1.1)
