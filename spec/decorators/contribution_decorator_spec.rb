@@ -68,4 +68,20 @@ RSpec.describe ContributionDecorator do
       end
     end
   end
+
+  describe '#description' do
+    subject { described_class.new(contribution).description }
+
+    context 'when description is nil' do
+      let(:contribution) { build_stubbed(:contribution, description: nil) }
+
+      it { is_expected.to eq 'pending description' }
+    end
+
+    context 'when description is not nil' do
+      let(:contribution) { build_stubbed(:contribution, description: 'Contribution description') }
+
+      it { is_expected.to eq 'Contribution description' }
+    end
+  end
 end

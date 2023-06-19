@@ -23,6 +23,7 @@ pt-BR:
     formats:
       default: "%d/%m/%Y"
       month_name: '%B'
+      month_and_year: '%b/%Y'
   english_evaluations: 'Avaliações de Inglês'
   experience: 'Experiências'
   professional_experience: 'Experiência profissional'
@@ -162,3 +163,4 @@ pt-BR:
   send_reset_instructions: "Enviar as instruções para resetar a senha"
   didnt_receive_instructions: "Não recebeu as instruções de confirmação?"
   resend_instructions: "Reenviar instruções de confirmação"
+  present: 'Presente'

@@ -248,6 +248,10 @@ ActiveAdmin.register User do
               class: "button"
           end
         end
+
+        span do
+          link_to 'Export Experiences (.docx)', export_experience_admin_user_path(user), method: :post
+        end
       end
     end
   end
@@ -334,5 +338,12 @@ ActiveAdmin.register User do
 
       redirect_to admin_user_path, notice: I18n.t('resend_user_registration_confirmed')
     end
+  end
+
+  member_action :export_experience, method: :post do
+    user = User.find(params[:id])
+    doc = UserResumeDoc.new.call(user)
+
+    send_data doc.to_string_io, filename: doc.filename
   end
 end

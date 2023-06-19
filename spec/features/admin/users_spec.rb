@@ -291,6 +291,7 @@ describe 'Users', type: :feature do
                             have_css('.col.col-date', text: talk.date)
 
             expect(page).to have_link('Novo(a) Palestra')
+            expect(page).to have_link('Export Experiences (.docx)')
           end
         end
       end

@@ -8,7 +8,7 @@ FactoryBot.define do
     rejected_reason { nil }
     pr_state { :open }
     sequence :link do |n|
-      "https://www.github.com/company/example-#{n}/pull/#{n}"
+      "https://www.github.com/company/example-#{n}/pull/#{n}#{Faker::Number.number(digits: 2)}"
     end
 
     trait :refused do

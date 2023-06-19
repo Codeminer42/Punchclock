@@ -38,6 +38,8 @@ gem 'kaminari'
 gem 'caxlsx'
 gem 'caxlsx_rails'
 
+gem 'docx'
+
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
 gem 'active_model_serializers', '~> 0.10.13'
