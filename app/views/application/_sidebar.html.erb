@@ -27,13 +27,11 @@
         </button>
         <ul class="pl-10 py-1 mt-1 bg-gray-200 dark:bg-gray-900 rounded-lg hidden">
           <li class="my-2">
-            <a href="#" class="block w-full hover:text-gray-800 dark:hover:text-gray-200">Plugins</a>
-          </li>
-          <li class="my-2">
-            <a href="#" class="block w-full hover:text-gray-800 dark:hover:text-gray-200">Plugins</a>
-          </li>
-          <li class="my-2">
-            <a href="#" class="block w-full hover:text-gray-800 dark:hover:text-gray-200">Plugins</a>
+            <%=
+              link_to I18n.t('evaluations_title'),
+              new_admin_evaluation_index_path,
+              class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
+            %>
           </li>
         </ul>
       </li>
