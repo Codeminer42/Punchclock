@@ -37,6 +37,9 @@ pt-BR:
   educational_experience: 'Experiência educacional'
   open_source_experience: 'Experiência open-source'
   talking_presenting_experience: 'Experiência Apresentando Palestras'
+  score: 'Pontuação'
+  questionnaire: 'Questionário'
+  evaluation_date: "Data da avaliação"
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'

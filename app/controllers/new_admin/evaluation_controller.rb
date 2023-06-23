@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 module NewAdmin
   class EvaluationController < ApplicationController
     layout "new_admin"
 
     def index
-      @mentorings = MentoringQuery.new.call
-      @mentorings_group = @mentorings.group_by(&:office_city)
+      @evaluations = EvaluationQuery.new.call.decorate
+    end
+
+    def show
     end
   end
 end
