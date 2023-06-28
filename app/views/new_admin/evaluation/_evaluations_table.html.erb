@@ -1,70 +1,77 @@
-<table class="w-full whitespace-no-wrap ">
-  <thead>
-    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-      <th class="px-4 py-3"><%= t 'reviewer' %></th>
-      <th class="px-4 py-3"><%= t 'evaluated' %></th>
-      <th class="px-4 py-3"><%= t 'score' %></th>
-      <th class="px-4 py-3"><%= t 'questionnaire' %></th>
-      <th class="px-4 py-3"><%= t 'created_at' %></th>
-      <th class="px-4 py-3"><%= t 'evaluation_date' %></th>
-      <th class="px-4 py-3"></th>
-    </tr>
-  </thead>
-  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
-    <% evaluations.each do |evaluation| %>
-      <tr class="text-gray-700 dark:text-gray-400">
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <%=
-              link_to evaluation[:evaluator],
-                new_admin_admin_user_path(evaluation[:evaluator_id]),
-                class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
-            %>
-          </div>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <%=
-              link_to evaluation[:evaluated],
-                new_admin_admin_user_path(evaluation[:evaluated_id]),
-                class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
-            %>
-          </div>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <span><%= evaluation[:score] %></span>
-          </div>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <%=
-              link_to evaluation[:questionnaire],
-                admin_questionnaire_path(evaluation[:questionnaire_id]),
-                class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
-            %>
-          </div>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <span><%= evaluation.created_at %></span>
-          </div>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <span><%= evaluation.evaluation_date %></span>
-          </div>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center">
-            <%=
-              link_to t('view'),
-                new_admin_evaluation_path(evaluation),
-                class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
-            %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="grid">
+  <div>
+    <table class="w-44">
+      <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3"><%= t 'reviewer' %></th>
+          <th class="px-4 py-3"><%= t 'evaluated' %></th>
+          <th class="px-4 py-3"><%= t 'score' %></th>
+          <th class="px-4 py-3"><%= t 'questionnaire' %></th>
+          <th class="px-4 py-3"><%= t 'created_at' %></th>
+          <th class="px-4 py-3"><%= t 'evaluation_date' %></th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
+        <% evaluations.each do |evaluation| %>
+          <tr class="text-gray-700 dark:text-gray-400">
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%=
+                  link_to evaluation[:evaluator],
+                    new_admin_admin_user_path(evaluation[:evaluator_id]),
+                    class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
+                %>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%=
+                  link_to evaluation[:evaluated],
+                    new_admin_admin_user_path(evaluation[:evaluated_id]),
+                    class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
+                %>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <span><%= evaluation[:score] %></span>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%=
+                  link_to evaluation[:questionnaire],
+                    admin_questionnaire_path(evaluation[:questionnaire_id]),
+                    class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
+                %>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <span><%= evaluation.created_at %></span>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <span><%= evaluation.evaluation_date %></span>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%=
+                  link_to t('view'),
+                    new_admin_evaluation_path(evaluation),
+                    class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
+                %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h1>show</h1>
+  </div>
+</div>
