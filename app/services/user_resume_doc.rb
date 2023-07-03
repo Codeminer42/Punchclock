@@ -67,7 +67,6 @@ class UserResumeDoc
     @doc_template.paragraphs.each do |p|
       p.each_text_run do |tr|
         tr.substitute('user_name', user.name)
-        tr.substitute('job_title', user.occupation)
       end
     end
   end
@@ -85,21 +84,42 @@ class UserResumeDoc
   def mount_professional_section(experiences)
     job_section = section('companies')
 
+    puts "================================================================"
+    p doc_template.paragraphs
+
     experiences.each do |experience|
       title = @job_element.copy
       substitute(title, 'job_title', experience.position)
       substitute(title, 'company_name', experience.company)
 
-      date = @date_element.copy
+      # date = @date_element.copy
       date_interval = "#{experience.start_date_month} - #{experience.end_date_month}"
-      substitute(date, '_date_', date_interval)
+      substitute(title, '_date_', date_interval)
 
       description = @text_element.copy
-      substitute(description, 'text', experience.description)
+
+      substitute(description, 'text', strip_extra_blank_space(experience.description))
 
       title.insert_after job_section
-      date.insert_after title
-      description.insert_after date
+      # date.insert_after title
+      description.insert_after title
+
+      @doc_template.tables.each do |table|
+        last_row = table.rows.last
+
+        # Copy last row and insert a new one before last row
+        new_row = last_row.copy
+        new_row.insert_before(last_row)
+
+        # Substitute text in each cell of this new row
+        new_row.cells.each do |cell|
+          cell.paragraphs.each do |paragraph|
+            paragraph.each_text_run do |text|
+              text.substitute('job_title', 'replacement value')
+            end
+          end
+        end
+      end
     end
   end
 
@@ -129,7 +149,7 @@ class UserResumeDoc
       substitute(title, 'project_name', repository_name)
 
       title.insert_after contribution_section
-      
+
       contributions.each do |contribution|
         pr_description = contribution.description
         description = @contribution_description_element.copy
@@ -165,11 +185,15 @@ class UserResumeDoc
   end
 
   def substitute(element, placeholder, text)
-      element.text_runs.map { |tr| tr.substitute(placeholder, text) }
+    element.text_runs.map { |tr| tr.substitute(placeholder, text) }
   end
 
   def set_filename(user)
     user_name = user.name.upcase.gsub(' ', '_')
     @filename = "#{user_name}_RESUME.docx"
+  end
+
+  def strip_extra_blank_space(string)
+    string.gsub(/(\r\n)/, "\n\r")
   end
 end
