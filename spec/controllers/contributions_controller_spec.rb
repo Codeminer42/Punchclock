@@ -10,7 +10,7 @@ RSpec.describe ContributionsController, type: :controller do
   let(:contribution_model) { double('ActiveRecord', order: contribution_list) }
   let(:page) { Capybara::Node::Simple.new(response.body) }
 
-  context 'when the user are logged in' do
+  context 'when the user is logged in' do
     before do
       allow(controller).to receive(:authenticate_user!)
       allow(controller).to receive(:current_user).and_return(user)
@@ -66,7 +66,7 @@ RSpec.describe ContributionsController, type: :controller do
       end
 
       context 'when the page is accessed' do
-        it 'is expected to return the successful status' do
+        it 'is expected to return a successful status' do
           get(:edit, params:)
 
           expect(response).to have_http_status(:ok)
@@ -150,7 +150,7 @@ RSpec.describe ContributionsController, type: :controller do
     end
   end
 
-  context 'when the user are not logged in' do
+  context 'when the user is not logged in' do
     describe 'GET index' do
       it 'redirects the user to the sign in page' do
         get :index
