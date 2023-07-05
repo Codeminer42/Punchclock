@@ -84,42 +84,19 @@ class UserResumeDoc
   def mount_professional_section(experiences)
     job_section = section('companies')
 
-    puts "================================================================"
-    p doc_template.paragraphs
-
     experiences.each do |experience|
       title = @job_element.copy
       substitute(title, 'job_title', experience.position)
       substitute(title, 'company_name', experience.company)
 
-      # date = @date_element.copy
       date_interval = "#{experience.start_date_month} - #{experience.end_date_month}"
-      substitute(title, '_date_', date_interval)
+      substitute(title, 'job_date', date_interval)
 
       description = @text_element.copy
-
       substitute(description, 'text', strip_extra_blank_space(experience.description))
 
       title.insert_after job_section
-      # date.insert_after title
       description.insert_after title
-
-      @doc_template.tables.each do |table|
-        last_row = table.rows.last
-
-        # Copy last row and insert a new one before last row
-        new_row = last_row.copy
-        new_row.insert_before(last_row)
-
-        # Substitute text in each cell of this new row
-        new_row.cells.each do |cell|
-          cell.paragraphs.each do |paragraph|
-            paragraph.each_text_run do |text|
-              text.substitute('job_title', 'replacement value')
-            end
-          end
-        end
-      end
     end
   end
 
@@ -131,12 +108,11 @@ class UserResumeDoc
       substitute(title, 'course_name', experience.course)
       substitute(title, 'institution_name', experience.institution)
 
-      date = @date_element.copy
       date_interval = "#{experience.start_year} - #{experience.end_year}"
-      substitute(date, '_date_', date_interval)
+
+      substitute(title, 'education_date', date_interval)
 
       title.insert_after education_section
-      date.insert_after title
     end
   end
 
@@ -154,12 +130,9 @@ class UserResumeDoc
         pr_description = contribution.description
         description = @contribution_description_element.copy
         substitute(description, 'pr_description', pr_description)
+        substitute(description, 'contribution_date', contribution.created_at)
 
-        date = @date_element.copy
-        substitute(date, '_date_', contribution.created_at)
-
-        date.insert_after title
-        description.insert_after date
+        description.insert_after title
       end
     end
   end
@@ -171,12 +144,9 @@ class UserResumeDoc
       title = @event_element.copy
       substitute(title, 'event_name', experience.event_name)
       substitute(title, 'talk_title', experience.talk_title)
-
-      date = @date_element.copy
-      substitute(date, '_date_', experience.date)
+      substitute(title, 'talk_date', experience.date)
 
       title.insert_after talks_section
-      date.insert_after title
     end
   end
 
