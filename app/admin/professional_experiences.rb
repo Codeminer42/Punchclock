@@ -26,8 +26,8 @@ ActiveAdmin.register ProfessionalExperience do
       f.input :user, as: :select, collection: User.engineer.active.order(:name), selected: user_id
       f.input :company, placeholder: 'Codeminer42'
       f.input :position, placeholder: 'Software Engineer'
-      f.input :description, as: :text, placeholder: 'As a backend developer, I worked on building a system'
-      f.input :responsibilities, placeholder: 'Ruby on Rails'
+      f.input :description, as: :text, placeholder: 'As a backend developer, I worked on building a system...'
+      f.input :responsibilities, placeholder: 'Ruby on Rails, React, Ruby'
       f.input :start_date, as: :string, input_html: { class: :datepicker }, placeholder: '2021-11-01'
       f.input :end_date, as: :string, input_html: { class: :datepicker }, placeholder: '2023-06-28'
     end
