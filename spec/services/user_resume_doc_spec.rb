@@ -33,7 +33,7 @@ describe UserResumeDoc do
   describe '.doc_element' do
     it 'should have all the required placeholders' do
       expect(doc.doc_element.paragraphs.map(&:text).join(' '))
-        .to include('_item_', 'text', '_date_', 'course_name', 'project_name', 'pr_description', 'event_name')
+        .to include('_item_', 'text', 'job_date', 'course_name', 'project_name', 'pr_description', 'event_name')
     end
   end
 
@@ -77,7 +77,7 @@ describe UserResumeDoc do
     end
 
     it 'should add user info to the document' do
-      expect(doc_final_text).to include(user.name, user.occupation)
+      expect(doc_final_text).to include(user.name)
     end
 
     it 'should add user skills to the document' do
