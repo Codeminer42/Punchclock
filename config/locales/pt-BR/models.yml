@@ -81,7 +81,8 @@ pt-BR:
         professional_experience:
           attributes:
             start_date:
-              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
+              greater_than_current_month: "A data de início deve ser anterior ou igual ao mês atual"
+              greater_than_end_date: "A data de início deve ser anterior à data de término"
     models:
       admin_user:
         one: "Administrador"

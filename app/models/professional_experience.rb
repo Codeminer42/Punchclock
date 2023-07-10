@@ -14,15 +14,15 @@ class ProfessionalExperience < ApplicationRecord
   FIELDS_TO_BE_VALIDATED = %i[start_date end_date].freeze
 
   def greater_than_current_month?
-    return if start_date.to_date < Date.today.beginning_of_month
+    return if start_date.to_date < Date.today.end_of_month
 
-    errors.add(:start_date, "Start date can't be ahead of today's date")
+    errors.add(:start_date, I18n.t('activerecord.errors.models.professional_experience.attributes.start_date.greater_than_current_month'))
   end
 
   def greater_than_end_date?
     return if start_date.to_date < end_date.to_date
 
-    errors.add(:start_date, "Start date can't be ahead of end date")
+    errors.add(:start_date, I18n.t('activerecord.errors.models.professional_experience.attributes.start_date.greater_than_end_date'))
   end
 
   def date_format
