@@ -12,12 +12,12 @@ def create_punches(project:, user:)
   end if user.punches.empty?
 end
 
-def create_holiday(office:)
+def create_holiday(city:)
   random_date = rand(Date.civil(2017, 1, 1)..Date.civil(2017, 12, 31))
   holiday = RegionalHoliday.find_or_create_by!(day: random_date.day, month: random_date.month) do |holiday|
     holiday.name = "#{Faker::Name.name} day"
   end
-  holiday.offices << office
+  holiday.cities << city unless holiday.cities.exists?(city.id)
 end
 
 def create_user(number:)
@@ -150,9 +150,10 @@ User.find_or_create_by!(email: "admin@codeminer42.com") do |admin|
 end
 puts " done."
 
-print "..creating offices holidays..."
-rand(offices.size * 5).times do |i|
-  create_holiday(office: Office.all.sample)
+print "..creating cities holidays..."
+cities = City.all
+rand(cities.size * 5).times do |i|
+  create_holiday(city: cities.sample)
 end
 puts " done."
 

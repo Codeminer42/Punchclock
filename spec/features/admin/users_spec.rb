@@ -35,8 +35,8 @@ describe 'Users', type: :feature do
         expect(page).to have_css('tbody tr', count: 1) &&
         have_css('.col-name', text: user.name) &&
         have_css('.col-office', text: user.office.city) &&
-        have_css('.col-level', text: user.level.humanize) &&
-        have_css('.col-specialty', text: user.specialty.humanize) &&
+        have_css('.col-backend_level', text: user.backend_level.humanize) &&
+        have_css('.col-frontend_level', text: user.frontend_level.humanize) &&
         have_css('.col-allow_overtime', text: I18n.t(user.allow_overtime)) &&
         have_css('.col-active', text: I18n.t(user.active)) &&
         have_css('.col-2fa', text: I18n.t(user.otp_required_for_login))
@@ -67,15 +67,15 @@ describe 'Users', type: :feature do
       end
     end
 
-    it 'by level' do
+    it 'by backend level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Nível', options: User.level.values.map { |key| key.text.titleize } << 'Qualquer')
+        expect(page).to have_select('Nível de Backend', options: User.backend_level.values.map { |key| key.text.titleize } << 'Qualquer')
       end
     end
 
-    it 'by specialty' do
+    it 'by frontend level' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Especialidade', options: User.specialty.values.map { |key| key.text.humanize } << 'Qualquer')
+        expect(page).to have_select('Nível de Frontend', options: User.backend_level.values.map { |key| key.text.titleize } << 'Qualquer')
       end
     end
 
@@ -105,7 +105,6 @@ describe 'Users', type: :feature do
 
   describe 'Actions' do
     let!(:city)      { create(:city) }
-    let!(:skill)      { create(:skill) }
     let!(:office)     { create(:office, head: user) }
     let!(:office2)    { create(:office, head: user) }
     let!(:evaluation) { create(:evaluation, :english, evaluated: user) }
@@ -126,7 +125,6 @@ describe 'Users', type: :feature do
         find('#user_started_at').fill_in with: started_at.strftime('%Y-%m-%d')
         find('#user_office_id').find(:option, office.city).select_option
         find('#user_city_id').find(:option, city.name).select_option
-        find("#user_skill_ids_#{skill.id}").set(true)
         choose('Engenheiro')
         find('#user_specialty').find(:option, 'Backend').select_option
         find('#user_level').find(:option, 'Junior').select_option
@@ -142,7 +140,6 @@ describe 'Users', type: :feature do
                         have_text('userGithub') &
                         have_text(I18n.l(started_at, format: '%d de %B de %Y')) &
                         have_text(office.city) &
-                        have_text(skill.title) &
                         have_text('Engenheiro') &
                         have_text('Backend') &
                         have_text('Junior') &
@@ -175,6 +172,28 @@ describe 'Users', type: :feature do
         visit '/admin/users'
         within 'table' do
           find_link(user.name.to_s, href: "/admin/users/#{user.id}").click
+        end
+      end
+
+      context 'when user is confirmed' do
+        let(:user) { create(:user) }
+        
+        it "doesn't render resend confirmation email button" do
+          user.skip_confirmation!
+          user.save
+
+          visit '/admin/users'
+          within 'table' do
+            find_link(user.name.to_s, href: "/admin/users/#{user.id}").click
+          end
+
+          expect(page).to_not have_content('Reenviar Email de Cadastro')
+        end
+      end
+
+      context 'when user is not confirmed' do
+        it 'renders resend confirmation email button' do
+          expect(page).to have_content('Reenviar Email de Cadastro')
         end
       end
 
@@ -245,6 +264,38 @@ describe 'Users', type: :feature do
         end
       end
 
+      context 'on Experience tab' do
+        let!(:contribution) { 
+          create(:contribution, :approved, :with_description, user: user).decorate 
+        }
+        let!(:rejected_contribution) { 
+          create(:contribution, :refused, :no_sufficient_effort,:with_description, user: user).decorate 
+        }
+        let!(:talk) { create(:talk, user: user).decorate }
+
+        before { refresh }
+        it 'finds all elements correctly' do
+          within '#experiencias' do
+            expect(page).to have_table('') &
+                            have_text('Experiência open-source') &
+                            have_css('.col.col-name', text: contribution.repository.name) &
+                            have_css('.col.col-description', text: contribution.description)
+                            have_css('.col.col-created_at', text: contribution.created_at)
+
+            expect(page).to_not have_css('.col.col-description', text: rejected_contribution.description)
+
+            expect(page).to have_table('') &
+                            have_text('Experiência Apresentando Palestras') &
+                            have_css('.col.col-event_name', text: talk.event_name) &
+                            have_css('.col.col-talk_title', text: talk.talk_title) &
+                            have_css('.col.col-date', text: talk.date)
+
+            expect(page).to have_link('Novo(a) Palestra')
+            expect(page).to have_link('Export Experiences (.docx)')
+          end
+        end
+      end
+
       context 'on Punches tab' do
         let!(:monday_1_month_ago) { (DateTime.new(2021, 6, 1) - 4.week).monday }
         let!(:punch) { create :punch, user: user, from: monday_1_month_ago.change(hour: 8, min: 8, sec: 0), to: monday_1_month_ago.change(hour: 12, min: 0, sec: 0) }
@@ -304,7 +355,6 @@ describe 'Users', type: :feature do
                           have_text('Funções') &
                           have_text('Nível') &
                           have_text('Iniciou em') &
-                          have_text('Habilidades') &
                           have_text('Observação')
         end
       end

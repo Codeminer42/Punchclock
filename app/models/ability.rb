@@ -11,7 +11,9 @@ class Ability
     can :read, User, id: user.id
     can %i[edit update], User, id: user.id
     can :read, Vacation, user_id: user.id
-    can :destroy, Vacation, status: :pending
+    can :destroy, Vacation do |vacation|
+      vacation.cancelable?
+    end
 
     unless user.vacations.any?(&:pending?)
       can :create, Vacation

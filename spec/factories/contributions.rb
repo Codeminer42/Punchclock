@@ -3,16 +3,16 @@
 FactoryBot.define do
   factory :contribution do
     user
-    repository 
+    repository
     state { :received }
     rejected_reason { nil }
     pr_state { :open }
     sequence :link do |n|
-      "https://www.github.com/company/example-#{n}/pull/#{n}"
+      "https://www.github.com/company/example-#{n}/pull/#{n}#{Faker::Number.number(digits: 2)}"
     end
-    
-    trait :rejected do
-      state { :reject }
+
+    trait :refused do
+      state { :refused }
     end
 
     trait :approved do
@@ -49,6 +49,18 @@ FactoryBot.define do
 
     trait :closed_pr do
       pr_state { :closed }
+    end
+
+    trait :with_description do
+      description { Faker::Lorem.paragraph }
+    end
+
+    trait :without_repository do
+      repository { nil }
+    end
+
+    trait :with_custom_repository do
+      repository { build(:repository, link: "https://github.com/org/repo") }
     end
   end
 end

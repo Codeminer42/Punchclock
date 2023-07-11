@@ -7,7 +7,6 @@ RSpec.describe Office, type: :model do
     it { is_expected.to have_many :users }
     it { is_expected.to have_many(:users).dependent(:restrict_with_error) }
     it { is_expected.to belong_to(:head).class_name('User').optional }
-    it { is_expected.to have_and_belong_to_many :regional_holidays }
 
     describe 'has_many users_without_head' do
       let(:office) { create(:office, :with_head) }

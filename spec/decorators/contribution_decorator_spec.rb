@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ContributionDecorator do
-
   describe '#reviewed_by_short_name' do
     subject { described_class.new(contribution).reviewed_by_short_name }
 
@@ -47,6 +48,40 @@ RSpec.describe ContributionDecorator do
       let(:contribution) { build_stubbed(:contribution, reviewed_at: DateTime.parse('2022-08-26T16:50')) }
 
       it { is_expected.to eq '26/08/2022' }
+    end
+  end
+
+  describe '#repository_name' do
+    context 'when there iss no repository' do
+      subject(:without_repository) { build(:contribution, :without_repository).decorate }
+
+      it 'is expected to return nil' do
+        expect(without_repository.repository_name).to be_nil
+      end
+    end
+
+    context 'when there is a repository' do
+      subject(:contribution) { build(:contribution, :with_custom_repository).decorate }
+
+      it 'is expected to return the repository name' do
+        expect(contribution.repository_name).to eq('repo')
+      end
+    end
+  end
+
+  describe '#description' do
+    subject { described_class.new(contribution).description }
+
+    context 'when description is nil' do
+      let(:contribution) { build_stubbed(:contribution, description: nil) }
+
+      it { is_expected.to eq 'pending description' }
+    end
+
+    context 'when description is not nil' do
+      let(:contribution) { build_stubbed(:contribution, description: 'Contribution description') }
+
+      it { is_expected.to eq 'Contribution description' }
     end
   end
 end

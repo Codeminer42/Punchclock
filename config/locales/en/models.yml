@@ -28,3 +28,8 @@ en:
               invalid_authentication: "or password are invalid"
             password:
               invalid_authentication: "or e-mail are invalid"
+        vacation:
+          attributes:
+            start_date:
+              close_weekend: "The start of the vacation cannot be close to the weekend"
+              close_holiday: "The start of the vacation cannot be close to a holiday"

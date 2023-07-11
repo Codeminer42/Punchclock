@@ -26,6 +26,10 @@ en:
     attributes:
       user:
         password: "Password"
+  date:
+    formats:
+      month_name: '%B'
+      month_and_year: '%b/%Y'
   hello: "Hello world"
   user: 'User'
   reviewer: 'Reviewer'
@@ -100,3 +104,4 @@ en:
     start_at: Start At
     end_at: End At
     in_progress: In Progress
+  present: 'Present'

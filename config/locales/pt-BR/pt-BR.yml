@@ -25,13 +25,22 @@ pt-BR:
       short: "%m/%Y"
       time: "%H:%M"
       month_name: '%B'
+      month_and_year: '%b/%Y'
   time:
     formats:
       date_time: "%d/%m/%Y %H:%M"
   english_evaluations: 'Avaliações de Inglês'
   english_score: 'Pontuação de Inglês'
+  english_evaluations: 'Avaliações de Inglês'
+  experience: 'Experiências'
+  professional_experience: 'Experiência profissional'
+  educational_experience: 'Experiência educacional'
+  open_source_experience: 'Experiência open-source'
+  talking_presenting_experience: 'Experiência Apresentando Palestras'
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
+  resend_user_registration: 'Reenviar Email de Cadastro'
+  resend_user_registration_confirmed: 'Email de Cadastro Reenviado'
   not_evaluated: 'Não avaliado'
   not_allocated: 'Não alocado'
   allocated: 'Alocado'
@@ -92,6 +101,8 @@ pt-BR:
     error: Cheque os dados e tente novamente.
     create: Criar Alocações
   average_score: 'Média de engenheiros por nível'
+  backend_level: 'Nível de Backend'
+  frontend_level: 'Nível de Frontend'
   level: 'Nível'
   users_average: 'Média'
   offices_leaderboard: 'Escritórios que mais contribuiram esta semana'
@@ -109,8 +120,10 @@ pt-BR:
   contributions_sent_to_newsletter: "As contribuições aprovadas foram enviadas para a newsletter."
   vacation_approved: "Pedido de férias aprovado"
   vacation_denied: "Pedido de férias recusado"
+  vacation_cancelled: "Pedido de férias cancelado"
   approve: "Aprovar"
   refuse:  "Recusar"
+  cancel: "Cancelar"
   this_week: "Semana atual"
   last_week: "Última semana"
   stats: Estatísticas
@@ -204,3 +217,4 @@ pt-BR:
     clean_filter: Limpar Filtro
     download_xls: Baixar XLS
     all_punches: Todos os Punches
+  present: 'Presente'

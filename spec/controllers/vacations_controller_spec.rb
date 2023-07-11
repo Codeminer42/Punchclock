@@ -57,7 +57,7 @@ describe VacationsController do
 
       let(:vacation_valid_params) do
         {
-          start_date: 1.months.from_now,
+          start_date: Date.current.next_week(:monday),
           end_date: 2.months.from_now
         }
       end

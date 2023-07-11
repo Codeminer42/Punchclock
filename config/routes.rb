@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get '/admin/vacations/:id/denied', to: 'admin/vacations#denied', as: :admin_vacations_denied
   get '/admin/vacations/:id/approve', to: 'admin/vacations#approve', as: :admin_vacations_approve
+  get '/admin/vacations/:id/cancel', to: 'admin/vacations#cancel', as: :admin_vacations_cancel
 
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'user/sessions' }
@@ -79,7 +80,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds
     resources :evaluations, only: %i[show index]
-    resources :contributions, only: %i[index]
+    resources :contributions, only: %i[index edit update]
     get "users/:user_id/notes/new" => "notes#new", as: :new_users_note
     post "users/:user_id/notes" => "notes#create", as: :user_notes
   end

@@ -63,7 +63,7 @@ describe VacationMailer do
       let(:admins) { build_list :user, 2, :admin }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_approved(vacation) }
-      let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+      let(:count) { "#{vacation.duration_days} dias" }
       let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
@@ -154,7 +154,7 @@ describe VacationMailer do
       let!(:vacation_managers) { create_list :user, 2, :commercial }
       let(:vacation) { FactoryBot.build(:vacation) }
       let(:mail) { VacationMailer.notify_vacation_cancelled(vacation) }
-      let(:count) { "#{(vacation.end_date - vacation.start_date).to_i} dias" }
+      let(:count) { "#{vacation.duration_days} dias" }
       let(:hr_mail) { 'hr@email.com' }
 
       it 'renders the subject' do
@@ -205,6 +205,44 @@ describe VacationMailer do
 
       it 'assigns @end_date on text_part' do
         expect(mail.text_part.decoded).to match(l vacation.end_date)
+      end
+    end
+
+    context 'when an email was sended remembering the hr/commercial users of the pending vacations' do
+      let!(:vacation_managers) { FactoryBot.create_list :user, 2, :commercial }
+      let(:vacations) { FactoryBot.create_list(:vacation, 1, :pending) }
+      let(:mail) { VacationMailer.notify_pending_vacations(vacation_managers, vacations) }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq(t 'vacation_mailer.notify_pending_vacations.subject')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq(vacation_managers.map(&:email))
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @name on html_part' do
+        expect(mail.decode_body).to match(vacations.first.user.name)
+      end
+
+      it 'assigns @start_date on html_part' do
+        expect(mail.decode_body).to match(l vacations.first.start_date)
+      end
+
+      it 'assigns @end_date on html_part' do
+        expect(mail.decode_body).to match(l vacations.first.end_date)
+      end
+
+      it 'renders the approve button' do
+        expect(mail.decode_body).to match(t 'vacation_mailer.notify_pending_vacations.approve_button')
+      end
+
+      it 'renders the deny button' do
+        expect(mail.decode_body).to match(t 'vacation_mailer.notify_pending_vacations.deny_button')
       end
     end
   end

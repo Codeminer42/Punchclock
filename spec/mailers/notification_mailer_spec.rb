@@ -220,5 +220,60 @@ describe NotificationMailer do
         expect(mail.body).to match(contributions)
       end
     end
+
+    context 'when a registration email is sent again through admin' do
+      let(:user) { create(:user, name: "Art Vandelay") }
+      let(:mail) { NotificationMailer.resend_user_registration(user, 'xyz') }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq('Welcome to Punchclock')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([user.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'assigns @name' do
+        expect(mail.body.encoded).to match(user.name)
+      end
+
+      it 'assigns @email' do
+        expect(mail.body.encoded).to match(user.email)
+      end
+
+      it 'assigns link to edit user password path' do
+        expect(mail.body.encoded).to have_link('here', href: edit_user_password_url(reset_password_token: 'xyz'))
+      end
+    end
+
+    context 'when notify user to fill contribution description' do
+      let(:user) { create(:user) }
+      let!(:contributions) { FactoryBot.create_list(:contribution, 5, user: user) }
+      let(:mail) { NotificationMailer.notify_fill_contribution_description(user, contributions.length) }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq('Punchlock - Contribuições Aguardando Descrição')
+      end
+
+      it 'renders the receiver email' do
+        expect(mail.to).to eq([user.email])
+      end
+
+      it 'renders the sender email' do
+        expect(mail.from).to eq(['do-not-reply@punchclock.com'])
+      end
+
+      it 'renders the total of contributions' do
+        expect(mail.body.encoded).to match('5')
+      end
+
+      it 'renders the contribution link' do
+        expect(mail.body.encoded).to have_link('Acessar PRs', href: contributions_url)
+      end
+    end
   end
 end

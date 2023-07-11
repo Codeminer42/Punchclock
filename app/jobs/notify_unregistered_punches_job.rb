@@ -6,7 +6,7 @@ class NotifyUnregisteredPunchesJob < ApplicationJob
       final_date = Date.current.change(day: 15)
       initial_date = final_date.prev_month.change(day: 16)
 
-      work_days = (initial_date..final_date).select { |day| working_day?(day) }
+      work_days = (initial_date..final_date).select { |day| working_day?(day, user) }
 
       work_days_punches_count = work_days.product([0]).to_h
       punches_by_day = user.punches
@@ -26,7 +26,7 @@ class NotifyUnregisteredPunchesJob < ApplicationJob
 
   private
 
-  def working_day?(day)
-    day.on_weekday? && !day.holiday?(:br)
+  def working_day?(day, user)
+    day.on_weekday? && user.holidays.exclude?({ month: day.month, day: day.day })
   end
 end

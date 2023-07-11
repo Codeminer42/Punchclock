@@ -24,7 +24,7 @@ RSpec.describe MentoringQuery do
 
       it "returns mentor's mentee" do
         result = subject.call
-        expect(result.map(&:mentees)).to contain_exactly([mentee.name])
+        expect(result.map(&:mentee_list)).to contain_exactly([mentee.name])
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe MentoringQuery do
         it "returns mentor's mentees" do
           result = subject.call
 
-          expect(result.flat_map(&:mentees)).to contain_exactly(
+          expect(result.flat_map(&:mentee_list)).to contain_exactly(
             mentor_2_mentee.name,
             other_mentor_2_mentee.name,
             mentor_1_mentee.name,
@@ -67,7 +67,7 @@ RSpec.describe MentoringQuery do
         it "does not return inactive mentees" do
           result = subject.call
 
-          expect(result.flat_map(&:mentees)).to_not contain_exactly(inactive_mentor_2_mentee, inactive_mentor_1_mentee)
+          expect(result.flat_map(&:mentee_list)).to_not contain_exactly(inactive_mentor_2_mentee, inactive_mentor_1_mentee)
         end
       end
     end

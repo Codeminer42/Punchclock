@@ -28,6 +28,8 @@ pt-BR:
     form:
       submit: 'Salvar Revisão'
   notification_mailer:
+    subject: 
+      notify_fill_contribution_description_html: 'Punchlock - Contribuições Aguardando Descrição'
     body_html: |
       <p>
         Pessoal,
@@ -54,6 +56,17 @@ pt-BR:
       </p>
       <p>
         E avisem hora extra para <strong>"rh@codeminer42.com"</strong>
+      </p>
+      Abs
+    notify_fill_contribution_description_html: |
+      <p>
+        Olá,
+      </p>
+      <p>
+        Você possui %{contributions_total} contribuições aguardando descrição da PR.
+      </p>
+      <p>
+        %{contributions_link}
       </p>
       Abs
     notify_admin_extra_hour:
@@ -91,6 +104,12 @@ pt-BR:
       subject: "Punchclock - %{user} cancelou o pedido de férias"
       info: "O %{user} cancelou o pedido de férias com duração de %{count} dias."
       dates: "Referente ao pedido com início em %{start_date} e término em %{end_date}"
+    notify_pending_vacations:
+      subject: "Punchclock - Existem férias pendentes de aprovação"
+      start_date: "Inicio"
+      end_date: "Término"
+      approve_button: "Aprovar"
+      deny_button: "Negar"
   views:
     pagination:
       first: "&laquo; Primeira"

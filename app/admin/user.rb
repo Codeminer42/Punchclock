@@ -9,9 +9,9 @@ ActiveAdmin.register User do
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :level, :contract_type, :contract_company_country, :mentor_id,
+  permit_params :name, :email, :github, :backend_level, :frontend_level, :level, :contract_type, :contract_company_country, :mentor_id,
                 :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at,
-                :observation, :specialty, :otp_required_for_login, skill_ids: [], roles: []
+                :observation, :specialty, :otp_required_for_login, roles: []
 
   scope :all
   scope :active, default: true, group: :active
@@ -24,10 +24,12 @@ ActiveAdmin.register User do
   filter :name
   filter :email
 
-  filter :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize, level.value] }
+  filter :backend_level, as: :select, collection: User.backend_level.values.map { |level| [level.text, level.value] }
+  filter :frontend_level, as: :select, collection: User.frontend_level.values.map { |level| [level.text, level.value] }
+
   filter :office, collection: -> { Office.active.order(:city) }
-  filter :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty.value] }
   filter :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }
+
   filter :by_skills, as: :check_boxes, collection: proc {
     Skill.order(:title).map do |skill|
       [skill.title, skill.id, checked: params.dig(:q, :by_skills_in)&.include?(skill.id.to_s)]
@@ -55,14 +57,18 @@ ActiveAdmin.register User do
    link_to I18n.t('hour_report_past_month'), hour_report_admin_users_path(format: :xlsx, month: :past)
   end
 
+  action_item :user_registration, only: :show, priority: 0, if: -> { !user.confirmed? } do
+    link_to I18n.t('resend_user_registration'), resend_user_registration_admin_user_path, method: :patch
+  end
+
   index download_links: [:xlsx] do
     selectable_column
     column :name do |user|
       link_to user.name, admin_user_path(user)
     end
     column :office
-    column :level, &:level_text
-    column :specialty, &:specialty_text
+    column :backend_level, &:backend_level_text
+    column :frontend_level, &:frontend_level_text
     column :allow_overtime
     column :active
     column :"2fa" do |user|
@@ -90,15 +96,23 @@ ActiveAdmin.register User do
           row :overall_score
           row :performance_score
           row :occupation, &:occupation_text
+          row :backend_level, &:backend_level_text
+          row :frontend_level, &:frontend_level_text
           row :specialty, &:specialty_text
           row :level, &:level_text
           row :contract_type, &:contract_type_text
           row :contract_company_country, &:contract_company_country_text
+
           row :roles do |user|
             user.roles.map { |role| I18n.t(role, scope: 'enumerize.user.role') }
           end
-          row :skills
+
+          row :skills do |user|
+            raw(skills_tags(user))
+          end
+
           row :mentor
+          row :mentees
           row :allow_overtime
           row :active
           row :started_at
@@ -179,6 +193,66 @@ ActiveAdmin.register User do
         div link_to I18n.t('all_punches'),
                         admin_punches_path(q: { user_id_eq: user.id, commit: :Filter })
       end
+
+      tab I18n.t('experience') do
+        panel I18n.t('professional_experience') do
+          table_for user.professional_experiences.order(end_date: :desc).decorate, i18n: ProfessionalExperience do
+            column :company
+            column :position
+            column :description
+            column :responsibilities
+            column :start_date
+            column :end_date
+          end
+          span do
+            link_to I18n.t('active_admin.new_model', model: ProfessionalExperience.model_name.human),
+                    new_admin_professional_experience_path(user_id: user),
+                    class: "button"
+          end
+        end
+
+        panel I18n.t('educational_experience') do
+          table_for user.education_experiences.decorate, i18n: EducationExperience do
+            column :course
+            column :institution
+            column :start_date
+            column :end_date
+          end
+          span do
+            link_to I18n.t('active_admin.new_model', model: EducationExperience.model_name.human),
+                    new_admin_education_experience_path(user_id: user),
+                    class: "button"
+          end
+        end
+
+        panel I18n.t('open_source_experience') do
+          table_for user.contributions.approved.order(created_at: :desc).decorate, i18n: Contribution do
+            column :name, i18n: Repository do |contribution|
+              contribution.repository_name
+            end
+            column :description
+            column :created_at
+          end
+        end
+
+        panel I18n.t('talking_presenting_experience') do
+          table_for user.talks.decorate, i18n: Talk do
+            column :event_name
+            column :talk_title
+            column :date
+          end
+
+          span do
+            link_to I18n.t('active_admin.new_model', model: Talk.model_name.human),
+              new_admin_talk_path(user_id: user),
+              class: "button"
+          end
+        end
+
+        span do
+          link_to 'Export Experiences (.docx)', export_experience_admin_user_path(user), method: :post
+        end
+      end
     end
   end
 
@@ -192,8 +266,9 @@ ActiveAdmin.register User do
       f.input :office, collection: Office.active.order(:city)
       f.input :roles, as: :select, multiple: true, collection: User.roles.values.map { |role| [I18n.t(role, scope: 'enumerize.user.role'), role] }
       f.input :mentor, collection: User.active.order(:name)
-      f.input :skills, as: :check_boxes, collection: Skill.order(:title)
       f.input :occupation, as: :radio
+      f.input :backend_level, as: :select, collection: User.backend_level.options
+      f.input :frontend_level, as: :select, collection: User.frontend_level.options
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
       f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
@@ -251,5 +326,24 @@ ActiveAdmin.register User do
 
       format.xlsx { send_data spreadsheet.to_string_io, filename: "users-hours-#{Date.current}.xlsx" }
     end
+  end
+
+  member_action :resend_user_registration, method: :patch do
+    user = resource.user
+
+    user.transaction do
+      user.touch(:confirmed_at)
+      token = user.send(:set_reset_password_token)
+      NotificationMailer.resend_user_registration(resource, token).deliver_later
+
+      redirect_to admin_user_path, notice: I18n.t('resend_user_registration_confirmed')
+    end
+  end
+
+  member_action :export_experience, method: :post do
+    user = User.find(params[:id])
+    doc = UserResumeDoc.new.call(user)
+
+    send_data doc.to_string_io, filename: doc.filename
   end
 end

@@ -16,13 +16,13 @@ ActiveAdmin.register_page 'Allocation Chart' do
         column(I18n.t('allocated_until'), class: 'allocated-column') do |allocation|
           build_allocation_status_cell(allocation)
         end
-        column(I18n.t('level')) { |allocation| decorated_user(allocation).level }
-        column(I18n.t('specialty')) { |allocation| decorated_user(allocation).specialty }
+        column(I18n.t('backend_level')) { |allocation| decorated_user(allocation).backend_level }
+        column(I18n.t('frontend_level')) { |allocation| decorated_user(allocation).frontend_level }
         column(I18n.t('english_evaluation')) do |allocation|
           decorated_user(allocation).english_level
         end
         column(I18n.t('skills'), class: 'allocated-column__last') do |allocation|
-          decorated_user(allocation).skills
+          raw(skills_tags(allocation.user))
         end
         column(:allocated_until_data) do |allocation|
           allocation.end_at ? allocation.end_at.to_time.to_i : 'Not allocated'

@@ -4,6 +4,11 @@ pt-BR:
       market:
         internal: Interno
         international: Externo
+    contribution:
+      pending:
+        mantainer: Mantenedor
+        dev: Desenvolvedor
+        other: Outro
   activemodel:
     attributes:
       allocate_users_form:
@@ -56,7 +61,27 @@ pt-BR:
             hourly_rate:
               invalid_currency: Moeda inválida
         vacation:
-          must_be_higher_than_10: "As férias precisam ter no mínimo 10 dias"
+          attributes:
+            start_date:
+              close_holiday: "O início das férias não pode ser próximo a um feriado"
+              close_weekend: "O início das férias não pode ser próximo ao final de semana"
+              greater_than_current: "deve ser maior que %{date}"
+            end_date:
+              greater_than_current: "deve ser maior que %{date}"
+        talk:
+          attributes:
+            date:
+              future_date: 'Data não pode ser um período futuro'
+        education_experience:
+          attributes:
+            start_date:
+              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
+            end_date:
+              less_than_start_date: "A data de término deve ser maior que a data de inicio"
+        professional_experience:
+          attributes:
+            start_date:
+              greater_than_current: "A data de inicio deve ser mais antiga do que a data atual"
     models:
       admin_user:
         one: "Administrador"
@@ -88,6 +113,9 @@ pt-BR:
       allocation:
         one: "Alocação"
         other: "Alocações"
+      talk:
+        one: "Palestra"
+        other: "Palestras"
       questionnaire:
         one: "Questionário"
         other: "Questionários"
@@ -106,12 +134,21 @@ pt-BR:
       hour_report:
         one: "Relatório de Horas"
         other: "Relatórios de Horas"
+      user_skill:
+        one: Habilidade do Usuário
+        other: Habilidades dos Usuários
       vacation:
         one: "Férias"
         other: "Férias"
       exchange_rate:
         one: "Taxa de Câmbio"
         other: "Taxas de Câmbio"
+      education_experience:
+        one: "Experiência Educacional"
+        other: "Experiências Educacionais"
+      professional_experience:
+        one: "Experiência Profissional"
+        other: "Experiências Profissionais"
     attributes:
       admin_user:
         id: "ID"
@@ -175,10 +212,14 @@ pt-BR:
         roles: 'Funções'
         skills: "Habilidades"
         level: "Nível"
+        backend_level: "Nível de Backend"
+        frontend_level: "Nível de Frontend"
         active: "Ativo"
         observation: "Observação"
         started_at: "Iniciou em"
         mentor: "Mentor"
+        mentees: "Mentorados"
+        user_registration: 'Cadastro de Usuário'
         overall_score: "Pontuação Geral"
         performance_score: "Pontuação de Desempenho"
         english_level: "Nível de Inglês"
@@ -219,11 +260,19 @@ pt-BR:
         regional_holidays: "Feriados regionais"
         score: "Pontuação"
         active: "Ativo"
+      talk:
+        user: "Usuário"
+        event_name: "Nome do evento"
+        talk_title: "Título da palestra"
+        date: "Data"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       regional_holiday:
         id: "ID"
         name: "Nome"
         day: "Dia"
         month: "Mês"
+        cities: "Cidades"
         offices: "Escritórios"
         created_at: "Criado em"
         updated_at: "Atualizado em"
@@ -282,6 +331,7 @@ pt-BR:
       repository:
         id: "ID"
         link: "Link"
+        name: "Nome"
         language: "Linguagem"
         created_at: "Criado em"
         updated_at: "Atualizado em"
@@ -290,6 +340,7 @@ pt-BR:
         user: "Usuário"
         link: "Link"
         state: "Estado"
+        description: "Descrição"
         state/received: "Recebido"
         state/approved: "Aprovado"
         state/refused:  "Recusado"
@@ -298,6 +349,10 @@ pt-BR:
         reviewed_by: "Revisado por"
         reviewed_at: "Revisado em"
         rejected_reason: "Motivo da recusa"
+        pending: "Pendência"
+        tracking: "Monitorar"
+        description: "Descrição"
+        notes: "Observações"
       vacation:
         user: 'Usuário'
         start_date: "Data de início"
@@ -306,10 +361,21 @@ pt-BR:
         hr_approver: 'Aprovação Recursos Humanos'
         commercial_approver: 'Aprovação Comercial'
         denier: 'Recusado Por'
-      exchange_rate:
-        month: 'Mês'
-        year: 'Ano'
-        currency: 'Moeda'
-        rate: 'Taxa'
-        created_at: "Criada em"
-        updated_at: "Atualizada em"
+      education_experience:
+        user: 'Usuário'
+        institution: 'Instituição'
+        course: 'Curso'
+        start_date: "Data de início"
+        end_date: "Data de término"
+      user_skill:
+        user: 'Usuário'
+        skill: 'Habilidade'
+        experience_level: 'Nível de Experiência'
+      professional_experience:
+        user: 'Usuário'
+        company: 'Empresa'
+        position: 'Cargo'
+        description: "Descrição"
+        responsibilities: "Competências"
+        start_date: "Data de início"
+        end_date: "Data de término"

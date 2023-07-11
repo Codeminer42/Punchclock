@@ -26,5 +26,13 @@ RSpec.describe RepositoryDecorator do
       end
     end
   end
+
+  describe '#name' do
+    let(:repository) { build(:repository, link: "https://github.com/Codeminer42/rails2-r_ruby").decorate }
+
+    it 'returns the repository name' do
+      expect(repository.name).to eql "rails2-r_ruby"
+    end
+  end
 end
 

@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 class ContributionDecorator < Draper::Decorator
   delegate_all
+  decorates_association :repository
+  delegate :name, to: :repository, prefix: :repository, allow_nil: true
 
   def created_at
     model.created_at.to_date.to_fs(:date)
@@ -13,5 +17,10 @@ class ContributionDecorator < Draper::Decorator
 
   def reviewed_at
     model.reviewed_at&.to_date&.to_fs(:date)
+  end
+
+  def description
+    return 'pending description' if model.description.nil?
+    model.description
   end
 end

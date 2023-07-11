@@ -4,13 +4,13 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.1.4'
 
-gem 'rails', '~> 7.0.3.1'
+gem 'rails', '~> 7.0.4'
 
 gem 'bootsnap', require: false
 
-gem 'nokogiri', '~> 1.13.10'
+gem 'nokogiri', '~> 1.14.3'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'pg', '~> 1.2'
 gem 'sprockets'
@@ -33,11 +33,12 @@ gem 'draper'
 gem 'draper-cancancan', '~> 1.1.1'
 gem 'rails-i18n'
 gem 'webpacker', '~> 5.1'
-gem 'holidays', '~> 8.3'
 gem 'kaminari'
 
 gem 'caxlsx'
 gem 'caxlsx_rails'
+
+gem 'docx'
 
 gem 'httparty'
 gem 'github_api', '~> 0.18.2'
@@ -67,11 +68,17 @@ gem 'aasm', '~> 5.0', '>= 5.0.8'
 
 # SSL (https://github.com/pixielabs/letsencrypt-rails-heroku)
 gem 'platform-api', github: 'heroku/platform-api'
-gem 'letsencrypt-rails-heroku', group: 'production'
+
+group :production, :staging do
+  # Heroku Ruby Language Metrics
+  gem "barnes"
+
+  gem 'letsencrypt-rails-heroku'
+end
 
 gem 'rswag-api', '~> 2.5.1'
 gem 'rswag-ui', '~> 2.5.1'
-gem 'unicorn'
+gem 'puma'
 gem "tailwindcss-rails", "~> 2.0"
 gem 'inline_svg', '~> 1.9'
 

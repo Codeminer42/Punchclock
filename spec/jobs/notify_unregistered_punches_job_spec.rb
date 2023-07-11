@@ -6,7 +6,7 @@ RSpec.describe NotifyUnregisteredPunchesJob, type: :job do
     let(:active_user) { create :user, active: true }
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
     let(:last_30_work_days) do
-      ('2019-04-16'.to_date..'2019-05-15'.to_date).select { |day| day.on_weekday? && !day.holiday?(:br) }
+      ('2019-04-16'.to_date..'2019-05-15'.to_date).select { |day| day.on_weekday? }
     end
 
     before do

@@ -26,6 +26,22 @@ RSpec.describe Vacation, type: :model do
     end
   end
 
+  describe ".expired" do
+    let(:expired_vacation) { create(:vacation, :expired) }
+    let(:valid_vacation) { create(:vacation, :valid) }
+
+    before do
+      create(:vacation, :pending)
+      create(:vacation, :cancelled)
+      create(:vacation, :denied)
+      create(:vacation, :ended)
+    end
+
+    it "return only expired vacations" do
+      expect(described_class.expired).to eq([expired_vacation])
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:end_date) }
@@ -33,7 +49,11 @@ RSpec.describe Vacation, type: :model do
 
     context 'when end_date is greater than start_date' do
       subject(:vacation) do
-        build(:vacation, start_date: 1.months.from_now, end_date: 2.months.from_now)
+        build(:vacation, start_date: 1.months.from_now.monday, end_date: 2.months.from_now)
+      end
+
+      before do
+        allow(vacation.user).to receive(:holidays).and_return([])
       end
 
       it { is_expected.to be_valid }
@@ -41,22 +61,8 @@ RSpec.describe Vacation, type: :model do
 
     context 'when start_date is greater than end_date' do
       subject(:vacation) do
-        build(:vacation, start_date: 2.months.from_now, end_date: 1.months.from_now)
+        build(:vacation, start_date: 1.months.from_now.monday, end_date: 1.week.from_now.monday)
       end
-
-      it { is_expected.to_not be_valid }
-    end
-
-    context 'when end_date is greater than start_date but difference is less than 5 days' do
-      subject(:vacation) do
-        build(:vacation, start_date: 2.days.from_now, end_date: 3.days.from_now)
-      end
-
-      it { is_expected.to_not be_valid }
-    end
-
-    context 'when end_date and start_date are the same' do
-      subject(:vacation) { build(:vacation, start_date: 1.day.ago, end_date: 1.day.ago) }
 
       it { is_expected.to_not be_valid }
     end
@@ -74,25 +80,164 @@ RSpec.describe Vacation, type: :model do
     end
 
     context 'when the duration of the vacation is less than 10 days' do
-      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 2.days.from_now)}
+      let(:vacation) {build(:vacation, start_date: 1.week.from_now.monday, end_date: 1.week.from_now.monday + 8.days)}
 
       it { expect(vacation).to_not be_valid }
-
-      it 'raises an error' do
-        expect { vacation.save! }.to raise_error(ActiveRecord::RecordInvalid, 'A validação falhou: As férias precisam ter no mínimo 10 dias')
-      end
     end
 
     context 'when the duration of the vacation is equal to 10 days' do
-      let(:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 11.days.from_now)}
+      let(:vacation) {build(:vacation, start_date: 1.week.from_now.monday, end_date: 1.week.from_now.monday + 9.days)}
 
       it { expect(vacation).to be_valid }
     end
 
     context 'when the duration of the vacation is higher than 10 days' do
-      let (:vacation) {build(:vacation, start_date: 1.day.from_now, end_date: 20.days.from_now)}
+      let (:vacation) {build(:vacation, start_date: 1.week.from_now.monday, end_date: 1.week.from_now.monday + 20.days)}
 
       it { expect(vacation).to be_valid }
+    end
+
+    context 'when the start_date is close or in a weekend' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.current.next_week(:thursday),
+          end_date: Date.current.next_month
+        )
+      end
+
+      it { expect(vacation).to_not be_valid }
+
+      context 'when the user is a contractor' do
+        let(:vacation) do
+          build(
+            :vacation,
+            start_date: Date.current.next_week(:thursday),
+            end_date: Date.current.next_month,
+            user: create(:user, contract_type: 'contractor')
+          )
+        end
+
+        it { expect(vacation).to be_valid }
+      end
+    end
+
+    context 'when the start_date is close or in a holiday' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.current.next_week(:monday),
+          end_date: Date.current.next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:holidays).and_return([{day: Date.current.next_week(:wednesday).day, month: Date.current.next_week(:wednesday).month}])
+      end
+
+      it { expect(vacation).to_not be_valid }
+    end
+
+    context 'when the start_date is close to the new year\'s eve holiday' do
+      # The next 30th of December that will be a Monday will be in 2024
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.new(2024, 12, 30),
+          end_date: Date.new(2024, 12, 30).next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:holidays).and_return([{day: 01, month: 01}])
+      end
+
+      it { expect(vacation).to_not be_valid }
+    end
+
+    context 'when the start_date is on the new year\'s holiday' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.new(2025, 01, 01),
+          end_date: Date.new(2025, 01, 01).next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:holidays).and_return([{day: 01, month: 01}])
+      end
+
+      it { expect(vacation).to_not be_valid }
+    end
+
+    context 'when the start_date is after a holiday' do
+      let(:vacation) do
+        build(
+          :vacation,
+          start_date: Date.current.next_week(:wednesday),
+          end_date: Date.current.next_month
+        )
+      end
+
+      before do
+        allow(vacation.user).to receive(:holidays).and_return([{day: Date.current.next_week(:tuesday).day, month: Date.current.next_week(:tuesday).month}])
+      end
+
+      it { expect(vacation).to be_valid }
+    end
+  end
+
+  describe ".pending_approval_of" do
+    let!(:hr_user) { create(:user, :hr) }
+    let!(:commercial_user) { create(:user, :commercial) }
+    let(:pending_vacation) { create(:vacation, :pending) }
+    let(:pending_hr_vacation) { create(:vacation, :pending, commercial_approver: commercial_user) }
+    let(:pending_commercial_vacation) { create(:vacation, :pending, hr_approver: hr_user) }
+
+    context 'when is looking for vacations pending to be approved by hr' do
+      it "return the vacations where the hr_approver is nil" do
+        expect(described_class.pending_approval_of(:hr)).to eq(
+          [pending_vacation, pending_hr_vacation]
+        )
+      end
+    end
+
+    context 'when is looking for vacations pending to be approved by commercial' do
+      it "return the vacations where the commercial_approver is nil" do
+        expect(described_class.pending_approval_of(:commercial)).to eq(
+          [pending_vacation, pending_commercial_vacation]
+        )
+      end
+    end
+
+    context 'when is looking for vacations pending to be approved by a wrong parameter' do
+      it "return the vacations where the commercial_approver is nil" do
+        expect { described_class.pending_approval_of(:wrong_parameter) }.to raise_error(
+          ArgumentError, "The approver should be :hr or :commercial"
+        )
+      end
+    end
+  end
+
+  describe '.finished' do
+    let!(:ended_vacation1) { create(:vacation, :ended, end_date: 1.day.ago) }
+    let!(:ended_vacation2) { create(:vacation, :ended, end_date: 2.day.ago) }
+    let!(:ended_vacation3) { create(:vacation, :ended, end_date: 3.day.ago) }
+
+    before do
+      create(:vacation, :approved)
+      create(:vacation, :pending)
+      create(:vacation, :cancelled)
+      create(:vacation, :denied)
+      create(:vacation, :ongoing)
+      create(:vacation, :scheduled)
+      create(:vacation, :expired)
+      create(:vacation, :valid)
+    end
+
+    it 'returns finished vacations sorted by most recent' do
+      expect(described_class.finished).to eq([ended_vacation1, ended_vacation2, ended_vacation3])
     end
   end
 
@@ -138,6 +283,30 @@ RSpec.describe Vacation, type: :model do
       subject.deny! user
 
       expect(subject).to be_denied
+    end
+  end
+
+  describe '#cancel!' do 
+    let(:user) { create(:user) }
+    let(:vacation) { create(:vacation, :approved) }
+
+    it 'cancel vacation' do
+      expect { vacation.cancel!(user) }.to change(vacation, :status).to("cancelled") & change(vacation, :denier).to(user)
+    end
+  end 
+
+  # TODO: Maybe we're creating a flaky test here
+  describe '#duration_days' do
+    subject(:vacation) do
+      create(
+        :vacation,
+        start_date: 1.week.from_now.monday,
+        end_date: 1.week.from_now.monday + 21.days
+      )
+    end
+
+    it 'returns the duration of the vacation in days' do
+      expect(subject.duration_days).to eq(22)
     end
   end
 end

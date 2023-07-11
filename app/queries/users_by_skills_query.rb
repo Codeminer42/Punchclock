@@ -24,7 +24,7 @@ class UsersBySkillsQuery
   end
 
   def skills_user_subquery
-    SkillsUser.select(:user_id, 'array_agg(skill_id) as skills_ids')
-              .group(:user_id)
+    UserSkill.select(:user_id, 'array_agg(skill_id) as skills_ids')
+             .group(:user_id)
   end
 end

@@ -14,12 +14,15 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:punches) }
     it { is_expected.to have_many(:allocations) }
     it { is_expected.to have_many(:projects).through(:allocations) }
-    it { is_expected.to have_and_belong_to_many(:skills) }
+    it { is_expected.to have_many(:user_skills) }
+    it { is_expected.to have_many(:skills).through(:user_skills) }
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
+    it { is_expected.to have_many(:mentees).class_name(:User) }
   end
 
   describe 'validations' do
     let!(:user) { create(:user, :admin) }
+    it { is_expected.to validate_presence_of(:city) }
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
@@ -56,6 +59,34 @@ RSpec.describe User, type: :model do
     context 'when user is engineer with no level' do
       subject { build :user, occupation: 'engineer', level: '' }
       it { is_expected.to be_invalid }
+    end
+  end
+
+  describe "frontend level" do
+    it do
+      is_expected.to enumerize(:frontend_level).in(
+        intern: 0,
+        junior: 1,
+        junior_plus: 2,
+        mid: 3,
+        mid_plus: 4,
+        senior: 5,
+        trainee: 6
+      )
+    end
+  end
+
+  describe "backend level" do
+    it do
+      is_expected.to enumerize(:backend_level).in(
+        intern: 0,
+        junior: 1,
+        junior_plus: 2,
+        mid: 3,
+        mid_plus: 4,
+        senior: 5,
+        trainee: 6
+      )
     end
   end
 
@@ -141,6 +172,26 @@ RSpec.describe User, type: :model do
 
       it 'returns users with admin role' do
         expect(User.admin).to contain_exactly(user1, user3)
+      end
+    end
+
+    describe '.hr' do
+      let!(:hr_user) { create(:user, :hr) }
+      let!(:commercial_user) { create(:user, :commercial) }
+      let!(:admin_user) { create(:user, roles: [:admin]) }
+
+      it 'returns users with hr role' do
+        expect(User.hr).to contain_exactly(hr_user)
+      end
+    end
+
+    describe '.commercial' do
+      let!(:hr_user) { create(:user, :hr) }
+      let!(:commercial_user) { create(:user, :commercial) }
+      let!(:admin_user) { create(:user, roles: [:admin]) }
+
+      it 'returns users with hr role' do
+        expect(User.commercial).to contain_exactly(commercial_user)
       end
     end
 
@@ -284,5 +335,24 @@ RSpec.describe User, type: :model do
   describe '#inactive_message' do
     it { expect(inactive_user.inactive_message).to eq :inactive_account }
     it { expect(active_user.inactive_message).to eq :unconfirmed }
+  end
+
+  describe '#holidays' do
+    let!(:city) { create(:city, :with_holidays) }
+    let!(:user) { create(:user, city: city) }
+
+    context 'when there are no holidays' do
+      it 'returns an empty array' do
+        allow(user).to receive(:holidays).and_return([])
+
+        expect(user.holidays).to be_empty
+      end
+    end
+
+    context 'when there are city holidays' do
+      it 'returns city holidays' do
+        expect(user.holidays).to eq(city.holidays)
+      end
+    end
   end
 end

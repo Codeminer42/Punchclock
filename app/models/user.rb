@@ -11,6 +11,14 @@ class User < ApplicationRecord
          :two_factor_backupable,
          otp_secret_encryption_key: ENV['OTP_SECRET_ENCRYPTION_KEY']
 
+  %i[backend_level frontend_level].each do |specialty|
+    enumerize specialty,
+      in: { trainee: 6, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5 },
+      scope: :shallow,
+      predicates: true,
+      i18n_scope: 'enumerize.user.level'
+  end
+
   enumerize :level, in: {
     trainee: 7, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
     },  scope: :shallow,
@@ -30,6 +38,7 @@ class User < ApplicationRecord
     internship: 0, employee: 1, contractor: 2, associate: 3
     },  scope: :shallow,
         predicates: true
+
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
 
   enumerize :roles, in: {
@@ -52,8 +61,16 @@ class User < ApplicationRecord
   has_many :notes
   has_many :authored_notes, class_name: 'Note', inverse_of: :author
   has_many :vacations
-  has_and_belongs_to_many :skills
+  has_many :mentees, class_name: :User, foreign_key: :mentor_id, inverse_of: :mentor
+  has_many :education_experiences
+  has_many :user_skills
+  has_many :skills, through: :user_skills
+  has_many :talks
+  has_many :professional_experiences
 
+  delegate :holidays, to: :city, prefix: true
+
+  validates :city, presence: true
   validates :name, :occupation, presence: true
   validates :email, uniqueness: true, presence: true
   validates :level, :specialty, presence: true, if: :engineer?
@@ -72,6 +89,8 @@ class User < ApplicationRecord
     where("users.roles && ARRAY[?]::int[]", roles_values)
   }
   scope :admin, -> { by_roles_in([:admin]) }
+  scope :hr, -> { by_roles_in([:hr]) }
+  scope :commercial, -> { by_roles_in([:commercial]) }
   scope :vacation_managers, -> { by_roles_in([:hr, :commercial]) }
 
   attr_accessor :password_required
@@ -105,10 +124,6 @@ class User < ApplicationRecord
 
   def inactive_message
     active? ? super : :inactive_account
-  end
-
-  def office_holidays
-    HolidaysService.from_office(office)
   end
 
   def to_s
@@ -173,5 +188,9 @@ class User < ApplicationRecord
 
   def first_and_last_name
     name.split.values_at(0, -1).uniq.join(' ')
+  end
+
+  def holidays
+    city_holidays
   end
 end

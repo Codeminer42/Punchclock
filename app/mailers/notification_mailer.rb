@@ -12,6 +12,12 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Welcome to Punchclock')
   end
 
+  def resend_user_registration(user, token)
+    @user = user
+    @token = token
+    mail(to: @user.email, subject: 'Welcome to Punchclock', template_name: 'notify_user_registration')
+  end
+
   def notify_user_password_change(user, new_password)
     @user = user
     @new_password = new_password
@@ -51,5 +57,11 @@ class NotificationMailer < ActionMailer::Base
     @contributions = contributions
     newsletter_email = ENV['NEWS_EMAIL']
     mail(to: newsletter_email, subject: 'Punchlock - Contribuições aprovadas')
+  end
+
+  def notify_fill_contribution_description(user, contributions_total)
+    @user = user
+    @contributions_total = contributions_total 
+    mail(to: @user.email, subject: t('notification_mailer.subject.notify_fill_contribution_description_html'))
   end
 end

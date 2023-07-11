@@ -26,7 +26,7 @@ class WorkableValidator < ActiveModel::Validator
   end
 
   def all_holidays
-    @model.user.office_holidays
+    @model.user.holidays
   end
 
   def format_date(date)

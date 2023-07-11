@@ -1,10 +1,11 @@
-FROM ruby:3.1.2
+FROM ruby:3.1.4
 
 LABEL MAINTAINER Codeminer42 <contact@codeminer42.com>
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
+# Copy the lock to install the bundler version
 COPY Gemfile.lock .
 
 ENV BUNDLE_PATH=/bundle \

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_185451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
+  create_table "cities_regional_holidays", id: false, force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "regional_holiday_id", null: false
+    t.index ["city_id", "regional_holiday_id"], name: "index_cities_on_regional_holidays", unique: true
+    t.index ["regional_holiday_id", "city_id"], name: "index_regional_holidays_on_cities", unique: true
+  end
+
   create_table "contributions", force: :cascade do |t|
     t.bigint "user_id"
     t.string "link", null: false
@@ -57,10 +64,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
     t.datetime "reviewed_at", precision: nil
     t.string "pr_state"
     t.integer "rejected_reason"
+    t.boolean "tracking", default: false, null: false
+    t.text "notes"
+    t.text "description"
+    t.string "pending"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
+  end
+
+  create_table "education_experiences", force: :cascade do |t|
+    t.string "institution"
+    t.string "course"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_education_experiences_on_user_id"
   end
 
   create_table "evaluations", force: :cascade do |t|
@@ -98,11 +120,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
     t.boolean "active", default: true
   end
 
-  create_table "offices_regional_holidays", id: false, force: :cascade do |t|
-    t.integer "office_id", null: false
-    t.integer "regional_holiday_id", null: false
-    t.index ["office_id", "regional_holiday_id"], name: "index_offices_on_regional_holidays"
-    t.index ["regional_holiday_id", "office_id"], name: "index_regional_holidays_on_offices"
+  create_table "professional_experiences", force: :cascade do |t|
+    t.string "company"
+    t.string "position"
+    t.text "description"
+    t.string "responsibilities"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_professional_experiences_on_user_id"
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
@@ -167,21 +195,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "skills_users", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "skill_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["skill_id"], name: "index_skills_users_on_skill_id"
-    t.index ["user_id"], name: "index_skills_users_on_user_id"
-  end
-
   create_table "states", force: :cascade do |t|
     t.string "name", null: false
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_states_on_code", unique: true
+  end
+
+  create_table "talks", force: :cascade do |t|
+    t.string "event_name"
+    t.string "talk_title"
+    t.datetime "date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_talks_on_user_id"
+  end
+
+  create_table "user_skills", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "skill_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "experience_level"
+    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
+    t.index ["user_id"], name: "index_user_skills_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -222,6 +261,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
     t.bigint "city_id"
     t.integer "roles", array: true
     t.integer "contract_company_country"
+    t.integer "frontend_level"
+    t.integer "backend_level"
     t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -254,12 +295,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_182908) do
   add_foreign_key "cities", "states"
   add_foreign_key "contributions", "repositories"
   add_foreign_key "contributions", "users"
+  add_foreign_key "education_experiences", "users"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "notes", "users"
   add_foreign_key "notes", "users", column: "author_id"
+  add_foreign_key "professional_experiences", "users"
   add_foreign_key "questions", "questionnaires"
-  add_foreign_key "skills_users", "skills"
-  add_foreign_key "skills_users", "users"
+  add_foreign_key "talks", "users"
+  add_foreign_key "user_skills", "skills"
+  add_foreign_key "user_skills", "users"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "offices"
   add_foreign_key "users", "users", column: "mentor_id"

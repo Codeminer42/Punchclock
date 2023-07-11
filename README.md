@@ -13,6 +13,7 @@ Ruby 3.1
 Rails 7.0
 Postgres >= 13.7
 Node 16.13.1
+Yarn >= 1.22.19
 ```
 
 ## Installing
@@ -20,9 +21,9 @@ Node 16.13.1
 ```console
 $ git clone git@github.com:Codeminer42/Punchclock.git
 $ cd Punchclock
-$ cp .env.example .env
 $ Install Postgres
 $ Install Redis
+$ Install Yarn as a global dependency (npm i -g yarn@1.22.19)
 $ bin/setup
 ```
 
@@ -70,7 +71,6 @@ Install the docker and docker compose plugin versions:
 * Docker compose plugin `~>v2.10`
 
 ```console
-$ cp .env.example .env
 $ cp config/database.yml.example config/database.yml
 $ docker compose build
 $ docker compose run --rm app bundle install

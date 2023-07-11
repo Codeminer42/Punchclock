@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe 'Admin Allocation chart', type: :feature do
+  let(:next_month_date) { Date.today.next_month }
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
   before do
@@ -14,7 +15,7 @@ describe 'Admin Allocation chart', type: :feature do
     let!(:user) { create(:user, allocations: [allocation]) }
 
     let(:allocation) do
-      build(:allocation, project: project, start_at: Date.new(2022, 5, 1), end_at: Date.new(2023, 03, 1), ongoing: true)
+      build(:allocation, project: project, start_at: Date.today.prev_month, end_at: next_month_date, ongoing: true)
     end
 
     before { visit '/admin/allocation_chart' }
@@ -24,8 +25,8 @@ describe 'Admin Allocation chart', type: :feature do
         aggregate_failures 'testing table fields' do
           expect(page).to have_text('Nome')
           expect(page).to have_text('Habilidades')
-          expect(page).to have_text('Nível')
-          expect(page).to have_text('Especialidade')
+          expect(page).to have_text('Nível de Backend')
+          expect(page).to have_text('Nível de Frontend')
           expect(page).to have_text('Cliente')
           expect(page).to have_text('Alocado até')
         end
@@ -50,7 +51,8 @@ describe 'Admin Allocation chart', type: :feature do
           travel_to Date.new(2023, 4, 1)
 
           within 'tbody' do
-            expect(page).to have_link('01/03/2023', href: "/admin/allocations/#{allocation.id}")
+            formatted_date = next_month_date.strftime('%d/%m/%Y')
+            expect(page).to have_link(formatted_date, href: "/admin/allocations/#{allocation.id}")
           end
         end
       end

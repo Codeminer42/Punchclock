@@ -24,6 +24,10 @@ describe 'User' do
     it "can delete punch" do
       expect(ability_admin).to be_able_to :destroy, Punch.new
     end
+
+    it 'able to manage UserSkill' do
+      expect(ability_admin).to be_able_to :manage, UserSkill
+    end
   end
 
   describe 'abilities open source manager' do
