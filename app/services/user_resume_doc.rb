@@ -7,7 +7,7 @@ class UserResumeDoc
     @doc_element = load_document('template-elements.docx')
     @doc_template = load_document('template.docx')
     @item_element = find_element('_item_')
-    @text_element = find_element('text')
+    @text_element = find_element('_job_description_')
     @date_element = find_element('_date_')
     @job_element = @doc_element.bookmarks['job_title'].parent_paragraph
     @course_element = find_element('course_name')
@@ -93,7 +93,7 @@ class UserResumeDoc
       substitute(title, 'job_date', date_interval)
 
       description = @text_element.copy
-      substitute(description, 'text', strip_extra_blank_space(experience.description))
+      substitute(description, '_job_description_', strip_extra_blank_space(experience.description))
 
       title.insert_after job_section
       description.insert_after title
