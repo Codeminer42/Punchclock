@@ -4,6 +4,10 @@ module NewAdmin
   class EvaluationsController < ApplicationController
     layout 'new_admin'
 
+    load_and_authorize_resource
+
+    before_action :authenticate_user!
+
     def index
       @evaluations = EvaluationQuery.new(**search_params).call.decorate
     end
