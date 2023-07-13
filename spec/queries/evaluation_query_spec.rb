@@ -157,5 +157,19 @@ RSpec.describe EvaluationQuery do
         expect(result).to contain_exactly(performance_evaluation)
       end
     end
+
+    context 'when an invalid option is specified' do
+      let(:options) { { evaluator_id: 'invalid' } }
+
+      it 'does not raise any errors' do
+        expect { call }.not_to raise_error
+      end
+
+      it 'ignores the invalid option and returns all evaluations' do
+        result = call
+
+        expect(result).to contain_exactly(english_evaluation, performance_evaluation, expired_evaluation, recent_evaluation)
+      end
+    end
   end
 end

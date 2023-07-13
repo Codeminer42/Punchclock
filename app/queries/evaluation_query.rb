@@ -47,19 +47,19 @@ class EvaluationQuery
   end
 
   def by_evaluator(query)
-    return query unless evaluator_id.present?
+    return query unless valid_integer?(evaluator_id)
 
     query.where('evaluator.id = ?', evaluator_id)
   end
 
   def by_evaluated(query)
-    return query unless evaluated_id.present?
+    return query unless valid_integer?(evaluated_id)
 
     query.where('evaluated.id = ?', evaluated_id)
   end
 
   def by_questionnaire_type(query)
-    return query unless questionnaire_type.present?
+    return query unless valid_integer?(questionnaire_type)
 
     query.where('questionnaires.kind = ?', questionnaire_type)
   end
@@ -86,5 +86,9 @@ class EvaluationQuery
     elsif evaluation_date_end
       query.where('evaluations.evaluation_date <= ?', evaluation_date_end)
     end
+  end
+
+  def valid_integer?(value)
+    value.present? && value.to_i.to_s == value.to_s
   end
 end
