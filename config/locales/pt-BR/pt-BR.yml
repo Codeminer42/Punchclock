@@ -222,3 +222,12 @@ pt-BR:
     download_xls: Baixar XLS
     all_punches: Todos os Punches
   present: 'Presente'
+  evaluations:
+    empty: Nenhuma avaliação encontrada
+    filters: Filtros
+    filter: Filtrar
+    clear: Limpar filtros
+    questionnaire_type: Tipo de questionário
+    created_at: Criado em
+    evaluation_date: Data da avaliação
+    any: Qualquer

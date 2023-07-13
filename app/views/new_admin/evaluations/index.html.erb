@@ -9,11 +9,11 @@
         <%= render 'evaluations_table', evaluations: @evaluations %>
       <% else %>
         <h3 class="text-xs font-semibold text-left uppercase dark:text-gray-400">
-          <%= 'Nenhuma avaliação encontrada' %>
+          <%= t('evaluations.empty') %>
         </h3>
       <% end %>
     </div>
-    <div>
+    <div id="filters_sidebar_section">
       <%= render 'evaluations_filter' %>
     </div>
   </div>
