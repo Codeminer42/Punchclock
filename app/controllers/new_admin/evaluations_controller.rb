@@ -12,8 +12,6 @@ module NewAdmin
       @evaluations = EvaluationQuery.new(**search_params).call.decorate
     end
 
-    def show; end
-
     private
 
     def search_params
