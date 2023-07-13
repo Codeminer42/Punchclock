@@ -7,7 +7,7 @@
       <li class="relative px-6 py-3">
         <%= link_to new_admin_mentoring_index_path, class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" do %>
           <%= inline_svg_tag 'mentoring.svg', class: 'h-6 w-6' %>
-          <span class="ml-4">Mentoring</span>
+          <span class="ml-4"><%= t('mentoring') %></span>
         <% end %>
       </li>
       <li class="relative px-6 py-3">
@@ -21,8 +21,8 @@
           data-menu="submenu"
           class="flex items-center w-full transition-colors duration-800 hover:text-gray-800 dark:hover:text-gray-200"
         >
-          <%= inline_svg_tag 'allocation_chart.svg', class: 'h-6 w-6' %>
-          <span class="ml-4">Avaliações</span>
+          <%= inline_svg_tag 'evaluation.svg', class: 'h-6 w-6' %>
+          <span class="ml-4"><%= t('evaluations_title') %></span>
           <%= inline_svg_tag 'arrow-down.svg', class: 'ml-auto h-6 w-6 transition-transform', data: { icon: 'arrow' } %>
         </button>
         <ul class="pl-10 py-1 mt-1 bg-gray-200 dark:bg-gray-900 rounded-lg hidden">
