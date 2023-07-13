@@ -33,3 +33,8 @@ en:
             start_date:
               close_weekend: "The start of the vacation cannot be close to the weekend"
               close_holiday: "The start of the vacation cannot be close to a holiday"
+        professional_experience:
+          attributes:
+            start_date:
+              greater_than_current_month: "Start date can't be ahead of current month"
+              greater_than_end_date: "Start date can't be ahead of end date"

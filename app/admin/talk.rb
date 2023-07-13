@@ -18,9 +18,9 @@ ActiveAdmin.register Talk do
     user = f.object.user_id || params[:user_id]
     f.inputs do
       f.input :user, as: :select, collection: User.active.order(:name), selected: user
-      f.input :event_name
-      f.input :talk_title
-      f.input :date, as: :datetime_picker
+      f.input :event_name, placeholder: 'RailsConf'
+      f.input :talk_title, placeholder: 'A Rails Performance Guidebook'
+      f.input :date, as: :string, input_html: { class: :datepicker }, placeholder: '2021-11-01'
     end
     f.actions
   end
