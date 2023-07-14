@@ -81,25 +81,7 @@ class UserDecorator < Draper::Decorator
     model.mentor.first_and_last_name
   end
 
-  def allow_overtime
-    I18n.t(model.allow_overtime) || 'N/A'
-  end
-
-  def active
-    I18n.t(model.active) || 'N/A'
-  end
-
-  def started_at
-    return if model.started_at.nil?
-    I18n.l(user.started_at)
-  end
-
   def office_city
     model.office.city
-  end
-
-  def otp_required_for_login
-    return I18n.t('false') if model.otp_required_for_login.nil?
-    I18n.t(model.otp_required_for_login)
   end
 end
