@@ -95,7 +95,7 @@ class Vacation < ApplicationRecord
   private
 
   def approved_within_cancel_range?
-    start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.today
+    start_date.days_ago(MINIMUM_DAYS_TO_CANCEL) >= Date.current
   end
 
   def validate_approvers_and_approve

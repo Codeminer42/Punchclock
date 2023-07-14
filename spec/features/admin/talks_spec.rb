@@ -90,7 +90,7 @@ describe 'Talks', type: :feature do
 
     it 'by talk date' do
       within '#filters_sidebar_section' do
-        fill_in 'q[date_gteq_datetime]', with: talk.date
+        fill_in 'q_date_gteq', with: talk.date
         click_button 'Filtrar'
       end
 
@@ -101,7 +101,7 @@ describe 'Talks', type: :feature do
 
       within '#filters_sidebar_section' do
         click_link 'Limpar Filtros'
-        fill_in 'q[date_gteq_datetime]', with: Date.today
+        fill_in 'q_date_gteq', with: Date.today
         click_button 'Filtrar'
       end
 
