@@ -32,7 +32,7 @@ describe NewAdmin::UsersController do
 
       expect(page).to have_content(user.name)
                   .and have_content(user.email)
-                  .and have_content(user.otp_required_for_login)
+                  .and have_content(I18n.t(user.otp_required_for_login?))
                   .and have_content(user.github)
                   .and have_content(user.office_city)
     end
