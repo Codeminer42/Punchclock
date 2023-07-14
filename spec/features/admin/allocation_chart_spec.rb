@@ -48,6 +48,8 @@ describe 'Admin Allocation chart', type: :feature do
         end
 
         it '"Alocado até" column links to allocation' do
+          travel_to Date.new(2023, 4, 1)
+
           within 'tbody' do
             formatted_date = next_month_date.strftime('%d/%m/%Y')
             expect(page).to have_link(formatted_date, href: "/admin/allocations/#{allocation.id}")

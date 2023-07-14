@@ -1,0 +1,118 @@
+<div class="flex pt-2">
+  <div class="flex-auto w-96">
+    <% if punches.present? %>
+      <table id="punches_table" >
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= t ('project') %>
+            </div>
+          </th>
+          <th class="w-1/12">
+            <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= t ('activerecord.attributes.punch.when') %>
+            </div>
+          </th>
+          <th class="w-1/12">
+            <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= t ('activerecord.attributes.punch.from') %>
+            </div>
+          </th>
+          <th class="w-1/12">
+            <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= t ('activerecord.attributes.punch.to') %>
+            </div>
+          </th>
+          <th class="w-1/12">
+            <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= t ('activerecord.attributes.punch.delta') %>
+            </div>
+          </th>
+          <th class="w-1/12">
+            <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= t ('activerecord.attributes.punch.extra_hour') %>
+            </div>
+          </th>
+        </tr>
+
+        <% punches.each do |punch| %>
+          <tr class="text-gray-700 dark:text-gray-300 ">
+            <td class="py-3 px-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.project.name %>
+                </p>
+              </div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.date %>
+                </p>
+              </div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.from %>
+                </p>
+              </div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.to %>
+                </p>
+              </div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.delta_as_hour %>
+                </p>
+              </div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= punch.extra_hour %>
+                </p>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <p class="text-md text-gray-600 dark:text-gray-400 font-semibold">
+        <%= t ('no_punches') %>
+      </p>
+    <% end %>
+  </div>
+ 
+  <div class="flex-auto w-20">
+    <div class="px-2 py-2 w-fit h-40 max-w-sm dark:bg-gray-800 rounded"> 
+      <h3 class="mb-2 text-sm text-gray-600 dark:text-gray-400 font-semibold">
+        <%= t ('punches_filter.filter') %>
+      </h3> 
+      <%= form_with url: new_admin_admin_user_path(@user, anchor: "user_punches"), method: :get do |form| %>
+        <h4 class="mb-2 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase" >
+          <%= t ('punches_filter.range') %>
+        </h4>
+        <%
+          from = params.dig(:punch, :from)
+          to = params.dig(:punch, :to)
+        %>
+        <div class="input_container mb-4">
+          <%= form.date_field :from, value: :from, class: "mr-2 bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+          <%= form.date_field :to, value: :to, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+        </div>
+        <%= form.submit "#{t('punches_filter.to_filter')}", formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+        <%= link_to "#{t('punches_filter.clean_filter')}", new_admin_admin_user_path(@user, anchor: "user_punches"), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %> 
+      <% end %>
+    </div> 
+    <div class="py-4">
+      <%= link_to "#{t('punches_filter.download_xls')}", '#', class: "inline-flex items-center w-full text-sm font-semibold text-gray-400 duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
+      <%= link_to "#{t('punches_filter.all_punches')}", '#', class: "inline-flex items-center w-full text-sm font-semibold text-gray-400 duration-150 underline hover:no-underline dark:hover:text-gray-200" %>
+    </div>
+  </div>
+</div>

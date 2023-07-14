@@ -1,0 +1,36 @@
+<% content_for :page_title do %>
+  <%= @user.first_and_last_name %>
+<% end %>
+<div>
+  <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg
+  bg-primary-600 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="user_details"><%= Allocation.human_attribute_name('user') %></button>
+  <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg 
+  bg-primary-400 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="user_allocations"> <%= t('allocation.allocations') %> </button>
+  <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg 
+  bg-primary-400 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="user_performance_evaluations"> <%= t ('performance_evaluations') %> </button>
+  <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg 
+  bg-primary-400 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="user_english_evaluations"> <%= t ('english_evaluations') %> </button>
+   <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg 
+  bg-primary-400 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="user_punches"> <%= t ('activerecord.models.punch.other') %> </button>
+<div>
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="w-full overflow-x-auto">
+    <div data-tab-content>
+      <div id="user_details">
+        <%= render 'details', user: @user %>
+      </div>
+      <div id="user_allocations">
+        <%= render 'allocations', user_allocations: @user_allocations %>
+      </div>
+      <div id="user_performance_evaluations">
+         <%= render 'performance_evaluations', performance_evaluations: @performance_evaluations %>
+      </div>
+      <div id="user_english_evaluations">
+         <%= render 'english_evaluations', english_evaluations: @english_evaluations %>
+      </div>
+       <div id="user_punches">
+         <%= render 'punches', punches: @punches %>
+      </div>
+    </div>
+  </div>
+</div>

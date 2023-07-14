@@ -21,8 +21,10 @@ class Punch < ApplicationRecord
     last_month = current_month.prev_month + 1.day
     where from: last_month..current_month
   }
+  scope :filter_by_date, -> (user_id, from, to) { where('user_id = ? AND created_at >= ? AND created_at <= ?', user_id, from.to_datetime, to.to_datetime) }
 
   delegate :name, to: :user, prefix: true
+  delegate :name, to: :project, prefix: true
 
   def from_time=(time_string)
     @from_time = time_string.presence

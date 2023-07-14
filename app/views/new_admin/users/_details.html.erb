@@ -1,0 +1,360 @@
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap">
+      <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+          <th colspan="100%" class="px-4 py-3"><%= t 'user_details' %></th>
+        </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('name') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.first_and_last_name %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('email') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.email %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              2fa
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= t(user.otp_required_for_login?) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('github') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.github %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('office') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.office_city %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('city') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.city_text %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('managed_offices') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.offices_managed %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('english_score') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.english_score %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('overall_score') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.overall_score %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('performance_score') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.performance_score %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('occupation') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= t("user.occupation.#{user.occupation}") %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('specialty') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.specialty %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('level') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.level %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('contract_type') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= t("user.contract_type.#{user.contract_type.downcase}") %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('contract_company_country') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= t("user.contract_company_country.#{user.contract_company_country}") %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('roles') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.roles_sentence %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('skills') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.skills %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('mentor') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <% if user.mentor %>
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  <%= link_to new_admin_admin_user_path(user.mentor_id), class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 underline hover:no-underline dark:hover:text-gray-200" do %>
+                    <%= user.mentor_name  %>
+                  <% end %>
+                </p>
+              </div>
+            <% else %>
+              <div class="flex items-center text-sm">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                  <%= user.mentor_name %>
+                </p>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('allow_overtime') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= t(user.allow_overtime?) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('active') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= t(user.active?) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('started_at') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= l(user.started_at) if user.started_at.present? %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('created_at') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= l(user.created_at, format: :date_time) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('updated_at') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= l(user.updated_at, format: :date_time) %>
+              </p>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+              <%= User.human_attribute_name('observation') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                <%= user.observation %>
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

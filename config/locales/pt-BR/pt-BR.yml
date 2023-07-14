@@ -22,8 +22,15 @@ pt-BR:
       - Sábado
     formats:
       default: "%d/%m/%Y"
+      short: "%m/%Y"
+      time: "%H:%M"
       month_name: '%B'
       month_and_year: '%b/%Y'
+  time:
+    formats:
+      date_time: "%d/%m/%Y %H:%M"
+  english_evaluations: 'Avaliações de Inglês'
+  english_score: 'Pontuação de Inglês'
   english_evaluations: 'Avaliações de Inglês'
   experience: 'Experiências'
   professional_experience: 'Experiência profissional'
@@ -39,7 +46,13 @@ pt-BR:
   allocated: 'Alocado'
   projects: 'Projetos'
   project_details: 'Detalhes do Projeto'
-  perfomance_evaluations: 'Avaliações de Desempenho'
+  user_details: 'Detalhes do Usuário'
+  punch_details: 'Detalhes do Punch'
+  performance_evaluations: 'Avaliações de Desempenho'
+  no_performance_evaluations: 'Sem avaliações de desempenho'
+  no_punches: 'Sem Punches'
+  evaluation: 'Avaliação'
+  access_evaluation: 'Acessar Avaliação'
   allocation: 'Alocação'
   office:
     user_not_evaluated: "Usuários não foram todos avaliados"
@@ -134,6 +147,7 @@ pt-BR:
     button:
       change_my_password: 'Mudar minha senha'
       verify: 'Verificar'
+      update_allocation: 'Atualizar Alocação'
     links:
       return_to_sign_in: 'Retornar ao Sign In'
   allocation_chart: 'Organograma'
@@ -163,4 +177,44 @@ pt-BR:
   send_reset_instructions: "Enviar as instruções para resetar a senha"
   didnt_receive_instructions: "Não recebeu as instruções de confirmação?"
   resend_instructions: "Reenviar instruções de confirmação"
+  project: "Projeto"
+  allocation_details: "Detalhes da Alocação"
+  working_hours: "Horas Trabalhadas"
+  forecast: "Previsão"
+  user:
+    occupation:
+      administrative: Administrativo
+      engineer: Engenheiro
+    contract_type:
+      internship: Estagiário
+      employee: Funcionário
+      contractor: PJ
+      associate: Associado
+    contract_company_country:
+      brazil: Brasil
+      usa: Estados Unidos
+    role:
+      evaluator: Avaliador
+      admin: Admin
+      open_source_manager: Responsável OpenSource
+      hr: Recursos Humanos
+      commercial: Comercial
+  edit_allocation: "Editar Alocação"
+  details: "Detalhes"
+  allocation:
+    access_allocation: Acessar Alocação
+    current_allocation: Alocação Atual 
+    not_allocated: Não Alocado
+    allocations: Alocações
+    project_name: Nome do Projeto
+    start_at: Início 
+    end_at: Término 
+    in_progress: Em Progresso
+  punches_filter:
+    filter: Filtro
+    range: Intervalo
+    to_filter: Filtrar
+    clean_filter: Limpar Filtro
+    download_xls: Baixar XLS
+    all_punches: Todos os Punches
   present: 'Presente'

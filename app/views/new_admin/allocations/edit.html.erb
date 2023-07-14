@@ -1,0 +1,8 @@
+<% content_for :page_title do %>
+  <%= t 'edit_allocation' %>
+<% end %>
+
+<div data-tab-id="edit_allocation">
+  <%= render 'form', allocation: @allocation, users: @users, projects: @projects %>
+</div>
+

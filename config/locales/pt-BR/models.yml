@@ -250,6 +250,7 @@ pt-BR:
         attachment: "Anexo"
         comment: "Comentário"
         extra_hour: "Hora extra?"
+        delta: "Delta"
       office:
         id: "ID"
         city: "Cidade"
@@ -305,6 +306,7 @@ pt-BR:
         questionnaire_kind: "Tipo do Questionário"
         evaluation_date: "Data da avaliação"
       questionnaire:
+        questionnaire: "Questionário"
         id: "ID"
         title: "Título"
         kind: "Tipo"

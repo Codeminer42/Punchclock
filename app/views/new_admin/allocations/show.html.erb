@@ -1,0 +1,24 @@
+<% content_for :page_title do %>
+  <%= t 'allocation' %> #<%= @allocation.id %>
+<% end %>
+
+<div data-tab-id="allocation" class="space-y-6">
+  <div>
+    <%= link_to edit_new_admin_user_allocation_path(@allocation) do %>
+      <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700"><%= t 'edit_allocation' %></button>
+    <% end %>
+  </div>
+
+  <div id="allocation_details">
+    <%= render 'allocation_details', allocation: @allocation %>
+  </div>
+
+  <div id="revenue_forecast">
+    <%= render 'revenue_forecast', allocation_forecast: @allocation_forecast %>
+  </div>
+
+  <div id="allocated_user_punches">
+    <%= render 'allocated_user_punches', allocation: @allocation %>
+  </div>
+</div>
+

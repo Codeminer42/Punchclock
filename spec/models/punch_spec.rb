@@ -247,4 +247,37 @@ describe Punch do
       end
     end
   end
+
+  describe "filter_by_date scope" do 
+
+    let(:user) {FactoryBot.create(:user)}
+
+    let(:punch) { 
+      FactoryBot.create(
+        :punch, 
+        created_at: 1.month.ago, 
+        user: user,
+      ) 
+    }
+
+    let(:another_punch) {
+      FactoryBot.create(
+        :punch, 
+        created_at: 2.months.ago, 
+        user: user,
+      )
+    }
+
+    context "punch is under filter" do 
+      it "appears in the filtered list" do 
+        expect(Punch.filter_by_date(user.id, 1.month.ago, 1.day.ago)).to include(punch)
+      end 
+    end 
+
+    context "punch is out of filter" do 
+      it "does not appear in the filtered list" do 
+        expect(Punch.filter_by_date(user.id, 1.month.ago, 1.day.ago)).to_not include(another_punch)
+      end 
+    end 
+  end 
 end

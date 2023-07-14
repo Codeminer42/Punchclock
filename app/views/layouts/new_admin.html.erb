@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= yield :page_title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="main">
+      <div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+        <%= render 'sidebar' %>
+        <div class="flex flex-col flex-1 w-full">
+          <%= render 'header' %>
+          <div class="h-full overflow-y-auto">
+            <div class="container py-6 mx-auto grid">
+              <%= render 'shared/flash_redesign' %>
+              <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <%= yield :page_title %>
+              </h2>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= javascript_include_tag "new_admin_application" %>
+  </body>
+</html>

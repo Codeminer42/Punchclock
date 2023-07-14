@@ -63,4 +63,25 @@ class UserDecorator < Draper::Decorator
     return if model.city.nil?
     "#{model.city.name} - #{model.city.state.code}"
   end
+
+  def offices_managed
+    model.managed_offices.pluck(:city).to_sentence
+  end
+
+  def roles_sentence
+    roles = model.roles.values.reduce([]) do |acc, role|
+      acc.push(I18n.t("user.role.#{role}"))
+    end
+
+    roles.to_sentence.humanize
+  end
+
+  def mentor_name
+    return if model.mentor.nil?
+    model.mentor.first_and_last_name
+  end
+
+  def office_city
+    model.office.city
+  end
 end

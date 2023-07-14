@@ -78,6 +78,10 @@ en:
   vacation_approved: "Vacation request approved"
   vacation_denied: "Vacation request denied"
   english_evaluation: "English evaluation"
+  performance_evaluations: "Performance Evaluations"
+  no_performance_evaluations: "No performance evaluations"
+  evaluation: "Evaluation"
+  access_evaluation: "Access Evaluation"
   revenue_forecast: 'Revenue Forecast'
   revenue_forecast_warning: '* This feature was implemented on Sept/2022, and for this reason, data before this date are incomplete.'
   internal_market: "Internal Market"
@@ -91,4 +95,13 @@ en:
   send_reset_instructions: "Send me reset password instructions"
   didnt_receive_instructions: "Didn't receive confirmation instructions?"
   resend_instructions: "Resend confirmation instructions"
+  allocation:
+    access_allocation: Access Allocation
+    current_allocation: Current Allocation
+    not_allocated: Not Allocated
+    allocations: Allocations
+    project_name: Project Name
+    start_at: Start At
+    end_at: End At
+    in_progress: In Progress
   present: 'Present'
