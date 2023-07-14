@@ -142,7 +142,7 @@ ActiveAdmin.register User do
         end
       end
 
-      tab I18n.t('perfomance_evaluations') do
+      tab I18n.t('performance_evaluations') do
         attributes_table do
           row :evaluation do
             table_for user.evaluations.by_kind(:performance).order(created_at: :desc) do
