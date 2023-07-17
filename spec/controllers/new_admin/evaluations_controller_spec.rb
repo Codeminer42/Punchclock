@@ -102,4 +102,47 @@ RSpec.describe NewAdmin::EvaluationsController do
       end
     end
   end
+
+  describe 'GET #show' do
+    let(:evaluation) { create(:evaluation) }
+    context 'when the user is signed in' do
+      before do
+        sign_in(user)
+      end
+
+      context 'when the user is an admin' do
+        let(:user) { create(:user, :admin) }
+
+        it 'renders the show template' do
+          get :show, params: { id: evaluation.id }
+
+          expect(response).to render_template(:show)
+        end
+
+        it 'assigns the evaluation correctly' do
+          get :show, params: { id: evaluation.id }
+
+          expect(assigns(:evaluation)).to eq(evaluation)
+        end
+      end
+
+      context 'when the user is not an admin' do
+        let(:user) { create(:user) }
+
+        it 'redirects to the root path' do
+          get :show, params: { id: evaluation.id }
+
+          expect(response).to redirect_to(root_path)
+        end
+      end
+    end
+
+    context 'when the user is not signed in' do
+      it 'redirects to the root path' do
+        get :show, params: { id: evaluation.id }
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
 end
