@@ -105,6 +105,7 @@ RSpec.describe NewAdmin::EvaluationsController do
 
   describe 'GET #show' do
     let(:evaluation) { create(:evaluation) }
+
     context 'when the user is signed in' do
       before do
         sign_in(user)

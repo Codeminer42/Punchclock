@@ -13,7 +13,7 @@ module NewAdmin
     end
 
     def show
-      @evaluation = Evaluation.find(params[:id])
+      @evaluation = Evaluation.find(params[:id]).decorate
     end
 
     private

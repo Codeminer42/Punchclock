@@ -78,6 +78,7 @@ en:
   vacation_approved: "Vacation request approved"
   vacation_denied: "Vacation request denied"
   english_evaluation: "English evaluation"
+  english_level: "English level"
   performance_evaluations: "Performance Evaluations"
   no_performance_evaluations: "No performance evaluations"
   evaluation: "Evaluation"
@@ -114,3 +115,8 @@ en:
     created_at: Crated at
     evaluation_date: Evaluation date
     any: Any
+    show_title: "Evaluation %{id}"
+    details: "Evaluation details"
+    answers: "Respostas"
+    question: "Questão"
+    response: "Resposta"
