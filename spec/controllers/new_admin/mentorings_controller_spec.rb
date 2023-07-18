@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe NewAdmin::MentoringController do
+RSpec.describe NewAdmin::MentoringsController do
   describe 'GET #index' do
     context 'when the user is signed in' do
       before do

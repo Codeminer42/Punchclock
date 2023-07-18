@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class MentoringController < ApplicationController
+  class MentoringsController < ApplicationController
     layout 'new_admin'
 
     before_action :authenticate_user!
