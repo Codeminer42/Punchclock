@@ -1,0 +1,33 @@
+<div class='p-4 border-solid border-2 rounded-xl mb-3'>
+  <div class='flex justify-between items-center mb-4'>
+    <%= link_to repository.link, target: "_blank" do %>
+      <h2 class="font-semibold text-lg m-0"><%= repository.link %></h2>
+    <% end %>
+    <div class='flex gap-4 items-center'>
+      <div class='flex gap-1 items-center text-gray-400' title="<%= t("repositories.index.issues") %>">
+        <%= inline_svg_tag 'issues.svg', class: 'h-4 w-4' %>
+        <span class='font-semibold'>40</span>
+      </div>
+      <div class='flex gap-1 items-center text-gray-400' title="<%= t("repositories.index.pull_requests") %>">
+        <%= inline_svg_tag 'prs.svg', class: 'h-4 w-4' %>
+        <span class='font-semibold'>1K</span>
+      </div>
+      <div class='flex gap-1 items-center text-gray-400' title="<%= t("repositories.index.stars") %>">
+        <%= inline_svg_tag 'stars.svg', class: 'h-4 w-4' %>
+        <span class='font-semibold'>374</span>
+      </div>
+    </div>
+  </div>
+  <div class='flex justify-between items-center'>
+    <div class="flex gap-2">
+      <% repository.languages.each do |language| %>
+        <span class="bg-gray-300 text-gray-500 px-2 py-1 font-semibold text-sm rounded-lg">
+          <%= language %>
+        </span>
+      <% end %>
+    </div>
+    <span class="bg-sky-500 px-2 py-1 text-white font-semibold text-sm rounded-lg">
+      <%= t("repositories.index.highlight") %>
+    </span>
+  </div>
+</div>

@@ -92,6 +92,10 @@ pt-BR:
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
+      highlight: 'Recomendado'
+      issues: 'Issues'
+      pull_requests: 'Pull Requests'
+      stars: 'Stars'
   not_started: 'Não iniciado'
   finished: 'Finalizado'
   admin:
@@ -203,12 +207,12 @@ pt-BR:
   details: "Detalhes"
   allocation:
     access_allocation: Acessar Alocação
-    current_allocation: Alocação Atual 
+    current_allocation: Alocação Atual
     not_allocated: Não Alocado
     allocations: Alocações
     project_name: Nome do Projeto
-    start_at: Início 
-    end_at: Término 
+    start_at: Início
+    end_at: Término
     in_progress: Em Progresso
   punches_filter:
     filter: Filtro

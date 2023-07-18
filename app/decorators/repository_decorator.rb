@@ -8,9 +8,9 @@ class RepositoryDecorator < ApplicationDecorator
   end
 
   def languages
-    return '' unless language
+    return [] unless language
 
-    language.split(',').first(3).to_sentence
+    language.split(', ').map(&:strip)
   end
 
   def name
