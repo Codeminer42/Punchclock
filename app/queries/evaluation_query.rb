@@ -36,6 +36,7 @@ class EvaluationQuery
         INNER JOIN users as evaluator ON evaluator.id = evaluations.evaluator_id
         INNER JOIN users as evaluated ON evaluated.id = evaluations.evaluated_id
       ')
+      .order('evaluations.created_at DESC')
   end
 
   def merge_options!(query)

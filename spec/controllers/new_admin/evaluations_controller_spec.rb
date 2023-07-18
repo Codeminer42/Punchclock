@@ -27,7 +27,7 @@ RSpec.describe NewAdmin::EvaluationsController do
         it 'assigns all evaluations' do
           get :index
 
-          expect(assigns(:evaluations)).to contain_exactly(english, performance, expired, recent)
+          expect(assigns(:evaluations)).to eq([recent, english, expired, performance])
         end
 
         context 'when filtering by evaluator_id' do
@@ -54,7 +54,7 @@ RSpec.describe NewAdmin::EvaluationsController do
           it 'assigns evaluations correctly' do
             get :index, params: { questionnaire_type: 1 }
 
-            expect(assigns(:evaluations)).to contain_exactly(performance, expired, recent)
+            expect(assigns(:evaluations)).to eq([recent, expired, performance])
           end
         end
 
@@ -62,7 +62,7 @@ RSpec.describe NewAdmin::EvaluationsController do
           it 'assigns evaluations correctly' do
             get :index, params: { created_at_start: 1.year.ago, created_at_end: 3.months.ago }
 
-            expect(assigns(:evaluations)).to contain_exactly(performance, expired)
+            expect(assigns(:evaluations)).to eq([expired, performance])
           end
         end
 

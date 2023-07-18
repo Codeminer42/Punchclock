@@ -51,10 +51,10 @@ RSpec.describe EvaluationQuery do
     context 'with no options specified' do
       let(:options) { {} }
 
-      it 'returns all evaluations' do
+      it 'returns all evaluations ordered correctly' do
         result = call
 
-        expect(result).to contain_exactly(english_evaluation, performance_evaluation, expired_evaluation, recent_evaluation)
+        expect(result).to eq([recent_evaluation, english_evaluation, performance_evaluation, expired_evaluation])
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe EvaluationQuery do
       it 'returns evaluations from the given evaluator' do
         result = call
 
-        expect(result).to contain_exactly(english_evaluation, recent_evaluation)
+        expect(result).to eq([recent_evaluation, english_evaluation])
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe EvaluationQuery do
       it 'returns evaluations of the given evaluated' do
         result = call
 
-        expect(result).to contain_exactly(performance_evaluation, expired_evaluation)
+        expect(result).to eq([performance_evaluation, expired_evaluation])
       end
     end
 
@@ -94,7 +94,7 @@ RSpec.describe EvaluationQuery do
       it 'returns evaluations created after or on the given start date' do
         result = call
 
-        expect(result).to contain_exactly(recent_evaluation, english_evaluation)
+        expect(result).to eq([recent_evaluation, english_evaluation])
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe EvaluationQuery do
       it 'returns evaluations created before or on the given end date' do
         result = call
 
-        expect(result).to contain_exactly(performance_evaluation, expired_evaluation)
+        expect(result).to eq([performance_evaluation, expired_evaluation])
       end
     end
 
@@ -114,7 +114,7 @@ RSpec.describe EvaluationQuery do
       it 'returns evaluations created within the given range' do
         result = call
 
-        expect(result).to contain_exactly(expired_evaluation, performance_evaluation)
+        expect(result).to eq([performance_evaluation, expired_evaluation])
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe EvaluationQuery do
       it 'returns evaluations with evaluation dates before or on the given end date' do
         result = call
 
-        expect(result).to contain_exactly(performance_evaluation, expired_evaluation)
+        expect(result).to eq([performance_evaluation, expired_evaluation])
       end
     end
 
@@ -168,7 +168,7 @@ RSpec.describe EvaluationQuery do
       it 'ignores the invalid option and returns all evaluations' do
         result = call
 
-        expect(result).to contain_exactly(english_evaluation, performance_evaluation, expired_evaluation, recent_evaluation)
+        expect(result).to eq([recent_evaluation, english_evaluation, performance_evaluation, expired_evaluation])
       end
     end
   end
