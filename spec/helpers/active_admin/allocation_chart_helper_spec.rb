@@ -44,7 +44,7 @@ module ActiveAdmin
       end
 
       context 'when last allocation end date has passed' do
-        let(:last_allocation) { create(:allocation, end_at: current_date) }
+        let(:last_allocation) { create(:allocation, start_at: current_date - 10.days, end_at: current_date) }
         it 'returns EXPIRED' do
           is_expected.to eq(AllocationChartHelper::Status::EXPIRED)
         end
