@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     resources :mentoring, only: :index
     resources :allocation_chart, only: :index
     resources :allocations, only: %i[new create show update edit], as: :user_allocations
-    resources :users, only: :show, as: :admin_user
+    resources :users, only: %i[show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
   end
 
