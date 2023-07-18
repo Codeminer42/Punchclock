@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe NewAdmin::AllocationChartController do
+describe NewAdmin::AllocationChartsController do
   render_views
 
   let(:page) { Capybara::Node::Simple.new(response.body) }

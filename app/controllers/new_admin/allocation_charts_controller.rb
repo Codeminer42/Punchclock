@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class AllocationChartController < ApplicationController
+  class AllocationChartsController < ApplicationController
     layout 'new_admin'
 
     before_action :authenticate_user!
