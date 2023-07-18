@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AllocationsAndUnalocatedUsersQuery
+class AllocationsAndUnallocatedUsersQuery
   attr_reader :allocation
 
   def initialize(allocation)
