@@ -136,4 +136,43 @@ describe 'Evaluations', type: :feature do
       end
     end
   end
+
+  describe 'Actions' do
+    let!(:evaluation) { create(:evaluation, :with_answers, answer_count: 2, english_level: 'beginner') }
+
+    before do
+      visit '/new_admin/evaluations'
+    end
+
+    context 'when on show' do
+      before do
+        find_link('Visualizar', href: "/new_admin/evaluations/#{evaluation.id}").click
+      end
+
+      it 'have the evaluation answers on show' do
+        within '#answers-table' do
+          expect(page).to have_css('tbody tr', count: 2)
+        end
+      end
+
+      it 'have all evaluation attributes except updated at' do
+        expect(page).to have_css('td', text: evaluation.score) and
+          have_css('td', text: evaluation.english_level.text.titleize) and
+          have_css('a',  text: evaluation.evaluator.name) and
+          have_css('a',  text: evaluation.evaluated.name) and
+          have_css('td', text: I18n.l(evaluation.evaluator.created_at, format: :long)) and
+          have_css('td', text: evaluation.questionnaire.title) and
+          have_css('td', text: evaluation.observation) and
+          have_css('td', text: I18n.l(evaluation.evaluation_date, format: :long))
+      end
+
+      it 'have no edit action' do
+        expect(page).to have_no_link('Editar Avaliação')
+      end
+
+      it 'have no delete action' do
+        expect(page).to have_no_link('Remover Avaliação')
+      end
+    end
+  end
 end
