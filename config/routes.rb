@@ -61,6 +61,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get 'latest_contributions' => 'contributions#latest'
       get "holidays" => "holidays#holidays_dashboard"
       post "request" => "token#request_token"
       post "refresh" => "token#refresh_token"
