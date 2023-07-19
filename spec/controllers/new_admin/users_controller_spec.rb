@@ -39,18 +39,18 @@ describe NewAdmin::UsersController do
   end
 
   describe 'GET #edit' do
-  it 'returns successful status' do
-    get :edit, params: { id: user.id }
+    it 'returns successful status' do
+      get :edit, params: { id: user.id }
 
-    expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'assigns the correct user to @user' do
+      get :edit, params: { id: user.id }
+
+      expect(assigns(:user)).to eq(user)
+    end
   end
-
-  it 'assigns the correct user to @user' do
-    get :edit, params: { id: user.id }
-
-    expect(assigns(:user)).to eq(user)
-  end
-end
 
 describe 'PATCH #update' do
   let(:updated_attributes) { { name: "Updated User", email: "updated.user@codeminer42.com" } }
