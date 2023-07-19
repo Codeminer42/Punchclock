@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t('regional_holidays') %>
+<% end %>
+
+<div data-tab-id="regional_holidays" class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <%= render 'regional_holidays_table', regional_holidays: @regional_holidays %>
+</div>

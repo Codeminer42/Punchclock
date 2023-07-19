@@ -1,0 +1,53 @@
+<table class="table-auto w-full">
+  <thead>
+    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+      <th class="px-4 py-3"><%= RegionalHoliday.human_attribute_name('name') %></th>
+      <th class="px-4 py-3"><%= RegionalHoliday.human_attribute_name('day') %></th>
+      <th class="px-4 py-3"><%= RegionalHoliday.human_attribute_name('month') %></th>
+      <th class="px-4 py-3"><%= RegionalHoliday.human_attribute_name('cities') %></th>
+      <th class="px-4 py-3"></th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
+    <% regional_holidays.each do |holiday| %>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <td class="px-4 py-3">
+          <div>
+            <%= holiday.name %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div>
+            <%= holiday.day %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div>
+            <%= holiday.month %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div>
+            <%= holiday.cities %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="space-x-4">
+            <%= link_to t('view'),
+                nil,
+                class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900' 
+            %>
+            <%= link_to t('edit'),
+                nil,
+                class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900' 
+            %>
+            <%= link_to t('delete'),
+                nil,
+                class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900' 
+            %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
