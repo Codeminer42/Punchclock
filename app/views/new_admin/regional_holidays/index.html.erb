@@ -3,5 +3,8 @@
 <% end %>
 
 <div data-tab-id="regional_holidays" class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
-  <%= render 'regional_holidays_table', regional_holidays: @regional_holidays %>
+  <div class="flex justify-between gap-4">
+    <%= render 'regional_holidays_table', regional_holidays: @regional_holidays %>
+    <%= render 'regional_holidays_filters' %>
+  <div>
 </div>
