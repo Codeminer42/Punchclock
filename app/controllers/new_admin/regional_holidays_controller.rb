@@ -4,8 +4,24 @@ module NewAdmin
   class RegionalHolidaysController < ApplicationController
     layout 'new_admin'
 
+    before_action :cities_with_holidays, only: :index
+
     def index
-      @regional_holidays = RegionalHoliday.all.decorate
+      @regional_holidays = RegionalHolidaysQuery.new(**filter_params).call.decorate
+    end
+
+    private
+
+    def filter_params
+      params.permit(
+        :regional_holiday_id,
+        :month,
+        city_ids: []
+      ).to_h
+    end
+
+    def cities_with_holidays
+      @cities_with_holidays = City.joins(:regional_holidays).distinct.order('cities.name ASC')
     end
   end
 end
