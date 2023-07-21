@@ -1,5 +1,5 @@
 ActiveAdmin.register Repository do
-  permit_params :link, :language
+  permit_params :link, :language, :highlight
 
   filter :link
   filter :language
@@ -9,6 +9,7 @@ ActiveAdmin.register Repository do
   index download_links: [:xlsx] do
     column :link
     column :language
+    column :highlight
 
     actions
   end
@@ -17,6 +18,7 @@ ActiveAdmin.register Repository do
     f.inputs do
       f.input :link
       f.input :language
+      f.input :highlight
     end
     f.actions
   end
@@ -25,6 +27,7 @@ ActiveAdmin.register Repository do
     attributes_table do
       row :link
       row :language
+      row :highlight
       row :created_at
       row :updated_at
     end
