@@ -238,4 +238,12 @@ pt-BR:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
-  regional_holidays: 'Feriados regionais'
+  regional_holidays:
+    title: "Feriados regionais"
+    filters: "Filtros"
+    name: "Nome"
+    city: "Cidade"
+    month: "Mês"
+    select_a_month: "Selecione um mês"
+    filter: "Filtrar"
+    clear_filters: "Limpar filtros"

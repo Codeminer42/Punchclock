@@ -120,4 +120,12 @@ en:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
-  regional_holidays: 'Regional holidays'
+  regional_holidays:
+    title: "Regional holidays"
+    filters: "Filters"
+    name: "Name"
+    city: "City"
+    month: "Month"
+    select_a_month: "Select a month"
+    filter: "Filter"
+    clear_filters: "Clear filters"
