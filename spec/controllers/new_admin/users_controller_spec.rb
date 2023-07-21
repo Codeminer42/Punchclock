@@ -59,4 +59,59 @@ describe NewAdmin::UsersController do
       end
     end
   end
+
+  describe 'GET #edit' do
+    it 'returns successful status' do
+      get :edit, params: { id: user.id }
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'assigns the correct user to @user' do
+      get :edit, params: { id: user.id }
+
+      expect(assigns(:user)).to eq(user)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let(:updated_attributes) { { name: "Updated User", email: "updated.user@codeminer42.com" } }
+
+    context 'with valid attributes' do
+      it 'updates the user' do
+        patch :update, params: { id: user.id, user: updated_attributes }
+
+        user.reload
+        expect(user.name).to eq("Updated User")
+        expect(user.email).to eq("updated.user@codeminer42.com")
+      end
+
+      it 'redirects to user show page' do
+        patch :update, params: { id: user.id, user: updated_attributes }
+
+        expect(response).to redirect_to(new_admin_admin_user_path(user))
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not update the user' do
+        invalid_attributes = { name: "", email: "invalid_email" }
+
+        patch :update, params: { id: user.id, user: invalid_attributes }
+
+        user.reload
+        expect(user.name).not_to eq("")
+        expect(user.email).not_to eq("invalid_email")
+      end
+
+      it 'flashes error and redirects to edit user page' do
+        invalid_attributes = { name: "", email: "invalid_email" }
+
+        patch :update, params: { id: user.id, user: invalid_attributes }
+
+        expect(flash[:alert]).to be_present
+        expect(response).to redirect_to(edit_new_admin_admin_user_path(user))
+      end
+    end
+  end
 end
