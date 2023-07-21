@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     resources :evaluations, only: %i[index]
     resources :allocation_chart, only: :index
     resources :allocations, only: %i[new create show update edit], as: :user_allocations
-    resources :users, only: :show, as: :admin_user
+    resources :users, only: %i[show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
   end
 
@@ -62,8 +62,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get "users" => "companies#users"
-      get "offices" => "companies#offices"
+      get 'latest_contributions' => 'contributions#latest'
       get "holidays" => "holidays#holidays_dashboard"
       post "request" => "token#request_token"
       post "refresh" => "token#refresh_token"
