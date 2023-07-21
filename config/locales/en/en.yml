@@ -105,3 +105,12 @@ en:
     end_at: End At
     in_progress: In Progress
   present: 'Present'
+  evaluations:
+    empty: No evaluation found
+    filters: Filters
+    filter: Filter
+    clear: Clear filters
+    questionnaire_type: Questionnaire type
+    created_at: Crated at
+    evaluation_date: Evaluation date
+    any: Any
