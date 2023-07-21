@@ -1,0 +1,174 @@
+<% content_for :page_title do %>
+  <%= t('evaluations.show_title', id: @evaluation.id) %>
+<% end %>
+
+<div data-tab-id="evaluation">
+  <table class="w-full whitespace-nowrap">
+    <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+        <th colspan="100%" class="px-4 py-3"><%= t 'evaluations.details' %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'score' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-bold">
+              <%= @evaluation.score %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'english_level' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  @evaluation.english_level %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'reviewer' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=
+                link_to @evaluation.evaluator.name,
+                new_admin_admin_user_path(@evaluation.evaluator),
+                class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+              %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'evaluated' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=
+                link_to @evaluation.evaluated.name,
+                new_admin_admin_user_path(@evaluation.evaluated),
+                class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+              %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'created_at' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  @evaluation.created_at %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'questionnaire' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=
+                link_to @evaluation.questionnaire.title,
+                  admin_questionnaire_path(@evaluation.questionnaire),
+                  class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
+              %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'observation' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @evaluation.observation %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'evaluation_date' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @evaluation.evaluation_date %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= t 'evaluations.answers' %>
+          </div>
+        </th>
+        <td>
+          <table id="answers-table" class="w-full whitespace-nowrap">
+            <thead>
+              <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+                <td class="px-4 py-3"><%= t 'evaluations.question' %></td>
+                <td class="px-4 py-3"><%= t 'evaluations.response' %></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @evaluation.answers.each do |answer| %>
+                <tr class="text-gray-700 dark:text-gray-400">
+                  <th class="w-1/2 px-4 py-3">
+                    <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+                      <%= answer.question.title %>
+                    </div>
+                  </th>
+                  <td class="w-1/2 px-4 py-3">
+                    <div class="flex items-center text-sm">
+                      <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                        <%= answer.response %>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            <tbody>
+          </table>
+        </td>
+      </tr>
+    <tbody>
+  <table>
+</div>

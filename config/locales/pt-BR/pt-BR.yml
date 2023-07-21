@@ -31,6 +31,7 @@ pt-BR:
       date_time: "%d/%m/%Y %H:%M"
   english_evaluations: 'Avaliações de Inglês'
   english_score: 'Pontuação de Inglês'
+  english_level: "Nível de inglês"
   english_evaluations: 'Avaliações de Inglês'
   experience: 'Experiências'
   professional_experience: 'Experiência profissional'
@@ -232,3 +233,8 @@ pt-BR:
     created_at: Criado em
     evaluation_date: Data da avaliação
     any: Qualquer
+    show_title: "Avaliação #%{id}"
+    details: "Detalhes da avaliação"
+    answers: "Respostas"
+    question: "Questão"
+    response: "Resposta"
