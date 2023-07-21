@@ -1,0 +1,115 @@
+<%= form_with(model: user, url: "/new_admin/users/#{user.id}", method: :patch) do |form| %>
+  <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div class="flex mb-4">
+      <div class="w-1/2 mr-2">
+        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('name', scope: %i[activerecord attributes user]) %></label>
+        <%= form.text_field :name, id: 'name', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input' %>
+      </div>
+      <div class="w-1/2 mr-2">
+          <label for="started_at" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('started_at', scope: %i[activerecord attributes user]) %></label>
+          <%= form.date_field :started_at, id: 'started_at', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input' %>
+      </div>
+    </div>
+
+    <div class="flex mb-4">
+      <div class="w-1/2 mr-2">
+        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('email', scope: %i[activerecord attributes user]) %></label>
+        <%= form.email_field :email, id: 'email', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input' %>
+      </div>
+      <div class="w-1/2 mr-2">
+        <label for="github" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('github', scope: %i[activerecord attributes user]) %></label>
+        <%= form.text_field :github, id: 'github', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input' %>
+      </div>
+    </div>
+
+    <div class="flex mb-4">
+      <div class="w-1/3 mr-2">
+        <label for="city_id" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('city', scope: %i[activerecord attributes user]) %></label>
+        <%= form.collection_select :city_id, City.collection, :id, :name, { include_blank: true }, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+      </div>
+      <div class="w-1/3 mr-2">
+        <label for="office_id" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('office', scope: %i[activerecord attributes user]) %></label>
+        <%= form.collection_select :office_id, Office.active.order(:city), :id, :city, { include_blank: true }, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+      </div>
+      <div class="w-1/3">
+        <label for="contract_company_country" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('contract_company_country', scope: %i[activerecord attributes user]) %></label>
+        <%= form.select :contract_company_country, User.contract_company_country.values.map { |company_country| [company_country.text.humanize, company_country.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+      </div>
+    </div>
+
+    <div class="flex mb-4">
+      <div class="w-1/3 mr-2">
+        <label for="specialty" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('specialty', scope: %i[activerecord attributes user]) %></label>
+        <%= form.text_field :specialty, id: 'specialty', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input' %>
+      </div>
+
+      <div class="w-1/3 mr-2">
+        <label for="backend_level" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('backend_level', scope: %i[activerecord attributes user]) %></label>
+        <%= form.select :backend_level, User.backend_level.values.map { |level| [level.text, level.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+      </div>
+
+      <div class="w-1/3">
+        <label for="frontend_level" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('frontend_level', scope: %i[activerecord attributes user]) %></label>
+        <%= form.select :frontend_level, User.frontend_level.values.map { |level| [level.text, level.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+      </div>
+    </div>
+
+
+    <div class="mb-4">
+      <label for="level" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('level', scope: %i[activerecord attributes user]) %></label>
+      <%= form.select :level, User.level.values.map { |level| [level.text.titleize, level.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+    </div>
+
+    <div class="mb-4">
+      <label for="contract_type" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('contract_type', scope: %i[activerecord attributes user]) %></label>
+      <%= form.select :contract_type, User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+    </div>
+
+    <div class="flex mb-4">
+      
+      <div class="w-1/2 mr-4">
+        <label for="mentor_id" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('mentor', scope: %i[activerecord attributes user]) %></label>
+        <%= form.collection_select :mentor_id, User.active.order(:name), :id, :name, { include_blank: true }, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+      </div>
+      <div class="w-1/2">
+          <label for="occupation" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('occupation', scope: %i[activerecord attributes user]) %></label>
+          <div class="flex items-center my-1">
+            <%= form.radio_button :occupation, :administrative, id: 'occupation_administrative', class: 'text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+            <label for="occupation_administrative" class="ml-2 block text-sm text-gray-900 dark:text-gray-300"><%= t('administrative', scope: %i[ user occupation]) %></label>
+          </div>
+          <div class="flex items-center">
+            <%= form.radio_button :occupation, :engineer, id: 'occupation_engineer', class: 'text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
+            <label for="occupation_engineer" class="ml-2 block text-sm text-gray-900 dark:text-gray-300"><%= t('engineer', scope: %i[user occupation]) %></label>
+          </div>
+      </div>
+    </div>
+
+    
+    <div class="flex mb-4">
+      <div class="w-1/2 ml-2">
+      <div class="flex items-center">
+          <%= form.check_box :allow_overtime, id: 'allow_overtime', class: 'form-checkbox' %>
+          <label for="allow_overtime" class="ml-2 block text-sm text-gray-900 dark:text-gray-300"><%= t('allow_overtime', scope: %i[activerecord attributes user]) %></label>
+        </div>
+        <div class="flex items-center">
+          <%= form.check_box :active, id: 'active', class: 'form-checkbox' %>
+          <label for="active" class="ml-2 block text-sm text-gray-900 dark:text-gray-300"><%= t('active', scope: %i[activerecord attributes user]) %></label>
+        </div>
+        <div class="flex items-center">
+          <%= form.check_box :otp_required_for_login, id: 'otp_required_for_login', class: 'form-checkbox' %>
+          <label for="otp_required_for_login" class="ml-2 block text-sm text-gray-900 dark:text-gray-300"><%= t('otp_required_for_login', scope: %i[activerecord attributes user]) %></label>
+        </div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label for="observation" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('observation', scope: %i[activerecord attributes user]) %></label>
+      <%= form.text_area :observation, id: 'observation', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-textarea' %>
+    </div>
+    <div class="mt-6">
+      <%= form.submit t('update', scope: %i[user]), class: 'px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple' %>
+      <button class="w-full px-5 py-3 ml-2 font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+           <%= t('cancel') %> 
+      </button>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t(:editing, scope: %i(helpers actions), model: User.model_name.human) %>
+<% end %>
+
+<div data-tab-id="edit_user">
+  <%= render 'form', user: @user %>
+</div>
