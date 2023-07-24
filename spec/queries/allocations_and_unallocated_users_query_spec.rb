@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AllocationsAndUnalocatedUsersQuery do
+RSpec.describe AllocationsAndUnallocatedUsersQuery do
   describe '.call' do
     subject(:call) { described_class.new(Allocation).call }
 
