@@ -244,7 +244,7 @@ pt-BR:
     name: "Nome"
     city: "Cidade"
     month: "Mês"
-    select_a_month: "Selecione um mês"
+    any: "Qualquer"
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
     empty: "Nenhum feriado regional encontrado"

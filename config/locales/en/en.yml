@@ -126,7 +126,7 @@ en:
     name: "Name"
     city: "City"
     month: "Month"
-    select_a_month: "Select a month"
+    any: "Any"
     filter: "Filter"
     clear_filters: "Clear filters"
     empty: "No regional holiday found"
