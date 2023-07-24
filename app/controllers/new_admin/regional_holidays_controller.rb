@@ -4,7 +4,7 @@ module NewAdmin
   class RegionalHolidaysController < ApplicationController
     layout 'new_admin'
 
-    before_action :cities_with_holidays, only: :index
+    before_action :load_cities_with_holidays, only: :index
 
     def index
       @regional_holidays = RegionalHolidaysQuery.new(**filter_params).call.decorate
@@ -20,7 +20,7 @@ module NewAdmin
       ).to_h
     end
 
-    def cities_with_holidays
+    def load_cities_with_holidays
       @cities_with_holidays = City.joins(:regional_holidays).distinct.order('cities.name ASC')
     end
   end
