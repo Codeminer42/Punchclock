@@ -14,10 +14,12 @@ module NewAdmin
 
     def edit
       @user = User.find(params[:id])
+      AbilityAdmin.new(current_user).authorize! :manage, @user
     end
 
     def update
       @user = User.find(params[:id])
+      AbilityAdmin.new(current_user).authorize! :manage, @user
 
       @user.attributes = user_params
 
