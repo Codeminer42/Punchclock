@@ -4,7 +4,7 @@ class ContributionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @user_contributions = scopped_contributions.approved.order(pr_state: :desc)
+    @user_contributions = scopped_contributions.approved.order(created_at: :desc)
   end
 
   def edit
