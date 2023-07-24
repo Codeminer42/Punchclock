@@ -129,3 +129,4 @@ en:
     select_a_month: "Select a month"
     filter: "Filter"
     clear_filters: "Clear filters"
+    empty: "No regional holiday found"

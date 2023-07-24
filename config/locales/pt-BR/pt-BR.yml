@@ -247,3 +247,4 @@ pt-BR:
     select_a_month: "Selecione um mês"
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
+    empty: "Nenhum feriado regional encontrado"
