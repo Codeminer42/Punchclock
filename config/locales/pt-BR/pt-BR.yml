@@ -153,6 +153,7 @@ pt-BR:
       change_my_password: 'Mudar minha senha'
       verify: 'Verificar'
       update_allocation: 'Atualizar Alocação'
+      submit: 'Enviar'
     links:
       return_to_sign_in: 'Retornar ao Sign In'
   allocation_chart: 'Organograma'
