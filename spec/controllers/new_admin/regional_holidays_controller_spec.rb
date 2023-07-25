@@ -145,4 +145,20 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       expect(assigns(:regional_holiday)).to eq(regional_holiday)
     end
   end
+
+  describe 'GET #new' do
+    before do
+      get :new
+    end
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders new template' do
+      expect(response).to render_template(:new)
+    end
+
+    it 'assigns a new holiday to @regional_holiday' do
+      expect(assigns(:regional_holiday)).to be_an_instance_of(RegionalHoliday)
+    end
+  end
 end

@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :allocations, only: %i[show update edit], as: :user_allocations
     resources :users, only: %i[show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
-    resources :regional_holidays, only: :index
+    resources :regional_holidays, only: %i[index new create]
     resources :regional_holidays, only: :show, as: :show_regional_holiday
   end
 
