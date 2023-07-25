@@ -5,6 +5,7 @@ class City < ApplicationRecord
   has_and_belongs_to_many :regional_holidays
 
   scope :collection, -> { joins(:state).includes(:state).order('states.name ASC, cities.name ASC') }
+  scope :with_holidays, -> { joins(:regional_holidays).distinct.order('cities.name ASC') }
 
   validates :name, presence: true
 

@@ -21,7 +21,7 @@ module NewAdmin
     end
 
     def load_cities_with_holidays
-      @cities_with_holidays = City.joins(:regional_holidays).distinct.order('cities.name ASC')
+      @cities_with_holidays = City.with_holidays
     end
   end
 end
