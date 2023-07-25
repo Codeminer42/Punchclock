@@ -105,6 +105,7 @@ en:
     start_at: Start At
     end_at: End At
     in_progress: In Progress
+    title: "Allocation #%{id}"
   present: 'Present'
   evaluations:
     empty: No evaluation found
