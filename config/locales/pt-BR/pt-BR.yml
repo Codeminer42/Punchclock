@@ -206,6 +206,8 @@ pt-BR:
       commercial: Comercial
     update: Editar Usuário
   edit_allocation: "Editar Alocação"
+  edit_regional_holiday: "Editar Feriado Regional"
+  destroy_regional_holiday: "Remover Feriado Regional"
   details: "Detalhes"
   allocation:
     access_allocation: Acessar Alocação
