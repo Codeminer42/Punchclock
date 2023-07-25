@@ -123,4 +123,26 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       end
     end
   end
+
+  describe 'GET #show' do
+    let(:city) { create(:city) }
+
+    let!(:regional_holiday) do
+      create(:regional_holiday, cities: [city])
+    end
+
+    before do
+      get :show, params: { id: regional_holiday.id }
+    end
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders show template' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'assigns holiday to @regional_holiday' do
+      expect(assigns(:regional_holiday)).to eq(regional_holiday)
+    end
+  end
 end

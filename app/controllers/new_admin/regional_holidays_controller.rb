@@ -10,6 +10,10 @@ module NewAdmin
       @regional_holidays = RegionalHolidaysQuery.new(**filter_params).call.decorate
     end
 
+    def show
+      @regional_holiday = RegionalHoliday.find(params[:id])
+    end
+
     private
 
     def filter_params

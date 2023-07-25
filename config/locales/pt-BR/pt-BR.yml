@@ -52,6 +52,7 @@ pt-BR:
   project_details: 'Detalhes do Projeto'
   user_details: 'Detalhes do Usuário'
   punch_details: 'Detalhes do Punch'
+  regional_holiday_details: 'Detalhes do Feriado regional'
   performance_evaluations: 'Avaliações de Desempenho'
   no_performance_evaluations: 'Sem avaliações de desempenho'
   no_punches: 'Sem Punches'
@@ -205,6 +206,8 @@ pt-BR:
       commercial: Comercial
     update: Editar Usuário
   edit_allocation: "Editar Alocação"
+  edit_regional_holiday: "Editar Feriado Regional"
+  destroy_regional_holiday: "Remover Feriado Regional"
   details: "Detalhes"
   allocation:
     access_allocation: Acessar Alocação
@@ -243,6 +246,7 @@ pt-BR:
     filters: "Filtros"
     name: "Nome"
     city: "Cidade"
+    cities: "Cidades"
     month: "Mês"
     any: "Qualquer"
     filter: "Filtrar"

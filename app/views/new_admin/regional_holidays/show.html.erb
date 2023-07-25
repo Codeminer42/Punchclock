@@ -1,0 +1,27 @@
+<% content_for :page_title do %>
+  <%= @regional_holiday.name %>
+<% end %>
+
+<div data-tab-id="regional_holiday" class="space-y-6">
+  <div id="regional_holiday_actions" class="flex items-center justify-end">
+    <div class="mx-2">
+      <%= link_to nil do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t 'edit_regional_holiday' %>
+        </button>
+      <% end %>
+    </div>
+
+    <div class="mx-2">
+      <%= link_to nil do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t 'destroy_regional_holiday' %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="regional_holiday_details">
+    <%= render 'regional_holiday_details', regional_holiday: @regional_holiday %>
+  </div>
+</div>
