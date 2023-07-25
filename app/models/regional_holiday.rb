@@ -14,6 +14,10 @@ class RegionalHoliday < ApplicationRecord
     all.map { |h| { month: h.month, day: h.day } }
   end
 
+  def cities_names
+    cities.map(&:name).to_sentence
+  end
+
   private
 
   def valid_date?

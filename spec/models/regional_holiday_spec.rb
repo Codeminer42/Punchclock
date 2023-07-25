@@ -62,4 +62,14 @@ describe RegionalHoliday do
       ])
     end
   end
+
+  describe "#cities_names" do
+    let(:regional_holiday) { create(:regional_holiday, cities: [london, moscow]) }
+    let(:london) { create(:city, name: "London") }
+    let(:moscow) { create(:city, name: "Moscow") }
+
+    it "returns cities names" do
+      expect(regional_holiday.cities_names).to eq("London e Moscow")
+    end
+  end
 end
