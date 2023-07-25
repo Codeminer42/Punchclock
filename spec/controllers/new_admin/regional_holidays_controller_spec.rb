@@ -23,6 +23,10 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       create(:regional_holiday, cities: [chicago], month: 11, name: 'Thanksgiving Day')
     end
 
+    it do
+      is_expected.to permit(:regional_holiday_id, :month, { city_ids: [] }).for(:index, verb: :get)
+    end
+
     it 'renders the index template' do
       get :index
 
