@@ -121,3 +121,13 @@ en:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
+  regional_holidays:
+    title: "Regional holidays"
+    filters: "Filters"
+    name: "Name"
+    city: "City"
+    month: "Month"
+    any: "Any"
+    filter: "Filter"
+    clear_filters: "Clear filters"
+    empty: "No regional holiday found"

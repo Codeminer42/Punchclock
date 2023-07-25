@@ -238,3 +238,13 @@ pt-BR:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
+  regional_holidays:
+    title: "Feriados regionais"
+    filters: "Filtros"
+    name: "Nome"
+    city: "Cidade"
+    month: "Mês"
+    any: "Qualquer"
+    filter: "Filtrar"
+    clear_filters: "Limpar filtros"
+    empty: "Nenhum feriado regional encontrado"
