@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class City < ApplicationRecord
   belongs_to :state
   has_and_belongs_to_many :regional_holidays
