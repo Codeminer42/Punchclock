@@ -4,15 +4,14 @@ module NewAdmin
   class RegionalHolidaysController < ApplicationController
     layout 'new_admin'
 
+    before_action :set_regional_holiday, only: %i[show edit update]
     before_action :load_cities_with_holidays, only: :index
 
     def index
       @regional_holidays = RegionalHolidaysQuery.new(**filter_params).call.decorate
     end
 
-    def show
-      @regional_holiday = RegionalHoliday.find(params[:id])
-    end
+    def show; end
 
     def new
       @regional_holiday = RegionalHoliday.new
@@ -30,6 +29,18 @@ module NewAdmin
       end
     end
 
+    def edit; end
+
+    def update
+      if @regional_holiday.update(regional_holiday_params)
+        flash[:notice] = I18n.t(:notice, scope: "flash.actions.update", resource_name: RegionalHoliday.model_name.human)
+        redirect_to new_admin_show_regional_holiday_path(id: @regional_holiday.id)
+      else
+        flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
+        render :edit
+      end
+    end
+
     private
 
     def filter_params
@@ -42,6 +53,10 @@ module NewAdmin
 
     def regional_holiday_params
       params.require(:regional_holiday).permit(:name, :day, :month, :city_ids)
+    end
+
+    def set_regional_holiday
+      @regional_holiday = RegionalHoliday.find(params[:id])
     end
 
     def load_cities_with_holidays
