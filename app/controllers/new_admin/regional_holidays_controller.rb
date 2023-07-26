@@ -51,8 +51,8 @@ module NewAdmin
       @regional_holiday = RegionalHoliday.new(regional_holiday_params)
 
       if @regional_holiday.save
-        redirect_to new_admin_regional_holidays_path,
-                    I18n.t(:notice, scope: "flash.actions.create", resource_name: RegionalHoliday.model_name.human)
+        flash[:notice] = I18n.t(:notice, scope: "flash.actions.create", resource_name: RegionalHoliday.model_name.human)
+        redirect_to new_admin_regional_holidays_path
       else
         flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
         render :new
