@@ -1,5 +1,5 @@
 ActiveAdmin.register Repository do
-  permit_params :link, :language, :highlight
+  permit_params :link, :language, :highlight, :description
 
   filter :link
   filter :language
@@ -17,6 +17,7 @@ ActiveAdmin.register Repository do
   form do |f|
     f.inputs do
       f.input :link
+      f.input :description
       f.input :language
       f.input :highlight
     end
@@ -26,6 +27,7 @@ ActiveAdmin.register Repository do
   show do
     attributes_table do
       row :link
+      row :description
       row :language
       row :highlight
       row :created_at
