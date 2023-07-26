@@ -150,4 +150,42 @@ RSpec.describe 'Regional holidays' do
       end
     end
   end
+
+  describe 'new' do
+    let!(:city) { create(:city, name: 'London') }
+    let(:admin) { create(:user, :admin, occupation: :administrative) }
+
+    before do
+      sign_in(admin)
+      visit '/new_admin/regional_holidays/new'
+    end
+
+    it 'shows form fields' do
+      within "#form_regional_holiday" do
+        expect(page).to have_content(RegionalHoliday.human_attribute_name('name')) &&
+                        have_content(RegionalHoliday.human_attribute_name('day')) &&
+                        have_content(RegionalHoliday.human_attribute_name('month')) &&
+                        have_content(RegionalHoliday.human_attribute_name('cities')) &&
+                        have_select
+      end
+
+      expect(page).to have_button(I18n.t('form.button.submit'))
+    end
+
+    it 'creates regional holiday' do
+      within "#form_regional_holiday" do
+        fill_in 'regional_holiday_name', with: 'Foobar Holiday'
+        fill_in 'regional_holiday_day', with: 1
+        fill_in 'regional_holiday_month', with: 12
+        select city.name, from: 'regional_holiday_city_ids'
+      end
+
+      click_button I18n.t('form.button.submit')
+
+      expect(page).to have_content(
+        I18n.t(:notice, scope: "flash.actions.create",
+                        resource_name: RegionalHoliday.model_name.human)
+      )
+    end
+  end
 end
