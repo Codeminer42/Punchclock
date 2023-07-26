@@ -253,6 +253,8 @@ pt-BR:
     empty: "Nenhum feriado regional encontrado"
   new_admin:
     regional_holidays:
+      index:
+        new: "Novo Feriado Regional"
       show:
         edit: "Editar Feriado Regional"
         destroy: "Remover Feriado Regional"
