@@ -42,4 +42,3 @@ public/webpack/*
 !/app/assets/builds/.keep
 
 .env.*local
-.idea
