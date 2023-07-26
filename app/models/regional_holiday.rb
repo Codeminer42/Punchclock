@@ -15,7 +15,7 @@ class RegionalHoliday < ApplicationRecord
   end
 
   def cities_names
-    cities.map(&:name).to_sentence
+    cities.pluck(:name).to_sentence
   end
 
   private
