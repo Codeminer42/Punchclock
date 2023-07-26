@@ -21,6 +21,7 @@
         <i class="fab fa-github"></i>
         <span class="d-inline-block"><%= repository.link %></span>
         <span class="d-inline-block float-right"> <%= repository.languages %></span>
+        <span class="d-block text-dark"><%= simple_format repository.description %></span>
       <% end %>
     <% end %>
   </div>

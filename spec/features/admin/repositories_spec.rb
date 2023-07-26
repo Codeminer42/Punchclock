@@ -14,7 +14,7 @@ describe 'Repository', type: :feature do
   describe 'Index' do
     it 'must find fields "Link" on table' do
       within 'table' do
-          expect(page).to have_text('Link') &
+        expect(page).to have_text('Link') &
                         have_text('Linguagem')
       end
     end
@@ -40,12 +40,14 @@ describe 'Repository', type: :feature do
         expect(page).to have_text('Link') &
                         have_text('Linguagem') &
                         have_text('Criado em') &
+                        have_text('Descrição') &
                         have_text('Atualizado em')
       end
 
       it 'have repository table with correct information' do
         expect(page).to have_text(repository.link) &
                         have_text(repository.language) &
+                        have_text(repository.description) &
                         have_text(I18n.l(repository.created_at, format: :long)) &
                         have_text(I18n.l(repository.updated_at, format: :long))
       end
@@ -61,11 +63,13 @@ describe 'Repository', type: :feature do
       it 'must have the form working' do
         fill_in 'Link', with: 'https://github.com/example'
         fill_in 'Linguagem', with: 'Ruby on Rails'
+        fill_in 'Descrição', with: 'Web-application framework'
 
         click_button 'Criar Repositório'
         expect(page).to have_css('.flash_notice', text: 'Repositório foi criado com sucesso.') &
                         have_text('Ruby on Rails') &
-                        have_text('https://github.com/example')
+                        have_text('https://github.com/example') &
+                        have_text('Web-application framework')
       end
     end
 
@@ -78,7 +82,8 @@ describe 'Repository', type: :feature do
       it 'must have labels' do
         within 'form' do
           expect(page).to have_text('Link') &
-                          have_text('Linguagem')
+                          have_text('Linguagem') &
+                          have_text('Descrição')
         end
       end
 
@@ -90,7 +95,7 @@ describe 'Repository', type: :feature do
 
         expect(page).to have_css('.flash_notice', text: 'Repositório foi atualizado com sucesso.') &
                         have_text('https://github.com/new_link') &
-                        have_text('Javascript') 
+                        have_text('Javascript')
       end
     end
   end
