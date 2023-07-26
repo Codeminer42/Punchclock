@@ -334,6 +334,7 @@ pt-BR:
         link: "Link"
         name: "Nome"
         language: "Linguagem"
+        description: "Descrição"
         created_at: "Criado em"
         updated_at: "Atualizado em"
       contribution:
