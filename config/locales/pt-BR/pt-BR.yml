@@ -58,7 +58,6 @@ pt-BR:
   evaluation: 'Avaliação'
   evaluations_title: 'Avaliações'
   access_evaluation: 'Acessar Avaliação'
-  allocation: 'Alocação'
   office:
     user_not_evaluated: "Usuários não foram todos avaliados"
   reviewer: 'Avaliador'
@@ -216,6 +215,7 @@ pt-BR:
     start_at: Início
     end_at: Término
     in_progress: Em Progresso
+    title: "Alocação #%{id}"
   punches_filter:
     filter: Filtro
     range: Intervalo
@@ -238,3 +238,13 @@ pt-BR:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
+  regional_holidays:
+    title: "Feriados regionais"
+    filters: "Filtros"
+    name: "Nome"
+    city: "Cidade"
+    month: "Mês"
+    any: "Qualquer"
+    filter: "Filtrar"
+    clear_filters: "Limpar filtros"
+    empty: "Nenhum feriado regional encontrado"

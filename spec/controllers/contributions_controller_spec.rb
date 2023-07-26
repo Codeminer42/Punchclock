@@ -5,17 +5,18 @@ require 'rails_helper'
 RSpec.describe ContributionsController, type: :controller do
   render_views
 
-  let(:user) { build_stubbed(:user) }
-  let(:contribution_list) { [build_stubbed(:contribution), build_stubbed(:contribution)] }
-  let(:contribution_model) { double('ActiveRecord', order: contribution_list) }
+  let(:user) { create(:user) }
+  let!(:contribution_list) do
+    [
+      create(:contribution, user:, created_at: 10.days.ago, state: :approved),
+      create(:contribution, user:, created_at: Date.today, state: :approved)
+    ]
+  end
   let(:page) { Capybara::Node::Simple.new(response.body) }
 
   context 'when the user is logged in' do
     before do
-      allow(controller).to receive(:authenticate_user!)
-      allow(controller).to receive(:current_user).and_return(user)
-      allow(user).to receive(:contributions).and_return(contribution_model)
-      allow(contribution_model).to receive(:approved).and_return(contribution_model)
+      sign_in(user)
     end
 
     describe 'GET index' do
@@ -54,16 +55,18 @@ RSpec.describe ContributionsController, type: :controller do
                                     .and have_content(contribution_list[1].created_at.strftime('%d/%m/%Y'))
                                     .and have_selector(:css, "a[href='/contributions/#{contribution_list[1].id}/edit']")
         end
+
+        it 'returns the newest contributions first' do
+          get :index
+
+          expect(assigns(:user_contributions)).to eq([contribution_list[1], contribution_list[0]])
+        end
       end
     end
 
     describe 'GET edit' do
-      let(:contribution) { create(:contribution) }
+      let(:contribution) { create(:contribution, user: user) }
       let(:params) { { id: contribution.id } }
-
-      before do
-        allow(user.contributions).to receive(:find).with(contribution.id.to_s) { contribution }
-      end
 
       context 'when the page is accessed' do
         it 'is expected to return a successful status' do
@@ -85,7 +88,7 @@ RSpec.describe ContributionsController, type: :controller do
     end
 
     describe 'PUT update' do
-      let(:contribution) { create(:contribution) }
+      let(:contribution) { create(:contribution, user:) }
       let(:params) do
         {
           id: contribution.id,
@@ -95,10 +98,6 @@ RSpec.describe ContributionsController, type: :controller do
         }
       end
       let(:description) { nil }
-
-      before do
-        allow(user.contributions).to receive(:find).with(contribution.id.to_s) { contribution }
-      end
 
       context 'when description is passed' do
         context 'when description has some content' do
@@ -113,7 +112,7 @@ RSpec.describe ContributionsController, type: :controller do
         end
 
         context 'when description is an empty string' do
-          let(:contribution) { create(:contribution, description: 'description') }
+          let(:contribution) { create(:contribution, user:, description: 'description') }
           let(:description) { '' }
 
           it 'is expected to update the contribution description with the nil value' do
