@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
     resources :regional_holidays, only: :index
+    resources :regional_holidays, only: :show, as: :show_regional_holiday
   end
 
   resources :repositories, only: :index do

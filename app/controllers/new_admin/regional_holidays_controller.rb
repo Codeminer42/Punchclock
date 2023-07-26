@@ -10,6 +10,10 @@ module NewAdmin
       @regional_holidays = RegionalHolidaysQuery.new(**filter_params).call.decorate
     end
 
+    def show
+      @regional_holiday = RegionalHoliday.find(params[:id])
+    end
+
     private
 
     def filter_params
@@ -21,7 +25,7 @@ module NewAdmin
     end
 
     def load_cities_with_holidays
-      @cities_with_holidays = City.joins(:regional_holidays).distinct.order('cities.name ASC')
+      @cities_with_holidays = City.with_holidays
     end
   end
 end

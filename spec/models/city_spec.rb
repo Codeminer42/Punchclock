@@ -21,13 +21,23 @@ RSpec.describe City, type: :model do
 
     context 'when there are city holidays' do
       let(:regional_holiday) { create(:regional_holiday) }
-      
+
       it 'returns city holidays' do
         city.regional_holidays.push(regional_holiday)
         city_holidays = [{ day: regional_holiday.day, month: regional_holiday.month }]
 
         expect(city.holidays).to eq(city_holidays)
       end
+    end
+  end
+
+  describe '#with_holidays' do
+    let!(:city_without_holiday) { create(:city) }
+    let(:city_with_holiday) { create(:city, regional_holidays: [regional_holiday]) }
+    let(:regional_holiday) { create(:regional_holiday) }
+
+    it 'returns only cities with holidays' do
+      expect(City.with_holidays).to eq([city_with_holiday])
     end
   end
 end

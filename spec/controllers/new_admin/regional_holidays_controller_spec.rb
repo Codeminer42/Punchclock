@@ -23,6 +23,10 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       create(:regional_holiday, cities: [chicago], month: 11, name: 'Thanksgiving Day')
     end
 
+    it do
+      is_expected.to permit(:regional_holiday_id, :month, { city_ids: [] }).for(:index, verb: :get)
+    end
+
     it 'renders the index template' do
       get :index
 
@@ -117,6 +121,28 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
 
         expect(assigns(:regional_holidays)).to be_empty
       end
+    end
+  end
+
+  describe 'GET #show' do
+    let(:city) { create(:city) }
+
+    let!(:regional_holiday) do
+      create(:regional_holiday, cities: [city])
+    end
+
+    before do
+      get :show, params: { id: regional_holiday.id }
+    end
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders show template' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'assigns holiday to @regional_holiday' do
+      expect(assigns(:regional_holiday)).to eq(regional_holiday)
     end
   end
 end

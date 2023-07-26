@@ -52,6 +52,7 @@ pt-BR:
   project_details: 'Detalhes do Projeto'
   user_details: 'Detalhes do Usuário'
   punch_details: 'Detalhes do Punch'
+  regional_holiday_details: 'Detalhes do Feriado regional'
   performance_evaluations: 'Avaliações de Desempenho'
   no_performance_evaluations: 'Sem avaliações de desempenho'
   no_punches: 'Sem Punches'
@@ -243,8 +244,14 @@ pt-BR:
     filters: "Filtros"
     name: "Nome"
     city: "Cidade"
+    cities: "Cidades"
     month: "Mês"
     any: "Qualquer"
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
     empty: "Nenhum feriado regional encontrado"
+  new_admin:
+    regional_holidays:
+      show:
+        edit: "Editar Feriado Regional"
+        destroy: "Remover Feriado Regional"
