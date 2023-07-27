@@ -258,3 +258,5 @@ pt-BR:
       show:
         edit: "Editar Feriado Regional"
         destroy: "Remover Feriado Regional"
+      edit:
+        edit: "Editar"
