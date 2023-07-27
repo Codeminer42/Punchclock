@@ -27,7 +27,7 @@ module NewAdmin
         redirect_to new_admin_regional_holidays_path
       else
         flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -39,7 +39,7 @@ module NewAdmin
         redirect_to new_admin_show_regional_holiday_path(id: @regional_holiday.id)
       else
         flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 

@@ -203,6 +203,7 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
         end
 
         it { is_expected.to render_template(:new) }
+        it { is_expected.to respond_with(:unprocessable_entity) }
         it { is_expected.to set_flash.now[:alert] }
       end
     end
@@ -263,6 +264,7 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       end
 
       it { is_expected.to render_template(:edit) }
+      it { is_expected.to respond_with(:unprocessable_entity) }
       it { is_expected.to set_flash.now[:alert] }
     end
   end
