@@ -42,7 +42,9 @@
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
             %>
             <%= link_to t('delete'),
-                nil,
+                new_admin_destroy_regional_holiday_path(holiday.id),
+                method: :delete,
+                data: { confirm: t('delete_confirmation') },
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
             %>
           </div>
