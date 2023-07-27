@@ -81,6 +81,22 @@ RSpec.describe NewAdmin::EvaluationsController do
             expect(response).to have_http_status(:ok)
           end
         end
+
+        context 'when number of evaluations is enough to paginate the registers' do
+          let(:evaluations) { create_list(:evaluation, 3) }
+
+          it 'paginates evaluations' do
+            get :index, params: { per: 2 }
+
+            expect(assigns(:evaluations).count).to eq(2)
+          end
+
+          it 'decorates evaluations' do
+            get :index, params: { per: 1 }
+
+            expect(assigns(:evaluations).last).to be_an_instance_of(EvaluationDecorator)
+          end
+        end
       end
 
       context 'when the user is not an admin' do
