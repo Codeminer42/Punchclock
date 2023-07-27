@@ -10,7 +10,7 @@
   </thead>
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
     <% regional_holidays.each do |holiday| %>
-      <tr id=<%= "regional_holiday_#{holiday.id}" %> class="text-gray-700 dark:text-gray-400">
+      <tr id="<%= "regional_holiday_#{holiday.id}" %>" class="text-gray-700 dark:text-gray-400">
         <td class="px-4 py-3">
           <div>
             <%= holiday.name %>
