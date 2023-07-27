@@ -6,7 +6,7 @@ module NewAdmin
 
     layout 'new_admin'
 
-    before_action :set_regional_holiday, only: %i[show edit update]
+    before_action :set_regional_holiday, only: %i[show edit update destroy]
     before_action :load_cities_with_holidays, only: :index
 
     def index
@@ -56,6 +56,17 @@ module NewAdmin
       else
         flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
         render :new
+      end
+    end
+
+    def destroy
+      if @regional_holiday.destroy
+        flash[:notice] = I18n.t(:notice, scope: "flash.actions.destroy",
+                                resource_name: RegionalHoliday.model_name.human)
+        redirect_to new_admin_regional_holidays_path
+      else
+        flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
+        render :index, status: :unprocessable_entity
       end
     end
 
