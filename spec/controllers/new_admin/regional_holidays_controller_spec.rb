@@ -145,4 +145,52 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       expect(assigns(:regional_holiday)).to eq(regional_holiday)
     end
   end
+
+  describe 'GET #new' do
+    before do
+      get :new
+    end
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders new template' do
+      expect(response).to render_template(:new)
+    end
+
+    it 'assigns a new holiday to @regional_holiday' do
+      expect(assigns(:regional_holiday)).to be_an_instance_of(RegionalHoliday)
+    end
+  end
+
+  describe 'POST #create' do
+    let!(:city) { create(:city) }
+
+    context 'when all parameters are correct' do
+      describe 'http response' do
+        before do
+          post :create, params: { regional_holiday: { name: 'foobar holiday', day: 1, month: 12, city_ids: city.id } }
+        end
+
+        it { is_expected.to redirect_to new_admin_regional_holidays_path }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "creates a new regional holiday" do
+        expect do
+          post :create, params: { regional_holiday: { name: 'foobar holiday', day: 1, month: 12, city_ids: city.id } }
+        end.to change(RegionalHoliday, :count).from(0).to(1)
+      end
+    end
+
+    context 'when record is not properly saved' do
+      describe 'http response' do
+        before do
+          post :create, params: { regional_holiday: { name: nil, day: 1, month: 12, city_ids: city.id } }
+        end
+
+        it { is_expected.to render_template(:new) }
+        it { is_expected.to set_flash.now[:alert] }
+      end
+    end
+  end
 end
