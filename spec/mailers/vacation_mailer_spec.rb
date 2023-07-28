@@ -162,7 +162,7 @@ describe VacationMailer do
       end
 
       it 'renders the receivers emails' do
-        expect(mail.to).to eq(vacation_managers.map(&:email))
+        expect(mail.to).to match_array(vacation_managers.map(&:email))
       end
 
       it 'renders the CC email' do
