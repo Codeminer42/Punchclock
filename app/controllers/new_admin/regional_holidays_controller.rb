@@ -23,11 +23,9 @@ module NewAdmin
       @regional_holiday = RegionalHoliday.new(regional_holiday_params)
 
       if @regional_holiday.save
-        flash[:notice] = I18n.t(:notice, scope: "flash.actions.create", resource_name: RegionalHoliday.model_name.human)
-        redirect_to new_admin_regional_holidays_path
+        redirect_on_success new_admin_regional_holidays_path, message_scope: "create"
       else
-        flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
-        render :new, status: :unprocessable_entity
+        render_on_failure :new
       end
     end
 
@@ -35,22 +33,17 @@ module NewAdmin
 
     def update
       if @regional_holiday.update(regional_holiday_params)
-        flash[:notice] = I18n.t(:notice, scope: "flash.actions.update", resource_name: RegionalHoliday.model_name.human)
-        redirect_to new_admin_show_regional_holiday_path(id: @regional_holiday.id)
+        redirect_on_success new_admin_show_regional_holiday_path(id: @regional_holiday.id), message_scope: "update"
       else
-        flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
-        render :edit, status: :unprocessable_entity
+        render_on_failure :edit
       end
     end
 
     def destroy
       if @regional_holiday.destroy
-        flash[:notice] = I18n.t(:notice, scope: "flash.actions.destroy",
-                                resource_name: RegionalHoliday.model_name.human)
-        redirect_to new_admin_regional_holidays_path
+        redirect_on_success new_admin_regional_holidays_path, message_scope: "destroy"
       else
-        flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
-        render :index, status: :unprocessable_entity
+        render_on_failure :index
       end
     end
 
@@ -58,6 +51,17 @@ module NewAdmin
 
     def regional_holidays
       RegionalHolidaysQuery.new(**filter_params).call
+    end
+
+    def redirect_on_success(url, message_scope:)
+      flash[:notice] = I18n.t(:notice, scope: "flash.actions.#{message_scope}",
+                                       resource_name: RegionalHoliday.model_name.human)
+      redirect_to url
+    end
+
+    def render_on_failure(template)
+      flash.now[:alert] = @regional_holiday.errors.full_messages.to_sentence
+      render template, status: :unprocessable_entity
     end
 
     def filter_params
