@@ -9,7 +9,7 @@ module NewAdmin
     before_action :authenticate_user!
 
     def index
-      @evaluations = EvaluationQuery.new(**search_params).call.decorate
+      @evaluations = paginated_evaluations.decorate
     end
 
     def show
@@ -17,6 +17,14 @@ module NewAdmin
     end
 
     private
+
+    def paginated_evaluations
+      evaluations.page(params[:page]).per(params[:per])
+    end
+
+    def evaluations
+      EvaluationQuery.new(**search_params).call
+    end
 
     def search_params
       params.permit(
