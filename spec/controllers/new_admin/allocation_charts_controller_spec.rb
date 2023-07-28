@@ -57,6 +57,22 @@ describe NewAdmin::AllocationChartsController do
                         .and have_content(allocation.end_at.strftime('%d/%m/%Y'))
           end
         end
+
+        context 'when number of allocations is enough to paginate the registers' do
+          let!(:allocations) { create_list(:allocation, 3) }
+
+          it 'paginates allocations' do
+            get :index, params: { per: 2 }
+
+            expect(assigns(:allocations).count).to eq(2)
+          end
+
+          it 'decorates allocations' do
+            get :index, params: { per: 1 }
+
+            expect(assigns(:allocations).last).to be_an_instance_of(AllocationDecorator)
+          end
+        end
       end
 
       context 'when the user is not an admin' do
