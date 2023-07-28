@@ -1,6 +1,6 @@
 namespace :github do
   desc "Sync repository languages"
-  task sync_repository_languages: :environment do
+  task sync_repository_languages_and_stats: :environment do
     Rails.logger = Logger.new(STDOUT)
 
     client = Github.new(headers: {"Authorization" => "token #{ENV['GITHUB_OAUTH_TOKEN']}"})
