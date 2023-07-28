@@ -16,7 +16,7 @@ describe 'Repositories list', type: :feature do
 
       visit repositories_path
 
-      expect(page).to have_css('.list-group .list-group-item', :count => 25)
+      expect(page).to have_css('#repository-card', :count => 25)
     end
 
     it 'have all links for repositories' do
@@ -25,8 +25,13 @@ describe 'Repositories list', type: :feature do
     end
 
     it 'have all languages for repositories' do
-      expect(page).to have_text(repository.languages) &
-                      have_text(second_repository.languages)
+      repository.languages.each do |language|
+        expect(page).to have_css('#language-tag', :text => language)
+      end
+
+      second_repository.languages.each do |language|
+        expect(page).to have_css('#language-tag', :text => language)
+      end
     end
 
     it 'has all descriptions for repositories' do
@@ -47,8 +52,13 @@ describe 'Repositories list', type: :feature do
       fill_in 'search-input-field', with: 'javascript'
       find('#filter-button').click
 
-      expect(page).to have_text(repository.languages)
-      expect(page).not_to have_text(second_repository.languages)
+      repository.languages.each do |language|
+        expect(page).to have_css('#language-tag', :text => language)
+      end
+
+      second_repository.languages.each do |language|
+        expect(page).not_to have_css('#language-tag', :text => language)
+      end
     end
 
     it 'not have any repository with Go' do
@@ -63,9 +73,8 @@ describe 'Repositories list', type: :feature do
       fill_in 'search-input-field', with: 'python'
       find('#filter-button').click
 
-      expect(page).to have_text(repository.languages) &
-                      have_text(second_repository.languages)
-      expect(page).to have_css('.list-group .list-group-item', :count => 2)
+      expect(page).to have_text('python')
+      expect(page).to have_css('#repository-card', :count => 2)
     end
   end
 end
