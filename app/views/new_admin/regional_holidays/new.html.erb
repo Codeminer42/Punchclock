@@ -1,3 +1,7 @@
+<% content_for :page_title do %>
+  <%= t 'new_regional_holiday' %>
+<% end %>
+
 <div data-tab-id="new_regional_holiday" class="space-y-6">
-  <%= render 'form', regional_holiday: @regional_holiday %>
+  <%= render 'form', regional_holiday: @regional_holiday, url: new_admin_regional_holidays_path%>
 </div>

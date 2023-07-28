@@ -193,4 +193,63 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       end
     end
   end
+
+  describe 'GET #edit' do
+    let(:city) { create(:city) }
+
+    let!(:regional_holiday) do
+      create(:regional_holiday, cities: [city])
+    end
+
+    before do
+      get :edit, params: { id: regional_holiday.id }
+    end
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders edit template' do
+      expect(response).to render_template(:edit)
+    end
+
+    it 'assigns a new holiday to @regional_holiday' do
+      expect(assigns(:regional_holiday)).to eq(regional_holiday)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let(:city) { create(:city) }
+
+    let!(:regional_holiday) do
+      create(:regional_holiday, cities: [city])
+    end
+
+    context 'when parameters are correct' do
+      describe 'http response' do
+        before do
+          patch :update, params: { id: regional_holiday.id,
+                                   regional_holiday: { name: 'edited holiday', day: 1, month: 12, city_ids: city.id } }
+        end
+
+        it { is_expected.to redirect_to new_admin_show_regional_holiday_path(id: regional_holiday.id) }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "updates regional holiday" do
+        expect do
+          patch :update, params: { id: regional_holiday.id,
+                                   regional_holiday: { name: 'edited holiday', day: 1, month: 12, city_ids: city.id } }
+        end.to change { regional_holiday.reload.name }.to('edited holiday')
+      end
+    end
+
+    context 'when record is not properly updated' do
+      before do
+        patch :update, params: { id: regional_holiday.id,
+                                 regional_holiday: { name: nil, day: 1, month: 12, city_ids: city.id } }
+      end
+
+      it { is_expected.to render_template(:edit) }
+      it { is_expected.to set_flash.now[:alert] }
+    end
+  end
 end
