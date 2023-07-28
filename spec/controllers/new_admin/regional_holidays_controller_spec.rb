@@ -122,6 +122,20 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
         expect(assigns(:regional_holidays)).to be_empty
       end
     end
+
+    describe 'pagination' do
+      it 'paginates results' do
+        get :index, params: { per: 2 }
+
+        expect(assigns(:regional_holidays).count).to eq(2)
+      end
+
+      it 'decorates regional holidays' do
+        get :index, params: { per: 1 }
+
+        expect(assigns(:regional_holidays).last).to be_an_instance_of(RegionalHolidayDecorator)
+      end
+    end
   end
 
   describe 'GET #show' do
