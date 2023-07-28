@@ -6,7 +6,7 @@ RSpec.describe RepositoryDecorator do
       let(:repository) { create(:repository, language: 'Javascript, Docker, Ruby, HTML, CSS').decorate }
 
       it 'returns only the first three' do
-        expect(repository.languages).to eq('Javascript,  Docker e  Ruby')
+        expect(repository.languages).to eq(['Javascript', 'Docker',  'Ruby'])
       end
     end
 
@@ -14,7 +14,7 @@ RSpec.describe RepositoryDecorator do
       let(:repository) { create(:repository, language: 'Javascript, Docker').decorate }
 
       it 'returns available languages' do
-        expect(repository.languages).to eq('Javascript e  Docker')
+        expect(repository.languages).to eq(['Javascript',  'Docker'])
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe RepositoryDecorator do
       let(:repository) { create(:repository, language: nil).decorate }
 
       it 'returns empty string' do
-        expect(repository.languages).to eq ''
+        expect(repository.languages).to be_empty
       end
     end
   end

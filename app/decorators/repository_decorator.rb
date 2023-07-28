@@ -10,10 +10,28 @@ class RepositoryDecorator < ApplicationDecorator
   def languages
     return [] unless language
 
-    language.split(', ').map(&:strip)
+    language.split(', ').map(&:strip).first(3)
+  end
+
+  def issues_formatted
+    format_number(model.issues)
+  end
+
+  def stars_formatted
+    format_number(model.stars)
   end
 
   def name
     link[/[\w_-]+$/]
+  end
+
+  private
+
+  def format_number(number)
+    if number >= 1000
+      "#{(number/1000).round(1)}K"
+    else
+      number
+    end
   end
 end
