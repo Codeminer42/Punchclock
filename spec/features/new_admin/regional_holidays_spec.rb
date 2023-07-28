@@ -188,4 +188,44 @@ RSpec.describe 'Regional holidays' do
       )
     end
   end
+
+  describe 'edit' do
+    let(:city) { create(:city, name: 'London') }
+    let!(:holiday) { create(:regional_holiday, cities: [city], day: 26, month: 12, name: 'Boxing Day') }
+
+    let(:admin) { create(:user, :admin, occupation: :administrative) }
+
+    before do
+      sign_in(admin)
+      visit "/new_admin/regional_holidays/#{holiday.id}/edit"
+    end
+
+    it "shows form fields" do
+      within "#form_regional_holiday" do
+        expect(page).to have_content(RegionalHoliday.human_attribute_name('name')) &&
+                        have_content(RegionalHoliday.human_attribute_name('day')) &&
+                        have_content(RegionalHoliday.human_attribute_name('month')) &&
+                        have_content(RegionalHoliday.human_attribute_name('cities')) &&
+                        have_select
+      end
+
+      expect(page).to have_button(I18n.t('form.button.submit'))
+    end
+
+    it 'updates regional holiday', :aggregate_failures do
+      new_name = 'Foobar Holiday'
+
+      within "#form_regional_holiday" do
+        fill_in 'regional_holiday_name', with: new_name
+      end
+
+      click_button I18n.t('form.button.submit')
+
+      expect(page).to have_content(
+        I18n.t(:notice, scope: "flash.actions.update",
+                        resource_name: RegionalHoliday.model_name.human)
+      )
+      expect(holiday.reload.name).to eq(new_name)
+    end
+  end
 end
