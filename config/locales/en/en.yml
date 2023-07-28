@@ -78,6 +78,7 @@ en:
   vacation_approved: "Vacation request approved"
   vacation_denied: "Vacation request denied"
   english_evaluation: "English evaluation"
+  english_level: "English level"
   performance_evaluations: "Performance Evaluations"
   no_performance_evaluations: "No performance evaluations"
   evaluation: "Evaluation"
@@ -104,4 +105,29 @@ en:
     start_at: Start At
     end_at: End At
     in_progress: In Progress
+    title: "Allocation #%{id}"
   present: 'Present'
+  evaluations:
+    empty: No evaluation found
+    filters: Filters
+    filter: Filter
+    clear: Clear filters
+    questionnaire_type: Questionnaire type
+    created_at: Crated at
+    evaluation_date: Evaluation date
+    any: Any
+    show_title: "Evaluation %{id}"
+    details: "Evaluation details"
+    answers: "Respostas"
+    question: "Questão"
+    response: "Resposta"
+  regional_holidays:
+    title: "Regional holidays"
+    filters: "Filters"
+    name: "Name"
+    city: "City"
+    month: "Month"
+    any: "Any"
+    filter: "Filter"
+    clear_filters: "Clear filters"
+    empty: "No regional holiday found"

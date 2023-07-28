@@ -11,6 +11,10 @@ FactoryBot.define do
       "https://www.github.com/company/example-#{n}/pull/#{n}#{Faker::Number.number(digits: 2)}"
     end
 
+    trait :received do
+      state { :received }
+    end
+
     trait :refused do
       state { :refused }
     end

@@ -7,7 +7,7 @@ ActiveAdmin.register_page 'Allocation Chart' do
 
   content title: I18n.t('allocation_chart') do
     panel I18n.t('allocation_chart') do
-      allocations = AllocationsAndUnalocatedUsersQuery.new(Allocation).call
+      allocations = AllocationsAndUnallocatedUsersQuery.new(Allocation).call
       table_for allocations, id: 'allocations_chart' do
         column(I18n.t('name')) do |allocation|
           link_to allocation.user.first_and_last_name, admin_user_path(allocation.user)

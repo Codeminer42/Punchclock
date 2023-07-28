@@ -26,11 +26,15 @@ Rails.application.routes.draw do
   end
 
   namespace :new_admin do
-    resources :mentoring, only: :index
-    resources :allocation_chart, only: :index
-    resources :allocations, only: %i[new create show update edit], as: :user_allocations
-    resources :users, only: :show, as: :admin_user
+    resources :mentorings, only: :index
+    resources :evaluations, only: %i[index show]
+    resources :allocation_charts, only: :index
+    resources :allocations, only: %i[show update edit], as: :user_allocations
+    resources :users, only: %i[show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
+    resources :regional_holidays, except: %i[show update]
+    resources :regional_holidays, only: :show, as: :show_regional_holiday
+    resources :regional_holidays, only: :update, as: :update_regional_holiday
   end
 
   resources :repositories, only: :index do
@@ -61,8 +65,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get "users" => "companies#users"
-      get "offices" => "companies#offices"
+      get 'latest_contributions' => 'contributions#latest'
       get "holidays" => "holidays#holidays_dashboard"
       post "request" => "token#request_token"
       post "refresh" => "token#refresh_token"

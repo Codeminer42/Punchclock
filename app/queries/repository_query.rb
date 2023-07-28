@@ -11,7 +11,7 @@ class RepositoryQuery
   end
 
   def initialize(opts = {})
-  	@scopes = Repository.all
+    @scopes = Repository.order(highlight: :desc, link: :asc).all
     @opts = opts
   end
 

@@ -31,12 +31,16 @@ pt-BR:
       date_time: "%d/%m/%Y %H:%M"
   english_evaluations: 'Avaliações de Inglês'
   english_score: 'Pontuação de Inglês'
+  english_level: "Nível de inglês"
   english_evaluations: 'Avaliações de Inglês'
   experience: 'Experiências'
   professional_experience: 'Experiência profissional'
   educational_experience: 'Experiência educacional'
   open_source_experience: 'Experiência open-source'
   talking_presenting_experience: 'Experiência Apresentando Palestras'
+  score: 'Pontuação'
+  questionnaire: 'Questionário'
+  evaluation_date: "Data da avaliação"
   hour_report_curent_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'
@@ -48,12 +52,13 @@ pt-BR:
   project_details: 'Detalhes do Projeto'
   user_details: 'Detalhes do Usuário'
   punch_details: 'Detalhes do Punch'
+  regional_holiday_details: 'Detalhes do Feriado regional'
   performance_evaluations: 'Avaliações de Desempenho'
   no_performance_evaluations: 'Sem avaliações de desempenho'
   no_punches: 'Sem Punches'
   evaluation: 'Avaliação'
+  evaluations_title: 'Avaliações'
   access_evaluation: 'Acessar Avaliação'
-  allocation: 'Alocação'
   office:
     user_not_evaluated: "Usuários não foram todos avaliados"
   reviewer: 'Avaliador'
@@ -152,6 +157,7 @@ pt-BR:
       change_my_password: 'Mudar minha senha'
       verify: 'Verificar'
       update_allocation: 'Atualizar Alocação'
+      submit: 'Enviar'
     links:
       return_to_sign_in: 'Retornar ao Sign In'
   allocation_chart: 'Organograma'
@@ -203,6 +209,7 @@ pt-BR:
       open_source_manager: Responsável OpenSource
       hr: Recursos Humanos
       commercial: Comercial
+    update: Editar Usuário
   edit_allocation: "Editar Alocação"
   details: "Detalhes"
   allocation:
@@ -214,6 +221,7 @@ pt-BR:
     start_at: Início
     end_at: Término
     in_progress: Em Progresso
+    title: "Alocação #%{id}"
   punches_filter:
     filter: Filtro
     range: Intervalo
@@ -222,3 +230,35 @@ pt-BR:
     download_xls: Baixar XLS
     all_punches: Todos os Punches
   present: 'Presente'
+  evaluations:
+    empty: Nenhuma avaliação encontrada
+    filters: Filtros
+    filter: Filtrar
+    clear: Limpar filtros
+    questionnaire_type: Tipo de questionário
+    created_at: Criado em
+    evaluation_date: Data da avaliação
+    any: Qualquer
+    show_title: "Avaliação #%{id}"
+    details: "Detalhes da avaliação"
+    answers: "Respostas"
+    question: "Questão"
+    response: "Resposta"
+  regional_holidays:
+    title: "Feriados regionais"
+    filters: "Filtros"
+    name: "Nome"
+    city: "Cidade"
+    cities: "Cidades"
+    month: "Mês"
+    any: "Qualquer"
+    filter: "Filtrar"
+    clear_filters: "Limpar filtros"
+    empty: "Nenhum feriado regional encontrado"
+  new_admin:
+    regional_holidays:
+      index:
+        new: "Novo Feriado Regional"
+      show:
+        edit: "Editar Feriado Regional"
+        destroy: "Remover Feriado Regional"

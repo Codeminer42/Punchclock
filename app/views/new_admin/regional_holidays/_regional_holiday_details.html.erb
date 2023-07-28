@@ -1,0 +1,88 @@
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap" id="details_table_regional_holidays">
+      <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+        <th colspan="100%" class="px-4 py-3"><%= t 'regional_holiday_details' %></th>
+      </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= RegionalHoliday.human_attribute_name('id') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= regional_holiday.id %>
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= RegionalHoliday.human_attribute_name('name') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= regional_holiday.name %>
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= RegionalHoliday.human_attribute_name('day') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= regional_holiday.day %>
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= RegionalHoliday.human_attribute_name('month') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= regional_holiday.month %>
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= RegionalHoliday.human_attribute_name('cities') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= regional_holiday.cities_names %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

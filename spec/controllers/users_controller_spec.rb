@@ -50,19 +50,20 @@ describe UsersController do
     before do
       set_2fa
     end
-    
+
     context 'with valid information' do
       it 'redirects to root_path' do
         post :confirm_otp, params: { otp_attempt: user.current_otp }
-        
+
         expect(response).to redirect_to backup_codes_path
       end
     end
-    
+
     context 'with invalid information' do
       it 'renders "two_factor" view' do
         otp = user.current_otp
-        post :confirm_otp, params: { otp_attempt: otp.chars.shuffle.join }
+
+        post :confirm_otp, params: { otp_attempt: suffle_otp(otp) }
 
         expect(response).to redirect_to two_factor_path
       end
@@ -85,7 +86,7 @@ describe UsersController do
     context 'with valid information' do
       it 'deactivate 2FA' do
         post :deactivate_otp, params: { otp_attempt: user.current_otp }
-  
+
         expect(response).to redirect_to root_path
       end
     end

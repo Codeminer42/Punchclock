@@ -1,0 +1,32 @@
+<div class="px-4 py-3 w-fit h-fit dark:bg-gray-800">
+  <h3 class="text-xs py-1 font-semibold tracking-wide text-left uppercase border-b dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+    <%= t('regional_holidays.filters') %>
+  </h3>
+  <%= form_with url: new_admin_regional_holidays_url, method: :get do |form| %>
+    <div class="mt-2 space-y-2">
+      <div class="mt-2 space-y-2">
+        <div class="flex flex-col space-y-2">
+          <%= form.label :name, t('regional_holidays.name'), class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
+          <%= form.collection_select :regional_holiday_id, RegionalHoliday.order(:name), :id, :name, { prompt: t('regional_holidays.any'), selected: params[:regional_holiday_id] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+        </div>
+      </div>
+      <div class="mt-2 space-y-2">
+        <div class="flex flex-col space-y-2">
+          <%= form.label :city, t('regional_holidays.city'), class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
+          <%= form.collection_select :city_ids, @cities_with_holidays, :id, :name, { selected: params[:city_ids] }, { multiple: true, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+        </div>
+      </div>
+      <div class="mt-2 space-y-2">
+        <div class="flex flex-col space-y-2">
+          <%= form.label :month, t('regional_holidays.month'), class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
+          <%= select_month(params[:month]&.to_i, { prompt: t('regional_holidays.any') }, { name: 'month', class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' }) %>
+        </div>
+      </div>
+      <div class="mt-4 mb-2">
+        <div class="flex flex-row">
+          <%= form.submit t('regional_holidays.filter'), formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+          <%= link_to t('regional_holidays.clear_filters'), new_admin_regional_holidays_url, class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %>
+        </div>
+      </div>
+  <% end %>
+</div>
