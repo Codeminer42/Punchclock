@@ -42,6 +42,9 @@ module.exports = {
       fontFamily: {
         sans: ["Lato", "sans-serif", ...defaultTheme.fontFamily.sans],
       },
+      gridTemplateColumns: {
+          "13": "repeat(13, minmax(0, 1fr))",
+      },
     },
   },
   plugins: [
