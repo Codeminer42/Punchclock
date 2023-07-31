@@ -16,4 +16,8 @@ class ProjectDecorator < Draper::Decorator
   def active_class
     active? ? 'fill-green-500' : 'fill-none'
   end
+
+  def truncated_name
+    name.truncate_words 1
+  end
 end
