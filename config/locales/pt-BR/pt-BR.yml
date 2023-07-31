@@ -99,7 +99,6 @@ pt-BR:
       open_source_repositories: "Projetos Open Source"
       highlight: 'Recomendado'
       issues: 'Issues'
-      pull_requests: 'Pull Requests'
       stars: 'Stars'
   not_started: 'Não iniciado'
   finished: 'Finalizado'
