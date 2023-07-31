@@ -6,6 +6,8 @@ class RevenueForecastPresenter
   # should only show forecasts from 2022 and beyond
   REVENUE_FORECAST_START_YEAR = 2022
 
+  YEAR_MONTHS_RANGE = 1..12
+
   def initialize(year, market)
     @forecasts = fetch_and_sort_forecasts(year, market)
   end
@@ -15,13 +17,17 @@ class RevenueForecastPresenter
   end
 
   def months(&block)
-    (1..12).each do |month_number|
+    YEAR_MONTHS_RANGE.each do |month_number|
       block.call(
         month_name(month_number),
         month_forecasts(month_number),
         month_total(month_number)
       )
     end
+  end
+
+  def months_names
+    YEAR_MONTHS_RANGE.map { |month_number| month_name(month_number) }
   end
 
   def self.years_range

@@ -276,3 +276,6 @@ pt-BR:
     projects:
       index:
         new: "Novo Projeto"
+    revenue_forecast:
+      index:
+        total: "Total"
