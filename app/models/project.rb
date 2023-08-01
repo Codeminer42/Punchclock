@@ -3,6 +3,8 @@
 class Project < ApplicationRecord
   extend Enumerize
 
+  include ::Filters::ProjectsFilter
+
   has_many :punches
   has_many :allocations, dependent: :destroy
 
