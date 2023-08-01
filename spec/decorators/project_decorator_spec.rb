@@ -48,4 +48,12 @@ RSpec.describe ProjectDecorator do
       end
     end
   end
+
+  describe '#truncated_name' do
+    it 'keeps first name of project' do
+      project = create(:project, name: 'Long Name To Test Truncation').decorate
+
+      expect(project.truncated_name).to eq('Long...')
+    end
+  end
 end
