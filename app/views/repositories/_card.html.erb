@@ -15,7 +15,7 @@
     <% end %>
     <% if repository.stars.present? %>
       <div class='flex gap-1 items-center text-gray-400' title="<%= "#{t("repositories.index.stars")}: #{repository.stars}" %>">
-        <%= inline_svg_tag 'stars.svg', class: 'h-4 w-4' %>
+        <%= inline_svg_tag 'stars.svg', class: 'h-5 w-5' %>
         <span class='font-semibold'><%= repository.stars_formatted %></span>
       </div>
     <%end%>
