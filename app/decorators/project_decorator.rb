@@ -8,4 +8,8 @@ class ProjectDecorator < Draper::Decorator
 
     'N/A'
   end
+
+  def active_class
+    active? ? 'fill-green-500' : 'fill-none'
+  end
 end
