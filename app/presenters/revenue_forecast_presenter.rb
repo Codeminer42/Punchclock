@@ -32,6 +32,7 @@ class RevenueForecastPresenter
 
   def self.years_range
     allocation_with_newest_end_date = Allocation.order(end_at: :desc).first
+    return REVENUE_FORECAST_START_YEAR..REVENUE_FORECAST_START_YEAR if allocation_with_newest_end_date.nil?
 
     (REVENUE_FORECAST_START_YEAR..allocation_with_newest_end_date.end_at.year)
   end
