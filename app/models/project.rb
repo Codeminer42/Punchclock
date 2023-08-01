@@ -3,6 +3,8 @@
 class Project < ApplicationRecord
   extend Enumerize
 
+  include ::Filters::ProjectsFilter
+
   has_many :punches
   has_many :allocations, dependent: :destroy
 
@@ -13,9 +15,6 @@ class Project < ApplicationRecord
             uniqueness: true
 
   validates :market, presence: true
-
-  scope :active, -> { where(active: true) }
-  scope :inactive, -> { where(active: false) }
 
   def disable!
     update!(active: false)
