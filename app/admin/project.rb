@@ -104,7 +104,7 @@ ActiveAdmin.register Project do
   end
 
   form do |f|
-    f.inputs I18n.t('project_details') do
+    f.inputs I18n.t('projects.details') do
       f.input :name
       f.input :market
       f.input :active
