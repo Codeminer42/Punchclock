@@ -12,18 +12,16 @@
   <% end %>
 </div>
 
-<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
-    <div class="w-full overflow-x-auto">
-      <div data-tab-content>
-        <% @years_range.each do |year| %>
-          <div id="<%= selector_data_tab_id year %>">
-            <h2 class="text-gray-700 dark:text-gray-400 py-2"> <%= I18n.t('international_market') %> </h2>
-            <%= render 'forecasts_table', { forecast: international_forecast(year) } %>
+<div class="w-full overflow-x-auto rounded-lg ring-1 ring-black ring-opacity-5" id="revenue_forecast_index">
+  <div data-tab-content>
+    <% @years_range.each do |year| %>
+      <div id="<%= selector_data_tab_id year %>">
+        <h2 class="text-gray-700 dark:text-gray-400 py-2"> <%= I18n.t('international_market') %> </h2>
+        <%= render 'forecasts_table', { forecast: international_forecast(year) } %>
 
-            <h2 class="text-gray-700 dark:text-gray-400 py-2"> <%= I18n.t('internal_market') %> </h2>
-            <%= render 'forecasts_table', { forecast: internal_forecast(year) } %>
-          </div>
-        <% end %>
+        <h2 class="text-gray-700 dark:text-gray-400 py-2"> <%= I18n.t('internal_market') %> </h2>
+        <%= render 'forecasts_table', { forecast: internal_forecast(year) } %>
       </div>
-    </div>
+    <% end %>
+  </div>
 </div>
