@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NewAdmin
   class RevenueForecastController < ApplicationController
     layout 'new_admin'
