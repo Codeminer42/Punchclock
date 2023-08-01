@@ -3,6 +3,10 @@
 class ProjectDecorator < Draper::Decorator
   delegate_all
 
+  def self.collection_decorator_class
+    PaginatingDecorator
+  end
+
   def market
     return super.text if super
 
