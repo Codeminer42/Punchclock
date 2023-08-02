@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { compareHours, prev, next, current, innerRange, startDate } from "../../../../app/javascript/packs/utils/calendar";
+import { compareHours, prev, next, current, innerRange, startDate, week } from "../../../../app/javascript/packs/utils/calendar";
 
 const formattedDate = (date) => date.format('YYYY-MM-DD');
 const CURRENT_DATE = '2022-08-15'
@@ -110,6 +110,18 @@ describe("calendar", () => {
       const result = startDate(baseDate)
       const formattedResult = formattedDate(result)
       expect(formattedResult).toBe('2022-06-26')
+    });
+  });
+
+  describe('week', () => {
+    it('returns the day as inner when the 31st day of the month before is Monday', () => {
+      const baseDate = moment('2023-08-1', 'YYYY-MM-DD').utc()
+      const range = innerRange(baseDate)
+
+      const processedWeekMonday = week(baseDate, range).get(1)
+
+      expect(processedWeekMonday.day.month()).toBe(7)
+      expect(processedWeekMonday.inner).toBe(true)
     });
   });
 });
