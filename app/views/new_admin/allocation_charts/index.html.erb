@@ -7,3 +7,7 @@
     <%= render 'allocations', allocations: @allocations  %>
   </div>
 </div>
+
+<section id="pagination_allocation_charts" class="dark:text-gray-400">
+  <%= paginate @allocations %>
+</section>
