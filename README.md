@@ -73,10 +73,7 @@ Install the docker and docker compose plugin versions:
 ```console
 $ cp config/database.yml.example config/database.yml
 $ docker compose build
-$ docker compose run --rm app bundle install
-$ docker compose run --rm app yarn install --frozen-lockfile
-$ docker compose run --rm app bundle exec rake db:reset
-$ docker compose run --rm app bundle exec rake db:create
+$ docker compose run --rm app bin/setup
 ```
 
 #### Useful commands
