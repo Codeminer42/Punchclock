@@ -254,7 +254,7 @@ pt-BR:
   projects:
     title: "Projetos"
     filters: "Filtros"
-    details: "Details"
+    details: "Detalhes"
     empty: "Nenhum projeto encontrado"
     name: "Nome"
     market:
