@@ -4,6 +4,10 @@ class AllocationDecorator < Draper::Decorator
   delegate_all
   decorates_association :user
 
+  def self.collection_decorator_class
+    PaginatingDecorator
+  end
+
   def hourly_rate
     h.humanized_money_with_symbol(super)
   end
