@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t '.new' %>
+<% end %>
+
+<div data-tab-id="new_project" class="space-y-6">
+  <%= render 'form', project: @project, url: new_admin_projects_path %>
+</div>

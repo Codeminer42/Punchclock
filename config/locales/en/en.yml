@@ -142,3 +142,7 @@ en:
     active: "Active"
     filter: "Filter"
     clear_filters: "Clear filters"
+  new_admin:
+    projects:
+      new:
+        new: "New Project"

@@ -276,3 +276,10 @@ pt-BR:
     projects:
       index:
         new: "Novo Projeto"
+      show:
+        edit: "Editar Projeto"
+        destroy: "Remover Projeto"
+      new:
+        new: "Novo Projeto"
+      edit:
+        edit: "Editar Projeto"
