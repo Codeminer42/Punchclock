@@ -1,0 +1,27 @@
+<% content_for :page_title do %>
+  <%= @project.name %>
+<% end %>
+
+<div data-tab-id="project" class="space-y-6">
+  <div id="project_actions" class="flex items-center justify-end">
+    <div class="mx-2">
+      <%= link_to edit_new_admin_project_path(id: @project.id) do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t '.edit' %>
+        </button>
+      <% end %>
+    </div>
+
+    <div class="mx-2">
+      <%= link_to nil do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t '.destroy' %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="project_details">
+    <%= render 'project_details', project: @project %>
+  </div>
+</div>
