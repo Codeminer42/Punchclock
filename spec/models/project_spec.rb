@@ -53,8 +53,8 @@ describe Project do
     end
 
     describe '#by_operation' do
-      let(:active_project) { create :project, :active }
-      let(:inactive_project) { create :project, :inactive }
+      let!(:active_project) { create :project, :active }
+      let!(:inactive_project) { create :project, :inactive }
 
       it 'filters projects by its active status', :aggregate_failures do
         expect(Project.by_operation(true)).to eq([active_project])
@@ -63,8 +63,8 @@ describe Project do
     end
 
     describe '#by_market' do
-      let(:internal_project) { create(:project, :internal) }
-      let(:international_project) { create(:project, :international) }
+      let!(:internal_project) { create(:project, :internal) }
+      let!(:international_project) { create(:project, :international) }
 
       it 'filters projects by its market', :aggregate_failures do
         expect(Project.by_market('internal')).to eq([internal_project])
@@ -74,8 +74,8 @@ describe Project do
     end
 
     describe '#by_name_like' do
-      let(:project1) { create(:project, name: 'TheFirstProject') }
-      let(:project2) { create(:project, name: 'TheSecondProject') }
+      let!(:project1) { create(:project, name: 'TheFirstProject') }
+      let!(:project2) { create(:project, name: 'TheSecondProject') }
 
       it 'filters projects by its name', :aggregate_failures do
         expect(Project.by_name_like('first')).to eq([project1])

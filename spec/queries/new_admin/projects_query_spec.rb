@@ -13,8 +13,8 @@ RSpec.describe NewAdmin::ProjectsQuery do
     end
 
     context 'when filters are applied' do
-      let(:active_projects) { create_list(:project, 2, :active) }
-      let(:inactive_projects) { create_list(:project, 2, :inactive) }
+      let!(:active_projects) { create_list(:project, 2, :active) }
+      let!(:inactive_projects) { create_list(:project, 2, :inactive) }
 
       it 'retireve filtered projects' do
         filters = { active: true }
