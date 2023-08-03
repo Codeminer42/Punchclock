@@ -190,4 +190,38 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
       it { is_expected.to set_flash.now[:alert] }
     end
   end
+
+  describe 'DELETE #destroy' do
+    let!(:project) { create(:project) }
+
+    context 'when record is successfully deleted' do
+      describe 'http response' do
+        before do
+          delete :destroy, params: { id: project.id }
+        end
+
+        it { is_expected.to redirect_to new_admin_projects_path }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "destroys project" do
+        expect do
+          delete :destroy, params: { id: project.id }
+        end.to change(Project, :count).from(1).to(0)
+      end
+    end
+
+    context 'when record is not properly deleted' do
+      before do
+        allow_any_instance_of(Project).to receive(:destroy).and_return(false)
+        allow_any_instance_of(Project).to receive_message_chain(:errors, :full_messages).and_return(['Foobar'])
+
+        delete :destroy, params: { id: project.id }
+      end
+
+      it { is_expected.to render_template(:index) }
+      it { is_expected.to respond_with(:unprocessable_entity) }
+      it { is_expected.to set_flash.now[:alert].to('Foobar') }
+    end
+  end
 end
