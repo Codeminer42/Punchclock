@@ -1,73 +1,69 @@
-<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
-  <div class="w-full overflow-x-auto">
-    <table class="w-full whitespace-no-wrap" id="details_table_projects">
-      <thead>
-      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
-        <th colspan="100%" class="px-4 py-3"><%= t 'projects.details' %></th>
-      </tr>
-      </thead>
+<table class="w-full whitespace-no-wrap" id="details_table_projects">
+  <thead>
+  <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+    <th colspan="100%" class="px-4 py-3"><%= t 'projects.details' %></th>
+  </tr>
+  </thead>
 
-      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-      <tr class="text-gray-700 dark:text-gray-300">
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
-            <%= Project.human_attribute_name('id') %>
-          </div>
-        </th>
-        <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= project.id %>
-            </p>
-          </div>
-        </td>
-      </tr>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+  <tr class="text-gray-700 dark:text-gray-300">
+    <th class="w-1/12">
+      <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+        <%= Project.human_attribute_name('id') %>
+      </div>
+    </th>
+    <td class="px-4 py-3">
+      <div class="flex items-center text-sm">
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+          <%= project.id %>
+        </p>
+      </div>
+    </td>
+  </tr>
 
-      <tr class="text-gray-700 dark:text-gray-300">
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
-            <%= Project.human_attribute_name('name') %>
-          </div>
-        </th>
-        <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= project.name %>
-            </p>
-          </div>
-        </td>
-      </tr>
+  <tr class="text-gray-700 dark:text-gray-300">
+    <th class="w-1/12">
+      <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+        <%= Project.human_attribute_name('name') %>
+      </div>
+    </th>
+    <td class="px-4 py-3">
+      <div class="flex items-center text-sm">
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+          <%= project.name %>
+        </p>
+      </div>
+    </td>
+  </tr>
 
-      <tr class="text-gray-700 dark:text-gray-300">
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
-            <%= Project.human_attribute_name('market') %>
-          </div>
-        </th>
-        <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= project.market %>
-            </p>
-          </div>
-        </td>
-      </tr>
+  <tr class="text-gray-700 dark:text-gray-300">
+    <th class="w-1/12">
+      <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+        <%= Project.human_attribute_name('market') %>
+      </div>
+    </th>
+    <td class="px-4 py-3">
+      <div class="flex items-center text-sm">
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+          <%= project.market %>
+        </p>
+      </div>
+    </td>
+  </tr>
 
-      <tr class="text-gray-700 dark:text-gray-300">
-        <th class="w-1/12">
-          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
-            <%= Project.human_attribute_name('active') %>
-          </div>
-        </th>
-        <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= inline_svg_tag 'check_circle_fill.svg', class: "h-6 w-6 #{project.active_class}" %>
-            </p>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+  <tr class="text-gray-700 dark:text-gray-300">
+    <th class="w-1/12">
+      <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+        <%= Project.human_attribute_name('active') %>
+      </div>
+    </th>
+    <td class="px-4 py-3">
+      <div class="flex items-center text-sm">
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+          <%= inline_svg_tag 'check_circle_fill.svg', class: "h-6 w-6 #{project.active_class}" %>
+        </p>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

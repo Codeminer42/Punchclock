@@ -1,0 +1,30 @@
+ <div class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700 px-4 py-3">
+      <%= t('revenue_forecast') %>
+ </div>
+
+ <div id="project_revenue_forecast_years" class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-white dark:text-gray-400 dark:bg-gray-800 pt-4 px-4">
+    <% revenue_forecast.each do |year, _data| %>
+      <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border
+        border-transparent rounded-t-lg bg-primary-600 active:bg-primary-600 hover:bg-primary-700 focus:outline-none
+        focus:ring" data-tab-id="<%= "project_revenue_forecast_#{year}" %>">
+        <%= year %>
+      </button>
+    <% end %>
+ </div>
+
+ <div class="w-full overflow-x-auto rounded-lg ring-1 ring-black ring-opacity-5 bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 px-4 py-3" id="project_revenue_forecast_index">
+   <div data-tab-content>
+     <% revenue_forecast.each do |year, data| %>
+       <div id="<%= "project_revenue_forecast_#{year}" %>">
+         <div class="grid lg:grid-cols-12 gap-4">
+           <% (1..12).each do |month| %>
+             <div class="text-gray-700 dark:text-gray-300 text-sm">
+               <p><%= Date::MONTHNAMES[month] %></p>
+               <span><%= data[month] ? humanized_money_with_symbol(data[month]) : '-' %></span>
+             </div>
+           <% end %>
+         </div>
+       </div>
+     <% end %>
+   </div>
+ </div>
