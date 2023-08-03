@@ -96,7 +96,7 @@ describe 'Repositories list', type: :feature do
 
   context 'when the repository has issues' do
     context 'when issues are greater than 1000' do
-      let!(:repository) { create(:repository, issues: '5455').decorate }
+      let!(:repository) { create(:repository, issues: 5455).decorate }
 
       before do
         visit repositories_path
@@ -108,7 +108,7 @@ describe 'Repositories list', type: :feature do
     end
 
     context 'when issues are less than 1000' do
-      let!(:repository) { create(:repository, issues: '855').decorate }
+      let!(:repository) { create(:repository, issues: 855).decorate }
 
       before do
         visit repositories_path
@@ -122,7 +122,7 @@ describe 'Repositories list', type: :feature do
 
   context 'when the repository has stars' do
     context 'when stars are greater than 1000' do
-      let!(:repository) { create(:repository, stars: '1500').decorate }
+      let!(:repository) { create(:repository, stars: 1500).decorate }
 
       before do
         visit repositories_path
@@ -134,7 +134,7 @@ describe 'Repositories list', type: :feature do
     end
 
     context 'when stars are less than 1000' do
-      let!(:repository) { create(:repository, stars: '643').decorate }
+      let!(:repository) { create(:repository, stars: 643).decorate }
 
       before do
         visit repositories_path
