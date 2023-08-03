@@ -16,7 +16,7 @@ describe 'Repositories list', type: :feature do
 
       visit repositories_path
 
-      expect(page).to have_css('#repository-card', :count => 25)
+      expect(page).to have_css('#repository-card', count: 25)
     end
 
     it 'have all links for repositories' do
@@ -26,11 +26,11 @@ describe 'Repositories list', type: :feature do
 
     it 'have all languages for repositories' do
       repository.languages.each do |language|
-        expect(page).to have_css('#language-tag', :text => language)
+        expect(page).to have_css('#language-tag', text: language)
       end
 
       second_repository.languages.each do |language|
-        expect(page).to have_css('#language-tag', :text => language)
+        expect(page).to have_css('#language-tag', text: language)
       end
     end
 
@@ -53,11 +53,11 @@ describe 'Repositories list', type: :feature do
       find('#filter-button').click
 
       repository.languages.each do |language|
-        expect(page).to have_css('#language-tag', :text => language)
+        expect(page).to have_css('#language-tag', text: language)
       end
 
       second_repository.languages.each do |language|
-        expect(page).not_to have_css('#language-tag', :text => language)
+        expect(page).not_to have_css('#language-tag', text: language)
       end
     end
 
@@ -74,7 +74,75 @@ describe 'Repositories list', type: :feature do
       find('#filter-button').click
 
       expect(page).to have_text('python')
-      expect(page).to have_css('#repository-card', :count => 2)
+      expect(page).to have_css('#repository-card', count: 2)
+    end
+  end
+
+  context 'when the repository has no issues and stars' do
+    let!(:repository) { create(:repository).decorate }
+
+    before do
+      visit repositories_path
+    end
+
+    it 'have all issues for repositories' do
+      expect(page).not_to have_css('#issues-tag')
+    end
+
+    it 'have all stars for repositories' do
+      expect(page).not_to have_css('#stars-tag')
+    end
+  end
+
+  context 'when the repository has issues' do
+    context 'when issues are greater than 1000' do
+      let!(:repository) { create(:repository, issues: '5455').decorate }
+
+      before do
+        visit repositories_path
+      end
+
+      it 'returns the number of issues abbreviated to thousands' do
+        expect(page).to have_css('#issues-tag', text: '5K')
+      end
+    end
+
+    context 'when issues are less than 1000' do
+      let!(:repository) { create(:repository, issues: '855').decorate }
+
+      before do
+        visit repositories_path
+      end
+
+      it 'returns the number of issues without abbreviations' do
+        expect(page).to have_css('#issues-tag', text: repository.issues)
+      end
+    end
+  end
+
+  context 'when the repository has stars' do
+    context 'when stars are greater than 1000' do
+      let!(:repository) { create(:repository, stars: '1500').decorate }
+
+      before do
+        visit repositories_path
+      end
+
+      it 'returns the number of stars abbreviated to thousands' do
+        expect(page).to have_css('#stars-tag', text: '1K')
+      end
+    end
+
+    context 'when stars are less than 1000' do
+      let!(:repository) { create(:repository, stars: '643').decorate }
+
+      before do
+        visit repositories_path
+      end
+
+      it 'returns the number of stars without abbreviations' do
+        expect(page).to have_css('#stars-tag', text: repository.stars)
+      end
     end
   end
 end
