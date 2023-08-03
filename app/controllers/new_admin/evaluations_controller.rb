@@ -2,6 +2,8 @@
 
 module NewAdmin
   class EvaluationsController < ApplicationController
+    include Pagination
+
     layout 'new_admin'
 
     load_and_authorize_resource
@@ -9,7 +11,7 @@ module NewAdmin
     before_action :authenticate_user!
 
     def index
-      @evaluations = paginated_evaluations.decorate
+      @evaluations = paginate_record(evaluations)
     end
 
     def show
@@ -17,10 +19,6 @@ module NewAdmin
     end
 
     private
-
-    def paginated_evaluations
-      evaluations.page(params[:page]).per(params[:per])
-    end
 
     def evaluations
       EvaluationQuery.new(**search_params).call

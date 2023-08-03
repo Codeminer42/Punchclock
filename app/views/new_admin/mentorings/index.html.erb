@@ -6,13 +6,19 @@
   <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg
   bg-primary-600 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="mentorings">Mentoria</button>
   <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-t-lg bg-primary-400 active:bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring" data-tab-id="mentorings_by_office">Escritorios</button>
-<div>
+</div>
+
 <div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
   <div class="w-full overflow-x-auto">
     <div data-tab-content>
       <div id="mentorings">
         <%= render 'mentorings', mentorings: @mentorings %>
+
+        <section id="pagination_mentorings" class="dark:text-gray-400 p-1">
+          <%= paginate @mentorings %>
+        </section>
       </div>
+
       <div id="mentorings_by_office">
         <%= render 'mentorings_by_office', mentorings_groupped: @mentorings_group %>
       </div>
