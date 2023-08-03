@@ -213,4 +213,42 @@ describe 'Projects', type: :feature do
       expect(project.reload.market).to be_internal
     end
   end
+
+  describe 'destroy' do
+    let!(:project) { create(:project) }
+
+    context 'when user deletes project from index page' do
+      before { visit "/new_admin/projects" }
+
+      it 'destroys record', :aggregate_failures do
+        within "#project_#{project.id}" do
+          expect do
+            click_link I18n.t('delete')
+          end.to change(Project, :count).from(1).to(0)
+        end
+
+        expect(page).to have_content(
+          I18n.t(:notice, scope: "flash.actions.destroy",
+                          resource_name: Project.model_name.human)
+        )
+      end
+    end
+
+    context 'when user deletes project from show page' do
+      before { visit "/new_admin/projects/#{project.id}" }
+
+      it 'destroys record', :aggregate_failures do
+        within '#project_actions' do
+          expect do
+            click_link I18n.t('new_admin.projects.show.destroy')
+          end.to change(Project, :count).from(1).to(0)
+        end
+
+        expect(page).to have_content(
+          I18n.t(:notice, scope: "flash.actions.destroy",
+                          resource_name: Project.model_name.human)
+        )
+      end
+    end
+  end
 end
