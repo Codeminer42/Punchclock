@@ -1,3 +1,7 @@
+<% content_for :page_title do %>
+  <%= t @project.name %>
+<% end %>
+
 <%= form_with model: @allocation, url: new_admin_projects_allocate_users_path do |form| %>
   <div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="w-full overflow-x-auto">
