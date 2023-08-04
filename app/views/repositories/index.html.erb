@@ -15,9 +15,6 @@
     <% end %>
   </div>
 
-  <% @repositories.each do |repository| %>
-    <%= render 'card', repository: repository %>
-  <% end %>
-
+  <%= render @repositories %>
   <%= paginate @repositories %>
 </div>
