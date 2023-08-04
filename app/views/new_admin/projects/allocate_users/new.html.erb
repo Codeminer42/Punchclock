@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= t @project.name %>
+  <%= @project.name %>
 <% end %>
 
 <%= form_with model: @allocation, url: new_admin_projects_allocate_users_path do |form| %>
