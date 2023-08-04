@@ -34,13 +34,16 @@
       <%= render 'project_details', project: @project %>
     </div>
 
-      <div id="project_allocations">
+    <% if @allocations.any? %>
+      <div id="project_allocations" class="my-4">
         <%= render 'project_allocations', allocations: @allocations %>
       </div>
+    <% end %>
 
-      <div id="project_revenue_forecast">
+    <% if @revenue_forecast.any? %>
+      <div id="project_revenue_forecast" class="my-4">
         <%= render 'project_revenue_forecast', revenue_forecast: @revenue_forecast %>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
