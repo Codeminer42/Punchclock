@@ -2,6 +2,7 @@
 
 class Allocation < ApplicationRecord
   HOURLY_RATE_CURRENCIES = %w[BRL USD]
+  DEFAULT_HOURLY_RATE_FOR_PROJECTS = 0
 
   belongs_to :user
   belongs_to :project

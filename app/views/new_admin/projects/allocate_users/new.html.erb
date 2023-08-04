@@ -1,0 +1,68 @@
+<%= form_with model: @allocation, url: new_admin_projects_allocate_users_path do |form| %>
+  <div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full whitespace-no-wrap" id="form_project">
+        <thead>
+          <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+            <th colspan="100%" class="px-4 py-3"><%= t 'allocate_users' %></th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <%= form.hidden_field :project_id, value: @allocation.project_id %>
+          <%= form.hidden_field :hourly_rate_cents, value: Allocation::DEFAULT_HOURLY_RATE_FOR_PROJECTS %>
+
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/6">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= AllocateUsersForm.human_attribute_name('not_allocated_users') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.select :user_id,
+                                not_allocated_users_options_for_select,
+                                {},
+                                { class: "text-sm bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" } %>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/6">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= AllocateUsersForm.human_attribute_name('start_at') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.date_field :start_at,
+                                    value: @allocation.start_at,
+                                    class: "text-sm bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" %>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="text-gray-700 dark:text-gray-300">
+            <th class="w-1/6">
+              <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+                <%= AllocateUsersForm.human_attribute_name('end_at') %>
+              </div>
+            </th>
+            <td class="px-4 py-3">
+              <div class="flex items-center">
+                <%= form.date_field :end_at,
+                                    value: @allocation.end_at,
+                                    class: "text-sm bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" %>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="flex mt-4">
+    <%= form.submit t('form.button.submit'), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+  </div>
+<% end %>

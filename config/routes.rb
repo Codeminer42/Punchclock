@@ -40,6 +40,10 @@ Rails.application.routes.draw do
     resources :projects, only: :show, as: :show_project
     resources :projects, only: :update, as: :update_project
     resources :projects, only: :destroy, as: :destroy_project
+
+    namespace :projects do
+      resources :allocate_users, only: %i[new create]
+    end
   end
 
   resources :repositories, only: :index do

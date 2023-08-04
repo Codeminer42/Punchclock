@@ -21,11 +21,18 @@
     </div>
   </div>
 
-  <div class="w-full overflow-hidden rounded-tr-lg ring-1 ring-black ring-opacity-5">
-    <div class="w-full overflow-x-auto">
-      <div id="project_details">
-        <%= render 'project_details', project: @project %>
-      </div>
+  <div id="project_allocate_user_action">
+    <%= link_to new_new_admin_projects_allocate_user_path(allocation: { project_id: @project.id }) do %>
+      <button class="px-4 py-4 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+        <%= t 'allocate_users' %>
+      </button>
+    <% end %>
+  </div>
+
+  <div class="w-full overflow-x-auto rounded-tr-lg ring-1 ring-black ring-opacity-5">
+    <div id="project_details" class="my-4">
+      <%= render 'project_details', project: @project %>
+    </div>
 
       <div id="project_allocations">
         <%= render 'project_allocations', allocations: @allocations %>
