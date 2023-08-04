@@ -29,7 +29,7 @@
         </span>
       <% end %>
     </div>
-    <% if repository.highlight.present? %>
+    <% if repository.highlight? %>
       <span class="bg-sky-500 px-2 py-1 text-white font-semibold text-sm rounded-lg">
         <%= t("repositories.index.highlight") %>
       </span>

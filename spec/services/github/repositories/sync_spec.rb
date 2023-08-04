@@ -10,12 +10,14 @@ RSpec.describe Github::Repositories::Sync, type: :service do
   end
 
   describe '#call' do
-    subject(:call) { described_class.new(client:).call }
+    subject(:github_repositories_sync) { described_class.new(client:) }
 
     let(:client) { instance_double('Github') }
 
     context 'when there are no repositories in database' do
-      it { is_expected.to be_empty }
+      it 'is expected to be empty' do
+        expect(github_repositories_sync.call).to be_empty
+      end
     end
 
     context 'when there are repositories in database' do
@@ -37,21 +39,18 @@ RSpec.describe Github::Repositories::Sync, type: :service do
       end
 
       it 'returns updated repositories languages' do
-        call.each do |repository|
-          expect(repository.language).to eq('ruby')
-        end
+        repository, = github_repositories_sync.call
+        expect(repository.language).to eq('ruby')
       end
 
       it 'returns updated repositories issues' do
-        call.each do |repository|
-          expect(repository.issues).to eq(3)
-        end
+        repository, = github_repositories_sync.call
+        expect(repository.issues).to eq(3)
       end
 
       it 'returns updated repositories stars' do
-        call.each do |repository|
-          expect(repository.stars).to eq(4)
-        end
+        repository, = github_repositories_sync.call
+        expect(repository.stars).to eq(4)
       end
     end
   end

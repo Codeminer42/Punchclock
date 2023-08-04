@@ -10,7 +10,7 @@ class RepositoryDecorator < ApplicationDecorator
   def languages
     return [] unless language
 
-    language.split(', ').map(&:strip).first(3)
+    language.split(', ').first(3).map(&:strip)
   end
 
   def issues_formatted
