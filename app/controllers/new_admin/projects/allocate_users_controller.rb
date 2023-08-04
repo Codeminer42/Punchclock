@@ -5,6 +5,7 @@ module NewAdmin
     class AllocateUsersController < ApplicationController
       layout 'new_admin'
 
+      before_action :authenticate_user!
       before_action :set_project, only: %i[new create]
 
       def new
