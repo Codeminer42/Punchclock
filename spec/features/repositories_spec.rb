@@ -95,25 +95,21 @@ describe 'Repositories list', type: :feature do
   end
 
   context 'when the repository has issues' do
+    let!(:repository) { create(:repository, issues:).decorate }
+
+    before do
+      visit repositories_path
+    end
+
     context 'when issues are greater than 1000' do
-      let!(:repository) { create(:repository, issues: 5455).decorate }
-
-      before do
-        visit repositories_path
-      end
-
+      let(:issues) { 5566 }
       it 'returns the number of issues abbreviated to thousands' do
         expect(page).to have_css('#issues-tag', text: '5K')
       end
     end
 
     context 'when issues are less than 1000' do
-      let!(:repository) { create(:repository, issues: 855).decorate }
-
-      before do
-        visit repositories_path
-      end
-
+      let(:issues) { 885 }
       it 'returns the number of issues without abbreviations' do
         expect(page).to have_css('#issues-tag', text: repository.issues)
       end
@@ -121,25 +117,21 @@ describe 'Repositories list', type: :feature do
   end
 
   context 'when the repository has stars' do
+    let!(:repository) { create(:repository, stars:).decorate }
+
+    before do
+      visit repositories_path
+    end
+
     context 'when stars are greater than 1000' do
-      let!(:repository) { create(:repository, stars: 1500).decorate }
-
-      before do
-        visit repositories_path
-      end
-
+      let(:stars) { 1500 }
       it 'returns the number of stars abbreviated to thousands' do
         expect(page).to have_css('#stars-tag', text: '1K')
       end
     end
 
     context 'when stars are less than 1000' do
-      let!(:repository) { create(:repository, stars: 643).decorate }
-
-      before do
-        visit repositories_path
-      end
-
+      let(:stars) { 644 }
       it 'returns the number of stars without abbreviations' do
         expect(page).to have_css('#stars-tag', text: repository.stars)
       end
