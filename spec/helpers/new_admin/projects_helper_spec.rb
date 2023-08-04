@@ -21,4 +21,15 @@ RSpec.describe NewAdmin::ProjectsHelper, type: :helper do
                         %W[#{I18n.t('projects.market.internal')} internal]])
     end
   end
+
+  describe '#not_allocated_users_options_for_select' do
+    let(:name) { 'Paul Atreides' }
+    let!(:user) { create(:user, name:) }
+
+    it 'returns non allocated users for select' do
+      expect(
+        klass.not_allocated_users_options_for_select
+      ).to eq([[name, user.id]])
+    end
+  end
 end

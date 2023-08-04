@@ -172,6 +172,61 @@ describe 'Projects', type: :feature do
                         have_link(I18n.t('new_admin.projects.show.destroy'))
       end
     end
+
+    context 'when user clicks on create allocations button' do
+      it 'redirects to allocate users to project page' do
+        within '#project_allocate_user_action' do
+          click_link I18n.t('allocate_users')
+        end
+
+        expect(page).to have_select('allocation_user_id') &&
+                        have_field('allocation_start_at') &&
+                        have_field('allocation_end_at')
+      end
+    end
+
+    context 'when project has allocations' do
+      let!(:allocation) do
+        create(:allocation,
+               start_at: 2.months.after,
+               end_at: 3.months.after,
+               user: create(:user),
+               project:).decorate
+      end
+
+      before do
+        visit "/new_admin/projects/#{project.id}"
+      end
+
+      it 'shows allocation details' do
+        within '#allocations_table_projects' do
+          expect(page).to have_css('tbody tr', count: 1) &&
+                          have_content(allocation.user_name) &&
+                          have_content(l(allocation.start_at, format: :long)) &&
+                          have_content(l(allocation.end_at, format: :long)) &&
+                          have_link(I18n.t('view'))
+        end
+      end
+
+      it 'shows revenue forecast years buttons' do
+        within '#project_revenue_forecast_years' do
+          expect(page).to have_button(allocation.start_at.year.to_s)
+        end
+      end
+
+      it 'creates paragraph for each month' do
+        within '#project_revenue_forecast_index' do
+          expect(page).to have_css('p', count: 12)
+        end
+      end
+
+      it 'creates span for each revenue' do
+        within '#project_revenue_forecast_index' do
+          expect(page).to have_css('span', count: 12) &&
+                          have_content('R$')
+        end
+      end
+    end
   end
 
   describe 'edit' do
