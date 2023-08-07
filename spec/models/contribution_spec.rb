@@ -57,6 +57,10 @@ RSpec.describe Contribution, type: :model do
       it 'updates reviewed_at' do
         expect(contribution.reviewed_at).to eq(Time.current)
       end
+
+      it 'updates tracking' do
+        expect(contribution.tracking).to be_truthy
+      end
     end
 
     context 'when the contribution is refused' do
