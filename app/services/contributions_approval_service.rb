@@ -24,6 +24,6 @@ class ContributionsApprovalService
   end
 
   def set_tracking
-    contribution.update!(tracking: true)
+    contribution.update(tracking: true)
   end
 end
