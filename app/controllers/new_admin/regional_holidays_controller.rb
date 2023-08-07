@@ -2,13 +2,15 @@
 
 module NewAdmin
   class RegionalHolidaysController < ApplicationController
+    include Pagination
+
     layout 'new_admin'
 
     before_action :set_regional_holiday, only: %i[show edit update]
     before_action :load_cities_with_holidays, only: :index
 
     def index
-      @regional_holidays = RegionalHolidaysQuery.new(**filter_params).call.decorate
+      @regional_holidays = paginate_record(regional_holidays)
     end
 
     def show; end
@@ -42,6 +44,10 @@ module NewAdmin
     end
 
     private
+
+    def regional_holidays
+      RegionalHolidaysQuery.new(**filter_params).call
+    end
 
     def filter_params
       params.permit(
