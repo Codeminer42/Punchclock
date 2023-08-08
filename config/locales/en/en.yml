@@ -132,3 +132,13 @@ en:
     filter: "Filter"
     clear_filters: "Clear filters"
     empty: "No regional holiday found"
+  projects:
+    title: "Projects"
+    details: "Details"
+    empty: "No project found"
+    filters: "Filters"
+    name: "Name"
+    market: "Market"
+    active: "Active"
+    filter: "Filter"
+    clear_filters: "Clear filters"

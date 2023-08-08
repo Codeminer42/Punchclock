@@ -48,8 +48,6 @@ pt-BR:
   not_evaluated: 'Não avaliado'
   not_allocated: 'Não alocado'
   allocated: 'Alocado'
-  projects: 'Projetos'
-  project_details: 'Detalhes do Projeto'
   user_details: 'Detalhes do Usuário'
   punch_details: 'Detalhes do Punch'
   regional_holiday_details: 'Detalhes do Feriado regional'
@@ -130,6 +128,7 @@ pt-BR:
   approve: "Aprovar"
   refuse:  "Recusar"
   cancel: "Cancelar"
+  prompt: "Selecione"
   this_week: "Semana atual"
   last_week: "Última semana"
   stats: Estatísticas
@@ -252,6 +251,19 @@ pt-BR:
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
     empty: "Nenhum feriado regional encontrado"
+  projects:
+    title: "Projetos"
+    filters: "Filtros"
+    details: "Details"
+    empty: "Nenhum projeto encontrado"
+    name: "Nome"
+    market:
+      one: "Mercado"
+      internal: "Interno"
+      international: "Externo"
+    active: "Ativo"
+    filter: "Filtrar"
+    clear_filters: "Limpar filtros"
   new_admin:
     regional_holidays:
       index:
@@ -261,3 +273,6 @@ pt-BR:
         destroy: "Remover Feriado Regional"
       edit:
         edit: "Editar"
+    projects:
+      index:
+        new: "Novo Projeto"

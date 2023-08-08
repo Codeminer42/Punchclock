@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :regional_holidays, only: :show, as: :show_regional_holiday
     resources :regional_holidays, only: :update, as: :update_regional_holiday
     resources :regional_holidays, only: :destroy, as: :destroy_regional_holiday
+    resources :projects, only: :index
   end
 
   resources :repositories, only: :index do
