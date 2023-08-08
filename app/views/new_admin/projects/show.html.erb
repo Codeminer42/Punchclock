@@ -2,7 +2,7 @@
   <%= @project.name %>
 <% end %>
 
-<div data-tab-id="project" class="space-y-6">
+<div class="space-y-6">
   <div id="project_actions" class="flex items-center justify-end">
     <div class="mx-2">
       <%= link_to edit_new_admin_project_path(id: @project.id) do %>
@@ -21,7 +21,27 @@
     </div>
   </div>
 
-  <div id="project_details">
-    <%= render 'project_details', project: @project %>
+  <div id="project_allocate_user_action">
+    <%= link_to new_new_admin_projects_allocate_user_path(allocation: { project_id: @project.id }) do %>
+      <button class="px-4 py-4 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+        <%= t 'allocate_users' %>
+      </button>
+    <% end %>
+  </div>
+
+  <div class="w-full overflow-x-auto rounded-tr-lg ring-1 ring-black ring-opacity-5">
+    <div id="project_details" class="mb-4">
+      <%= render 'project_details', project: @project %>
+    </div>
+
+    <div id="project_allocations" class="my-4">
+      <%= render @allocations %>
+    </div>
+
+    <% if @revenue_forecast.any? %>
+      <div id="project_revenue_forecast" class="mt-4">
+        <%= render 'project_revenue_forecast', revenue_forecast: @revenue_forecast %>
+      </div>
+    <% end %>
   </div>
 </div>

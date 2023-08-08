@@ -16,7 +16,10 @@ module NewAdmin
       @project = Project.new.decorate
     end
 
-    def show; end
+    def show
+      @allocations = @project.allocations.decorate
+      @revenue_forecast = project_revenue_forecast
+    end
 
     def create
       @project = Project.new(project_params)
@@ -47,6 +50,10 @@ module NewAdmin
     end
 
     private
+
+    def project_revenue_forecast
+      RevenueForecastService.project_forecast(@project)
+    end
 
     def redirect_on_success(url, message_scope:)
       flash[:notice] = I18n.t(:notice, scope: "flash.actions.#{message_scope}",

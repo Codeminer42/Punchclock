@@ -94,6 +94,26 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
     it 'assigns project to @project' do
       expect(assigns(:project)).to eq(project)
     end
+
+    context 'when project has allocations' do
+      before do
+        create(:allocation,
+               start_at: 2.months.after,
+               end_at: 3.months.after,
+               user: create(:user),
+               project:).decorate
+
+        get :show, params: { id: project.id }
+      end
+
+      it 'assigns decorated allocations to @allocations' do
+        expect(assigns(:allocations).last).to be_an_instance_of(AllocationDecorator)
+      end
+
+      it 'assigns revenue forecast to @revenue_forecast' do
+        expect(assigns(:revenue_forecast)).to have_key(Date.current.year)
+      end
+    end
   end
 
   describe 'GET #new' do
