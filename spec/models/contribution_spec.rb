@@ -43,19 +43,30 @@ RSpec.describe Contribution, type: :model do
     context 'when the contribution is approved' do
       before do
         travel_to Time.zone.parse('2022-01-01')
-        contribution.approve(reviewer.id)
       end
 
       it 'has state approved' do
-        expect(contribution).to have_state(:approved)
+        expect do
+          contribution.approve(reviewer.id)
+        end.to change { contribution.state }.from('received').to('approved')
       end
 
       it 'updates reviewer_id' do
-        expect(contribution.reviewer_id).to be(reviewer.id)
+        expect do
+          contribution.approve(reviewer.id)
+        end.to change { contribution.reviewer_id }.from(nil).to(reviewer.id)
       end
 
       it 'updates reviewed_at' do
-        expect(contribution.reviewed_at).to eq(Time.current)
+        expect do
+          contribution.approve(reviewer.id)
+        end.to change { contribution.reviewed_at }.from(nil).to(Time.current)
+      end
+
+      it 'updates tracking' do
+        expect do
+          contribution.approve(reviewer.id)
+        end.to change { contribution.tracking }.from(false).to(true)
       end
     end
 

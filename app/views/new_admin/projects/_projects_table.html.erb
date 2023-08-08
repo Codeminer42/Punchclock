@@ -1,0 +1,44 @@
+<table class="table-auto w-full h-fit" id="index_table_projects">
+  <thead>
+  <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+    <th class="px-4 py-3"><%= Project.human_attribute_name('name') %></th>
+    <th class="px-4 py-3"><%= Project.human_attribute_name('market') %></th>
+    <th class="px-4 py-3"><%= Project.human_attribute_name('active') %></th>
+    <th class="px-4 py-3"></th>
+  </tr>
+  </thead>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
+    <% projects.each do |project| %>
+      <tr id="<%= "project_#{project.id}" %>" class="text-gray-700 dark:text-gray-400">
+        <td class="px-4 py-3">
+          <%= project.name %>
+        </td>
+
+        <td class="px-4 py-3">
+          <%= project.market %>
+        </td>
+
+        <td class="px-4 py-3">
+          <%= inline_svg_tag 'check_circle_fill.svg', class: "h-6 w-6 #{project.active_class}" %>
+        </td>
+
+        <td class="px-4 py-3">
+          <div class="space-x-4">
+            <%= link_to t('view'),
+                        nil,
+                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+            %>
+            <%= link_to t('edit'),
+                        nil,
+                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+            %>
+            <%= link_to t('delete'),
+                        nil,
+                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+            %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

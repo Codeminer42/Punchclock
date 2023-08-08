@@ -10,7 +10,7 @@
   </thead>
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
     <% regional_holidays.each do |holiday| %>
-      <tr id=<%= "regional_holiday_#{holiday.id}" %> class="text-gray-700 dark:text-gray-400">
+      <tr id="<%= "regional_holiday_#{holiday.id}" %>" class="text-gray-700 dark:text-gray-400">
         <td class="px-4 py-3">
           <div>
             <%= holiday.name %>
@@ -34,15 +34,17 @@
         <td class="px-4 py-3">
           <div class="space-x-4">
             <%= link_to t('view'),
-                        new_admin_show_regional_holiday_path(id: holiday.id),
+                new_admin_show_regional_holiday_path(id: holiday.id),
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
             %>
             <%= link_to t('edit'),
-                        edit_new_admin_regional_holiday_path(id: holiday.id),
+                edit_new_admin_regional_holiday_path(id: holiday.id),
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
             %>
             <%= link_to t('delete'),
-                nil,
+                new_admin_destroy_regional_holiday_path(holiday.id),
+                method: :delete,
+                data: { confirm: t('delete_confirmation') },
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
             %>
           </div>

@@ -118,6 +118,28 @@ RSpec.describe 'Regional holidays' do
           expect(page).to have_content('Nenhum feriado regional encontrado')
         end
       end
+
+      describe 'pagination' do
+        let(:maximum_per_page) { 2 }
+
+        before do
+          visit "/new_admin/regional_holidays?per=#{maximum_per_page}"
+        end
+
+        it 'displays the maximum holidays in each page', :aggregate_failure do
+          within_table 'index_table_regional_holidays' do
+            expect(page).to have_css('tbody tr', count: maximum_per_page)
+          end
+
+          within '#pagination_regional_holidays' do
+            click_link '2'
+          end
+
+          within_table 'index_table_regional_holidays' do
+            expect(page).to have_css('tbody tr', count: maximum_per_page)
+          end
+        end
+      end
     end
   end
 
@@ -226,6 +248,51 @@ RSpec.describe 'Regional holidays' do
                         resource_name: RegionalHoliday.model_name.human)
       )
       expect(holiday.reload.name).to eq(new_name)
+    end
+  end
+
+  describe 'destroy' do
+    let(:city) { create(:city, name: 'London') }
+    let!(:holiday) { create(:regional_holiday, cities: [city], day: 26, month: 12, name: 'Boxing Day') }
+
+    let(:admin) { create(:user, :admin, occupation: :administrative) }
+
+    before do
+      sign_in(admin)
+    end
+
+    context 'when user deletes holiday from index page' do
+      before { visit "/new_admin/regional_holidays" }
+
+      it 'destroys record', :aggregate_failures do
+        within "#regional_holiday_#{holiday.id}" do
+          expect do
+            click_link I18n.t('delete')
+          end.to change(RegionalHoliday, :count).from(1).to(0)
+        end
+
+        expect(page).to have_content(
+          I18n.t(:notice, scope: "flash.actions.destroy",
+                          resource_name: RegionalHoliday.model_name.human)
+        )
+      end
+    end
+
+    context 'when user deletes holiday from show page' do
+      before { visit "/new_admin/regional_holidays/#{holiday.id}" }
+
+      it 'destroys record', :aggregate_failures do
+        within '#regional_holiday_actions' do
+          expect do
+            click_link I18n.t('new_admin.regional_holidays.show.destroy')
+          end.to change(RegionalHoliday, :count).from(1).to(0)
+        end
+
+        expect(page).to have_content(
+          I18n.t(:notice, scope: "flash.actions.destroy",
+                          resource_name: RegionalHoliday.model_name.human)
+        )
+      end
     end
   end
 end

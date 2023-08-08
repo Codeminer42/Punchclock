@@ -96,6 +96,7 @@ en:
   send_reset_instructions: "Send me reset password instructions"
   didnt_receive_instructions: "Didn't receive confirmation instructions?"
   resend_instructions: "Resend confirmation instructions"
+  delete_confirmation: "Are you sure you want to delete the record?"
   allocation:
     access_allocation: Access Allocation
     current_allocation: Current Allocation
@@ -131,3 +132,13 @@ en:
     filter: "Filter"
     clear_filters: "Clear filters"
     empty: "No regional holiday found"
+  projects:
+    title: "Projects"
+    details: "Details"
+    empty: "No project found"
+    filters: "Filters"
+    name: "Name"
+    market: "Market"
+    active: "Active"
+    filter: "Filter"
+    clear_filters: "Clear filters"

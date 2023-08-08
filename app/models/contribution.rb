@@ -27,7 +27,9 @@ class Contribution < ApplicationRecord
     state :refused
 
     event :approve do
-      transitions from: %i[received], to: :approved, after: Proc.new { |*args| update_reviewer(*args) }
+      transitions from: %i[received], to: :approved, after: proc { |reviewer_id|
+        ContributionsApprovalService.call(self, reviewer_id:)
+      }
     end
 
     event :refuse do
@@ -37,10 +39,6 @@ class Contribution < ApplicationRecord
 
   def to_s
     "#{id} - #{user}"
-  end
-
-  def update_reviewer(reviewer_id)
-    self.update(reviewer_id: reviewer_id, reviewed_at: Time.current)
   end
 
   def update_rejected_reason(rejected_reason = "other_reason", reviewer_id)
