@@ -90,6 +90,15 @@ en:
   blank_field: "can't be blank"
   forgot_password: "Forgot your password?"
   vacations:
+    scopes:
+      ongoing_and_scheduled: "Ongoing and scheduled"
+      pending: "Pending"
+      denied: "Denied"
+      approved: "Approved"
+      finished: "Finished"
+      cancelled: "Cancelled"
+      all: "All"
+    title: 'Vacations'
     index:
       are_you_sure_remove_request: 'Remove this vacation request?'
       request_vacation: "Request Vacation"
