@@ -18,15 +18,15 @@ RSpec.describe RevenueForecastPresenter do
         12 => Money.new(9200_00)
       }
     },
-    {
-      project: project1,
-      forecast: {
-        1 => Money.new(3000_00),
-        2 => Money.new(4000_00),
-        3 => Money.new(1600_00),
-        11 => Money.new(12600_00)
-      }
-    }]
+     {
+       project: project1,
+       forecast: {
+         1 => Money.new(3000_00),
+         2 => Money.new(4000_00),
+         3 => Money.new(1600_00),
+         11 => Money.new(12600_00)
+       }
+     }]
   end
 
   before do
@@ -62,17 +62,36 @@ RSpec.describe RevenueForecastPresenter do
     end
   end
 
-  context '.years_range' do
-    it 'returns a range where the first year is 2022
+  describe '#years_range' do
+    context 'when allocation with newest end date is present' do
+      it 'returns a range where the first year is 2022
       and the last year is the year when the last allocation ends' do
+        create(:allocation, start_at: "2018-02-10", end_at: "2025-03-14")
+        expect(described_class.years_range).to eq((2022..2025))
+
+        create(:allocation, start_at: "1894-02-01", end_at: "1895-02-01")
+        expect(described_class.years_range).to eq((2022..2025))
+
+        create(:allocation, end_at: "2027-02-01")
+        expect(described_class.years_range).to eq((2022..2027))
+      end
+    end
+
+    context 'when no allocation is present' do
+      it 'returns default range' do
+        expect(described_class.years_range).to eq((2022..2022))
+      end
+    end
+  end
+
+  describe '#months_names' do
+    it 'returns list containing names of months in a year' do
       create(:allocation, start_at: "2018-02-10", end_at: "2025-03-14")
-      expect(described_class.years_range).to eq((2022..2025))
 
-      create(:allocation, start_at: "1894-02-01", end_at: "1895-02-01")
-      expect(described_class.years_range).to eq((2022..2025))
-
-      create(:allocation, end_at: "2027-02-01")
-      expect(described_class.years_range).to eq((2022..2027))
+      expect(
+        subject.months_names
+      ).to match_array(%w[January February March April May June July August
+                          September October November December])
     end
   end
 end
