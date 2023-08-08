@@ -11,19 +11,14 @@ class ContributionsApprovalService
   end
 
   def call
-    update_contribution_review
-    set_tracking
+    assign_reviewer
   end
 
   private
 
   attr_accessor :contribution, :reviewer_id
 
-  def update_contribution_review
-    contribution.update_reviewer reviewer_id
-  end
-
-  def set_tracking
-    contribution.update(tracking: true)
+  def assign_reviewer
+    contribution.update(reviewer_id:, reviewed_at: Time.current, tracking: true)
   end
 end

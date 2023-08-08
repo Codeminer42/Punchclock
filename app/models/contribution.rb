@@ -41,10 +41,6 @@ class Contribution < ApplicationRecord
     "#{id} - #{user}"
   end
 
-  def update_reviewer(reviewer_id)
-    self.update(reviewer_id: reviewer_id, reviewed_at: Time.current)
-  end
-
   def update_rejected_reason(rejected_reason = "other_reason", reviewer_id)
     self.update(rejected_reason: rejected_reason, reviewer_id: reviewer_id, reviewed_at: Time.current )
   end
