@@ -12,11 +12,11 @@ class Ability
     can %i[edit update], User, id: user.id
     can :read, Vacation, user_id: user.id
     can :destroy, Vacation do |vacation|
-      vacation.user_id == user.id && vacation.cancelable?
+      vacation.cancelable?
     end
 
     unless user.vacations.any?(&:pending?)
-      can :create, Vacation, user_id: user.id
+      can :create, Vacation
     end
 
     if user.admin? || user.evaluator? || user.office_head?
