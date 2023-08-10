@@ -15,8 +15,11 @@
 
 <div class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
   <div class="flex justify-between gap-4">
-    <table class="table-auto w-full h-fit" id="index_table_vacations">
-      <thead>
+    <% if @vacations.blank? %>
+      <%= render 'empty'  %>
+    <% else %>
+      <table class="table-auto w-full h-fit" id="index_table_vacations">
+        <thead>
         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
           <th class="px-4 py-3"><%= Vacation.human_attribute_name('id') %></th>
           <th class="px-4 py-3"><%= Vacation.human_attribute_name('user') %></th>
@@ -24,11 +27,12 @@
           <th class="px-4 py-3"><%= Vacation.human_attribute_name('end_date') %></th>
           <th class="px-4 py-3"><%= Vacation.human_attribute_name('status') %></th>
         </tr>
-      </thead>
+        </thead>
 
-      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
-        <%= render @vacations %>
-      </tbody>
-    </table>
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
+          <%= render @vacations %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>

@@ -99,6 +99,7 @@ en:
       cancelled: "Cancelled"
       all: "All"
     title: 'Vacations'
+    empty: 'No vacations found'
     index:
       are_you_sure_remove_request: 'Remove this vacation request?'
       request_vacation: "Request Vacation"

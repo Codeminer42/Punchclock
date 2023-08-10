@@ -178,6 +178,7 @@ pt-BR:
   requesting_vacation: 'Solicitando Férias'
   vacations:
     title: 'Férias'
+    empty: 'Não existem férias ainda'
     scopes:
       ongoing_and_scheduled: "Em andamento e agendadas"
       pending: "Pendentes"
