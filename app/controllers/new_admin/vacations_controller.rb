@@ -16,6 +16,10 @@ module NewAdmin
 
     private
 
+    def filters
+      { scope: params[:scope] }
+    end
+
     def vacations
       Vacation.all
     end

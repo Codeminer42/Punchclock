@@ -6,9 +6,9 @@
   <% vacation_query_scopes.each do |scope| %>
     <a class="px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border
       border-transparent rounded-md hover:bg-primary-700 focus:outline-none
-      focus:ring <%= scoped_active_class(scope).presence || 'bg-primary-600' %>"
+      focus:ring <%= scoped_active_class(scope) %>"
        href="<%= new_admin_vacations_path(scope:) %>">
-      <%= t("vacations.scopes.#{scope}") %>
+      <%= vacation_scope_selector scope %>
     </a>
   <% end %>
 </div>
