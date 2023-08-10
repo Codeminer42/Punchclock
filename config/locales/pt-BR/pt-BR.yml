@@ -254,7 +254,7 @@ pt-BR:
   projects:
     title: "Projetos"
     filters: "Filtros"
-    details: "Details"
+    details: "Detalhes"
     empty: "Nenhum projeto encontrado"
     name: "Nome"
     market:
@@ -276,6 +276,13 @@ pt-BR:
     projects:
       index:
         new: "Novo Projeto"
+      show:
+        edit: "Editar Projeto"
+        destroy: "Remover Projeto"
+      new:
+        new: "Novo Projeto"
+      edit:
+        edit: "Editar Projeto"
     revenue_forecast:
       index:
         total: "Total"

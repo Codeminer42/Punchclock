@@ -79,4 +79,169 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #show' do
+    let!(:project) { create(:project) }
+
+    before { get :show, params: { id: project.id } }
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders show template' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'assigns project to @project' do
+      expect(assigns(:project)).to eq(project)
+    end
+
+    context 'when project has allocations' do
+      before do
+        create(:allocation,
+               start_at: 2.months.after,
+               end_at: 3.months.after,
+               user: create(:user),
+               project:).decorate
+
+        get :show, params: { id: project.id }
+      end
+
+      it 'assigns decorated allocations to @allocations' do
+        expect(assigns(:allocations).last).to be_an_instance_of(AllocationDecorator)
+      end
+
+      it 'assigns revenue forecast to @revenue_forecast' do
+        expect(assigns(:revenue_forecast)).to have_key(Date.current.year)
+      end
+    end
+  end
+
+  describe 'GET #new' do
+    before { get :new }
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders new template' do
+      expect(response).to render_template(:new)
+    end
+
+    it 'assigns a new project to @project' do
+      expect(assigns(:project)).to be_an_instance_of(Project)
+    end
+  end
+
+  describe 'GET #edit' do
+    let!(:project) { create(:project) }
+
+    before do
+      get :edit, params: { id: project.id }
+    end
+
+    it { is_expected.to respond_with(:ok) }
+
+    it 'renders edit template' do
+      expect(response).to render_template(:edit)
+    end
+
+    it 'assigns a new project to @project' do
+      expect(assigns(:project)).to eq(project)
+    end
+  end
+
+  describe 'POST #create' do
+    context 'when all parameters are correct' do
+      describe 'http response' do
+        before do
+          post :create, params: { project: { name: 'Foobar Project', market: 'internal', active: true } }
+        end
+
+        it { is_expected.to redirect_to new_admin_projects_path }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "creates a new project" do
+        expect do
+          post :create, params: { project: { name: 'Foobar Project', market: 'internal', active: true } }
+        end.to change(Project, :count).from(0).to(1)
+      end
+    end
+
+    context 'when record is not properly saved due to name param being nil' do
+      describe 'http response' do
+        before do
+          post :create, params: { project: { name: nil, market: 'internal', active: true } }
+        end
+
+        it { is_expected.to render_template(:new) }
+        it { is_expected.to set_flash.now[:alert] }
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:project) { create(:project) }
+
+    context 'when parameters are correct' do
+      describe 'http response' do
+        before do
+          patch :update, params: { id: project.id,
+                                   project: { name: 'edited project', market: 'internal', active: true } }
+        end
+
+        it { is_expected.to redirect_to new_admin_show_project_path(id: project.id) }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "updates project" do
+        expect do
+          patch :update, params: { id: project.id,
+                                   project: { name: 'edited project', market: 'internal', active: true } }
+        end.to change { project.reload.name }.to('edited project')
+      end
+    end
+
+    context 'when record is not properly updated' do
+      before do
+        patch :update, params: { id: project.id,
+                                 project: { name: nil } }
+      end
+
+      it { is_expected.to render_template(:edit) }
+      it { is_expected.to set_flash.now[:alert] }
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:project) { create(:project) }
+
+    context 'when record is successfully deleted' do
+      describe 'http response' do
+        before do
+          delete :destroy, params: { id: project.id }
+        end
+
+        it { is_expected.to redirect_to new_admin_projects_path }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "destroys project" do
+        expect do
+          delete :destroy, params: { id: project.id }
+        end.to change(Project, :count).from(1).to(0)
+      end
+    end
+
+    context 'when record is not properly deleted' do
+      before do
+        allow_any_instance_of(Project).to receive(:destroy).and_return(false)
+        allow_any_instance_of(Project).to receive_message_chain(:errors, :full_messages).and_return(['Foobar'])
+
+        delete :destroy, params: { id: project.id }
+      end
+
+      it { is_expected.to render_template(:index) }
+      it { is_expected.to respond_with(:unprocessable_entity) }
+      it { is_expected.to set_flash.now[:alert].to('Foobar') }
+    end
+  end
 end

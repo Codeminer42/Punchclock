@@ -51,7 +51,7 @@ tabButtons.forEach((buttonElement) => {
     setActiveButton(buttonElement)
   });
 });
-tabButtons[0].click();
+tabButtons[0]?.click();
 
 window.addEventListener("load", () => {
   const anchor = window.location.hash
