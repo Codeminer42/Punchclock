@@ -21,7 +21,7 @@ module NewAdmin
     end
 
     def vacations
-      Vacation.all
+      VacationsQuery.call(filters)
     end
   end
 end
