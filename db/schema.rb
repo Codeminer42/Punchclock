@@ -187,10 +187,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_175727) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "language"
-    t.integer "issues"
-    t.integer "stars"
     t.boolean "highlight", default: false
     t.text "description"
+    t.integer "issues", default: 0
+    t.integer "stars", default: 0
   end
 
   create_table "skills", force: :cascade do |t|
