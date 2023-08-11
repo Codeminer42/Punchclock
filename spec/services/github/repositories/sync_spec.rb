@@ -69,12 +69,12 @@ RSpec.describe Github::Repositories::Sync, type: :service do
 
         it 'returns repositories issues as nil' do
           repository, = github_repositories_sync.call
-          expect(repository.issues).to be_nil
+          expect(repository.issues).to be_zero
         end
 
         it 'returns repositories stars as nil' do
           repository, = github_repositories_sync.call
-          expect(repository.stars).to be_nil
+          expect(repository.stars).to be_zero
         end
       end
     end

@@ -54,17 +54,11 @@ module Github
       end
 
       def repository_owner_and_name(repository_link)
-        repository_link.split('/')[-2..]
+        repository_link.split('/').last(2)
       end
 
       def build_update_params(languages, stats)
-        params = {}
-
-        params[:language] = languages if languages.present?
-        params[:issues] = stats[:issues] if stats[:issues].present?
-        params[:stars] = stats[:stars] if stats[:stars].present?
-
-        params
+        stats.slice(:issues, :stars).merge(language: languages).compact
       end
     end
   end

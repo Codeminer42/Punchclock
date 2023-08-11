@@ -7,13 +7,13 @@
       <span class="d-block text-dark"><%= simple_format repository.description %></span>
     </div>
     <div class='flex gap-4 items-center'>
-    <% if repository.issues.present? %>
+    <% if repository.issues > 0 %>
       <div class='flex gap-1 items-center text-gray-400' title="<%= "#{t("repositories.index.issues")}: #{repository.issues}" %>">
         <%= inline_svg_tag 'issues.svg', class: 'h-4 w-4' %>
         <span id='issues-tag' class='font-semibold'><%= repository.issues_formatted %></span>
       </div>
     <% end %>
-    <% if repository.stars.present? %>
+    <% if repository.stars > 0 %>
       <div class='flex gap-1 items-center text-gray-400' title="<%= "#{t("repositories.index.stars")}: #{repository.stars}" %>">
         <%= inline_svg_tag 'stars.svg', class: 'h-5 w-5' %>
         <span id='stars-tag' class='font-semibold'><%= repository.stars_formatted %></span>

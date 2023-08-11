@@ -83,14 +83,6 @@ RSpec.describe RepositoryDecorator do
         expect(repository.issues_formatted).to eql '0'
       end
     end
-
-    context 'when repository has no issues' do
-      let(:repository) { build(:repository, issues: nil).decorate }
-
-      it 'returns 0' do
-        expect(repository.issues_formatted).to eql '0'
-      end
-    end
   end
 
   describe '#stars_formatted' do
@@ -136,14 +128,6 @@ RSpec.describe RepositoryDecorator do
 
     context 'when repository has 0 stars' do
       let(:repository) { build(:repository, stars: 0).decorate }
-
-      it 'returns 0' do
-        expect(repository.stars_formatted).to eql '0'
-      end
-    end
-
-    context 'when repository has no stars' do
-      let(:repository) { build(:repository, stars: nil).decorate }
 
       it 'returns 0' do
         expect(repository.stars_formatted).to eql '0'
