@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Repositories list', type: :feature do
@@ -104,7 +106,7 @@ describe 'Repositories list', type: :feature do
     context 'when issues are greater than 1000' do
       let(:issues) { 5566 }
       it 'returns the number of issues abbreviated to thousands' do
-        expect(page).to have_css('#issues-tag', text: '5K')
+        expect(page).to have_css('#issues-tag', text: '5.6K')
       end
     end
 
@@ -126,7 +128,7 @@ describe 'Repositories list', type: :feature do
     context 'when stars are greater than 1000' do
       let(:stars) { 1500 }
       it 'returns the number of stars abbreviated to thousands' do
-        expect(page).to have_css('#stars-tag', text: '1K')
+        expect(page).to have_css('#stars-tag', text: '1.5K')
       end
     end
 

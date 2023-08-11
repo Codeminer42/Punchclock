@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RepositoryDecorator < ApplicationDecorator
+  include ActionView::Helpers::NumberHelper
+
   delegate_all
 
   def self.collection_decorator_class
@@ -13,6 +15,10 @@ class RepositoryDecorator < ApplicationDecorator
     language.split(', ').first(3).map(&:strip)
   end
 
+  def name
+    link[/[\w_-]+$/]
+  end
+
   def issues_formatted
     format_number(model.issues)
   end
@@ -21,17 +27,12 @@ class RepositoryDecorator < ApplicationDecorator
     format_number(model.stars)
   end
 
-  def name
-    link[/[\w_-]+$/]
-  end
-
   private
 
   def format_number(number)
-    if number >= 1000
-      "#{(number/1000).round(1)}K"
-    else
-      number
-    end
+    return '0' if number.nil?
+    return number.to_s if number <= 999
+
+    number_to_human(number, precision: 2, separator: '.', units: { thousand: "K", million: "M" }).gsub(/\s+/, '')
   end
 end
