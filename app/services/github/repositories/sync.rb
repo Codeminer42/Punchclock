@@ -16,10 +16,7 @@ module Github
           languages = fetch_repository_languages(repository.link)
           stats = fetch_repository_stats(repository.link)
 
-          repository.update!(
-            **(languages.present? ? { language: languages } : {}),
-            **(stats.values.any? ? stats : {})
-          )
+          repository.update!(**(languages.present? ? { language: languages } : {}), **(stats.values.any? ? stats : {}))
 
           repository
         end.compact
