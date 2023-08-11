@@ -30,8 +30,7 @@ class RepositoryDecorator < ApplicationDecorator
   private
 
   def format_number(number)
-    return '0' if number.nil?
-    return number.to_s if number <= 999
+    return (number || 0).to_s if (number || 0) <= 999
 
     number_to_human(number, precision: 2, separator: '.', units: { thousand: "K", million: "M" }).gsub(/\s+/, '')
   end

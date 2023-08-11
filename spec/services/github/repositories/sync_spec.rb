@@ -21,7 +21,7 @@ RSpec.describe Github::Repositories::Sync, type: :service do
     end
 
     context 'when there are repositories in database' do
-      let!(:repository) { create(:repository).decorate }
+      let!(:repository) { create(:repository, language: nil).decorate }
       let(:github_languages_success) { true }
       let(:github_get_success) { true }
       let(:client) do
