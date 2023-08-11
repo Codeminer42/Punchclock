@@ -1,6 +1,6 @@
 columns do
   column do
-    para(I18n.t('projects'), style: 'font-weight: bold')
+    para(I18n.t('projects.title'), style: 'font-weight: bold')
 
     forecast.projects.each do |project|
       para(project.name, style: 'font-weight: bold')

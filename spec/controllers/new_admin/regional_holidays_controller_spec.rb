@@ -122,6 +122,20 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
         expect(assigns(:regional_holidays)).to be_empty
       end
     end
+
+    describe 'pagination' do
+      it 'paginates results' do
+        get :index, params: { per: 2 }
+
+        expect(assigns(:regional_holidays).count).to eq(2)
+      end
+
+      it 'decorates regional holidays' do
+        get :index, params: { per: 1 }
+
+        expect(assigns(:regional_holidays).last).to be_an_instance_of(RegionalHolidayDecorator)
+      end
+    end
   end
 
   describe 'GET #show' do
@@ -189,6 +203,7 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
         end
 
         it { is_expected.to render_template(:new) }
+        it { is_expected.to respond_with(:unprocessable_entity) }
         it { is_expected.to set_flash.now[:alert] }
       end
     end
@@ -249,7 +264,42 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
       end
 
       it { is_expected.to render_template(:edit) }
+      it { is_expected.to respond_with(:unprocessable_entity) }
       it { is_expected.to set_flash.now[:alert] }
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:regional_holiday) { create(:regional_holiday) }
+
+    context 'when record is successfully deleted' do
+      describe 'http response' do
+        before do
+          delete :destroy, params: { id: regional_holiday.id }
+        end
+
+        it { is_expected.to redirect_to new_admin_regional_holidays_path }
+        it { is_expected.to set_flash[:notice] }
+      end
+
+      it "destroys regional holiday" do
+        expect do
+          delete :destroy, params: { id: regional_holiday.id }
+        end.to change(RegionalHoliday, :count).from(1).to(0)
+      end
+    end
+
+    context 'when record is not properly deleted' do
+      before do
+        allow_any_instance_of(RegionalHoliday).to receive(:destroy).and_return(false)
+        allow_any_instance_of(RegionalHoliday).to receive_message_chain(:errors, :full_messages).and_return(['Foobar'])
+
+        delete :destroy, params: { id: regional_holiday.id }
+      end
+
+      it { is_expected.to render_template(:index) }
+      it { is_expected.to respond_with(:unprocessable_entity) }
+      it { is_expected.to set_flash.now[:alert].to('Foobar') }
     end
   end
 end

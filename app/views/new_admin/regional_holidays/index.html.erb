@@ -24,5 +24,11 @@
     <div id="filters_sidebar_section">
       <%= render 'regional_holidays_filters' %>
     </div>
-  <div>
+  </div>
 </div>
+
+<% if @regional_holidays.any? %>
+  <section id="pagination_regional_holidays" class="dark:text-gray-400">
+    <%= paginate @regional_holidays %>
+  </section>
+<% end %>

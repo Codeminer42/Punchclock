@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t '.edit' %>
+<% end %>
+
+<div data-tab-id="edit_regional_holiday">
+  <%= render 'form', project: @project, url: new_admin_update_project_path %>
+</div>

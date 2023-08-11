@@ -2,13 +2,9 @@
 
 class RegionalHoliday < ApplicationRecord
   has_and_belongs_to_many :cities
-  has_and_belongs_to_many :offices
+
   validates :name, :day, :month, presence: true
   validate :date_validation
-
-  def deprecated_cities
-    offices.map(&:city)
-  end
 
   def self.to_formatted_hash
     all.map { |h| { month: h.month, day: h.day } }

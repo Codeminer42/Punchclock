@@ -11,4 +11,12 @@ FactoryBot.define do
   trait :inactive do
     active { false }
   end
+
+  trait :internal do
+    market { :internal }
+  end
+
+  trait :international do
+    market { :international }
+  end
 end

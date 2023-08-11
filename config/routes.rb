@@ -32,9 +32,19 @@ Rails.application.routes.draw do
     resources :allocations, only: %i[show update edit], as: :user_allocations
     resources :users, only: %i[show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
-    resources :regional_holidays, except: %i[show update]
+    resources :regional_holidays, except: %i[show update destroy]
     resources :regional_holidays, only: :show, as: :show_regional_holiday
     resources :regional_holidays, only: :update, as: :update_regional_holiday
+    resources :regional_holidays, only: :destroy, as: :destroy_regional_holiday
+    resources :projects, except: %i[show update destroy]
+    resources :projects, only: :show, as: :show_project
+    resources :projects, only: :update, as: :update_project
+    resources :projects, only: :destroy, as: :destroy_project
+    resources :revenue_forecast, only: :index
+
+    namespace :projects do
+      resources :allocate_users, only: %i[new create]
+    end
   end
 
   resources :repositories, only: :index do

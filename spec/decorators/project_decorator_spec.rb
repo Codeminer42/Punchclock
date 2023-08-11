@@ -30,4 +30,30 @@ RSpec.describe ProjectDecorator do
       end
     end
   end
+
+  describe '#active_class' do
+    context 'when project is active' do
+      subject(:project) { build_stubbed(:project, :active).decorate }
+
+      it 'returns css class that fills svg with green color' do
+        expect(subject.active_class).to eq('fill-green-500')
+      end
+    end
+
+    context 'when project is inactive' do
+      subject(:project) { build_stubbed(:project, :inactive).decorate }
+
+      it 'returns css class with no fill' do
+        expect(subject.active_class).to eq('fill-none')
+      end
+    end
+  end
+
+  describe '#truncated_name' do
+    it 'keeps first name of project' do
+      project = create(:project, name: 'Long Name To Test Truncation').decorate
+
+      expect(project.truncated_name).to eq('Long...')
+    end
+  end
 end

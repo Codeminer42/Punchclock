@@ -1,0 +1,43 @@
+<table class="w-full whitespace-no-wrap" id="forecasts_index_table">
+    <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+        <th class="px-4 py-3"><%= I18n.t('projects') %></th>
+
+        <% forecast.months_names.each do |month_name| %>
+          <th class="px-4 py-3"><%= month_name %></th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr class="text-gray-700 dark:text-gray-400">
+          <td class="px-4 py-3">
+            <% forecast.projects.each do |project| %>
+              <div class="text-sm text-gray-600 dark:text-gray-400 p-1">
+                <%= link_to project.decorate.truncated_name, admin_project_path(project),
+                            target: '_blank', title: project.name %>
+              </div>
+            <% end %>
+
+            <div class="text-sm text-lime-600 dark:text-green-500 p-1">
+              <%= t '.total' %>
+            </div>
+          </td>
+
+          <% forecast.months do |_month_name, forecasts, total| %>
+            <td class="px-4 py-3">
+              <% forecasts.each do |forecast| %>
+                  <div class="text-sm text-gray-600 dark:text-gray-400 p-1">
+                    <%= forecast %>
+                  </div>
+              <% end %>
+
+              <div class="text-sm text-gray-600 dark:text-gray-400 p-1">
+                <%= total %>
+              </div>
+            </td>
+        <% end %>
+        </tr>
+    </tbody>
+</table>
+
