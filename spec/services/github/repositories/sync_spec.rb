@@ -22,16 +22,18 @@ RSpec.describe Github::Repositories::Sync, type: :service do
 
     context 'when there are repositories in database' do
       let!(:repository) { create(:repository).decorate }
+      let(:github_languages_success) { true }
+      let(:github_get_success) { true }
       let(:client) do
         class_double(
           'Github',
           repos: double(
             languages: double(
-              success?: true,
+              success?: github_languages_success,
               body: { ruby: 'ruby' }
             ),
             get: double(
-              success?: true,
+              success?: github_get_success,
               body: { 'open_issues_count' => 3, 'stargazers_count' => 4 }
             )
           )
@@ -51,6 +53,29 @@ RSpec.describe Github::Repositories::Sync, type: :service do
       it 'returns updated repositories stars' do
         repository, = github_repositories_sync.call
         expect(repository.stars).to eq(4)
+      end
+
+      context 'when github languages API endpoint is not successful' do
+        let(:github_languages_success) { false }
+
+        it 'returns repositories languages as nil' do
+          repository, = github_repositories_sync.call
+          expect(repository.language).to be_nil
+        end
+      end
+
+      context 'when github get API endpoint is not successful' do
+        let(:github_get_success) { false }
+
+        it 'returns repositories issues as nil' do
+          repository, = github_repositories_sync.call
+          expect(repository.issues).to be_nil
+        end
+
+        it 'returns repositories stars as nil' do
+          repository, = github_repositories_sync.call
+          expect(repository.stars).to be_nil
+        end
       end
     end
   end
