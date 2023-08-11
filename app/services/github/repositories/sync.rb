@@ -16,7 +16,9 @@ module Github
           languages = fetch_repository_languages(repository.link)
           stats = fetch_repository_stats(repository.link)
 
-          repository.update!(**(languages.present? ? { language: languages } : {}), **(stats.values.any? ? stats : {}))
+          params = build_update_params(languages, stats)
+
+          repository.update!(params)
 
           repository
         end.compact
@@ -53,6 +55,16 @@ module Github
 
       def repository_owner_and_name(repository_link)
         repository_link.split('/')[-2..]
+      end
+
+      def build_update_params(languages, stats)
+        params = {}
+
+        params[:language] = languages if languages.present?
+        params[:issues] = stats[:issues] if stats[:issues].present?
+        params[:stars] = stats[:stars] if stats[:stars].present?
+
+        params
       end
     end
   end
