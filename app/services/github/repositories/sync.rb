@@ -34,16 +34,16 @@ module Github
         repository_owner, repository_name = repository_owner_and_name(repository_link)
         request = client.repos.languages(repository_owner, repository_name)
 
-        return nil if !request.success?
+        return nil unless request.success?
 
-        request.body.keys[0..MAX_LANGUAGES_NUMBER-1].join(', ')
+        request.body.keys[0..MAX_LANGUAGES_NUMBER - 1].join(', ')
       end
 
       def fetch_repository_stats(repository_link)
         repository_owner, repository_name = repository_owner_and_name(repository_link)
         request = client.repos.get(repository_owner, repository_name)
 
-        return {} if !request.success?
+        return {} unless request.success?
 
         {
           issues: request.body['open_issues_count'],
@@ -52,7 +52,7 @@ module Github
       end
 
       def repository_owner_and_name(repository_link)
-        repository_link.split('/')[-2..-1]
+        repository_link.split('/')[-2..]
       end
     end
   end
