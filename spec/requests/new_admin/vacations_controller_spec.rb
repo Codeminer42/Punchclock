@@ -19,7 +19,7 @@ RSpec.describe NewAdmin::VacationsController, type: :request do
         end
 
         context 'when pagination is applied' do
-          let!(:vacations) { create_list(:vacation, 3) }
+          let!(:vacations) { create_list(:vacation, 3, :ongoing) }
 
           it 'paginates results' do
             get new_admin_vacations_path, params: { per: 2 }
