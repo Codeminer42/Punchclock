@@ -60,6 +60,7 @@
     "webpack-cli": "^3.3.3"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "modulePathIgnorePatterns": [
       "config/webpack/test.js"
     ]
