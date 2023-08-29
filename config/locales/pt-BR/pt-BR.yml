@@ -96,6 +96,9 @@ pt-BR:
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
+      highlight: 'Recomendado'
+      issues: 'Issues'
+      stars: 'Stars'
   not_started: 'Não iniciado'
   finished: 'Finalizado'
   admin:

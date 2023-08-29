@@ -1,0 +1,38 @@
+<div id='repository-card' class='p-4 border-solid border-2 rounded-xl mb-3'>
+  <div class='flex justify-between items-start mb-4'>
+    <div class='flex flex-col gap-2'>
+      <%= link_to repository.link, target: "_blank" do %>
+        <h2 class="font-semibold text-lg m-0"><i class="fab fa-github mr-2"></i><%= repository.link %></h2>
+      <% end %>
+      <span class="d-block text-dark"><%= simple_format repository.description %></span>
+    </div>
+    <div class='flex gap-4 items-center'>
+    <% if repository.issues > 0 %>
+      <div class='flex gap-1 items-center text-gray-400' title="<%= "#{t("repositories.index.issues")}: #{repository.issues}" %>">
+        <%= inline_svg_tag 'issues.svg', class: 'h-4 w-4' %>
+        <span id='issues-tag' class='font-semibold'><%= repository.issues_formatted %></span>
+      </div>
+    <% end %>
+    <% if repository.stars > 0 %>
+      <div class='flex gap-1 items-center text-gray-400' title="<%= "#{t("repositories.index.stars")}: #{repository.stars}" %>">
+        <%= inline_svg_tag 'stars.svg', class: 'h-5 w-5' %>
+        <span id='stars-tag' class='font-semibold'><%= repository.stars_formatted %></span>
+      </div>
+    <%end%>
+    </div>
+  </div>
+  <div class='flex justify-between items-center'>
+    <div class="flex gap-2">
+      <% repository.languages.each do |language| %>
+        <span id='language-tag' class="bg-gray-300 text-gray-500 px-2 py-1 font-semibold text-sm rounded-lg">
+          <%= language %>
+        </span>
+      <% end %>
+    </div>
+    <% if repository.highlight? %>
+      <span class="bg-sky-500 px-2 py-1 text-white font-semibold text-sm rounded-lg">
+        <%= t("repositories.index.highlight") %>
+      </span>
+    <%end%>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Repositories list', type: :feature do
@@ -16,7 +18,7 @@ describe 'Repositories list', type: :feature do
 
       visit repositories_path
 
-      expect(page).to have_css('.list-group .list-group-item', :count => 25)
+      expect(page).to have_css('#repository-card', count: 25)
     end
 
     it 'have all links for repositories' do
@@ -25,8 +27,13 @@ describe 'Repositories list', type: :feature do
     end
 
     it 'have all languages for repositories' do
-      expect(page).to have_text(repository.languages) &
-                      have_text(second_repository.languages)
+      repository.languages.each do |language|
+        expect(page).to have_css('#language-tag', text: language)
+      end
+
+      second_repository.languages.each do |language|
+        expect(page).to have_css('#language-tag', text: language)
+      end
     end
 
     it 'has all descriptions for repositories' do
@@ -47,8 +54,13 @@ describe 'Repositories list', type: :feature do
       fill_in 'search-input-field', with: 'javascript'
       find('#filter-button').click
 
-      expect(page).to have_text(repository.languages)
-      expect(page).not_to have_text(second_repository.languages)
+      repository.languages.each do |language|
+        expect(page).to have_css('#language-tag', text: language)
+      end
+
+      second_repository.languages.each do |language|
+        expect(page).not_to have_css('#language-tag', text: language)
+      end
     end
 
     it 'not have any repository with Go' do
@@ -63,9 +75,68 @@ describe 'Repositories list', type: :feature do
       fill_in 'search-input-field', with: 'python'
       find('#filter-button').click
 
-      expect(page).to have_text(repository.languages) &
-                      have_text(second_repository.languages)
-      expect(page).to have_css('.list-group .list-group-item', :count => 2)
+      expect(page).to have_text('python')
+      expect(page).to have_css('#repository-card', count: 2)
+    end
+  end
+
+  context 'when the repository has no issues and stars' do
+    let!(:repository) { create(:repository).decorate }
+
+    before do
+      visit repositories_path
+    end
+
+    it 'have all issues for repositories' do
+      expect(page).not_to have_css('#issues-tag')
+    end
+
+    it 'have all stars for repositories' do
+      expect(page).not_to have_css('#stars-tag')
+    end
+  end
+
+  context 'when the repository has issues' do
+    let!(:repository) { create(:repository, issues:).decorate }
+
+    before do
+      visit repositories_path
+    end
+
+    context 'when issues are greater than 1000' do
+      let(:issues) { 5566 }
+      it 'returns the number of issues abbreviated to thousands' do
+        expect(page).to have_css('#issues-tag', text: '5.6K')
+      end
+    end
+
+    context 'when issues are less than 1000' do
+      let(:issues) { 885 }
+      it 'returns the number of issues without abbreviations' do
+        expect(page).to have_css('#issues-tag', text: repository.issues)
+      end
+    end
+  end
+
+  context 'when the repository has stars' do
+    let!(:repository) { create(:repository, stars:).decorate }
+
+    before do
+      visit repositories_path
+    end
+
+    context 'when stars are greater than 1000' do
+      let(:stars) { 1500 }
+      it 'returns the number of stars abbreviated to thousands' do
+        expect(page).to have_css('#stars-tag', text: '1.5K')
+      end
+    end
+
+    context 'when stars are less than 1000' do
+      let(:stars) { 644 }
+      it 'returns the number of stars without abbreviations' do
+        expect(page).to have_css('#stars-tag', text: repository.stars)
+      end
     end
   end
 end
