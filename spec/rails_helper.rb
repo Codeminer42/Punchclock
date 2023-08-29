@@ -25,6 +25,7 @@ RSpec.configure do |config|
   config.include IntegrationHelpers, type: :feature
   config.include ActiveSupport::Testing::TimeHelpers
   config.include AbstractController::Translation
+  config.include Devise::Test::IntegrationHelpers, type: :request
 
   config.filter_rails_from_backtrace!
   config.infer_spec_type_from_file_location!

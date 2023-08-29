@@ -19,7 +19,6 @@ class Ability
       can :create, Vacation
     end
 
-
     if user.admin? || user.evaluator? || user.office_head?
       can :manage, Evaluation
       can :manage, Note

@@ -180,6 +180,16 @@ pt-BR:
   request_vacation: 'Solicitar Férias'
   requesting_vacation: 'Solicitando Férias'
   vacations:
+    title: 'Férias'
+    empty: 'Não existem férias ainda'
+    scopes:
+      ongoing_and_scheduled: "Em andamento e agendadas"
+      pending: "Pendentes"
+      denied: "Negadas"
+      approved: "Aprovadas"
+      finished: "Finalizadas"
+      cancelled: "Canceladas"
+      all: "Todos"
     index:
       are_you_sure_remove_request: 'Tem certeza que deseja remover a solicitação de férias?'
       request_vacation: 'Solicitar Férias'

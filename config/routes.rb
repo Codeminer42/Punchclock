@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     namespace :projects do
       resources :allocate_users, only: %i[new create]
     end
+
+    resources :vacations, only: :index
   end
 
   resources :repositories, only: :index do

@@ -1,0 +1,42 @@
+<% content_for :page_title do %>
+  <%= t('vacations.title') %>
+<% end %>
+
+<div id="vacation_scopes" class="flex flex-col gap-1 mb-4 md:ml-2 sm:flex-row">
+  <% vacation_query_scopes.each do |scope| %>
+    <a class="px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 border
+      border-transparent rounded-md hover:bg-primary-700 focus:outline-none
+      focus:ring <%= scoped_active_class(scope) %>"
+       href="<%= new_admin_vacations_path(scope:) %>">
+      <%= vacation_scope_selector scope %>
+    </a>
+  <% end %>
+</div>
+
+<div class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="flex justify-between gap-4">
+    <% if @vacations.blank? %>
+      <%= render 'empty'  %>
+    <% else %>
+      <table class="table-auto w-full h-fit" id="index_table_vacations">
+        <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3"><%= Vacation.human_attribute_name('id') %></th>
+          <th class="px-4 py-3"><%= Vacation.human_attribute_name('user') %></th>
+          <th class="px-4 py-3"><%= Vacation.human_attribute_name('start_date') %></th>
+          <th class="px-4 py-3"><%= Vacation.human_attribute_name('end_date') %></th>
+          <th class="px-4 py-3"><%= Vacation.human_attribute_name('status') %></th>
+        </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
+          <%= render @vacations %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<section id="pagination_vacations" class="dark:text-gray-400">
+  <%= paginate @vacations %>
+</section>

@@ -1,0 +1,38 @@
+<tr id="<%= "vacation_#{vacation.id}" %>" class="text-gray-700 dark:text-gray-400">
+  <td class="px-4 py-3">
+    <%= vacation.id %>
+  </td>
+
+  <td class="px-4 py-3">
+    <%= vacation.user.name %>
+  </td>
+
+  <td class="px-4 py-3">
+    <%= l vacation.start_date, format: :default %>
+  </td>
+
+  <td class="px-4 py-3">
+    <%= l vacation.end_date, format: :default %>
+  </td>
+
+  <td class="px-4 py-3">
+    <%= vacation.status_text %>
+  </td>
+
+  <td class="px-4 py-3">
+    <div class="space-x-4">
+      <%= link_to t('view'),
+                  nil,
+                  class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+      %>
+      <%= link_to t('edit'),
+                  nil,
+                  class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+      %>
+      <%= link_to t('delete'),
+                  nil,
+                  class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+      %>
+    </div>
+  </td>
+</tr>
