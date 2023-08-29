@@ -15,16 +15,6 @@
     <% end %>
   </div>
 
-  <div class="list-group">
-    <% @repositories.each do |repository| %>
-      <%= link_to repository.link, class: "list-group-item list-group-item-action", target: "_blank" do %>
-        <i class="fab fa-github"></i>
-        <span class="d-inline-block"><%= repository.link %></span>
-        <span class="d-inline-block float-right"> <%= repository.languages %></span>
-        <span class="d-block text-dark"><%= simple_format repository.description %></span>
-      <% end %>
-    <% end %>
-  </div>
-
+  <%= render @repositories %>
   <%= paginate @repositories %>
 </div>

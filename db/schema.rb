@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_24_160449) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_28_175727) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -189,6 +189,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_160449) do
     t.string "language"
     t.boolean "highlight", default: false
     t.text "description"
+    t.integer "issues", default: 0
+    t.integer "stars", default: 0
   end
 
   create_table "skills", force: :cascade do |t|
