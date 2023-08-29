@@ -51,7 +51,10 @@ tabButtons.forEach((buttonElement) => {
     setActiveButton(buttonElement)
   });
 });
-tabButtons[0]?.click();
+
+if (tabButtons && tabButtons[0] && typeof tabButtons[0].click === 'function') {
+   tabButtons[0].click();
+}
 
 window.addEventListener("load", () => {
   const anchor = window.location.hash
