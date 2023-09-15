@@ -79,8 +79,8 @@ ActiveAdmin.register Allocation do
       input :project, collection: (Project.active.to_a | [@resource.project]).reject(&:blank?).sort_by(&:name)
       input :hourly_rate
       input :hourly_rate_currency, as: :select, collection: Allocation::HOURLY_RATE_CURRENCIES
-      input :start_at, as: :date_picker, input_html: { value: f.object.start_at }
-      input :end_at, as: :date_picker, input_html: { value: f.object.end_at }
+      input :start_at, as: :date_picker, input_html: { value: f.object.start_at.strftime("%Y-%m-%d") }
+      input :end_at, as: :date_picker, input_html: { value: f.object.end_at.strftime("%Y-%m-%d") }
       input :ongoing
     end
     actions
