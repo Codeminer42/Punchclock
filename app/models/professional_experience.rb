@@ -9,7 +9,7 @@ class ProfessionalExperience < ApplicationRecord
   validate :greater_than_current_month?, if: -> { valid_date?(start_date) }
   validate :greater_than_end_date?, if: -> { valid_date?(start_date) && valid_date?(end_date) }
 
-  scope :ordered_by_start_date, lambda {
+  scope :ordered_by_start_date, -> {
     sort_by { |professional_experience| Date.strptime(professional_experience.start_date, '%m/%Y') }
   }
 
