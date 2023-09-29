@@ -64,6 +64,7 @@ class Contribution < ApplicationRecord
   scope :valid_pull_requests, -> { where.not(state: :refused) }
   scope :without_pr_state, ->(state) { where.not(pr_state: state) }
   scope :tracking, -> { where(tracking: true) }
+  scope :without_description, -> { where(description: nil) }
 
   private
 

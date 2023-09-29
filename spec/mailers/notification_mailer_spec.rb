@@ -250,6 +250,7 @@ describe NotificationMailer do
       end
     end
 
+    # TODO
     context 'when notify user to fill contribution description' do
       let(:user) { create(:user) }
       let!(:contributions) { FactoryBot.create_list(:contribution, 5, user: user) }
