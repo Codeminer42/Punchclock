@@ -1,9 +1,9 @@
 <p>
-  Olá,
+  <%= t '.info', user: @user %>
 </p>
 
 <p>
-  Você possui <%= @contributions_total %> contribuições aguardando descrição da PR:
+  Você possui <%= t '.contributions', count: @contributions_total %> aguardando descrição da PR:
 </p>
 
 <ul>

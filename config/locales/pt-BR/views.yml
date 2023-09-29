@@ -58,17 +58,11 @@ pt-BR:
         E avisem hora extra para <strong>"rh@codeminer42.com"</strong>
       </p>
       Abs
-    notify_fill_contribution_description_html: |
-      <p>
-        Olá,
-      </p>
-      <p>
-        Você possui %{contributions_total} contribuições aguardando descrição da PR.
-      </p>
-      <p>
-        %{contributions_page}
-      </p>
-      Abs
+    notify_fill_contribution_description:
+      info: "Olá, %{user}"
+      contributions:
+        one: "%{count} contribuição"
+        other: "%{count} contribuições"
     notify_admin_extra_hour:
       info: "%{user} registrou hora extra:"
       days:
