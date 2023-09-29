@@ -118,6 +118,26 @@ RSpec.describe Contribution, type: :model do
     end
   end
 
+  describe '.without_description' do
+    let!(:contributions) { create_list :contribution, 2, description: }
+
+    context 'when contribution has no description' do
+      let(:description) { nil }
+
+      it 'returns the contributions' do
+        expect(described_class.without_description).to match_array(contributions)
+      end
+    end
+
+    context 'when contribution have description' do
+      let(:description) { "Described" }
+
+      it 'returns empty relation' do
+        expect(described_class.without_description).to be_empty
+      end
+    end
+  end
+
   describe '.without_pr_state' do
     it "returns contributions without the received pr state" do
       open_pr = create :contribution, pr_state: :open
