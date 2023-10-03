@@ -24,7 +24,7 @@
   <div class="w-full flex flex-col items-start justify-between space-y-4 mt-8 md:flex-row md:items-center md:space-y-0">
     <%= f.input :remember_me,
           as: :boolean,
-          input_html: { class: "appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400" },
+          input_html: { class: "appearance-none w-5 h-5 mr-2 bg-grey-50 border-0 rounded-md focus:ring-0 text-grey-400 cursor-pointer" },
           label_html: { class: "text-base text-grey-400 font-medium" } if devise_mapping.rememberable? %>
 
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
@@ -32,5 +32,5 @@
     <% end %>
   </div>
 
-  <%= f.button :submit, "Login", class: "w-full h-10 mt-8 px-4 rounded bg-red text-white transition-all hover:brightness-110" %>
+  <%= f.button :submit, "Login", class: "w-full h-10 mt-8 px-4 rounded bg-red text-white transition-all hover:brightness-110 cursor-pointer" %>
 <% end %>
