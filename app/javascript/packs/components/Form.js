@@ -62,6 +62,7 @@ class Form extends React.Component{
                 disabled={isSelectedsEmpty}
                 options={{ placeholder: 'Projeto' }}
                 onChange={(e) => this.handleProjectChange(e)}
+                onOpen={() => this.focusOnSearch()}
               />
             </div>
             <div className="col">
@@ -197,6 +198,10 @@ class Form extends React.Component{
 
   handleProjectChange(e) {
     this.setState({ selectedProject: e.currentTarget.value })
+  }
+
+  focusOnSearch() {
+    $(".select2-search__field")[0].focus()
   }
 }
 
