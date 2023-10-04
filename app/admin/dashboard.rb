@@ -10,7 +10,6 @@ ActiveAdmin.register_page "Dashboard" do
 
         users_collection = User.active.includes(:office).order(:name).map do |user|
           user_label = "#{user.name.titleize} - #{user.email} - "
-  #        user_label += "#{user.level.humanize} - " if user.engineer?
           user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
 
           [user_label, user.id]

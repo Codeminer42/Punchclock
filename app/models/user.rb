@@ -19,11 +19,6 @@ class User < ApplicationRecord
       i18n_scope: 'enumerize.user.level'
   end
 
-  # enumerize :level, in: {
-  #   trainee: 7, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5, senior_plus: 6
-  #   },  scope: :shallow,
-  #       predicates: true
-
   enumerize :occupation, in: {
     administrative: 0, engineer: 1
     },  scope: :shallow,
@@ -83,7 +78,6 @@ class User < ApplicationRecord
   scope :allocated, -> { engineer.active.where(id: Allocation.ongoing.select(:user_id)) }
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
-  #scope :with_level,       -> value { where(level: value) }
   scope :by_roles_in, -> roles {
     roles_values = self.roles.find_values(*roles).map(&:value)
     where("users.roles && ARRAY[?]::int[]", roles_values)

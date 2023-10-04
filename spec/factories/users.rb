@@ -61,38 +61,6 @@ FactoryBot.define do
       end
     end
 
-    trait :level_trainee do
-      level { :trainee }
-    end
-
-    trait :level_intern do
-      level { :intern }
-    end
-
-    trait :level_junior do
-      level { :junior }
-    end
-
-    trait :level_junior_plus do
-      level { :junior_plus }
-    end
-
-    trait :level_mid do
-      level { :mid }
-    end
-
-    trait :level_mid_plus do
-      level { :mid_plus }
-    end
-
-    trait :level_senior do
-      level { :senior }
-    end
-
-    trait :level_senior_plus do
-      level { :senior_plus }
-    end
-
     trait :with_started_at do
       started_at { Date.today }
     end

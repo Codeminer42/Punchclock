@@ -28,7 +28,6 @@ def create_user(number:)
     user.occupation = :engineer
     user.password = 'password'
     user.office = Office.all.sample
-    user.level = User.level.values.sample
     user.specialty = User.specialty.values.sample
     user.github = "codeminer42.user.teste#{number}"
     user.allow_overtime = true
