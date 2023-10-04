@@ -27,7 +27,6 @@ describe NewAdmin::AllocationChartsController do
             get :index
 
             expect(page).to have_content(user.name)
-                        .and have_content(/#{user.level}/i)
                         .and have_content(/#{user.specialty}/i)
           end
         end

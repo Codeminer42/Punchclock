@@ -54,12 +54,6 @@
       </div>
     </div>
 
-
-    <div class="mb-4">
-      <label for="level" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('level', scope: %i[activerecord attributes user]) %></label>
-      <%= form.select :level, User.level.values.map { |level| [level.text.titleize, level.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
-    </div>
-
     <div class="mb-4">
       <label for="contract_type" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('contract_type', scope: %i[activerecord attributes user]) %></label>
       <%= form.select :contract_type, User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
