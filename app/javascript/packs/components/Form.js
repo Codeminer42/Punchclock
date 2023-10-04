@@ -124,10 +124,12 @@ class Form extends React.Component{
 
   /* Removes the double confirmation prompt */
   componentDidUpdate() {
-    if (this.props.calendar.selecteds.size == 0) {
-      if (this.state.selectedProject) {
-        this.setState({ selectedProject: "" })
-      }
+    const { currentAllocationId, selecteds } = this.props.calendar;
+    const selectedProject = this.state.selectedProject
+    const selectedsEmpty = selecteds.size == 0;
+
+    if(selectedsEmpty && selectedProject !== currentAllocationId && !selectedProject && currentAllocationId) {
+      this.setState({ selectedProject: currentAllocationId });
     }
 
     if (this.state.hasConfirmedOperation) {

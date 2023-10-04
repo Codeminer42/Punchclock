@@ -18,7 +18,8 @@ import {
   onSetTimeSheet,
   onErase,
   onDeselect,
-  onFetchHolidays
+  onFetchHolidays,
+  onFetchCurrentAllocation,
 } from '../reducers/calendarReducer';
 
 class Calendar extends React.Component {
@@ -86,6 +87,7 @@ class Calendar extends React.Component {
   componentDidMount() {
     this.props.onInitializeCalendar(this.props.date);
     this.props.onFetchSheets();
+    this.props.onFetchCurrentAllocation();
     this.props.onFetchHolidays();
   }
 }
@@ -105,7 +107,8 @@ const mapDispatchToProps = (dispatch) => ({
   onSetTimeSheet: onSetTimeSheet(dispatch),
   onErase: onErase(dispatch),
   onDeselect: onDeselect(dispatch),
-  onFetchHolidays: onFetchHolidays(dispatch)
+  onFetchHolidays: onFetchHolidays(dispatch),
+  onFetchCurrentAllocation: onFetchCurrentAllocation(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
