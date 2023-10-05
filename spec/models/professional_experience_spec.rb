@@ -50,4 +50,15 @@ RSpec.describe ProfessionalExperience, type: :model do
       it { expect(professional_experience).to_not be_valid }
     end
   end
+
+  describe '#ordered_by_start_date' do
+    let!(:user) { create(:user) }
+    let!(:old_experience) { create(:professional_experience, start_date: '06/2014', end_date: '01/2015', user:) }
+    let!(:older_experience) { create(:professional_experience, start_date: '04/2012', end_date: '03/2016', user:) }
+    let!(:current_experience) { create(:professional_experience, start_date: "05/#{Date.current.year}", end_date: nil, user:) }
+
+    subject { user.professional_experiences.ordered_by_start_date }
+
+    it { is_expected.to eq [older_experience, old_experience, current_experience] }
+  end
 end

@@ -196,7 +196,7 @@ ActiveAdmin.register User do
 
       tab I18n.t('experience') do
         panel I18n.t('professional_experience') do
-          table_for user.professional_experiences.order(end_date: :desc).decorate, i18n: ProfessionalExperience do
+          table_for user.professional_experiences.ordered_by_start_date, i18n: ProfessionalExperience do
             column :company
             column :position
             column :description

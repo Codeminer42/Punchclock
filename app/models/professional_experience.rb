@@ -9,6 +9,10 @@ class ProfessionalExperience < ApplicationRecord
   validate :greater_than_current_month?, if: -> { valid_date?(start_date) }
   validate :greater_than_end_date?, if: -> { valid_date?(start_date) && valid_date?(end_date) }
 
+  def self.ordered_by_start_date
+    all.sort_by { |professional_experience| Date.strptime(professional_experience.start_date, '%m/%Y') }
+  end
+
   private
 
   FIELDS_TO_BE_VALIDATED = %i[start_date end_date].freeze
