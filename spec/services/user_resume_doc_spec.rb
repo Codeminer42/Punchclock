@@ -13,14 +13,14 @@ describe UserResumeDoc do
   let(:contributions) { build_list(:contribution, 5, :approved, :with_description) << contribution }
   let(:talk) { build(:talk) }
   let(:talks) { build_list(:talk, 5) << talk }
-  let!(:user) { 
+  let!(:user) {
     create(:user,
            user_skills: skills,
            professional_experiences: all_professional_xp,
            education_experiences: all_educational_xp,
            contributions: contributions,
            talks: talks
-          ) 
+          )
   }
 
   describe '.doc_template' do
@@ -56,7 +56,7 @@ describe UserResumeDoc do
       talk_experiences = double('TalkExperiences')
 
       allow(user).to receive_message_chain(:skills, :pluck).and_return(['Ruby', 'JavaScript'])
-      allow(user).to receive_message_chain(:professional_experiences, :order, :decorate).and_return(job_experiences)
+      allow(user).to receive_message_chain(:professional_experiences, :ordered_by_start_date).and_return(job_experiences)
       allow(user).to receive_message_chain(:education_experiences, :decorate).and_return(education_experiences)
       allow(user).to receive_message_chain(:contributions, :approved, :order, :decorate, :group_by).and_return(contribution_experiences)
       allow(user).to receive_message_chain(:talks, :decorate).and_return(talk_experiences)
