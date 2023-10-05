@@ -5,7 +5,6 @@ class UsersSpreadsheet < DefaultSpreadsheet
     [
       user.name,
       user.email,
-      user.level_text,
       user.office&.city,
       user.roles_text,
       user.specialty_text,
@@ -20,7 +19,6 @@ class UsersSpreadsheet < DefaultSpreadsheet
     %w[
       name
       email
-      level
       office
       roles
       specialty

@@ -67,7 +67,7 @@ module NewAdmin
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :github, :backend_level, :frontend_level, :level, :contract_type,
+      params.require(:user).permit(:name, :email, :github, :backend_level, :frontend_level, :contract_type,
                                    :contract_company_country, :mentor_id, :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at, :observation, :specialty, :otp_required_for_login, roles: [])
     end
 

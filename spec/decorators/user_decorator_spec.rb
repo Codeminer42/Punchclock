@@ -79,24 +79,6 @@ RSpec.describe UserDecorator do
     end
   end
 
-  describe '#level' do
-    context 'when level is set' do
-      subject(:user) { build_stubbed(:user, level: 'trainee').decorate }
-
-      it 'returns user level' do
-        expect(subject.level).to eq('Trainee')
-      end
-    end
-
-    context 'when level is nil' do
-      subject(:user) { build_stubbed(:user, level: nil).decorate }
-
-      it 'returns N/A' do
-        expect(subject.level).to eq('N/A')
-      end
-    end
-  end
-
   describe '#english_level' do
     subject(:user) { build_stubbed(:user).decorate }
 

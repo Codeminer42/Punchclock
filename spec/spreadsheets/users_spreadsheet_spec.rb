@@ -9,7 +9,6 @@ RSpec.describe UsersSpreadsheet do
     %w[
       name
       email
-      level
       office
       roles
       specialty
@@ -28,7 +27,6 @@ RSpec.describe UsersSpreadsheet do
     [
       user.name,
       user.email,
-      user.level_text,
       user.office.city,
       user.roles_text,
       user.specialty_text,

@@ -4,7 +4,6 @@
       <th class="px-4 py-3"><%= t 'name' %></th>
       <th class="px-4 py-3"><%= t 'client' %></th>
       <th class="px-4 py-3"><%= t 'allocated_until' %></th>
-      <th class="px-4 py-3"><%= t 'level' %></th>
       <th class="px-4 py-3"><%= t 'specialty' %></th>
       <th class="px-4 py-3"><%= t 'english_evaluation' %></th>
       <th class="px-4 py-3"><%= t 'skills' %></th>
@@ -45,13 +44,6 @@
               </p>
             </div>
           <% end %>
-        </td>
-        <td class="px-4 py-3">
-          <div class="flex items-center text-sm">
-            <p class="text-sm text-gray-600 dark:text-gray-400">
-              <%= allocation.user.level %>
-            </p>
-          </div>
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_28_175727) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_131111) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -246,7 +246,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_175727) do
     t.datetime "confirmation_sent_at", precision: nil
     t.boolean "active", default: true
     t.integer "mentor_id"
-    t.integer "level"
     t.boolean "allow_overtime", default: false
     t.integer "office_id"
     t.integer "occupation"

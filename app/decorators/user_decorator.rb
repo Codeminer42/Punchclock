@@ -19,10 +19,6 @@ class UserDecorator < Draper::Decorator
     "Backend #{model.backend_level.humanize}"
   end
 
-  def level
-    model.level.try(:humanize) || 'N/A'
-  end
-
   def specialty
     model.specialty.try(:humanize) || 'N/A'
   end

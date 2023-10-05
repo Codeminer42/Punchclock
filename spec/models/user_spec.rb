@@ -47,18 +47,9 @@ RSpec.describe User, type: :model do
     context 'when user is engineer' do
       subject { build :user, occupation: 'engineer'}
 
-      context 'level validation' do
-        it { is_expected.to validate_presence_of(:level) }
-      end
-
       context 'github validation' do
         it { is_expected.to validate_uniqueness_of(:github) }
       end
-    end
-
-    context 'when user is engineer with no level' do
-      subject { build :user, occupation: 'engineer', level: '' }
-      it { is_expected.to be_invalid }
     end
   end
 
@@ -96,18 +87,6 @@ RSpec.describe User, type: :model do
                                                   devops: 2,
                                                   mobile: 4,
                                                   qa: 5) }
-  end
-
-  describe "level" do
-    it { is_expected.to enumerize(:level).in( intern: 0,
-                                              junior: 1,
-                                              junior_plus: 2,
-                                              mid: 3,
-                                              mid_plus: 4,
-                                              senior: 5,
-                                              senior_plus: 6,
-                                              trainee: 7) }
-
   end
 
   describe 'contract type' do
