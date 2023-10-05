@@ -137,3 +137,39 @@ body.logged_in .flash {
 .member_link_refuse:hover {
   cursor: pointer;
 }
+
+.forecast-table {
+  display: flex;
+  overflow: hidden;
+}
+
+.forecast-table-cell {
+  position: relative;
+}
+
+.forecast-table-cell:hover::before {
+  content: "";
+  background-color: #5EA3D3;
+  position: absolute;
+  height: 170%;
+  top: 0;
+  left: -5000px;
+  width: 10000px;
+  opacity: 0.3;
+}
+
+.forecast-table-cell:hover::after {
+  content: "";
+  background-color: #5EA3D3;
+  position: absolute;
+  height: 10000px;
+  top: -5000px;
+  left: 0;
+  width: 100%;
+  opacity: 0.2;
+}
+
+.forecast-table-cell::before,
+.forecast-table-cell::after {
+  pointer-events: none;
+}
