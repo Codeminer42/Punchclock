@@ -2,7 +2,7 @@ import Moment from 'moment';
 import Immutable from 'immutable';
 import * as Calendar from '../utils/calendar';
 import { push } from 'react-router-redux';
-import { fetchSheets, fetchHolidays, saveSheets } from '../api';
+import { fetchSheets, fetchHolidays, saveSheets, fetchCurrentAllocation } from '../api';
 
 //calendar actions
 export const INITIALIZE = 'calendar/initializeCalendar';
@@ -18,6 +18,8 @@ export const NEXT = 'calendar/next';
 //server actions
 export const UPDATE_SHEETS_SUCCESS = 'server/updateSheetsSucceded';
 export const UPDATE_SHEETS_FAIL = 'server/updateSheetsFailed';
+export const UPDATE_CURRENT_ALLOCATION_SUCCESS = 'server/updateCurrentAllocationSucceded';
+export const UPDATE_CURRENT_ALLOCATION_FAIL = 'server/updateCurrentAllocationFailed';
 export const UPDATE_HOLIDAYS_SUCCESS = 'server/updateHolidaysSucceded';
 export const UPDATE_HOLIDAYS_FAIL = 'server/updateHolidaysFailed';
 export const SAVE_SHEET_SUCCESS = 'server/saveSheetsSucceded';
@@ -46,6 +48,7 @@ const initialState = {
   sheets: emptyMap,
   deleteds: emptySet,
   changes: 0,
+  currentAllocationId: '',
 };
 
 export default (state = initialState, action) => {
@@ -115,6 +118,15 @@ export default (state = initialState, action) => {
         sheetsSaveds: action.sheetsPayload.sheetsSaveds,
       };
     case UPDATE_SHEETS_FAIL:
+      return {
+        ...state,
+      };
+    case UPDATE_CURRENT_ALLOCATION_SUCCESS:
+      return {
+        ...state,
+        currentAllocationId: action.currentAllocationPayload.currentAllocation.id,
+      };
+    case UPDATE_CURRENT_ALLOCATION_FAIL:
       return {
         ...state,
       };
@@ -338,6 +350,22 @@ export const onFetchSheets = (dispatch) => () => {
     })
   });
 };
+
+export const onFetchCurrentAllocation = (dispatch) => () => {
+  fetchCurrentAllocation().then((response) => {
+    dispatch({
+      type: UPDATE_CURRENT_ALLOCATION_SUCCESS,
+      currentAllocationPayload: {
+        currentAllocation: response.body.currentAllocation
+      },
+    })
+  })
+  .catch((response) => {
+    dispatch({
+      type: UPDATE_CURRENT_ALLOCATION_FAIL,
+    })
+  });
+}
 
 export const onFetchHolidays = (dispatch) => () => {
   fetchHolidays().then((response) => {

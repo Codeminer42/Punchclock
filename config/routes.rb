@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'latest_contributions' => 'contributions#latest'
       get "holidays" => "holidays#holidays_dashboard"
+      get "allocations/current" => "allocations#current"
       post "request" => "token#request_token"
       post "refresh" => "token#refresh_token"
 

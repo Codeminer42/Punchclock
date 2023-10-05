@@ -5,7 +5,8 @@ asPromissed(request);
 
 const urls = {
   sheets: '/dashboard/sheets',
-  holidays: '/api/v1/holidays'
+  holidays: '/api/v1/holidays',
+  currentAllocation: '/api/v1/allocations/current'
 };
 const csrf = {
   token: document.querySelector('[name="csrf-token"]'),
@@ -18,6 +19,10 @@ export const fetchSheets = () => {
 
 export const fetchHolidays = () => {
   return request.get(urls.holidays).endAsync();
+}
+
+export const fetchCurrentAllocation = () => {
+  return request.get(urls.currentAllocation).endAsync();
 }
 
 export const saveSheets = (deleteds, sheets) => {
