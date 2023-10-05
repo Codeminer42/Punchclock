@@ -51,7 +51,6 @@ describe NewAdmin::AllocationChartsController do
 
             expect(page).to have_content(allocation.project_name)
                         .and have_content(user.name)
-                        .and have_content(/#{user.level}/i)
                         .and have_content(/#{user.specialty}/i)
                         .and have_content(allocation.end_at.strftime('%d/%m/%Y'))
           end

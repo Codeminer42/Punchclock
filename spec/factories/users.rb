@@ -7,7 +7,6 @@ FactoryBot.define do
     occupation               { 'engineer' }
     backend_level            { User.backend_level.values.sample }
     frontend_level           { User.frontend_level.values.sample }
-    level                    { 'junior' }
     specialty                { 'backend' }
     github                   { Faker::Internet.unique.username }
     contract_type            { 'employee' }
