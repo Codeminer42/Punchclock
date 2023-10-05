@@ -5,7 +5,12 @@ require 'rails_helper'
 describe 'Projects', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
 
-  before { sign_in(admin_user) }
+  before do
+    travel_to Date.parse('01/07/2023')
+    sign_in(admin_user)
+  end
+
+  after { travel_back }
 
   describe 'index' do
     describe 'Pagination' do
