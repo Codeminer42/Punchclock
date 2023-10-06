@@ -22,13 +22,15 @@ pt-BR:
     created_at: 'Criada em'
     pr_state: 'Estado da PR'
     no_prs_found: 'Nenhuma PR encontrada'
+    description_filled: 'Preenchida'
+    description: 'Descrição'
   evaluations:
     written:
       add_review: 'Adicionar Revisão'
     form:
       submit: 'Salvar Revisão'
   notification_mailer:
-    subject: 
+    subject:
       notify_fill_contribution_description_html: 'Punchlock - Contribuições Aguardando Descrição'
     body_html: |
       <p>
