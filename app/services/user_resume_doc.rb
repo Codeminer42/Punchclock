@@ -92,11 +92,15 @@ class UserResumeDoc
       date_interval = "#{experience.decorate.start_date_month} - #{experience.decorate.end_date_month}"
       substitute(title, 'job_date', date_interval)
 
-      description = @text_element.copy
-      substitute(description, '_job_description_', strip_extra_blank_space(experience.description))
-
+      description_paragraphs = experience.description.split("\r\n").reverse
+      
       title.insert_after job_section
-      description.insert_after title
+
+      description_paragraphs.each do |paragraph|
+        description = @text_element.copy
+        substitute(description, '_job_description_', paragraph)
+        description.insert_after title
+      end 
     end
   end
 
