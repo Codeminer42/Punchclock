@@ -10,7 +10,6 @@ ActiveAdmin.register_page "Dashboard" do
 
         users_collection = User.active.includes(:office).order(:name).map do |user|
           user_label = "#{user.name.titleize} - #{user.email} - "
-          user_label += "#{user.level.humanize} - " if user.engineer?
           user_label += "#{user.office} - #{user.current_allocation.presence || 'Não Alocado'}"
 
           [user_label, user.id]
@@ -44,17 +43,6 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
     columns do
-      if AbilityAdmin.new(current_user).can?(:read, User)
-        column do
-          panel t(I18n.t('average_score'), scope: 'active_admin'), class: 'average-score' do
-            table_for User.level.values do
-              column(User.human_attribute_name(:level)) { |level| User.human_attribute_name(level) }
-              column(I18n.t('users_average')) { |level| User.with_level(level).overall_score_average }
-            end
-          end
-        end
-      end
-
       if AbilityAdmin.new(current_user).can? :read, Contribution
         column do
           panel t(I18n.t('offices_leaderboard'), scope: 'active_admin') do

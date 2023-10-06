@@ -127,7 +127,6 @@ describe 'Users', type: :feature do
         find('#user_city_id').find(:option, city.name).select_option
         choose('Engenheiro')
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_level').find(:option, 'Junior').select_option
         find('#user_contract_type').find(:option, 'Estagiário').select_option
         find('#user_contract_company_country').find(:option, 'Brasil').select_option
         check('Ativo')
@@ -142,21 +141,18 @@ describe 'Users', type: :feature do
                         have_text(office.city) &
                         have_text('Engenheiro') &
                         have_text('Backend') &
-                        have_text('Junior') &
                         have_text('Estagiário') &
                         have_text('Admin') &
                         have_css('.row-active td', text: 'Sim') &
                         have_text('Observation')
       end
 
-      it "must deactivate User specialty and level when 'administrative' occupation is selected", js: true do
+      it "must deactivate User specialty when 'administrative' occupation is selected", js: true do
         find('#user_specialty').find(:option, 'Backend').select_option
-        find('#user_level').find(:option, 'Junior').select_option
 
         choose('Administrativo')
 
-        expect(page).to have_select('user_specialty', disabled: true, selected: '') &
-                        have_select('user_level', disabled: true, selected: '')
+        expect(page).to have_select('user_specialty', disabled: true, selected: '')
       end
     end
 
@@ -218,7 +214,6 @@ describe 'Users', type: :feature do
                             have_css('.row-performance_score td', text: user.performance_score) &
                             have_css('.row-occupation td', text: user.occupation_text) &
                             have_css('.row-specialty td', text: user.specialty.humanize) &
-                            have_css('.row-level td', text: user.level.humanize) &
                             have_css('.row-contract_type td', text: user.contract_type_text) &
                             have_css('.row-roles td', text: UserDecorator.new(user).roles_text) &
                             have_css('.row-observation td', text: user.observation)

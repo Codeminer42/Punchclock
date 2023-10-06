@@ -9,7 +9,7 @@ ActiveAdmin.register User do
 
   menu parent: User.model_name.human(count: 2), priority: 1
 
-  permit_params :name, :email, :github, :backend_level, :frontend_level, :level, :contract_type, :contract_company_country, :mentor_id,
+  permit_params :name, :email, :github, :backend_level, :frontend_level, :contract_type, :contract_company_country, :mentor_id,
                 :city_id, :active, :allow_overtime, :office_id, :occupation, :started_at,
                 :observation, :specialty, :otp_required_for_login, roles: []
 
@@ -99,7 +99,6 @@ ActiveAdmin.register User do
           row :backend_level, &:backend_level_text
           row :frontend_level, &:frontend_level_text
           row :specialty, &:specialty_text
-          row :level, &:level_text
           row :contract_type, &:contract_type_text
           row :contract_company_country, &:contract_company_country_text
 
@@ -196,7 +195,7 @@ ActiveAdmin.register User do
 
       tab I18n.t('experience') do
         panel I18n.t('professional_experience') do
-          table_for user.professional_experiences.order(end_date: :desc).decorate, i18n: ProfessionalExperience do
+          table_for user.professional_experiences.ordered_by_start_date, i18n: ProfessionalExperience do
             column :company
             column :position
             column :description
@@ -270,7 +269,6 @@ ActiveAdmin.register User do
       f.input :backend_level, as: :select, collection: User.backend_level.options
       f.input :frontend_level, as: :select, collection: User.frontend_level.options
       f.input :specialty, as: :select, collection: User.specialty.values.map { |specialty| [specialty.text.humanize, specialty] }
-      f.input :level, as: :select, collection: User.level.values.map { |level| [level.text.titleize,level] }
       f.input :contract_type, as: :select, collection: User.contract_type.values.map { |contract_type| [contract_type.text.humanize, contract_type] }
       f.input :contract_company_country, as: :select, collection: User.contract_company_country.values.map { |company_country| [company_country.text.humanize, company_country] }
       f.input :allow_overtime

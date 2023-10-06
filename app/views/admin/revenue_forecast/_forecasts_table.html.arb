@@ -1,21 +1,21 @@
-columns do
+columns class: "forecast-table" do
   column do
-    para(I18n.t('projects.title'), style: 'font-weight: bold')
+    para(I18n.t('projects.title'), style: 'font-weight: bold', class: "forecast-table-cell")
 
     forecast.projects.each do |project|
-      para(project.name, style: 'font-weight: bold')
+      para(project.name, style: 'font-weight: bold', class: "forecast-table-cell")
     end
   end
 
   forecast.months do |month_name, forecasts, total|
     column do
-      para(month_name, style: 'font-weight: bold')
+      para(month_name, style: 'font-weight: bold', class: "forecast-table-cell")
 
       forecasts.each do |forecast|
-        para forecast
+        para forecast, class: "forecast-table-cell"
       end
 
-      span(total, style: 'color: blue')
+      span(total, style: 'color: blue', class: "forecast-table-cell")
     end
   end
 end

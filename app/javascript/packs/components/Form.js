@@ -62,6 +62,7 @@ class Form extends React.Component{
                 disabled={isSelectedsEmpty}
                 options={{ placeholder: 'Projeto' }}
                 onChange={(e) => this.handleProjectChange(e)}
+                onOpen={() => this.focusOnSearch()}
               />
             </div>
             <div className="col">
@@ -123,10 +124,12 @@ class Form extends React.Component{
 
   /* Removes the double confirmation prompt */
   componentDidUpdate() {
-    if (this.props.calendar.selecteds.size == 0) {
-      if (this.state.selectedProject) {
-        this.setState({ selectedProject: "" })
-      }
+    const { currentAllocationId, selecteds } = this.props.calendar;
+    const selectedProject = this.state.selectedProject
+    const selectedsEmpty = selecteds.size == 0;
+
+    if(selectedsEmpty && selectedProject !== currentAllocationId && !selectedProject && currentAllocationId) {
+      this.setState({ selectedProject: currentAllocationId });
     }
 
     if (this.state.hasConfirmedOperation) {
@@ -197,6 +200,10 @@ class Form extends React.Component{
 
   handleProjectChange(e) {
     this.setState({ selectedProject: e.currentTarget.value })
+  }
+
+  focusOnSearch() {
+    $(".select2-search__field")[0].focus()
   }
 }
 

@@ -25,7 +25,7 @@ class UserResumeDoc
       skills = user.skills.pluck(:title)
       mount_skill_section(skills)
 
-      job_experiences = user.professional_experiences.order(end_date: :asc).decorate
+      job_experiences = user.professional_experiences.ordered_by_start_date
       mount_professional_section(job_experiences)
 
       education_experiences = user.education_experiences.decorate
@@ -89,14 +89,18 @@ class UserResumeDoc
       substitute(title, 'job_title', experience.position)
       substitute(title, 'company_name', experience.company)
 
-      date_interval = "#{experience.start_date_month} - #{experience.end_date_month}"
+      date_interval = "#{experience.decorate.start_date_month} - #{experience.decorate.end_date_month}"
       substitute(title, 'job_date', date_interval)
 
-      description = @text_element.copy
-      substitute(description, '_job_description_', strip_extra_blank_space(experience.description))
-
+      description_paragraphs = experience.description.split("\r\n").reverse
+      
       title.insert_after job_section
-      description.insert_after title
+
+      description_paragraphs.each do |paragraph|
+        description = @text_element.copy
+        substitute(description, '_job_description_', paragraph)
+        description.insert_after title
+      end 
     end
   end
 
