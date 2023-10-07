@@ -13,6 +13,7 @@
                 <th><%= t('contributions.pr_link') %></th>
                 <th><%= t('contributions.created_at') %></th>
                 <th><%= t('contributions.pr_state') %></th>
+                <th><%= t('contributions.description') %></th>
                 <th></th>
               </tr>
             </thead>
@@ -27,6 +28,7 @@
                   <td><%= link_to contribution.link, contribution.link, target: :blank %></td>
                   <td><%= I18n.l(contribution.created_at.to_date, format: :default) %></td>
                   <td><%= contribution.pr_state.nil? ? '-' : contribution.pr_state_text %></td>
+                  <td><%= contribution.description.present? ? t('contributions.description_filled') : '-' %></td>
                   <td>
                     <%=
                       link_to image_tag('edit.png', class: 'mx-auto'),

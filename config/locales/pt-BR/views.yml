@@ -22,6 +22,8 @@ pt-BR:
     created_at: 'Criada em'
     pr_state: 'Estado da PR'
     no_prs_found: 'Nenhuma PR encontrada'
+    description_filled: 'Preenchida'
+    description: 'Descrição'
   evaluations:
     written:
       add_review: 'Adicionar Revisão'
