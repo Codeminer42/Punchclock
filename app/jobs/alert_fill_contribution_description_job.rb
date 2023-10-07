@@ -9,7 +9,7 @@ class AlertFillContributionDescriptionJob < ApplicationJob
       NotificationMailer.notify_fill_contribution_description(
         user: user,
         contributions_total: contributions.length,
-        contributions_links: contributions.pluck(:id, :link)
+        contributions_links: contributions.map { [_1.id, _1.link] }
       ).deliver_later
     end
   end

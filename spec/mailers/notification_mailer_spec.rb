@@ -258,7 +258,7 @@ describe NotificationMailer do
           .notify_fill_contribution_description(
             user:,
             contributions_total: contributions.length,
-            contributions_links: contributions.pluck(:id, :link)
+            contributions_links: contributions.map { [_1.id, _1.link] }
           )
       end
 
