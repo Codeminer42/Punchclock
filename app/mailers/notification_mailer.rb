@@ -59,9 +59,10 @@ class NotificationMailer < ActionMailer::Base
     mail(to: newsletter_email, subject: 'Punchlock - Contribuições aprovadas')
   end
 
-  def notify_fill_contribution_description(user, contributions_total)
+  def notify_fill_contribution_description(user:, contributions_total:, contributions_links:)
     @user = user
-    @contributions_total = contributions_total 
+    @contributions_total = contributions_total
+    @contributions_links = contributions_links
     mail(to: @user.email, subject: t('notification_mailer.subject.notify_fill_contribution_description_html'))
   end
 end

@@ -253,7 +253,14 @@ describe NotificationMailer do
     context 'when notify user to fill contribution description' do
       let(:user) { create(:user) }
       let!(:contributions) { FactoryBot.create_list(:contribution, 5, user: user) }
-      let(:mail) { NotificationMailer.notify_fill_contribution_description(user, contributions.length) }
+      let(:mail) do
+        NotificationMailer
+          .notify_fill_contribution_description(
+            user:,
+            contributions_total: contributions.length,
+            contributions_links: contributions.map { [_1.id, _1.link] }
+          )
+      end
 
       it 'renders the subject' do
         expect(mail.subject).to eq('Punchlock - Contribuições Aguardando Descrição')
@@ -271,8 +278,10 @@ describe NotificationMailer do
         expect(mail.body.encoded).to match('5')
       end
 
-      it 'renders the contribution link' do
-        expect(mail.body.encoded).to have_link('Acessar PRs', href: contributions_url)
+      it 'renders the list of contributions links' do
+        contributions.each do |contribution|
+          expect(mail.body.encoded).to have_selector('li', text: contribution.link)
+        end
       end
     end
   end

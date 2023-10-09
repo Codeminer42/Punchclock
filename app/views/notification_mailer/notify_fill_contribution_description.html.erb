@@ -1,7 +1,17 @@
-<%= 
-  t('notification_mailer.notify_fill_contribution_description_html',
-    host: ENV['HOST'],
-    contributions_total: @contributions_total,
-    contributions_link: link_to("Acessar PRs", contributions_url)
-   ) 
- %>
+<p>
+  <%= t '.info', user: @user %>
+</p>
+
+<p>
+  Você possui <%= t '.contributions', count: @contributions_total %> aguardando descrição da PR:
+</p>
+
+<ul>
+  <% @contributions_links.each do |id, link| %>
+    <li>
+      <%= link_to link, edit_contribution_url(id) %>
+    </li>
+  <% end %>
+</ul>
+
+Abs
