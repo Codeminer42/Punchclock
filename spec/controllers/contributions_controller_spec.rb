@@ -9,7 +9,8 @@ RSpec.describe ContributionsController, type: :controller do
   let!(:contribution_list) do
     [
       create(:contribution, user:, created_at: 10.days.ago, state: :approved),
-      create(:contribution, user:, created_at: Date.today, state: :approved)
+      create(:contribution, user:, created_at: Date.today, state: :approved),
+      create(:contribution, user:, created_at: Date.today, state: :refused, rejected_reason: :other_reason)
     ]
   end
   let(:page) { Capybara::Node::Simple.new(response.body) }
@@ -54,6 +55,13 @@ RSpec.describe ContributionsController, type: :controller do
                                     .and have_content(contribution_list[1].pr_state_text)
                                     .and have_content(contribution_list[1].created_at.strftime('%d/%m/%Y'))
                                     .and have_selector(:css, "a[href='/contributions/#{contribution_list[1].id}/edit']")
+        end
+
+        it 'does not show rejected contributions' do
+          get :index
+
+
+          expect(page.find('table')).not_to have_content(contribution_list[2].link)
         end
 
         it 'returns the newest contributions first' do
