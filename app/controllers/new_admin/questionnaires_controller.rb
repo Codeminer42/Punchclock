@@ -4,6 +4,8 @@ module NewAdmin
 
     layout 'new_admin'
 
+    load_and_authorize_resource
+
     before_action :authenticate_user!
 
     def index
@@ -11,3 +13,6 @@ module NewAdmin
     end
   end
 end
+
+#TODO:
+#Filtros no index
