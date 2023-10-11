@@ -24,6 +24,7 @@ pt-BR:
     no_prs_found: 'Nenhuma PR encontrada'
     description_filled: 'Preenchida'
     description: 'Descrição'
+    authors: 'Autores'
   evaluations:
     written:
       add_review: 'Adicionar Revisão'

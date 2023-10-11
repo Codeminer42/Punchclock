@@ -340,6 +340,8 @@ pt-BR:
       contribution:
         id: "ID"
         user: "Usuário"
+        users: "Usuários"
+        authors: "Autores"
         link: "Link"
         state: "Estado"
         description: "Descrição"

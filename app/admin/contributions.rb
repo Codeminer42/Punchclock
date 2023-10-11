@@ -62,6 +62,11 @@ ActiveAdmin.register Contribution do
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
     column :pr_state, &:pr_state_text
+    column :authors do |contribution|
+      contribution.users.each do |user|
+        link_to user.first_and_last_name, admin_user_path(user)
+      end
+    end
     column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
     column :rejected_reason, &:rejected_reason_text
@@ -94,6 +99,11 @@ ActiveAdmin.register Contribution do
       end
       row :rejected_reason, &:rejected_reason_text
       row :pr_state
+      row :authors do |contribution|
+        contribution.users.each do |user|
+          link_to user.first_and_last_name, admin_user_path(user)
+        end
+      end
       row :reviewed_by
       row :reviewed_at
       row :created_at

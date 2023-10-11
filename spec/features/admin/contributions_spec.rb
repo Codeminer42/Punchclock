@@ -8,6 +8,7 @@ RSpec::Matchers.define_negated_matcher :not_have_text, :have_text
 describe 'Contribution', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
   let!(:contribution) { create(:contribution) }
+  let!(:contribution_user) { create(:contributions_user, user: contribution.user, contribution: ) }
   let!(:inactive_user_contribution) { create(:contribution, :approved, user: create(:user, :inactive_user)) }
 
   before do
@@ -16,13 +17,14 @@ describe 'Contribution', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "User", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason" on table' do
+    it 'must find fields "User", "Link", "Created at", "State", "Pr state", "Authors", "Reviewed by", "Reviewed at", "Rejected reason" on table' do
       within 'table' do
           expect(page).to have_text('Usuário') &
                         have_text('Link') &
                         have_text('Criado em') &
                         have_text('Estado') &
                         have_text('Pr State') &
+                        have_text('Autores') &
                         have_text('Revisado por') &
                         have_text('Revisado em') &
                         have_text('Motivo da recusa')
@@ -35,7 +37,8 @@ describe 'Contribution', type: :feature do
                         have_text(contribution.link) &
                         have_text(I18n.l(contribution.created_at.to_date, format: :default)) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
-                        have_text(contribution.pr_state_text)
+                        have_text(contribution.pr_state_text) &
+                        have_text(contribution_user.user.first_and_last_name)
       end
     end
 
@@ -54,13 +57,14 @@ describe 'Contribution', type: :feature do
         find_link('Monitorando (1)', href: "/admin/contributions?scope=tracking").click
       end
 
-      it 'must have fields "User", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason", "Pending" and "Notes" on table' do
+      it 'must have fields "User", "Link", "Created at", "State", "Pr state", "Authors", "Reviewed by", "Reviewed at", "Rejected reason", "Pending" and "Notes" on table' do
         within 'table' do
             expect(page).to have_text('Usuário') &
                           have_text('Link') &
                           have_text('Criado em') &
                           have_text('Estado') &
                           have_text('Pr State') &
+                          have_text('Autores') &
                           have_text('Revisado por') &
                           have_text('Revisado em') &
                           have_text('Motivo da recusa') &
@@ -77,7 +81,8 @@ describe 'Contribution', type: :feature do
                           have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
                           have_text(contribution.pr_state_text) &
                           have_text('Desenvolvedor') &
-                          have_text(contribution.notes)
+                          have_text(contribution.notes) &
+                          have_text(contribution_user.user.first_and_last_name)
         end
       end
     end
@@ -112,6 +117,7 @@ describe 'Contribution', type: :feature do
                         have_text('Estado') &
                         have_text('Motivo da recusa') &
                         have_text('Pr State') &
+                        have_text('Autores') &
                         have_text('Revisado por') &
                         have_text('Revisado em') &
                         have_text('Criado em') &
@@ -137,6 +143,10 @@ describe 'Contribution', type: :feature do
 
           within "tr.row.row-rejected_reason" do
             expect(page).to have_text('Vazio')
+          end
+
+          within "tr.row.row-authors" do
+            expect(page).to have_text(contribution_user.user.name)
           end
 
           within "tr.row.row-pr_state" do
