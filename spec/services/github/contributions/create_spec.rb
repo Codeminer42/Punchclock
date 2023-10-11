@@ -24,14 +24,16 @@ RSpec.describe Github::Contributions::Create, type: :service do
             repository_id: 1,
             pull_request_url: 'http://github.com/owner/repo/pull/123',
             created_at: Time.now,
-            pr_state: 'open'
+            pr_state: 'open',
+            contributors_ids: [:user_id]
           ),
           instance_double(Github::Contributions::Wrappers::PullRequest,
             user_id: 2,
             repository_id: 2,
             pull_request_url: 'http://github.com/owner/repo2/pull/456',
             created_at: Time.now,
-            pr_state: 'closed'
+            pr_state: 'closed',
+            contributors_ids: [:user_id]
           )
         ]
       end
@@ -43,6 +45,11 @@ RSpec.describe Github::Contributions::Create, type: :service do
 
       it 'creates contributions using find_or_create_by' do
         expect(Contribution).to receive(:find_or_create_by).twice
+        call_create
+      end
+
+      it 'associates users with contributions' do
+        expect(ContributionsUser).to receive(:create).twice
         call_create
       end
 
@@ -62,6 +69,11 @@ RSpec.describe Github::Contributions::Create, type: :service do
 
       it 'does not create any contributions' do
         expect(Contribution).not_to receive(:find_or_create_by)
+        call_create
+      end
+
+      it 'does not associate users with contributions' do
+        expect(ContributionsUser).not_to receive(:create)
         call_create
       end
 
