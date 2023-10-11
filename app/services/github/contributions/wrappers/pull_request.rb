@@ -33,18 +33,18 @@ module Github
         end
 
         def get_co_authors_data_by_commit_messages
-          co_authors_data = pull_request_commits.map do |commit|
+          co_authors_data = pull_request_commits.filter_map do |commit|
             commit_message = commit.dig("commit", "message")
 
             data = nil
 
-            unless !commit_message.match?(CO_AUTHOR_REGEX)
+            if commit_message.match?(CO_AUTHOR_REGEX)
               data = commit_message.scan(CO_AUTHOR_REGEX).flatten
               data.first.strip!
             end
 
             data
-          end.compact
+          end
           Set.new(co_authors_data)
         end
         
@@ -78,7 +78,7 @@ module Github
         end
 
         def co_authors
-          @co_authors ||= co_authors_ids_by_messages.concat(co_authors_ids_by_committers).uniq.compact
+          @co_authors ||= co_authors_ids_by_messages.concat(co_authors_ids_by_committers).uniq.reject(&:blank?)
         end
 
         def contributors_ids
