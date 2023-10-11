@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_131111) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_10_170247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_131111) do
   end
 
   create_table "contributions", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "link", null: false
     t.string "state", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -68,10 +67,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_131111) do
     t.text "notes"
     t.text "description"
     t.string "pending"
+    t.bigint "user_id"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
+  end
+
+  create_table "contributions_users", force: :cascade do |t|
+    t.bigint "contribution_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contribution_id"], name: "index_contributions_users_on_contribution_id"
+    t.index ["user_id"], name: "index_contributions_users_on_user_id"
   end
 
   create_table "education_experiences", force: :cascade do |t|
@@ -297,7 +306,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_131111) do
   add_foreign_key "answers", "questions"
   add_foreign_key "cities", "states"
   add_foreign_key "contributions", "repositories"
-  add_foreign_key "contributions", "users"
   add_foreign_key "education_experiences", "users"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "notes", "users"

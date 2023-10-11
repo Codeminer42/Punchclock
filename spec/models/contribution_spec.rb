@@ -7,6 +7,9 @@ RSpec.describe Contribution, type: :model do
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:repository) }
   it { is_expected.to belong_to(:reviewed_by).class_name('User').optional }
+  it { is_expected.to belong_to(:reviewed_by).class_name('User').optional }
+  it { is_expected.to have_many(:contributions_users).dependent(:destroy) }
+  it { is_expected.to have_many(:users).through(:contributions_users) }
   it { is_expected.to validate_presence_of :link }
   it { is_expected.to validate_presence_of :state }
 
@@ -95,7 +98,7 @@ RSpec.describe Contribution, type: :model do
   end
 
   describe 'scopes' do
-    let!(:today_contribution) { create :contribution }
+  let!(:today_contribution) { create :contribution }
     let!(:last_week_contribution) { create :contribution, created_at: 1.week.ago }
     let(:tracking_contribution) { create :contribution, tracking: true }
 

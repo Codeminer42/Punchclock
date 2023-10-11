@@ -21,6 +21,10 @@ class Contribution < ApplicationRecord
   belongs_to :repository
   belongs_to :reviewed_by, class_name: "User", foreign_key: "reviewer_id", optional: true
 
+  has_many :contributions_users, dependent: :destroy
+  has_many :users, through: :contributions_users
+
+
   aasm column: 'state' do
     state :received, initial: true
     state :approved

@@ -18,6 +18,8 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:skills).through(:user_skills) }
     it { is_expected.to have_many(:managed_offices).class_name('Office') }
     it { is_expected.to have_many(:mentees).class_name(:User) }
+    it { is_expected.to have_many(:contributions_users).dependent(:destroy) }
+    it { is_expected.to have_many(:contributions).through(:contributions_users) }
   end
 
   describe 'validations' do
