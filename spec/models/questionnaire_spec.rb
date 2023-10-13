@@ -117,6 +117,23 @@ RSpec.describe Questionnaire, type: :model do
         end
       end
     end
+
+    describe '#by_active' do
+      let!(:active_questionnaire) { create(:questionnaire, active: true) }
+      let!(:unactive_questionnaire) { create(:questionnaire, active: false) }
+
+      context 'when active is present' do
+        it 'filters by active' do
+          expect(Questionnaire.by_active(true)).to eq([active_questionnaire])
+        end
+      end
+
+      context 'when active is not present' do
+        it 'does not filter' do
+          expect(Questionnaire.by_active(nil)).to eq([active_questionnaire, unactive_questionnaire])
+        end
+      end
+    end
   end
 
   describe '#toggle_active' do
