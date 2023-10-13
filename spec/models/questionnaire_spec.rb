@@ -83,6 +83,40 @@ RSpec.describe Questionnaire, type: :model do
         end
       end
     end
+
+    describe '#by_created_at_from' do
+      let!(:october_questionnaire) { create(:questionnaire, created_at: '2022-10-02') }
+      let!(:november_questionnaire) { create(:questionnaire, created_at: '2022-11-02') }
+
+      context 'when date is present' do
+        it 'returns questionnaires created from given date' do
+          expect(Questionnaire.by_created_at_from('2022-11-01')).to eq([november_questionnaire])
+        end
+      end
+
+      context 'when date is not present' do
+        it 'does not filter by date' do
+          expect(Questionnaire.by_created_at_from(nil)).to eq([october_questionnaire, november_questionnaire])
+        end
+      end
+    end
+
+    describe '#by_created_at_until' do
+      let!(:october_questionnaire) { create(:questionnaire, created_at: '2022-10-02') }
+      let!(:november_questionnaire) { create(:questionnaire, created_at: '2022-11-02') }
+
+      context 'when date is present' do
+        it 'returns questionnaires created until given date' do
+          expect(Questionnaire.by_created_at_until('2022-10-10')).to eq([october_questionnaire])
+        end
+      end
+
+      context 'when date is not present' do
+        it 'does not filter by date' do
+          expect(Questionnaire.by_created_at_from(nil)).to eq([october_questionnaire, november_questionnaire])
+        end
+      end
+    end
   end
 
   describe '#toggle_active' do
