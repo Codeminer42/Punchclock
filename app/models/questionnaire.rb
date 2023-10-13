@@ -11,6 +11,7 @@ class Questionnaire < ApplicationRecord
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   scope :active, -> { where(active: true) }
+  scope :by_title_like, ->(title) { where("questionnaires.title ILIKE ?", "%#{title}%") if title.present? }
 
   enumerize :kind,  in: { english: 0, performance: 1 },
                     scope: :shallow,
