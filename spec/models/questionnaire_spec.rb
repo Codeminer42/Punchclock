@@ -66,6 +66,23 @@ RSpec.describe Questionnaire, type: :model do
         end
       end
     end
+
+    describe '#by_kind' do
+      let!(:performance_questionnaire) { create(:questionnaire) }
+      let!(:english_questionnaire) { create(:questionnaire, :kind_english) }
+
+      context 'when kind is present' do
+        it 'filters by kind' do
+          expect(Questionnaire.by_kind('performance')).to eq([performance_questionnaire])
+        end
+      end
+
+      context 'when kind is not present' do
+        it 'does not filter' do
+          expect(Questionnaire.by_kind(nil)).to eq([performance_questionnaire, english_questionnaire])
+        end
+      end
+    end
   end
 
   describe '#toggle_active' do

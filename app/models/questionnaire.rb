@@ -12,6 +12,7 @@ class Questionnaire < ApplicationRecord
 
   scope :active, -> { where(active: true) }
   scope :by_title_like, ->(title) { where("questionnaires.title ILIKE ?", "%#{title}%") if title.present? }
+  scope :by_kind, ->(kind) { where(kind:) if kind.present? }
 
   enumerize :kind,  in: { english: 0, performance: 1 },
                     scope: :shallow,
