@@ -15,6 +15,7 @@ class Questionnaire < ApplicationRecord
   scope :by_kind, ->(kind) { where(kind:) if kind.present? }
   scope :by_created_at_from, ->(date) { where("created_at >= ?", date) if date.present? }
   scope :by_created_at_until, ->(date) { where("created_at <= ?", date) if date.present? }
+  scope :by_active, ->(active) { where(active:) if active.present? }
 
   enumerize :kind,  in: { english: 0, performance: 1 },
                     scope: :shallow,
