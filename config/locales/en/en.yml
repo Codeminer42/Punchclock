@@ -134,6 +134,9 @@ en:
     response: "Resposta"
   questionnaires:
     empty: "No questionnaires found"
+    filters: "Filters"
+    filter: "Filter"
+    clear: "Clear filters"
   regional_holidays:
     title: "Regional holidays"
     filters: "Filters"
