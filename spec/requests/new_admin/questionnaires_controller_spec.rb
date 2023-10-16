@@ -41,6 +41,16 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
             expect(response.body).not_to include('Bar')
           end
         end
+
+        context 'when pagination is applied' do
+          let!(:questionnaires_list) { create_list(:questionnaire, 3) }
+
+          it 'paginates the results', :aggregate_failures do
+            get new_admin_questionnaires_path, params: { per: 2 }
+
+            expect(assigns(:questionnaires).count).to eq(2)
+          end
+        end
       end
     end
 

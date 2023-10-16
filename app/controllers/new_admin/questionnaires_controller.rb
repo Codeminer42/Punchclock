@@ -9,7 +9,7 @@ module NewAdmin
     before_action :authenticate_user!
 
     def index
-      @questionnaires = questionnaires
+      @questionnaires = paginate_record(questionnaires)
     end
 
     private
