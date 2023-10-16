@@ -23,7 +23,11 @@
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center">
-            <span><%= questionnaire.active %></span>
+            <% if questionnaire.active %>
+              <%= heroicon "check-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% else %>
+              <%= heroicon "x-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% end %>   
           </div>
         </td>
         <td class="px-4 py-3">
