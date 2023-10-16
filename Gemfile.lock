@@ -277,6 +277,8 @@ GEM
       activesupport (>= 5.2)
     hashdiff (1.0.1)
     hashie (3.6.0)
+    heroicon (1.0.0)
+      rails (>= 5.2)
     heroics (0.1.2)
       erubis (~> 2.0)
       excon
@@ -675,6 +677,7 @@ DEPENDENCIES
   github_api (~> 0.18.2)
   guard
   guard-livereload (~> 2.5)
+  heroicon
   httparty
   inline_svg (~> 1.9)
   jquery-easing-rails
