@@ -100,6 +100,7 @@ pt-BR:
       highlight: 'Recomendado'
       issues: 'Issues'
       stars: 'Stars'
+    undefined: 'Indefinido'
   not_started: 'Não iniciado'
   finished: 'Finalizado'
   admin:
