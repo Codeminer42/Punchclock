@@ -258,6 +258,7 @@ pt-BR:
     filters: "Filtros"
     filter: "Filtrar"
     clear: "Limpar filtros"
+    new: "Novo questionário"
   regional_holidays:
     title: "Feriados regionais"
     filters: "Filtros"
