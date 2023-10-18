@@ -92,6 +92,18 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_new_admin_questionnaire_path
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 
   describe 'POST #create' do
@@ -100,14 +112,37 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       before { sign_in user }
 
       context 'with valid parameters' do
-        let(:valid_params) { { title: 'title', kind: 'english', active: true, description: 'some description' } }
+        let(:valid_params) do
+          { title: 'title', kind: 'english', active: true, description: 'some description', questions_attributes:
+        { '0' => { title: 'some title', kind: 'multiple_choice', raw_answer_options: 'one;two;three' } } }
+        end
         it 'creates a new questionnaire' do
           expect { post new_admin_questionnaires_path, params: { questionnaire: valid_params } }.to change(Questionnaire, :count).by(1)
+        end
+
+        it 'creates a new question' do
+          expect { post new_admin_questionnaires_path, params: { questionnaire: valid_params } }.to change(Question, :count).by(1)
         end
 
         it 'redirects to questionnaires index page' do
           post new_admin_questionnaires_path, params: { questionnaire: valid_params }
           expect(response).to redirect_to(new_admin_questionnaires_path)
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:invalid_params) { { title: '' } }
+        it 'does not create the questionnaire' do
+          expect { post new_admin_questionnaires_path, params: { questionnaire: invalid_params } }.not_to change(Questionnaire, :count)
+        end
+
+        it 'does not create questions' do
+          expect { post new_admin_questionnaires_path, params: { questionnaire: invalid_params } }.not_to change(Question, :count)
+        end
+
+        it 'renders template new' do
+          post new_admin_questionnaires_path, params: { questionnaire: invalid_params }
+          expect(response).to render_template(:new)
         end
       end
     end

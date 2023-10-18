@@ -14,6 +14,7 @@ module NewAdmin
 
     def new
       @questionnaire = Questionnaire.new
+      @questionnaire.questions.build
     end
 
     def create
@@ -44,7 +45,7 @@ module NewAdmin
 
     def questionnaire_params
       params.require(:questionnaire).permit(:title, :kind, :active, :description,
-                                            questions_attributes: %i[title kind answer_options])
+                                            questions_attributes: %i[title kind raw_answer_options])
     end
 
     def redirect_on_success(url, message_scope:)
@@ -54,7 +55,7 @@ module NewAdmin
     end
 
     def render_on_failure(template)
-      flash.now[:alert] = @project.errors.full_messages.to_sentence
+      flash.now[:alert] = @questionnaire.errors.full_messages.to_sentence
       render template, status: :unprocessable_entity
     end
   end

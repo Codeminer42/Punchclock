@@ -259,6 +259,8 @@ pt-BR:
     filter: "Filtrar"
     clear: "Limpar filtros"
     new: "Novo questionário"
+    new_question: "Nova pergunta"
+    answer_options: "Opções de resposta separadas por ;"
   regional_holidays:
     title: "Feriados regionais"
     filters: "Filtros"
