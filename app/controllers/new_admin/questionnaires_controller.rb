@@ -14,7 +14,6 @@ module NewAdmin
 
     def new
       @questionnaire = Questionnaire.new
-      @questionnaire.questions.build
     end
 
     def create
@@ -45,7 +44,7 @@ module NewAdmin
 
     def questionnaire_params
       params.require(:questionnaire).permit(:title, :kind, :active, :description,
-                                            questions_attributes: %i[title kind raw_answer_options])
+                                            questions_attributes: %i[title kind raw_answer_options _destroy])
     end
 
     def redirect_on_success(url, message_scope:)
