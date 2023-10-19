@@ -1,12 +1,12 @@
 ActiveAdmin.register Contribution do
   decorate_with ContributionDecorator
 
-  permit_params :state, :link, :user_id, :repository_id, :rejected_reason, :tracking, :pending, :notes, :description
+  permit_params :state, :link, :repository_id, :rejected_reason, :tracking, :pending, :notes, :description, user_ids: []
   actions :index, :show, :new, :create, :edit, :update
 
   menu parent: Contribution.model_name.human(count: 2), priority: 1
 
-  filter :user, as: :select, collection: -> { User.engineer.active.order(:name) }
+  filter :users, as: :select, collection: -> { User.engineer.active.order(:name) }
   filter :state, as: :select, collection: -> { Contribution.aasm.states }
   filter :reviewed_at
   filter :created_at
@@ -51,8 +51,10 @@ ActiveAdmin.register Contribution do
 
   index download_links: %i[xlsx text] do
     selectable_column
-    column :user do |contribution|
-      link_to contribution.user.first_and_last_name, admin_user_path(contribution.user)
+    column :authors do |contribution|
+      contribution.users.map do |user|
+        link_to user.first_and_last_name, admin_user_path(user)
+      end
     end
     column :link do |contribution|
       link_to contribution.link, contribution.link, target: :blank
@@ -62,11 +64,6 @@ ActiveAdmin.register Contribution do
       Contribution.human_attribute_name("state/#{contribution.state}")
     end
     column :pr_state, &:pr_state_text
-    column :authors do |contribution|
-      contribution.users.each do |user|
-        link_to user.first_and_last_name, admin_user_path(user)
-      end
-    end
     column :reviewed_by, &:reviewed_by_short_name
     column :reviewed_at
     column :rejected_reason, &:rejected_reason_text
@@ -92,7 +89,6 @@ ActiveAdmin.register Contribution do
   show do
     attributes_table do
       row :tracking
-      row :user
       row :link
       row :state do |contribution|
         Contribution.human_attribute_name("state/#{contribution.state}")
@@ -100,7 +96,7 @@ ActiveAdmin.register Contribution do
       row :rejected_reason, &:rejected_reason_text
       row :pr_state
       row :authors do |contribution|
-        contribution.users.each do |user|
+        contribution.users.map do |user|
           link_to user.first_and_last_name, admin_user_path(user)
         end
       end
@@ -126,7 +122,7 @@ ActiveAdmin.register Contribution do
                                                            [I18n.t(reason, scope: 'enumerize.contribution.rejected_reason'), reason]
                                                          }
       else
-        input :user, as: :select, collection: User.engineer.active.order(:name)
+        input :users, label: I18n.t('contributions.authors'), as: :select, multiple: true, collection: User.engineer.active.order(:name)
 
         input :repository, collection: RepositoriesOrderedByContributionsQuery.new.call
         input :link
