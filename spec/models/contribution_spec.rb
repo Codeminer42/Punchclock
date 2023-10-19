@@ -4,12 +4,10 @@ require 'rails_helper'
 require 'aasm/rspec'
 
 RSpec.describe Contribution, type: :model do
-  it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:repository) }
   it { is_expected.to belong_to(:reviewed_by).class_name('User').optional }
   it { is_expected.to belong_to(:reviewed_by).class_name('User').optional }
-  it { is_expected.to have_many(:contributions_users).dependent(:destroy) }
-  it { is_expected.to have_many(:users).through(:contributions_users) }
+  it { is_expected.to have_and_belong_to_many(:users) }
   it { is_expected.to validate_presence_of :link }
   it { is_expected.to validate_presence_of :state }
 
@@ -98,8 +96,8 @@ RSpec.describe Contribution, type: :model do
   end
 
   describe 'scopes' do
-  let!(:today_contribution) { create :contribution }
-    let!(:last_week_contribution) { create :contribution, created_at: 1.week.ago }
+    let!(:today_contribution) { create :contribution, :with_users, users_count: 1 }
+    let!(:last_week_contribution) { create :contribution, :with_users, users_count: 1, created_at: 1.week.ago }
     let(:tracking_contribution) { create :contribution, tracking: true }
 
     it 'is in this week' do
@@ -111,7 +109,7 @@ RSpec.describe Contribution, type: :model do
     end
 
     it 'has active engineer' do
-      create :contribution, user: create(:user, :inactive)
+      create :contribution, users: [create(:user, :inactive)]
 
       expect(described_class.active_engineers).to contain_exactly(today_contribution, last_week_contribution)
     end

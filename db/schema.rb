@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_170247) do
   end
 
   create_table "contributions", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "link", null: false
     t.string "state", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -67,7 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_170247) do
     t.text "notes"
     t.text "description"
     t.string "pending"
-    t.bigint "user_id"
     t.index ["link"], name: "index_contributions_on_link", unique: true
     t.index ["repository_id"], name: "index_contributions_on_repository_id"
     t.index ["reviewer_id"], name: "index_contributions_on_reviewer_id"
@@ -306,6 +306,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_170247) do
   add_foreign_key "answers", "questions"
   add_foreign_key "cities", "states"
   add_foreign_key "contributions", "repositories"
+  add_foreign_key "contributions", "users"
   add_foreign_key "education_experiences", "users"
   add_foreign_key "evaluations", "questionnaires"
   add_foreign_key "notes", "users"

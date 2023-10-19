@@ -17,13 +17,10 @@ class Contribution < ApplicationRecord
   }
   enumerize :pending, in: [:mantainer, :dev, :other]
 
-  belongs_to :user
   belongs_to :repository
   belongs_to :reviewed_by, class_name: "User", foreign_key: "reviewer_id", optional: true
 
-  has_many :contributions_users, dependent: :destroy
-  has_many :users, through: :contributions_users
-
+  has_and_belongs_to_many :users
 
   aasm column: 'state' do
     state :received, initial: true
@@ -42,7 +39,7 @@ class Contribution < ApplicationRecord
   end
 
   def to_s
-    "#{id} - #{user}"
+    "#{id} - #{users.first}"
   end
 
   def update_rejected_reason(rejected_reason = "other_reason", reviewer_id)
@@ -64,7 +61,7 @@ class Contribution < ApplicationRecord
       end_date: 1.week.ago.end_of_week
     )
   end
-  scope :active_engineers, -> { joins(:user).merge(User.engineer.active) }
+  scope :active_engineers, -> { joins(:users).merge(User.engineer.active).distinct }
   scope :valid_pull_requests, -> { where.not(state: :refused) }
   scope :without_pr_state, ->(state) { where.not(pr_state: state) }
   scope :tracking, -> { where(tracking: true) }
