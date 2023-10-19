@@ -55,33 +55,6 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
     it { expect(subject.repository_name).to eq repository.link.split('com/').last }
   end
 
-  describe '#user_id' do
-    let!(:repository) { create(:repository) }
-    let(:user) { create(:user) }
-    let(:pr_state) { 'open' }
-    let(:merged_at) { nil }
-    let(:pull_request) do
-      double(created_at: '2022-01-01',
-             html_url: "#{repository.link}/pull/1",
-             user: double(login: user.github),
-             state: pr_state,
-             pull_request: double(merged_at:))
-    end
-
-    let(:engineers_wrapper) { Github::Contributions::Wrappers::Engineers.new }
-    let(:repositories_wrapper) { Github::Contributions::Wrappers::Repositories.new }
-    let(:github_client) { Github::Client.new }
-
-    subject do
-      described_class.new(pull_request:,
-                          engineers: engineers_wrapper,
-                          repositories: repositories_wrapper,
-                          client: github_client)
-    end
-
-    it { expect(subject.user_id).to eq user.id }
-  end
-
   describe '#repository_id' do
     let!(:repository) { create(:repository) }
     let(:user) { create(:user) }
@@ -347,15 +320,14 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
           }
         ]
       end
-  
-  
+
       subject do
         described_class.new(pull_request:,
                             engineers: engineers_wrapper,
                             repositories: repositories_wrapper,
                             client: github_client)
       end
-  
+
       before { allow(subject).to receive(:pull_request_commits).and_return(commits) }
 
       it 'returns a set containing co-authors data' do 
@@ -545,7 +517,7 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
     end
   end
 
-  describe '#co_authors_ids_by_messages' do 
+  describe '#co_authors_by_messages' do 
     context 'when there is an existent co-author with the username specified on commit message' do
       let!(:repository) { create(:repository) }
       let!(:user) { create(:user) }
@@ -588,8 +560,8 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
       end
 
       it 'considers the committer as a co author' do
-          expect(subject.co_authors_ids_by_messages)
-          .to eq([co_author.id])
+          expect(subject.co_authors_by_messages)
+          .to eq([co_author])
       end
     end
 
@@ -635,13 +607,13 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
       end
 
       it 'considers the committer as a co author' do
-          expect(subject.co_authors_ids_by_messages)
-          .to eq([co_author.id])
+          expect(subject.co_authors_by_messages)
+          .to eq([co_author])
       end
     end
   end
 
-  describe '#co_authors_ids_by_committers' do 
+  describe '#co_authors_by_committers' do 
     let!(:repository) { create(:repository) }
     let(:user) { create(:user) }
     let(:co_author) { create(:user, github: 'username42') }
@@ -682,7 +654,7 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
 
     before { allow(subject).to receive(:get_co_authors_data_by_committers).and_return(co_author_data) }
 
-    it { expect(subject.co_authors_ids_by_committers).to eq [co_author.id] }
+    it { expect(subject.co_authors_by_committers).to eq [co_author] }
   end
 
   describe '#co_authors' do
@@ -698,7 +670,7 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
              state: pr_state,
              pull_request: double(merged_at:))
     end
-    let(:co_authors_logins) { [co_author.id] }
+    let(:co_authors) { [co_author] }
 
     let(:engineers_wrapper) { Github::Contributions::Wrappers::Engineers.new }
     let(:repositories_wrapper) { Github::Contributions::Wrappers::Repositories.new }
@@ -712,14 +684,14 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
     end
 
     before do 
-      allow(subject).to receive(:co_authors_ids_by_committers).and_return(co_authors_logins)
-      allow(subject).to receive(:co_authors_ids_by_messages).and_return(co_authors_logins)
+      allow(subject).to receive(:co_authors_by_committers).and_return(co_authors)
+      allow(subject).to receive(:co_authors_by_messages).and_return(co_authors)
     end
 
-    it { expect(subject.co_authors).to eq [co_author.id] }
+    it { expect(subject.co_authors).to eq [co_author] }
   end
 
-  describe '#contributors_ids' do 
+  describe '#contributors' do 
     let!(:repository) { create(:repository) }
     let!(:user) { create(:user) }
     let(:co_author) { create(:user, github: 'username42') }
@@ -745,9 +717,41 @@ RSpec.describe Github::Contributions::Wrappers::PullRequest do
     end
 
     before do 
-      allow(subject).to receive(:co_authors).and_return([co_author.id])
+      allow(subject).to receive(:co_authors).and_return([co_author])
+      allow(subject).to receive(:author).and_return([user])
     end
 
-    it { expect(subject.contributors_ids).to eq [co_author.id, user.id ] }
+    it { expect(subject.contributors).to eq [co_author, user ] }
+  end
+
+  describe '#author' do 
+    let!(:repository) { create(:repository) }
+    let!(:user) { create(:user) }
+    let(:pr_state) { 'open' }
+    let(:merged_at) { nil }
+    let(:pull_request) do
+      double(created_at: '2022-01-01',
+            html_url: "#{repository.link}/pull/1",
+            user: double(login: user.github),
+            state: pr_state,
+            pull_request: double(merged_at:))
+    end
+
+    let(:engineers_wrapper) { Github::Contributions::Wrappers::Engineers.new }
+    let(:repositories_wrapper) { Github::Contributions::Wrappers::Repositories.new }
+    let(:github_client) { Github::Client.new }
+
+    subject do
+      described_class.new(pull_request:,
+                          engineers: engineers_wrapper,
+                          repositories: repositories_wrapper,
+                          client: github_client)
+    end
+
+    before do 
+      allow(engineers_wrapper).to receive(:find_by_github_user).and_return(user)
+    end
+
+    it { expect(subject.author).to eq user }
   end
 end

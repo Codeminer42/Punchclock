@@ -2,7 +2,7 @@ module Github
   module Contributions
     module Wrappers
       class PullRequest
-        CO_AUTHOR_REGEX = %r{Co-authored-by:\s?([À-ÿ\w\s.,'-]*)\s?<(.*)>}
+        CO_AUTHOR_REGEX = /Co-authored-by:\s?([À-ÿ\w\s.,'-]*)\s?<(.*)>/
 
         def initialize(pull_request:, engineers:, repositories:, client:)
           @pull_request = pull_request
@@ -36,16 +36,12 @@ module Github
           co_authors_data = pull_request_commits.filter_map do |commit|
             commit_message = commit.dig("commit", "message")
 
-            data = nil
-
             if commit_message.match?(CO_AUTHOR_REGEX)
-              data = commit_message.scan(CO_AUTHOR_REGEX).flatten
-              data.first.strip!
+              commit_message.scan(CO_AUTHOR_REGEX).flatten.map(&:strip)
             end
-
-            data
           end
-          Set.new(co_authors_data)
+          
+          co_authors_data.to_set
         end
         
         def get_co_authors_data_by_committers
@@ -54,38 +50,37 @@ module Github
 
             login unless pull_request.user.login == login
           end
-          
-          Set.new(co_authors_data)
+
+          co_authors_data.to_set
         end
         
-        def co_authors_ids_by_messages
+        def co_authors_by_messages
           get_co_authors_data_by_commit_messages.map do |co_author_data|
-            co_author_id = engineers.find_by_github_user(co_author_data.first)
+            co_author = engineers.find_by_github_user(co_author_data.first)
 
-            if co_author_id.nil? 
-              co_author = User.find_by(email: co_author_data.last)
-              co_author_id = co_author.present? ? co_author.id : nil
+            if co_author.nil? 
+              co_author = engineers.find_by_email(co_author_data.last)
             end
 
-            co_author_id
+            co_author
           end
         end
 
-        def co_authors_ids_by_committers
+        def co_authors_by_committers
           get_co_authors_data_by_committers.map do |co_author_login|
             engineers.find_by_github_user(co_author_login)
           end
         end
 
         def co_authors
-          @co_authors ||= co_authors_ids_by_messages.concat(co_authors_ids_by_committers).uniq.reject(&:blank?)
+          @co_authors ||= co_authors_by_messages.concat(co_authors_by_committers).uniq.reject(&:blank?)
         end
 
-        def contributors_ids
-          [co_authors, user_id].flatten
+        def contributors
+          [co_authors, author].flatten
         end
 
-        def user_id
+        def author
           engineers.find_by_github_user(pull_request.user.login)
         end
 

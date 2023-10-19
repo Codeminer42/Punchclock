@@ -17,46 +17,45 @@ RSpec.describe Github::Contributions::Create, type: :service do
     let(:client) { instance_double(Github::Client) }
 
     context 'when there are contributions to create' do
-      let(:contributions) do
+      let(:users) { create_list(:user, 2) }
+      let(:repositories) { create_list(:repository, 2) }
+      let!(:collected_contributions) do
         [
           instance_double(Github::Contributions::Wrappers::PullRequest,
-            user_id: 1,
-            repository_id: 1,
+            repository_id: repositories.first.id,
             pull_request_url: 'http://github.com/owner/repo/pull/123',
             created_at: Time.now,
             pr_state: 'open',
-            contributors_ids: [:user_id]
+            contributors: users
           ),
           instance_double(Github::Contributions::Wrappers::PullRequest,
-            user_id: 2,
-            repository_id: 2,
+            repository_id: repositories.last.id,
             pull_request_url: 'http://github.com/owner/repo2/pull/456',
             created_at: Time.now,
             pr_state: 'closed',
-            contributors_ids: [:user_id]
+            contributors: [users.first]
           )
         ]
       end
 
       before do
-        allow_any_instance_of(Github::Contributions::Collect).to receive(:all).and_return(contributions)
-        allow(Contribution).to receive(:find_or_create_by).and_call_original
+        allow_any_instance_of(Github::Contributions::Collect).to receive(:all).and_return(collected_contributions)
       end
 
       it 'creates contributions using find_or_create_by' do
-        expect(Contribution).to receive(:find_or_create_by).twice
-        call_create
+        expect{ call_create }.to change(Contribution, :count).by 2     
       end
 
       it 'associates users with contributions' do
-        expect(ContributionsUser).to receive(:create).twice
         call_create
+        expect(Contribution.first.users).to eq(users)
+        expect(Contribution.last.users).to eq([users.first])
       end
 
       it 'enqueues AlertFillContributionDescriptionJob for each user' do
         perform_enqueued_jobs do
-          expect(AlertFillContributionDescriptionJob).to receive(:perform_later).with(1).once
-          expect(AlertFillContributionDescriptionJob).to receive(:perform_later).with(2).once
+          expect(AlertFillContributionDescriptionJob).to receive(:perform_later).with(users.first.id).once
+          expect(AlertFillContributionDescriptionJob).to receive(:perform_later).with(users.last.id).once
           call_create
         end
       end
@@ -68,13 +67,7 @@ RSpec.describe Github::Contributions::Create, type: :service do
       end
 
       it 'does not create any contributions' do
-        expect(Contribution).not_to receive(:find_or_create_by)
-        call_create
-      end
-
-      it 'does not associate users with contributions' do
-        expect(ContributionsUser).not_to receive(:create)
-        call_create
+        expect{ call_create }.not_to change(Contribution, :count) 
       end
 
       it 'does not enqueue AlertFillContributionDescriptionJob' do
