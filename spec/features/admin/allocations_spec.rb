@@ -52,6 +52,12 @@ describe 'Admin Allocation', type: :feature do
         expect(page).to have_select('Projeto', options: Project.all.pluck(:name) << 'Qualquer')
       end
     end
+
+    it 'by hourly rates currencies' do
+      within '#filters_sidebar_section' do
+        expect(page).to have_select('Moeda da taxa horária', options: Allocation.hourly_rate_currencies)
+      end
+    end
   end
 
   describe 'Actions' do
