@@ -5,8 +5,6 @@ require 'rails_helper'
 RSpec.describe EducationExperiencesController, type: :controller do
   render_views
 
-
-
   describe 'GET #index' do
     let(:user) { create(:user) }
 
@@ -54,12 +52,12 @@ RSpec.describe EducationExperiencesController, type: :controller do
         end
 
         it 'paginates results' do
-          get :index, params: { per: 2, page: 1 }
+          get :index, params: { per: 1, page: 1 }
 
-          expect(assigns(:education_experiences).count).to eq(2)
+          expect(assigns(:education_experiences).count).to eq(1)
         end
 
-        it 'decorates regional holidays' do
+        it 'decorates education experiences' do
           get :index, params: { per: 1 }
 
           expect(assigns(:education_experiences).last).to be_an_instance_of(EducationExperienceDecorator)

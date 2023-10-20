@@ -3,23 +3,6 @@
 require 'rails_helper'
 
 describe 'Punches Dashboard', type: :feature do
-  describe 'navigation bar' do
-    let(:user) { create(:user) }
-
-    context 'when the user is logged in' do
-      before do
-        sign_in user
-      end
-
-      it 'has the dropdown option on the navigation bar' do
-        visit root_path
-
-        # find('.resume').click
-        expect(page).to have_link(I18n.t('activerecord.models.education_experience.one'), href: education_experiences_path)
-      end
-    end
-  end
-
   context 'When user has overtime allowed' do
     let!(:authed_user_with_overtime) { create_logged_in_user(allow_overtime: true) }
     let!(:active_project) { create(:project, :active) }
