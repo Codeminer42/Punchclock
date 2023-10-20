@@ -1,11 +1,11 @@
 <% content_for :assets do %>
-  <%= javascript_pack_tag 'nested_form' %>
+  <%= javascript_pack_tag 'questionnaire' %>
 <% end %>
 
 <% content_for :page_title do %>
   <%= t 'questionnaires.new' %>
 <% end %>
 
-<div data-tab-id="new_questionnaire" class="space-y-6">
+<div class="space-y-6">
   <%= render 'form', questionnaire: @questionnaire, url: new_admin_questionnaires_path %>
 </div>

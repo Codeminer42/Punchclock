@@ -1,4 +1,4 @@
-<%= form_with model: questionnaire, url: url, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |form| %>
+<%= form_with model: questionnaire, url: url, data: { controller: 'nested-form' } do |form| %>
   <div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
     <div class="w-full overflow-x-auto">
       <table class="w-full whitespace-no-wrap" id="form_questionnaire">
@@ -79,9 +79,9 @@
     <%= render "question_form", form: question_fields %>    
   <% end %>
 
-  <div data-nested-form-target="target"></div>
+  <div data-nested-form-target="formContent"></div>
 
-  <button type="button" data-action="nested-form#add">Add question</button>
+  <button type="button" data-action="click->nested-form#add">Add question</button>
 
   <div class="flex mt-4">
     <%= form.submit t('form.button.submit'), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>

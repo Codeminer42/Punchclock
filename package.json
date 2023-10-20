@@ -43,7 +43,6 @@
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
     "stats-webpack-plugin": "^0.6.0",
-    "stimulus-rails-nested-form": "^4.1.0",
     "superagent": "~7.0.2",
     "superagent-as-promised": "~4.0.0",
     "webpack": "^4.33.0",
