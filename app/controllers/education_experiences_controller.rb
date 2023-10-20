@@ -5,6 +5,6 @@ class EducationExperiencesController < ApplicationController
 
   def index
     @undecorated_experiences = EducationExperience.for_user(current_user.id)
-    @education_experiences = PunchesPaginationDecorator.new(params, @undecorated_experiences)
+    @education_experiences = EducationExperiencePaginationDecorator.new(params, @undecorated_experiences)
   end
 end

@@ -203,7 +203,7 @@ pt-BR:
   forecast: "Previsão"
   resumes:
     education_experience:
-      not_found: 'Nenhuma experiência educacinal cadastrada'
+      not_found: 'Nenhuma experiência educacional cadastrada'
   user:
     occupation:
       administrative: Administrativo

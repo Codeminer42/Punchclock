@@ -41,15 +41,15 @@ RSpec.describe EducationExperience, type: :model do
 
   describe '.for_user' do
     let!(:user) { create(:user) }
-    let!(:user_education_experience) { create(:education_experience, user:) }
-    let!(:non_user_education_experience) { create(:education_experience) }
+    let!(:education_experience_from_user) { create(:education_experience, user:) }
+    let!(:education_experience_from_another_user) { create(:education_experience) }
 
     it 'returns education experiences associated with the specified user' do
-      expect(EducationExperience.for_user(user.id)).to include(user_education_experience)
+      expect(EducationExperience.for_user(user.id)).to include(education_experience_from_user)
     end
 
     it 'does not return education experiences associated with other users' do
-      expect(EducationExperience.for_user(user.id)).not_to include(non_user_education_experience)
+      expect(EducationExperience.for_user(user.id)).not_to include(education_experience_from_another_user)
     end
   end
 end

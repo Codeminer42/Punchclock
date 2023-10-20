@@ -38,7 +38,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
       context 'when the user has educatione experiences' do
         let!(:education_experiences) { create_list(:education_experience, 2, user_id: user.id) }
 
-        it 'renders the table with a list of contributions' do
+        it 'renders the table with a list of education experiences' do
           get :index
 
           expect(page.find('table')).to have_content(education_experiences[0].institution)
@@ -60,7 +60,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
         it 'decorates education experiences' do
           get :index, params: { per: 1 }
 
-          expect(assigns(:education_experiences).last).to be_an_instance_of(EducationExperienceDecorator)
+          expect(assigns(:education_experiences).last).to be_an_instance_of(EducationExperiencePaginationDecorator)
         end
       end
     end
