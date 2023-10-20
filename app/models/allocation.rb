@@ -23,6 +23,9 @@ class Allocation < ApplicationRecord
   scope :ongoing, -> {
     where(ongoing: true, user_id: User.active).order(start_at: :desc)
   }
+  scope :hourly_rate_currencies, -> {
+    select(:hourly_rate_currency).distinct.map(&:hourly_rate_currency)
+  }
   scope :finished, -> {
     where(ongoing: false, user_id: User.active).order(end_at: :desc) }
   scope :in_period, -> (start_at, end_at) do
