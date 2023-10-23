@@ -23,6 +23,15 @@ RSpec.describe ProfessionalExperience, type: :request do
         expect(response.body).not_to include(other_experience.company)
         expect(response.body).not_to include(other_experience.position)
       end
+
+      context 'when pagination is applied' do
+        let!(:user_experiences) { create_list(:professional_experience, 3, user:) }
+
+        it 'paginates the results' do
+          get professional_experiences_path, params: { per: 2 }
+          expect(assigns(:professional_experiences).count).to eq(2)
+        end
+      end
     end
 
     context 'when user is not signed in' do
