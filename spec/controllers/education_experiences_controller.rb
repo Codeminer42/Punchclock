@@ -75,4 +75,69 @@ RSpec.describe EducationExperiencesController, type: :controller do
       end
     end
   end
+
+  describe 'GET new' do
+    let(:user) { create(:user) }
+
+    let(:page) { Capybara::Node::Simple.new(response.body) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      it 'has status 200' do
+        get :new
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'renders the new template' do
+        get :index
+
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when the user is not logged in' do
+      it 'redirects the user to the sign in page' do
+        get :index
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'POST create' 
+    let(:user) { create(:user) }
+    let(:page) { Capybara::Node::Simple.new(response.body) }
+  
+    context 'when the user is logged in' do
+  
+      before do
+        sign_in user
+      end
+
+      context 'when params are valid' do
+        it "saves the user vacation" do
+          post :create, params: { vacation: vacation_valid_params }
+  
+          expect(response).to have_http_status(:found)
+        end
+
+      end
+
+      context 'when params are invalid' do
+
+      end
+    end
+
+    context 'when the user is not logged in' do
+      it 'redirects the user to the sign in page' do
+        get :index
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end
