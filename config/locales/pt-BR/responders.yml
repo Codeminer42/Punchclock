@@ -18,3 +18,7 @@ pt-BR:
       cancel:
         notice: 'Solicitação de férias canceladas com sucesso.'
         alert: 'Somente férias pendentes podem ser canceladas.'
+    education_experience:
+      create:
+        notice: 'Experiência educacional criada com sucesso.'
+        alert: 'A Experiência educacional não pôde ser criada.'

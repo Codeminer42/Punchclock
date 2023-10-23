@@ -29,6 +29,11 @@ pt-BR:
       add_review: 'Adicionar Revisão'
     form:
       submit: 'Salvar Revisão'
+  education_experiences:
+    form:
+      save: 'Salvar'
+    new:
+      new_experience: 'Nova experiência educacional'
   notification_mailer:
     subject:
       notify_fill_contribution_description_html: 'Punchlock - Contribuições Aguardando Descrição'
