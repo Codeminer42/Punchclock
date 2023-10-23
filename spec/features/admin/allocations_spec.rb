@@ -55,7 +55,7 @@ describe 'Admin Allocation', type: :feature do
 
     it 'by hourly rates currencies' do
       within '#filters_sidebar_section' do
-        expect(page).to have_select('Moeda da taxa horária', options: Allocation.hourly_rate_currencies)
+        expect(page).to have_select('Moeda da taxa horária', options: Allocation.hourly_rate_currencies << 'Qualquer')
       end
     end
   end
