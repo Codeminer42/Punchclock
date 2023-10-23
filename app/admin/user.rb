@@ -130,6 +130,9 @@ ActiveAdmin.register User do
               column :project_name do |allocation|
                 allocation.project.name
               end
+              column :hourly_rate do |allocation|
+                allocation.decorate.hourly_rate
+              end
               column :start_at
               column :end_at
               column :ongoing
