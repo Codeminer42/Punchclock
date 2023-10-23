@@ -1,0 +1,43 @@
+<div id="page-top" class="row">
+  <div class="container-fluid home">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>
+        <%= t('activerecord.models.professinal_experience.other') %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered users-evaluation" id="dataTable">
+            <thead>
+              <tr>
+                <th><%= t('activerecord.attributes.professional_experience.company') %></th>
+                <th><%= t('activerecord.attributes.professional_experience.position') %></th>
+                <th><%= t('activerecord.attributes.professional_experience.start_date') %></th>
+                <th><%= t('activerecord.attributes.professional_experience.end_date') %></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @professional_experiences.empty?  %>
+                <tr>
+                  <td colspan="4"><%= t('professional_experience.not_found') %></td>
+                </tr>
+              <% end %>
+              <% @professional_experiences.each do |experience| %>
+                <tr>
+                  <td><%= experience.company %></td>
+                  <td><%= experience.position %></td>
+                  <td><%= l(Date.parse(experience.start_date), format: :short) %></td>
+                  <td><%= l(Date.parse(experience.end_date), format: :short) %></td>
+                  <td>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

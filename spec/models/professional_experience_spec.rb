@@ -61,16 +61,4 @@ RSpec.describe ProfessionalExperience, type: :model do
 
     it { is_expected.to eq [older_experience, old_experience, current_experience] }
   end
-
-  describe 'scopes' do
-    describe 'by_user' do
-      let!(:user) { create(:user) }
-      let!(:user_experience) { create(:professional_experience, user:) }
-      let!(:other_experience) { create(:professional_experience) }
-
-      it "returns only the user's professional experience" do
-        expect(ProfessionalExperience.by_user(user.id)).to eq([user_experience])
-      end
-    end
-  end
 end

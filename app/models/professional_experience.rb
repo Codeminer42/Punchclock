@@ -13,8 +13,6 @@ class ProfessionalExperience < ApplicationRecord
     all.sort_by { |professional_experience| Date.strptime(professional_experience.start_date, '%m/%Y') }
   end
 
-  scope :by_user, ->(user_id) { where(user_id:) }
-
   private
 
   FIELDS_TO_BE_VALIDATED = %i[start_date end_date].freeze
