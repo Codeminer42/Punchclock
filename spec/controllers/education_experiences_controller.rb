@@ -7,7 +7,6 @@ RSpec.describe EducationExperiencesController, type: :controller do
 
   describe 'GET #index' do
     let(:user) { create(:user) }
-
     let(:page) { Capybara::Node::Simple.new(response.body) }
 
     context 'when the user is logged in' do

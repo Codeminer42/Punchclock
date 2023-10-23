@@ -14,11 +14,15 @@ class EducationExperiencePaginationDecorator < Draper::Decorator
   end
 
   def start_date
-    model.start_date.to_date.to_fs(:date)
+    I18n.l(model.start_date.to_date, format: :default)
   end
 
   def end_date
-    model.end_date.to_date.to_fs(:date)
+    if model.end_date.present?
+      I18n.l(model.end_date.to_date, format: :default)
+    else
+      '-'
+    end
   end
 
   def start_year
@@ -26,6 +30,10 @@ class EducationExperiencePaginationDecorator < Draper::Decorator
   end
 
   def end_year
-    model.end_date.to_date.year
+    if model.end_date.present?
+      model.end_date.to_date.year
+    else
+      '-'
+    end
   end
 end

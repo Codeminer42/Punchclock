@@ -8,7 +8,11 @@ class EducationExperienceDecorator < Draper::Decorator
   end
 
   def end_date
-    model.end_date.to_date.to_fs(:date)
+    if model.end_date.present?
+      model.end_date.to_date.to_fs(:date)
+    else
+      '-'
+    end
   end
 
   def start_year
@@ -16,6 +20,10 @@ class EducationExperienceDecorator < Draper::Decorator
   end
 
   def end_year
-    model.end_date.to_date.year
+    if model.end_date.present?
+      model.end_date.to_date.year
+    else
+      '-'
+    end
   end
 end
