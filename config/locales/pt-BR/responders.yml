@@ -22,3 +22,6 @@ pt-BR:
       create:
         notice: 'Experiência educacional criada com sucesso.'
         alert: 'A Experiência educacional não pôde ser criada.'
+      update:
+        notice: 'Experiência educacional atualizada com sucesso.'
+        alert: 'A Experiência educacional não pôde ser atualizada.'
