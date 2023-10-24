@@ -128,4 +128,13 @@ RSpec.describe Allocation, type: :model do
       end
     end
   end
+
+  describe '.hourly_rate_currencies' do
+    let!(:brl_allocations) { create_list(:allocation, 2, hourly_rate_currency: 'BRL') }
+    let!(:usd_allocation) { create(:allocation, hourly_rate_currency: 'USD') }
+
+    it 'gets the available currencies from allocations without duplicates in ASC order' do
+      expect(described_class.hourly_rate_currencies).to eq ['BRL', 'USD']
+    end
+  end
 end

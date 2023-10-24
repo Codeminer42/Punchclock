@@ -20,13 +20,13 @@ class ProfessionalExperience < ApplicationRecord
   def greater_than_current_month?
     return if start_date.to_date < Date.today.end_of_month
 
-    errors.add(:start_date, I18n.t('activerecord.errors.models.professional_experience.attributes.start_date.greater_than_current_month'))
+    errors.add(:start_date, :greater_than_current_month)
   end
 
   def greater_than_end_date?
     return if start_date.to_date < end_date.to_date
 
-    errors.add(:start_date, I18n.t('activerecord.errors.models.professional_experience.attributes.start_date.greater_than_end_date'))
+    errors.add(:start_date, :greater_than_end_date)
   end
 
   def date_format

@@ -299,3 +299,5 @@ pt-BR:
     revenue_forecast:
       index:
         total: "Total"
+  professional_experience:
+    not_found: "Nenhuma experiência profissional cadastrada"
