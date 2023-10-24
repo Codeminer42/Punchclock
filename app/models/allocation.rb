@@ -23,6 +23,7 @@ class Allocation < ApplicationRecord
   scope :ongoing, -> {
     where(ongoing: true, user_id: User.active).order(start_at: :desc)
   }
+
   scope :finished, -> {
     where(ongoing: false, user_id: User.active).order(end_at: :desc) }
   scope :in_period, -> (start_at, end_at) do
@@ -43,6 +44,10 @@ class Allocation < ApplicationRecord
     else
       I18n.t('finished')
     end
+  end
+
+  def self.hourly_rate_currencies
+    select(:hourly_rate_currency).distinct.pluck(:hourly_rate_currency)
   end
 
   def user_punches
