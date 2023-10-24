@@ -150,6 +150,7 @@ export default (state = initialState, action) => {
     case SHEETS_SAVE_FAIL:
       return {
         ...state,
+        sheets: emptyMap,
       };
     default:
       return state;
