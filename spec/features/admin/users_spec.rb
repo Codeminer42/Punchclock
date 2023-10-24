@@ -239,6 +239,38 @@ describe 'Users', type: :feature do
             expect(page).to have_css('.row-allocations tbody tr', count: 1)
           end
         end
+
+        context 'on allocations table' do 
+          it 'finds user allocation project name' do 
+            within '#alocacoes' do
+              expect(page).to have_text(user.allocations.first.project.name)
+            end
+          end
+
+          it 'finds user allocation hourly rate' do 
+            within '#alocacoes' do
+              expect(page).to have_text(user.allocations.first.decorate.hourly_rate)
+            end
+          end
+
+          it 'finds user allocation start date' do 
+            within '#alocacoes' do
+              expect(page).to have_text(I18n.l(user.allocations.first.start_at, format: :long))
+            end
+          end
+
+          it 'finds user allocation end date' do 
+            within '#alocacoes' do
+              expect(page).to have_text(I18n.l(user.allocations.first.end_at, format: :long))
+            end
+          end
+
+          it 'finds user allocation ongoing status' do 
+            within '#alocacoes' do
+              expect(page).to have_text('Sim')
+            end
+          end
+        end
       end
 
       context 'on Performance Evaluations tab' do
