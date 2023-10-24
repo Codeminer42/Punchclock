@@ -1,0 +1,9 @@
+<ul class="breadcrumb">
+  <li class="breadcrumb-item"><%= link_to t(:back, scope: :helpers), education_experiences_path %></li>
+  <li class="breadcrumb-item"><%= link_to t(:show, scope: :helpers), @education_experience %></li>
+</ul>
+
+<h1 class="punch-form-title">
+  <%= t(:editing, scope: %i(helpers actions), model: EducationExperience.model_name.human) %>
+</h1>
+<%= render 'form', punch: @education_experience %>
