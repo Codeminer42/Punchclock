@@ -129,7 +129,7 @@ RSpec.describe Allocation, type: :model do
     end
   end
 
-  describe '#hourly_rate_currencies' do
+  describe '.hourly_rate_currencies' do
     let!(:brl_allocations) { create_list(:allocation, 2, hourly_rate_currency: 'BRL') }
     let!(:usd_allocation) { create(:allocation, hourly_rate_currency: 'USD') }
 
