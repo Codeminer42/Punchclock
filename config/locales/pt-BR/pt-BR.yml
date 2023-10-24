@@ -253,6 +253,11 @@ pt-BR:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
+  questionnaires:
+    empty: "Nenhum questionário encontrado"
+    filters: "Filtros"
+    filter: "Filtrar"
+    clear: "Limpar filtros"
   regional_holidays:
     title: "Feriados regionais"
     filters: "Filtros"

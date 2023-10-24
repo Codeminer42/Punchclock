@@ -28,6 +28,7 @@ class Ability
 
     if user.admin? || user.open_source_manager?
       can :read, ActiveAdmin
+      can :manage, Questionnaire
     end
   end
 end
