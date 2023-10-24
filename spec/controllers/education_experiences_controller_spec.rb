@@ -84,7 +84,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
       end
 
       it 'renders the new template' do
-        get :index
+        get :new
 
         expect(response).to render_template(:new)
       end
@@ -92,42 +92,68 @@ RSpec.describe EducationExperiencesController, type: :controller do
 
     context 'when the user is not logged in' do
       it 'redirects the user to the sign in page' do
-        get :index
+        get :new
 
         expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
-  describe 'POST create' 
+  describe 'POST create' do
     let(:user) { create(:user) }
     let(:page) { Capybara::Node::Simple.new(response.body) }
-  
+
     context 'when the user is logged in' do
-  
       before do
         sign_in user
       end
 
       context 'when params are valid' do
-        it "saves the user vacation" do
-          post :create, params: { vacation: vacation_valid_params }
-  
+        let(:education_experience_valid_params) do
+          {
+            institution: 'UFF',
+            course: 'Computer Science',
+            start_date: '10/10/2000',
+            end_date: '10/10/2002',
+            user_id: user.id
+          }
+        end
+
+        it 'has 302 status' do
+          post :create, params: { education_experience: education_experience_valid_params }
+
           expect(response).to have_http_status(:found)
         end
 
+        it 'creates a new education experience' do
+          expect do
+            post :create, params: { education_experience: education_experience_valid_params }
+          end.to change { EducationExperience.where(education_experience_valid_params).count }.by(1)
+        end
       end
 
       context 'when params are invalid' do
+        let(:education_experience_invalid_params) do
+          {
+            institution: 'UFF',
+            course: nil,
+            start_date: '10/10/2000',
+            end_date: '10/10/2002',
+            user_id: user.id
+          }
+        end
 
-      end
-    end
+        it 'has 200 status' do
+          post :create, params: { education_experience: education_experience_invalid_params }
 
-    context 'when the user is not logged in' do
-      it 'redirects the user to the sign in page' do
-        get :index
+          expect(response).to have_http_status(:ok)
+        end
 
-        expect(response).to redirect_to(new_user_session_path)
+        it 'does not create a new education experience' do
+          expect do
+            post :create, params: { education_experience: education_experience_invalid_params }
+          end.not_to(change { EducationExperience.count })
+        end
       end
     end
   end

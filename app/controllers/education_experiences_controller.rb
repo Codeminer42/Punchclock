@@ -46,6 +46,6 @@ class EducationExperiencesController < ApplicationController
   end
 
   def error_message
-    I18n.t(:errors, scope: :flash, errors: errors)
+    I18n.t(:errors, scope: :flash, errors:)
   end
 end
