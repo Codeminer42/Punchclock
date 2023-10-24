@@ -3,17 +3,17 @@
     <div class="card mb-3">
       <div class="card-header">
         <i class="fa fa-table"></i>
-        <%= t('activerecord.models.professinal_experience.other') %>
+        <%= ProfessionalExperience.model_name.human(count: 2) %>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-hover table-bordered users-evaluation" id="dataTable">
             <thead>
               <tr>
-                <th><%= t('activerecord.attributes.professional_experience.company') %></th>
-                <th><%= t('activerecord.attributes.professional_experience.position') %></th>
-                <th><%= t('activerecord.attributes.professional_experience.start_date') %></th>
-                <th><%= t('activerecord.attributes.professional_experience.end_date') %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:company) %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:position) %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:start_date) %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:end_date) %></th>
                 <th></th>
               </tr>
             </thead>
