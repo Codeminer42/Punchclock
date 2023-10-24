@@ -140,4 +140,89 @@ RSpec.describe EducationExperiencesController, type: :controller do
       end
     end
   end
+
+  describe 'GET edit' do
+    let(:user) { create(:user) }
+    let(:education_experience) { create(:education_experience, user_id: user.id) }
+
+    let(:page) { Capybara::Node::Simple.new(response.body) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      it 'has status 200' do
+        get :edit, params: { id: education_experience.id }
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'renders the new template' do
+        get :edit, params: { id: education_experience.id }
+
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'when the user is not logged in' do
+      it 'redirects the user to the sign in page' do
+        get :edit, params: { id: education_experience.id }
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'POST update' do
+    let(:user) { create(:user) }
+    let(:education_experience) { create(:education_experience, user_id: user.id) }
+    let(:page) { Capybara::Node::Simple.new(response.body) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      context 'when params are valid' do
+        let(:education_experience_valid_params) do
+          {
+            course: 'Teste course'
+          }
+        end
+
+        it 'has 302 status' do
+          post :update, params: { id: education_experience.id, education_experience: education_experience_valid_params }
+
+          expect(response).to have_http_status(:found)
+        end
+
+        it 'creates a new education experience' do
+          expect do
+            post :update, params: { id: education_experience.id, education_experience: education_experience_valid_params }
+          end.to change { education_experience.reload.course }.to('Teste course')
+        end
+      end
+
+      context 'when params are invalid' do
+        let(:education_experience_invalid_params) do
+          {
+            course: nil
+          }
+        end
+
+        it 'has 200 status' do
+          post :update, params: { id: education_experience.id, education_experience: education_experience_invalid_params }
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'does not create a new education experience' do
+          expect do
+            post :update, params: { id: education_experience.id, education_experience: education_experience_invalid_params }
+          end.not_to(change { education_experience.reload.course })
+        end
+      end
+    end
+  end
 end

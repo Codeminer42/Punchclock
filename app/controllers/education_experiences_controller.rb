@@ -79,17 +79,17 @@ class EducationExperiencesController < ApplicationController
   end
 
   def edit
-    @education_experience = user.education_experiences.find params[:id].decorate
+    @education_experience = current_user.education_experiences.find(params[:id])
   end
 
   def update
-    @education_experience = user.education_experiences.find params[:id]
+    @education_experience = current_user.education_experiences.find params[:id]
 
-    if @education_experience.save
+    if @education_experience.update(education_experience_params)
       redirect_to education_experiences_path, notice: I18n.t(:notice, scope: "flash.education_experience.update")
     else
       flash_errors('update')
-      render :new
+      render :edit
     end
   end
 
