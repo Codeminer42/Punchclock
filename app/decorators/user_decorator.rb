@@ -2,6 +2,7 @@
 
 class UserDecorator < Draper::Decorator
   delegate_all
+  decorates_association :allocations
 
   def current_allocation
     super || ENV["DEFAULT_PROJECT_NAME"] || I18n.t('not_allocated')
