@@ -2,7 +2,11 @@ class ProfessionalExperiencesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @professional_experiences = current_user.professional_experiences.page(params[:page]).per(params[:per])
+    @professional_experiences = scoped_professional_experiences.page(params[:page]).per(params[:per])
+  end
+
+  def show
+    @professional_experience = scoped_professional_experiences.find(params[:id])
   end
 
   def new
@@ -36,5 +40,9 @@ class ProfessionalExperiencesController < ApplicationController
 
   def error_message
     I18n.t(:errors, scope: "flash", errors:)
+  end
+
+  def scoped_professional_experiences
+    current_user.professional_experiences
   end
 end

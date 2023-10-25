@@ -1,0 +1,33 @@
+<div id="page-top" class="row">
+  <div class="container-fluid home">
+    <div class="card-body">
+      <%= link_to t('professional_experience.new'), new_professional_experience_path, class: "button" %>
+    </div>
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>
+        <%= ProfessionalExperience.model_name.human %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered users-professional-experience" id="dataTable">
+            <thead>
+              <tr>
+                <th><%= t 'professional_experience.details' %></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td><%= ProfessionalExperience.human_attribute_name(:company) %></td>
+                  <td><%= @professional_experience.company %></td>
+                </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
