@@ -80,13 +80,13 @@ RSpec.describe ProfessionalExperience, type: :request do
         end
 
         it 'attaches the professional experience to the signed in user' do
-          post professional_experiences_path, params: { professional_experience: valid_params }
+          post professional_experiences_path, params: valid_params
 
           expect(ProfessionalExperience.last.user).to eq(user)
         end
 
         it 'redirects to professional_experiences_path' do
-          post professional_experiences_path, params: { professional_experience: valid_params }
+          post professional_experiences_path, params: valid_params
 
           expect(response).to redirect_to(professional_experiences_path)
         end
