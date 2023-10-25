@@ -1,0 +1,25 @@
+<%= simple_form_for professional_experience do |f| %>
+  <div class="row">
+    <div class="col-lg-8">
+
+      <%= f.input :company, placeholder: 'Codeminer42' %>
+
+      <%= f.input :position, placeholder: 'Software Engineer' %>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <%= f.input :description, placeholder: 'As a backend developer, I worked on building a system...' %>
+        </div>
+      </div>
+
+      <%= f.input :responsibilities, placeholder: 'Ruby on Rails, React, Ruby' %>
+
+      <%= f.input :start_date, placeholder: '11/2021' %>
+
+      <%= f.input :end_date, placeholder: '11/2022' %>
+      
+    </div>
+  </div>
+
+  <%= f.submit t('helpers.save')%>
+<% end %>
