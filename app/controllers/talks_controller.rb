@@ -5,6 +5,8 @@ class TalksController < ApplicationController
     @talks = scoped_talks.page(params[:page])
   end
 
+  private
+
   def scoped_talks
     current_user.talks
   end
