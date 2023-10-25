@@ -71,12 +71,12 @@ RSpec.describe ProfessionalExperience, type: :request do
 
       context 'with valid params' do
         let(:valid_params) do
-          { company: 'Codeminer42', position: 'Software engineer', description: 'some description here', responsibilities: 'Ruby on Rails', start_date: '11/2021',
-            end_date: '11/2022' }
+          { professional_experience: { company: 'Codeminer42', position: 'Software engineer', description: 'some description here', responsibilities: 'Ruby on Rails', start_date: '11/2021',
+                                       end_date: '11/2022' } }
         end
 
         it 'creates a new professional experience' do
-          expect { post professional_experiences_path, params: { professional_experience: valid_params } }.to change(ProfessionalExperience, :count).by(1)
+          expect { post professional_experiences_path, params: valid_params }.to change(ProfessionalExperience, :count).by(1)
         end
 
         it 'attaches the professional experience to the signed in user' do
@@ -93,10 +93,10 @@ RSpec.describe ProfessionalExperience, type: :request do
       end
 
       context 'with invalid params' do
-        let(:invalid_params) { { company: '', position: '' } }
+        let(:invalid_params) { { professional_experience: { company: '', position: '' } } }
 
         it 'does not create the student' do
-          expect { post professional_experiences_path, params: { professional_experience: invalid_params } }.not_to change(ProfessionalExperience, :count)
+          expect { post professional_experiences_path, params: invalid_params }.not_to change(ProfessionalExperience, :count)
         end
 
         it 'renders the new template' do

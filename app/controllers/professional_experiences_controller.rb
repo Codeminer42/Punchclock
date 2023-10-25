@@ -18,7 +18,7 @@ class ProfessionalExperiencesController < ApplicationController
                   notice: I18n.t(:notice, scope: "flash.actions.create",
                                           resource_name: ProfessionalExperience.model_name.human)
     else
-      flash_errors('create')
+      flash_errors('create', ProfessionalExperience.model_name.human, error_message)
       render :new
     end
   end
@@ -28,14 +28,6 @@ class ProfessionalExperiencesController < ApplicationController
   def professional_experience_params
     params.require(:professional_experience).permit(:company, :position, :description, :responsabilities, :start_date,
                                                     :end_date)
-  end
-
-  def flash_errors(scope)
-    flash.now[:alert] = "#{alert_message(scope)} #{error_message}"
-  end
-
-  def alert_message(scope)
-    I18n.t(:alert, scope: "flash.actions.#{scope}", resource_name: ProfessionalExperience.model_name.human)
   end
 
   def errors

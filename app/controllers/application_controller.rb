@@ -14,11 +14,9 @@ class ApplicationController < ActionController::Base
 
   # https://github.com/plataformatec/devise/issues/3461
   rescue_from ActionController::InvalidAuthenticityToken do |_exception|
-    if devise_controller?
-      redirect_to root_path, alert: I18n.t('devise.failure.already_logged_out')
-    else
-      raise
-    end
+    raise unless devise_controller?
+
+    redirect_to root_path, alert: I18n.t('devise.failure.already_logged_out')
   end
 
   def access_denied(exception)
@@ -26,12 +24,12 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin_user!
-    if cannot?(:read, ActiveAdmin)
-      redirect_to root_path, alert: I18n.t('devise.failure.access_denied')
-    end
+    return unless cannot?(:read, ActiveAdmin)
+
+    redirect_to root_path, alert: I18n.t('devise.failure.access_denied')
   end
 
-  def after_sign_in_path_for(user)
+  def after_sign_in_path_for(_user)
     stored_location_for(:request) || default_redirect_path
   end
 
@@ -42,7 +40,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :otp_attempt])
+    devise_parameter_sanitizer.permit(:sign_in, keys: %i[email password otp_attempt])
   end
 
   private
@@ -61,5 +59,13 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
+  end
+
+  def flash_errors(scope, resource_name, error_message)
+    flash.now[:alert] = "#{alert_message(scope, resource_name)} #{error_message}"
+  end
+
+  def alert_message(scope, resource_name)
+    I18n.t(:alert, scope: "flash.actions.#{scope}", resource_name:)
   end
 end
