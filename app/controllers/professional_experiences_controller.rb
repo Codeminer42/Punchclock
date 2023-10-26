@@ -29,6 +29,14 @@ class ProfessionalExperiencesController < ApplicationController
     end
   end
 
+  def edit
+    @professional_experience = scoped_professional_experiences.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to '/404'
+  end
+
+  def update; end
+
   private
 
   def professional_experience_params
