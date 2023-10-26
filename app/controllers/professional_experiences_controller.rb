@@ -32,7 +32,7 @@ class ProfessionalExperiencesController < ApplicationController
   private
 
   def professional_experience_params
-    params.require(:professional_experience).permit(:company, :position, :description, :responsabilities, :start_date,
+    params.require(:professional_experience).permit(:company, :position, :description, :responsibilities, :start_date,
                                                     :end_date)
   end
 

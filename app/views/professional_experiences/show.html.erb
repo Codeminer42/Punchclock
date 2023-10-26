@@ -2,6 +2,7 @@
   <div class="container-fluid home">
     <div class="card-body">
       <%= link_to t('professional_experience.new'), new_professional_experience_path, class: "button" %>
+      <%= link_to t('helpers.back'), professional_experiences_path, class: "button" %>
     </div>
     <div class="card mb-3">
       <div class="card-header">
@@ -21,6 +22,26 @@
                 <tr>
                   <td><%= ProfessionalExperience.human_attribute_name(:company) %></td>
                   <td><%= @professional_experience.company %></td>
+                </tr>
+                <tr>
+                  <td><%= ProfessionalExperience.human_attribute_name(:position) %></td>
+                  <td><%= @professional_experience.position %></td>
+                </tr>
+                <tr>
+                  <td><%= ProfessionalExperience.human_attribute_name(:description) %></td>
+                  <td><%= @professional_experience.description %></td>
+                </tr>
+                <tr>
+                  <td><%= ProfessionalExperience.human_attribute_name(:responsibilities) %></td>
+                  <td><%= @professional_experience.responsibilities %></td>
+                </tr>
+                <tr>
+                  <td><%= ProfessionalExperience.human_attribute_name(:start_date) %></td>
+                  <td><%= @professional_experience.start_date %></td>
+                </tr>
+                <tr>
+                  <td><%= ProfessionalExperience.human_attribute_name(:end_date) %></td>
+                  <td><%= @professional_experience.end_date %></td>
                 </tr>
             </tbody>
           </table>
