@@ -10,8 +10,7 @@ class ProfessionalExperiencesController < ApplicationController
   end
 
   def create
-    @professional_experience = ProfessionalExperience.new(professional_experience_params)
-    @professional_experience.user = current_user
+    @professional_experience = current_user.professional_experiences.new(professional_experience_params)
 
     if @professional_experience.save
       redirect_to professional_experiences_path,
