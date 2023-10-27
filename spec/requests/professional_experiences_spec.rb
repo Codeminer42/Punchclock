@@ -175,4 +175,58 @@ RSpec.describe ProfessionalExperience, type: :request do
       end
     end
   end
+
+  describe 'PUT/PATCH #update' do
+    context 'with user signed in' do
+      let(:user) { create(:user) }
+      let(:user_experience) { create(:professional_experience, user:) }
+      let(:other_experience) { create(:professional_experience) }
+      let(:valid_params) { { professional_experience: { company: 'New company name' } } }
+      let(:invalid_params) { { professional_experience: { start_date: '11/2022', end_date: '11/2021' } } }
+
+      before { sign_in user }
+      context 'when professional experience belongs to user' do
+        context 'with valid params' do
+          it 'updates the experience' do
+            put professional_experience_path(user_experience), params: valid_params
+
+            expect(ProfessionalExperience.find(user_experience.id).company).to eq('New company name')
+          end
+
+          it 'redirects to experience show page' do
+            put professional_experience_path(user_experience), params: valid_params
+
+            expect(response).to redirect_to(professional_experience_path(user_experience.id))
+          end
+        end
+
+        context 'with invalid params' do
+          it 'does not update the experience' do
+            put professional_experience_path(user_experience), params: invalid_params
+
+            expect { put professional_experience_path(user_experience), params: invalid_params }.not_to(change { ProfessionalExperience.find(user_experience.id) })
+          end
+        end
+      end
+
+      context 'when professional experience does not belong to user' do
+        it 'redirects to not found page' do
+          put professional_experience_path(other_experience), params: valid_params
+
+          expect(response).to redirect_to('/404')
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      let(:pro_experience) { create(:professional_experience) }
+      let(:valid_params) { { professional_experience: { company: 'New company name' } } }
+
+      it 'redirects to sign in page' do
+        put professional_experience_path(pro_experience), params: valid_params
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

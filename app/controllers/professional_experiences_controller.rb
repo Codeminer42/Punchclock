@@ -35,7 +35,21 @@ class ProfessionalExperiencesController < ApplicationController
     redirect_to '/404'
   end
 
-  def update; end
+  def update
+    @professional_experience = scoped_professional_experiences.find(params[:id])
+    @professional_experience.attributes = professional_experience_params
+
+    if @professional_experience.save
+      redirect_to professional_experience_path(@professional_experience.id),
+                  notice: I18n.t(:notice, scope: "flash.actions.update",
+                                          resource_name: ProfessionalExperience.model_name.human)
+    else
+      flash_errors('update', ProfessionalExperience.model_name.human, error_message)
+      render :new
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to '/404'
+  end
 
   private
 
