@@ -206,6 +206,12 @@ RSpec.describe ProfessionalExperience, type: :request do
 
             expect { put professional_experience_path(user_experience), params: invalid_params }.not_to(change { ProfessionalExperience.find(user_experience.id) })
           end
+
+          it 'renders the edit template' do
+            put professional_experience_path(user_experience), params: invalid_params
+
+            expect(response).to render_template(:edit)
+          end
         end
       end
 

@@ -45,7 +45,7 @@ class ProfessionalExperiencesController < ApplicationController
                                           resource_name: ProfessionalExperience.model_name.human)
     else
       flash_errors('update', ProfessionalExperience.model_name.human, error_message)
-      render :new
+      render :edit
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to '/404'
