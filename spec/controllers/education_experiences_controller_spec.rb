@@ -30,7 +30,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
         it 'renders the table with not found message' do
           get :index
 
-          expect(page.find('table')).to have_content(I18n.t('resumes.education_experience.not_found'))
+          expect(page.find('table')).to have_content('Nenhuma experiência educacional cadastrada')
         end
       end
 
@@ -152,7 +152,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
         it 'does not create a new education experience' do
           expect do
             post :create, params: { education_experience: education_experience_invalid_params }
-          end.not_to(change { EducationExperience.count })
+          end.not_to change(EducationExperience, :count)
         end
       end
     end

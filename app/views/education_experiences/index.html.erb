@@ -13,10 +13,10 @@
           <table class="table table-hover table-bordered users-evaluation" id="dataTable">
             <thead>
               <tr>
-                <th><%= t('activerecord.attributes.education_experience.institution') %></th>
-                <th><%= t('activerecord.attributes.education_experience.course') %></th>
-                <th><%= t('activerecord.attributes.education_experience.start_date') %></th>
-                <th><%= t('activerecord.attributes.education_experience.end_date') %></th>
+                <th><%= EducationExperience.human_attribute_name("institution") %></th>
+                <th><%= EducationExperience.human_attribute_name("course") %></th>
+                <th><%= EducationExperience.human_attribute_name("start_date") %></th>
+                <th><%= EducationExperience.human_attribute_name("end_date") %></th>
                 <th></th>
               </tr>
             </thead>

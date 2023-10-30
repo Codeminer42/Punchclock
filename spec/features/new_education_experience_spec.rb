@@ -8,7 +8,7 @@ describe 'Add new Education Experience', type: :feature do
   it 'displays the new education experience message' do
     visit '/education_experiences/new'
 
-    expect(page).to have_content t('education_experiences.new.new_experience')
+    expect(page).to have_content ('Nova experiência educacional')
   end
 
   it 'has the a link to create a new user experience' do
