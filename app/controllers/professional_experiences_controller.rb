@@ -1,5 +1,5 @@
 class ProfessionalExperiencesController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound do |_|
+  rescue_from ActiveRecord::RecordNotFound do
     redirect_to '/404'
   end
 
