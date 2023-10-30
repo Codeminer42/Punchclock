@@ -4,6 +4,7 @@ pt-BR:
     show: "Mostrar"
     edit: "Editar"
     save: "Salvar"
+    delete: "Deletar"
     actions:
       editing: "Editando %{model}"
       creating: "Criando %{model}"

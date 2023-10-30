@@ -235,4 +235,48 @@ RSpec.describe ProfessionalExperience, type: :request do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'when user is signed in' do
+      let!(:user) { create(:user) }
+      let!(:user_pro_experience) { create(:professional_experience, user:) }
+      let!(:other_pro_experience) { create(:professional_experience) }
+
+      before { sign_in user }
+
+      context 'when professional experience belongs to signed in user' do
+        it 'deletes the professional experience' do
+          expect { delete professional_experience_path(user_pro_experience.id) }.to change(ProfessionalExperience, :count).by(-1)
+        end
+
+        it 'redirects to professional experiences index' do
+          delete professional_experience_path(user_pro_experience.id)
+
+          expect(response).to redirect_to(professional_experiences_path)
+        end
+      end
+
+      context 'when professional experience does not belong to signed in user' do
+        it 'redirects to /404' do
+          delete professional_experience_path(other_pro_experience.id)
+
+          expect(response).to redirect_to('/404')
+        end
+
+        it 'does not delete the experience' do
+          expect { delete professional_experience_path(other_pro_experience.id) }.not_to change(ProfessionalExperience, :count)
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      let(:pro_experience) { create(:professional_experience) }
+
+      it 'redirects to sign in page' do
+        delete professional_experience_path(pro_experience.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end
