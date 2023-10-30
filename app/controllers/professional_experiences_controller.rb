@@ -1,4 +1,8 @@
 class ProfessionalExperiencesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do |_|
+    redirect_to '/404'
+  end
+
   before_action :authenticate_user!
 
   def index
@@ -7,8 +11,6 @@ class ProfessionalExperiencesController < ApplicationController
 
   def show
     @professional_experience = scoped_professional_experiences.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   def new
@@ -31,8 +33,6 @@ class ProfessionalExperiencesController < ApplicationController
 
   def edit
     @professional_experience = scoped_professional_experiences.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   def update
@@ -47,8 +47,6 @@ class ProfessionalExperiencesController < ApplicationController
       flash_errors('update', ProfessionalExperience.model_name.human, error_message)
       render :edit
     end
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   def destroy
@@ -57,8 +55,6 @@ class ProfessionalExperiencesController < ApplicationController
     redirect_to professional_experiences_path,
                 notice: I18n.t(:notice, scope: "flash.actions.destroy",
                                         resource_name: ProfessionalExperience.model_name.human)
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   private
