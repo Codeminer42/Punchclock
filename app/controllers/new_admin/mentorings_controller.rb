@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class MentoringsController < ApplicationController
-    include Pagination
-
-    layout 'new_admin'
-
-    before_action :authenticate_user!
+  class MentoringsController < NewAdminController
     before_action :authorize_ability!, only: :index
 
     def index

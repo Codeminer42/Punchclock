@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class UsersController < ApplicationController
-    layout 'new_admin'
+  class UsersController < NewAdminController
     before_action :load_user_data, only: :show
-
-    before_action :authenticate_user!
 
     def show
       @punches = filter_punches_by_date(params[:id], params[:from], params[:to])

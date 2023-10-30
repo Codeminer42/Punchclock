@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class AllocationsController < ApplicationController
-    layout 'new_admin'
-
-    before_action :authenticate_user!
-
+  class AllocationsController < NewAdminController
     def show
       allocation = Allocation.find(params[:id])
 

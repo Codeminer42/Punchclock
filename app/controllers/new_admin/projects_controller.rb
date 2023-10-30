@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class ProjectsController < ApplicationController
-    layout 'new_admin'
-
-    include Pagination
-
+  class ProjectsController < NewAdminController
     before_action :set_project, only: %i[show edit update destroy]
 
     def index

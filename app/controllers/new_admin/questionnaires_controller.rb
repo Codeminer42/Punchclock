@@ -1,12 +1,6 @@
 module NewAdmin
-  class QuestionnairesController < ApplicationController
-    include Pagination
-
-    layout 'new_admin'
-
+  class QuestionnairesController < NewAdminController
     load_and_authorize_resource
-
-    before_action :authenticate_user!
 
     def index
       @questionnaires = paginate_record(questionnaires)

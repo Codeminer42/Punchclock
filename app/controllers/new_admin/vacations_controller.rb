@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class VacationsController < ApplicationController
-    include Pagination
-
-    layout 'new_admin'
-
-    before_action :authenticate_user!
-
+  class VacationsController < NewAdminController
     def index
       @vacations = paginate_record(vacations)
 
