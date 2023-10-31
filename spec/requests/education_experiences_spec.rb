@@ -2,12 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe EducationExperiencesController, type: :controller do
-  render_views
-
+RSpec.describe EducationExperience, type: :request do
   describe 'GET #index' do
     let(:user) { create(:user) }
-    let(:page) { Capybara::Node::Simple.new(response.body) }
 
     context 'when the user is logged in' do
       before do
@@ -15,43 +12,50 @@ RSpec.describe EducationExperiencesController, type: :controller do
       end
 
       it 'renders the index template' do
-        get :index
+        get education_experiences_path
 
         expect(response).to render_template(:index)
       end
 
       it 'has status 200' do
-        get :index
+        get education_experiences_path
 
         expect(response).to have_http_status(:ok)
       end
 
       context 'when the user does not contain education experiences' do
         it 'renders the table with not found message' do
-          get :index
+          get education_experiences_path
 
-          expect(page.find('table')).to have_content('Nenhuma experiência educacional cadastrada')
+          expect(response.body).to include(I18n.t('resumes.education_experience.not_found'))
         end
       end
 
-      context 'when the user has educatione experiences' do
+      context 'when the user has education experiences' do
         let!(:education_experiences) { create_list(:education_experience, 2, user_id: user.id) }
+        let!(:other_education_experience) { create(:education_experience, institution: 'strange institution') }
 
         it 'renders the table with a list of education experiences' do
-          get :index
+          get education_experiences_path
 
-          expect(page.find('table')).to have_content(education_experiences[0].institution)
-                                    .and have_content(education_experiences[0].course)
-                                    .and have_content(education_experiences[0].start_date.strftime('%d/%m/%Y'))
-                                    .and have_content(education_experiences[0].end_date.strftime('%d/%m/%Y'))
-                                    .and have_content(education_experiences[1].institution)
-                                    .and have_content(education_experiences[1].course)
-                                    .and have_content(education_experiences[1].start_date.strftime('%d/%m/%Y'))
-                                    .and have_content(education_experiences[1].end_date.strftime('%d/%m/%Y'))
+          expect(response.body).to include(education_experiences[0].institution)
+            .and include(education_experiences[0].course)
+            .and include(education_experiences[0].start_date.strftime('%d/%m/%Y'))
+            .and include(education_experiences[0].end_date.strftime('%d/%m/%Y'))
+            .and include(education_experiences[1].institution)
+            .and include(education_experiences[1].course)
+            .and include(education_experiences[1].start_date.strftime('%d/%m/%Y'))
+            .and include(education_experiences[1].end_date.strftime('%d/%m/%Y'))
+        end
+
+        it 'shows only the logged in user experiences' do
+          get education_experiences_path
+
+          expect(response.body).not_to include(other_education_experience.institution)
         end
 
         it 'paginates results' do
-          get :index, params: { per: 1, page: 1 }
+          get education_experiences_path, params: { per: 1, page: 1 }
 
           expect(assigns(:education_experiences).count).to eq(1)
         end
@@ -60,7 +64,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
 
     context 'when the user is not logged in' do
       it 'redirects the user to the sign in page' do
-        get :index
+        get education_experiences_path
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -70,21 +74,19 @@ RSpec.describe EducationExperiencesController, type: :controller do
   describe 'GET new' do
     let(:user) { create(:user) }
 
-    let(:page) { Capybara::Node::Simple.new(response.body) }
-
     context 'when the user is logged in' do
       before do
         sign_in user
       end
 
       it 'has status 200' do
-        get :new
+        get new_education_experience_path
 
         expect(response).to have_http_status(:ok)
       end
 
       it 'renders the new template' do
-        get :new
+        get new_education_experience_path
 
         expect(response).to render_template(:new)
       end
@@ -92,7 +94,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
 
     context 'when the user is not logged in' do
       it 'redirects the user to the sign in page' do
-        get :new
+        get new_education_experience_path
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -101,7 +103,6 @@ RSpec.describe EducationExperiencesController, type: :controller do
 
   describe 'POST create' do
     let(:user) { create(:user) }
-    let(:page) { Capybara::Node::Simple.new(response.body) }
 
     context 'when the user is logged in' do
       before do
@@ -120,14 +121,14 @@ RSpec.describe EducationExperiencesController, type: :controller do
         end
 
         it 'has 302 status' do
-          post :create, params: { education_experience: education_experience_valid_params }
+          post education_experiences_path, params: { education_experience: education_experience_valid_params }
 
           expect(response).to have_http_status(:found)
         end
 
         it 'creates a new education experience' do
           expect do
-            post :create, params: { education_experience: education_experience_valid_params }
+            post education_experiences_path, params: { education_experience: education_experience_valid_params }
           end.to change { EducationExperience.where(education_experience_valid_params).count }.by(1)
         end
       end
@@ -144,15 +145,15 @@ RSpec.describe EducationExperiencesController, type: :controller do
         end
 
         it 'has 200 status' do
-          post :create, params: { education_experience: education_experience_invalid_params }
+          post education_experiences_path, params: { education_experience: education_experience_invalid_params }
 
           expect(response).to have_http_status(:ok)
         end
 
         it 'does not create a new education experience' do
           expect do
-            post :create, params: { education_experience: education_experience_invalid_params }
-          end.not_to change(EducationExperience, :count)
+            post education_experiences_path, params: { education_experience: education_experience_invalid_params }
+          end.not_to(change { EducationExperience.count })
         end
       end
     end
@@ -161,40 +162,48 @@ RSpec.describe EducationExperiencesController, type: :controller do
   describe 'GET edit' do
     let(:user) { create(:user) }
     let(:education_experience) { create(:education_experience, user_id: user.id) }
-
-    let(:page) { Capybara::Node::Simple.new(response.body) }
+    let(:other_experience) { create(:education_experience) }
 
     context 'when the user is logged in' do
       before do
         sign_in user
       end
+      context 'when experience belongs to user' do
+        it 'has status 200' do
+          get edit_education_experience_path(education_experience.id)
 
-      it 'has status 200' do
-        get :edit, params: { id: education_experience.id }
+          expect(response).to have_http_status(:ok)
+        end
 
-        expect(response).to have_http_status(:ok)
+        it 'renders the edit template' do
+          get edit_education_experience_path(education_experience.id)
+
+          expect(response).to render_template(:edit)
+        end
       end
 
-      it 'renders the new template' do
-        get :edit, params: { id: education_experience.id }
+      context 'when experience does not belong to user' do
+        it 'redirects to /404' do
+          get edit_education_experience_path(other_experience.id)
 
-        expect(response).to render_template(:edit)
+          expect(response).to redirect_to('/404')
+        end
       end
     end
 
     context 'when the user is not logged in' do
       it 'redirects the user to the sign in page' do
-        get :edit, params: { id: education_experience.id }
+        get edit_education_experience_path(education_experience.id)
 
         expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
-  describe 'POST update' do
+  describe 'PUT/PATCH update' do
     let(:user) { create(:user) }
     let(:education_experience) { create(:education_experience, user_id: user.id) }
-    let(:page) { Capybara::Node::Simple.new(response.body) }
+    let(:other_experience) { create(:education_experience) }
 
     context 'when the user is logged in' do
       before do
@@ -204,29 +213,34 @@ RSpec.describe EducationExperiencesController, type: :controller do
       context 'when params are valid' do
         let(:education_experience_valid_params) do
           {
-            course: 'Teste course'
+            education_experience: {
+              course: 'Teste course'
+            }
           }
         end
 
         context 'when experience belongs to signed in user' do
           it 'has 302 status' do
-            post :update, params: { id: education_experience.id, education_experience: education_experience_valid_params }
+            put education_experience_path(education_experience.id), params: education_experience_valid_params
 
             expect(response).to have_http_status(:found)
           end
 
           it 'updates the education experience' do
             expect do
-              post :update, params: { id: education_experience.id, education_experience: education_experience_valid_params }
+              put education_experience_path(education_experience.id), params: education_experience_valid_params
             end.to change { education_experience.reload.course }.to('Teste course')
           end
         end
 
         context 'when experience does not belong to signed in user' do
           it 'redirects to /404' do
+            put education_experience_path(education_experience.id), params: education_experience_valid_params
           end
 
           it 'does not update the experience' do
+            expect { put education_experience_path(education_experience.id), params: education_experience_valid_params }
+              .not_to change(EducationExperience.find(other_experience.id), :course)
           end
         end
       end
@@ -234,19 +248,21 @@ RSpec.describe EducationExperiencesController, type: :controller do
       context 'when params are invalid' do
         let(:education_experience_invalid_params) do
           {
-            course: nil
+            education_experience: {
+              course: nil
+            }
           }
         end
 
         it 'has 200 status' do
-          post :update, params: { id: education_experience.id, education_experience: education_experience_invalid_params }
+          put education_experience_path(education_experience.id), params: education_experience_invalid_params
 
           expect(response).to have_http_status(:ok)
         end
 
-        it 'does not create a new education experience' do
+        it 'does not update the education experience' do
           expect do
-            post :update, params: { id: education_experience.id, education_experience: education_experience_invalid_params }
+            put education_experience_path(education_experience.id), params: education_experience_invalid_params
           end.not_to(change { education_experience.reload.course })
         end
       end
