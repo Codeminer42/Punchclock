@@ -203,11 +203,7 @@ pt-BR:
   forecast: "Previsão"
   resumes:
     education_experience:
-<<<<<<< HEAD
-      not_found: 'Nenhuma experiência educacional cadastrada'
-=======
       not_found: 'Nenhuma experiência educacinal cadastrada'
->>>>>>> 1aaaab0b (create education experiences index action)
   user:
     occupation:
       administrative: Administrativo
