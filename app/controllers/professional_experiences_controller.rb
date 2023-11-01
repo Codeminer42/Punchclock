@@ -1,4 +1,8 @@
 class ProfessionalExperiencesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to '/404'
+  end
+
   before_action :authenticate_user!
 
   def index
@@ -7,8 +11,6 @@ class ProfessionalExperiencesController < ApplicationController
 
   def show
     @professional_experience = scoped_professional_experiences.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   def new
