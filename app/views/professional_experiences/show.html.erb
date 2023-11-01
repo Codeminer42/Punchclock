@@ -4,9 +4,10 @@
       <b>
         <%= ProfessionalExperience.model_name.human %>
       </b>
-      <b>
-        <%= link_to t('helpers.back'), professional_experiences_path, class: "button" %>
-      </b>
+      <div>
+          <%= link_to t('helpers.back'), professional_experiences_path, class: "button" %>
+          <%= link_to t('helpers.edit'), edit_professional_experience_path, class: "button" %>
+      </div>
     </div>
     <div class="card-body"> 
       <div class="professional-experience-info">

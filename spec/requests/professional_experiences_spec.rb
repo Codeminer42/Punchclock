@@ -139,4 +139,99 @@ RSpec.describe ProfessionalExperience, type: :request do
       end
     end
   end
+
+  describe 'GET #edit' do
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      let(:user_professional_experience) { create(:professional_experience, user:) }
+      let(:other_professional_experience) { create(:professional_experience) }
+
+      before { sign_in user }
+
+      context 'when professional experience belongs to signed in user' do
+        it 'renders the edit template' do
+          get edit_professional_experience_path(user_professional_experience.id)
+
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when professional experience does no belong to signed in user' do
+        it 'redirects to not found page' do
+          get edit_professional_experience_path(other_professional_experience.id)
+
+          expect(response).to redirect_to('/404')
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      let(:professional_experience) { create(:professional_experience) }
+      it 'redirects to sign in page' do
+        get edit_professional_experience_path(professional_experience.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'PUT/PATCH #update' do
+    context 'with user signed in' do
+      let(:user) { create(:user) }
+      let(:user_experience) { create(:professional_experience, user:) }
+      let(:other_experience) { create(:professional_experience) }
+      let(:valid_params) { { professional_experience: { company: 'New company name' } } }
+      let(:invalid_params) { { professional_experience: { start_date: '11/2022', end_date: '11/2021' } } }
+
+      before { sign_in user }
+      context 'when professional experience belongs to user' do
+        context 'with valid params' do
+          it 'updates the experience' do
+            put professional_experience_path(user_experience), params: valid_params
+
+            expect(ProfessionalExperience.find(user_experience.id).company).to eq('New company name')
+          end
+
+          it 'redirects to experience show page' do
+            put professional_experience_path(user_experience), params: valid_params
+
+            expect(response).to redirect_to(professional_experience_path(user_experience.id))
+          end
+        end
+
+        context 'with invalid params' do
+          it 'does not update the experience' do
+            put professional_experience_path(user_experience), params: invalid_params
+
+            expect { put professional_experience_path(user_experience), params: invalid_params }.not_to(change { user_experience.reload })
+          end
+
+          it 'renders the edit template' do
+            put professional_experience_path(user_experience), params: invalid_params
+
+            expect(response).to render_template(:edit)
+          end
+        end
+      end
+
+      context 'when professional experience does not belong to user' do
+        it 'redirects to not found page' do
+          put professional_experience_path(other_experience), params: valid_params
+
+          expect(response).to redirect_to('/404')
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      let(:pro_experience) { create(:professional_experience) }
+      let(:valid_params) { { professional_experience: { company: 'New company name' } } }
+
+      it 'redirects to sign in page' do
+        put professional_experience_path(pro_experience), params: valid_params
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end
