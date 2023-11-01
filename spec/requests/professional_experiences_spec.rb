@@ -71,8 +71,7 @@ RSpec.describe ProfessionalExperience, type: :request do
 
       context 'with valid params' do
         let(:valid_params) do
-          { professional_experience: { company: 'Codeminer42', position: 'Software engineer', description: 'some description here', responsibilities: 'Ruby on Rails', start_date: '11/2021',
-                                       end_date: '11/2022' } }
+          { professional_experience: attributes_for(:professional_experience) }
         end
 
         it 'creates a new professional experience' do
@@ -204,7 +203,7 @@ RSpec.describe ProfessionalExperience, type: :request do
           it 'does not update the experience' do
             put professional_experience_path(user_experience), params: invalid_params
 
-            expect { put professional_experience_path(user_experience), params: invalid_params }.not_to(change { ProfessionalExperience.find(user_experience.id) })
+            expect { put professional_experience_path(user_experience), params: invalid_params }.not_to(change { user_experience.reload })
           end
 
           it 'renders the edit template' do
