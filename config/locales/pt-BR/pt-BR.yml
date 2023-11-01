@@ -204,6 +204,7 @@ pt-BR:
   resumes:
     education_experience:
       not_found: 'Nenhuma experiência educacional cadastrada'
+      details: 'Detalhes da experiência educacional'
   user:
     occupation:
       administrative: Administrativo

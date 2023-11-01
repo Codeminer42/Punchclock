@@ -12,6 +12,10 @@ class EducationExperiencesController < ApplicationController
                                                                         EducationExperience.where(user_id: current_user.id))
   end
 
+  def show
+    @education_experience = current_user.education_experiences.find(params[:id])
+  end
+
   def new
     @education_experience = EducationExperience.new
   end

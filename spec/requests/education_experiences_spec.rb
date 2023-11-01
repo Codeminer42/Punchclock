@@ -71,6 +71,39 @@ RSpec.describe EducationExperience, type: :request do
     end
   end
 
+  describe 'GET #show' do
+    let(:user) { create(:user) }
+    let(:user_experience) { create(:education_experience, user:) }
+    let(:other_experience) { create(:education_experience) }
+
+    context 'when user is logged in' do
+      before { sign_in user }
+      context 'when education experience belongs to logged in user' do
+        it 'renders the show template' do
+          get education_experience_path(user_experience)
+
+          expect(response).to render_template(:show)
+        end
+      end
+
+      context 'when education experience does not exist or does not belong to user' do
+        it 'redirects to not found page' do
+          get education_experience_path(other_experience)
+
+          expect(response).to redirect_to('/404')
+        end
+      end
+    end
+
+    context 'when user is not logged in' do
+      it 'redirects to sign in page' do
+        get education_experience_path(other_experience)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
   describe 'GET new' do
     let(:user) { create(:user) }
 
