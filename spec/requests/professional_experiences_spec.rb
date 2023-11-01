@@ -71,8 +71,7 @@ RSpec.describe ProfessionalExperience, type: :request do
 
       context 'with valid params' do
         let(:valid_params) do
-          { professional_experience: { company: 'Codeminer42', position: 'Software engineer', description: 'some description here', responsibilities: 'Ruby on Rails', start_date: '11/2021',
-                                       end_date: '11/2022' } }
+          { professional_experience: attributes_for(:professional_experience) }
         end
 
         it 'creates a new professional experience' do
