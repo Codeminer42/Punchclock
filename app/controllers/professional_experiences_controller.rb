@@ -1,8 +1,16 @@
 class ProfessionalExperiencesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to '/404'
+  end
+
   before_action :authenticate_user!
 
   def index
-    @professional_experiences = current_user.professional_experiences.page(params[:page]).per(params[:per])
+    @professional_experiences = scoped_professional_experiences.page(params[:page]).per(params[:per])
+  end
+
+  def show
+    @professional_experience = scoped_professional_experiences.find(params[:id])
   end
 
   def new
@@ -10,7 +18,8 @@ class ProfessionalExperiencesController < ApplicationController
   end
 
   def create
-    @professional_experience = current_user.professional_experiences.new(professional_experience_params)
+    @professional_experience = ProfessionalExperience.new(professional_experience_params)
+    @professional_experience.user = current_user
 
     if @professional_experience.save
       redirect_to professional_experiences_path,
@@ -25,7 +34,7 @@ class ProfessionalExperiencesController < ApplicationController
   private
 
   def professional_experience_params
-    params.require(:professional_experience).permit(:company, :position, :description, :responsabilities, :start_date,
+    params.require(:professional_experience).permit(:company, :position, :description, :responsibilities, :start_date,
                                                     :end_date)
   end
 
@@ -35,5 +44,9 @@ class ProfessionalExperiencesController < ApplicationController
 
   def error_message
     I18n.t(:errors, scope: "flash", errors:)
+  end
+
+  def scoped_professional_experiences
+    current_user.professional_experiences
   end
 end

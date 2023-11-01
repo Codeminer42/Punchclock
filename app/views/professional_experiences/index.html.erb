@@ -32,8 +32,7 @@
                   <td><%= experience.position %></td>
                   <td><%= experience.start_date %></td>
                   <td><%= experience.end_date %></td>
-                  <td>
-                  </td>
+                  <td><%= link_to t('helpers.show'), professional_experience_path(experience.id) %></td>
                 </tr>
               <% end %>
             </tbody>
