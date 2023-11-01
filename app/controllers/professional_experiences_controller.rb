@@ -1,4 +1,8 @@
 class ProfessionalExperiencesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to '/404'
+  end
+
   before_action :authenticate_user!
 
   def index
@@ -47,8 +51,6 @@ class ProfessionalExperiencesController < ApplicationController
       flash_errors('update', ProfessionalExperience.model_name.human, error_message)
       render :edit
     end
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   private
