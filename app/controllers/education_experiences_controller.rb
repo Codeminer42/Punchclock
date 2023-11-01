@@ -4,7 +4,6 @@ class EducationExperiencesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @undecorated_experiences = EducationExperience.for_user(current_user.id)
-    @education_experiences = EducationExperiencePaginationDecorator.new(params, @undecorated_experiences)
+    @education_experiences = EducationExperience.for_user(current_user.id).page(params[:page]).per(params[:per])
   end
 end
