@@ -33,8 +33,6 @@ class ProfessionalExperiencesController < ApplicationController
 
   def edit
     @professional_experience = scoped_professional_experiences.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to '/404'
   end
 
   def update
@@ -49,6 +47,14 @@ class ProfessionalExperiencesController < ApplicationController
       flash_errors('update', ProfessionalExperience.model_name.human, error_message)
       render :edit
     end
+  end
+
+  def destroy
+    @professional_experience = scoped_professional_experiences.find(params[:id])
+    @professional_experience.destroy
+    redirect_to professional_experiences_path,
+                notice: I18n.t(:notice, scope: "flash.actions.destroy",
+                                        resource_name: ProfessionalExperience.model_name.human)
   end
 
   private

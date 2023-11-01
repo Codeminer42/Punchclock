@@ -19,6 +19,7 @@
                 <th><%= ProfessionalExperience.human_attribute_name(:end_date) %></th>
                 <th></th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -35,6 +36,7 @@
                   <td><%= experience.end_date %></td>
                   <td><%= link_to t('helpers.show'), professional_experience_path(experience.id) %></td>
                   <td><%= link_to t('helpers.edit'), edit_professional_experience_path(experience.id) %></td>
+                  <td><%= link_to t('helpers.delete'), professional_experience_path(experience.id), method: :delete %></td>
                 </tr>
               <% end %>
             </tbody>
