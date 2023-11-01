@@ -268,4 +268,48 @@ RSpec.describe EducationExperience, type: :request do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'when user is signed in' do
+      let!(:user) { create(:user) }
+      let!(:education_experience) { create(:education_experience, user:) }
+      let!(:other_experience) { create(:education_experience) }
+
+      before { sign_in user }
+
+      context 'when education experience belongs to signed in user' do
+        it 'deletes the education experience' do
+          expect { delete education_experience_path(education_experience.id) }.to change(EducationExperience, :count).by(-1)
+        end
+
+        it 'redirects to education experiences index' do
+          delete education_experience_path(education_experience.id)
+
+          expect(response).to redirect_to(education_experiences_path)
+        end
+      end
+
+      context 'when education experience does not belong to signed in user' do
+        it 'redirects to /404' do
+          delete education_experience_path(other_experience.id)
+
+          expect(response).to redirect_to('/404')
+        end
+
+        it 'does not delete the experience' do
+          expect { delete education_experience_path(other_experience.id) }.not_to change(EducationExperience, :count)
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      let(:education_experience) { create(:education_experience) }
+
+      it 'redirects to sign in page' do
+        delete education_experience_path(education_experience.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

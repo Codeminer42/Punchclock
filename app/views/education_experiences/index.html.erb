@@ -34,6 +34,7 @@
                   <td><%= I18n.l(experience.start_date.to_date, format: :default) %></td>
                   <td><%= I18n.l(experience.end_date.to_date, format: :default) %></td>
                   <td><%= link_to t('helpers.edit'), edit_education_experience_path(experience.id) %></td>
+                  <td><%= link_to t('helpers.destroy'), education_experience_path(experience.id), method: :delete %></td>
                 </tr>
               <% end %>
             </tbody>
