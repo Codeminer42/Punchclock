@@ -29,7 +29,10 @@ pt-BR:
     written:
       add_review: "Adicionar Revisão"
     form:
-      submit: "Salvar Revisão"
+      submit: 'Salvar Revisão'
+  talks:
+    title: 'Minhas Palestras'
+    no_talks_found: 'Nenhuma palestra encontrada'
   notification_mailer:
     subject:
       notify_fill_contribution_description_html: "Punchlock - Contribuições Aguardando Descrição"
