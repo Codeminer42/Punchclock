@@ -1,32 +1,33 @@
 pt-BR:
   helpers:
-    back: 'Voltar'
-    show: 'Mostrar'
-    edit: 'Editar'
+    back: "Voltar"
+    show: "Mostrar"
+    edit: "Editar"
+    save: "Salvar"
     actions:
-      editing: 'Editando %{model}'
-      creating: 'Criando %{model}'
+      editing: "Editando %{model}"
+      creating: "Criando %{model}"
   application:
     user_header:
-      settings: 'Configurações'
-      account: 'Conta'
-      logout: 'Sair'
-      dashboard: 'Dashboard'
-      administrative: 'Administrativo'
+      settings: "Configurações"
+      account: "Conta"
+      logout: "Sair"
+      dashboard: "Dashboard"
+      administrative: "Administrativo"
   punches:
     index:
-      total: 'TOTAL'
+      total: "TOTAL"
   contributions:
-    my_contributions: 'Minhas Contribuições'
-    pr_link: 'Link da PR'
-    created_at: 'Criada em'
-    pr_state: 'Estado da PR'
-    no_prs_found: 'Nenhuma PR encontrada'
-    description_filled: 'Preenchida'
-    description: 'Descrição'
+    my_contributions: "Minhas Contribuições"
+    pr_link: "Link da PR"
+    created_at: "Criada em"
+    pr_state: "Estado da PR"
+    no_prs_found: "Nenhuma PR encontrada"
+    description_filled: "Preenchida"
+    description: "Descrição"
   evaluations:
     written:
-      add_review: 'Adicionar Revisão'
+      add_review: "Adicionar Revisão"
     form:
       submit: 'Salvar Revisão'
   talks:
@@ -34,7 +35,7 @@ pt-BR:
     no_talks_found: 'Nenhuma palestra encontrada'
   notification_mailer:
     subject:
-      notify_fill_contribution_description_html: 'Punchlock - Contribuições Aguardando Descrição'
+      notify_fill_contribution_description_html: "Punchlock - Contribuições Aguardando Descrição"
     body_html: |
       <p>
         Pessoal,

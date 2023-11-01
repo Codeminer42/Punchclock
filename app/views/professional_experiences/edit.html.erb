@@ -1,0 +1,8 @@
+<ul class="breadcrumb">
+  <li li class="breadcrumb-item"><%= link_to t(:back, scope: :helpers), professional_experiences_path %></li>
+</ul>
+
+<h1 class="professional-experience-form-title">
+  <%= t(:editing, scope: %i(helpers actions), model: ProfessionalExperience.model_name.human) %>
+</h1>
+<%= render 'form', professional_experience: @professional_experience %>
