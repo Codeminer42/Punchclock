@@ -6,6 +6,7 @@
       <th><%= Talk.human_attribute_name(:date) %></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -16,8 +17,9 @@
           <td><%= talk.event_name %></td>
           <td><%= talk.talk_title %></td>
           <td><%= talk.date %></td>
-          <td><%= image_tag('edit.png', class: 'mx-auto') %></td>
-          <td><%= image_tag('destroy.png', class: 'mx-auto') %></td>
+          <td><%= link_to t('helpers.show'), talk_path(talk.id) %></td>
+          <td><%= link_to t('helpers.edit'), edit_talk_path(talk.id) %></td>
+          <td><%= link_to t('helpers.delete'), talk_path(talk.id), method: :delete %></td>
         </tr>
       <% end %>
     <% else %>

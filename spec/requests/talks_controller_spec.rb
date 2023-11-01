@@ -31,4 +31,37 @@ RSpec.describe TalksController, type: :request do
       end
     end
   end
+
+  describe 'GET #show' do
+    let(:user) { create(:user) }
+    let(:user_talk) { create(:talk, user:) }
+    let(:other_talk) { create(:talk) }
+
+    context 'when user is logged in' do
+      before { sign_in user }
+      context 'when talk belongs to logged in user' do
+        it 'renders the show template' do
+          get talk_path(user_talk)
+
+          expect(response).to render_template(:show)
+        end
+      end
+
+      context 'when talk does not exist or does not belong to user' do
+        it 'redirects to not found page' do
+          get talk_path(other_talk)
+
+          expect(response).to redirect_to('/404')
+        end
+      end
+    end
+
+    context 'when user is not logged in' do
+      it 'redirects to sign in page' do
+        get talk_path(other_talk)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end
