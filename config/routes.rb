@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :professional_experiences
-  resources :talks, only: %i[index]
+  resources :education_experiences
+  resources :talks, only: :index
 
   get '/admin/vacations/:id/denied', to: 'admin/vacations#denied', as: :admin_vacations_denied
   get '/admin/vacations/:id/approve', to: 'admin/vacations#approve', as: :admin_vacations_approve

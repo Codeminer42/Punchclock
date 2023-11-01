@@ -38,4 +38,18 @@ RSpec.describe EducationExperience, type: :model do
       it { expect(education_experience).to_not be_valid }
     end
   end
+
+  describe '.for_user' do
+    let(:user) { create(:user) }
+    let(:education_experience_from_user) { create(:education_experience, user:) }
+    let(:education_experience_from_another_user) { create(:education_experience) }
+
+    it 'returns education experiences associated with the specified user' do
+      expect(EducationExperience.for_user(user.id)).to eq([education_experience_from_user])
+    end
+
+    it 'does not return education experiences associated with other users' do
+      expect(EducationExperience.for_user(user.id)).not_to include(education_experience_from_another_user)
+    end
+  end
 end
