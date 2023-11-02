@@ -312,3 +312,5 @@ pt-BR:
     not_found: "Nenhuma experiência profissional cadastrada"
     new: "Nova experiência profissional"
     details: "Detalhes da experiência profissional"
+  talk:
+    details: "Detalhes da palestra"
