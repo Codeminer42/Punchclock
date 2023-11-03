@@ -4,7 +4,7 @@ class EducationExperiencesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @education_experiences = PunchesPaginationDecorator.new(params, EducationExperience.where(user_id: current_user.id))
+    @education_experiences = EducationExperience.for_user(current_user.id).page(params[:page]).per(params[:per])
   end
 
   def new
@@ -12,7 +12,7 @@ class EducationExperiencesController < ApplicationController
   end
 
   def create
-    @education_experience = EducationExperience.new(education_experience_params)
+    @education_experience = current_user.education_experiences.new(education_experience_params)
 
     if @education_experience.save
       redirect_to education_experiences_path, notice: I18n.t(:notice, scope: "flash.education_experience.create")

@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin_user!
-    return unless cannot?(:read, ActiveAdmin)
+    return if can?(:read, ActiveAdmin)
 
     redirect_to root_path, alert: I18n.t('devise.failure.access_denied')
   end
@@ -63,5 +63,13 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
+  end
+
+  def flash_errors(scope, resource_name, error_message)
+    flash.now[:alert] = "#{alert_message(scope, resource_name)} #{error_message}"
+  end
+
+  def alert_message(scope, resource_name)
+    I18n.t(:alert, scope: "flash.actions.#{scope}", resource_name:)
   end
 end
