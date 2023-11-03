@@ -2,9 +2,9 @@
 
 module NewAdmin
   class RepositoryQuery
-    def initialize(repository_name_search: nil, languages: nil)
+    def initialize(languages: [], repository_name_search: nil)
       @repository_name_search = repository_name_search
-      @languages              = languages
+      @languages              = languages.reject(&:blank?)
     end
 
     def call
@@ -16,14 +16,6 @@ module NewAdmin
 
     private
 
-    def languages
-      if @languages.nil?
-        return nil
-      end
-
-      @languages.reject(&:blank?)
-    end
-
-    attr_reader :repository_name_search
+    attr_reader :repository_name_search, :languages
   end
 end
