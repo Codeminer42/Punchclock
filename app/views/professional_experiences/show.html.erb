@@ -1,0 +1,55 @@
+<div class="container-fluid professional_experience">
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+      <b>
+        <%= ProfessionalExperience.model_name.human %>
+      </b>
+      <div>
+          <%= link_to t('helpers.back'), professional_experiences_path, class: "button" %>
+          <%= link_to t('helpers.edit'), edit_professional_experience_path, class: "button" %>
+          <%= link_to t('helpers.delete'), professional_experience_path, class: "button", method: :delete %>
+      </div>
+    </div>
+    <div class="card-body"> 
+      <div class="professional-experience-info">
+        <span>
+          <b>
+            <%= t 'professional_experience.details' %>
+          </b>
+        </span>
+      </div>
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= ProfessionalExperience.human_attribute_name(:company) %></b>: <%= @professional_experience.company %> </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= ProfessionalExperience.human_attribute_name(:position) %></b>: <%= @professional_experience.position %> </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= ProfessionalExperience.human_attribute_name(:description) %></b></p>
+          <p><%= @professional_experience.description %></p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= ProfessionalExperience.human_attribute_name(:responsibilities) %></b>: <%= @professional_experience.responsibilities %> </p>
+        </div>
+      </div>
+      <div class="card mb-2 d-flex gap-5">
+        <div class="card-body">
+            <p><b><%= ProfessionalExperience.human_attribute_name(:start_date) %></b>: <%= @professional_experience.start_date %> </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= ProfessionalExperience.human_attribute_name(:end_date) %></b>: <%= @professional_experience.end_date %> </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

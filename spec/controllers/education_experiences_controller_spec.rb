@@ -27,7 +27,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
       end
 
       context 'when the user does not contain education experiences' do
-        xit 'renders the table with not found message' do
+        it 'renders the table with not found message' do
           get :index
 
           expect(page.find('table')).to have_content('Nenhuma experiência educacional cadastrada')
