@@ -19,5 +19,9 @@ module NewAdmin
     def filter_params
       params.permit(:repository_name_search, languages: []).to_h.symbolize_keys
     end
+
+    def current_ability
+      AbilityAdmin.new(current_user)
+    end
   end
 end
