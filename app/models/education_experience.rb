@@ -14,6 +14,4 @@ class EducationExperience < ApplicationRecord
                           message: :less_than_start_date,
                           greater_than: ->(education_experience) { education_experience.start_date },
                           allow_nil: true
-
-  scope :for_user, ->(user_id) { where(user_id:) }
 end
