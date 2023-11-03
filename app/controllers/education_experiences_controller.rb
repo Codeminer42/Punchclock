@@ -37,6 +37,14 @@ class EducationExperiencesController < ApplicationController
     end
   end
 
+  def destroy
+    @education_experience = current_user.education_experiences.find(params[:id])
+    @education_experience.destroy
+    redirect_to education_experiences_path,
+                notice: I18n.t(:notice, scope: "flash.actions.destroy",
+                                        resource_name: EducationExperience.model_name.human)
+  end
+  
   private
 
   def education_experience_params

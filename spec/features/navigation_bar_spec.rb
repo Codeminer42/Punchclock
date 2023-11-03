@@ -13,7 +13,7 @@ feature 'Navigation Bar' do
 
       it 'has the education experience dropdown option on the navigation bar', agreggate_failures: true do
         visit root_path
-
+        
         expect(page).to have_selector('.dropdown-toggle', text: 'Meu currículo')
         click_link 'Meu currículo'
         click_link 'Experiência Educacional'

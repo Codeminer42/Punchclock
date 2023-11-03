@@ -3,8 +3,8 @@ pt-BR:
     back: "Voltar"
     show: "Mostrar"
     edit: "Editar"
+    destroy: "Deletar"
     save: "Salvar"
-    delete: "Deletar"
     actions:
       editing: "Editando %{model}"
       creating: "Criando %{model}"
