@@ -31,6 +31,11 @@ pt-BR:
       add_review: "Adicionar Revisão"
     form:
       submit: "Salvar Revisão"
+  education_experiences:
+    form:
+      save: "Salvar"
+    new:
+      new_experience: "Nova experiência educacional"
   talks:
     title: "Minhas Palestras"
     no_talks_found: "Nenhuma palestra encontrada"
