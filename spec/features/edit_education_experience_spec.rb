@@ -9,8 +9,9 @@ describe 'Edit Education Experience', type: :feature do
   context 'editing an education experience with valid params' do
     before do
       visit "/education_experiences/#{education_experience.id}/edit"
-      fill_in t('activerecord.attributes.education_experience.institution'), with: 'USP'
-      click_button t('education_experiences.form.save')
+
+      fill_in 'Instituição', with: 'USP'
+      click_button 'Salvar'
     end
 
     it 'updates the education experience' do
@@ -21,12 +22,13 @@ describe 'Edit Education Experience', type: :feature do
   context 'editing an education experience with invalid params' do
     before do
       visit "/education_experiences/#{education_experience.id}/edit"
-      fill_in t('activerecord.attributes.education_experience.institution'), with: ''
-      click_button t('education_experiences.form.save')
+      
+      fill_in 'Instituição', with: ''
+      click_button 'Salvar'
     end
 
-    it 'does not creates a new education experience' do
-      expect(page).to have_content(t('flash.education_experience.update.alert'))
+    it 'does not update the education experience' do
+      expect(page).to have_content('A Experiência educacional não pôde ser atualizada.')
     end
   end
 end

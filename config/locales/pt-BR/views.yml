@@ -4,6 +4,7 @@ pt-BR:
     show: "Mostrar"
     edit: "Editar"
     destroy: "Deletar"
+    save: "Salvar"
     actions:
       editing: "Editando %{model}"
       creating: "Criando %{model}"
@@ -35,6 +36,9 @@ pt-BR:
       save: "Salvar"
     new:
       new_experience: "Nova experiência educacional"
+  talks:
+    title: "Minhas Palestras"
+    no_talks_found: "Nenhuma palestra encontrada"
   notification_mailer:
     subject:
       notify_fill_contribution_description_html: "Punchlock - Contribuições Aguardando Descrição"

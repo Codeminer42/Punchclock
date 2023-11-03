@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
 class EducationExperiencesController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound do
-    redirect_to '/404'
-  end
-
   before_action :authenticate_user!
 
   def index
-    @education_experiences = EducationExperiencePaginationDecorator.new(params,
-                                                                        EducationExperience.where(user_id: current_user.id))
+    @education_experiences = current_user.education_experiences.page(params[:page]).per(params[:per])
   end
 
   def new
@@ -17,7 +12,7 @@ class EducationExperiencesController < ApplicationController
   end
 
   def create
-    @education_experience = EducationExperience.new(education_experience_params)
+    @education_experience = current_user.education_experiences.new(education_experience_params)
 
     if @education_experience.save
       redirect_to education_experiences_path, notice: I18n.t(:notice, scope: "flash.education_experience.create")
@@ -49,7 +44,7 @@ class EducationExperiencesController < ApplicationController
                 notice: I18n.t(:notice, scope: "flash.actions.destroy",
                                         resource_name: EducationExperience.model_name.human)
   end
-
+  
   private
 
   def education_experience_params

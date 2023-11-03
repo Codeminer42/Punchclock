@@ -8,7 +8,7 @@ describe 'Add new Education Experience', type: :feature do
   it 'displays the new education experience message' do
     visit '/education_experiences/new'
 
-    expect(page).to have_content ('Nova experiência educacional')
+    expect(page).to have_content('Nova experiência educacional')
   end
 
   it 'has the a link to create a new user experience' do
@@ -21,16 +21,16 @@ describe 'Add new Education Experience', type: :feature do
     before do
       visit '/education_experiences/new'
       within '#new_education_experience' do
-        fill_in t('activerecord.attributes.education_experience.institution'), with: 'USP'
-        fill_in t('activerecord.attributes.education_experience.course'), with: 'CC'
-        fill_in t('activerecord.attributes.education_experience.start_date'), with: '10/05/2019'
-        fill_in t('activerecord.attributes.education_experience.end_date'), with: '10/05/2020'
-        click_button t('education_experiences.form.save')
+        fill_in 'Instituição', with: 'USP'
+        fill_in 'Curso', with: 'CC'
+        fill_in "Data de início", with: '10/05/2019'
+        fill_in "Data de término", with: '10/05/2020'
+        click_button 'Salvar'
       end
     end
 
     it 'creates a new education experience' do
-      expect(page).to have_content(t('flash.education_experience.create.notice'))
+      expect(page).to have_content('Experiência educacional criada com sucesso.')
     end
   end
 
@@ -38,16 +38,16 @@ describe 'Add new Education Experience', type: :feature do
     before do
       visit '/education_experiences/new'
       within '#new_education_experience' do
-        fill_in t('activerecord.attributes.education_experience.institution'), with: 'USP'
-        fill_in t('activerecord.attributes.education_experience.course'), with: 'CC'
-        fill_in t('activerecord.attributes.education_experience.start_date'), with: '10/05/2019'
-        fill_in t('activerecord.attributes.education_experience.end_date'), with: '10/05/2015'
-        click_button t('education_experiences.form.save')
+        fill_in 'Instituição', with: 'USP'
+        fill_in 'Curso', with: 'CC'
+        fill_in "Data de início", with: '10/05/2019'
+        fill_in "Data de término", with: '10/05/2015'
+        click_button 'Salvar'
       end
     end
 
     it 'does not creates a new education experience' do
-      expect(page).to have_content(t('flash.education_experience.create.alert'))
+      expect(page).to have_content('A Experiência educacional não pôde ser criada.')
     end
   end
 end
