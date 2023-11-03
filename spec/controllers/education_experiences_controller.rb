@@ -5,8 +5,6 @@ require 'rails_helper'
 RSpec.describe EducationExperiencesController, type: :controller do
   render_views
 
-
-
   describe 'GET #index' do
     let(:user) { create(:user) }
 
@@ -33,7 +31,7 @@ RSpec.describe EducationExperiencesController, type: :controller do
         it 'renders the table with not found message' do
           get :index
 
-          expect(page.find('table')).to have_content(I18n.t('resumes.education_experience.not_found'))
+          expect(page.find('table')).to have_content('Nenhuma experiência educacional cadastrada')
         end
       end
 

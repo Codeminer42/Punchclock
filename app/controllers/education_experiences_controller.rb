@@ -12,7 +12,7 @@ class EducationExperiencesController < ApplicationController
   end
 
   def create
-    @education_experience = EducationExperience.new(education_experience_params)
+    @education_experience = current_user.education_experiences.new(education_experience_params)
 
     if @education_experience.save
       redirect_to education_experiences_path, notice: I18n.t(:notice, scope: "flash.education_experience.create")
