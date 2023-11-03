@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: exception.message
   end
 
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to '/404'
+  end
+
   # https://github.com/plataformatec/devise/issues/3461
   rescue_from ActionController::InvalidAuthenticityToken do |_exception|
     raise unless devise_controller?

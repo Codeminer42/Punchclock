@@ -32,8 +32,8 @@
                   <td><%= experience.course %></td>
                   <td><%= experience.decorate.start_date %></td>
                   <td><%= experience.decorate.end_date %></td>
-                  <td>
-                  </td>
+                  <td><%= link_to t('helpers.edit'), edit_education_experience_path(experience.id) %></td>
+
                 </tr>
               <% end %>
             </tbody>

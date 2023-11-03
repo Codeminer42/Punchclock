@@ -4,7 +4,7 @@ class EducationExperiencesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @education_experiences = EducationExperience.for_user(current_user.id).page(params[:page]).per(params[:per])
+    @education_experiences = current_user.education_experiences.page(params[:page]).per(params[:per])
   end
 
   def new
@@ -19,6 +19,21 @@ class EducationExperiencesController < ApplicationController
     else
       flash_errors('create')
       render :new
+    end
+  end
+
+  def edit
+    @education_experience = current_user.education_experiences.find(params[:id])
+  end
+
+  def update
+    @education_experience = current_user.education_experiences.find params[:id]
+
+    if @education_experience.update(education_experience_params)
+      redirect_to education_experiences_path, notice: I18n.t(:notice, scope: "flash.education_experience.update")
+    else
+      flash_errors('update')
+      render :edit
     end
   end
 

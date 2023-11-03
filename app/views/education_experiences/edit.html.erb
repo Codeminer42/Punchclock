@@ -3,7 +3,7 @@
 </ul>
 
 <h1 class="education-experience-form-title">
-  <%= t('.new_experience') %>
+  <%= t(:editing, scope: %i(helpers actions), model: EducationExperience.model_name.human) %>
 </h1>
 
 <%= render 'form', education_experience: @education_experience %>

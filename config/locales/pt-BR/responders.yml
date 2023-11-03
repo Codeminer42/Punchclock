@@ -1,24 +1,27 @@
 pt-BR:
   flash:
-    errors: 'Erros: %{errors}'
+    errors: "Erros: %{errors}"
     actions:
       create:
-        notice: '%{resource_name} foi criado com sucesso.'
-        alert: '%{resource_name} não pôde ser criado.'
+        notice: "%{resource_name} foi criado com sucesso."
+        alert: "%{resource_name} não pôde ser criado."
       update:
-        notice: '%{resource_name} foi atualizado com sucesso.'
-        alert: '%{resource_name} não pôde ser atualizado.'
+        notice: "%{resource_name} foi atualizado com sucesso."
+        alert: "%{resource_name} não pôde ser atualizado."
       destroy:
-        notice: '%{resource_name} foi deletado com sucesso.'
-        alert: '%{resource_name} não pôde ser deletado.'
+        notice: "%{resource_name} foi deletado com sucesso."
+        alert: "%{resource_name} não pôde ser deletado."
     vacation:
       create:
-        notice: 'Solicitação de férias criada com sucesso.'
-        alert: 'Solicitação de férias não pôde ser criada.'
+        notice: "Solicitação de férias criada com sucesso."
+        alert: "Solicitação de férias não pôde ser criada."
       cancel:
-        notice: 'Solicitação de férias canceladas com sucesso.'
-        alert: 'Somente férias pendentes podem ser canceladas.'
+        notice: "Solicitação de férias canceladas com sucesso."
+        alert: "Somente férias pendentes podem ser canceladas."
     education_experience:
       create:
-        notice: 'Experiência educacional criada com sucesso.'
-        alert: 'A Experiência educacional não pôde ser criada.'
+        notice: "Experiência educacional criada com sucesso."
+        alert: "A Experiência educacional não pôde ser criada."
+      update:
+        notice: "Experiência educacional atualizada com sucesso."
+        alert: "A Experiência educacional não pôde ser atualizada."
