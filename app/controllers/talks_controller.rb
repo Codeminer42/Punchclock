@@ -12,4 +12,9 @@ class TalksController < ApplicationController
   def show
     @talk = current_user.talks.find(params[:id])
   end
+
+  def edit
+    @talk = current_user.talks.find(params[:id])
+  end
+
 end

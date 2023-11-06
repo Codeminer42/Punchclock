@@ -64,4 +64,50 @@ RSpec.describe Talk, type: :request do
       end
     end
   end
+
+  describe 'GET #edit' do
+    let(:user) { create(:user) }
+    let(:talk) { create(:talk, user_id: user.id) }
+    let(:talk_not_from_user) { create(:talk) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      context 'when talk belongs to user' do
+        it 'has http status 200' do
+          get edit_talk_path(talk.id)
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'renders the edit template' do
+          get edit_talk_path(talk.id)
+
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when talk does not belong to user' do
+        it 'redirects to /404' do
+          get edit_talk_path(talk_not_from_user.id)
+
+          expect(response).to redirect_to('/404')
+        end
+      end
+    end
+
+    context 'when the user is not logged in' do
+      it 'redirects the user to the sign in page' do
+        get edit_talk_path(talk.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+        end
+      end
+    end
 end
