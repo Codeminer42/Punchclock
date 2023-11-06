@@ -37,6 +37,6 @@ class TalksController < ApplicationController
   end
 
   def error_message
-    I18n.t(:errors, scope: "flash", errors:)
+    I18n.t(:errors, scope: :flash, errors:)
   end
 end
