@@ -144,4 +144,48 @@ RSpec.describe TalksController, type: :request do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'when user is signed in' do
+      let!(:user) { create(:user) }
+      let!(:talk) { create(:talk, user:) }
+      let!(:other_talk) { create(:talk) }
+
+      before { sign_in user }
+
+      context 'when talk belongs to signed in user' do
+        it 'deletes the talk' do
+          expect { delete talk_path(talk.id) }.to change(Talk, :count).by(-1)
+        end
+
+        it 'redirects to talks index' do
+          delete talk_path(talk.id)
+
+          expect(response).to redirect_to(talks_path)
+        end
+      end
+
+      context 'when education experience does not belong to signed in user' do
+        it 'redirects to /404' do
+          delete education_experience_path(other_talk.id)
+
+          expect(response).to redirect_to('/404')
+        end
+
+        it 'does not delete the talk' do
+          expect { delete talk_path(other_talk.id) }.not_to change(Talk, :count)
+        end
+      end
+    end
+
+    context 'when user is not signed in' do
+      let(:talk) { create(:talk) }
+
+      it 'redirects to sign in page' do
+        delete talk_path(talk.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

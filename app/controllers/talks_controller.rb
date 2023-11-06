@@ -26,6 +26,14 @@ class TalksController < ApplicationController
     end
   end
 
+  def destroy
+    @talk = current_user.talks.find(params[:id])
+    @talk.destroy
+    redirect_to talks_path,
+                notice: I18n.t(:notice, scope: "flash.actions.destroy",
+                                        resource_name: Talk.model_name.human)
+  end
+
   private
 
   def talk_params
