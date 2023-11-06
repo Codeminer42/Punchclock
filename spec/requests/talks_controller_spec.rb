@@ -64,4 +64,84 @@ RSpec.describe TalksController, type: :request do
       end
     end
   end
+
+  describe 'GET new' do
+    let(:user) { create(:user) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      it 'has status 200' do
+        get new_talk_path
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'renders the new template' do
+        get new_talk_path
+
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when the user is not logged in' do
+      it 'redirects the user to the sign in page' do
+        get new_talk_path
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'POST create' do
+    let(:user) { create(:user) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      context 'when params are valid' do
+        let(:talk_valid_params) do
+          attributes_for(:talk)
+        end
+
+        it 'has 302 status' do
+          post talks_path, params: { talk: talk_valid_params }
+
+          expect(response).to have_http_status(:found)
+        end
+
+        it 'creates a new talk' do
+          expect do
+            post talks_path, params: { talk: talk_valid_params }
+          end.to change { Talk.where(user_id: user.id).count }.by(1)
+        end
+      end
+
+      context 'when params are invalid' do
+        let(:talk_invalid_params) do
+          {
+            event_name: '',
+            talk_title: 'some title',
+            date: '10/10/2000'
+          }
+        end
+
+        it 'has 200 status' do
+          post talks_path, params: { talk: talk_invalid_params }
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'does not create a new talk' do
+          expect do
+            post talks_path, params: { talk: talk_invalid_params }
+          end.not_to(change { Talk.count })
+        end
+      end
+    end
+  end
 end

@@ -1,0 +1,9 @@
+<ul class="breadcrumb">
+  <li><%= link_to t(:back, scope: :helpers), talks_path %></li>
+</ul>
+
+<h1 class="education-experience-form-title">
+  <%= t('talks.new') %>
+</h1>
+
+<%= render 'form', talk: @talk %>

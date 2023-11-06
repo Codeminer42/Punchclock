@@ -63,6 +63,11 @@
                   <%= EducationExperience.model_name.human %>
                 <%- end %>
               </li>
+              <li>
+                <%= link_to talks_path, class:"justify-content-start" do %>
+                  <%= Talk.model_name.human %>
+                <%- end %>
+              </li>
             </ul>
           </div>
         </div>
