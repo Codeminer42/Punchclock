@@ -22,7 +22,7 @@ describe 'Edit Education Experience', type: :feature do
   context 'editing an education experience with invalid params' do
     before do
       visit "/education_experiences/#{education_experience.id}/edit"
-      
+
       fill_in 'Instituição', with: ''
       click_button 'Salvar'
     end

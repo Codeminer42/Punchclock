@@ -1,0 +1,44 @@
+<div class="container-fluid education_experience">
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+      <b>
+        <%= EducationExperience.model_name.human %>
+      </b>
+      <b>
+        <%= link_to t('helpers.back'), education_experiences_path, class: "button" %>
+        <%= link_to t('helpers.edit'), edit_education_experience_path(@education_experience.id), class: "button" %>
+        <%= link_to t('helpers.delete'), education_experience_path(@education_experience.id), class: "button", method: :delete %>
+      </b>
+    </div>
+    <div class="card-body"> 
+      <div class="education-experience-info">
+        <span>
+          <b>
+            <%= t 'resumes.education_experience.details' %>
+          </b>
+        </span>
+      </div>
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= EducationExperience.human_attribute_name(:institution) %></b>: <%= @education_experience.institution %> </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= EducationExperience.human_attribute_name(:course) %></b>: <%= @education_experience.course %> </p>
+        </div>
+      </div>
+      <div class="card mb-2 d-flex gap-5">
+        <div class="card-body">
+            <p><b><%= EducationExperience.human_attribute_name(:start_date) %></b>: <%= @education_experience.start_date %> </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= EducationExperience.human_attribute_name(:end_date) %></b>: <%= @education_experience.end_date %> </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
