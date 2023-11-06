@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TalksController, type: :request do
+RSpec.describe Talk, type: :request do
   describe 'GET index' do
     context 'when user is authenticated' do
       let!(:user) { create(:user) }
