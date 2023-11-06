@@ -43,7 +43,7 @@ RSpec.describe Talk, type: :model do
         it 'is expected to return an error message' do
           with_future_date.validate
 
-          expect(with_future_date.errors[:date]).to contain_exactly('Data não pode ser um período futuro')
+          expect(with_future_date.errors[:date]).to contain_exactly('não pode ser um período futuro')
         end
       end
     end
