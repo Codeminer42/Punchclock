@@ -165,9 +165,9 @@ RSpec.describe TalksController, type: :request do
         end
       end
 
-      context 'when education experience does not belong to signed in user' do
+      context 'when talk does not belong to signed in user' do
         it 'redirects to /404' do
-          delete education_experience_path(other_talk.id)
+          delete talk_path(other_talk.id)
 
           expect(response).to redirect_to('/404')
         end
