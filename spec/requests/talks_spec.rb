@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Talk, type: :request do
-  describe 'GET index' do
+  describe 'GET #index' do
     context 'when user is authenticated' do
       let!(:user) { create(:user) }
       let!(:talk_list) { create_list(:talk, 2, user:) }
@@ -107,7 +107,67 @@ RSpec.describe Talk, type: :request do
     end
   end
 
+  describe 'PUT/PATCH #update' do
+    let(:user) { create(:user) }
+    let(:talk) { create(:talk, user_id: user.id) }
+    let(:talk_not_from_user) { create(:talk) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      context 'when params are valid' do
+        let(:talk_valid_params) do
+          {
+            talk: {
+              event_name: 'RailsConf'
+            }
+          }
+        end
+
+        context 'when talk belongs to signed in user' do
+          it 'has http status 302' do
+            put talk_path(talk.id), params: talk_valid_params
+
+            expect(response).to have_http_status(:found)
+          end
+
+          it 'updates the talk' do
+            expect do
+              put talk_path(talk.id), params: talk_valid_params
+            end.to change { talk.reload.event_name }.to('RailsConf')
+          end
+        end
+
+        context 'when talk does not belong to signed in user' do
+          it 'does not update' do
+            expect { put talk_path(talk.id), params: talk_valid_params }
+              .not_to change(Talk.find(talk_not_from_user.id), :event_name)
+          end
+        end
+      end
+
+      context 'when params are invalid' do
+        let(:talk_invalid_params) do
+          {
+            talk: {
+              event_name: nil
+            }
+          }
+        end
+
+        it 'has http status 200' do
+          put talk_path(talk.id), params: talk_invalid_params
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'does not update the talk' do
+          expect { put talk_path(talk.id), params: talk_invalid_params }
+            .not_to change { talk.reload.event_name }
         end
       end
     end
+  end
 end
