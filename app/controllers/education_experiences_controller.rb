@@ -11,6 +11,10 @@ class EducationExperiencesController < ApplicationController
     @education_experience = EducationExperience.new
   end
 
+  def show
+    @education_experience = current_user.education_experiences.find(params[:id])
+  end
+
   def create
     @education_experience = current_user.education_experiences.new(education_experience_params)
 
@@ -44,7 +48,7 @@ class EducationExperiencesController < ApplicationController
                 notice: I18n.t(:notice, scope: "flash.actions.destroy",
                                         resource_name: EducationExperience.model_name.human)
   end
-  
+
   private
 
   def education_experience_params
