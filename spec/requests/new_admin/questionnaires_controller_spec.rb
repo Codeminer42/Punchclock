@@ -106,6 +106,40 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
     end
   end
 
+  describe 'GET #show' do
+    let(:questionnaire) { create(:questionnaire) }
+
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      it 'renders the show template' do
+        get new_admin_show_questionnaire_url(questionnaire.id)
+
+        expect(response).to render_template(:show)
+      end
+
+      it 'renders the correct questionnaire' do
+        get new_admin_show_questionnaire_url(questionnaire.id)
+
+        expect(response.body).to include(questionnaire.title)
+          .and include(questionnaire.description)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:questionnaire) { create(:questionnaire) }
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_admin_show_questionnaire_url(questionnaire.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'when user is admin' do
       let(:user) { create(:user, :admin) }

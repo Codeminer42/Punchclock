@@ -16,6 +16,10 @@ module NewAdmin
       @questionnaire = Questionnaire.new
     end
 
+    def show
+      @questionnaire = Questionnaire.find(params[:id])
+    end
+
     def create
       @questionnaire = Questionnaire.new(questionnaire_params)
 

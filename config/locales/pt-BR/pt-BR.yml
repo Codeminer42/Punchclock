@@ -267,6 +267,8 @@ pt-BR:
     new_question: "Nova pergunta"
     remove_question: "Remover pergunta"
     answer_options: "Opções de resposta separadas por ;"
+    show_title: "Questionário #%{id}"
+    details: "Detalhes do questionário"
   regional_holidays:
     title: "Feriados regionais"
     filters: "Filtros"
