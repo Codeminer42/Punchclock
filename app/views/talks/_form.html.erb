@@ -1,11 +1,9 @@
-<%= simple_form_for talk do |f| %>
+<%= simple_form_for @talk do |f| %>
   <div class="row">
     <div class="col-lg-8">
-      <%= f.input :event_name, placeholder: 'RailsConf' %>
-
-      <%= f.input :talk_title, placeholder: 'A Rails Performance Guidebook' %>
-
-      <%= f.input :date, as: :string, placeholder: '01/01/2000', input_html: { class: 'datepicker'} %>
+      <%= f.input :event_name, as: :string, placeholder: 'RailsConf' %>
+      <%= f.input :talk_title, as: :string, placeholder: 'A Rails Performance Guidebook' %>
+      <%= f.input :date, as: :string, placeholder: '01/01/2000', input_html: { class: 'datepicker', data: { allow_overtime: 'true' }} %>
     </div>
   </div>
 

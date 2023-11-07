@@ -7,7 +7,7 @@
       <b>
         <%= link_to t('helpers.back'), talks_path, class: "button" %>
         <%= link_to t('helpers.edit'), edit_talk_path(@talk.id), class: "button" %>
-        <%= link_to t('helpers.delete'), talk_path(@talk.id), class: "button", method: :delete %>
+        <%= link_to t('helpers.destroy'), talk_path(@talk.id), class: "button", method: :delete %>
       </b>
     </div>
     <div class="card-body"> 
