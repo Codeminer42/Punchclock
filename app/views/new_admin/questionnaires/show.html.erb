@@ -47,7 +47,11 @@
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%= @questionnaire.active %>
+              <% if @questionnaire.active %>
+                <%= heroicon "check-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+              <% else %>
+                <%= heroicon "x-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+              <% end %> 
             </p>
           </div>
         </td>
@@ -75,7 +79,7 @@
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%=  @questionnaire.created_at %>
+              <%=  l(@questionnaire.created_at, format: :short) %>
             </p>
           </div>
         </td>
@@ -89,7 +93,7 @@
         <td class="px-4 py-3">
           <div class="flex items-center text-sm">
             <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-              <%=  @questionnaire.updated_at %>
+              <%=  l(@questionnaire.updated_at, format: :short) %>
             </p>
           </div>
         </td>
@@ -126,9 +130,11 @@
                   </td>
                   <td class="w-1/2 px-4 py-3">
                     <div class="flex items-center text-sm">
-                      <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
-                        <%= question.answer_options %>
-                      </p>
+                      <ul class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+                        <% question.answer_options.each do |answer_option| %>
+                          <li>- <%= answer_option %></li>                          
+                        <% end %>
+                      </ul>
                     </div>
                   </td>
                 </tr>
