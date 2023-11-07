@@ -9,21 +9,6 @@ class TalksController < ApplicationController
     @talk = current_user.talks.find(params[:id])
   end
 
-  def edit
-    @talk = current_user.talks.find(params[:id])
-  end
-
-  def update
-    @talk = current_user.talks.find(params[:id])
-
-    if @talk.update(talk_params)
-      redirect_to talks_path, notice: I18n.t(:notice, scope: "flash.actions.update", resource_name: Talk.model_name.human)
-    else
-      flash_errors('update', Talk.model_name.human, error_message)
-      render :edit
-    end
-  end
-
   def new
     @talk = Talk.new
   end
@@ -38,6 +23,21 @@ class TalksController < ApplicationController
     else
       flash_errors('create', Talk.model_name.human, error_message)
       render :new
+    end
+  end
+
+  def edit
+    @talk = current_user.talks.find(params[:id])
+  end
+
+  def update
+    @talk = current_user.talks.find(params[:id])
+
+    if @talk.update(talk_params)
+      redirect_to talks_path, notice: I18n.t(:notice, scope: "flash.actions.update", resource_name: Talk.model_name.human)
+    else
+      flash_errors('update', Talk.model_name.human, error_message)
+      render :edit
     end
   end
 
