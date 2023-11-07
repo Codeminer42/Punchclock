@@ -126,9 +126,12 @@ ActiveAdmin.register User do
         attributes_table do
           row :current_allocation
           row :allocations do
-            table_for user.allocations.order(start_at: :desc) do
+            table_for user.allocations.order(start_at: :desc), i18n: Allocation do
               column :project_name do |allocation|
                 allocation.project.name
+              end
+              column :hourly_rate do |allocation|
+                allocation.hourly_rate
               end
               column :start_at
               column :end_at

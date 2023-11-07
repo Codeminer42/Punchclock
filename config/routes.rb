@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Sidekiq::Web => '/sidekiq'
 
+  resources :professional_experiences
+  resources :talks
+  resources :education_experiences
+
   get '/admin/vacations/:id/denied', to: 'admin/vacations#denied', as: :admin_vacations_denied
   get '/admin/vacations/:id/approve', to: 'admin/vacations#approve', as: :admin_vacations_approve
   get '/admin/vacations/:id/cancel', to: 'admin/vacations#cancel', as: :admin_vacations_cancel
@@ -73,7 +77,7 @@ Rails.application.routes.draw do
   match(
     'users/account/password/update',
     to: 'passwords#update',
-    via: [:patch, :put]
+    via: %i[patch put]
   )
 
   namespace :api do
@@ -90,9 +94,7 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   devise_scope :user do
     post 'questionnaires_kinds', to: 'evaluations#show_questionnaire_kinds', as: :show_questionnaire_kinds

@@ -93,6 +93,7 @@ pt-BR:
       administrative: 'Administrativo'
       vacations: 'Férias'
       my_contributions: 'Minhas Contribuições'
+      my_resume: 'Meu currículo'
   repositories:
     index:
       open_source_repositories: "Projetos Open Source"
@@ -200,6 +201,10 @@ pt-BR:
   allocation_details: "Detalhes da Alocação"
   working_hours: "Horas Trabalhadas"
   forecast: "Previsão"
+  resumes:
+    education_experience:
+      not_found: 'Nenhuma experiência educacional cadastrada'
+      details: 'Detalhes da experiência educacional'
   user:
     occupation:
       administrative: Administrativo
@@ -308,3 +313,9 @@ pt-BR:
     revenue_forecast:
       index:
         total: "Total"
+  professional_experience:
+    not_found: "Nenhuma experiência profissional cadastrada"
+    new: "Nova experiência profissional"
+    details: "Detalhes da experiência profissional"
+  talk:
+    details: "Detalhes da palestra"

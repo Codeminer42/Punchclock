@@ -1,0 +1,54 @@
+<div id="page-top" class="row">
+  <div class="container-fluid home">
+    <div class="card-body">
+      <%= link_to t('professional_experience.new'), new_professional_experience_path, class: "button" %>
+    </div>
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>
+        <%= ProfessionalExperience.model_name.human(count: 2) %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered users-evaluation" id="dataTable">
+            <thead>
+              <tr>
+                <th><%= ProfessionalExperience.human_attribute_name(:company) %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:position) %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:start_date) %></th>
+                <th><%= ProfessionalExperience.human_attribute_name(:end_date) %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @professional_experiences.empty?  %>
+                <tr>
+                  <td colspan="4"><%= t('professional_experience.not_found') %></td>
+                </tr>
+              <% end %>
+              <% @professional_experiences.each do |experience| %>
+                <tr>
+                  <td><%= experience.company %></td>
+                  <td><%= experience.position %></td>
+                  <td><%= experience.start_date %></td>
+                  <td><%= experience.end_date %></td>
+                  <td><%= link_to t('helpers.show'), professional_experience_path(experience.id) %></td>
+                  <td><%= link_to t('helpers.edit'), edit_professional_experience_path(experience.id) %></td>
+                  <td><%= link_to t('helpers.delete'), professional_experience_path(experience.id), method: :delete %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <%= paginate  @professional_experiences %>
+</section>
+ 

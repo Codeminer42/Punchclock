@@ -1,0 +1,12 @@
+<%= simple_form_for @education_experience do |f| %>
+  <div class="row">
+    <div class="col-lg-8">
+      <%= f.input :institution, as: :string, placeholder: 'Universidade de São Paulo' %>
+      <%= f.input :course, as: :string, placeholder: 'Computer Science' %>
+      <%= f.input :start_date, as: :string, input_html: { class: 'datepicker', data: { allow_overtime: 'true' } } %>
+      <%= f.input :end_date, as: :string, input_html: { class: 'datepicker', data: { allow_overtime: 'true' }, required: false  } %>
+    </div>
+  </div>
+
+  <%= f.submit t('.save') %>
+<% end %>

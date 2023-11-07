@@ -1,0 +1,9 @@
+<ul class="breadcrumb">
+  <li><%= link_to t(:back, scope: :helpers), education_experiences_path %></li>
+</ul>
+
+<h1 class="education-experience-form-title">
+  <%= t('.new_experience') %>
+</h1>
+
+<%= render 'form', education_experience: @education_experience %>
