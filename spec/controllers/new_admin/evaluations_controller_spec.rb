@@ -111,10 +111,10 @@ RSpec.describe NewAdmin::EvaluationsController do
     end
 
     context 'when the user is not signed in' do
-      it 'redirects to the root path' do
+      it 'redirects to the sign in path' do
         get :index
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -155,10 +155,10 @@ RSpec.describe NewAdmin::EvaluationsController do
     end
 
     context 'when the user is not signed in' do
-      it 'redirects to the root path' do
+      it 'redirects to the sign in path' do
         get :show, params: { id: evaluation.id }
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end

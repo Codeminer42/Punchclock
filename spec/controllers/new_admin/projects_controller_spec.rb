@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NewAdmin::ProjectsController, type: :controller do
-  describe '#index' do
+  describe 'GET #index' do
     let(:user) { create(:user, :admin) }
 
     before { sign_in(user) }
@@ -81,9 +81,13 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'GET #show' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
 
-    before { get :show, params: { id: project.id } }
+    before do
+      sign_in user
+      get :show, params: { id: project.id }
+    end
 
     it { is_expected.to respond_with(:ok) }
 
@@ -117,7 +121,12 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { get :new }
+    let(:user) { create(:user, :admin) }
+
+    before do
+      sign_in user
+      get :new
+    end
 
     it { is_expected.to respond_with(:ok) }
 
@@ -131,9 +140,11 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
 
     before do
+      sign_in user
       get :edit, params: { id: project.id }
     end
 
@@ -149,6 +160,12 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:user) { create(:user, :admin) }
+
+    before do
+      sign_in user
+    end
+
     context 'when all parameters are correct' do
       describe 'http response' do
         before do
@@ -179,7 +196,12 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
+
+    before do
+      sign_in user
+    end
 
     context 'when parameters are correct' do
       describe 'http response' do
@@ -212,7 +234,12 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
+
+    before do
+      sign_in user
+    end
 
     context 'when record is successfully deleted' do
       describe 'http response' do

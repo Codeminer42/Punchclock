@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe NewAdmin::RegionalHolidaysController do
+
   describe 'GET #index' do
+    let(:user) { create(:user, :admin) }
     let!(:new_york)    { create(:city, name: 'New York') }
     let!(:los_angeles) { create(:city, name: 'Los Angeles') }
     let!(:miami)       { create(:city, name: 'Miami') }
@@ -22,6 +24,8 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
     let!(:chicago_holiday) do
       create(:regional_holiday, cities: [chicago], month: 11, name: 'Thanksgiving Day')
     end
+
+    before { sign_in user }
 
     it do
       is_expected.to permit(:regional_holiday_id, :month, { city_ids: [] }).for(:index, verb: :get)
@@ -139,6 +143,7 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
   end
 
   describe 'GET #show' do
+    let(:user) { create(:user, :admin) }
     let(:city) { create(:city) }
 
     let!(:regional_holiday) do
@@ -146,6 +151,7 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
     end
 
     before do
+      sign_in user
       get :show, params: { id: regional_holiday.id }
     end
 
@@ -161,7 +167,10 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
   end
 
   describe 'GET #new' do
+    let(:user) { create(:user, :admin) }
+
     before do
+      sign_in user
       get :new
     end
 
@@ -177,7 +186,10 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
   end
 
   describe 'POST #create' do
+    let(:user) { create(:user, :admin) }
     let!(:city) { create(:city) }
+
+    before { sign_in user }
 
     context 'when all parameters are correct' do
       describe 'http response' do
@@ -210,9 +222,11 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
   end
 
   describe 'GET #edit' do
+    let(:user) { create(:user, :admin) }
     let(:city) { create(:city) }
 
     let!(:regional_holiday) do
+      sign_in user
       create(:regional_holiday, cities: [city])
     end
 
@@ -232,11 +246,14 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
   end
 
   describe 'PATCH #update' do
+    let(:user) { create(:user, :admin) }
     let(:city) { create(:city) }
 
     let!(:regional_holiday) do
       create(:regional_holiday, cities: [city])
     end
+
+    before { sign_in user }
 
     context 'when parameters are correct' do
       describe 'http response' do
@@ -270,7 +287,10 @@ RSpec.describe NewAdmin::RegionalHolidaysController do
   end
 
   describe 'DELETE #destroy' do
+    let(:user) { create(:user, :admin) }
     let!(:regional_holiday) { create(:regional_holiday) }
+
+    before { sign_in user }
 
     context 'when record is successfully deleted' do
       describe 'http response' do
