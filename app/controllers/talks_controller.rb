@@ -1,8 +1,4 @@
 class TalksController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound do
-    redirect_to '/404'
-  end
-  
   before_action :authenticate_user!
 
   def index
@@ -11,5 +7,44 @@ class TalksController < ApplicationController
 
   def show
     @talk = current_user.talks.find(params[:id])
+  end
+
+  def new
+    @talk = Talk.new
+  end
+
+  def create
+    @talk = current_user.talks.new(talk_params)
+
+    if @talk.save
+      redirect_to talks_path,
+                  notice: I18n.t(:notice, scope: "flash.actions.create",
+                                          resource_name: Talk.model_name.human)
+    else
+      flash_errors('create', Talk.model_name.human, error_message)
+      render :new
+    end
+  end
+
+  def destroy
+    @talk = current_user.talks.find(params[:id])
+    @talk.destroy
+    redirect_to talks_path,
+                notice: I18n.t(:notice, scope: "flash.actions.destroy",
+                                        resource_name: Talk.model_name.human)
+  end
+
+  private
+
+  def talk_params
+    params.require(:talk).permit(:event_name, :talk_title, :date)
+  end
+
+  def errors
+    @talk.errors.full_messages.join('. ')
+  end
+
+  def error_message
+    I18n.t(:errors, scope: :flash, errors:)
   end
 end
