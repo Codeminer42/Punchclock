@@ -138,6 +138,16 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
         expect(response).to redirect_to(root_path)
       end
     end
+
+    context 'when user is not logged in' do
+      let(:questionnaire) { create(:questionnaire) }
+
+      it 'redirects to sign in page' do
+        get new_admin_show_questionnaire_url(questionnaire.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 
   describe 'POST #create' do
