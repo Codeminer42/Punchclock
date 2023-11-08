@@ -2,7 +2,7 @@
 
 module NewAdmin
   class RevenueForecastController < NewAdminController
-    load_and_authorize_resource
+    authorize_resource class: false
 
     def index
       @years_range = RevenueForecastPresenter.years_range
