@@ -100,22 +100,22 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
     end
 
     context 'when project has allocations' do
-      before do
+      let!(:allocation) do
         create(:allocation,
-               start_at: 2.months.after,
-               end_at: 3.months.after,
-               user: create(:user),
-               project:).decorate
-
-        get :show, params: { id: project.id }
+          start_at: 2.months.after,
+          end_at: 3.months.after,
+          user: create(:user),
+          project:).decorate
       end
+
+      before { get :show, params: { id: project.id } }
 
       it 'assigns decorated allocations to @allocations' do
         expect(assigns(:allocations).last).to be_an_instance_of(AllocationDecorator)
       end
 
-      xit 'assigns revenue forecast to @revenue_forecast' do
-        expect(assigns(:revenue_forecast)).to have_key(Date.current.year)
+      it 'assigns revenue forecast to @revenue_forecast' do
+        expect(assigns(:revenue_forecast)).to have_key(allocation.start_at.beginning_of_month.year)
       end
     end
   end
