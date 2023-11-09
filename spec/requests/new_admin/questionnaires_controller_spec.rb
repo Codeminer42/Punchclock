@@ -191,4 +191,111 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       end
     end
   end
+
+  describe 'GET #edit' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      let(:questionnaire) { create(:questionnaire) }
+      before { sign_in user }
+
+      it 'renders edit template' do
+        get edit_new_admin_questionnaire_path(questionnaire.id)
+
+        expect(response).to render_template(:edit)
+      end
+
+      it 'returns http status 200 ok' do
+        get edit_new_admin_questionnaire_path(questionnaire.id)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:questionnaire) { create(:questionnaire) }
+
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get edit_new_admin_questionnaire_path(questionnaire.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not logged in' do
+      let(:questionnaire) { create(:questionnaire) }
+
+      it 'redirects to root path' do
+        get edit_new_admin_questionnaire_path(questionnaire.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe 'PUT/PATCH #update' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      let(:questionnaire) { create(:questionnaire) }
+
+      before { sign_in user }
+
+      context 'whith valid params' do
+        let(:valid_params) { { questionnaire: { title: 'New title' } } }
+        it 'updates the questionnaire' do
+          patch new_admin_update_questionnaire_path(questionnaire.id, params: valid_params)
+
+          expect(questionnaire.reload.title).to eq('New title')
+        end
+
+        it 'redirects to show page' do
+          patch new_admin_update_questionnaire_path(questionnaire.id, params: valid_params)
+
+          expect(response).to redirect_to(new_admin_show_questionnaire_path)
+        end
+      end
+
+      context 'with invalid params' do
+        let(:invalid_params) { { questionnaire: { title: '' } } }
+
+        it 'does not update the questionnaire' do
+          expect { patch new_admin_update_questionnaire_path(questionnaire.id, params: invalid_params) }.not_to change(Questionnaire.find(questionnaire.id), :title)
+        end
+
+        it 'renders the edit template with errors', :aggregate_failures do
+          patch new_admin_update_questionnaire_path(questionnaire.id, params: invalid_params)
+
+          expect(response.body).to include('Título não pode ficar em branco')
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:questionnaire) { create(:questionnaire) }
+      let(:valid_params) { { questionnaire: { title: 'New title' } } }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        patch new_admin_update_questionnaire_path(questionnaire.id, params: valid_params)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not logged in' do
+      let(:questionnaire) { create(:questionnaire) }
+      let(:valid_params) { { questionnaire: { title: 'New title' } } }
+
+      it 'redirects to root path' do
+        patch new_admin_update_questionnaire_path(questionnaire.id, params: valid_params)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
 end
