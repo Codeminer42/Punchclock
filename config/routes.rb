@@ -45,8 +45,9 @@ Rails.application.routes.draw do
     resources :projects, only: :update, as: :update_project
     resources :projects, only: :destroy, as: :destroy_project
     resources :revenue_forecast, only: :index
-    resources :questionnaires, except: %i[show]
+    resources :questionnaires, except: %i[show update]
     resources :questionnaires, only: :show, as: :show_questionnaire
+    resources :questionnaires, only: :update, as: :update_questionnaire
 
     namespace :projects do
       resources :allocate_users, only: %i[new create]

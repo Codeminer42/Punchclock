@@ -30,6 +30,20 @@ module NewAdmin
       end
     end
 
+    def edit
+      @questionnaire = Questionnaire.find(params[:id])
+    end
+
+    def update
+      @questionnaire = Questionnaire.find(params[:id])
+
+      if @questionnaire.update(questionnaire_params)
+        redirect_on_success new_admin_show_questionnaire_path(id: @questionnaire.id), message_scope: 'update'
+      else
+        render_on_failure :edit
+      end
+    end
+
     private
 
     def filters
@@ -48,7 +62,7 @@ module NewAdmin
 
     def questionnaire_params
       params.require(:questionnaire).permit(:title, :kind, :active, :description,
-                                            questions_attributes: %i[title kind raw_answer_options _destroy])
+                                            questions_attributes: %i[title kind raw_answer_options _destroy id])
     end
 
     def redirect_on_success(url, message_scope:)
