@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     resources :projects, only: :destroy, as: :destroy_project
     resources :revenue_forecast, only: :index
     resources :questionnaires
+    resources :notes
 
     namespace :projects do
       resources :allocate_users, only: %i[new create]
