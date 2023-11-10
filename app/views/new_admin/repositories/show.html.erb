@@ -1,0 +1,116 @@
+<% content_for :page_title do %>
+  <%= @repository.link %>
+<% end %>
+
+<div data-tab-id="repository" class="space-y-6">
+  <div id="project_actions" class="flex items-center justify-end">
+    <div class="mx-2">
+      <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+        <%= t '.edit' %>
+      </button>
+    </div>
+
+    <div class="mx-2">
+      <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+        <%= t '.destroy' %>
+      </button>
+    </div>
+  </div>
+  <table class="w-full whitespace-nowrap">
+    <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+        <th colspan="100%" class="px-4 py-3"><%= t 'new_admin.repositories.details' %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Repository.human_attribute_name(:link) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-bold">
+              <%= @repository.link %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Repository.human_attribute_name(:description) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @repository.description %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Repository.human_attribute_name(:language) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @repository.language %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Repository.human_attribute_name(:highlight) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <% if @repository.highlight %>
+                <%= heroicon "check-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+              <% else %>
+                <%= heroicon "x-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+              <% end %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Repository.human_attribute_name(:created_at) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  l(@repository.created_at, format: :long) %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Repository.human_attribute_name(:updated_at) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  l(@repository.updated_at, format: :long) %>
+            </p>
+          </div>
+        </td>
+      </tr>
+    <tbody>
+  <table>
+</div>
