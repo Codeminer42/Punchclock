@@ -44,6 +44,14 @@ module NewAdmin
       end
     end
 
+    def destroy
+      @questionnaire = Questionnaire.find(params[:id])
+
+      @questionnaire.destroy
+
+      redirect_on_success new_admin_questionnaires_path, message_scope: 'destroy'
+    end
+
     private
 
     def filters

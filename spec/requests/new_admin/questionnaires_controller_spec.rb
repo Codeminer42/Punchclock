@@ -298,4 +298,47 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       end
     end
   end
+
+  describe 'DELETE #delete' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      before { sign_in user }
+
+      let!(:questionnaire) { create(:questionnaire) }
+
+      it 'deletes the questionnaire' do
+        expect { delete new_admin_destroy_questionnaire_path(questionnaire.id) }.to change(Questionnaire, :count).by(-1)
+      end
+
+      it 'redirects to questionnaires index' do
+        delete new_admin_destroy_questionnaire_path(questionnaire.id)
+
+        expect(response).to redirect_to(new_admin_questionnaires_path)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:questionnaire) { create(:questionnaire) }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_questionnaire_path(questionnaire.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user not logged in' do
+      let(:questionnaire) { create(:questionnaire) }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_questionnaire_path(questionnaire.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
 end

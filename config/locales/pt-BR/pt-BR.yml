@@ -270,6 +270,7 @@ pt-BR:
     show_title: "Questionário #%{id}"
     details: "Detalhes do questionário"
     edit: 'Editar questionário'
+    not_possible_to_delete: 'Não é possível deletar esse questionário'
   regional_holidays:
     title: "Feriados regionais"
     filters: "Filtros"

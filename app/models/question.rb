@@ -10,10 +10,10 @@ class Question < ApplicationRecord
   validates_presence_of :title, :kind
   validate :raw_answer_options_must_be_present, if: :answer_options_needed?
 
-  enumerize :kind, in: { 
-    multiple_choice: 0 
-    },  scope: :shallow,
-        predicates: true
+  enumerize :kind, in: {
+    multiple_choice: 0
+  },  scope: :shallow,
+                   predicates: true
 
   def raw_answer_options=(answer)
     self.answer_options = answer.split(';').map(&:strip).reject(&:empty?)
