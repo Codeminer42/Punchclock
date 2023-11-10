@@ -16,9 +16,6 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'user/sessions' }
 
-  resources :punches
-  resource :user, only: %i[show edit update]
-
   resources :vacations, only: %i[index show new create destroy] if ENV["ENABLE_VACATION"].present?
 
   resources :dashboard, only: :index do
@@ -59,12 +56,19 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
+    resource :user, only: %i[show edit update]
     root to: 'punches#index', as: :authenticated_user
     get 'two_factor', to: 'users#two_factor'
     get 'deactivate_two_factor', to: 'users#deactivate_two_factor'
     post 'confirm_otp', to: 'users#confirm_otp'
     get 'backup_codes', to: 'users#backup_codes'
     post 'deactivate_otp', to: 'users#deactivate_otp'
+    resources :punches do
+      collection do
+        get "calendar(/:year)(/:month)", action: :calendar, as: :calendar
+        post :calendar, action: :bulk_create
+      end
+    end
   end
 
   unauthenticated :user do

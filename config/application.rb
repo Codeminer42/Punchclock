@@ -30,6 +30,7 @@ module Punchclock
     config.i18n.locale = :'pt-BR'
     config.i18n.default_locale = :'pt-BR'
     config.time_zone = 'America/Sao_Paulo'
+    config.beginning_of_week = :sunday
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_job.queue_adapter = :sidekiq

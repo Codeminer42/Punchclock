@@ -1,0 +1,59 @@
+<% content_for :assets do %>
+  <%= javascript_pack_tag 'calendar' %>
+<% end %>
+<div data-controller="calendar" data-calendar-select-day-class="selected">
+  <div class="container">
+    <%= render "calendar_form", punches: @punches %>
+  </div>
+  <div class="d-flex justify-content-center container">
+    <div class="calendar-container">
+      <turbo-frame id="calendar-days">
+        <div class="d-flex align-items-center">
+          <h2>
+            <%= link_to "❮",
+              calendar_punches_path(month: @selected_month.prev_month.month, year: @selected_month.prev_month.year),
+              class: "nav-arrow mr-1" %>
+            <%= @current_month_by_weeks.values.second.first.strftime("%B") %>
+            <% unless @current_month_by_weeks.values.second.first.month == Date.current.month %>
+              <%= link_to "❯", calendar_punches_path(month: @selected_month.next_month.month, year: @selected_month.next_month.year), class: "nav-arrow ml-1" %>
+            <% end %>
+          </h2>
+          <h6 class="ml-2">Horas: <b><%= 0 %></b></h6>
+        </div>
+
+        <table class='punches-table'>
+          <thead>
+            <tr>
+              <% Date::DAYNAMES.each do |dayname| %>
+                <th><%= dayname %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @current_month_by_weeks.each do |_week_number, days_of_week| %>
+              <tr>
+                <% days_of_week.each do |day| %>
+                  <%= tag.td class: "weekday-#{day.wday} #{day.month == @selected_month.month ? "" : "out"}",
+                    data: {
+                      action: day.on_weekday? && day.month == @selected_month.month ? "click->calendar#selectDay" : nil,
+                      calendar_day_param: day } do %>
+                    <h3>
+                      <%= day.strftime("%d") %><%= "/#{day.strftime('%b')}" if day.mday == 1 %>
+                    </h3>
+                    <ul class="punches ml-0">
+                      <% Array(@punches_of_day[day]).each do |punch| %>
+                        <li>
+                          <%= "#{punch.from.strftime("%H:%M")} - #{punch.to.strftime("%H:%M")}" %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </turbo-frame>
+    </div>
+  </div>
+</div>

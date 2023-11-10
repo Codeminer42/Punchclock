@@ -1,0 +1,77 @@
+<turbo-frame id="punches-form">
+  <%= form_for punches, url: calendar_punches_path do |f| %>
+    <!-- data-search-target="errorMessage" -->
+    <%= f.hidden_field :days, name: "punches_calendar_form[days][]", data: {calendar_target: "selectedDays"} %>
+    <div class="form-container mb-4">
+      <!-- Form Header -->
+      <div class="d-flex justify-content-between align-items-baseline selected-days-container">
+        <h6>Selecionado (<%= 0 %>)</h6>
+        <div class="d-flex align-items-center">
+          <button
+            class="btn btn-outline-secondary btn-sm text-dark mr-2"
+            disabled=<%= true %>
+            type="button"
+          >
+            Remover seleção <i class="fa fa-times-circle fa-sm"></i>
+          </button>
+          <button
+            class="btn btn-outline-danger btn-sm text-danger"
+            disabled=<%= true %>
+            type="button"
+          >
+              Apagar <i style='color: "#c61515"' class="fa fa-trash fa-sm"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Form Inputs Control -->
+      <div class="row p-3">
+        <div class="col select-container">
+          <%= f.select :project_id, Project.all,
+            include_blank: 'Projeto',
+            required: true,
+            data: { calendar_target: "deactivatable" }
+          %>
+        </div>
+        <div class="col">
+          <div class="d-flex align-items-center">
+            <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} class="fa fa-coffee fa-lg" data-calendar-target="deactivatableIcon"></i>
+            <%= f.time_field :from1,
+              class: "form-control form-control-sm w-auto ml-1",
+              value: "09:00",
+              required: true,
+              data: { calendar_target: "deactivatable" }
+            %>
+            <span class="mx-1">-</span>
+            <%= f.time_field :to1,
+              class: "form-control form-control-sm w-auto",
+              value: "12:00",
+              required: true,
+              data: { calendar_target: "deactivatable" }
+            %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="d-flex align-items-center">
+            <i style={{color: isSelectedsEmpty ? "#9ea8ad" : "#555"}} class="fa fa-utensils fa-lg" data-calendar-target="deactivatableIcon"></i>
+            <%= f.time_field :from2,
+              class: "form-control form-control-sm w-auto ml-1",
+              value: "13:00",
+              required: true,
+              data: { calendar_target: "deactivatable" }
+            %>
+            <span class="mx-1">-</span>
+            <%= f.time_field :to2,
+              class: "form-control form-control-sm w-auto",
+              value: "18:00",
+              required: true,
+              data: { calendar_target: "deactivatable" }
+            %>
+          </div>
+        </div>
+        <div class="col">
+          <%= f.submit  class: "w-100", value: "Salvar", data: { calendar_target: "deactivatable" } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</turbo-frame>

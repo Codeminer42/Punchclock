@@ -33,6 +33,29 @@ class PunchesController < ApplicationController
     end
   end
 
+  def bulk_create
+    punches_params = params.require(:punches_calendar_form).permit(:project_id, :from1, :from2, :to1, :to2, days: [])
+
+    @punches = Punches::CalendarForm.new(punches_params)
+    @punches.validate
+    @punches_of_day = current_user.punches.group_by(&:date)
+    @current_month_by_weeks = (Date.current.beginning_of_month.beginning_of_week..Date.current.end_of_month.end_of_week).group_by do |date|
+      date.strftime("%U")
+    end
+
+
+    render :calendar
+    # @punch = Punch.new(punch_params)
+    # @punch.user_id = current_user.id
+
+    # if @punch.save
+    #   redirect_to punches_path, notice: I18n.t(:notice, scope: "flash.actions.create", resource_name: "Punch")
+    # else
+    #   flash_errors('create')
+    #   render :new
+    # end
+  end
+
   def update
     @punch = scopped_punches.find params[:id]
     @punch.attributes = punch_params
@@ -42,6 +65,16 @@ class PunchesController < ApplicationController
     else
       flash_errors('update')
       render :new
+    end
+  end
+
+  def calendar
+    @selected_month = params[:month].present? && params[:year].present? ? "#{params[:year]}/#{params[:month]}/1".to_date : Date.current.beginning_of_month
+
+    @punches = Punches::CalendarForm.new
+    @punches_of_day = current_user.punches.group_by(&:date)
+    @current_month_by_weeks = (@selected_month.beginning_of_week..@selected_month.end_of_month.end_of_week).group_by do |date|
+      date.strftime("%U")
     end
   end
 

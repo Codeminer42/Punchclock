@@ -47,6 +47,7 @@ $header-text-color: #453b3b;
 
     &.out {
       opacity: .3;
+      cursor: default;
     }
 
     &.today {
@@ -59,6 +60,8 @@ $header-text-color: #453b3b;
   .weekday-0, .weekday-6, .weekday-holiday {
     background: $flat-clouds;
     color: $flat-silver;
+    cursor: default;
+
     ul {
       color: $flat-pomegranate;
     }
