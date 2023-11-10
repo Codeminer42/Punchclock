@@ -10,6 +10,10 @@ module NewAdmin
       @repositories = paginate_record(repositories)
     end
 
+    def show
+      @repository = Repository.find(params[:id]).decorate
+    end
+
     private
 
     def repositories

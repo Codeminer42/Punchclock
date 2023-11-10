@@ -46,7 +46,8 @@ Rails.application.routes.draw do
     resources :projects, only: :destroy, as: :destroy_project
     resources :revenue_forecast, only: :index
     resources :questionnaires
-    resources :repositories, only: %i[index]
+    resources :repositories, except: %i[show]
+    resources :repositories, only: :show, as: :show_repository
 
     namespace :projects do
       resources :allocate_users, only: %i[new create]
