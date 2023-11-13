@@ -2,6 +2,8 @@
 
 module NewAdmin
   class ProjectsController < NewAdminController
+    load_and_authorize_resource
+
     before_action :set_project, only: %i[show edit update destroy]
 
     def index
@@ -34,14 +36,6 @@ module NewAdmin
         redirect_on_success new_admin_show_project_path(id: @project.id), message_scope: 'update'
       else
         render_on_failure :edit
-      end
-    end
-
-    def destroy
-      if @project.destroy
-        redirect_on_success new_admin_projects_path, message_scope: 'destroy'
-      else
-        render_on_failure :index
       end
     end
 
