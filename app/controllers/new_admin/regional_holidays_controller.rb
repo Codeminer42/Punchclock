@@ -2,6 +2,8 @@
 
 module NewAdmin
   class RegionalHolidaysController < NewAdminController
+    load_and_authorize_resource
+
     before_action :set_regional_holiday, only: %i[show edit update destroy]
     before_action :load_cities_with_holidays, only: :index
 
