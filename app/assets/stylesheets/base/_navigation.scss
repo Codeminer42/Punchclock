@@ -1,7 +1,19 @@
 .navbar {
   background: $red;
-  background: linear-gradient(to bottom,  $red 0%,$redDark 20%,$redDarker 100%);
-  background: gradient(linear, left top, left bottom, color-stop(0%,$red), color-stop(20%,$redDark), color-stop(100%,$redDarker)); /* Chrome,Safari4+ */
+  background: linear-gradient(
+    to bottom,
+    $red 0%,
+    $redDark 20%,
+    $redDarker 100%
+  );
+  background: gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, $red),
+    color-stop(20%, $redDark),
+    color-stop(100%, $redDarker)
+  ); /* Chrome,Safari4+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$red', endColorstr='$redDarker',GradientType=0 ); /* IE6-9 */
 
   a {
@@ -51,7 +63,7 @@
     a {
       img.gravatar {
         border-radius: 20px;
-        margin: 1em
+        margin: 1em;
       }
     }
   }
@@ -84,12 +96,16 @@
     display: flex;
     padding-top: 0.813em;
     padding-bottom: 0.813em;
-
   }
 
   &-opened {
     .links a {
       display: block;
     }
+  }
+
+  .dropdown-menu {
+    min-width: 15rem;
+    color: #c61515;
   }
 }

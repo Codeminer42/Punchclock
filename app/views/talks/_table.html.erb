@@ -1,0 +1,33 @@
+<table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th><%= Talk.human_attribute_name(:event_name) %></th>
+      <th><%= Talk.human_attribute_name(:talk_title) %></th>
+      <th><%= Talk.human_attribute_name(:date) %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if talks.any? %>
+      <% talks.each do |talk| %>
+        <tr>
+          <td><%= talk.event_name %></td>
+          <td><%= talk.talk_title %></td>
+          <td><%= talk.date %></td>
+          <td><%= link_to t('helpers.show'), talk_path(talk) %></td>
+          <td><%= link_to t('helpers.edit'), edit_talk_path(talk) %></td>
+          <td><%= link_to t('helpers.destroy'), talk_path(talk), method: :delete %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">
+          <%= t('talks.no_talks_found') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

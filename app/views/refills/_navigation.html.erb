@@ -13,7 +13,7 @@
             <%= link_to "#", data: {toggle: "dropdown"}, class: "dropdown-toggle" do %>
               <%= t('.punches') %><span class="caret"></span>
             <% end %>
-            <ul class="dropdown-menu bg-danger" style="min-width: 11rem" role="menu" aria-labelledby="dLabel" style="color:#c61515">
+            <ul class="dropdown-menu bg-danger" role="menu" aria-labelledby="dLabel">
               <li>
                 <%= link_to new_punch_path, class:"justify-content-start" do %>
                   <%= t('.single_punch') %>
@@ -50,6 +50,31 @@
               <%= t('.administrative') %>
             <% end %>
           <% end %>
+        </div>
+
+        <div class="links">
+          <div class="dropdown">
+            <%= link_to "#", data: {toggle: "dropdown"}, class: "dropdown-toggle resume" do %>
+              <%= t('.my_resume') %><span class="caret"></span>
+            <% end %>
+            <ul class="dropdown-menu bg-danger" role="menu" aria-labelledby="dLabel">
+              <li>
+                <%= link_to education_experiences_path, class:"justify-content-start" do %>
+                  <%= EducationExperience.model_name.human(count: 2) %>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to talks_path, class:"justify-content-start" do %>
+                  <%= Talk.model_name.human(count: 2) %>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to professional_experiences_path, class:"justify-content-start" do %>
+                  <%= ProfessionalExperience.model_name.human(count: 2) %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div class="navbar-nav ml-auto nav-link">

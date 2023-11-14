@@ -13,13 +13,14 @@ ActiveAdmin.register Allocation do
   filter :ongoing
   filter :user, collection: -> { User.active.order(:name) }
   filter :project, collection: -> { Project.active.order(:name) }
+  filter :hourly_rate_currency, collection: -> { Allocation.hourly_rate_currencies }, as: :select
   filter :start_at
   filter :end_at
 
   index download_links: [:xlsx] do
     column :user, sortable: 'users.name'
     column :project
-    column :hourly_rate
+    column :hourly_rate, sortable: :hourly_rate_cents
     column :start_at, sortable: false
     column :end_at, sortable: false
     column :days_left, &:days_until_finish

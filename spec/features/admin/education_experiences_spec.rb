@@ -4,8 +4,8 @@ require 'rails_helper'
 
 describe 'EducationExperience', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let!(:user)      { create(:user, :admin) }
-  let!(:another_user)      { create(:user) }
+  let!(:user) { create(:user, :admin) }
+  let!(:another_user) { create(:user) }
   let!(:education_experiences) { create_list(:education_experience, 15) }
   let!(:education_experience) { create(:education_experience, user: user) }
 
@@ -23,6 +23,12 @@ describe 'EducationExperience', type: :feature do
                         have_text('Data de início') &
                         have_text('Data de término')
       end
+    end
+
+    it 'has the xlsx export link' do
+      click_link 'XLSX'
+
+      expect(current_path).to eq('/admin/education_experiences.xlsx')
     end
   end
 

@@ -3,6 +3,22 @@
 require 'rails_helper'
 
 describe 'Punches Dashboard', type: :feature do
+  describe 'navigation bar' do
+    let(:user) { create(:user) }
+
+    context 'when the user is logged in' do
+      before do
+        sign_in user
+      end
+
+      it 'has the dropdown option on the navigation bar' do
+        visit root_path
+
+        expect(page).to have_link('Experiências Educacionais', href: education_experiences_path)
+      end
+    end
+  end
+
   context 'When user has overtime allowed' do
     let!(:authed_user_with_overtime) { create_logged_in_user(allow_overtime: true) }
     let!(:active_project) { create(:project, :active) }
@@ -73,7 +89,7 @@ describe 'Punches Dashboard', type: :feature do
 
   context 'When user do not have overtime allowed' do
     let!(:authed_user_without_overtime) { create_logged_in_user }
-    let!(:regional_holiday) do 
+    let!(:regional_holiday) do
       create(:regional_holiday, cities: [authed_user_without_overtime.city], month: 11, day: 2)
     end
     let!(:active_project) { create(:project, :active) }
@@ -107,13 +123,13 @@ describe 'Punches Dashboard', type: :feature do
       lunch_end_input = hour_inputs[3]
 
       morning_start_input.set('09:00')
-      morning_end_input.set('12:00')   
+      morning_end_input.set('12:00')
 
       lunch_start_input.set('09:00')
-      lunch_end_input.set('12:00')      
+      lunch_end_input.set('12:00')
 
       save_button = find('.w-100')
-      
+
       expect(save_button.disabled?).to eq(true)
     end
   end
@@ -122,14 +138,14 @@ describe 'Punches Dashboard', type: :feature do
     let!(:authed_user_without_overtime) { create_logged_in_user }
     let!(:active_project) { create(:project, :active) }
     let(:time_now) { Time.rfc3339('2022-06-06T15:00:00-03:00') }
-    
+
     before do
       allow(Time).to receive(:now).and_return(time_now)
     end
 
     it 'Renders alert with error messages', js: true do
       visit '/dashboard/2022/06'
-      
+
       find('td.inner', text: '06').click
       find('span.select2').click
       find('li.select2-results__option').click
@@ -143,13 +159,13 @@ describe 'Punches Dashboard', type: :feature do
       lunch_end_input = hour_inputs[3]
 
       morning_start_input.set('09:00')
-      morning_end_input.set('12:00')   
+      morning_end_input.set('12:00')
 
       lunch_start_input.set('13:00')
-      lunch_end_input.set(1.hour.from_now.to_fs(:time))     
+      lunch_end_input.set(1.hour.from_now.to_fs(:time))
 
       alert_message = accept_alert { click_on 'Salvar' }
-      
+
       expect(alert_message).to eq('Horário final não pode ser no futuro')
     end
   end

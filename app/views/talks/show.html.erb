@@ -1,0 +1,39 @@
+<div class="container-fluid talk">
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+      <b>
+        <%= Talk.model_name.human %>
+      </b>
+      <b>
+        <%= link_to t('helpers.back'), talks_path, class: "button" %>
+        <%= link_to t('helpers.edit'), edit_talk_path(@talk.id), class: "button" %>
+        <%= link_to t('helpers.destroy'), talk_path(@talk.id), class: "button", method: :delete %>
+      </b>
+    </div>
+    <div class="card-body"> 
+      <div class="talk-info">
+        <span>
+          <b>
+            <%= t 'talk.details' %>
+          </b>
+        </span>
+      </div>
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= Talk.human_attribute_name(:event_name) %></b>: <%= @talk.event_name %> </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p><b><%= Talk.human_attribute_name(:talk_title) %></b>: <%= @talk.talk_title %> </p>
+        </div>
+      </div>
+      <div class="card mb-2 d-flex gap-5">
+        <div class="card-body">
+            <p><b><%= Talk.human_attribute_name(:date) %></b>: <%= @talk.date %> </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

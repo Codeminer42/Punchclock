@@ -1,0 +1,52 @@
+<div id="page-top" class="row">
+  <div class="container-fluid home">
+    <div class="card-body">
+      <%= link_to t('education_experiences.new.new_experience'), new_education_experience_path, class: "button" %>
+    </div>
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i>
+        <%= t('activerecord.models.education_experience.other') %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered users-evaluation" id="dataTable">
+            <thead>
+              <tr>
+                <th><%= EducationExperience.human_attribute_name("institution") %></th>
+                <th><%= EducationExperience.human_attribute_name("course") %></th>
+                <th><%= EducationExperience.human_attribute_name("start_date") %></th>
+                <th><%= EducationExperience.human_attribute_name("end_date") %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @education_experiences.empty?  %>
+                <tr>
+                  <td colspan="4"><%= t('resumes.education_experience.not_found') %></td>
+                </tr>
+              <% end %>
+              <% @education_experiences.each do |experience| %>
+                <tr>
+                  <td><%= experience.institution %></td>
+                  <td><%= experience.course %></td>
+                  <td><%= I18n.l(experience.start_date.to_date, format: :default) %></td>
+                  <td><%= I18n.l(experience.end_date.to_date, format: :default) %></td>
+                  <td><%= link_to t('helpers.edit'), edit_education_experience_path(experience.id) %></td>
+                  <td><%= link_to t('helpers.destroy'), education_experience_path(experience.id), method: :delete %></td>
+                  <td><%= link_to t('helpers.show'), education_experience_path(experience.id) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section>
+  <%= paginate  @education_experiences %>
+</section>

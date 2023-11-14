@@ -19,6 +19,18 @@ ActiveAdmin.register EducationExperience do
     actions
   end
 
+  controller do
+    def index
+      respond_to do |format|
+        format.html { super }
+        format.xlsx do
+          spreadsheet = EducationExperiencesSpreadsheet.new find_collection(except: :pagination)
+          send_data spreadsheet.to_string_io, filename: 'education_experiences.xlsx'
+        end
+      end
+    end
+  end
+
   form do |f|
     user_id = params[:user_id] || f.object.user_id
     f.inputs do

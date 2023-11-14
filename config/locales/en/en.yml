@@ -20,60 +20,60 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  "true": 'Yes'
-  "false": 'No'
+  "true": "Yes"
+  "false": "No"
   activerecord:
     attributes:
       user:
         password: "Password"
   date:
     formats:
-      month_name: '%B'
-      month_and_year: '%b/%Y'
+      month_name: "%B"
+      month_and_year: "%b/%Y"
   hello: "Hello world"
-  user: 'User'
-  reviewer: 'Reviewer'
-  evaluated: 'Evaluated'
-  review: 'Review'
-  created_at: 'Created at'
-  updated_at: 'Updated at'
-  view: 'View'
-  mine: 'Mine'
-  written: 'Written'
+  user: "User"
+  reviewer: "Reviewer"
+  evaluated: "Evaluated"
+  review: "Review"
+  created_at: "Created at"
+  updated_at: "Updated at"
+  view: "View"
+  mine: "Mine"
+  written: "Written"
   refills:
     navigation:
-      punches: 'Punches'
-      single_punch: 'Single Punch'
-      multiple_punches: 'Multiple Punches'
+      punches: "Punches"
+      single_punch: "Single Punch"
+      multiple_punches: "Multiple Punches"
   form:
     title:
-      change_your_password: 'Change your password'
-      verify_your_identity: 'Verify Your Identity'
+      change_your_password: "Change your password"
+      verify_your_identity: "Verify Your Identity"
     hint:
-      minimum_caracters: 'caracters minimum'
-      authentication_code: 'Enter the 6 digit code or the recovery code.'
+      minimum_caracters: "caracters minimum"
+      authentication_code: "Enter the 6 digit code or the recovery code."
     field:
-      new_password: 'New Password'
-      confirm_new_password: 'Confirm new password'
-      authentication_code: 'Authentication Code'
+      new_password: "New Password"
+      confirm_new_password: "Confirm new password"
+      authentication_code: "Authentication Code"
     button:
-      change_my_password: 'Change my password'
-      verify: 'Verify'
+      change_my_password: "Change my password"
+      verify: "Verify"
     links:
   errors:
     messages:
-      wrong_credentials: 'The username or password is incorrect'
-      unable_to_refuse_contribution: 'Unable to refuse contribution'
-  allocation_chart: 'Allocation chart'
-  mentoring: 'Mentoring'
-  mentor: 'Mentor'
-  mentors: 'Mentors'
-  office: 'Offices'
-  mentees: 'Mentees'
-  name: 'Name'
-  skills: 'Skills'
-  client: 'Client'
-  allocated_until: 'Allocated until'
+      wrong_credentials: "The username or password is incorrect"
+      unable_to_refuse_contribution: "Unable to refuse contribution"
+  allocation_chart: "Allocation chart"
+  mentoring: "Mentoring"
+  mentor: "Mentor"
+  mentors: "Mentors"
+  office: "Offices"
+  mentees: "Mentees"
+  name: "Name"
+  skills: "Skills"
+  client: "Client"
+  allocated_until: "Allocated until"
   specialty: "Specialty"
   vacation_approved: "Vacation request approved"
   vacation_denied: "Vacation request denied"
@@ -83,8 +83,8 @@ en:
   no_performance_evaluations: "No performance evaluations"
   evaluation: "Evaluation"
   access_evaluation: "Access Evaluation"
-  revenue_forecast: 'Revenue Forecast'
-  revenue_forecast_warning: '* This feature was implemented on Sept/2022, and for this reason, data before this date are incomplete.'
+  revenue_forecast: "Revenue Forecast"
+  revenue_forecast_warning: "* This feature was implemented on Sept/2022, and for this reason, data before this date are incomplete."
   internal_market: "Internal Market"
   international_market: "International Market"
   blank_field: "can't be blank"
@@ -98,10 +98,10 @@ en:
       finished: "Finished"
       cancelled: "Cancelled"
       all: "All"
-    title: 'Vacations'
-    empty: 'No vacations found'
+    title: "Vacations"
+    empty: "No vacations found"
     index:
-      are_you_sure_remove_request: 'Remove this vacation request?'
+      are_you_sure_remove_request: "Remove this vacation request?"
       request_vacation: "Request Vacation"
   send_reset_instructions: "Send me reset password instructions"
   didnt_receive_instructions: "Didn't receive confirmation instructions?"
@@ -117,7 +117,7 @@ en:
     end_at: End At
     in_progress: In Progress
     title: "Allocation #%{id}"
-  present: 'Present'
+  present: "Present"
   evaluations:
     empty: No evaluation found
     filters: Filters
@@ -132,6 +132,11 @@ en:
     answers: "Respostas"
     question: "Questão"
     response: "Resposta"
+  questionnaires:
+    empty: "No questionnaires found"
+    filters: "Filters"
+    filter: "Filter"
+    clear: "Clear filters"
   regional_holidays:
     title: "Regional holidays"
     filters: "Filters"

@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="container-fluid home">
+    <div class="card-body">
+      <%= link_to t('talks.new'), new_talk_path, class: "button" %>
+    </div>
+    <div class="card mb-3">
+      <div class="card-header">
+        <%= t('talks.title') %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive ">
+          <%= render 'table', talks: @talks %>
+        </div>
+      </div>
+      <div>
+        <%= paginate @talks %>
+      </div>
+    </div>
+  </div>
+</div>
