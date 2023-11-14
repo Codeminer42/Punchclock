@@ -150,6 +150,9 @@ GEM
     bullet (7.0.7)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
+    business_time (0.13.0)
+      activesupport (>= 3.2.0)
+      tzinfo
     cancancan (3.3.0)
     capybara (3.39.2)
       addressable
@@ -651,6 +654,7 @@ DEPENDENCIES
   bootsnap
   bootstrap (~> 4.5)
   bullet
+  business_time
   cancancan (~> 3.3.0)
   capybara
   capybara-screenshot

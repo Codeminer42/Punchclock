@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'business_time'
+
 class RevenueForecastService
   WORKING_DAYS_PER_MONTH = 20
   WORKING_HOURS_PER_DAY = 8
@@ -67,6 +69,37 @@ class RevenueForecastService
     result
   end
 
+  def self.detailed_month_forecast(month, year)
+    new.detailed_month_forecast(month, year)
+  end
+
+  def detailed_month_forecast(month, year)
+    first_day_of_month = Date.new(year, month, 1)
+    last_day_of_month = first_day_of_month.end_of_month
+
+    allocations = Allocation.in_period(first_day_of_month, last_day_of_month)
+
+    result = []
+
+    allocations.each do |allocation|
+      start_date = [first_day_of_month, allocation.start_at].max
+      end_date = [last_day_of_month, allocation.end_at].min
+      worked_hours = start_date.business_days_until(end_date, inclusive = true) * 8
+
+      result_item = { user: allocation.user.name,
+                      project: allocation.project.name,
+                      hourly_rate: allocation.hourly_rate.format,
+                      start_date: start_date.to_fs,
+                      end_date: end_date.to_fs,
+                      worked_hours:,
+                      total_revenue: (allocation.hourly_rate * worked_hours).format }
+
+      result << result_item
+    end
+
+    result
+  end
+
   private
 
   def allocation_month_data(allocation, month, year)
@@ -92,14 +125,14 @@ class RevenueForecastService
     analyzed_month = Date.new(year, month, 1)
 
     days = if same_month_and_year?(start_date, end_date)
-      calculate_weekdays(start_date, end_date)
-    elsif same_month_and_year?(start_date, analyzed_month)
-      calculate_weekdays(start_date, analyzed_month.end_of_month)
-    elsif same_month_and_year?(end_date, analyzed_month)
-      calculate_weekdays(analyzed_month, end_date)
-    else
-      WORKING_DAYS_PER_MONTH
-    end
+             calculate_weekdays(start_date, end_date)
+           elsif same_month_and_year?(start_date, analyzed_month)
+             calculate_weekdays(start_date, analyzed_month.end_of_month)
+           elsif same_month_and_year?(end_date, analyzed_month)
+             calculate_weekdays(analyzed_month, end_date)
+           else
+             WORKING_DAYS_PER_MONTH
+           end
 
     days * WORKING_HOURS_PER_DAY
   end
