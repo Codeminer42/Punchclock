@@ -1,0 +1,8 @@
+<ul class="breadcrumb">
+  <li><%= link_to t(:back, scope: :helpers), talks_path %></li>
+</ul>
+
+<h1>
+  <%= t(:editing, scope: %i(helpers actions), model: Talk.model_name.human) %>
+</h1>
+<%= render 'form', talk: @talk %>

@@ -24,13 +24,13 @@ describe 'RevenueForecast', type: :feature do
 
       before { visit '/new_admin/revenue_forecast' }
 
-      xit 'shows year of newest allocation' do
+      it 'shows year of newest allocation' do
         within '#revenue_forecast_years' do
           expect(page).to have_button('2022') && have_button('2023')
         end
       end
 
-      xit 'shows project details' do
+      it 'shows project details' do
         within '#revenue_forecast_years' do
           click_button '2023'
         end

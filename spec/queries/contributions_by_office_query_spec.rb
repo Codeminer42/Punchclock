@@ -3,15 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe ContributionsByOfficeQuery do
-  let(:offices) { create_list(:office, 3) }
-
+  
   subject { ContributionsByOfficeQuery.new }
-
+  
   context 'to_relation' do
-    before do
-      user = create(:user, office: offices.first)
+    let(:offices) { create_list(:office, 3) }
 
-      create_list(:contribution, 6, { user: user })
+    before do
+      create(:user, :with_contributions, office: offices.first, contributions_count: 6)
     end
 
     it 'return the office' do
@@ -24,10 +23,10 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'by_office' do
-    before do
-      user = create(:user, office: offices.first)
+    let(:offices) { create_list(:office, 3) }
 
-      create_list(:contribution, 3, { user: user })
+    before do
+      create(:user, :with_contributions, office: offices.first, contributions_count: 3)
     end
 
     it 'return contributions' do
@@ -36,11 +35,11 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'leaderboard' do
+    let(:offices) { create_list(:office, 3) }
+
     before do
       3.times do |n|
-        user = create(:user, office: offices[n])
-
-        create_list(:contribution, 3 - n, { user: user })
+        create(:user, :with_contributions, office: offices[n], contributions_count: 3 - n)
       end
     end
 
@@ -55,11 +54,15 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'this_week' do
+    let(:offices) { create_list(:office, 3) }
+
     before do
+      travel_to '2022-01-01'.to_date
       user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user })
-      create_list(:contribution, 3, { user: user, created_at: 1.week.ago })
+      create_list(:contribution, 3, { users: [user] })
+      create_list(:contribution, 4, { users: [user], created_at: 1.month.ago })
+      create_list(:contribution, 5, { users: [user], created_at: 13.month.ago })
     end
 
     it 'return the right number of contributions' do
@@ -68,6 +71,8 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'per_month' do
+    let(:offices) { create_list(:office, 3) }
+
     around do |example|
       travel_to(DateTime.new(2022,01, 01), &example)
     end
@@ -77,9 +82,9 @@ RSpec.describe ContributionsByOfficeQuery do
 
       user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user })
-      create_list(:contribution, 4, { user: user, created_at: 1.month.ago })
-      create_list(:contribution, 5, { user: user, created_at: 13.month.ago })
+      create_list(:contribution, 3, { users: [user] })
+      create_list(:contribution, 4, { users: [user], created_at: 1.month.ago })
+      create_list(:contribution, 5, { users: [user], created_at: 13.month.ago })
     end
 
     it 'return the right number of contributions' do
@@ -92,11 +97,13 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'n_weeks_ago' do
+    let(:offices) { create_list(:office, 3) }
+
     before do
       user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user })
-      create_list(:contribution, 3, { user: user, created_at: 2.week.ago })
+      create_list(:contribution, 3, { users: [user] })
+      create_list(:contribution, 3, { users: [user], created_at: 2.week.ago })
     end
 
     it 'return the right number of contributions' do
@@ -105,11 +112,13 @@ RSpec.describe ContributionsByOfficeQuery do
   end
 
   context 'approved' do
+    let(:offices) { create_list(:office, 3) }
+
     before do
       user = create(:user, office: offices.first)
 
-      create_list(:contribution, 3, { user: user })
-      create_list(:contribution, 3, { user: user, state: :approved })
+      create_list(:contribution, 3, { users: [user] })
+      create_list(:contribution, 3, { users: [user], state: :approved })
     end
 
     it 'return the right number of contributions' do

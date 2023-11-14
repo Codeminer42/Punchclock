@@ -41,6 +41,7 @@ pt-BR:
   talks:
     title: "Minhas Palestras"
     no_talks_found: "Nenhuma palestra encontrada"
+    new: "Nova palestra"
   repositories:
     language: 'Linguagem'
     title: 'Repositórios'

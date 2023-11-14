@@ -48,7 +48,6 @@ class User < ApplicationRecord
   belongs_to :mentor, class_name: :User, foreign_key: :mentor_id, optional: true
   belongs_to :city, optional: true
   has_many :punches
-  has_many :contributions
   has_many :allocations, dependent: :restrict_with_error
   has_many :projects, through: :allocations
   has_many :evaluations, foreign_key: :evaluated_id, dependent: :restrict_with_error
@@ -62,6 +61,7 @@ class User < ApplicationRecord
   has_many :skills, through: :user_skills
   has_many :talks
   has_many :professional_experiences
+  has_and_belongs_to_many :contributions
 
   delegate :holidays, to: :city, prefix: true
 

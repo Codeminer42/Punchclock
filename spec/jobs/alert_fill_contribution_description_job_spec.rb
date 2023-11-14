@@ -5,7 +5,7 @@ RSpec.describe AlertFillContributionDescriptionJob, type: :job do
     let(:user) { create(:user) }
 
     context "when user has received contributions" do
-      let(:contributions) { create_list(:contribution, 3, user: user) }
+      let(:contributions) { create_list(:contribution, 3, users: [user]) }
 
       it "sends a notification email when user has received contributions" do
         expect(NotificationMailer).to receive(:notify_fill_contribution_description)

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class RegionalHolidaysController < ApplicationController
-    include Pagination
-
-    layout 'new_admin'
+  class RegionalHolidaysController < NewAdminController
+    load_and_authorize_resource
 
     before_action :set_regional_holiday, only: %i[show edit update destroy]
     before_action :load_cities_with_holidays, only: :index
