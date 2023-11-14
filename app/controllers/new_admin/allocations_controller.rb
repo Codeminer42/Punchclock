@@ -1,28 +1,22 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class AllocationsController < ApplicationController
-    layout 'new_admin'
-
-    before_action :authenticate_user!
+  class AllocationsController < NewAdminController
+    load_and_authorize_resource
 
     def show
       allocation = Allocation.find(params[:id])
 
       @allocation_forecast = RevenueForecastService.allocation_forecast(allocation)
       @allocation = allocation.decorate
-
-      AbilityAdmin.new(current_user).authorize! :manage, @allocation
     end
 
     def edit
       @allocation = Allocation.find(params[:id])
-      AbilityAdmin.new(current_user).authorize! :manage, @allocation
     end
 
     def update
       @allocation = Allocation.find(params[:id])
-      AbilityAdmin.new(current_user).authorize! :manage, @allocation
 
       @allocation.attributes = allocation_params
 

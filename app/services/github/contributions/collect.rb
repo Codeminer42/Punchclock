@@ -32,7 +32,7 @@ module Github
           client.search
                 .issues(q: query)
                 .items
-                .map { | pull_request | Wrappers::PullRequest.new(pull_request: pull_request, engineers: @engineers, repositories: @repositories) }
+                .map { | pull_request | Wrappers::PullRequest.new(pull_request: pull_request, engineers: @engineers, repositories: @repositories, client: client) }
         rescue StandardError => e
           Rails.logger.error e.message
           Rails.logger.error e.backtrace.join("\n")

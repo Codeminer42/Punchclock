@@ -43,7 +43,24 @@ RSpec.describe Github::Contributions::Wrappers::Engineers, type: :service do
     end
 
     context 'when the user is found' do
-      it { is_expected.to eq user.id  }
+      it { is_expected.to eq user  }
+    end
+  end
+
+  describe '#find_by_email' do
+    subject(:find_by_github_user) { described_class.new.find_by_email(user.email) }
+    let(:user) { create(:user) }
+    
+    context 'when the user is not found' do
+      before do
+        allow(user).to receive(:email).and_return('')
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when the user is found' do
+      it { is_expected.to eq user  }
     end
   end
 end

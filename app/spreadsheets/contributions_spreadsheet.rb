@@ -3,7 +3,7 @@
 class ContributionsSpreadsheet < DefaultSpreadsheet
   def body(contribution)
     [
-      contribution.user.name,
+      contribution.users.map(&:name).join(', '),
       contribution.link,
       contribution.created_at.to_s,
       Contribution.human_attribute_name("state/#{contribution.state}"),
@@ -17,7 +17,7 @@ class ContributionsSpreadsheet < DefaultSpreadsheet
 
   def header
     %w[
-      user
+      authors
       link
       created_at
       state

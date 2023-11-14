@@ -16,8 +16,26 @@ feature 'Navigation Bar' do
 
         expect(page).to have_selector('.dropdown-toggle', text: 'Meu currículo')
         click_link 'Meu currículo'
-        click_link 'Experiência Educacional'
+        click_link 'Experiências Educacionais'
         expect(current_path).to eq(education_experiences_path)
+      end
+
+      it 'has the professional experience dropdown option on the navigation bar', agreggate_failures: true do
+        visit root_path
+
+        expect(page).to have_selector('.dropdown-toggle', text: 'Meu currículo')
+        click_link 'Meu currículo'
+        click_link 'Experiências Profissionais'
+        expect(current_path).to eq(professional_experiences_path)
+      end
+
+      it 'has the talks dropdown option on the navigation bar', agreggate_failures: true do
+        visit root_path
+
+        expect(page).to have_selector('.dropdown-toggle', text: 'Meu currículo')
+        click_link 'Meu currículo'
+        click_link 'Palestras'
+        expect(current_path).to eq(talks_path)
       end
     end
 

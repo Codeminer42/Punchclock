@@ -14,7 +14,7 @@ describe 'Punches Dashboard', type: :feature do
       it 'has the dropdown option on the navigation bar' do
         visit root_path
 
-        expect(page).to have_link('Experiência Educacional', href: education_experiences_path)
+        expect(page).to have_link('Experiências Educacionais', href: education_experiences_path)
       end
     end
   end

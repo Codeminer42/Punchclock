@@ -58,7 +58,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       it 'redirects to the sign in page' do
         get new_admin_questionnaires_path
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
