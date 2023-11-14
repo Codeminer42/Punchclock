@@ -45,12 +45,14 @@ class AbilityAdmin
       Punch
     ]
     can :manage, action
+    can :manage, :allocate_user
     can :read, Punch
     can :manage, Punch, user_id: user.id
     can :create, action
     can :read, Vacation
-    can  :read, :allocation_chart
+    can :read, :allocation_chart
     can :read, :mentoring
+    can :read, :revenue_forecast
 
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'

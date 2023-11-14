@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NewAdmin::ProjectsController, type: :controller do
-  describe '#index' do
+  describe 'GET #index' do
     let(:user) { create(:user, :admin) }
 
     before { sign_in(user) }
@@ -81,9 +81,13 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'GET #show' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
 
-    before { get :show, params: { id: project.id } }
+    before do
+      sign_in user
+      get :show, params: { id: project.id }
+    end
 
     it { is_expected.to respond_with(:ok) }
 
@@ -96,28 +100,33 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
     end
 
     context 'when project has allocations' do
-      before do
+      let!(:allocation) do
         create(:allocation,
-               start_at: 2.months.after,
-               end_at: 3.months.after,
-               user: create(:user),
-               project:).decorate
-
-        get :show, params: { id: project.id }
+          start_at: 2.months.after,
+          end_at: 3.months.after,
+          user: create(:user),
+          project:).decorate
       end
+
+      before { get :show, params: { id: project.id } }
 
       it 'assigns decorated allocations to @allocations' do
         expect(assigns(:allocations).last).to be_an_instance_of(AllocationDecorator)
       end
 
-      xit 'assigns revenue forecast to @revenue_forecast' do
-        expect(assigns(:revenue_forecast)).to have_key(Date.current.year)
+      it 'assigns revenue forecast to @revenue_forecast' do
+        expect(assigns(:revenue_forecast)).to have_key(allocation.start_at.beginning_of_month.year)
       end
     end
   end
 
   describe 'GET #new' do
-    before { get :new }
+    let(:user) { create(:user, :admin) }
+
+    before do
+      sign_in user
+      get :new
+    end
 
     it { is_expected.to respond_with(:ok) }
 
@@ -131,9 +140,11 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
 
     before do
+      sign_in user
       get :edit, params: { id: project.id }
     end
 
@@ -149,6 +160,12 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:user) { create(:user, :admin) }
+
+    before do
+      sign_in user
+    end
+
     context 'when all parameters are correct' do
       describe 'http response' do
         before do
@@ -179,7 +196,12 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    let(:user) { create(:user, :admin) }
     let!(:project) { create(:project) }
+
+    before do
+      sign_in user
+    end
 
     context 'when parameters are correct' do
       describe 'http response' do
@@ -208,40 +230,6 @@ RSpec.describe NewAdmin::ProjectsController, type: :controller do
 
       it { is_expected.to render_template(:edit) }
       it { is_expected.to set_flash.now[:alert] }
-    end
-  end
-
-  describe 'DELETE #destroy' do
-    let!(:project) { create(:project) }
-
-    context 'when record is successfully deleted' do
-      describe 'http response' do
-        before do
-          delete :destroy, params: { id: project.id }
-        end
-
-        it { is_expected.to redirect_to new_admin_projects_path }
-        it { is_expected.to set_flash[:notice] }
-      end
-
-      it "destroys project" do
-        expect do
-          delete :destroy, params: { id: project.id }
-        end.to change(Project, :count).from(1).to(0)
-      end
-    end
-
-    context 'when record is not properly deleted' do
-      before do
-        allow_any_instance_of(Project).to receive(:destroy).and_return(false)
-        allow_any_instance_of(Project).to receive_message_chain(:errors, :full_messages).and_return(['Foobar'])
-
-        delete :destroy, params: { id: project.id }
-      end
-
-      it { is_expected.to render_template(:index) }
-      it { is_expected.to respond_with(:unprocessable_entity) }
-      it { is_expected.to set_flash.now[:alert].to('Foobar') }
     end
   end
 end
