@@ -69,6 +69,17 @@ FactoryBot.define do
         user.skills = create_list(:skill, 2)
       end
     end
+
+    trait :with_contributions do |user|
+      transient do 
+        contributions_count { 2 }
+        contributions_created_at { Time.now }
+      end
+
+      contributions { 
+        create_list(:contribution, contributions_count, created_at: contributions_created_at) 
+      }
+    end
   end
 
   trait :with_all_datetime_informations do

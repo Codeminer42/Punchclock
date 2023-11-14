@@ -7,7 +7,7 @@ RSpec.describe ContributionsSpreadsheet do
   let(:contribution_spreadsheet) { ContributionsSpreadsheet.new([contribution]) }
   let(:header_attributes) do
     %w[
-      user
+      authors
       link
       created_at
       state
@@ -21,7 +21,7 @@ RSpec.describe ContributionsSpreadsheet do
 
   let(:body_attributes) do
     [
-      contribution.user.name,
+      contribution.users.map(&:name).join(', '),
       contribution.link,
       contribution.created_at.to_s,
       Contribution.human_attribute_name("state/#{contribution.state}"),

@@ -19,13 +19,14 @@ pt-BR:
     index:
       total: "TOTAL"
   contributions:
-    my_contributions: "Minhas Contribuições"
-    pr_link: "Link da PR"
-    created_at: "Criada em"
-    pr_state: "Estado da PR"
-    no_prs_found: "Nenhuma PR encontrada"
-    description_filled: "Preenchida"
-    description: "Descrição"
+    my_contributions: 'Minhas Contribuições'
+    pr_link: 'Link da PR'
+    created_at: 'Criada em'
+    pr_state: 'Estado da PR'
+    no_prs_found: 'Nenhuma PR encontrada'
+    description_filled: 'Preenchida'
+    description: 'Descrição'
+    authors: 'Autores'
   evaluations:
     written:
       add_review: "Adicionar Revisão"
