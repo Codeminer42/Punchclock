@@ -2,10 +2,10 @@
 
 module NewAdmin
   class VacationsController < NewAdminController
+    load_and_authorize_resource
+
     def index
       @vacations = paginate_record(vacations)
-
-      AbilityAdmin.new(current_user).authorize! :read, Vacation
     end
 
     private

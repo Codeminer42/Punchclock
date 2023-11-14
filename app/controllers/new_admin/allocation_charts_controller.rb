@@ -2,10 +2,10 @@
 
 module NewAdmin
   class AllocationChartsController < NewAdminController
+    authorize_resource class: false
+
     def index
       @allocations = paginate_record(allocations)
-
-      AbilityAdmin.new(current_user).authorize! :read, :allocation_chart
     end
 
     private

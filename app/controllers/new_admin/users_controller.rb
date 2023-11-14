@@ -2,21 +2,19 @@
 
 module NewAdmin
   class UsersController < NewAdminController
+    load_and_authorize_resource
     before_action :load_user_data, only: :show
 
     def show
       @punches = filter_punches_by_date(params[:id], params[:from], params[:to])
-      AbilityAdmin.new(current_user).authorize! :read, Punch
     end
 
     def edit
       @user = User.find(params[:id])
-      AbilityAdmin.new(current_user).authorize! :manage, @user
     end
 
     def update
       @user = User.find(params[:id])
-      AbilityAdmin.new(current_user).authorize! :manage, @user
 
       @user.attributes = user_params
 

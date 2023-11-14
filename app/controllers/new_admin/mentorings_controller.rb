@@ -2,7 +2,7 @@
 
 module NewAdmin
   class MentoringsController < NewAdminController
-    before_action :authorize_ability!, only: :index
+    authorize_resource class: false
 
     def index
       @mentorings = paginate_record(all_mentorings, decorate: false)
@@ -17,10 +17,6 @@ module NewAdmin
 
     def all_mentorings
       @all_mentorings ||= MentoringQuery.new.call
-    end
-
-    def authorize_ability!
-      AbilityAdmin.new(current_user).authorize! :read, :mentoring
     end
   end
 end

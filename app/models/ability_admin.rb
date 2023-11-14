@@ -45,6 +45,7 @@ class AbilityAdmin
       Punch
     ]
     can :manage, action
+    can :manage, :allocate_user
     can :read, Punch
     can :manage, Punch, user_id: user.id
     can :create, action
