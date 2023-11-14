@@ -96,4 +96,69 @@ RSpec.describe NewAdmin::RepositoriesController, type: :request do
       end
     end
   end
+
+  describe 'GET #new' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      it 'renders new template' do
+        get new_new_admin_repository_path
+
+        expect(response).to render_template(:new)
+      end
+
+      it 'returns http status 200 ok' do
+        get new_new_admin_repository_path
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_new_admin_repository_path
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      context 'with valid parameters' do
+        let(:valid_params) do
+          { link: 'https://github.com/Codeminer42/Punchclock', language: 'Ruby', highlight: true, description: 'Some description' }
+        end
+
+        it 'creates a new repository' do
+          expect { post new_admin_repositories_path, params: { repository: valid_params } }.to change(Repository, :count).by(1)
+        end
+
+        it 'redirects to repositories index page' do
+          post new_admin_repositories_path, params: { repository: valid_params }
+          expect(response).to redirect_to(new_admin_repositories_path)
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:invalid_params) { { link: '' } }
+        it 'does not create the repository' do
+          expect { post new_admin_repositories_path, params: { repository: invalid_params } }.not_to change(Repository, :count)
+        end
+
+        it 'renders template new' do
+          post new_admin_repositories_path, params: { repository: invalid_params }
+          expect(response).to render_template(:new)
+        end
+      end
+    end
+  end
 end
