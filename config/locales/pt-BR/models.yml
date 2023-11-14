@@ -71,7 +71,7 @@ pt-BR:
         talk:
           attributes:
             date:
-              future_date: 'não pode ser um período futuro'
+              future_date: "não pode ser um período futuro"
         education_experience:
           attributes:
             start_date:
