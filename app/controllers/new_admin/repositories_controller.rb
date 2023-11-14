@@ -1,5 +1,5 @@
 module NewAdmin
-  class RepositoriesController < ApplicationController
+  class RepositoriesController < NewAdminController
     include Pagination
     before_action :authenticate_user!
     load_and_authorize_resource
