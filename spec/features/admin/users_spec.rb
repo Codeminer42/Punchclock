@@ -293,10 +293,10 @@ describe 'Users', type: :feature do
 
       context 'on Experience tab' do
         let!(:contribution) { 
-          create(:contribution, :approved, :with_description, user: user).decorate 
+          create(:contribution, :approved, :with_description, users: [user]).decorate 
         }
         let!(:rejected_contribution) { 
-          create(:contribution, :refused, :no_sufficient_effort,:with_description, user: user).decorate 
+          create(:contribution, :refused, :no_sufficient_effort,:with_description, users: [user]).decorate 
         }
         let!(:talk) { create(:talk, user: user).decorate }
 

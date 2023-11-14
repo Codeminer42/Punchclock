@@ -32,12 +32,6 @@
                         edit_new_admin_project_path(id: project.id),
                         class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
             %>
-            <%= link_to t('delete'),
-                        new_admin_destroy_project_path(id: project.id),
-                        method: :delete,
-                        data: { confirm: t('delete_confirmation') },
-                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
-            %>
           </div>
         </td>
       </tr>

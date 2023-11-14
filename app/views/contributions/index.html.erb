@@ -14,13 +14,14 @@
                 <th><%= t('contributions.created_at') %></th>
                 <th><%= t('contributions.pr_state') %></th>
                 <th><%= t('contributions.description') %></th>
+                <th><%= t('contributions.authors') %></th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <% if @user_contributions.empty?  %>
                 <tr>
-                  <td colspan="4"><%= t('contributions.no_prs_found') %></td>
+                  <td colspan="5"><%= t('contributions.no_prs_found') %></td>
                 </tr>
               <% end %>
               <% @user_contributions.each do |contribution| %>
@@ -29,6 +30,9 @@
                   <td><%= I18n.l(contribution.created_at.to_date, format: :default) %></td>
                   <td><%= contribution.pr_state.nil? ? '-' : contribution.pr_state_text %></td>
                   <td><%= contribution.description.present? ? t('contributions.description_filled') : '-' %></td>
+                  <td> 
+                    <%= contribution.users.map(&:first_and_last_name).sort_by{ |name| name }.join("; ") %>
+                  </td>
                   <td>
                     <%=
                       link_to image_tag('edit.png', class: 'mx-auto'),

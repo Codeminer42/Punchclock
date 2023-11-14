@@ -27,13 +27,13 @@ RSpec.describe NewAdmin::RevenueForecastController, type: :controller do
       get :index
     end
 
-    xit { is_expected.to respond_with(:ok) }
+    it { is_expected.to respond_with(:ok) }
 
-    xit 'renders index template' do
+    it 'renders index template' do
       expect(response).to render_template(:index)
     end
 
-    xit 'assigns years range from presenter to @years_range' do
+    it 'assigns years range from presenter to @years_range' do
       expect(assigns(:years_range)).to eq(RevenueForecastPresenter::REVENUE_FORECAST_START_YEAR..2023)
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe NewAdmin::RevenueForecastController, type: :controller do
   context 'when no allocations are present' do
     before { get :index }
 
-    xit 'assigns default revenue forecast start year range to @years_range' do
+    it 'assigns default revenue forecast start year range to @years_range' do
       expect(
         assigns(:years_range)
       ).to eq(RevenueForecastPresenter::REVENUE_FORECAST_START_YEAR..RevenueForecastPresenter::REVENUE_FORECAST_START_YEAR)

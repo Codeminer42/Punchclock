@@ -8,7 +8,7 @@ class ContributionsTextService
   end
 
   def call
-    contributions = @collection.joins(user: :office).select('*').reorder('offices.id, users.id')
+    contributions = @collection.joins(users: :office).select('*').reorder('offices.id, users.id')
 
     generate_text(contributions)
   end

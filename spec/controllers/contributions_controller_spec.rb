@@ -8,9 +8,9 @@ RSpec.describe ContributionsController, type: :controller do
   let(:user) { create(:user) }
   let!(:contribution_list) do
     [
-      create(:contribution, user:, created_at: 10.days.ago, state: :approved),
-      create(:contribution, user:, created_at: Date.today, state: :approved),
-      create(:contribution, user:, created_at: Date.today, state: :refused, rejected_reason: :other_reason)
+      create(:contribution, users: [user], created_at: 10.days.ago, state: :approved),
+      create(:contribution, users: [user], created_at: Date.today, state: :approved),
+      create(:contribution, users: [user], created_at: Date.today, state: :refused, rejected_reason: :other_reason)
     ]
   end
   let(:page) { Capybara::Node::Simple.new(response.body) }
@@ -73,7 +73,7 @@ RSpec.describe ContributionsController, type: :controller do
     end
 
     describe 'GET edit' do
-      let(:contribution) { create(:contribution, user: user) }
+      let(:contribution) { create(:contribution, users: [user]) }
       let(:params) { { id: contribution.id } }
 
       context 'when the page is accessed' do
@@ -96,7 +96,7 @@ RSpec.describe ContributionsController, type: :controller do
     end
 
     describe 'PUT update' do
-      let(:contribution) { create(:contribution, user:) }
+      let(:contribution) { create(:contribution, users:[user]) }
       let(:params) do
         {
           id: contribution.id,
@@ -120,7 +120,7 @@ RSpec.describe ContributionsController, type: :controller do
         end
 
         context 'when description is an empty string' do
-          let(:contribution) { create(:contribution, user:, description: 'description') }
+          let(:contribution) { create(:contribution, users:[user], description: 'description') }
           let(:description) { '' }
 
           it 'is expected to update the contribution description with the nil value' do
