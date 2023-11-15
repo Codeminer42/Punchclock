@@ -1,0 +1,34 @@
+<% content_for :page_title do %>
+  <%= t('repositories.title') %>
+<% end %>
+
+<div class="flex justify-end">
+  <div class="mx-2 mb-4">
+    <%= link_to new_admin_repositories_url do %>
+      <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+        <%= t 'repositories.new' %>
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<div data-tab-id="repositories" class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+	<div class="flex justify-between gap-4">
+		<% if @repositories.any? %>
+			<%= render 'repositories_table', repositories: @repositories %>
+    <% else %>
+      <h3 class="text-xs font-semibold text-left uppercase dark:text-gray-400">
+        <%= t('repositories.empty') %>
+      </h3>
+		<% end %>
+		<div id="filters_sidebar_section">
+			<%= render 'repositories_filters' %>
+		</div>
+	</div>
+</div>
+
+<% if @repositories.any? %>
+  <section id="pagination_regional_holidays" class="dark:text-gray-400">
+    <%= paginate @repositories %>
+  </section>
+<% end %>
