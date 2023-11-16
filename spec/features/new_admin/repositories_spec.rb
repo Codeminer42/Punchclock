@@ -10,6 +10,14 @@ describe 'Repositories', type: :feature do
   end
 
   describe 'Actions' do
+    let!(:repository) do
+      create(:repository,
+              link: 'https://github.com/Codeminer42/Punchclock',
+              language: 'Ruby',
+              highlight: true,
+              description: 'Some description')
+    end
+
     before do
       visit '/new_admin/repositories'
     end
@@ -57,6 +65,47 @@ describe 'Repositories', type: :feature do
         end
       end
     end
-  end
 
+    context 'when on edit' do
+      before do
+        find_link("", href: "/new_admin/repositories/#{repository.id}/edit").click
+      end
+
+      it 'shows form fields' do
+        within "#form_repository" do
+          expect(page).to have_content('Link') and
+                          have_content('Descrição') and
+                          have_content('Linguagem') and
+                          have_content('Highlight')
+        end
+
+        expect(page).to have_button('Enviar')
+      end
+
+      context 'when the link field is valid' do
+        it 'updates the repository' do
+          within "#form_repository" do
+            fill_in 'repository_link', with: 'https://github.com/Codeminer42/Punchclock2/'
+          end
+
+          click_button 'Enviar'
+
+          expect(page).to have_content('Repositório foi atualizado com sucesso.') and
+                          have_content('https://github.com/Codeminer42/Punchclock2/')
+        end
+      end
+
+      context 'when the link field is invalid' do
+        it 'does not update the repository' do
+          within "#form_repository" do
+            fill_in 'repository_link', with: ''
+          end
+
+          click_button 'Enviar'
+
+          expect(page).to have_content('Link não pode ficar em branco')
+        end
+      end
+    end
+  end
 end
