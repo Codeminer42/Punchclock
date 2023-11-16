@@ -8,6 +8,10 @@
       <th class="px-4 py-3"><%= t 'updated_at' %></th>
       <th></th>
       <th></th>
+<<<<<<< HEAD
+      <th></th>
+=======
+>>>>>>> master
     </tr>
   </thead>
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
@@ -58,6 +62,19 @@
             %>
           </div>
         </td>
+        <% unless questionnaire.evaluations.any? %>
+          <td class="px-4 py-3">
+            <div class="flex items-center">
+              <%= link_to t('helpers.destroy'),
+                          new_admin_destroy_questionnaire_path(id: questionnaire.id),
+                          class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900',
+                          method: :delete
+              %>
+            </div>
+          </td>
+        <% else %>
+          <td></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

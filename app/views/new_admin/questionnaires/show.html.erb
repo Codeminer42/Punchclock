@@ -11,6 +11,15 @@
         </button>
       <% end %>
     </div>
+    <% unless @questionnaire.evaluations.any? %>
+      <div class="mx-2">
+        <%= link_to new_admin_destroy_questionnaire_path(id: @questionnaire.id), method: :delete do %>
+          <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+            <%= t 'helpers.destroy' %>
+          </button>
+        <% end %>
+      </div>
+    <% end %>
   </div>
   <table class="w-full whitespace-nowrap">
     <thead>
