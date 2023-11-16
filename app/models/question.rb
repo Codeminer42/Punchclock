@@ -12,8 +12,7 @@ class Question < ApplicationRecord
 
   enumerize :kind, in: {
     multiple_choice: 0
-  },  scope: :shallow,
-                   predicates: true
+  },  scope: :shallow, predicates: true
 
   def raw_answer_options=(answer)
     self.answer_options = answer.split(';').map(&:strip).reject(&:empty?)
