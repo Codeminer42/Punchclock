@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@rails/webpacker": "^5.4.3",
     "babel-core": "^6.18.2",
-    "babel-loader": "^8.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",

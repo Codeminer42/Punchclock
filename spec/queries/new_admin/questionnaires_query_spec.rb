@@ -15,7 +15,7 @@ RSpec.describe NewAdmin::QuestionnairesQuery do
       let!(:inactive_questionnaires) { create_list(:questionnaire, 2, active: false) }
       let!(:english_questionnaires) { create_list(:questionnaire, 2, :kind_english) }
 
-      it 'retireve filtered projects' do
+      it 'retrieves filtered projects' do
         filters = { active: true, kind: 'english' }
 
         expect(described_class.call(filters)).to match_array(english_questionnaires)
