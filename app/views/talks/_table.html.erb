@@ -18,8 +18,8 @@
           <td><%= talk.talk_title %></td>
           <td><%= talk.date %></td>
           <td><%= link_to t('helpers.show'), talk_path(talk) %></td>
-          <td><%= link_to image_tag('edit.png', class: 'mx-auto'), edit_talk_path(talk) %></td>
-          <td><%= link_to image_tag('destroy.png', class: 'mx-auto'), talk_path(talk), method: :delete %></td>
+          <td><%= link_to t('helpers.edit'), edit_talk_path(talk) %></td>
+          <td><%= link_to t('helpers.destroy'), talk_path(talk), method: :delete %></td>
         </tr>
       <% end %>
     <% else %>

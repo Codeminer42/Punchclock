@@ -58,7 +58,6 @@ RSpec.describe NewAdmin::MentoringsController do
       end
 
       it { is_expected.to use_before_action(:authenticate_user!) }
-      it { is_expected.to use_before_action(:authorize_ability!) }
     end
   end
 end

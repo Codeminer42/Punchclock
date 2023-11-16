@@ -58,7 +58,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       it 'redirects to the sign in page' do
         get new_admin_questionnaires_path
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -145,7 +145,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       it 'redirects to sign in page' do
         get new_admin_show_questionnaire_url(questionnaire.id)
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -230,7 +230,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       it 'redirects to root path' do
         get edit_new_admin_questionnaire_path(questionnaire.id)
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -294,7 +294,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       it 'redirects to root path' do
         patch new_admin_update_questionnaire_path(questionnaire.id, params: valid_params)
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -337,7 +337,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
       it 'redirects to root path' do
         delete new_admin_destroy_questionnaire_path(questionnaire.id)
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end

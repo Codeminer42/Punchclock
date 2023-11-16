@@ -71,7 +71,7 @@ pt-BR:
         talk:
           attributes:
             date:
-              future_date: 'Data não pode ser um período futuro'
+              future_date: "não pode ser um período futuro"
         education_experience:
           attributes:
             start_date:
@@ -340,6 +340,8 @@ pt-BR:
       contribution:
         id: "ID"
         user: "Usuário"
+        users: "Usuários"
+        authors: "Autores"
         link: "Link"
         state: "Estado"
         description: "Descrição"

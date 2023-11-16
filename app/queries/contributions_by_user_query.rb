@@ -3,12 +3,12 @@
 class ContributionsByUserQuery
   def initialize(relation = Contribution.all)
     @relation = relation
-                  .joins(:user)
-                  .group(:user_id)
+                  .joins(:users)
+                  .group('users.id')
   end
 
   def to_hash
-    @relation.count(:user_id)
+    @relation.count
   end
 
   def approved

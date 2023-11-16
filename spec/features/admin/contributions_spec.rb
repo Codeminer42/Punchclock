@@ -7,8 +7,8 @@ RSpec::Matchers.define_negated_matcher :not_have_text, :have_text
 
 describe 'Contribution', type: :feature do
   let(:admin_user) { create(:user, :admin, occupation: :administrative) }
-  let!(:contribution) { create(:contribution) }
-  let!(:inactive_user_contribution) { create(:contribution, :approved, user: create(:user, :inactive_user)) }
+  let!(:contribution) { create(:contribution, users: create_list(:user, 2)) }
+  let!(:inactive_user_contribution) { create(:contribution, :approved, users: [create(:user, :inactive_user)]) }
 
   before do
     sign_in(admin_user)
@@ -16,13 +16,14 @@ describe 'Contribution', type: :feature do
   end
 
   describe 'Index' do
-    it 'must find fields "User", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason" on table' do
+    it 'must find fields "Authors", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason" on table' do
       within 'table' do
-          expect(page).to have_text('Usuário') &
+          expect(page).to have_text('Autores') &
                         have_text('Link') &
                         have_text('Criado em') &
                         have_text('Estado') &
                         have_text('Pr State') &
+                        have_text('Autores') &
                         have_text('Revisado por') &
                         have_text('Revisado em') &
                         have_text('Motivo da recusa')
@@ -31,36 +32,40 @@ describe 'Contribution', type: :feature do
 
     it 'have contribution table with correct information of active user' do
       within 'table' do
-        expect(page).to have_text(contribution.user.first_and_last_name) &
+        expect(page).to have_text(contribution.users.first.first_and_last_name) &
+                        have_text(contribution.users.last.first_and_last_name) &
                         have_text(contribution.link) &
                         have_text(I18n.l(contribution.created_at.to_date, format: :default)) &
                         have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
-                        have_text(contribution.pr_state_text)
+                        have_text(contribution.pr_state_text) 
       end
     end
 
     it 'have contribution table without information of inactive user' do
       within 'table' do
-        expect(page).to not_have_text(inactive_user_contribution.user.first_and_last_name) &
+        expect(page).to not_have_text(inactive_user_contribution.users.take.first_and_last_name) &
                         not_have_text(inactive_user_contribution.link) &
                         not_have_text(Contribution.human_attribute_name("state/#{inactive_user_contribution.state}"))
       end
     end
 
     context 'Tracking' do
-      let!(:contribution) { create(:contribution, tracking: true, pending: :dev, notes: 'Note') }
+      let!(:contribution) { 
+        create(:contribution, :with_users, tracking: true, pending: :dev, notes: 'Note', users_count: 2) 
+      }
 
       before do
         find_link('Monitorando (1)', href: "/admin/contributions?scope=tracking").click
       end
 
-      it 'must have fields "User", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason", "Pending" and "Notes" on table' do
+      it 'must have fields "Authors", "Link", "Created at", "State", "Pr state", "Reviewed by", "Reviewed at", "Rejected reason", "Pending" and "Notes" on table' do
         within 'table' do
-            expect(page).to have_text('Usuário') &
+            expect(page).to have_text('Autores')
                           have_text('Link') &
                           have_text('Criado em') &
                           have_text('Estado') &
                           have_text('Pr State') &
+                          have_text('Autores') &
                           have_text('Revisado por') &
                           have_text('Revisado em') &
                           have_text('Motivo da recusa') &
@@ -71,7 +76,8 @@ describe 'Contribution', type: :feature do
 
       it 'have contribution table with correct information of active user' do
         within 'table' do
-          expect(page).to have_text(contribution.user.first_and_last_name) &
+          expect(page).to have_text(contribution.users.first.first_and_last_name) &
+                          have_text(contribution.users.last.first_and_last_name) &
                           have_text(contribution.link) &
                           have_text(I18n.l(contribution.created_at.to_date, format: :default)) &
                           have_text(Contribution.human_attribute_name("state/#{contribution.state}")) &
@@ -107,11 +113,11 @@ describe 'Contribution', type: :feature do
 
       it 'must have labels' do
         expect(page).to have_text('Monitorar') &
-                        have_text('Usuário') &
                         have_text('Link') &
                         have_text('Estado') &
                         have_text('Motivo da recusa') &
                         have_text('Pr State') &
+                        have_text('Autores') &
                         have_text('Revisado por') &
                         have_text('Revisado em') &
                         have_text('Criado em') &
@@ -123,8 +129,9 @@ describe 'Contribution', type: :feature do
 
       it 'have contribution table with correct information', :aggregate_failures do
         within "table" do
-          within "tr.row.row-user" do
-            expect(page).to have_text(contribution.user.name)
+          within "tr.row.row-authors" do
+            expect(page).to have_text(contribution.users.first.first_and_last_name)
+            expect(page).to have_text(contribution.users.last.first_and_last_name)
           end
 
           within "tr.row.row-link" do

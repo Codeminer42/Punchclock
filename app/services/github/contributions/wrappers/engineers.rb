@@ -3,12 +3,16 @@ module Github
     module Wrappers
       class Engineers
         def find_by_github_user(github_user)
-          to_h[github_user]
+          engineers.find_by(github: github_user)
+        end
+
+        def find_by_email(email)
+          engineers.find_by(email:)
         end
 
         def to_query
-          engineers.map do |github_user, _user_id|
-            "author:#{github_user.strip}"
+          engineers.map do |engineer|
+            "author:#{engineer.github.strip}"
           end.join(' ')
         end
 
@@ -22,11 +26,6 @@ module Github
           @engineers ||= User
             .engineer
             .active
-            .pluck(:github, :id)
-        end
-
-        def to_h
-          engineers.to_h
         end
       end
     end
