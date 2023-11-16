@@ -6,6 +6,8 @@
       <th class="px-4 py-3"><%= Questionnaire.human_attribute_name(:active) %></th>
       <th class="px-4 py-3"><%= t 'created_at' %></th>
       <th class="px-4 py-3"><%= t 'updated_at' %></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
@@ -38,6 +40,22 @@
         <td class="px-4 py-3">
           <div class="flex items-center">
             <span><%= l(questionnaire.updated_at, format: :short) %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <%= link_to t('view'),
+                        new_admin_show_questionnaire_path(id: questionnaire.id),
+                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+            %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <%= link_to t('edit'),
+                        edit_new_admin_questionnaire_path(id: questionnaire.id),
+                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
+            %>
           </div>
         </td>
       </tr>
