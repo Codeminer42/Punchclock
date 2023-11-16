@@ -5,9 +5,11 @@
 <div data-tab-id="repository" class="space-y-6">
   <div id="repository_actions" class="flex items-center justify-end">
     <div class="mx-2">
-      <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
-        <%= t '.edit' %>
-      </button>
+      <%= link_to edit_new_admin_repository_path(id: @repository.id) do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t '.edit' %>
+        </button>
+      <% end %>
     </div>
 
     <div class="mx-2">

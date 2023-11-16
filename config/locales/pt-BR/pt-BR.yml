@@ -319,6 +319,8 @@ pt-BR:
       show:
         edit: "Editar Repositório"
         destroy: "Remover Repositório"
+      edit:
+        edit: "Editar"
     revenue_forecast:
       index:
         total: "Total"
