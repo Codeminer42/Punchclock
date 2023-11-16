@@ -30,17 +30,31 @@ describe 'Repositories', type: :feature do
         expect(page).to have_button('Enviar')
       end
 
-      it 'creates repository' do
-        within "#form_repository" do
-          fill_in 'repository_link', with: 'https://github.com/Codeminer42/Punchclock/'
-          fill_in 'repository_description', with: 'Some description'
-          fill_in 'repository_language', with: 'Ruby'
-          check 'repository_highlight'
+      context 'when the link field is valid' do
+        it 'creates repository' do
+          within "#form_repository" do
+            fill_in 'repository_link', with: 'https://github.com/Codeminer42/Punchclock/'
+            fill_in 'repository_description', with: 'Some description'
+            fill_in 'repository_language', with: 'Ruby'
+            check 'repository_highlight'
+          end
+
+          click_button 'Enviar'
+
+          expect(page).to have_content('Repositório foi criado com sucesso.')
         end
+      end
 
-        click_button 'Enviar'
+      context 'when the link field is invalid' do
+        it 'does not create the repository' do
+          within "#form_repository" do
+            fill_in 'repository_link', with: ''
+          end
 
-        expect(page).to have_content('Repositório foi criado com sucesso.')
+          click_button 'Enviar'
+
+          expect(page).to have_content('Link não pode ficar em branco')
+        end
       end
     end
   end
