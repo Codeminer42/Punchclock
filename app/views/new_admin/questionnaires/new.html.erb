@@ -1,0 +1,11 @@
+<% content_for :assets do %>
+  <%= javascript_pack_tag 'questionnaire' %>
+<% end %>
+
+<% content_for :page_title do %>
+  <%= t 'questionnaires.new' %>
+<% end %>
+
+<div class="space-y-6">
+  <%= render 'form', questionnaire: @questionnaire, url: new_admin_questionnaires_path %>
+</div>

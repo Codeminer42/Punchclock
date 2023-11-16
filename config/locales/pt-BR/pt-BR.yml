@@ -264,6 +264,13 @@ pt-BR:
     filters: "Filtros"
     filter: "Filtrar"
     clear: "Limpar filtros"
+    new: "Novo questionário"
+    new_question: "Nova pergunta"
+    remove_question: "Remover pergunta"
+    answer_options: "Opções de resposta separadas por ;"
+    show_title: "Questionário #%{id}"
+    details: "Detalhes do questionário"
+    edit: 'Editar questionário'
   regional_holidays:
     title: "Feriados regionais"
     filters: "Filtros"

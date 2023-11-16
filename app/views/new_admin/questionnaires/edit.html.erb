@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t 'questionnaires.edit' %>
+<% end %>
+
+<div data-tab-id="edit_questionnaire">
+  <%= render 'form', questionnaire: @questionnaire, url: new_admin_update_questionnaire_path %>
+</div>
