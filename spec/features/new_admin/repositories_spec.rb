@@ -107,5 +107,32 @@ describe 'Repositories', type: :feature do
         end
       end
     end
+
+    context 'when on destroy' do
+      context 'when user deletes repository from index page' do
+
+        it 'deletes the repository', :aggregate_failures do
+            expect do
+              find_all("a[href=\"/new_admin/repositories/#{repository.id}\"]")[1].click
+            end.to change(Repository, :count).from(1).to(0)
+
+          expect(page).to have_content("Repositório foi deletado com sucesso.")
+        end
+      end
+
+      context 'when user deletes repository from show page' do
+        before { visit "/new_admin/repositories/#{repository.id}" }
+
+        it 'deletes the repository', :aggregate_failures do
+          within '#repository_actions' do
+            expect do
+              find_link("Remover Repositório", href: "/new_admin/repositories/#{repository.id}").click
+            end.to change(Repository, :count).from(1).to(0)
+          end
+
+          expect(page).to have_content("Repositório foi deletado com sucesso.")
+        end
+      end
+    end
   end
 end

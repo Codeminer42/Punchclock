@@ -25,11 +25,12 @@
 						<%= link_to edit_new_admin_repository_path(id: repository.id), class: "flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray" do %>
 							<%= heroicon 'pencil', variant: :solid, options: { class: "w-5 h-5" } %>
 						<% end %>
-						<button
-							class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray"
-							aria-label="Delete">
-          		<%= heroicon 'trash', variant: :mini, options: { class: "w-5 h-5" } %>
-						</button>
+						<%= link_to new_admin_destroy_repository_path(id: repository.id),
+								class: "flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray",
+								method: :delete,
+								data: { confirm: t('delete_confirmation') } do %>
+							<%= heroicon 'trash', variant: :mini, options: { class: "w-5 h-5" } %>
+						<% end %>
 					</div>
 				</td>
 			</tr>
