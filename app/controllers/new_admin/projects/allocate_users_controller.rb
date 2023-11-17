@@ -2,21 +2,18 @@
 
 module NewAdmin
   module Projects
-    class AllocateUsersController < ApplicationController
-      layout 'new_admin'
+    class AllocateUsersController < NewAdminController
+      authorize_resource class: false
 
-      before_action :authenticate_user!
       before_action :set_project, only: %i[new create]
 
       def new
         @allocation = @project.allocations.new
 
-        AbilityAdmin.new(current_user).authorize! :manage, @allocation
       end
 
       def create
         @allocation = Allocation.new(allocation_params)
-        AbilityAdmin.new(current_user).authorize! :manage, @allocation
 
         if @allocation.save
           flash[:notice] = I18n.t(:notice, scope: "flash.actions.create",

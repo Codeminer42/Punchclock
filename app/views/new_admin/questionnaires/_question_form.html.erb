@@ -1,0 +1,62 @@
+<div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5" data-new-record="<%= form.object.new_record? %>">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap" id="form_questionnaire">
+      <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+        <th colspan="100%" class="px-4 py-3"><%= t 'questionnaires.new_question' %></th>
+      </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= Question.human_attribute_name('title') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <%= form.text_field :title, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-8 dark:bg-slate-700" %>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/12">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= Question.human_attribute_name('kind') %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <%= form.select :kind,
+                            Question.kind.values.map { |kind| [kind.text.titleize, kind.value] },
+                            { prompt: t('prompt') },
+                            { class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" }
+            %>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="text-gray-700 dark:text-gray-300">
+        <th class="w-1/6">
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+            <%= t 'questionnaires.answer_options' %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <%= form.text_field :raw_answer_options, value: form.object.answer_options_to_string, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-8 dark:bg-slate-700" %>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="flex mt-4">
+    <button type="button" class="px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" data-action="click->nested-form#remove"> <%= t 'questionnaires.remove_question' %> </button>
+  </div>
+
+  <%= form.hidden_field :_destroy %>
+</div>

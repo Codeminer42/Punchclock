@@ -10,6 +10,7 @@
 
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= csrf_meta_tags %>
+    <%= yield(:assets) if content_for?(:assets) %>
   </head>
   <body>
     <div class="main">

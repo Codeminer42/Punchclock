@@ -8,7 +8,6 @@ class AbilityAdmin
 
   def initialize(user)
     return if user.nil?
-
     @action = [
       Allocation,
       User,
@@ -43,14 +42,17 @@ class AbilityAdmin
   def admin_permitions(user)
     can :manage, action + [
       Punch
+
     ]
     can :manage, action
+    can :manage, :allocate_user
     can :read, Punch
     can :manage, Punch, user_id: user.id
     can :create, action
     can :read, Vacation
-    can  :read, :allocation_chart
+    can :read, :allocation_chart
     can :read, :mentoring
+    can :read, :revenue_forecast
 
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'
@@ -58,10 +60,12 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Revenue Forecast'
     can :read, ActiveAdmin::Page, name: 'Mentoring'
 
+    can :manage, Repository
+
     cannot :destroy, [User, Project]
   end
 
-  def open_source_manager_permissions(user)
+  def open_source_manager_permissions(_user)
     can :read, ActiveAdmin::Page, name: 'Dashboard'
     can :read, ActiveAdmin::Page, name: 'Stats'
     can :manage, Repository
@@ -69,9 +73,9 @@ class AbilityAdmin
     can :create, Repository
   end
 
-  def vacation_manager_permissions(user)
+  def vacation_manager_permissions(_user)
     can :manage, Vacation
-    cannot [:denied, :approve], Vacation,  ["status not in (?)", [:approved, :denied, :cancelled]] do |vacation|
+    cannot [:denied, :approve], Vacation, ["status not in (?)", %i[approved denied cancelled]] do |vacation|
       !vacation.pending?
     end
   end

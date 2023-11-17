@@ -26,6 +26,21 @@ class TalksController < ApplicationController
     end
   end
 
+  def edit
+    @talk = current_user.talks.find(params[:id])
+  end
+
+  def update
+    @talk = current_user.talks.find(params[:id])
+
+    if @talk.update(talk_params)
+      redirect_to talks_path, notice: I18n.t(:notice, scope: "flash.actions.update", resource_name: Talk.model_name.human)
+    else
+      flash_errors('update', Talk.model_name.human, error_message)
+      render :edit
+    end
+  end
+
   def destroy
     @talk = current_user.talks.find(params[:id])
     @talk.destroy

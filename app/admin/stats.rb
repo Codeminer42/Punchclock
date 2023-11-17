@@ -4,7 +4,6 @@ include ActiveAdmin::StatsHelper
 
 def contributions_by_offices(month)
   query = ContributionsByOfficeQuery.new.approved
-
   relation = month.empty? ? query.to_relation : query.per_month(month.to_i).to_relation
   ActiveAdmin::StatsHelper.constributions_offices_data(relation)
 end
@@ -38,7 +37,7 @@ ActiveAdmin.register_page 'Stats' do
     relation = ContributionsByOfficeQuery.new.approved.to_relation
     @stats = ActiveAdmin::StatsHelper.constributions_offices_data(relation)
     @max = @stats.values.max
-
+    
     per_users = ContributionsByUserQuery.new.approved.to_hash
     @per_user_stats = ActiveAdmin::StatsHelper.constributions_users_data(
       contributions: per_users,

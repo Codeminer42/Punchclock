@@ -4,7 +4,7 @@ class ContributionsByOfficeQuery
   def initialize(relation = Office.all)
     @relation = relation
                       .left_outer_joins(users: :contributions)
-                      .select('offices.city, COUNT(contributions.id) AS number_of_contributions')
+                      .select('offices.city, COUNT(DISTINCT contributions.id) AS number_of_contributions')
                       .group('offices.id')
   end
 
@@ -42,7 +42,6 @@ class ContributionsByOfficeQuery
 
   def approved
     @relation = @relation.where('contributions.state = :approved', approved: 'approved')
-    
     self
   end
 end

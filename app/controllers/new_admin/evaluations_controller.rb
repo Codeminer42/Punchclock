@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
 module NewAdmin
-  class EvaluationsController < ApplicationController
-    include Pagination
-
-    layout 'new_admin'
-
+  class EvaluationsController < NewAdminController
     load_and_authorize_resource
-
-    before_action :authenticate_user!
 
     def index
       @evaluations = paginate_record(evaluations)

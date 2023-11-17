@@ -6,5 +6,5 @@ class Note < ApplicationRecord
 
   validates_presence_of :title, :comment
 
-  enumerize :rate, in: [:bad, :neutral, :good], scope: :shallow, default: :neutral
+  enumerize :rate, in: %i[bad neutral good], scope: :shallow, default: :neutral
 end

@@ -45,7 +45,11 @@ Rails.application.routes.draw do
     resources :projects, only: :update, as: :update_project
     resources :projects, only: :destroy, as: :destroy_project
     resources :revenue_forecast, only: :index
-    resources :questionnaires
+    resources :questionnaires, except: %i[show update destroy]
+    resources :questionnaires, only: :show, as: :show_questionnaire
+    resources :questionnaires, only: :update, as: :update_questionnaire
+    resources :questionnaires, only: :destroy, as: :destroy_questionnaire
+    resources :repositories, only: %i[index]
     resources :notes
 
     namespace :projects do

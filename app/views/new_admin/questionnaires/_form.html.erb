@@ -1,0 +1,90 @@
+<%= form_with model: questionnaire, url: url, data: { controller: 'nested-form' } do |form| %>
+  <div class="w-full overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full whitespace-no-wrap" id="form_questionnaire">
+        <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+          <th colspan="100%" class="px-4 py-3"><%= t 'questionnaires.new' %></th>
+        </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Questionnaire.human_attribute_name('title') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center">
+              <%= form.text_field :title, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-8 dark:bg-slate-700" %>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Questionnaire.human_attribute_name('kind') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center">
+              <%= form.select :kind,
+                              Questionnaire.kind.values.map { |kind| [kind.text.titleize, kind.value] },
+                              { selected: questionnaire&.kind, prompt: t('prompt') },
+                              { class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" }
+              %>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Questionnaire.human_attribute_name('active') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center">
+              <%= form.check_box :active, { checked: questionnaire.active? }, 'true', 'false' %>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="text-gray-700 dark:text-gray-300">
+          <th class="w-1/12">
+            <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase ">
+              <%= Questionnaire.human_attribute_name('description') %>
+            </div>
+          </th>
+          <td class="px-4 py-3">
+            <div class="flex items-center">
+              <%= form.text_area :description, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-8 dark:bg-slate-700 w-1/2 h-1/4" %>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <template data-nested-form-target="template">
+    <%= form.fields_for :questions, Question.new, child_index: 'NEW_RECORD' do |question_fields| %>
+      <%= render "question_form", form: question_fields %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :questions do |question_fields| %>
+    <%= render "question_form", form: question_fields %>    
+  <% end %>
+
+  <div data-nested-form-target="formContent"></div>
+<div class="flex mt-4">
+    <button type="button" data-action="click->nested-form#add" class="px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" > <%= t 'questionnaires.new_question' %> </button>
+</div>
+
+  <div class="flex mt-4">
+    <%= form.submit t('form.button.submit'), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+  </div>
+<% end %>

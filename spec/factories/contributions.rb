@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :contribution do
-    user
     repository
     state { :received }
     rejected_reason { nil }
@@ -10,7 +9,7 @@ FactoryBot.define do
     sequence :link do |n|
       "https://www.github.com/company/example-#{n}/pull/#{n}#{Faker::Number.number(digits: 2)}"
     end
-
+    
     trait :received do
       state { :received }
     end
@@ -65,6 +64,14 @@ FactoryBot.define do
 
     trait :with_custom_repository do
       repository { build(:repository, link: "https://github.com/org/repo") }
+    end
+
+    trait :with_users do |contribution|
+      transient do 
+        users_count { 2 }
+      end
+
+      users { create_list(:user, users_count) }
     end
   end
 end

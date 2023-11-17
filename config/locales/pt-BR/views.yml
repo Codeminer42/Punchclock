@@ -26,6 +26,8 @@ pt-BR:
     no_prs_found: "Nenhuma PR encontrada"
     description_filled: "Preenchida"
     description: "Descrição"
+    authors: "Autores"
+    title: "Contribuições"
   evaluations:
     written:
       add_review: "Adicionar Revisão"
@@ -40,6 +42,16 @@ pt-BR:
     title: "Minhas Palestras"
     no_talks_found: "Nenhuma palestra encontrada"
     new: "Nova palestra"
+  repositories:
+    language: 'Linguagem'
+    title: 'Repositórios'
+    new: 'Novo Repositório'
+    empty: 'Nenhum repositório encontrado'
+    filter: 'Filtrar'
+    filters: 'Filtros'
+    clear_filters: 'Limpar Filtros'
+    any: 'Qualquer'
+    search_by_name: 'Busca por Nome'
   notification_mailer:
     subject:
       notify_fill_contribution_description_html: "Punchlock - Contribuições Aguardando Descrição"
