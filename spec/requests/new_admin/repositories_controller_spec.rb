@@ -241,4 +241,47 @@ RSpec.describe NewAdmin::RepositoriesController, type: :request do
       end
     end
   end
+
+  describe 'DELETE #delete' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      before { sign_in user }
+
+      let!(:repository) { create(:repository) }
+
+      it 'deletes the repository' do
+        expect { delete new_admin_destroy_repository_path(repository.id) }.to change(Repository, :count).by(-1)
+      end
+
+      it 'redirects to repositories index' do
+        delete new_admin_destroy_repository_path(repository.id)
+
+        expect(response).to redirect_to(new_admin_repositories_path)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let!(:repository) { create(:repository) }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_repository_path(repository.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not signed in' do
+      let!(:repository) { create(:repository) }
+
+      it 'redirects to sign in path' do
+        delete new_admin_destroy_repository_path(repository.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end
