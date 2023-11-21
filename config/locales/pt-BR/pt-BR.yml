@@ -178,6 +178,7 @@ pt-BR:
   not_possible_to_download_excel: 'Não é possível baixar a planilha para a data informada'
   internal_market: "Mercado interno"
   international_market: "Mercado externo"
+  detailed_month_forecast: "Projeção mensal detalhada"
   blank_field: "não pode ficar em branco"
   forgot_password: "Esqueceu sua senha?"
   request_vacation: 'Solicitar Férias'

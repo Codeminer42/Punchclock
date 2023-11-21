@@ -5,6 +5,7 @@ pt-BR:
     edit: "Editar"
     destroy: "Deletar"
     save: "Salvar"
+    download_excel: "Download excel"
     actions:
       editing: "Editando %{model}"
       creating: "Criando %{model}"
