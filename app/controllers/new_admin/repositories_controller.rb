@@ -66,7 +66,7 @@ module NewAdmin
     end
 
     def errors
-      @talk.errors.full_messages.join('. ')
+      @repository.errors.full_messages.join('. ')
     end
 
     def error_message
