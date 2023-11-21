@@ -11,11 +11,13 @@ module NewAdmin
         end
 
         format.xlsx do
-          puts params, 'Params aquiiiiiiiiii'
           spreadsheet = DetailedMonthForecastSpreadsheet.new RevenueForecastService.detailed_month_forecast(
             params[:month].to_i, params[:year].to_i
           )
           send_data spreadsheet.to_string_io, filename: 'month_forecast.xlsx'
+        rescue Date::Error
+          flash[:alert] = I18n.t('not_possible_to_download_excel')
+          redirect_to new_admin_revenue_forecast_index_path
         end
       end
     end

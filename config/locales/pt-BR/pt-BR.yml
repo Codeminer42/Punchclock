@@ -175,6 +175,7 @@ pt-BR:
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
   revenue_forecast_warning: '* Como esta ferramenta começou a ser utilizada em Set/2022, as informações anteriores a esse mês estão incompletas'
+  not_possible_to_download_excel: 'Não é possível baixar a planilha para a data informada'
   internal_market: "Mercado interno"
   international_market: "Mercado externo"
   blank_field: "não pode ficar em branco"
