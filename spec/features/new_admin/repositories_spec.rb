@@ -126,7 +126,7 @@ describe 'Repositories', type: :feature do
         it 'deletes the repository', :aggregate_failures do
           within '#repository_actions' do
             expect do
-              find_link("Remover Repositório", href: "/new_admin/repositories/#{repository.id}").click
+              find_link("Deletar", href: "/new_admin/repositories/#{repository.id}").click
             end.to change(Repository, :count).from(1).to(0)
           end
 
