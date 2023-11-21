@@ -237,6 +237,8 @@ pt-BR:
     end_at: Término
     in_progress: Em Progresso
     title: "Alocação #%{id}"
+    worked_hours: 'Horas trabalhadas'
+    total_revenue: 'Faturamento total'
   punches_filter:
     filter: Filtro
     range: Intervalo
