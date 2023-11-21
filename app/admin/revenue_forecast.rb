@@ -27,18 +27,4 @@ ActiveAdmin.register_page 'Revenue Forecast' do
       end # tabs
     end # panel
   end # content
-
-  # index download_links: [:xlsx] do
-  # end
-
-  controller do
-    def index
-      super do |format|
-        format.xlsx do
-          spreadsheet = DetailedMonthForecastSpreadsheet.new RevenueForecastService.detailed_month_forecast(4, 2023)
-          send_data spreadsheet.to_string_io, filename: 'month_forecast.xlsx'
-        end
-      end
-    end
-  end
 end
