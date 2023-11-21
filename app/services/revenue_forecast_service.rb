@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'business_time'
-
 class RevenueForecastService
   WORKING_DAYS_PER_MONTH = 20
   WORKING_HOURS_PER_DAY = 8
