@@ -61,6 +61,7 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Mentoring'
 
     can :manage, Repository
+    can :manage, Note
 
     cannot :destroy, [User, Project]
   end
