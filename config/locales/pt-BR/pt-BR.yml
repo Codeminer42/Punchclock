@@ -325,4 +325,6 @@ pt-BR:
     details: "Detalhes da palestra"
   notes:
     empty: "Nenhuma note encontrada"
+    show_title: "Note #%{id}"
+    details: "Detalhes da Note"
     

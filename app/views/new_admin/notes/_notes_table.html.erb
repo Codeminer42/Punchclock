@@ -6,6 +6,8 @@
     <th class="px-4 py-3"><%= Note.human_attribute_name('user') %></th>
     <th class="px-4 py-3"><%= Note.human_attribute_name('rate') %></th>
     <th class="px-4 py-3"><%= Note.human_attribute_name('created_at') %></th>
+    <th class="px-4 py-3"><%= Note.human_attribute_name('updated_at') %></th>
+    <th></th>
   </tr>
   </thead>
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
@@ -29,6 +31,14 @@
 
         <td class="px-4 py-3">
           <%= l(note.created_at, format: :short) %>
+        </td>
+        <td class="px-4 py-3">
+          <%= l(note.updated_at, format: :short) %>
+        </td>
+        <td>
+          <%= link_to t('view'), 
+          new_admin_show_note_path(note.id),
+          class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900' %>
         </td>
       </tr>
     <% end %>
