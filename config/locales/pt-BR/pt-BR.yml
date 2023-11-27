@@ -325,4 +325,6 @@ pt-BR:
     details: "Detalhes da palestra"
   notes:
     empty: "Nenhuma note encontrada"
-    
+    filter: "Filtrar"
+    clear: "Limpar"
+    filters: "Filtros"

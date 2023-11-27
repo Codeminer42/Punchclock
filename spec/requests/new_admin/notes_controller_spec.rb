@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NewAdmin::QuestionnairesController, type: :request do
+RSpec.describe NewAdmin::NotesController, type: :request do
   describe 'GET #index' do
     context 'when user is signed in' do
       context 'when user is admin' do
@@ -22,7 +22,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
             expect(response).to render_template(:index)
           end
 
-          it 'shows the questionnaires' do
+          it 'shows the notes' do
             get new_admin_notes_path
 
             expect(response.body).to include(notes[0].title)
@@ -34,7 +34,7 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
           let!(:foo_note) { create(:note, title: 'Foo') }
           let!(:bar_note) { create(:note, title: 'Bar') }
 
-          it 'returns only the filtered questionnaires', :aggregate_failures do
+          it 'returns only the filtered notes', :aggregate_failures do
             get new_admin_notes_path, params: { title: 'foo' }
 
             expect(response.body).to include('Foo')
