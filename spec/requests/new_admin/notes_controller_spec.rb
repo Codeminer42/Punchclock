@@ -32,13 +32,13 @@ RSpec.describe NewAdmin::NotesController, type: :request do
 
         context 'when title filter is applied' do
           let!(:foo_note) { create(:note, title: 'Foo') }
-          let!(:bar_note) { create(:note, title: 'Bar') }
+          let!(:bar_note) { create(:note, title: 'weird title') }
 
           it 'returns only the filtered notes', :aggregate_failures do
             get new_admin_notes_path, params: { title: 'foo' }
 
             expect(response.body).to include('Foo')
-            expect(response.body).not_to include('Bar')
+            expect(response.body).not_to include('weird title')
           end
         end
 
@@ -116,6 +116,77 @@ RSpec.describe NewAdmin::NotesController, type: :request do
         get new_admin_show_note_url(note.id)
 
         expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'GET #new' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      it 'renders new template' do
+        get new_new_admin_note_path
+
+        expect(response).to render_template(:new)
+      end
+
+      it 'returns http status 200 ok' do
+        get new_new_admin_note_path
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_new_admin_note_path
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not logged in' do
+      it 'redirects to sign in page' do
+        get new_new_admin_note_path
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      context 'with valid parameters' do
+        let(:valid_params) do
+          { title: 'title', user_id: user.id, author_id: user.id, comment: 'bla bla', rate: 'neutral' }
+        end
+        it 'creates a new note' do
+          expect { post new_admin_notes_path, params: { note: valid_params } }.to change(Note, :count).by(1)
+        end
+
+        it 'redirects to notes index page' do
+          post new_admin_notes_path, params: { note: valid_params }
+          expect(response).to redirect_to(new_admin_notes_path)
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:invalid_params) { { title: '' } }
+        it 'does not create the note' do
+          expect { post new_admin_notes_path, params: { note: invalid_params } }.not_to change(Questionnaire, :count)
+        end
+
+        it 'renders template new' do
+          post new_admin_notes_path, params: { note: invalid_params }
+          expect(response).to render_template(:new)
+        end
       end
     end
   end

@@ -327,4 +327,5 @@ pt-BR:
     empty: "Nenhuma note encontrada"
     show_title: "Note #%{id}"
     details: "Detalhes da Note"
+    new: "Nova Note"
     
