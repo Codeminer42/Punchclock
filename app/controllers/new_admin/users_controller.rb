@@ -62,13 +62,14 @@ module NewAdmin
         :active,
         :contract_type,
         :name,
-        :backend_level,
         :email,
+        :backend_level,
         :frontend_level,
         :is_admin,
         :is_allocated,
         :is_office_head,
         :office_id,
+        skills: []
         skill_ids: []
       )
     end
