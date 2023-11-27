@@ -175,8 +175,10 @@ pt-BR:
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
   revenue_forecast_warning: '* Como esta ferramenta começou a ser utilizada em Set/2022, as informações anteriores a esse mês estão incompletas'
+  not_possible_to_download_excel: 'Não é possível baixar a planilha para a data informada'
   internal_market: "Mercado interno"
   international_market: "Mercado externo"
+  detailed_month_forecast: "Projeção mensal detalhada"
   blank_field: "não pode ficar em branco"
   forgot_password: "Esqueceu sua senha?"
   request_vacation: 'Solicitar Férias'
@@ -237,6 +239,8 @@ pt-BR:
     end_at: Término
     in_progress: Em Progresso
     title: "Alocação #%{id}"
+    worked_hours: 'Horas trabalhadas'
+    total_revenue: 'Faturamento total'
   punches_filter:
     filter: Filtro
     range: Intervalo

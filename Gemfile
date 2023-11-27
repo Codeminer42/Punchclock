@@ -43,10 +43,10 @@ gem 'caxlsx_rails'
 gem 'docx'
 
 gem 'active_model_serializers', '~> 0.10.13'
+gem 'business_time'
 gem 'github_api', '~> 0.18.2'
 gem 'httparty'
 gem 'money-rails', '~> 1.12'
-
 gem 'ransack', '~> 2.3'
 
 gem 'sidekiq', "~> 6.5.12"
