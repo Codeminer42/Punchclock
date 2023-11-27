@@ -87,6 +87,14 @@ class User < ApplicationRecord
   scope :commercial, -> { by_roles_in([:commercial]) }
   scope :vacation_managers, -> { by_roles_in([:hr, :commercial]) }
 
+  scope :by_name_like, ->(name) { where("users.name ILIKE ?", "%#{name}%") }
+  scope :by_email_like, ->(email) { where("users.email ILIKE ?", "%#{email}%") }
+  scope :by_backend_level, ->(backend_level) { where(backend_level:) if backend_level.present? }
+  scope :by_frontend_level, ->(frontend_level) { where(frontend_level:) if frontend_level.present? }
+  scope :by_office, ->(office_id) { where("users.office_id = ?", office_id) if office_id.present? }
+  scope :by_contract_type, ->(contract_type) { where(contract_type:) if contract_type.present? }
+  scope :by_active, ->(active) { where(active:) if active.present? }
+
   attr_accessor :password_required
 
   def self.ransackable_scopes_skip_sanitize_args
