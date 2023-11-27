@@ -77,25 +77,19 @@ class RevenueForecastService
 
     allocations = Allocation.in_period(first_day_of_month, last_day_of_month)
 
-    result = []
-
-    allocations.each do |allocation|
+    allocations.map do |allocation|
       start_date = [first_day_of_month, allocation.start_at].max
       end_date = [last_day_of_month, allocation.end_at].min
       worked_hours = start_date.business_days_until(end_date, inclusive = true) * 8
 
-      result_item = { user: allocation.user.name,
-                      project: allocation.project.name,
-                      hourly_rate: allocation.hourly_rate.format,
-                      start_date: start_date.to_fs,
-                      end_date: end_date.to_fs,
-                      worked_hours:,
-                      total_revenue: (allocation.hourly_rate * worked_hours).format }
-
-      result << result_item
+      { user: allocation.user.name,
+        project: allocation.project.name,
+        hourly_rate: allocation.hourly_rate.format,
+        start_date: start_date.to_fs,
+        end_date: end_date.to_fs,
+        worked_hours:,
+        total_revenue: (allocation.hourly_rate * worked_hours).format }
     end
-
-    result
   end
 
   private
