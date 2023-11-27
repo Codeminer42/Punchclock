@@ -299,6 +299,16 @@ pt-BR:
     active: "Ativo"
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
+  users:
+    title: "Usuários"
+    filters: "Filtros"
+    details: "Detalhes"
+    empty: "Nenhum usuário encontrado"
+    filter: "Filtrar"
+    clear: "Limpar filtros"
+    active: "Ativo"
+    inactive: "Inativo"
+    skills: "Habilidades"
   new_admin:
     regional_holidays:
       index:
