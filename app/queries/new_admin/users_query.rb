@@ -9,18 +9,39 @@ module NewAdmin
     end
 
     def call
-      User.order(name: :asc)
-          .by_name_like(filters[:name])
-          .by_email_like(filters[:email])
-          .by_backend_level(filters[:backend_level])
-          .by_frontend_level(filters[:frontend_level])
-          .by_office(filters[:office_id])
-          .by_contract_type(filters[:contract_type])
-          .by_active(filters[:active])
+      users = User.order(name: :asc)
+                  .by_name_like(filters[:name])
+                  .by_email_like(filters[:email])
+                  .by_backend_level(filters[:backend_level])
+                  .by_frontend_level(filters[:frontend_level])
+                  .by_office(filters[:office_id])
+                  .by_contract_type(filters[:contract_type])
+                  .by_active(filters[:active])
+
+      users = filtered_by_allocated(users)
+      users = filtered_by_skills(users)
+      users = users.admin if filters[:admin]
+      users = users.office_heads if filters[:office_head]
+
+      users
     end
 
     private
 
     attr_accessor :filters
+
+    def filtered_by_skills(users)
+      return users unless filters[:skill_ids]
+
+      skill_ids = filters[:skill_ids].compact_blank
+
+      skill_ids.present? ? users.by_skills_in(*skill_ids) : users
+    end
+
+    def filtered_by_allocated(users)
+      return users if filters[:allocated].nil?
+
+      filters[:allocated] == "true" ? users.allocated : users.not_allocated
+    end
   end
 end

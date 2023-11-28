@@ -75,7 +75,7 @@ class User < ApplicationRecord
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
-  scope :allocated, -> { engineer.active.where(id: Allocation.ongoing.select(:user_id)) }
+  scope :allocated,      -> { engineer.active.where(id: Allocation.ongoing.select(:user_id)) }
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :by_roles_in, -> roles {
