@@ -59,14 +59,17 @@ module NewAdmin
 
     def filters
       params.permit(
+        :active,
+        :admin,
+        :allocated,
+        :contract_type,
         :name,
-        :email,
         :backend_level,
+        :email,
         :frontend_level,
         :office_id,
-        :contract_type,
-        :active,
-        skills: []
+        :office_head,
+        skill_ids: []
       )
     end
 
