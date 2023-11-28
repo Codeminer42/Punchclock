@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t 'notes.edit' %>
+<% end %>
+
+<div data-tab-id="edit_note">
+  <%= render 'form', note: @note, url: new_admin_update_note_path %>
+</div>

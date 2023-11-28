@@ -190,4 +190,111 @@ RSpec.describe NewAdmin::NotesController, type: :request do
       end
     end
   end
+
+  describe 'GET #edit' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      let(:note) { create(:note) }
+      before { sign_in user }
+
+      it 'renders edit template' do
+        get edit_new_admin_note_path(note.id)
+
+        expect(response).to render_template(:edit)
+      end
+
+      it 'returns http status 200 ok' do
+        get edit_new_admin_note_path(note.id)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:note) { create(:note) }
+
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get edit_new_admin_note_path(note.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not logged in' do
+      let(:note) { create(:note) }
+
+      it 'redirects to root path' do
+        get edit_new_admin_note_path(note.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'PUT/PATCH #update' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      let(:note) { create(:note) }
+
+      before { sign_in user }
+
+      context 'whith valid params' do
+        let(:valid_params) { { note: { title: 'New title' } } }
+        it 'updates the note' do
+          patch new_admin_update_note_path(note.id, params: valid_params)
+
+          expect(note.reload.title).to eq('New title')
+        end
+
+        it 'redirects to show page' do
+          patch new_admin_update_note_path(note.id, params: valid_params)
+
+          expect(response).to redirect_to(new_admin_show_note_path)
+        end
+      end
+
+      context 'with invalid params' do
+        let(:invalid_params) { { note: { title: '' } } }
+
+        it 'does not update the note' do
+          expect { patch new_admin_update_note_path(note.id, params: invalid_params) }.not_to change(note.reload, :title)
+        end
+
+        it 'renders the edit template with errors', :aggregate_failures do
+          patch new_admin_update_note_path(note.id, params: invalid_params)
+
+          expect(response.body).to include('Title não pode ficar em branco')
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:note) { create(:note) }
+      let(:valid_params) { { note: { title: 'New title' } } }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        patch new_admin_update_note_path(note.id, params: valid_params)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not logged in' do
+      let(:note) { create(:note) }
+      let(:valid_params) { { note: { title: 'New title' } } }
+
+      it 'redirects to root path' do
+        patch new_admin_update_note_path(note.id, params: valid_params)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

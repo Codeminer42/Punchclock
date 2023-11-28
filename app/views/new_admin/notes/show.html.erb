@@ -4,6 +4,11 @@
 
 <div data-tab-id="note">
     <div id="note_actions" class="flex items-center justify-end">
+      <%= link_to edit_new_admin_note_path do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t 'notes.edit' %>
+        </button>
+      <% end %>
     </div>
   <table class="w-full whitespace-nowrap">
     <thead>

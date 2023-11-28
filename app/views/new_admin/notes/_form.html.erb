@@ -33,7 +33,7 @@
               <%= form.select :author_id, 
                               User.pluck(:name, :id), 
                               { prompt: t('prompt'), 
-                              selected: params[:author_id] }, 
+                              selected: User.pluck(:name, :id).select {|user| user[1] == note.author_id }.first}, 
                               { class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" } %>
             </div>
           </td>
@@ -50,7 +50,7 @@
                             <%= form.select :user_id, 
                               User.pluck(:name, :id), 
                               { prompt: t('prompt'), 
-                              selected: params[:author_id] }, 
+                              selected: User.pluck(:name, :id).select {|user| user[1] == note.user_id }.first }, 
                               { class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" } %>
             </div>
           </td>
@@ -79,7 +79,7 @@
                             <%= form.select :rate, 
                               Note.rate.values, 
                               { prompt: t('prompt'), 
-                              selected: params[:author_id] }, 
+                              selected: note.rate }, 
                               { class: "bg-gray-100 font-semibold rounded-lg text-gray-600 dark:text-gray-400 h-10 dark:bg-slate-700" } %>
             </div>
           </td>

@@ -328,4 +328,5 @@ pt-BR:
     show_title: "Note #%{id}"
     details: "Detalhes da Note"
     new: "Nova Note"
+    edit: "Editar Note"
     
