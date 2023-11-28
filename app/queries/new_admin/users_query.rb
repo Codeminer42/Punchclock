@@ -20,8 +20,8 @@ module NewAdmin
 
       users = filtered_by_allocated(users)
       users = filtered_by_skills(users)
-      users = users.admin if filters[:admin]
-      users = users.office_heads if filters[:office_head]
+      users = users.admin if filters[:is_admin]
+      users = users.office_heads if filters[:is_office_head]
 
       users
     end
@@ -39,9 +39,9 @@ module NewAdmin
     end
 
     def filtered_by_allocated(users)
-      return users if filters[:allocated].nil?
+      return users if filters[:is_allocated].blank?
 
-      filters[:allocated] == "true" ? users.allocated : users.not_allocated
+      filters[:is_allocated] == "true" ? users.allocated : users.not_allocated
     end
   end
 end
