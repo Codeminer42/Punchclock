@@ -309,6 +309,9 @@ pt-BR:
     active: "Ativo"
     inactive: "Inativo"
     skills: "Habilidades"
+    allocated: "Alocado"
+    not_allocated: "Não alocado"
+    office_head: "Head de escritório"
   new_admin:
     regional_holidays:
       index:

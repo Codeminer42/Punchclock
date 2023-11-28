@@ -30,15 +30,15 @@
       </div>
       <div class="flex flex-col space-y-2">
         <%= form.label :active, User.human_attribute_name(:active), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
-        <%= form.select :active, [[t('users.active'), true], [t('users.inactive'), false]], {include_blank: t('prompt'), selected: params[:active] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+        <%= form.select :active, [[t('users.active'), true], [t('users.inactive'), false]], { include_blank: t('prompt'), selected: params[:active] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
       </div>
       <div class="flex flex-col space-y-2">
         <%= form.label :allocated, t('users.allocated'), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
-        <%= form.select :allocated, [[t('users.allocated'), true], [t('users.not_allocated'), false]], {include_blank: t('prompt'), selected: params[:allocated] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+        <%= form.select :allocated, [[t('users.allocated'), true], [t('users.not_allocated'), false]], { include_blank: t('prompt'), selected: params[:allocated] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
       </div>
       <div class="flex flex-col space-y-2">
         <%= form.label :skills, t('users.skills'), class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
-        <%= form.collection_select :skill_ids, Skill.order(title: :asc), :id, :title, {selected: params[:skill_ids]}, { multiple: true, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+        <%= form.collection_select :skill_ids, Skill.order(title: :asc), :id, :title, { selected: params[:skill_ids] }, { multiple: true, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
       </div>
       <div class="flex flex-col space-y-2">
         <%= form.label :admin, t('users.admin'),
