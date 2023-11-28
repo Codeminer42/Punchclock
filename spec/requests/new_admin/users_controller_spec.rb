@@ -30,7 +30,7 @@ RSpec.describe NewAdmin::UsersController, type: :request do
           end
         end
 
-        context 'when title filter is applied' do
+        context 'when name filter is applied' do
           let!(:user1) { create(:user, name: 'John Doe') }
           let!(:user2) { create(:user, name: 'Jane Doe') }
 
