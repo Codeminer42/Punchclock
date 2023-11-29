@@ -180,7 +180,7 @@ RSpec.describe NewAdmin::NotesController, type: :request do
       context 'with invalid parameters' do
         let(:invalid_params) { { title: '' } }
         it 'does not create the note' do
-          expect { post new_admin_notes_path, params: { note: invalid_params } }.not_to change(Questionnaire, :count)
+          expect { post new_admin_notes_path, params: { note: invalid_params } }.not_to change(Note, :count)
         end
 
         it 'renders template new' do
@@ -292,6 +292,49 @@ RSpec.describe NewAdmin::NotesController, type: :request do
 
       it 'redirects to root path' do
         patch new_admin_update_note_path(note.id, params: valid_params)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'DELETE #delete' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      before { sign_in user }
+
+      let!(:note) { create(:note) }
+
+      it 'deletes the note' do
+        expect { delete new_admin_destroy_note_path(note.id) }.to change(Note, :count).by(-1)
+      end
+
+      it 'redirects to notes index' do
+        delete new_admin_destroy_note_path(note.id)
+
+        expect(response).to redirect_to(new_admin_notes_path)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:note) { create(:note) }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_note_path(note.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user not logged in' do
+      let(:note) { create(:note) }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_note_path(note.id)
 
         expect(response).to redirect_to(new_user_session_path)
       end

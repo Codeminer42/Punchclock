@@ -42,6 +42,14 @@ module NewAdmin
       end
     end
 
+    def destroy
+      @note = Note.find(params[:id])
+
+      @note.destroy
+
+      redirect_on_success new_admin_notes_path, message_scope: 'destroy'
+    end
+
     private
 
     def notes

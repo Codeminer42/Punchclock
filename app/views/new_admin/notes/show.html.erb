@@ -3,10 +3,15 @@
 <% end %>
 
 <div data-tab-id="note">
-    <div id="note_actions" class="flex items-center justify-end">
+    <div id="note_actions" class="flex items-center justify-end gap-x-1">
       <%= link_to edit_new_admin_note_path do %>
         <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
           <%= t 'notes.edit' %>
+        </button>
+      <% end %>
+      <%= link_to new_admin_destroy_note_path(@note.id), method: :delete do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t 'notes.destroy' %>
         </button>
       <% end %>
     </div>
