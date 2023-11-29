@@ -41,7 +41,7 @@ pt-BR:
   score: 'Pontuação'
   questionnaire: 'Questionário'
   evaluation_date: "Data da avaliação"
-  hour_report_curent_month: 'Report de Horas do mês atual'
+  hour_report_current_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'
   resend_user_registration_confirmed: 'Email de Cadastro Reenviado'

@@ -2,6 +2,19 @@
   <%= User.model_name.human(count: 2) %>
 <% end %>
 
+<div class="flex justify-end mx-2 mb-4 gap-2">
+  <%= link_to hour_report_admin_users_path(format: :xlsx, month: :current) do %>
+    <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+      <%= t 'hour_report_current_month' %>
+    </button>
+  <% end %>
+    <%= link_to hour_report_admin_users_path(format: :xlsx, month: :past) do %>
+    <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+      <%= t 'hour_report_past_month' %>
+    </button>
+  <% end %>
+</div>
+
 <div data-tab-id="users" class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
   <div class="flex justify-between gap-4 flax-wrap">
     <div class="grow">
