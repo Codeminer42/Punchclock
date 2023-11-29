@@ -11,19 +11,19 @@ RSpec.describe NewAdmin::UsersController, type: :request do
           let!(:users) { create_list(:user, 2) }
 
           it 'returns status code 200 ok' do
-            get new_admin_admin_user_index_path
+            get new_admin_users_path
 
             expect(response).to have_http_status(:ok)
           end
 
           it 'renders the index template' do
-            get new_admin_admin_user_index_path
+            get new_admin_users_path
 
             expect(response).to render_template(:index)
           end
 
           it 'shows the users' do
-            get new_admin_admin_user_index_path
+            get new_admin_users_path
 
             expect(response.body).to include(users[0].name)
               .and include(users[1].name)
@@ -35,7 +35,7 @@ RSpec.describe NewAdmin::UsersController, type: :request do
           let!(:user2) { create(:user, name: 'Jane Doe') }
 
           it 'returns only the filtered users', :aggregate_failures do
-            get new_admin_admin_user_index_path, params: { name: 'john' }
+            get new_admin_users_path, params: { name: 'john' }
 
             expect(response.body).to include('John')
             expect(response.body).not_to include('Jane')
@@ -46,7 +46,7 @@ RSpec.describe NewAdmin::UsersController, type: :request do
           let!(:users) { create_list(:user, 3) }
 
           it 'paginates the results', :aggregate_failures do
-            get new_admin_admin_user_index_path, params: { per: 2 }
+            get new_admin_users_path, params: { per: 2 }
 
             expect(assigns(:users).count).to eq(2)
           end
@@ -56,7 +56,7 @@ RSpec.describe NewAdmin::UsersController, type: :request do
 
     context 'when user is not signed in' do
       it 'redirects to the sign in page' do
-        get new_admin_admin_user_index_path
+        get new_admin_users_path
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -68,7 +68,7 @@ RSpec.describe NewAdmin::UsersController, type: :request do
       before { sign_in user }
 
       it 'redirects to root page' do
-        get new_admin_admin_user_index_path
+        get new_admin_users_path
 
         expect(response).to redirect_to(root_path)
       end

@@ -23,10 +23,10 @@ module NewAdmin
       @user.attributes = user_params
 
       if @user.save
-        redirect_to new_admin_admin_user_path(@user)
+        redirect_to new_admin_show_user_path(@user)
       else
         flash_errors('update')
-        redirect_to edit_new_admin_admin_user_path(@user)
+        redirect_to edit_new_admin_user_path(@user)
       end
     end
 

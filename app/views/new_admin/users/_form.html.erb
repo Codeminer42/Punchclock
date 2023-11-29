@@ -1,4 +1,4 @@
-<%= form_with(model: user, url: "/new_admin/users/#{user.id}", method: :patch) do |form| %>
+<%= form_with model: user, url: url do |form| %>
   <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
     <div class="flex mb-4">
       <div class="w-1/2 mr-2">
@@ -60,7 +60,7 @@
     </div>
 
     <div class="flex mb-4">
-      
+
       <div class="w-1/2 mr-4">
         <label for="mentor_id" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('mentor', scope: %i[activerecord attributes user]) %></label>
         <%= form.collection_select :mentor_id, User.active.order(:name), :id, :name, { include_blank: true }, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    
+
     <div class="flex mb-4">
       <div class="w-1/2 ml-2">
       <div class="flex items-center">
@@ -102,7 +102,7 @@
     <div class="mt-6">
       <%= form.submit t('update', scope: %i[user]), class: 'px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple' %>
       <button class="w-full px-5 py-3 ml-2 font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-           <%= t('cancel') %> 
+           <%= t('cancel') %>
       </button>
     </div>
   </div>
