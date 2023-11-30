@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t 'users.new' %>
+<% end %>
+
+<div data-tab-id="new_user" class="space-y-6">
+  <%= render 'form', user: @user, url: new_admin_users_path %>
+</div>

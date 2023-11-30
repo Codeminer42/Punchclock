@@ -40,7 +40,7 @@
     <div class="flex mb-4">
       <div class="w-1/3 mr-2">
         <label for="specialty" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('specialty', scope: %i[activerecord attributes user]) %></label>
-        <%= form.text_field :specialty, id: 'specialty', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input' %>
+        <%= form.select :specialty, User.specialty.values.map { |item| [item.text, item.value] }, {}, class: 'block w-full mt-1 text-sm rounded-md dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray' %>
       </div>
 
       <div class="w-1/3 mr-2">
@@ -99,11 +99,9 @@
       <label for="observation" class="block text-sm font-medium text-gray-700 dark:text-gray-400"><%= t('observation', scope: %i[activerecord attributes user]) %></label>
       <%= form.text_area :observation, id: 'observation', class: 'block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-textarea' %>
     </div>
-    <div class="mt-6">
-      <%= form.submit t('update', scope: %i[user]), class: 'px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple' %>
-      <button class="w-full px-5 py-3 ml-2 font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-           <%= t('cancel') %>
-      </button>
+    <div class="flex mt-4 gap-2">
+      <%= form.submit t('form.button.submit'), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+    <%= link_to t('cancel'), new_admin_users_path, class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %>
     </div>
   </div>
 <% end %>
