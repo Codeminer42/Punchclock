@@ -74,4 +74,82 @@ RSpec.describe NewAdmin::UsersController, type: :request do
       end
     end
   end
+
+  describe 'GET #new' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      it 'renders new template' do
+        get new_new_admin_user_path
+
+        expect(response).to render_template(:new)
+      end
+
+      it 'returns http status 200 ok' do
+        get new_new_admin_user_path
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_new_admin_user_path
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      context 'with valid parameters' do
+        let(:office) { create(:office) }
+        let(:city) { create(:city) }
+        let(:valid_params) do
+          {
+            user: {
+              name: "John Doe",
+              email: "johndoe@example.com",
+              github: "github.com/johndoe",
+              city_id: city.id,
+              office_id: office.id,
+              occupation: :engineer,
+              specialty: :frontend
+            }
+          }
+        end
+
+        it 'creates a new user' do
+          expect { post new_admin_users_path, params: valid_params }.to change(User, :count).by(1)
+        end
+
+        it 'redirects to user index page' do
+          post new_admin_users_path, params: valid_params
+          expect(response).to redirect_to(new_admin_users_path)
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:invalid_params) { { user: { name: '' } } }
+
+        it 'does not create the user' do
+          expect { post new_admin_users_path, params: invalid_params }.not_to change(User, :count)
+        end
+
+        it 'renders template new' do
+          post new_admin_users_path, params: invalid_params
+          expect(response).to render_template(:new)
+        end
+      end
+    end
+  end
 end
