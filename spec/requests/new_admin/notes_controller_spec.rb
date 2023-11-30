@@ -180,7 +180,7 @@ RSpec.describe NewAdmin::NotesController, type: :request do
       context 'with invalid parameters' do
         let(:invalid_params) { { title: '' } }
         it 'does not create the note' do
-          expect { post new_admin_notes_path, params: { note: invalid_params } }.not_to change(Questionnaire, :count)
+          expect { post new_admin_notes_path, params: { note: invalid_params } }.not_to change(Note, :count)
         end
 
         it 'renders template new' do
