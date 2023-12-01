@@ -287,7 +287,6 @@ pt-BR:
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
     empty: "Nenhum feriado regional encontrado"
-
   projects:
     title: "Projetos"
     filters: "Filtros"
@@ -341,6 +340,8 @@ pt-BR:
       index:
         empty: "Nenhuma habilidade encontrada"
         new: "Nova habilidade"
+      show:
+        details: "Detalhes da habilidade"
     repositories:
       details: "Detalhes do Repositório"
       show:
@@ -354,7 +355,6 @@ pt-BR:
     new: "Nova experiência profissional"
     details: "Detalhes da experiência profissional"
   talk:
-==== BASE ====
     details: "Detalhes da palestra"
   contributions:
     empty: "Nenhuma contribuição encontrada"

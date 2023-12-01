@@ -1,0 +1,59 @@
+<% content_for :page_title do %>
+  <%= @skill.title %>
+<% end %>
+
+<div data-tab-id="skill">
+    <div id="skill_actions" class="flex items-center justify-end">
+    </div>
+  <table class="w-full whitespace-nowrap">
+    <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+        <th colspan="100%" class="px-4 py-3"><%= t '.details' %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Skill.human_attribute_name(:title) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-bold">
+              <%= @skill.title %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Skill.human_attribute_name(:created_at) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  l(@skill.created_at, format: :short) %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Skill.human_attribute_name(:updated_at) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  l(@skill.updated_at, format: :short) %>
+            </p>
+          </div>
+        </td>
+      </tr>
+    <tbody>
+  <table>
+</div>

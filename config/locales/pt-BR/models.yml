@@ -318,6 +318,8 @@ pt-BR:
       skill:
         id: "ID"
         title: "Título"
+        created_at: "Criado em"
+        updated_at: "Atualizado em"
       client:
         id: "ID"
         name: "Nome"
