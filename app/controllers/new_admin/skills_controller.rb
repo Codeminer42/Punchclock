@@ -6,6 +6,10 @@ module NewAdmin
       @skills = paginate_record(skills)
     end
 
+    def show
+      @skill = Skill.find(params[:id])
+    end
+
     private
 
     def filters

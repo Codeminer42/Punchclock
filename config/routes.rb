@@ -53,7 +53,8 @@ Rails.application.routes.draw do
     resources :contributions, only: :show, as: :show_contribution
     resources :contributions, only: :update, as: :update_contribution
     resources :contributions, only: :destroy, as: :destroy_contribution
-    resources :skills
+    resources :skills, except: %i[show]
+    resources :skills, only: :show, as: :show_skill
     resources :repositories, except: %i[show]
     resources :repositories, only: :show, as: :show_repository
     resources :notes
