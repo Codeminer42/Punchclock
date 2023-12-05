@@ -40,6 +40,13 @@
               class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
             %>
           </li>
+          <li class="my-2">
+            <%=
+              link_to Note.model_name.human(count: 2),
+              new_admin_notes_path,
+              class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
+            %>
+          </li>
         </ul>
       <li class="relative px-6 py-3">
         <%= link_to new_admin_regional_holidays_path, class: "inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" do %>
