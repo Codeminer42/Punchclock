@@ -8,6 +8,7 @@ class AbilityAdmin
 
   def initialize(user)
     return if user.nil?
+
     @action = [
       Allocation,
       User,
@@ -61,6 +62,7 @@ class AbilityAdmin
     can :read, ActiveAdmin::Page, name: 'Mentoring'
 
     can :manage, Repository
+    can :manage, Contribution
 
     cannot :destroy, [User, Project]
   end

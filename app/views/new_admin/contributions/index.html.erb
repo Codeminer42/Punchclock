@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <%= Contribution.model_name.human(count: 2) %>
+<% end %>
+
+<div data-tab-id="contributions" class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+  <div class="flex justify-between gap-4 flax-wrap">
+    <div class="grow">
+      <% if @contributions.any? %>
+        <%= render 'contributions_table', contributions: @contributions %>
+      <% else %>
+        <h3 class="text-xs font-semibold text-left uppercase dark:text-gray-400">
+          <%= t('contributions.empty') %>
+        </h3>
+      <% end %>
+    </div>
+  </div>
+</div>

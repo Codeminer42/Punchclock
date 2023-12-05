@@ -29,6 +29,7 @@ pt-BR:
   time:
     formats:
       date_time: "%d/%m/%Y %H:%M"
+      default: "%d/%m/%Y"
   english_evaluations: 'Avaliações de Inglês'
   english_score: 'Pontuação de Inglês'
   english_level: "Nível de inglês"
@@ -327,3 +328,5 @@ pt-BR:
     details: "Detalhes da experiência profissional"
   talk:
     details: "Detalhes da palestra"
+  contributions:
+    empty: "Nenhuma contribuição encontrada"

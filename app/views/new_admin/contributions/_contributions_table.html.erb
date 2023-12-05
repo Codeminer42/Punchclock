@@ -1,0 +1,63 @@
+<table class="table-auto w-full" id="index_table_contributions">
+  <thead>
+    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+      <th class="px-4 py-3"><%= Contribution.human_attribute_name(:authors) %></th>
+      <th class="px-4 py-3"><%= Contribution.human_attribute_name(:link) %></th>
+      <th class="px-4 py-3"><%= t 'created_at' %></th>
+      <th class="px-4 py-3"><%= Contribution.human_attribute_name(:state) %></th>
+      <th class="px-4 py-3"><%= Contribution.human_attribute_name(:reviewed_by) %></th>
+      <th class="px-4 py-3"><%= Contribution.human_attribute_name(:reviewed_at) %></th>
+      <th class="px-4 py-3"><%= Contribution.human_attribute_name(:rejected_reason) %></th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
+    <% contributions.each do |contribution| %>
+      <tr id=<%= "contribution_#{contribution.id}" %> class="text-gray-700 dark:text-gray-400">
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <% contribution.users.each do |user| %>
+              <div><%= link_to user.first_and_last_name,
+                       new_admin_admin_user_path(id: user.id),
+                       class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'  %>
+              </div>
+            <% end %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= contribution.link %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= l(contribution.created_at, format: :default) %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= Contribution.human_attribute_name("state/#{contribution.state}") %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= contribution.reviewed_by %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <% if contribution.reviewed_at %>
+              <span><%= l(contribution.reviewed_at, format: :default) %></span>
+            <% else %>
+              <span>-</span>
+            <% end %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= Contribution.human_attribute_name("rejected_reason/#{contribution.rejected_reason}") if contribution.rejected_reason %></span>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
