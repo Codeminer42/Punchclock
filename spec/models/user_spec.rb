@@ -112,9 +112,10 @@ RSpec.describe User, type: :model do
     let(:user_not_in_experience){ create(:user, created_at: 5.months.ago)}
     let(:ruby)          { create(:skill, title: 'ruby') }
     let(:vuejs)         { create(:skill, title: 'vuejs') }
-    let!(:full_stack)   { create(:user, skills: [ruby, vuejs]) }
 
     context '.by_skills' do
+      let!(:full_stack)   { create(:user, skills: [ruby, vuejs]) }
+
       it 'returns the users that have all the skills selected' do
         expect(User.by_skills_in(ruby.id, vuejs.id).first).to eq(full_stack)
       end
@@ -182,6 +183,101 @@ RSpec.describe User, type: :model do
 
       it 'returns users that can manage vacations' do
         expect(User.vacation_managers).to contain_exactly(user1, user2)
+      end
+    end
+
+    describe '.by_name_like' do
+      let!(:user1) { create(:user, name: "John Doe") }
+      let!(:user2) { create(:user, name: "Jane Doe") }
+
+      context 'when name is present' do
+        it 'filters users by name' do
+          expect(User.by_name_like('John')).to contain_exactly(user1)
+        end
+      end
+
+      context 'when name is not present' do
+        it 'does not filter users by name' do
+          expect(User.by_name_like(nil)).to contain_exactly(user1, user2)
+        end
+      end
+    end
+
+    describe '.by_email_like' do
+      let!(:user1) { create(:user, email: "johndoe@foo.com") }
+      let!(:user2) { create(:user, email: "janedoe@bar.com") }
+
+      context 'when email is present' do
+        it 'filters users by email' do
+          expect(User.by_email_like('johndoe')).to contain_exactly(user1)
+        end
+      end
+
+      context 'when email is not present' do
+        it 'does not filter users by email' do
+          expect(User.by_email_like(nil)).to contain_exactly(user1, user2)
+        end
+      end
+    end
+
+    describe '.by_backend_level' do
+      let!(:user1) { create(:user, backend_level: :junior) }
+      let!(:user2) { create(:user, backend_level: :mid) }
+
+      it 'filters users by backend_level' do
+        expect(User.by_backend_level(:junior)).to contain_exactly(user1)
+      end
+    end
+
+    describe '.by_frontend_level' do
+      let!(:user1) { create(:user, frontend_level: :junior) }
+      let!(:user2) { create(:user, frontend_level: :mid) }
+
+      it 'filters users by backend_level' do
+        expect(User.by_frontend_level(:junior)).to contain_exactly(user1)
+      end
+    end
+
+    describe '.by_office' do
+      let!(:office1) { create(:office) }
+      let!(:office2) { create(:office) }
+      let!(:user1) { create(:user, office: office1) }
+      let!(:user2) { create(:user, office: office2) }
+
+      it 'filters users by office' do
+        expect(User.by_office(office1.id)).to contain_exactly(user1)
+      end
+    end
+
+    describe '.by_contract_type' do
+      let!(:user1) { create(:user, contract_type: :employee) }
+      let!(:user2) { create(:user, contract_type: :contractor) }
+
+      it 'filters users by backend_level' do
+        expect(User.by_contract_type(:employee)).to contain_exactly(user1)
+      end
+    end
+
+    describe '#by_active' do
+      let!(:user1) { create(:user, active: true) }
+      let!(:user2) { create(:user, active: false) }
+
+      context 'when active is true' do
+        it 'filters active users' do
+          expect(User.by_active("true")).to contain_exactly(user1)
+        end
+      end
+
+      context 'when active is false' do
+        it 'filters inactive users' do
+          expect(User.by_active("false")).to contain_exactly(user2)
+        end
+      end
+
+      context 'when active is not present' do
+        it 'does not filter' do
+          expect(User.by_active(nil)).to contain_exactly(user1, user2)
+        end
       end
     end
   end

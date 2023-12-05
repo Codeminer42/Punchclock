@@ -1,0 +1,61 @@
+<div class="px-4 py-3 w-fit h-fit dark:bg-gray-800">
+  <h3 class="text-xs py-1 font-semibold tracking-wide text-left uppercase border-b dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+    <%= t('users.filters') %>
+  </h3>
+  <%= form_with url: new_admin_admin_user_index_path, method: :get do |form| %>
+    <div class="mt-2 space-y-2">
+      <div class="flex flex-col space-y-2">
+        <%= form.label :name, User.human_attribute_name(:name), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.text_field :name, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :email, User.human_attribute_name(:email), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.text_field :email, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :backend_level, User.human_attribute_name(:backend_level), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :backend_level, User.backend_level.values.map { |level| [level.text.titleize, level.value] }, { include_blank: t('prompt'), selected: params[:backend_level] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :frontend_level, User.human_attribute_name(:frontend_level), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :frontend_level, User.frontend_level.values.map { |level| [level.text.titleize, level.value] }, { include_blank: t('prompt'), selected: params[:frontend_level] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :office, User.human_attribute_name(:office), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.collection_select :office_id, Office.order(:city), :id, :city, { include_blank: t('prompt'), selected: params[:office_id] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :contract_type, User.human_attribute_name(:contract_type), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :contract_type, User.contract_type.values.map { |type| [type.text.titleize, type.value] }, { include_blank: t('prompt'), selected: params[:contract_type] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :active, User.human_attribute_name(:active), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :active, [[t('users.active'), true], [t('users.inactive'), false]], { include_blank: t('prompt'), selected: params[:active] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :is_allocated, t('users.allocated'), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :is_allocated, [[t('users.allocated'), true], [t('users.not_allocated'), false]], { include_blank: t('prompt'), selected: params[:is_allocated] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :skills, t('users.skills'), class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
+        <%= form.collection_select :skill_ids, Skill.order(title: :asc), :id, :title, { selected: params[:skill_ids] }, { multiple: true, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :is_admin, t('users.admin'),
+                        class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
+        <%= form.check_box :is_admin, {}, true, false %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :is_office_head, t('users.office_head'),
+                        class: 'text-xs font-semibold tracking-wide text-left text-gray-500 uppercase' %>
+        <%= form.check_box :is_office_head, {}, true, false %>
+      </div>
+    </div>
+    <div class="mt-4 mb-2">
+      <div class="flex flex-row">
+        <%= form.submit t('users.filter'), formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+        <%= link_to t('users.clear'), new_admin_admin_user_index_path, class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %>
+      </div>
+    </div>
+  <% end %>
+</div>
