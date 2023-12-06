@@ -3,13 +3,25 @@ module NewAdmin
     load_and_authorize_resource
 
     def index
-      @contributions = scoped_contributions
+      @contributions = contributions
     end
 
     private
 
-    def scoped_contributions
-      Contribution.active_engineers
+    def filters
+      params.permit(
+        :state,
+        :user_id,
+        :state,
+        :reviewed_at_from,
+        :reviewed_at_until,
+        :created_at_from,
+        :created_at_until
+      )
+    end
+
+    def contributions
+      ContributionsQuery.call(filters)
     end
   end
 end
