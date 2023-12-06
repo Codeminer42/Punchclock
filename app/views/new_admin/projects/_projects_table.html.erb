@@ -19,7 +19,7 @@
         </td>
 
         <td class="px-4 py-3">
-          <%= inline_svg_tag 'check_circle_fill.svg', class: "h-6 w-6 #{project.active_class}" %>
+          <%= inline_svg_tag "#{project.active ? 'check' : 'x' }_circle_fill.svg", class: "h-6 w-6" %>
         </td>
 
         <td class="px-4 py-3">
