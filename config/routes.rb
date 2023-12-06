@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resources :evaluations, only: %i[index show]
     resources :allocation_charts, only: :index
     resources :allocations, only: %i[show update edit], as: :user_allocations
-    resources :users, only: %i[show update edit], as: :admin_user
+    resources :users, only: %i[index show update edit], as: :admin_user
     resources :punches, only: :show, as: :user_punches
     resources :regional_holidays, except: %i[show update destroy]
     resources :regional_holidays, only: :show, as: :show_regional_holiday
@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     resources :contributions, only: :show, as: :show_contribution
     resources :contributions, only: :update, as: :update_contribution
     resources :contributions, only: :destroy, as: :destroy_contribution
+    resources :notes
 
     namespace :projects do
       resources :allocate_users, only: %i[new create]

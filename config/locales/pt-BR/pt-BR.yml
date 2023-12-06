@@ -42,7 +42,7 @@ pt-BR:
   score: 'Pontuação'
   questionnaire: 'Questionário'
   evaluation_date: "Data da avaliação"
-  hour_report_curent_month: 'Report de Horas do mês atual'
+  hour_report_current_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'
   resend_user_registration_confirmed: 'Email de Cadastro Reenviado'
@@ -300,6 +300,19 @@ pt-BR:
     active: "Ativo"
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
+  users:
+    title: "Usuários"
+    filters: "Filtros"
+    details: "Detalhes"
+    empty: "Nenhum usuário encontrado"
+    filter: "Filtrar"
+    clear: "Limpar filtros"
+    active: "Ativo"
+    inactive: "Inativo"
+    skills: "Habilidades"
+    allocated: "Alocado"
+    not_allocated: "Não alocado"
+    office_head: "Head de escritório"
   new_admin:
     regional_holidays:
       index:
@@ -330,3 +343,8 @@ pt-BR:
     details: "Detalhes da palestra"
   contributions:
     empty: "Nenhuma contribuição encontrada"
+  notes:
+    empty: "Nenhuma note encontrada"
+    filter: "Filtrar"
+    clear: "Limpar"
+    filters: "Filtros"

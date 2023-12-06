@@ -63,6 +63,7 @@ class AbilityAdmin
 
     can :manage, Repository
     can :manage, Contribution
+    can :manage, Note
 
     cannot :destroy, [User, Project]
   end
