@@ -12,7 +12,6 @@ module NewAdmin
       params.permit(
         :state,
         :user_id,
-        :state,
         :reviewed_at_from,
         :reviewed_at_until,
         :created_at_from,

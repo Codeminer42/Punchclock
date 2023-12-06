@@ -343,6 +343,8 @@ pt-BR:
     details: "Detalhes da palestra"
   contributions:
     empty: "Nenhuma contribuição encontrada"
+    filter: "Filtrar Contribuições"
+    clear: "Limpar Filtros"
   notes:
     empty: "Nenhuma note encontrada"
     filter: "Filtrar"
