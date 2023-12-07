@@ -17,7 +17,7 @@
           <div class="flex items-center">
             <% contribution.users.each do |user| %>
               <div><%= link_to user.first_and_last_name,
-                       new_admin_admin_user_path(id: user.id),
+                       new_admin_show_user_path(id: user.id),
                        class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'  %>
               </div>
             <% end %>

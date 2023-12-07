@@ -83,8 +83,7 @@ module NewAdmin
         :is_office_head,
         :name,
         :office_id,
-        skill_ids: [],
-        skills: []
+        skill_ids: []
       )
     end
 

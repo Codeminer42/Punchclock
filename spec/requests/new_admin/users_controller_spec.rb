@@ -104,6 +104,14 @@ RSpec.describe NewAdmin::UsersController, type: :request do
         expect(response).to redirect_to(root_path)
       end
     end
+
+    context 'when user is not authenticated' do
+      it 'redirects to sign in page' do
+        get new_new_admin_user_path
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 
   describe 'POST #create' do
@@ -149,6 +157,84 @@ RSpec.describe NewAdmin::UsersController, type: :request do
           post new_admin_users_path, params: invalid_params
           expect(response).to render_template(:new)
         end
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:office) { create(:office) }
+      let(:city) { create(:city) }
+      let(:valid_params) do
+        {
+          user: {
+            name: "John Doe",
+            email: "johndoe@example.com",
+            github: "github.com/johndoe",
+            city_id: city.id,
+            office_id: office.id,
+            occupation: :engineer,
+            specialty: :frontend
+          }
+        }
+      end
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        post new_admin_users_path, params: valid_params
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user has no permission' do
+      let(:user) { create(:user, :open_source_manager) }
+      let(:office) { create(:office) }
+      let(:city) { create(:city) }
+      let(:valid_params) do
+        {
+          user: {
+            name: "John Doe",
+            email: "johndoe@example.com",
+            github: "github.com/johndoe",
+            city_id: city.id,
+            office_id: office.id,
+            occupation: :engineer,
+            specialty: :frontend
+          }
+        }
+      end
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        post new_admin_users_path, params: valid_params
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not authenticated' do
+      let(:office) { create(:office) }
+      let(:city) { create(:city) }
+      let(:valid_params) do
+        {
+          user: {
+            name: "John Doe",
+            email: "johndoe@example.com",
+            github: "github.com/johndoe",
+            city_id: city.id,
+            office_id: office.id,
+            occupation: :engineer,
+            specialty: :frontend
+          }
+        }
+      end
+
+      it 'redirects to root path' do
+        post new_admin_users_path, params: valid_params
+
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
