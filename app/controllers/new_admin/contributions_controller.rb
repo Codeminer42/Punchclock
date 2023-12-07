@@ -15,7 +15,9 @@ module NewAdmin
         :reviewed_at_from,
         :reviewed_at_until,
         :created_at_from,
-        :created_at_until
+        :created_at_until,
+        :this_week,
+        :last_week
       )
     end
 
