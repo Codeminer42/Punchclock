@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NewAdmin::ContributionsQuery do
   describe '#self.call' do
     context 'when no filters are applied' do
-      let(:contributions) { create_list(:contribution, 2) }
+      let!(:contributions) { create_list(:contribution, 2, :with_users) }
 
       it 'retrieves the contributions' do
         expect(described_class.call({})).to match_array(contributions)
