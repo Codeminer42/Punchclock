@@ -51,4 +51,49 @@ RSpec.describe NewAdmin::RepositoriesController, type: :request do
       end
     end
   end
+
+  describe 'GET #show' do
+    let(:repository) { create(:repository) }
+
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      it 'renders the show template' do
+        get new_admin_show_repository_url(repository.id)
+
+        expect(response).to render_template(:show)
+      end
+
+      it 'renders the correct repository' do
+        get new_admin_show_repository_url(repository.id)
+
+        expect(response.body).to include(repository.link)
+          .and include(repository.description)
+          .and include(repository.language)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:repository) { create(:repository) }
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_admin_show_repository_url(repository.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not logged in' do
+      let(:repository) { create(:repository) }
+
+      it 'redirects to sign in page' do
+        get new_admin_show_repository_url(repository.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

@@ -19,11 +19,9 @@
 				</td>
 				<td class="px-4 py-3">
 					<div class="flex items-center space-x-4 text-sm">
-						<button
-							class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray"
-							aria-label="Delete">
-          		<%= heroicon 'magnifying-glass', variant: :mini, options: { class: "w-5 h-5" } %>
-						</button>
+						<%= link_to new_admin_show_repository_path(id: repository.id), class: "flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray" do %>
+								<%= heroicon 'magnifying-glass', variant: :mini, options: { class: "w-5 h-5" } %>
+						<% end %>
 						<button
 							class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray"
 							aria-label="Edit">

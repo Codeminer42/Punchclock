@@ -331,6 +331,11 @@ pt-BR:
         new: "Novo Projeto"
       edit:
         edit: "Editar Projeto"
+    repositories:
+      details: "Detalhes do Repositório"
+      show:
+        edit: "Editar Repositório"
+        destroy: "Remover Repositório"
     revenue_forecast:
       index:
         total: "Total"
