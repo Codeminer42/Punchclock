@@ -21,6 +21,11 @@ class ContributionDecorator < Draper::Decorator
 
   def description
     return 'pending description' if model.description.nil?
+
     model.description
+  end
+
+  def self.collection_decorator_class
+    PaginatingDecorator
   end
 end

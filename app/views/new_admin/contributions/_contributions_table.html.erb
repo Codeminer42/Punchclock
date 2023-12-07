@@ -30,7 +30,7 @@
         </td>
         <td class="px-4 py-3">
           <div class="flex items-center">
-            <span><%= l(contribution.created_at, format: :default) %></span>
+            <span><%= contribution.created_at %></span>
           </div>
         </td>
         <td class="px-4 py-3">
@@ -46,7 +46,7 @@
         <td class="px-4 py-3">
           <div class="flex items-center">
             <% if contribution.reviewed_at %>
-              <span><%= l(contribution.reviewed_at, format: :default) %></span>
+              <span><%= contribution.reviewed_at %></span>
             <% else %>
               <span>-</span>
             <% end %>

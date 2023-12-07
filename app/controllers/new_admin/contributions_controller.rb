@@ -3,7 +3,7 @@ module NewAdmin
     load_and_authorize_resource
 
     def index
-      @contributions = contributions
+      @contributions = paginate_record(contributions)
     end
 
     private

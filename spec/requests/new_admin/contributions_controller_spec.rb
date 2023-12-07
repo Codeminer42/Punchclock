@@ -46,7 +46,7 @@ RSpec.describe NewAdmin::ContributionsController, type: :request do
           let!(:foo_questionnaire) { create(:questionnaire, title: 'Foo') }
           let!(:bar_questionnaire) { create(:questionnaire, title: 'Bar') }
 
-          xit 'returns only the filtered questionnaires', :aggregate_failures do
+          it 'returns only the filtered questionnaires', :aggregate_failures do
             get new_admin_questionnaires_path, params: { title: 'foo' }
 
             expect(response.body).to include('Foo')
@@ -57,7 +57,7 @@ RSpec.describe NewAdmin::ContributionsController, type: :request do
         context 'when pagination is applied' do
           let!(:questionnaires_list) { create_list(:questionnaire, 3) }
 
-          xit 'paginates the results', :aggregate_failures do
+          it 'paginates the results', :aggregate_failures do
             get new_admin_questionnaires_path, params: { per: 2 }
 
             expect(assigns(:questionnaires).count).to eq(2)
