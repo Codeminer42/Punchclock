@@ -75,7 +75,7 @@ class User < ApplicationRecord
   scope :inactive,       -> { where(active: false) }
   scope :office_heads,   -> { where(id: Office.select(:head_id)) }
   scope :not_allocated,  -> { engineer.active.where.not(id: Allocation.ongoing.select(:user_id)) }
-  scope :allocated, -> { engineer.active.where(id: Allocation.ongoing.select(:user_id)) }
+  scope :allocated,      -> { engineer.active.where(id: Allocation.ongoing.select(:user_id)) }
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
   scope :by_roles_in, -> roles {
@@ -86,6 +86,14 @@ class User < ApplicationRecord
   scope :hr, -> { by_roles_in([:hr]) }
   scope :commercial, -> { by_roles_in([:commercial]) }
   scope :vacation_managers, -> { by_roles_in([:hr, :commercial]) }
+
+  scope :by_name_like, ->(name) { where("users.name ILIKE ?", "%#{name}%") }
+  scope :by_email_like, ->(email) { where("users.email ILIKE ?", "%#{email}%") }
+  scope :by_backend_level, ->(backend_level) { where(backend_level:) if backend_level.present? }
+  scope :by_frontend_level, ->(frontend_level) { where(frontend_level:) if frontend_level.present? }
+  scope :by_office, ->(office_id) { where("users.office_id = ?", office_id) if office_id.present? }
+  scope :by_contract_type, ->(contract_type) { where(contract_type:) if contract_type.present? }
+  scope :by_active, ->(active) { where(active:) if active.present? }
 
   attr_accessor :password_required
 

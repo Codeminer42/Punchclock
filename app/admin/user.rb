@@ -50,7 +50,7 @@ ActiveAdmin.register User do
   end
 
   action_item :hour_report_current, only: :index, priority: 0 do
-   link_to I18n.t('hour_report_curent_month'), hour_report_admin_users_path(format: :xlsx, month: :current)
+   link_to I18n.t('hour_report_current_month'), hour_report_admin_users_path(format: :xlsx, month: :current)
   end
 
   action_item :hour_report_past, only: :index, priority: 0 do

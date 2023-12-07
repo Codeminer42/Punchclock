@@ -5,6 +5,7 @@ pt-BR:
     edit: "Editar"
     destroy: "Deletar"
     save: "Salvar"
+    download_excel: "Download excel"
     actions:
       editing: "Editando %{model}"
       creating: "Criando %{model}"
@@ -43,15 +44,15 @@ pt-BR:
     no_talks_found: "Nenhuma palestra encontrada"
     new: "Nova palestra"
   repositories:
-    language: 'Linguagem'
-    title: 'Repositórios'
-    new: 'Novo Repositório'
-    empty: 'Nenhum repositório encontrado'
-    filter: 'Filtrar'
-    filters: 'Filtros'
-    clear_filters: 'Limpar Filtros'
-    any: 'Qualquer'
-    search_by_name: 'Busca por Nome'
+    language: "Linguagem"
+    title: "Repositórios"
+    new: "Novo Repositório"
+    empty: "Nenhum repositório encontrado"
+    filter: "Filtrar"
+    filters: "Filtros"
+    clear_filters: "Limpar Filtros"
+    any: "Qualquer"
+    search_by_name: "Busca por Nome"
   notification_mailer:
     subject:
       notify_fill_contribution_description_html: "Punchlock - Contribuições Aguardando Descrição"

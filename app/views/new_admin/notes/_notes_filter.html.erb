@@ -1,0 +1,31 @@
+<div class="px-4 py-3 w-fit h-fit dark:bg-gray-800"> 
+  <h3 class="text-xs py-1 font-semibold tracking-wide text-left uppercase border-b dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+    <%= t('notes.filters') %>
+  </h3>
+  <%= form_with url: new_admin_notes_url, method: :get do |form| %>
+    <div class="mt-2 space-y-2">
+      <div class="flex flex-col space-y-2">
+        <%= form.label :title, Note.human_attribute_name(:title), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.text_field :title, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :user_id, Note.human_attribute_name(:user), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :user_id, User.pluck(:name, :id), { prompt: t('prompt'), selected: params[:user_id] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :author_id, Note.human_attribute_name(:author), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :author_id, User.pluck(:name, :id), { prompt: t('prompt'), selected: params[:author_id] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :rate, Note.human_attribute_name(:rate), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.select :rate, Note.rate.values, { prompt: t('prompt'), selected: params[:rate] }, { class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' } %>
+      </div>
+    </div>
+    <div class="mt-4 mb-2">
+      <div class="flex flex-row">
+        <%= form.submit t('notes.filter'), formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+        <%= link_to t('notes.clear'), new_admin_notes_url, class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %> 
+      </div>
+    </div>
+  <% end %>
+</div>
