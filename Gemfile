@@ -6,19 +6,16 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.4'
 
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.2'
 
 gem 'bootsnap', require: false
 
-gem 'activeadmin', '~> 2.13.1'
+gem 'activeadmin', '> 2.14.0'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'cancancan', '~> 3.3.0'
 gem 'carrierwave', '~> 2.2.5'
-gem 'devise', '~> 4.8.1'
-gem 'devise-two-factor',
-    git: 'https://github.com/eoinkelly/devise-two-factor',
-    branch: 'rails-7-support',
-    ref: '7de6c315b507c41e6ee288ea0bdf3a070416bd17'
+gem 'devise', '~> 4.8.0'
+gem 'devise-two-factor', '~> 5.0.0'
 gem 'draper'
 gem 'draper-cancancan', '~> 1.1.1'
 gem 'jquery-rails'
@@ -47,7 +44,7 @@ gem 'business_time'
 gem 'github_api', '~> 0.18.2'
 gem 'httparty'
 gem 'money-rails', '~> 1.12'
-gem 'ransack', '~> 2.3'
+gem 'ransack', '~> 4.0'
 
 gem 'sidekiq', "~> 6.5.12"
 
@@ -62,7 +59,7 @@ gem 'font-awesome-sass', '~> 5.13'
 gem 'jquery-easing-rails'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'normalize-rails', '~> 4.1.1'
-gem 'validates_timeliness', '~> 6.0.0.beta2', github: "mitsuru/validates_timeliness", branch: "rails7"
+gem 'validates_timeliness', '> 6.0.0'
 
 gem 'aasm', '~> 5.0', '>= 5.0.8'
 gem 'active_admin_flat_skin'
@@ -80,8 +77,8 @@ end
 
 gem 'inline_svg', '~> 1.9'
 gem 'puma'
-gem 'rswag-api', '~> 2.5.1'
-gem 'rswag-ui', '~> 2.5.1'
+gem 'rswag-api', '~> 2.13.0'
+gem 'rswag-ui', '~> 2.13.0'
 gem "tailwindcss-rails", "~> 2.0"
 
 group :test do
@@ -119,7 +116,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-remote', '~> 0.1.8'
   gem 'rspec-rails'
-  gem 'rswag-specs', '~> 2.5.1'
+  gem 'rswag-specs', '~> 2.13.0'
   gem 'rubocop', require: false
   gem 'rubocop-faker', '~> 1.1'
 end

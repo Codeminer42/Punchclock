@@ -17,7 +17,6 @@ RUN apt-get update \
   && apt-get install -y \
     build-essential \
     postgresql-client \
-    curl \
   && groupadd --gid ${GROUP_ID} app \
   && useradd --system --create-home --no-log-init --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo app \
   && mkdir /var/app && chown -R app:app /var/app \
