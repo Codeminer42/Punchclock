@@ -1,4 +1,4 @@
-FROM ruby:3.1.4
+FROM ruby:3.2.2
 
 LABEL MAINTAINER Codeminer42 <contact@codeminer42.com>
 
@@ -17,6 +17,7 @@ RUN apt-get update \
   && apt-get install -y \
     build-essential \
     postgresql-client \
+    curl \
   && groupadd --gid ${GROUP_ID} app \
   && useradd --system --create-home --no-log-init --uid ${USER_ID} --gid ${GROUP_ID} --groups sudo app \
   && mkdir /var/app && chown -R app:app /var/app \
@@ -25,12 +26,13 @@ RUN apt-get update \
   && chown -R app:app $BUNDLE_PATH
 
 # Install chrome and chromedriver for selenium
-ENV CHROME_VERSION 106.0.5249.61
+ENV CHROME_VERSION 119.0.6045.123
+ENV CHROMEDRIVER_VERSION 114.0.5735.90
 RUN wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
   && dpkg -i google-chrome-stable_${CHROME_VERSION}-1_amd64.deb || true \
   && apt-get -f install -y \
   && rm -v google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
-  && wget https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip \
+  && wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip \
   && unzip chromedriver_linux64.zip -d /usr/local/bin \
   && rm chromedriver_linux64.zip
 
