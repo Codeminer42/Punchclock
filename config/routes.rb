@@ -50,8 +50,9 @@ Rails.application.routes.draw do
     resources :questionnaires, only: :update, as: :update_questionnaire
     resources :questionnaires, only: :destroy, as: :destroy_questionnaire
     resources :repositories, only: %i[index]
-    resources :notes, except: %i[show]
+    resources :notes, except: %i[show update]
     resources :notes, only: :show, as: :show_note
+    resources :notes, only: :update, as: :update_note
 
     namespace :projects do
       resources :allocate_users, only: %i[new create]

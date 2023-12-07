@@ -2,6 +2,14 @@
   <%= Note.model_name.human %>
 <% end %>
 
+<div class="flex justify-end mx-2 mb-4">
+  <%= link_to new_new_admin_note_path do %>
+    <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+      <%= t 'notes.new' %>
+    </button>
+  <% end %>
+</div>
+
 <div data-tab-id="notes" class="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
   <div class="flex justify-between gap-4">
     <% if @notes.any? %>
