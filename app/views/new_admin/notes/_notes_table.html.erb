@@ -8,6 +8,7 @@
     <th class="px-4 py-3"><%= Note.human_attribute_name('created_at') %></th>
     <th class="px-4 py-3"><%= Note.human_attribute_name('updated_at') %></th>
     <th></th>
+    <th></th>
   </tr>
   </thead>
   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm text-start">
@@ -38,6 +39,11 @@
         <td>
           <%= link_to t('view'), 
           new_admin_show_note_path(note.id),
+          class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900' %>
+        </td>
+        <td>
+          <%= link_to t('edit'), 
+          edit_new_admin_note_path(note.id),
           class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900' %>
         </td>
       </tr>

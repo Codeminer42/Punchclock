@@ -28,6 +28,20 @@ module NewAdmin
       end
     end
 
+    def edit
+      @note = Note.find(params[:id])
+    end
+
+    def update
+      @note = Note.find(params[:id])
+
+      if @note.update(note_params)
+        redirect_on_success new_admin_show_note_path(id: @note.id), message_scope: 'update'
+      else
+        render_on_failure :edit
+      end
+    end
+
     private
 
     def notes
