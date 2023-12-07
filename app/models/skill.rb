@@ -7,4 +7,6 @@ class Skill < ApplicationRecord
   validates :title,
             presence: true,
             uniqueness: { case_sensitive: false }
+
+  scope :by_title_like, ->(title) { where("skills.title ILIKE ?", "%#{title}%") if title.present? }
 end

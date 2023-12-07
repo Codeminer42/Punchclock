@@ -286,6 +286,7 @@ pt-BR:
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
     empty: "Nenhum feriado regional encontrado"
+
   projects:
     title: "Projetos"
     filters: "Filtros"
@@ -331,6 +332,14 @@ pt-BR:
         new: "Novo Projeto"
       edit:
         edit: "Editar Projeto"
+    skills:
+      skills_filter:
+        filters: "Filtros"
+        filter: "Filtrar"
+        clear: "Limpar filtros"
+      index:
+        empty: "Nenhuma habilidade encontrada"
+        new: "Nova habilidade"
     repositories:
       details: "Detalhes do Repositório"
       show:
