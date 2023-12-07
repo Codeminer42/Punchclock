@@ -13,7 +13,7 @@ gem 'bootsnap', require: false
 gem 'activeadmin', '~> 2.13.1'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'cancancan', '~> 3.3.0'
-gem 'carrierwave', '~> 2.2.2'
+gem 'carrierwave', '~> 2.2.5'
 gem 'devise', '~> 4.8.1'
 gem 'devise-two-factor',
     git: 'https://github.com/eoinkelly/devise-two-factor',

@@ -5,6 +5,10 @@ module NewAdmin
     load_and_authorize_resource
     before_action :load_user_data, only: :show
 
+    def index
+      @users = paginate_record(users)
+    end
+
     def show
       @punches = filter_punches_by_date(params[:id], params[:from], params[:to])
     end
@@ -53,12 +57,32 @@ module NewAdmin
                 .where(evaluated_id: id).order(created_at: :desc).decorate
     end
 
+    def filters
+      params.permit(
+        :active,
+        :contract_type,
+        :name,
+        :backend_level,
+        :email,
+        :frontend_level,
+        :is_admin,
+        :is_allocated,
+        :is_office_head,
+        :office_id,
+        skill_ids: []
+      )
+    end
+
     def filter_punches_by_date(id, from, to)
       if from.present? && to.present?
         Punch.filter_by_date(id, from, to).decorate
       else
         Punch.where(user_id: id).decorate
       end
+    end
+
+    def users
+      UsersQuery.call filters
     end
 
     def user_params
