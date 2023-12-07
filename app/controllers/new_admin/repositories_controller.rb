@@ -40,6 +40,16 @@ module NewAdmin
       end
     end
 
+    def destroy
+      @repository = Repository.find(params[:id])
+
+      if @repository.destroy
+        redirect_on_success new_admin_repositories_path, message_scope: "destroy"
+      else
+        render_on_failure :index
+      end
+    end
+
     private
 
     def repositories
