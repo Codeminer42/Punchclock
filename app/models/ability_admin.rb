@@ -8,6 +8,7 @@ class AbilityAdmin
 
   def initialize(user)
     return if user.nil?
+
     @action = [
       Allocation,
       User,

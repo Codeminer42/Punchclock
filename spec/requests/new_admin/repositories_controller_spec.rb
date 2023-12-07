@@ -161,4 +161,127 @@ RSpec.describe NewAdmin::RepositoriesController, type: :request do
       end
     end
   end
+
+  describe 'GET #edit' do
+    let(:repository) { create(:repository) }
+
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      before { sign_in user }
+
+      it 'renders edit template' do
+        get edit_new_admin_repository_path(repository.id)
+
+        expect(response).to render_template(:edit)
+      end
+
+      it 'returns http status 200 ok' do
+        get edit_new_admin_repository_path(repository.id)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get edit_new_admin_repository_path(repository.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe 'PUT/PATCH #update' do
+    let(:repository) { create(:repository) }
+
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      context 'with valid parameters' do
+        let(:valid_params) do
+          {
+            repository: {
+              link: 'https://github.com/Codeminer42/Punchclock2'
+            }
+          }
+        end
+
+        it 'updates the repository' do
+          expect do
+            put new_admin_update_repository_path(repository.id), params: valid_params
+          end.to change { repository.reload.link }.to('https://github.com/Codeminer42/Punchclock2')
+        end
+
+        it 'redirects to repository show page' do
+          put new_admin_update_repository_path(repository.id), params: valid_params
+          expect(response).to redirect_to(new_admin_show_repository_url(repository.id))
+        end
+      end
+
+      context 'with invalid parameters' do
+        let(:invalid_params) do
+          {
+            repository: {
+              link: ''
+            }
+          }
+        end
+
+        it 'does not update the repository' do
+          expect do
+            put new_admin_update_repository_path(repository.id), params: invalid_params
+          end.not_to change { repository.reload.link }
+        end
+      end
+    end
+  end
+
+  describe 'DELETE #delete' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      before { sign_in user }
+
+      let!(:repository) { create(:repository) }
+
+      it 'deletes the repository' do
+        expect { delete new_admin_destroy_repository_path(repository.id) }.to change(Repository, :count).by(-1)
+      end
+
+      it 'redirects to repositories index' do
+        delete new_admin_destroy_repository_path(repository.id)
+
+        expect(response).to redirect_to(new_admin_repositories_path)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let!(:repository) { create(:repository) }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_repository_path(repository.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user is not signed in' do
+      let!(:repository) { create(:repository) }
+
+      it 'redirects to sign in path' do
+        delete new_admin_destroy_repository_path(repository.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end
