@@ -88,7 +88,7 @@ GEM
       case_transform (>= 0.2)
       jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     active_skin (0.0.13)
-    activeadmin (2.13.1)
+    activeadmin (3.0.0)
       arbre (~> 1.2, >= 1.2.1)
       formtastic (>= 3.1, < 5.0)
       formtastic_i18n (~> 0.4)
@@ -96,7 +96,7 @@ GEM
       jquery-rails (~> 4.2)
       kaminari (~> 1.0, >= 1.2.1)
       railties (>= 6.1, < 7.1)
-      ransack (>= 2.1.1, < 4)
+      ransack (>= 4.0, < 5)
     activejob (7.0.7.2)
       activesupport (= 7.0.7.2)
       globalid (>= 0.3.6)
@@ -123,9 +123,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
-    arbre (1.6.0)
-      activesupport (>= 3.0.0, < 7.1)
-      ruby2_keywords (>= 0.0.2, < 1.0)
+    arbre (1.7.0)
+      activesupport (>= 3.0.0)
+      ruby2_keywords (>= 0.0.2)
     ast (2.4.2)
     autoprefixer-rails (10.4.2.0)
       execjs (~> 2)
@@ -275,7 +275,7 @@ GEM
       guard (~> 2.8)
       guard-compat (~> 1.0)
       multi_json (~> 1.8)
-    has_scope (0.8.1)
+    has_scope (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
     hashdiff (1.0.1)
@@ -298,11 +298,11 @@ GEM
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
-    inherited_resources (1.13.1)
-      actionpack (>= 5.2, < 7.1)
-      has_scope (~> 0.6)
-      railties (>= 5.2, < 7.1)
-      responders (>= 2, < 4)
+    inherited_resources (1.14.0)
+      actionpack (>= 6.0)
+      has_scope (>= 0.6)
+      railties (>= 6.0)
+      responders (>= 2)
     inline_svg (1.9.0)
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
@@ -473,9 +473,9 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    ransack (2.6.0)
-      activerecord (>= 6.0.4)
-      activesupport (>= 6.0.4)
+    ransack (4.1.1)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
       i18n
     rate_throttle_client (0.1.2)
     rb-fsevent (0.11.2)
@@ -646,7 +646,7 @@ DEPENDENCIES
   active_admin_theme
   active_model_serializers (~> 0.10.13)
   active_skin
-  activeadmin (~> 2.13.1)
+  activeadmin (~> 3.0.0)
   autoprefixer-rails (~> 10.4.2.0)
   barnes
   better_errors
@@ -703,7 +703,7 @@ DEPENDENCIES
   rails-ajax_redirect
   rails-controller-testing
   rails-i18n
-  ransack (~> 2.3)
+  ransack (~> 4.0)
   rollbar
   roo (~> 2.9.0)
   rqrcode
