@@ -49,6 +49,10 @@ Rails.application.routes.draw do
     resources :questionnaires, only: :show, as: :show_questionnaire
     resources :questionnaires, only: :update, as: :update_questionnaire
     resources :questionnaires, only: :destroy, as: :destroy_questionnaire
+    resources :contributions, except: %i[show update destroy]
+    resources :contributions, only: :show, as: :show_contribution
+    resources :contributions, only: :update, as: :update_contribution
+    resources :contributions, only: :destroy, as: :destroy_contribution
     resources :skills
     resources :repositories, except: %i[show]
     resources :repositories, only: :show, as: :show_repository

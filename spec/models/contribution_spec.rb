@@ -3,6 +3,8 @@
 require 'rails_helper'
 require 'aasm/rspec'
 
+RSpec::Matchers.define_negated_matcher :not_include, :include
+
 RSpec.describe Contribution, type: :model do
   it { is_expected.to belong_to(:repository) }
   it { is_expected.to belong_to(:reviewed_by).class_name('User').optional }
@@ -116,6 +118,111 @@ RSpec.describe Contribution, type: :model do
 
     it 'is tracking' do
       expect(described_class.tracking).to contain_exactly(tracking_contribution)
+    end
+
+    describe '.by_user' do
+      let(:user) { create(:user) }
+      let!(:user_contribution) { create(:contribution) }
+      let!(:other_contribution) { create(:contribution) }
+
+      context 'when user is present' do
+        it 'returns only the user contributions' do
+          user_contribution.users << user
+          expect(described_class.by_user(user.id)).to contain_exactly(user_contribution)
+        end
+      end
+
+      context 'when user is not present' do
+        it 'returns all of the contributions' do
+          expect(described_class.by_user(nil)).to include(user_contribution, other_contribution)
+        end
+      end
+    end
+
+    describe '.by_state' do
+      let!(:received_contribution) { create(:contribution, :received) }
+      let!(:approved_contribution) { create(:contribution, :approved) }
+
+      context 'when state is present' do
+        it 'returns only the contributions with the given state' do
+          expect(described_class.by_state('approved')).to contain_exactly(approved_contribution)
+        end
+      end
+
+      context 'when state is not present' do
+        it 'returns all the contributins' do
+          expect(described_class.by_state(nil)).to include(received_contribution, approved_contribution)
+        end
+      end
+    end
+
+    describe '.by_reviewed_at_from' do
+      let!(:october_reviewed_contribution) { create(:contribution, reviewed_at: '2022-10-02') }
+      let!(:november_reviewed_contribution) { create(:contribution, reviewed_at: '2022-11-02') }
+
+      context 'when date is present' do
+        it 'returns contributions reviewed from given date' do
+          expect(described_class.by_reviewed_at_from('2022-11-01')).to eq([november_reviewed_contribution])
+        end
+      end
+
+      context 'when date is not present' do
+        it 'returns all the contributions' do
+          expect(described_class.by_reviewed_at_from(nil)).to include(october_reviewed_contribution, november_reviewed_contribution)
+        end
+      end
+    end
+
+    describe 'by_reviewed_at_until' do
+      let!(:october_reviewed_contribution) { create(:contribution, reviewed_at: '2022-10-02') }
+      let!(:november_reviewed_contribution) { create(:contribution, reviewed_at: '2022-11-02') }
+
+      context 'when date is present' do
+        it 'returns contributions reviewed until given date' do
+          expect(described_class.by_reviewed_at_until('2022-10-10')).to eq([october_reviewed_contribution])
+        end
+      end
+
+      context 'when date is not present' do
+        it 'returns all the contributions' do
+          expect(described_class.by_reviewed_at_until(nil)).to include(october_reviewed_contribution, november_reviewed_contribution)
+        end
+      end
+    end
+
+    describe '.by_created_at_from' do
+      let!(:october_created_contribution) { create(:contribution, created_at: '2022-10-02') }
+      let!(:november_created_contribution) { create(:contribution, created_at: '2022-11-02') }
+
+      context 'when date is present' do
+        it 'returns contributions created from given date' do
+          expect(Contribution.by_created_at_from('2022-11-01')).to include(november_created_contribution)
+            .and not_include(october_created_contribution)
+        end
+      end
+
+      context 'when date is not present' do
+        it 'returns all the contributions' do
+          expect(described_class.by_created_at_from(nil)).to include(october_created_contribution, november_created_contribution)
+        end
+      end
+    end
+
+    describe 'by_created_at_until' do
+      let!(:october_created_contribution) { create(:contribution, created_at: '2022-10-02') }
+      let!(:november_created_contribution) { create(:contribution, created_at: '2022-11-02') }
+
+      context 'when date is present' do
+        it 'returns contributions created until given date' do
+          expect(Contribution.by_created_at_until('2022-10-10')).to eq([october_created_contribution])
+        end
+      end
+
+      context 'when date is not present' do
+        it 'returns all the contributions' do
+          expect(described_class.by_created_at_until(nil)).to include(october_created_contribution, november_created_contribution)
+        end
+      end
     end
   end
 
