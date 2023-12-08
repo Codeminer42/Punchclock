@@ -68,6 +68,17 @@ class Punch < ApplicationRecord
     all.reduce(0) { |a, e| a + e.delta }
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      attachment comment created_at extra_hour from
+      id id_value project_id to updated_at user_id
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[project user]
+  end
+
   private
 
   def mount_time(time_string)
