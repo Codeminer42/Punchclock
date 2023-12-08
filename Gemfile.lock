@@ -121,7 +121,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.4)
+    addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     arbre (1.6.0)
       activesupport (>= 3.0.0, < 7.1)
@@ -169,7 +169,7 @@ GEM
     capybara-selenium (0.0.6)
       capybara
       selenium-webdriver
-    carrierwave (2.2.4)
+    carrierwave (2.2.5)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
       addressable (~> 2.6)
@@ -244,7 +244,7 @@ GEM
       i18n (>= 1.6, < 2)
     faraday (0.17.6)
       multipart-post (>= 1.2, < 3)
-    ffi (1.15.5)
+    ffi (1.16.3)
     font-awesome-sass (5.15.1)
       sassc (>= 1.11)
     foreman (0.87.2)
@@ -360,9 +360,9 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_magick (4.12.0)
-    mini_mime (1.1.2)
+    mini_mime (1.1.5)
     mini_portile2 (2.8.2)
-    minitest (5.18.1)
+    minitest (5.20.0)
     moneta (1.0.0)
     monetize (1.12.0)
       money (~> 6.12)
@@ -424,7 +424,7 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    public_suffix (5.0.1)
+    public_suffix (5.0.4)
     puma (6.3.1)
       nio4r (~> 2.0)
     racc (1.7.1)
@@ -542,7 +542,7 @@ GEM
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
     ruby-progressbar (1.13.0)
-    ruby-vips (2.1.4)
+    ruby-vips (2.2.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -584,7 +584,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    ssrf_filter (1.1.1)
+    ssrf_filter (1.1.2)
     statsd-ruby (1.5.0)
     tailwindcss-rails (2.0.30)
       railties (>= 6.0.0)
@@ -659,7 +659,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   capybara-selenium
-  carrierwave (~> 2.2.2)
+  carrierwave (~> 2.2.5)
   caxlsx
   caxlsx_rails
   certified

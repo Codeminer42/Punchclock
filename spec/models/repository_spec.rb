@@ -20,7 +20,7 @@ RSpec.describe Repository, type: :model do
     end
 
     it 'returns a relation containing repositories with distinct languages without duplicates' do
-      expect(described_class.with_distinct_languages.pluck(:language)).to eq(%w[Ruby Java])
+      expect(described_class.with_distinct_languages.pluck(:language)).to contain_exactly('Ruby', 'Java')
     end
   end
 
