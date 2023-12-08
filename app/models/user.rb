@@ -105,6 +105,22 @@ class User < ApplicationRecord
     [:by_skills_in]
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      active allow_overtime backend_level city_id consumed_timestep updated_at
+      contract_company_country contract_type created_at email frontend_level
+      github id mentor_id name observation occupation office_id roles specialty
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[
+      allocations authored_notes city contributions education_experiences
+      evaluations managed_offices mentees mentor notes office vacations
+      professional_experiences projects punches skills talks user_skills
+    ]
+  end
+
   def self.overall_score_average
     overall_scores = all.map(&:overall_score).compact
 

@@ -28,6 +28,17 @@ class Evaluation < ApplicationRecord
   },  scope: :shallow,
       predicates: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      created_at english_level evaluated_id evaluation_date evaluator_id
+      id id_value observation questionnaire_id score updated_at
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[answers evaluated evaluator questionnaire]
+  end
+
   private
 
   def update_office_score

@@ -14,4 +14,8 @@ class Repository < ApplicationRecord
     end
   }
   scope :by_languages, ->(languages) { where(language: languages) if languages.present? }
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[created_at description highlight id issues language link stars updated_at]
+  end
 end

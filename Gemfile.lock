@@ -659,7 +659,7 @@ DEPENDENCIES
   active_admin_theme
   active_model_serializers (~> 0.10.13)
   active_skin
-  activeadmin (> 2.14.0)
+  activeadmin (> 2.13.1)
   autoprefixer-rails (~> 10.4.2.0)
   barnes
   better_errors

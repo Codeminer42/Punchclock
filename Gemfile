@@ -10,7 +10,7 @@ gem 'rails', '~> 7.1.1'
 
 gem 'bootsnap', require: false
 
-gem 'activeadmin', '> 2.14.0'
+gem 'activeadmin', '> 2.13.1'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'cancancan', '~> 3.3.0'
 gem 'carrierwave', '~> 2.2.5'

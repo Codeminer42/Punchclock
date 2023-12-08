@@ -25,13 +25,12 @@ RUN apt-get update \
   && chown -R app:app $BUNDLE_PATH
 
 # Install chrome and chromedriver for selenium
-ENV CHROME_VERSION 119.0.6045.123
-ENV CHROMEDRIVER_VERSION 114.0.5735.90
+ENV CHROME_VERSION 114.0.5735.90
 RUN wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
   && dpkg -i google-chrome-stable_${CHROME_VERSION}-1_amd64.deb || true \
   && apt-get -f install -y \
   && rm -v google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
-  && wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip \
+  && wget https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip \
   && unzip chromedriver_linux64.zip -d /usr/local/bin \
   && rm chromedriver_linux64.zip
 
