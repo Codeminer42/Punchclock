@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
-gem 'rails', '~> 7.1.2'
+gem 'rails', '~> 7.1.1'
 
 gem 'bootsnap', require: false
 
@@ -31,7 +31,7 @@ gem 'simple_form', '~> 5.1.0'
 gem 'sprockets'
 gem 'uglifier'
 gem 'webpacker', '~> 5.1'
-
+gem 'mutex_m', '0.1.2'
 gem 'heroicon'
 
 gem 'caxlsx'
@@ -122,5 +122,5 @@ group :development, :test do
 end
 
 group :development, :test, :staging do
-  gem 'faker', '~> 2.14.0'
+  gem 'faker', '~> 2.23.0'
 end
