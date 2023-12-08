@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.4'
+ruby '3.2.2'
 
 gem 'rails', '~> 7.1.2'
 
@@ -59,7 +59,7 @@ gem 'font-awesome-sass', '~> 5.13'
 gem 'jquery-easing-rails'
 gem 'jquery_mask_rails', '~> 0.1.0'
 gem 'normalize-rails', '~> 4.1.1'
-gem 'validates_timeliness', '> 6.0.0'
+gem 'validates_timeliness', '>= 6.0.1'
 
 gem 'aasm', '~> 5.0', '>= 5.0.8'
 gem 'active_admin_flat_skin'

@@ -743,14 +743,14 @@ DEPENDENCIES
   sprockets
   tailwindcss-rails (~> 2.0)
   uglifier
-  validates_timeliness (> 6.0.0)
+  validates_timeliness (>= 6.0.1)
   vcr
   web-console (~> 4.0)
   webmock
   webpacker (~> 5.1)
 
 RUBY VERSION
-   ruby 3.1.4p223
+   ruby 3.2.2p53
 
 BUNDLED WITH
-   2.3.26
+   2.4.10
