@@ -69,6 +69,7 @@ module NewAdmin
     end
 
     def questions_to_be_destroyed_ids
+      return nil unless questionnaire_params[:questions_attributes]
       ids = questionnaire_params[:questions_attributes].values.filter_map do |question|
         if question["_destroy"] != 'false'
           question["id"]
