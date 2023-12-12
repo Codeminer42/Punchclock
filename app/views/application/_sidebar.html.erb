@@ -76,7 +76,7 @@
         >
           <%= heroicon 'gift', variant: :outline, options: { class: 'h-6 w-6' } %>
           <span class="ml-4"><%= t('contributions.title') %></span>
-          <%= heroicon 'chevron-down', options: { class: 'ml-auto h-6 w-6 transition-transform', data: { icon: 'arrow' } }%>
+          <%= inline_svg_tag 'arrow-down.svg', class: 'ml-auto h-6 w-6 transition-transform', data: { icon: 'arrow' } %>
         </button>
         <ul class="pl-10 py-1 mt-1 bg-gray-200 dark:bg-gray-900 rounded-lg hidden">
           <li class="my-2">
@@ -103,7 +103,7 @@
         >
           <%= heroicon 'user', variant: :outline, options: { class: 'h-6 w-6' } %>
           <span class="ml-4"><%= t('users.title') %></span>
-          <%= heroicon 'chevron-down', options: { class: 'ml-auto h-6 w-6 transition-transform', data: { icon: 'arrow' } }%>
+          <%= inline_svg_tag 'arrow-down.svg', class: 'ml-auto h-6 w-6 transition-transform', data: { icon: 'arrow' } %>
         </button>
         <ul class="pl-10 py-1 mt-1 bg-gray-200 dark:bg-gray-900 rounded-lg hidden">
           <li class="my-2">
