@@ -107,7 +107,6 @@ GEM
       drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
-      mutex_m
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
@@ -377,7 +376,6 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.3.0)
-    mutex_m (0.1.2)
     nenv (0.3.0)
     net-imap (0.4.7)
       date
@@ -705,7 +703,6 @@ DEPENDENCIES
   letter_opener_web (~> 1.4)
   listen (~> 3.2)
   money-rails (~> 1.12)
-  mutex_m (= 0.1.2)
   nokogiri (~> 1.14.3)
   normalize-rails (~> 4.1.1)
   pg (~> 1.2)

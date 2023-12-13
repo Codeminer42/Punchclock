@@ -31,7 +31,7 @@ gem 'simple_form', '~> 5.1.0'
 gem 'sprockets'
 gem 'uglifier'
 gem 'webpacker', '~> 5.1'
-gem 'mutex_m', '0.1.2'
+
 gem 'heroicon'
 
 gem 'caxlsx'
