@@ -1,0 +1,24 @@
+<table class="table-auto w-full" id="index_table_skills">
+  <thead>
+    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+      <th class="px-4 py-3"><%= Skill.human_attribute_name(:title) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
+    <% skills.each do |skill| %>
+      <tr id=<%= "skill_#{skill.id}" %> class="text-gray-700 dark:text-gray-400">
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= skill.title %></span>
+          </div>
+        </td>
+        <td class="flex items-center space-x-4 text-sm">
+          <%= link_to new_admin_show_skill_path(skill.id), class: "flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray" do %>
+            <%= heroicon 'magnifying-glass', variant: :solid, options: { class: "w-5 h-5" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

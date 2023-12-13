@@ -86,6 +86,39 @@
               class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
             %>
           </li>
+          <li class="my-2">
+            <%=
+              link_to I18n.t('contributions.title'),
+              new_admin_contributions_path,
+              class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
+            %>
+          </li>
+        </ul>
+      </li>
+      <li class="px-6 py-3 text-sm font-semibold cursor-pointer">
+        <button
+          data-menu="submenu"
+          class="flex items-center w-full transition-colors duration-800 hover:text-gray-800 dark:hover:text-gray-200"
+        >
+          <%= heroicon 'user', variant: :outline, options: { class: 'h-6 w-6' } %>
+          <span class="ml-4"><%= t('users.title') %></span>
+          <%= heroicon 'chevron-down', options: { class: 'ml-auto h-6 w-6 transition-transform', data: { icon: 'arrow' } }%>
+        </button>
+        <ul class="pl-10 py-1 mt-1 bg-gray-200 dark:bg-gray-900 rounded-lg hidden">
+          <li class="my-2">
+            <%=
+              link_to I18n.t('users.title'),
+              new_admin_users_path,
+              class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
+            %>
+          </li>
+          <li class="my-2">
+            <%=
+              link_to I18n.t('vacations.title'),
+              new_admin_vacations_path,
+              class: "block w-full hover:text-gray-800 dark:hover:text-gray-200"
+            %>
+          </li>
         </ul>
       </li>
     </ul>

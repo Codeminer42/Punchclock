@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+  <%= t 'helpers.edit' %>
+<% end %>
+
+<div data-tab-id="edit_repository">
+  <%= render 'form', repository: @repository, url: new_admin_update_repository_path %>
+</div>

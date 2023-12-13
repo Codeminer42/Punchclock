@@ -29,6 +29,7 @@ pt-BR:
   time:
     formats:
       date_time: "%d/%m/%Y %H:%M"
+      default: "%d/%m/%Y"
   english_evaluations: 'Avaliações de Inglês'
   english_score: 'Pontuação de Inglês'
   english_level: "Nível de inglês"
@@ -41,7 +42,7 @@ pt-BR:
   score: 'Pontuação'
   questionnaire: 'Questionário'
   evaluation_date: "Data da avaliação"
-  hour_report_curent_month: 'Report de Horas do mês atual'
+  hour_report_current_month: 'Report de Horas do mês atual'
   hour_report_past_month: 'Report de Horas do mês anterior'
   resend_user_registration: 'Reenviar Email de Cadastro'
   resend_user_registration_confirmed: 'Email de Cadastro Reenviado'
@@ -175,8 +176,10 @@ pt-BR:
   english_evaluation: 'Avaliação de Inglês'
   revenue_forecast: 'Projeção de Faturamento'
   revenue_forecast_warning: '* Como esta ferramenta começou a ser utilizada em Set/2022, as informações anteriores a esse mês estão incompletas'
+  not_possible_to_download_excel: 'Não é possível baixar a planilha para a data informada'
   internal_market: "Mercado interno"
   international_market: "Mercado externo"
+  detailed_month_forecast: "Projeção mensal detalhada"
   blank_field: "não pode ficar em branco"
   forgot_password: "Esqueceu sua senha?"
   request_vacation: 'Solicitar Férias'
@@ -237,6 +240,8 @@ pt-BR:
     end_at: Término
     in_progress: Em Progresso
     title: "Alocação #%{id}"
+    worked_hours: 'Horas trabalhadas'
+    total_revenue: 'Faturamento total'
   punches_filter:
     filter: Filtro
     range: Intervalo
@@ -295,6 +300,20 @@ pt-BR:
     active: "Ativo"
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
+  users:
+    new: "Novo usuário"
+    title: "Usuários"
+    filters: "Filtros"
+    details: "Detalhes"
+    empty: "Nenhum usuário encontrado"
+    filter: "Filtrar"
+    clear: "Limpar filtros"
+    active: "Ativo"
+    inactive: "Inativo"
+    skills: "Habilidades"
+    allocated: "Alocado"
+    not_allocated: "Não alocado"
+    office_head: "Head de escritório"
   new_admin:
     regional_holidays:
       index:
@@ -314,6 +333,21 @@ pt-BR:
         new: "Novo Projeto"
       edit:
         edit: "Editar Projeto"
+    skills:
+      skills_filter:
+        filters: "Filtros"
+        filter: "Filtrar"
+        clear: "Limpar filtros"
+      index:
+        empty: "Nenhuma habilidade encontrada"
+        new: "Nova habilidade"
+      show:
+        details: "Detalhes da habilidade"
+    repositories:
+      details: "Detalhes do Repositório"
+      show:
+        edit: "Editar Repositório"
+        destroy: "Remover Repositório"
     revenue_forecast:
       index:
         total: "Total"
@@ -330,3 +364,12 @@ pt-BR:
     new: "Nova Note"
     edit: "Editar Note"
     destroy: "Deletar Note"
+  contributions:
+    empty: "Nenhuma contribuição encontrada"
+    filter: "Filtrar Contribuições"
+    clear: "Limpar Filtros"
+  notes:
+    empty: "Nenhuma note encontrada"
+    filter: "Filtrar"
+    clear: "Limpar"
+    filters: "Filtros"

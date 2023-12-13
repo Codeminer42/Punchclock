@@ -4,8 +4,6 @@ module NewAdmin
   class NotesController < NewAdminController
     load_and_authorize_resource
 
-    layout 'new_admin'
-
     def index
       @notes = paginate_record(notes)
     end

@@ -131,7 +131,7 @@ describe NewAdmin::UsersController do
           it 'redirects to user show page' do
             patch :update, params: { id: bob.id, user: updated_attributes }
 
-            expect(response).to redirect_to(new_admin_admin_user_path(bob))
+            expect(response).to redirect_to(new_admin_show_user_path(bob))
           end
         end
 
@@ -156,7 +156,7 @@ describe NewAdmin::UsersController do
 
             aggregate_failures do
               expect(flash[:alert]).to be_present
-              expect(response).to redirect_to(edit_new_admin_admin_user_path(bob)) 
+              expect(response).to redirect_to(edit_new_admin_user_path(bob))
             end
           end
         end

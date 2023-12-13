@@ -25,3 +25,26 @@
     <% end %>
   </div>
 </div>
+
+<div id='detailed_month_forecast'>
+  <h2 class="text-gray-700 dark:text-gray-400 py-2"> <%= I18n.t('detailed_month_forecast') %> </h2>
+
+  <%= form_with url: new_admin_revenue_forecast_index_path(format: :xlsx), method: :get do |form| %>
+
+    <div class='flex justify-start items-end gap-1'>
+      <div>
+        <%= form.label :month, 'Mês', class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.text_field :month, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' %>
+      </div>
+
+      <div>
+        <%= form.label :year, 'Ano', class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.text_field :year, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' %>
+      </div>
+
+      <div>
+        <%= form.submit t('helpers.download_excel'), formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+      </div>
+    </div>
+  <% end %>
+<div>

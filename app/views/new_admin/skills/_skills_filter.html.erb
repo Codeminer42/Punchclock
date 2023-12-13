@@ -1,0 +1,17 @@
+<div class="px-4 py-3 w-fit h-fit dark:bg-gray-800">
+  <h3 class="text-xs py-1 font-semibold tracking-wide text-left uppercase border-b dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+    <%= t('.filters') %>
+  </h3>
+  <%= form_with url: new_admin_skills_url, method: :get do |form| %>
+    <div class="mt-2 space-y-2">
+        <%= form.label :title, Skill.human_attribute_name(:title), class: "text-xs font-semibold tracking-wide text-left text-gray-500 uppercase"  %>
+        <%= form.text_field :title, class: 'w-full font-semibold rounded-lg text-sm dark:bg-slate-700 dark:text-gray-400' %>
+    </div>
+    <div class="mt-4 mb-2">
+      <div class="flex flex-row">
+        <%= form.submit t('.filter'), formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
+        <%= link_to t('.clear'), new_admin_skills_url, class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %>
+      </div>
+    </div>
+  <% end %>
+</div>

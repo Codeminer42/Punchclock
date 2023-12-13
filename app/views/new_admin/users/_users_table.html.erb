@@ -1,0 +1,77 @@
+<table class="table-auto w-full" id="index_table_users">
+  <thead>
+    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+      <th class="px-4 py-3"><%= User.human_attribute_name(:name) %></th>
+      <th class="px-4 py-3"><%= User.human_attribute_name(:office) %></th>
+      <th class="px-4 py-3"><%= User.human_attribute_name(:backend_level) %></th>
+      <th class="px-4 py-3"><%= User.human_attribute_name(:frontend_level) %></th>
+      <th class="px-4 py-3"><%= User.human_attribute_name(:allow_overtime) %></th>
+      <th class="px-4 py-3"><%= User.human_attribute_name(:active) %></th>
+      <th class="px-4 py-3"><%= User.human_attribute_name(:otp_required_for_login) %></th>
+      <th class="px-4 py-3"></th>
+    </tr>
+  </thead>
+  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-sm">
+    <% users.each do |user| %>
+      <tr id=<%= "user_#{user.id}" %> class="text-gray-700 dark:text-gray-400">
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= user.name %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= user.office %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= user.backend_level %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <span><%= user.frontend_level %></span>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <% if user.allow_overtime %>
+              <%= heroicon "check-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% else %>
+              <%= heroicon "x-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% end %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <% if user.active %>
+              <%= heroicon "check-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% else %>
+              <%= heroicon "x-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% end %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+          <div class="flex items-center">
+            <% if user.otp_required_for_login %>
+              <%= heroicon "check-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% else %>
+              <%= heroicon "x-circle", variant: :mini, options: {class: "w-8 h-8"} %>
+            <% end %>
+          </div>
+        </td>
+        <td class="px-4 py-3">
+					<div class="flex items-center space-x-4 text-sm">
+						<%= link_to new_admin_show_user_path(id: user.id), class: "flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray" do %>
+								<%= heroicon 'magnifying-glass', variant: :mini, options: { class: "w-5 h-5" } %>
+						<% end %>
+						<%= link_to edit_new_admin_user_path(id: user.id), class: "flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 rounded-lg text-primary-600 dark:text-gray-400 hover:text-primary-400 hover:dark:text-gray-300 focus:outline-none focus:ring-gray" do %>
+							<%= heroicon 'pencil', variant: :solid, options: { class: "w-5 h-5" } %>
+						<% end %>
+					</div>
+				</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
