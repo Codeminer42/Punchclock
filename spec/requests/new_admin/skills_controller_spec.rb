@@ -74,4 +74,50 @@ RSpec.describe NewAdmin::SkillsController, type: :request do
       end
     end
   end
+
+  describe 'GET #show' do
+  let(:skill) { create(:skill) }
+
+  context 'when user is signed in' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+      before { sign_in user }
+
+      it 'renders the show template' do
+        get new_admin_show_skill_path(skill.id)
+
+        expect(response).to render_template(:show)
+      end
+
+      it 'renders the correct skill' do
+        get new_admin_show_skill_path(skill.id)
+
+        expect(response.body).to include(skill.title)
+          .and include(I18n.l(skill.created_at, format: :short))
+          .and include(I18n.l(skill.updated_at, format: :short))
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:skill) { create(:skill) }
+      before { sign_in user }
+
+      it 'redirects to root page' do
+        get new_admin_show_skill_path(skill.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+  context 'when user is not logged in' do
+    let(:skill) { create(:skill) }
+
+    it 'redirects to sign in page' do
+      get new_admin_show_skill_url(skill.id)
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+end
 end
