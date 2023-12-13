@@ -9,6 +9,20 @@ module NewAdmin
       @users = paginate_record(users)
     end
 
+    def new
+      @user = User.new
+    end
+
+    def create
+      @user = User.new(user_params)
+
+      if @user.save
+        redirect_on_success new_admin_users_path, message_scope: 'create'
+      else
+        render_on_failure :new
+      end
+    end
+
     def show
       @punches = filter_punches_by_date(params[:id], params[:from], params[:to])
     end
@@ -23,10 +37,10 @@ module NewAdmin
       @user.attributes = user_params
 
       if @user.save
-        redirect_to new_admin_admin_user_path(@user)
+        redirect_to new_admin_show_user_path(@user)
       else
         flash_errors('update')
-        redirect_to edit_new_admin_admin_user_path(@user)
+        redirect_to edit_new_admin_user_path(@user)
       end
     end
 
@@ -60,14 +74,14 @@ module NewAdmin
     def filters
       params.permit(
         :active,
-        :contract_type,
-        :name,
         :backend_level,
+        :contract_type,
         :email,
         :frontend_level,
         :is_admin,
         :is_allocated,
         :is_office_head,
+        :name,
         :office_id,
         skill_ids: []
       )
@@ -104,6 +118,17 @@ module NewAdmin
 
     def error_message
       I18n.t(:errors, scope: "flash", errors:)
+    end
+
+    def redirect_on_success(url, message_scope:)
+      flash[:notice] = I18n.t(:notice, scope: "flash.actions.#{message_scope}",
+                                       resource_name: User.model_name.human)
+      redirect_to url
+    end
+
+    def render_on_failure(template)
+      flash.now[:alert] = @user.errors.full_messages.to_sentence
+      render template, status: :unprocessable_entity
     end
   end
 end

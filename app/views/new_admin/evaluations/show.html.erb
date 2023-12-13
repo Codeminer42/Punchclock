@@ -49,7 +49,7 @@
             <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
               <%=
                 link_to @evaluation.evaluator.name,
-                new_admin_admin_user_path(@evaluation.evaluator),
+                new_admin_show_user_path(@evaluation.evaluator),
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
               %>
             </p>
@@ -67,7 +67,7 @@
             <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
               <%=
                 link_to @evaluation.evaluated.name,
-                new_admin_admin_user_path(@evaluation.evaluated),
+                new_admin_show_user_path(@evaluation.evaluated),
                 class: 'font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900'
               %>
             </p>
