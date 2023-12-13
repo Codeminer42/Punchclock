@@ -301,6 +301,7 @@ pt-BR:
     filter: "Filtrar"
     clear_filters: "Limpar filtros"
   users:
+    new: "Novo usuário"
     title: "Usuários"
     filters: "Filtros"
     details: "Detalhes"

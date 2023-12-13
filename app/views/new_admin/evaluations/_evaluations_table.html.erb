@@ -17,7 +17,7 @@
           <div class="flex items-center">
             <%=
               link_to evaluation[:evaluator],
-                new_admin_admin_user_path(evaluation[:evaluator_id]),
+                new_admin_show_user_path(evaluation[:evaluator_id]),
                 class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
             %>
           </div>
@@ -26,7 +26,7 @@
           <div class="flex items-center">
             <%=
               link_to evaluation[:evaluated],
-                new_admin_admin_user_path(evaluation[:evaluated_id]),
+                new_admin_show_user_path(evaluation[:evaluated_id]),
                 class: "font-semibold transition-colors duration-150 underline dark:hover:text-white hover:text-gray-900"
             %>
           </div>
