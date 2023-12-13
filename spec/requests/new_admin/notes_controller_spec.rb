@@ -297,4 +297,47 @@ RSpec.describe NewAdmin::NotesController, type: :request do
       end
     end
   end
+
+  describe 'DELETE #delete' do
+    context 'when user is admin' do
+      let(:user) { create(:user, :admin) }
+
+      before { sign_in user }
+
+      let!(:note) { create(:note) }
+
+      it 'deletes the note' do
+        expect { delete new_admin_destroy_note_path(note.id) }.to change(Note, :count).by(-1)
+      end
+
+      it 'redirects to notes index' do
+        delete new_admin_destroy_note_path(note.id)
+
+        expect(response).to redirect_to(new_admin_notes_path)
+      end
+    end
+
+    context 'when user is not admin' do
+      let(:user) { create(:user) }
+      let(:note) { create(:note) }
+
+      before { sign_in user }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_note_path(note.id)
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when user not logged in' do
+      let(:note) { create(:note) }
+
+      it 'redirects to root path' do
+        delete new_admin_destroy_note_path(note.id)
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

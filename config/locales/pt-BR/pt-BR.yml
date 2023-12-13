@@ -329,4 +329,4 @@ pt-BR:
     details: "Detalhes da Note"
     new: "Nova Note"
     edit: "Editar Note"
-    
+    destroy: "Deletar Note"
