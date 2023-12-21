@@ -357,6 +357,13 @@ pt-BR:
     details: "Detalhes da experiência profissional"
   talk:
     details: "Detalhes da palestra"
+  notes:
+    empty: "Nenhuma note encontrada"
+    show_title: "Note #%{id}"
+    details: "Detalhes da Note"
+    new: "Nova Note"
+    edit: "Editar Note"
+    destroy: "Deletar Note"
   contributions:
     empty: "Nenhuma contribuição encontrada"
     filter: "Filtrar Contribuições"
