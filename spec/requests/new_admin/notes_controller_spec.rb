@@ -32,13 +32,13 @@ RSpec.describe NewAdmin::NotesController, type: :request do
 
         context 'when title filter is applied' do
           let!(:foo_note) { create(:note, title: 'Foo') }
-          let!(:bar_note) { create(:note, title: 'Bar') }
+          let!(:bar_note) { create(:note, title: 'weird title') }
 
           it 'returns only the filtered notes', :aggregate_failures do
             get new_admin_notes_path, params: { title: 'foo' }
 
             expect(response.body).to include('Foo')
-            expect(response.body).not_to include('Bar')
+            expect(response.body).not_to include('weird title')
           end
         end
 
