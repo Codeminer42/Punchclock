@@ -1,0 +1,125 @@
+<% content_for :page_title do %>
+  <%= t('notes.show_title', id: @note.id) %>
+<% end %>
+
+<div data-tab-id="note">
+    <div id="note_actions" class="flex items-center justify-end gap-x-1">
+      <%= link_to edit_new_admin_note_path do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t 'notes.edit' %>
+        </button>
+      <% end %>
+      <%= link_to new_admin_destroy_note_path(@note.id), method: :delete do %>
+        <button class="px-4 py-2 text-sm text-white transition-colors font-semibold duration-150 border border-transparent rounded-lg bg-primary-600 hover:bg-primary-700">
+          <%= t 'notes.destroy' %>
+        </button>
+      <% end %>
+    </div>
+  <table class="w-full whitespace-nowrap">
+    <thead>
+      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-white dark:bg-slate-700">
+        <th colspan="100%" class="px-4 py-3"><%= t 'notes.details' %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:title) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-bold">
+              <%= @note.title %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:comment) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  @note.comment %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:rate) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @note.rate %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:user) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @note.user.name %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:author) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%= @note.author.name %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:created_at) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  l(@note.created_at, format: :short) %>
+            </p>
+          </div>
+        </td>
+      </tr>
+      <tr class="text-gray-700 dark:text-gray-400">
+        <th>
+          <div class="ml-3 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase">
+            <%= Note.human_attribute_name(:updated_at) %>
+          </div>
+        </th>
+        <td class="px-4 py-3">
+          <div class="flex items-center text-sm">
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              <%=  l(@note.updated_at, format: :short) %>
+            </p>
+          </div>
+        </td>
+      </tr>
+    <tbody>
+  <table>
+</div>

@@ -31,7 +31,8 @@ module NewAdmin
     def update
       @questionnaire = Questionnaire.find(params[:id])
 
-      if @questionnaire.update(questionnaire_params)
+      if @questionnaire.update(questionnaire_params) &&
+        @questionnaire.questions.destroy_by(id: questions_to_be_destroyed_ids)
         redirect_on_success new_admin_show_questionnaire_path(id: @questionnaire.id), message_scope: 'update'
       else
         render_on_failure :edit
@@ -65,6 +66,15 @@ module NewAdmin
     def questionnaire_params
       params.require(:questionnaire).permit(:title, :kind, :active, :description,
                                             questions_attributes: %i[title kind raw_answer_options _destroy id])
+    end
+
+    def questions_to_be_destroyed_ids
+      return unless questionnaire_params[:questions_attributes]
+      questionnaire_params[:questions_attributes].values.filter_map do |question|
+        if question["_destroy"] != 'false'
+          question["id"]
+        end
+      end
     end
 
     def redirect_on_success(url, message_scope:)
