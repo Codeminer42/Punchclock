@@ -80,8 +80,8 @@ RSpec.describe AllocationsSpreadsheet do
         'Philipe',
         'philipe@code.com',
         'Punchclock',
-        '-',
-        '-'
+        '',
+        ''
       ]
     end
 

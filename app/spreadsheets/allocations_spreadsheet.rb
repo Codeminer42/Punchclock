@@ -6,8 +6,8 @@ class AllocationsSpreadsheet < DefaultSpreadsheet
       allocation.user.name,
       allocation.user.email,
       allocation.project.name,
-      allocation.user.mentor ? allocation.user.mentor.name : '-',
-      allocation.user.mentor ? allocation.user.mentor.email : '-'
+      allocation.user.mentor ? allocation.user.mentor.name : '',
+      allocation.user.mentor ? allocation.user.mentor.email : ''
     ]
   end
 
