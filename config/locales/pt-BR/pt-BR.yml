@@ -242,6 +242,8 @@ pt-BR:
     title: "Alocação #%{id}"
     worked_hours: 'Horas trabalhadas'
     total_revenue: 'Faturamento total'
+    mentor_name: 'Nome do mentor'
+    mentor_email: 'Email do mentor'
   punches_filter:
     filter: Filtro
     range: Intervalo
