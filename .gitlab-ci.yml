@@ -1,0 +1,125 @@
+stages:
+  - security
+  - test
+  - deploy
+
+# .default_job is a template to be extended by other jobs that use the
+# same Ruby image, services, cache etc.
+.default_job:
+  image: codeminer42/ci-ruby:3.1
+  services:
+    - postgres:latest
+  variables:
+    RAILS_ENV: test
+    DATABASE_URL: postgresql://postgres:postgres@postgres
+    POSTGRES_PASSWORD: postgres
+  cache:
+    key: ${CI_PROJECT_ID}
+    paths:
+      - vendor/ruby
+      - .gitlab-cache/
+      - .gems/
+      - node_modules/
+  only:
+    - master
+    - merge_requests
+  before_script:
+    # Setup Node
+    - npm install yarn --global
+    - npm install n --global
+    - n v16.13
+
+    # Setup Ruby dependencies
+    - gem install bundler
+    - bundle config set path '.gems'
+    - bundle config set without 'development production'
+    - bundle install -j $(nproc)
+
+    # Setup Database
+    - cp config/database.yml.example config/database.yml
+    - bundle exec rake db:create
+    - bundle exec rake db:schema:load
+
+    # Install JS packages
+    - yarn install
+
+# Default Jobs
+# ============
+
+unit_specs:
+  extends: .default_job
+  stage: test
+  artifacts:
+    paths:
+      - coverage/index.html
+    when: always
+    expire_in: 1 week
+  script:
+    - bundle exec rails assets:precompile
+    - bundle exec rspec --exclude-pattern "./spec/features/**/*_spec.rb"
+
+feature_specs:
+  extends: .default_job
+  stage: test
+  artifacts:
+    paths:
+      - coverage/index.html
+    when: always
+    expire_in: 1 week
+  script:
+    - bundle exec rails assets:precompile
+    - bundle exec rspec spec/features
+
+brakeman:
+  extends: .default_job
+  stage: security
+  before_script:
+    - gem install brakeman
+  script:
+    - brakeman -z -q
+
+bundler_audit:
+  extends: .default_job
+  stage: security
+  before_script:
+    - gem install bundler-audit
+    - bundle audit --update
+  script: bundle audit
+
+# Deploy Stage
+# ============
+staging:
+  stage: deploy
+  when: manual # Run this job only manually
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - curl https://cli-assets.heroku.com/install.sh | sh
+    - gem install dpl
+    - dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=punchclock-staging
+    - heroku run rake db:migrate --exit-code --app punchclock-staging
+  environment:
+    name: staging
+    url: https://punchclock-staging.herokuapp.com
+  only:
+    - master
+
+# Deploy Production
+# ============
+production:
+  stage: deploy
+  when: manual # Run this job only manually
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - curl https://cli-assets.heroku.com/install.sh | sh
+    - gem install dpl
+    - dpl --provider=heroku --api-key=$HEROKU_API_KEY --app=punchlock
+    - heroku run rake db:migrate --exit-code --app punchlock
+  environment:
+    name: production
+    url: https://punchclock.cm42.io
+  only:
+    - master
