@@ -9,4 +9,8 @@ class Skill < ApplicationRecord
             uniqueness: { case_sensitive: false }
 
   scope :by_title_like, ->(title) { where("skills.title ILIKE ?", "%#{title}%") if title.present? }
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[created_at id id_value title updated_at]
+  end
 end

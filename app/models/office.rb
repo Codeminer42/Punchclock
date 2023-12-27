@@ -22,4 +22,10 @@ class Office < ApplicationRecord
     users_average_score = users_overall_scores.sum / users_overall_scores.size
     update(score: users_average_score.round(2))
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      active city created_at head_id id id_value score updated_at users_count
+    ]
+  end
 end

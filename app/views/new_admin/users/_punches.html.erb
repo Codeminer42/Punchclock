@@ -103,8 +103,8 @@
           to = params.dig(:punch, :to)
         %>
         <div class="input_container mb-4">
-          <%= form.date_field :from, value: :from, class: "mr-2 bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
-          <%= form.date_field :to, value: :to, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+          <%= form.date_field :from, value: from, class: "mr-2 bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
+          <%= form.date_field :to, value: to, class: "bg-gray-100 font-semibold rounded-lg text-gray-600 text-sm dark:bg-slate-700 dark:text-gray-400" %>
         </div>
         <%= form.submit "#{t('punches_filter.to_filter')}", formmethod: :get, class: "px-4 py-2 mr-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-primary-600 hover:bg-primary-700" %>
         <%= link_to "#{t('punches_filter.clean_filter')}", new_admin_show_user_path(@user, anchor: "user_punches"), class: "px-4 py-2 cursor-pointer font-semibold text-sm text-white transition-colors duration-150 rounded-lg bg-slate-700 hover:bg-gray-600" %>

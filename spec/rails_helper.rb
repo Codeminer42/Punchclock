@@ -21,7 +21,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
   config.include IntegrationHelpers, type: :feature
   config.include ActiveSupport::Testing::TimeHelpers
   config.include AbstractController::Translation

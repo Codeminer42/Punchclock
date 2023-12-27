@@ -82,8 +82,8 @@ describe 'Admin Evaluation', type: :feature do
       within '#filters_sidebar_section' do
         expect(page).to have_css('label', text: 'Criado em')
 
-        fill_in 'q_created_at_gteq_datetime', with: 9.months.ago
-        fill_in 'q_created_at_lteq_datetime', with: 7.months.ago
+        fill_in 'q_created_at_gteq', with: 9.months.ago
+        fill_in 'q_created_at_lteq', with: 7.months.ago
 
         click_button 'Filtrar'
       end

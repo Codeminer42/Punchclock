@@ -59,6 +59,13 @@ class Allocation < ApplicationRecord
       .decorate
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      created_at end_at hourly_rate_cents hourly_rate_currency id id_value
+      ongoing project_id start_at updated_at user_id
+    ]
+  end
+
   private
 
   def end_before_start?

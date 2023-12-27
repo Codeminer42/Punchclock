@@ -82,7 +82,7 @@ class Vacation < ApplicationRecord
 
   def cancel!(user)
     update!(status: :cancelled, denier: user)
-  end 
+  end
 
   def cancelable?
     pending? || approved_within_cancel_range?
@@ -90,6 +90,13 @@ class Vacation < ApplicationRecord
 
   def duration_days
     (start_date..end_date).count
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      commercial_approver_id created_at denier_id end_date hr_approver_id
+      id id_value start_date status updated_at user_id
+    ]
   end
 
   private

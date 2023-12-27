@@ -1,4 +1,4 @@
-FROM ruby:3.1.4
+FROM ruby:3.2.2
 
 LABEL MAINTAINER Codeminer42 <contact@codeminer42.com>
 
@@ -25,7 +25,7 @@ RUN apt-get update \
   && chown -R app:app $BUNDLE_PATH
 
 # Install chrome and chromedriver for selenium
-ENV CHROME_VERSION 106.0.5249.61
+ENV CHROME_VERSION 114.0.5735.90
 RUN wget http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb \
   && dpkg -i google-chrome-stable_${CHROME_VERSION}-1_amd64.deb || true \
   && apt-get -f install -y \
