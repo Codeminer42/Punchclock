@@ -83,6 +83,8 @@ describe 'Evaluations', type: :feature do
           fill_in 'created_at_end', with: 7.months.ago
 
           click_button 'Filtrar'
+
+          sleep 5
         end
 
         within_table 'index_table_evaluations' do
