@@ -95,6 +95,11 @@ class Vacation < ApplicationRecord
     %w[commercial_approver denier hr_approver user]
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[commercial_approver_id created_at denier_id end_date hr_approver_id id start_date status
+       updated_at user_id]
+  end
+
   private
 
   def approved_within_cancel_range?

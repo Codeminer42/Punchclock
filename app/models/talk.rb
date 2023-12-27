@@ -10,6 +10,10 @@ class Talk < ApplicationRecord
     ["user"]
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at date event_name id talk_title updated_at user_id]
+  end
+
   private
 
   def future_date?

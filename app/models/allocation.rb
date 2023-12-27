@@ -65,6 +65,10 @@ class Allocation < ApplicationRecord
        updated_at user_id]
   end
 
+  def self.ransackable_associations(_auth_object = nil)
+    %w[project user]
+  end
+
   private
 
   def end_before_start?

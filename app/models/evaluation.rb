@@ -32,6 +32,11 @@ class Evaluation < ApplicationRecord
     %w[answers evaluated evaluator questionnaire]
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at english_level evaluated_id evaluation_date evaluator_id id observation
+       questionnaire_id score updated_at]
+  end
+
   private
 
   def update_office_score

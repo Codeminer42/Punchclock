@@ -26,4 +26,8 @@ class Office < ApplicationRecord
   def self.ransackable_associations(_auth_object = nil)
     %w[head users users_without_head]
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[active city created_at head_id id score updated_at users_count]
+  end
 end
