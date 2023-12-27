@@ -20,19 +20,20 @@ class Allocation < ApplicationRecord
   delegate :name, to: :project, prefix: true, allow_nil: true
   delegate :name, to: :user, prefix: true, allow_nil: true
 
-  scope :ongoing, -> {
+  scope :ongoing, lambda {
     where(ongoing: true, user_id: User.active).order(start_at: :desc)
   }
 
-  scope :finished, -> {
-    where(ongoing: false, user_id: User.active).order(end_at: :desc) }
-  scope :in_period, -> (start_at, end_at) do
+  scope :finished, lambda {
+                     where(ongoing: false, user_id: User.active).order(end_at: :desc)
+                   }
+  scope :in_period, lambda { |start_at, end_at|
     where(
       "daterange(start_at, end_at, '[]') && daterange(:start_at, :end_at, '[]')",
-      start_at: start_at,
-      end_at: end_at
+      start_at:,
+      end_at:
     )
-  end
+  }
 
   def days_until_finish
     return unless end_at
@@ -53,10 +54,15 @@ class Allocation < ApplicationRecord
   def user_punches
     project
       .punches
-      .where(user: user)
+      .where(user:)
       .since(start_at)
       .order(from: :desc)
       .decorate
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at end_at hourly_rate_cents hourly_rate_currency id ongoing project_id start_at
+       updated_at user_id]
   end
 
   private
@@ -66,7 +72,7 @@ class Allocation < ApplicationRecord
   end
 
   def unique_period
-    return unless Allocation.in_period(start_at, end_at).where.not(id: id).exists?(user_id: user_id)
+    return unless Allocation.in_period(start_at, end_at).where.not(id:).exists?(user_id:)
 
     errors.add(:start_at, :overlapped_period)
   end

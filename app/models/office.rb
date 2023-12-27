@@ -2,7 +2,7 @@
 
 class Office < ApplicationRecord
   has_many :users, dependent: :restrict_with_error
-  has_many :users_without_head, ->(office) {where.not(id: office.head_id)}, class_name: 'User'
+  has_many :users_without_head, ->(office) { where.not(id: office.head_id) }, class_name: 'User'
   belongs_to :head, class_name: 'User', optional: true
 
   validates :city, presence: true, uniqueness: true
@@ -21,5 +21,9 @@ class Office < ApplicationRecord
 
     users_average_score = users_overall_scores.sum / users_overall_scores.size
     update(score: users_average_score.round(2))
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[head users users_without_head]
   end
 end

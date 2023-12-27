@@ -6,6 +6,10 @@ class Talk < ApplicationRecord
   validates :event_name, :talk_title, :date, presence: true
   validate :future_date?
 
+  def self.ransackable_associations(_auth_object = nil)
+    ["user"]
+  end
+
   private
 
   def future_date?

@@ -112,6 +112,11 @@ class User < ApplicationRecord
        remember_created_at roles specialty started_at updated_at]
   end
 
+  def self.ransackable_associations(_auth_object = nil)
+    %w[allocations authored_notes city contributions education_experiences evaluations
+       managed_offices mentees mentor notes office professional_experiences projects punches skills talks user_skills vacations]
+  end
+
   def self.overall_score_average
     overall_scores = all.map(&:overall_score).compact
 

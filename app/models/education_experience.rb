@@ -16,4 +16,8 @@ class EducationExperience < ApplicationRecord
                           allow_nil: true
 
   scope :for_user, ->(user_id) { where(user_id:) }
+
+  def self.ransackable_associations(_auth_object = nil)
+    ["user"]
+  end
 end
