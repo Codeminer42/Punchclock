@@ -78,7 +78,6 @@ describe 'Evaluations', type: :feature do
       it 'shows filtered evaluations' do
         within '#filters_sidebar_section' do
           expect(page).to have_css('label', text: 'Criado em')
-          sleep 5
 
           fill_in 'created_at_start', with: 9.months.ago
           fill_in 'created_at_end', with: 7.months.ago
