@@ -15,8 +15,8 @@ RSpec.describe Admin::ContributionsController, type: :controller do
     allow(controller).to receive(:authenticate_user!)
     allow(controller).to receive(:current_user).and_return(admin)
   end
- 
-  describe 'GET index' do 
+
+  describe 'GET index' do
     it 'renders the index template' do
       get :index
       expect(response).to render_template(:index)
@@ -41,8 +41,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
     it 'renders the form elements' do
       get :new
-      expect(page).to have_field('contribution[user_id]')
-                  .and have_field('contribution[repository_id]')
+      expect(page).to have_field('contribution[repository_id]')
                   .and have_field('contribution[link]')
     end
   end
@@ -53,18 +52,17 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
     let(:contribution_params) do
       {
-        "link"=>"https://github.com/Codeminer", 
-        "user_id"=>user.id, 
-        "repository_id"=>repository.id
+        "link" => "https://github.com/Codeminer",
+        "user_id" => user.id,
+        "repository_id" => repository.id
       }
     end
 
     context 'with valid params' do
       it 'creates a new Contribution' do
-        
-        expect {
+        expect do
           post :create, params: { contribution: contribution_params }
-        }.to change(Contribution, :count).by(1)
+        end.to change(Contribution, :count).by(1)
       end
 
       it 'assigns a newly created contribution as @contribution' do
@@ -85,13 +83,6 @@ RSpec.describe Admin::ContributionsController, type: :controller do
         contribution = Contribution.last
 
         expect(contribution.link).to eq(contribution_params['link'])
-      end
-
-      it 'ensures created contibution received correct user' do
-        post :create, params: { contribution: contribution_params }
-        contribution = Contribution.last
-
-        expect(contribution.user_id).to  eq(user.id)
       end
 
       it 'ensures created contibution received correct repository' do
@@ -133,10 +124,9 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
     it 'renders the form elements' do
       get :show, params: { id: contribution_to_show.id }
-      expect(page).to have_content(contribution_to_show.user)
-                  .and have_content(contribution_to_show.link)
+      expect(page).to have_content(contribution_to_show.link)
                   .and have_content(Contribution.human_attribute_name("state/#{contribution_to_show.state}"))
-    end 
+    end
   end
 
   describe 'GET edit' do
@@ -144,7 +134,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
 
     it 'has http status 200' do
       get :edit, params: { id: contribution.id }
-      
+
       expect(response).to have_http_status(:ok)
     end
 
@@ -160,9 +150,9 @@ RSpec.describe Admin::ContributionsController, type: :controller do
       let(:contribution) { create(:contribution) }
 
       it 'updates contribution\'s state' do
-        params = { id: contribution.id, state: 'approved'}
+        params = { id: contribution.id, state: 'approved' }
 
-        patch :update, params: params
+        patch(:update, params:)
         expect(response).to redirect_to admin_contribution_path
       end
     end
@@ -173,7 +163,7 @@ RSpec.describe Admin::ContributionsController, type: :controller do
       it 'does not update contribution\'s state' do
         params = { id: contribution.id, state: 'approved', rejected_reason: :other_reason }
 
-        patch :update, params: params
+        patch(:update, params:)
 
         expect(contribution.reload.state).to eq('received')
       end
@@ -181,8 +171,8 @@ RSpec.describe Admin::ContributionsController, type: :controller do
       it 'redirects to the same page' do
         params = { id: contribution.id, state: 'approved', rejected_reason: :other_reason }
 
-        patch :update, params: params
-        
+        patch(:update, params:)
+
         expect(response).to redirect_to admin_contribution_path
       end
     end

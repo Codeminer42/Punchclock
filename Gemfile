@@ -10,7 +10,7 @@ gem 'rails', '~> 7.0.7'
 
 gem 'bootsnap', require: false
 
-gem 'activeadmin', '~> 2.13.1'
+gem 'activeadmin', '~> 3.2'
 gem 'autoprefixer-rails', '~> 10.4.2.0'
 gem 'cancancan', '~> 3.3.0'
 gem 'carrierwave', '~> 2.2.5'
@@ -47,7 +47,7 @@ gem 'business_time'
 gem 'github_api', '~> 0.18.2'
 gem 'httparty'
 gem 'money-rails', '~> 1.12'
-gem 'ransack', '~> 2.3'
+gem 'ransack', '~> 4.0'
 
 gem 'sidekiq', "~> 6.5.12"
 
