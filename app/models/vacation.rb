@@ -15,56 +15,55 @@ class Vacation < ApplicationRecord
     pending: 0,
     approved: 1,
     denied: 2,
-    cancelled: 3,
+    cancelled: 3
   }, predicates: true, scope: :shallow
 
   validates_presence_of :start_date, :end_date, :user
   validates_comparison_of :start_date,
-    message: -> (_vacation, _other) {
-      I18n.t(
-        "activerecord.errors.models.vacation.attributes.start_date.greater_than_current",
-        date: I18n.l(Date.current)
-      )
-    },
-    greater_than: -> (_) { Date.current },
-    allow_nil: true,
-    if: :not_cancelled?
+                          message: lambda { |_vacation, _other|
+                            I18n.t(
+                              "activerecord.errors.models.vacation.attributes.start_date.greater_than_current",
+                              date: I18n.l(Date.current)
+                            )
+                          },
+                          greater_than: ->(_) { Date.current },
+                          allow_nil: true,
+                          if: :not_cancelled?
   validates_comparison_of :end_date,
-    message: -> (vacation, _other) {
-      I18n.t(
-        "activerecord.errors.models.vacation.attributes.end_date.greater_than_current",
-        date: I18n.l(vacation.start_date + MINIMUM_RANGE_OF_DAYS.days)
-      )
-    },
-    greater_than: -> (vacation) { vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
-    allow_nil: true,
-    if: :not_cancelled?
+                          message: lambda { |vacation, _other|
+                            I18n.t(
+                              "activerecord.errors.models.vacation.attributes.end_date.greater_than_current",
+                              date: I18n.l(vacation.start_date + MINIMUM_RANGE_OF_DAYS.days)
+                            )
+                          },
+                          greater_than: ->(vacation) { vacation.start_date + MINIMUM_RANGE_OF_DAYS.days },
+                          allow_nil: true,
+                          if: :not_cancelled?
   validate :validate_start_date_close_to_weekend, if: :start_date, unless: -> { user.contractor? }
   validates_with HolidayValidator, if: :start_date, unless: -> { !validate_vacation_before_holiday? }
 
-  scope :ongoing_and_scheduled, -> {
+  scope :ongoing_and_scheduled, lambda {
     where(status: :approved)
-    .where("end_date >= :today", today: Date.current)
-    .order(start_date: :asc, end_date: :asc)
+      .where("end_date >= :today", today: Date.current)
+      .order(start_date: :asc, end_date: :asc)
   }
 
-  scope :expired, -> {
+  scope :expired, lambda {
     pending
-    .where("start_date < :today", today: Date.current)
-    .order(start_date: :asc, end_date: :asc)
+      .where("start_date < :today", today: Date.current)
+      .order(start_date: :asc, end_date: :asc)
   }
 
-  scope :pending_approval_of, ->(approver) {
-    unless [:hr, :commercial].include? approver.to_sym
-      raise ArgumentError, "The approver should be :hr or :commercial"
-    end
+  scope :pending_approval_of, lambda { |approver|
+    raise ArgumentError, "The approver should be :hr or :commercial" unless %i[hr commercial].include? approver.to_sym
+
     where("#{approver}_approver_id": nil)
   }
 
-  scope :finished, -> {
+  scope :finished, lambda {
     approved
-    .where("end_date <= :today", today: Date.current)
-    .order(end_date: :desc)
+      .where("end_date <= :today", today: Date.current)
+      .order(end_date: :desc)
   }
 
   def approve!(user)
@@ -82,7 +81,7 @@ class Vacation < ApplicationRecord
 
   def cancel!(user)
     update!(status: :cancelled, denier: user)
-  end 
+  end
 
   def cancelable?
     pending? || approved_within_cancel_range?
@@ -90,6 +89,15 @@ class Vacation < ApplicationRecord
 
   def duration_days
     (start_date..end_date).count
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[commercial_approver denier hr_approver user]
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[commercial_approver_id created_at denier_id end_date hr_approver_id id start_date status
+       updated_at user_id]
   end
 
   private
@@ -107,9 +115,9 @@ class Vacation < ApplicationRecord
   end
 
   def validate_start_date_close_to_weekend
-    if start_date.thursday? || start_date.friday? || start_date.on_weekend?
-      errors.add(:start_date, :close_weekend)
-    end
+    return unless start_date.thursday? || start_date.friday? || start_date.on_weekend?
+
+    errors.add(:start_date, :close_weekend)
   end
 
   def validate_vacation_before_holiday?

@@ -32,4 +32,12 @@ class Questionnaire < ApplicationRecord
   def to_s
     title
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[active created_at description id kind title updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[evaluations questions]
+  end
 end

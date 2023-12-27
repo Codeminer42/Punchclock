@@ -13,26 +13,26 @@ class User < ApplicationRecord
 
   %i[backend_level frontend_level].each do |specialty|
     enumerize specialty,
-      in: { trainee: 6, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5 },
-      scope: :shallow,
-      predicates: true,
-      i18n_scope: 'enumerize.user.level'
+              in: { trainee: 6, intern: 0, junior: 1, junior_plus: 2, mid: 3, mid_plus: 4, senior: 5 },
+              scope: :shallow,
+              predicates: true,
+              i18n_scope: 'enumerize.user.level'
   end
 
   enumerize :occupation, in: {
     administrative: 0, engineer: 1
-    },  scope: :shallow,
-        predicates: true
+  }, scope: :shallow,
+                         predicates: true
 
   enumerize :specialty, in: {
     frontend: 0, backend: 1, devops: 2, mobile: 4, qa: 5
-    },  scope: :shallow,
-        predicates: true
+  }, scope: :shallow,
+                        predicates: true
 
   enumerize :contract_type, in: {
     internship: 0, employee: 1, contractor: 2, associate: 3
-    },  scope: :shallow,
-        predicates: true
+  }, scope: :shallow,
+                            predicates: true
 
   enumerize :contract_company_country, in: { brazil: 0, usa: 1 }
 
@@ -41,7 +41,7 @@ class User < ApplicationRecord
     admin: 2,
     open_source_manager: 3,
     hr: 4,
-    commercial: 5,
+    commercial: 5
   }, multiple: true, predicates: true
 
   belongs_to :office, optional: false
@@ -78,14 +78,14 @@ class User < ApplicationRecord
   scope :allocated,      -> { engineer.active.where(id: Allocation.ongoing.select(:user_id)) }
   scope :by_skills_in,   ->(*skill_ids) { UsersBySkillsQuery.where(ids: skill_ids) }
   scope :not_in_experience, -> { where arel_table[:created_at].lt(EXPERIENCE_PERIOD.ago) }
-  scope :by_roles_in, -> roles {
+  scope :by_roles_in, lambda { |roles|
     roles_values = self.roles.find_values(*roles).map(&:value)
     where("users.roles && ARRAY[?]::int[]", roles_values)
   }
   scope :admin, -> { by_roles_in([:admin]) }
   scope :hr, -> { by_roles_in([:hr]) }
   scope :commercial, -> { by_roles_in([:commercial]) }
-  scope :vacation_managers, -> { by_roles_in([:hr, :commercial]) }
+  scope :vacation_managers, -> { by_roles_in(%i[hr commercial]) }
 
   scope :by_name_like, ->(name) { where("users.name ILIKE ?", "%#{name}%") }
   scope :by_email_like, ->(email) { where("users.email ILIKE ?", "%#{email}%") }
@@ -105,10 +105,23 @@ class User < ApplicationRecord
     [:by_skills_in]
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[active allow_overtime backend_level city_id confirmation_sent_at
+       confirmed_at consumed_timestep contract_company_country contract_type created_at current_sign_in_at
+       email frontend_level github id last_sign_in_at mentor_id name observation occupation office_id
+       remember_created_at roles specialty started_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[allocations authored_notes city contributions education_experiences evaluations
+       managed_offices mentees mentor notes office professional_experiences projects punches skills talks user_skills vacations]
+  end
+
   def self.overall_score_average
     overall_scores = all.map(&:overall_score).compact
 
     return 0 if overall_scores.empty?
+
     (overall_scores.sum / overall_scores.size).round(2)
   end
 
@@ -174,11 +187,9 @@ class User < ApplicationRecord
     if current_password.blank?
       super
     else
-        errors.add(:password, "não pode ficar em branco") if password.blank?
-        errors.add(:password_confirmation, "não pode ficar em branco") if password_confirmation.blank?
-      if password_confirmation != password
-        errors.add(:password_confirmation, "não é igual a Password")
-      end
+      errors.add(:password, "não pode ficar em branco") if password.blank?
+      errors.add(:password_confirmation, "não pode ficar em branco") if password_confirmation.blank?
+      errors.add(:password_confirmation, "não é igual a Password") if password_confirmation != password
     end
 
     errors.present? ? false : super

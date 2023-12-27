@@ -14,6 +14,14 @@ class RegionalHoliday < ApplicationRecord
     cities.pluck(:name).to_sentence
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at day id month name updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    ["cities"]
+  end
+
   private
 
   def valid_date?

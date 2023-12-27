@@ -16,4 +16,12 @@ class EducationExperience < ApplicationRecord
                           allow_nil: true
 
   scope :for_user, ->(user_id) { where(user_id:) }
+
+  def self.ransackable_associations(_auth_object = nil)
+    ["user"]
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[course created_at end_date id institution start_date updated_at user_id]
+  end
 end

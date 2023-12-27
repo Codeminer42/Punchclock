@@ -76,6 +76,15 @@ class Contribution < ApplicationRecord
   scope :by_created_at_from, ->(date) { where('created_at >= ?', date) if date.present? }
   scope :by_created_at_until, ->(date) { where('created_at <= ?', date) if date.present? }
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at description id link notes pending pr_state rejected_reason repository_id
+       reviewed_at reviewer_id state tracking updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[repository reviewed_by users]
+  end
+
   private
 
   def normalize_description_blank_value

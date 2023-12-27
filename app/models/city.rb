@@ -16,4 +16,8 @@ class City < ApplicationRecord
   def holidays
     regional_holidays.to_formatted_hash
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at id name state_id updated_at]
+  end
 end

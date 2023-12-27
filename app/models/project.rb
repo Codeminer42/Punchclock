@@ -31,4 +31,12 @@ class Project < ApplicationRecord
   def to_s
     name
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[active created_at id market name updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[allocations punches]
+  end
 end
