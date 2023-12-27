@@ -32,13 +32,13 @@ RSpec.describe NewAdmin::QuestionnairesController, type: :request do
 
         context 'when title filter is applied' do
           let!(:foo_questionnaire) { create(:questionnaire, title: 'Foo') }
-          let!(:bar_questionnaire) { create(:questionnaire, title: 'Bar') }
+          let!(:bar_questionnaire) { create(:questionnaire, title: 'Weird title') }
 
           it 'returns only the filtered questionnaires', :aggregate_failures do
             get new_admin_questionnaires_path, params: { title: 'foo' }
 
             expect(response.body).to include('Foo')
-            expect(response.body).not_to include('Bar')
+            expect(response.body).not_to include('Weird title')
           end
         end
 
