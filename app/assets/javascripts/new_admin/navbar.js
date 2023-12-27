@@ -1,4 +1,4 @@
-const tabButtons = Array.from(document.querySelectorAll("[data-tab-id]"));
+const tabButtons = Array.from(document.querySelectorAll("button[data-tab-id]"));
 
 const showElement = (element) => {
   element.style.display = "block";
